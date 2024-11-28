@@ -1,0 +1,76 @@
+minestudio.simulator.callbacks package
+======================================
+
+.. automodule:: minestudio.simulator.callbacks
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+
+.. automodule:: minestudio.simulator.callbacks.callback
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+.. automodule:: minestudio.simulator.callbacks.commands
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+.. automodule:: minestudio.simulator.callbacks.fast_reset
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+.. automodule:: minestudio.simulator.callbacks.mask_actions
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+.. automodule:: minestudio.simulator.callbacks.play
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+.. automodule:: minestudio.simulator.callbacks.point
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+.. automodule:: minestudio.simulator.callbacks.record
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+.. automodule:: minestudio.simulator.callbacks.rewards
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+.. automodule:: minestudio.simulator.callbacks.speed_test
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+.. automodule:: minestudio.simulator.callbacks.summon_mobs
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+.. automodule:: minestudio.simulator.callbacks.task
+   :members:
+   :undoc-members:
+   :show-inheritance:

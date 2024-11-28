@@ -1,0 +1,22 @@
+minestudio package
+==================
+
+.. automodule:: minestudio
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   minestudio.agents
+   minestudio.benchmark
+   minestudio.data
+   minestudio.inference
+   minestudio.models
+   minestudio.simulator
+   minestudio.train
+   minestudio.utils
