@@ -12,7 +12,8 @@ Subpackages
 .. toctree::
    :maxdepth: 4
 
-   minestudio.train.callbacks
+   minestudio.train.lightning_callbacks
+   minestudio.train.mine_callbacks
 
 Submodules
 ----------

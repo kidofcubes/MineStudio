@@ -1,0 +1,28 @@
+minestudio.train.lightning\_callbacks package
+=============================================
+
+.. automodule:: minestudio.train.lightning_callbacks
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+
+.. automodule:: minestudio.train.lightning_callbacks.ema
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+.. automodule:: minestudio.train.lightning_callbacks.smart_checkpoint
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+.. automodule:: minestudio.train.lightning_callbacks.speed_monitor
+   :members:
+   :undoc-members:
+   :show-inheritance:
