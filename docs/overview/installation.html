@@ -542,7 +542,7 @@
 <!--
  * @Date: 2024-11-28 22:13:52
  * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-11-29 11:25:52
+ * @LastEditTime: 2024-11-29 11:34:57
  * @FilePath: /MineStudio/docs/source/overview/installation.md
 -->
 <section id="installation">
@@ -552,15 +552,17 @@
 <p>If you encounter any issues during installation, please open an issue on <a class="reference external" href="https://github.com/phython96/MineStudio/issues">GitHub</a>.</p>
 </div>
 <p>Welcome to MineStudio, please follow the tutorial below for installation.</p>
-<ol class="arabic">
-<li><p>To ensure that the Simulator runs smoothly, please make sure that JDK 8 is installed on your system. We recommend using conda to maintain an environment on Linux systems.</p>
+<section id="install-openjdk-8">
+<h2>Install OpenJDK 8<a class="headerlink" href="#install-openjdk-8" title="Link to this heading">#</a></h2>
+<p>To ensure that the Simulator runs smoothly, please make sure that JDK 8 is installed on your system. We recommend using conda to maintain an environment on Linux systems.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>minestudio<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.10<span class="w"> </span>-y
 <span class="gp">$ </span>conda<span class="w"> </span>activate<span class="w"> </span>minestudio
 <span class="gp">$ </span>conda<span class="w"> </span>install<span class="w"> </span>--channel<span class="o">=</span>conda-forge<span class="w"> </span><span class="nv">openjdk</span><span class="o">=</span><span class="m">8</span><span class="w"> </span>-y
 </pre></div>
 </div>
-</li>
-<li><p>Install MineStudio.</p>
+</section>
+<section id="install-minestudio">
+<h2>Install MineStudio<a class="headerlink" href="#install-minestudio" title="Link to this heading">#</a></h2>
 <p>a. Install MineStudio from the <a class="reference external" href="https://github.com/phython96/MineStudio">GitHub</a>.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/phython96/MineStudio.git
 </pre></div>
@@ -569,8 +571,10 @@
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip<span class="w"> </span>install<span class="w"> </span>minestudio
 </pre></div>
 </div>
-</li>
-<li><p>Install the rendering tool. For users with <strong>nvidia graphics cards</strong>, we recommend installing virtualGL; for other users, we recommend using xvfb, which supports CPU rendering but is relatively slower.</p>
+</section>
+<section id="install-the-rendering-tool">
+<h2>Install the rendering tool<a class="headerlink" href="#install-the-rendering-tool" title="Link to this heading">#</a></h2>
+<p>For users with <strong>nvidia graphics cards</strong>, we recommend installing virtualGL; for other users, we recommend using xvfb, which supports CPU rendering but is relatively slower.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Installing rendering tools may require <strong>root</strong> permissions.</p>
@@ -616,9 +620,9 @@ VirtualGL</label><div class="sd-tab-content docutils">
 </div>
 </div>
 </div>
-</li>
-<li><p>Verify by running simulator.</p></li>
-</ol>
+</section>
+<section id="verify-by-running-simulator">
+<h2>Verify by running simulator<a class="headerlink" href="#verify-by-running-simulator" title="Link to this heading">#</a></h2>
 <p>If you are using <strong>Xvfb</strong>, run the following command:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python<span class="w"> </span>-m<span class="w"> </span>minestudio.simulator.entry
 </pre></div>
@@ -628,17 +632,18 @@ VirtualGL</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 <p>If you see the following output, the installation is successful.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Speed Test Status: </span>
-<span class="go">Average Time: 0.03 </span>
-<span class="go">Average FPS: 38.46 </span>
-<span class="go">Total Steps: 50 </span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Speed</span> <span class="n">Test</span> <span class="n">Status</span><span class="p">:</span> 
+<span class="n">Average</span> <span class="n">Time</span><span class="p">:</span> <span class="mf">0.03</span> 
+<span class="n">Average</span> <span class="n">FPS</span><span class="p">:</span> <span class="mf">38.46</span> 
+<span class="n">Total</span> <span class="n">Steps</span><span class="p">:</span> <span class="mi">50</span> 
 
-<span class="go">Speed Test Status: </span>
-<span class="go">Average Time: 0.02 </span>
-<span class="go">Average FPS: 45.08 </span>
-<span class="go">Total Steps: 100 </span>
+<span class="n">Speed</span> <span class="n">Test</span> <span class="n">Status</span><span class="p">:</span> 
+<span class="n">Average</span> <span class="n">Time</span><span class="p">:</span> <span class="mf">0.02</span> 
+<span class="n">Average</span> <span class="n">FPS</span><span class="p">:</span> <span class="mf">45.08</span> 
+<span class="n">Total</span> <span class="n">Steps</span><span class="p">:</span> <span class="mi">100</span> 
 </pre></div>
 </div>
+</section>
 </section>
 
 <div class="section ablog__blog_comments">
@@ -683,6 +688,21 @@ VirtualGL</label><div class="sd-tab-content docutils">
                 <dialog id="pst-secondary-sidebar-modal"></dialog>
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-openjdk-8">Install OpenJDK 8</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-minestudio">Install MineStudio</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-the-rendering-tool">Install the rendering tool</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verify-by-running-simulator">Verify by running simulator</a></li>
+</ul>
+  </nav></div>
 
   <div class="sidebar-secondary-item">
 
