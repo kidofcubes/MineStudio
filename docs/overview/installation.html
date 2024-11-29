@@ -542,7 +542,7 @@
 <!--
  * @Date: 2024-11-28 22:13:52
  * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-11-29 10:41:19
+ * @LastEditTime: 2024-11-29 11:25:52
  * @FilePath: /MineStudio/docs/source/overview/installation.md
 -->
 <section id="installation">
@@ -575,12 +575,19 @@
 <p class="admonition-title">Note</p>
 <p>Installing rendering tools may require <strong>root</strong> permissions.</p>
 </div>
-<p>a. <strong>Render using Xvfb.</strong></p>
+<p>There are two options:</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-0">
+Xvfb</label><div class="sd-tab-content docutils">
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>apt<span class="w"> </span>update<span class="w"> </span>
 <span class="gp">$ </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>xvfb<span class="w"> </span>mesa-utils<span class="w"> </span>libegl1-mesa<span class="w"> </span>libgl1-mesa-dev<span class="w"> </span>libglu1-mesa-dev<span class="w"> </span>
 </pre></div>
 </div>
-<p>b. <strong>Render using VirtualGL. (Optional)</strong></p>
+</div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-1">
+VirtualGL</label><div class="sd-tab-content docutils">
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>Not all graphics cards support virtualGL. If you do not have speed requirements, it is recommended to use the easier-to-install xvfb rendering tool.</p>
@@ -607,9 +614,31 @@
 <span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">DISPLAY</span><span class="o">=</span>:1
 </pre></div>
 </div>
+</div>
+</div>
 </li>
 <li><p>Verify by running simulator.</p></li>
 </ol>
+<p>If you are using <strong>Xvfb</strong>, run the following command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python<span class="w"> </span>-m<span class="w"> </span>minestudio.simulator.entry
+</pre></div>
+</div>
+<p>If you are using <strong>VirtualGL</strong>, run the following command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nv">MINESTUDIO_GPU_RENDER</span><span class="o">=</span><span class="m">1</span><span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>minestudio.simulator.entry
+</pre></div>
+</div>
+<p>If you see the following output, the installation is successful.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Speed Test Status: </span>
+<span class="go">Average Time: 0.03 </span>
+<span class="go">Average FPS: 38.46 </span>
+<span class="go">Total Steps: 50 </span>
+
+<span class="go">Speed Test Status: </span>
+<span class="go">Average Time: 0.02 </span>
+<span class="go">Average FPS: 45.08 </span>
+<span class="go">Total Steps: 100 </span>
+</pre></div>
+</div>
 </section>
 
 <div class="section ablog__blog_comments">
