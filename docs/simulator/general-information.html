@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Installation &#8212; MineStudio 1.0.0</title>
+    <title>General Information &#8212; MineStudio 1.0.0</title>
   
   
   
@@ -63,11 +63,13 @@
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'overview/installation';</script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'simulator/general-information';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Getting Started" href="getting-started.html" />
-    <link rel="prev" title="Overview" href="index.html" />
+    <link rel="next" title="Design Principles" href="design-principles.html" />
+    <link rel="prev" title="MineStudio Simulator" href="index.html" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -170,22 +172,22 @@
 <nav>
   <ul class="bd-navbar-elements navbar-nav">
     
-<li class="nav-item current active">
-  <a class="nav-link nav-internal" href="index.html">
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../overview/index.html">
     Overview
   </a>
 </li>
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="getting-started.html">
+  <a class="nav-link nav-internal" href="../overview/getting-started.html">
     Getting Started
   </a>
 </li>
 
 
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="../simulator/index.html">
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
     Simulator
   </a>
 </li>
@@ -364,22 +366,22 @@
 <nav>
   <ul class="bd-navbar-elements navbar-nav">
     
-<li class="nav-item current active">
-  <a class="nav-link nav-internal" href="index.html">
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../overview/index.html">
     Overview
   </a>
 </li>
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="getting-started.html">
+  <a class="nav-link nav-internal" href="../overview/getting-started.html">
     Getting Started
   </a>
 </li>
 
 
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="../simulator/index.html">
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
     Simulator
   </a>
 </li>
@@ -481,9 +483,10 @@
 <nav class="bd-docs-nav bd-links"
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Get started</span></p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">MineStudio Simulator</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Installation</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design-principles.html">Design Principles</a></li>
 </ul>
 </div>
 </nav></div>
@@ -520,9 +523,9 @@
       </a>
     </li>
     
-    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Overview</a></li>
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">MineStudio Simulator</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Installation</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">General Information</span></li>
   </ul>
 </nav>
 </div>
@@ -540,135 +543,105 @@
                 <article class="bd-article">
                   
 <!--
- * @Date: 2024-11-28 22:13:52
+ * @Date: 2024-11-29 14:50:07
  * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-11-29 13:56:21
- * @FilePath: /MineStudio/docs/source/overview/installation.md
+ * @LastEditTime: 2024-11-29 15:42:45
+ * @FilePath: /MineStudio/docs/source/simulator/general-information.md
 -->
-<section id="installation">
-<span id="gentle-intro"></span><h1>Installation<a class="headerlink" href="#installation" title="Link to this heading">#</a></h1>
+<section id="general-information">
+<h1>General Information<a class="headerlink" href="#general-information" title="Link to this heading">#</a></h1>
+<section id="observation-space">
+<h2>Observation Space<a class="headerlink" href="#observation-space" title="Link to this heading">#</a></h2>
+<p>Most environments use the same observation space (just an RGB image), refer to <a class="reference external" href="https://minerl.readthedocs.io/en/latest/environments/index.html#observation-space">MineRL</a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">minestudio.simulator</span> <span class="kn">import</span> <span class="n">MinecraftSim</span>
+<span class="n">sim</span> <span class="o">=</span> <span class="n">MinecraftSim</span><span class="p">(</span><span class="n">obs_size</span><span class="o">=</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">),</span> <span class="n">render_size</span><span class="o">=</span><span class="p">(</span><span class="mi">640</span><span class="p">,</span> <span class="mi">360</span><span class="p">))</span>
+<span class="n">obs</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The observation space is a dictionary with the following keys:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Dict</span><span class="p">({</span>
+    <span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="n">Box</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">255</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+<span class="p">})</span>
+</pre></div>
+</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If you encounter any issues during installation, please open an issue on <a class="reference external" href="https://github.com/phython96/MineStudio/issues">GitHub</a>.</p>
+<p>Here are two types of resolution: <code class="docutils literal notranslate"><span class="pre">render_size</span></code> and <code class="docutils literal notranslate"><span class="pre">obs_size</span></code>. The <code class="docutils literal notranslate"><span class="pre">render_size</span></code> specifies the resolution of the Minecraft window, usually set to <span class="math notranslate nohighlight">\(640 \times 360\)</span>. We use opencv <code class="docutils literal notranslate"><span class="pre">resize</span></code> function to resize the image to the <code class="docutils literal notranslate"><span class="pre">obs_size</span></code>.</p>
+<p>You can also access the original image in <code class="docutils literal notranslate"><span class="pre">info[&quot;pov&quot;]</span></code> returned by the <code class="docutils literal notranslate"><span class="pre">step</span></code> function or the <code class="docutils literal notranslate"><span class="pre">reset</span></code> function.</p>
 </div>
-<p>Welcome to MineStudio, please follow the tutorial below for installation.</p>
-<section id="install-jdk-8">
-<h2>Install JDK 8<a class="headerlink" href="#install-jdk-8" title="Link to this heading">#</a></h2>
-<p>To ensure that the Simulator runs smoothly, please make sure that JDK 8 is installed on your system. We recommend using conda to maintain an environment on Linux systems.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>minestudio<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.10<span class="w"> </span>-y
-<span class="gp">$ </span>conda<span class="w"> </span>activate<span class="w"> </span>minestudio
-<span class="gp">$ </span>conda<span class="w"> </span>install<span class="w"> </span>--channel<span class="o">=</span>conda-forge<span class="w"> </span><span class="nv">openjdk</span><span class="o">=</span><span class="m">8</span><span class="w"> </span>-y
-</pre></div>
-</div>
-</section>
-<section id="install-minestudio">
-<h2>Install MineStudio<a class="headerlink" href="#install-minestudio" title="Link to this heading">#</a></h2>
-<p>a. Install MineStudio from the <a class="reference external" href="https://github.com/phython96/MineStudio">GitHub</a>.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/phython96/MineStudio.git
-</pre></div>
-</div>
-<p>b. Install MineStudio from <a class="reference external" href="https://pypi.org/project/minestudio/">PyPI</a>.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip<span class="w"> </span>install<span class="w"> </span>minestudio
-</pre></div>
-</div>
-</section>
-<section id="install-the-rendering-tool">
-<h2>Install the rendering tool<a class="headerlink" href="#install-the-rendering-tool" title="Link to this heading">#</a></h2>
-<p>For users with <em>nvidia graphics cards</em>, we recommend installing <strong>VirtualGL</strong>; for other users, we recommend using <strong>Xvfb</strong>, which supports CPU rendering but is relatively slower.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Installing rendering tools may require <strong>root</strong> permissions.</p>
-</div>
-<p>There are two options:</p>
-<div class="sd-tab-set docutils">
-<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
-<label class="sd-tab-label" for="sd-tab-item-0">
-Xvfb</label><div class="sd-tab-content docutils">
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>apt<span class="w"> </span>update<span class="w"> </span>
-<span class="gp">$ </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>xvfb<span class="w"> </span>mesa-utils<span class="w"> </span>libegl1-mesa<span class="w"> </span>libgl1-mesa-dev<span class="w"> </span>libglu1-mesa-dev<span class="w"> </span>
-</pre></div>
-</div>
-</div>
-<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
-<label class="sd-tab-label" for="sd-tab-item-1">
-VirtualGL</label><div class="sd-tab-content docutils">
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Not all graphics cards support virtualGL. If you do not have speed requirements, it is recommended to use the easier-to-install xvfb rendering tool.</p>
+<p>We use <code class="docutils literal notranslate"><span class="pre">cv2.INTER_LINEAR</span></code> as the interpolation method when resizing the image.</p>
+<p>We found that it is very important to align the interpolation methods between training and inference; otherwise, it may lead to poor performance.</p>
 </div>
-<p>You need to download the following sources:</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://sourceforge.net/projects/virtualgl/files/3.1/virtualgl_3.1_amd64.deb/download">virtualgl_3.1_amd64.deb</a></p></li>
-<li><p><a class="reference internal" href="#"><span class="xref myst">vgl_entrypoint.sh</span></a></p></li>
+</section>
+<section id="action-space">
+<h2>Action Space<a class="headerlink" href="#action-space" title="Link to this heading">#</a></h2>
+<p>We provide two types of action spaces: <code class="docutils literal notranslate"><span class="pre">env</span></code> and <code class="docutils literal notranslate"><span class="pre">agent</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">Discrete</span></code> and <code class="docutils literal notranslate"><span class="pre">Box</span></code> are from the <code class="docutils literal notranslate"><span class="pre">gymnasium.spaces</span></code> module.</p>
+</div>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">env</span></code>: The action space is similar to the original MineRL environment.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Dict</span><span class="p">({</span>
+    <span class="s2">&quot;attack&quot;</span><span class="p">:</span> <span class="n">Discrete</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+    <span class="s2">&quot;back&quot;</span><span class="p">:</span> <span class="n">Discrete</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+    <span class="s2">&quot;camera&quot;</span><span class="p">:</span> <span class="n">Box</span><span class="p">(</span><span class="n">low</span><span class="o">=-</span><span class="mf">180.0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mf">180.0</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,)),</span>
+    <span class="s2">&quot;forward&quot;</span><span class="p">:</span> <span class="n">Discrete</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+    <span class="s2">&quot;hotbar.1&quot;</span><span class="p">:</span> <span class="n">Discrete</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+    <span class="s2">&quot;hotbar.2&quot;</span><span class="p">:</span> <span class="n">Discrete</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+    <span class="s2">&quot;hotbar.3&quot;</span><span class="p">:</span> <span class="n">Discrete</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+    <span class="s2">&quot;hotbar.4&quot;</span><span class="p">:</span> <span class="n">Discrete</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+    <span class="s2">&quot;hotbar.5&quot;</span><span class="p">:</span> <span class="n">Discrete</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+    <span class="s2">&quot;hotbar.6&quot;</span><span class="p">:</span> <span class="n">Discrete</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+    <span class="s2">&quot;hotbar.7&quot;</span><span class="p">:</span> <span class="n">Discrete</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+    <span class="s2">&quot;hotbar.8&quot;</span><span class="p">:</span> <span class="n">Discrete</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+    <span class="s2">&quot;hotbar.9&quot;</span><span class="p">:</span> <span class="n">Discrete</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+    <span class="s2">&quot;inventory&quot;</span><span class="p">:</span> <span class="n">Discrete</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+    <span class="s2">&quot;jump&quot;</span><span class="p">:</span> <span class="n">Discrete</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+    <span class="s2">&quot;left&quot;</span><span class="p">:</span> <span class="n">Discrete</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+    <span class="s2">&quot;right&quot;</span><span class="p">:</span> <span class="n">Discrete</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+    <span class="s2">&quot;sneak&quot;</span><span class="p">:</span> <span class="n">Discrete</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+    <span class="s2">&quot;sprint&quot;</span><span class="p">:</span> <span class="n">Discrete</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+    <span class="s2">&quot;use&quot;</span><span class="p">:</span> <span class="n">Discrete</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="s2">&quot;</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This kind of action space is human-friendly.</p>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">agent</span></code>: The action space is a dictionary with the following keys:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Dict</span><span class="p">({</span>
+    <span class="s2">&quot;buttons&quot;</span><span class="p">:</span> <span class="n">MultiDiscrete</span><span class="p">([</span><span class="mi">8641</span><span class="p">]),</span>
+    <span class="s2">&quot;camera&quot;</span><span class="p">:</span>  <span class="n">MultiDiscrete</span><span class="p">([</span><span class="mi">121</span><span class="p">])</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It adopts the hierarchical design principle from the <a class="reference external" href="https://github.com/openai/Video-Pre-Training">video-pretraining</a> paper.</p>
+<p>This kind of action space is more suitable for training polices.</p>
+</div>
+</li>
 </ul>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>apt<span class="w"> </span>update<span class="w"> </span>
-<span class="gp">$ </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>xvfb<span class="w"> </span>mesa-utils<span class="w"> </span>libegl1-mesa<span class="w"> </span>libgl1-mesa-dev<span class="w"> </span>libglu1-mesa-dev<span class="w"> </span>
-</pre></div>
-</div>
-<p>Install the downloaded package.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dpkg<span class="w"> </span>-i<span class="w"> </span>virtualgl_3.1_amd64.deb
-</pre></div>
-</div>
-<p>Shutdown the display manager and configure VirtualGL.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>service<span class="w"> </span>gdm<span class="w"> </span>stop<span class="w"> </span>
-</pre></div>
-</div>
-<p>Configure VirtualGL.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>/opt/VirtualGL/bin/vglserver_config<span class="w"> </span>
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>First choose 1，then Yes, No, No, No，finally enter X</p>
-</div>
-<p>Start the display manager.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>service<span class="w"> </span>gdm<span class="w"> </span>start
-</pre></div>
-</div>
-<p>Start the VirtualGL server.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>bash<span class="w"> </span>vgl_entrypoint.sh
-</pre></div>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Each time the system is restarted, it may be necessary to run <code class="docutils literal notranslate"><span class="pre">vgl_entrypoint.sh</span></code>.</p>
-</div>
-<p>Configure the environment variables.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">PATH</span><span class="si">}</span><span class="s2">:/opt/VirtualGL/bin&quot;</span><span class="w"> </span>
-<span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="s2">&quot;/usr/lib/libreoffice/program:</span><span class="si">${</span><span class="nv">LD_LIBRARY_PATH</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>
-<span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">VGL_DISPLAY</span><span class="o">=</span><span class="s2">&quot;egl&quot;</span><span class="w"> </span>
-<span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">VGL_REFRESHRATE</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$REFRESH</span><span class="s2">&quot;</span>
-<span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">DISPLAY</span><span class="o">=</span>:1
-</pre></div>
-</div>
-</div>
-</div>
 </section>
-<section id="verify-by-running-simulator">
-<h2>Verify by running simulator<a class="headerlink" href="#verify-by-running-simulator" title="Link to this heading">#</a></h2>
+<section id="information">
+<h2>Information<a class="headerlink" href="#information" title="Link to this heading">#</a></h2>
+<p>The information space is a dictionary with the following keys:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dict_keys</span><span class="p">([</span>
+    <span class="s1">&#39;isGuiOpen&#39;</span><span class="p">,</span> <span class="s1">&#39;location_stats&#39;</span><span class="p">,</span> <span class="s1">&#39;voxels&#39;</span><span class="p">,</span> <span class="s1">&#39;mobs&#39;</span><span class="p">,</span> <span class="s1">&#39;health&#39;</span><span class="p">,</span> 
+    <span class="s1">&#39;food_level&#39;</span><span class="p">,</span> <span class="s1">&#39;pov&#39;</span><span class="p">,</span> <span class="s1">&#39;inventory&#39;</span><span class="p">,</span> <span class="s1">&#39;equipped_items&#39;</span><span class="p">,</span> <span class="s1">&#39;use_item&#39;</span>
+    <span class="s1">&#39;pickup&#39;</span><span class="p">,</span> <span class="s1">&#39;break_item&#39;</span><span class="p">,</span> <span class="s1">&#39;craft_item&#39;</span><span class="p">,</span> <span class="s1">&#39;mine_block&#39;</span><span class="p">,</span> <span class="s1">&#39;damage_dealt&#39;</span><span class="p">,</span> 
+    <span class="s1">&#39;kill_entity&#39;</span><span class="p">,</span> <span class="s1">&#39;player_pos&#39;</span><span class="p">,</span> <span class="s1">&#39;is_gui_open&#39;</span><span class="p">,</span> <span class="s1">&#39;message&#39;</span>
+<span class="p">])</span>
+</pre></div>
+</div>
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
-<p>The first time you run it, the script will ask whether to download the compiled model from Hugging Face; just choose Y.</p>
-</div>
-<p>If you are using <strong>Xvfb</strong>, run the following command:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python<span class="w"> </span>-m<span class="w"> </span>minestudio.simulator.entry
-</pre></div>
-</div>
-<p>If you are using <strong>VirtualGL</strong>, run the following command:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nv">MINESTUDIO_GPU_RENDER</span><span class="o">=</span><span class="m">1</span><span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>minestudio.simulator.entry
-</pre></div>
-</div>
-<p>If you see the following output, the installation is successful.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Speed</span> <span class="n">Test</span> <span class="n">Status</span><span class="p">:</span> 
-<span class="n">Average</span> <span class="n">Time</span><span class="p">:</span> <span class="mf">0.03</span> 
-<span class="n">Average</span> <span class="n">FPS</span><span class="p">:</span> <span class="mf">38.46</span> 
-<span class="n">Total</span> <span class="n">Steps</span><span class="p">:</span> <span class="mi">50</span> 
-
-<span class="n">Speed</span> <span class="n">Test</span> <span class="n">Status</span><span class="p">:</span> 
-<span class="n">Average</span> <span class="n">Time</span><span class="p">:</span> <span class="mf">0.02</span> 
-<span class="n">Average</span> <span class="n">FPS</span><span class="p">:</span> <span class="mf">45.08</span> 
-<span class="n">Total</span> <span class="n">Steps</span><span class="p">:</span> <span class="mi">100</span> 
-</pre></div>
+<p>The information is recorded in an accumulated manner, for example, <code class="docutils literal notranslate"><span class="pre">kill</span> <span class="pre">entity</span></code> records the cumulative number of entities killed.</p>
 </div>
 </section>
 </section>
@@ -693,15 +666,15 @@ VirtualGL</label><div class="sd-tab-content docutils">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Overview</p>
+        <p class="prev-next-title">MineStudio Simulator</p>
       </div>
     </a>
     <a class="right-next"
-       href="getting-started.html"
+       href="design-principles.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Getting Started</p>
+        <p class="prev-next-title">Design Principles</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -724,17 +697,16 @@ VirtualGL</label><div class="sd-tab-content docutils">
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-jdk-8">Install JDK 8</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-minestudio">Install MineStudio</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-the-rendering-tool">Install the rendering tool</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verify-by-running-simulator">Verify by running simulator</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#observation-space">Observation Space</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#action-space">Action Space</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#information">Information</a></li>
 </ul>
   </nav></div>
 
   <div class="sidebar-secondary-item">
 
   <div class="tocsection sourcelink">
-    <a href="../_sources/overview/installation.md.txt">
+    <a href="../_sources/simulator/general-information.md.txt">
       <i class="fa-solid fa-file-lines"></i> Show Source
     </a>
   </div>

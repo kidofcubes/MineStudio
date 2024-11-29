@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Installation &#8212; MineStudio 1.0.0</title>
+    <title>Design Principles &#8212; MineStudio 1.0.0</title>
   
   
   
@@ -63,11 +63,11 @@
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'overview/installation';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'simulator/design-principles';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Getting Started" href="getting-started.html" />
-    <link rel="prev" title="Overview" href="index.html" />
+    <link rel="next" title="Data" href="../data/index.html" />
+    <link rel="prev" title="General Information" href="general-information.html" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -170,22 +170,22 @@
 <nav>
   <ul class="bd-navbar-elements navbar-nav">
     
-<li class="nav-item current active">
-  <a class="nav-link nav-internal" href="index.html">
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../overview/index.html">
     Overview
   </a>
 </li>
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="getting-started.html">
+  <a class="nav-link nav-internal" href="../overview/getting-started.html">
     Getting Started
   </a>
 </li>
 
 
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="../simulator/index.html">
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
     Simulator
   </a>
 </li>
@@ -364,22 +364,22 @@
 <nav>
   <ul class="bd-navbar-elements navbar-nav">
     
-<li class="nav-item current active">
-  <a class="nav-link nav-internal" href="index.html">
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../overview/index.html">
     Overview
   </a>
 </li>
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="getting-started.html">
+  <a class="nav-link nav-internal" href="../overview/getting-started.html">
     Getting Started
   </a>
 </li>
 
 
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="../simulator/index.html">
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
     Simulator
   </a>
 </li>
@@ -481,9 +481,10 @@
 <nav class="bd-docs-nav bd-links"
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Get started</span></p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">MineStudio Simulator</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="general-information.html">General Information</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Design Principles</a></li>
 </ul>
 </div>
 </nav></div>
@@ -520,9 +521,9 @@
       </a>
     </li>
     
-    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Overview</a></li>
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">MineStudio Simulator</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Installation</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Design Principles</span></li>
   </ul>
 </nav>
 </div>
@@ -540,136 +541,77 @@
                 <article class="bd-article">
                   
 <!--
- * @Date: 2024-11-28 22:13:52
+ * @Date: 2024-11-29 15:45:12
  * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-11-29 13:56:21
- * @FilePath: /MineStudio/docs/source/overview/installation.md
+ * @LastEditTime: 2024-11-29 16:10:33
+ * @FilePath: /MineStudio/docs/source/simulator/design-principles.md
 -->
-<section id="installation">
-<span id="gentle-intro"></span><h1>Installation<a class="headerlink" href="#installation" title="Link to this heading">#</a></h1>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>If you encounter any issues during installation, please open an issue on <a class="reference external" href="https://github.com/phython96/MineStudio/issues">GitHub</a>.</p>
-</div>
-<p>Welcome to MineStudio, please follow the tutorial below for installation.</p>
-<section id="install-jdk-8">
-<h2>Install JDK 8<a class="headerlink" href="#install-jdk-8" title="Link to this heading">#</a></h2>
-<p>To ensure that the Simulator runs smoothly, please make sure that JDK 8 is installed on your system. We recommend using conda to maintain an environment on Linux systems.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>minestudio<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.10<span class="w"> </span>-y
-<span class="gp">$ </span>conda<span class="w"> </span>activate<span class="w"> </span>minestudio
-<span class="gp">$ </span>conda<span class="w"> </span>install<span class="w"> </span>--channel<span class="o">=</span>conda-forge<span class="w"> </span><span class="nv">openjdk</span><span class="o">=</span><span class="m">8</span><span class="w"> </span>-y
+<section id="design-principles">
+<h1>Design Principles<a class="headerlink" href="#design-principles" title="Link to this heading">#</a></h1>
+<section id="simulator-lifecycle">
+<h2>Simulator Lifecycle<a class="headerlink" href="#simulator-lifecycle" title="Link to this heading">#</a></h2>
+<p>The simulator lifecycle is divided into three stages: <code class="docutils literal notranslate"><span class="pre">reset</span></code>, <code class="docutils literal notranslate"><span class="pre">step</span></code>, and <code class="docutils literal notranslate"><span class="pre">close</span></code>.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">reset</span></code>: This method is called when the environment is initialized. It returns the initial observation and information.
+Our simulator wrapper’s <code class="docutils literal notranslate"><span class="pre">reset</span></code> method code looks like this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">callback</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="p">:</span>
+        <span class="n">callback</span><span class="o">.</span><span class="n">before_reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+    <span class="o">...</span> <span class="c1"># some other code</span>
+    <span class="n">obs</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">callback</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="p">:</span>
+        <span class="n">obs</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">callback</span><span class="o">.</span><span class="n">after_reset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obs</span><span class="p">,</span> <span class="n">info</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">obs</span><span class="p">,</span> <span class="n">info</span>
 </pre></div>
 </div>
-</section>
-<section id="install-minestudio">
-<h2>Install MineStudio<a class="headerlink" href="#install-minestudio" title="Link to this heading">#</a></h2>
-<p>a. Install MineStudio from the <a class="reference external" href="https://github.com/phython96/MineStudio">GitHub</a>.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/phython96/MineStudio.git
-</pre></div>
-</div>
-<p>b. Install MineStudio from <a class="reference external" href="https://pypi.org/project/minestudio/">PyPI</a>.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip<span class="w"> </span>install<span class="w"> </span>minestudio
-</pre></div>
-</div>
-</section>
-<section id="install-the-rendering-tool">
-<h2>Install the rendering tool<a class="headerlink" href="#install-the-rendering-tool" title="Link to this heading">#</a></h2>
-<p>For users with <em>nvidia graphics cards</em>, we recommend installing <strong>VirtualGL</strong>; for other users, we recommend using <strong>Xvfb</strong>, which supports CPU rendering but is relatively slower.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Installing rendering tools may require <strong>root</strong> permissions.</p>
-</div>
-<p>There are two options:</p>
-<div class="sd-tab-set docutils">
-<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
-<label class="sd-tab-label" for="sd-tab-item-0">
-Xvfb</label><div class="sd-tab-content docutils">
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>apt<span class="w"> </span>update<span class="w"> </span>
-<span class="gp">$ </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>xvfb<span class="w"> </span>mesa-utils<span class="w"> </span>libegl1-mesa<span class="w"> </span>libgl1-mesa-dev<span class="w"> </span>libglu1-mesa-dev<span class="w"> </span>
-</pre></div>
-</div>
-</div>
-<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
-<label class="sd-tab-label" for="sd-tab-item-1">
-VirtualGL</label><div class="sd-tab-content docutils">
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Not all graphics cards support virtualGL. If you do not have speed requirements, it is recommended to use the easier-to-install xvfb rendering tool.</p>
-</div>
-<p>You need to download the following sources:</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://sourceforge.net/projects/virtualgl/files/3.1/virtualgl_3.1_amd64.deb/download">virtualgl_3.1_amd64.deb</a></p></li>
-<li><p><a class="reference internal" href="#"><span class="xref myst">vgl_entrypoint.sh</span></a></p></li>
-</ul>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>apt<span class="w"> </span>update<span class="w"> </span>
-<span class="gp">$ </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>xvfb<span class="w"> </span>mesa-utils<span class="w"> </span>libegl1-mesa<span class="w"> </span>libgl1-mesa-dev<span class="w"> </span>libglu1-mesa-dev<span class="w"> </span>
-</pre></div>
-</div>
-<p>Install the downloaded package.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dpkg<span class="w"> </span>-i<span class="w"> </span>virtualgl_3.1_amd64.deb
-</pre></div>
-</div>
-<p>Shutdown the display manager and configure VirtualGL.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>service<span class="w"> </span>gdm<span class="w"> </span>stop<span class="w"> </span>
-</pre></div>
-</div>
-<p>Configure VirtualGL.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>/opt/VirtualGL/bin/vglserver_config<span class="w"> </span>
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>First choose 1，then Yes, No, No, No，finally enter X</p>
-</div>
-<p>Start the display manager.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>service<span class="w"> </span>gdm<span class="w"> </span>start
-</pre></div>
-</div>
-<p>Start the VirtualGL server.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>bash<span class="w"> </span>vgl_entrypoint.sh
-</pre></div>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Each time the system is restarted, it may be necessary to run <code class="docutils literal notranslate"><span class="pre">vgl_entrypoint.sh</span></code>.</p>
-</div>
-<p>Configure the environment variables.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">PATH</span><span class="si">}</span><span class="s2">:/opt/VirtualGL/bin&quot;</span><span class="w"> </span>
-<span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="s2">&quot;/usr/lib/libreoffice/program:</span><span class="si">${</span><span class="nv">LD_LIBRARY_PATH</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>
-<span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">VGL_DISPLAY</span><span class="o">=</span><span class="s2">&quot;egl&quot;</span><span class="w"> </span>
-<span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">VGL_REFRESHRATE</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$REFRESH</span><span class="s2">&quot;</span>
-<span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">DISPLAY</span><span class="o">=</span>:1
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="verify-by-running-simulator">
-<h2>Verify by running simulator<a class="headerlink" href="#verify-by-running-simulator" title="Link to this heading">#</a></h2>
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
-<p>The first time you run it, the script will ask whether to download the compiled model from Hugging Face; just choose Y.</p>
+<p>We can use callbacks to preprocess the <code class="docutils literal notranslate"><span class="pre">obs</span></code> or <code class="docutils literal notranslate"><span class="pre">info</span></code> before it is returned to the agent.</p>
+<p>For example, we can add task information to the observation when the environment is reset, so that the agent knows what task it is going to perform.</p>
 </div>
-<p>If you are using <strong>Xvfb</strong>, run the following command:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python<span class="w"> </span>-m<span class="w"> </span>minestudio.simulator.entry
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">step</span></code>: This method is called when the agent takes an action. It returns the observation, reward, termination status, and information.
+The <code class="docutils literal notranslate"><span class="pre">step</span></code> method code looks like this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">callback</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="p">:</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="n">callback</span><span class="o">.</span><span class="n">before_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span>
+    <span class="n">obs</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">terminated</span><span class="p">,</span> <span class="n">truncated</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span> 
+    <span class="o">...</span> <span class="c1"># some other code</span>
+    <span class="k">for</span> <span class="n">callback</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="p">:</span>
+        <span class="n">obs</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">terminated</span><span class="p">,</span> <span class="n">truncated</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">callback</span><span class="o">.</span><span class="n">after_step</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">obs</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">terminated</span><span class="p">,</span> <span class="n">truncated</span><span class="p">,</span> <span class="n">info</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">obs</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">terminated</span><span class="p">,</span> <span class="n">truncated</span><span class="p">,</span> <span class="n">info</span>
 </pre></div>
 </div>
-<p>If you are using <strong>VirtualGL</strong>, run the following command:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nv">MINESTUDIO_GPU_RENDER</span><span class="o">=</span><span class="m">1</span><span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>minestudio.simulator.entry
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>We can use callbacks to preprocess the action before it is passed to the environment. For example, we can mask the action that we do not want to use.</p>
+<p>Or we can use callbacks to post-process the observation, reward, termination status, and information before the environment returns them.</p>
+<p>The callbacks can be sequentially executed in the order they are added to the simulator.</p>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">close</span></code>: This method is called when the environment is closed.
+The <code class="docutils literal notranslate"><span class="pre">close</span></code> method code looks like this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">callback</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="p">:</span>
+        <span class="n">callback</span><span class="o">.</span><span class="n">before_close</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+    <span class="n">close_status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">callback</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="p">:</span>
+        <span class="n">callback</span><span class="o">.</span><span class="n">after_close</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">close_status</span>
 </pre></div>
 </div>
-<p>If you see the following output, the installation is successful.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Speed</span> <span class="n">Test</span> <span class="n">Status</span><span class="p">:</span> 
-<span class="n">Average</span> <span class="n">Time</span><span class="p">:</span> <span class="mf">0.03</span> 
-<span class="n">Average</span> <span class="n">FPS</span><span class="p">:</span> <span class="mf">38.46</span> 
-<span class="n">Total</span> <span class="n">Steps</span><span class="p">:</span> <span class="mi">50</span> 
-
-<span class="n">Speed</span> <span class="n">Test</span> <span class="n">Status</span><span class="p">:</span> 
-<span class="n">Average</span> <span class="n">Time</span><span class="p">:</span> <span class="mf">0.02</span> 
-<span class="n">Average</span> <span class="n">FPS</span><span class="p">:</span> <span class="mf">45.08</span> 
-<span class="n">Total</span> <span class="n">Steps</span><span class="p">:</span> <span class="mi">100</span> 
-</pre></div>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>We can use callbacks to do some cleanup work before the environment is closed. For example, we can save the trajectories or doing some logging.</p>
 </div>
+</li>
+</ul>
+</section>
+<section id="callbacks">
+<h2>Callbacks<a class="headerlink" href="#callbacks" title="Link to this heading">#</a></h2>
+<p>Callbacks are used to customize the environment. All the callbacks are optional, and you can use them in any combination.</p>
 </section>
 </section>
 
@@ -688,20 +630,20 @@ VirtualGL</label><div class="sd-tab-content docutils">
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="index.html"
+       href="general-information.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Overview</p>
+        <p class="prev-next-title">General Information</p>
       </div>
     </a>
     <a class="right-next"
-       href="getting-started.html"
+       href="../data/index.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Getting Started</p>
+        <p class="prev-next-title">Data</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -724,17 +666,15 @@ VirtualGL</label><div class="sd-tab-content docutils">
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-jdk-8">Install JDK 8</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-minestudio">Install MineStudio</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-the-rendering-tool">Install the rendering tool</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verify-by-running-simulator">Verify by running simulator</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simulator-lifecycle">Simulator Lifecycle</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#callbacks">Callbacks</a></li>
 </ul>
   </nav></div>
 
   <div class="sidebar-secondary-item">
 
   <div class="tocsection sourcelink">
-    <a href="../_sources/overview/installation.md.txt">
+    <a href="../_sources/simulator/design-principles.md.txt">
       <i class="fa-solid fa-file-lines"></i> Show Source
     </a>
   </div>

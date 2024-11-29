@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Simulator &#8212; MineStudio 1.0.0</title>
+    <title>MineStudio Simulator &#8212; MineStudio 1.0.0</title>
   
   
   
@@ -63,10 +63,12 @@
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'simulator/index';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Data" href="../data/index.html" />
+    <link rel="next" title="General Information" href="general-information.html" />
     <link rel="prev" title="Getting Started" href="../overview/getting-started.html" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -481,7 +483,12 @@
 <nav class="bd-docs-nav bd-links"
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"></div>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">MineStudio Simulator</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="general-information.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design-principles.html">Design Principles</a></li>
+</ul>
+</div>
 </nav></div>
     </div>
   
@@ -515,7 +522,7 @@
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Simulator</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">MineStudio Simulator</span></li>
   </ul>
 </nav>
 </div>
@@ -535,12 +542,141 @@
 <!--
  * @Date: 2024-11-29 08:09:07
  * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-11-29 08:11:10
+ * @LastEditTime: 2024-11-29 15:45:25
  * @FilePath: /MineStudio/docs/source/simulator/index.md
 -->
-<section id="simulator">
-<h1>Simulator<a class="headerlink" href="#simulator" title="Link to this heading">#</a></h1>
-<p>我写中文</p>
+<section id="minestudio-simulator">
+<h1>MineStudio Simulator<a class="headerlink" href="#minestudio-simulator" title="Link to this heading">#</a></h1>
+<p>We provide an easily customizable Minecraft simulator that is developed based on <a class="reference external" href="https://github.com/minerllabs/minerl">MineRL</a>. We designed a Gym-style Minecraft Wrapper, which supports a callbacks mechanism, allowing users to customize their own environment, including custom reward functions, environment initialization, trajectory recording, and more.</p>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">MineStudio Simulator</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="general-information.html">General Information</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="general-information.html#observation-space">Observation Space</a></li>
+<li class="toctree-l2"><a class="reference internal" href="general-information.html#action-space">Action Space</a></li>
+<li class="toctree-l2"><a class="reference internal" href="general-information.html#information">Information</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="design-principles.html">Design Principles</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="design-principles.html#simulator-lifecycle">Simulator Lifecycle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="design-principles.html#callbacks">Callbacks</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="hello-world">
+<h2>Hello World<a class="headerlink" href="#hello-world" title="Link to this heading">#</a></h2>
+<p>Here is a minimal example of how to use the simulator:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">minestudio.simulator</span> <span class="kn">import</span> <span class="n">MinecraftSim</span>
+
+<span class="n">sim</span> <span class="o">=</span> <span class="n">MinecraftSim</span><span class="p">(</span><span class="n">action_type</span><span class="o">=</span><span class="s2">&quot;env&quot;</span><span class="p">)</span>
+<span class="n">obs</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+    <span class="n">action</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">action_space</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
+    <span class="n">obs</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">terminated</span><span class="p">,</span> <span class="n">truncated</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="using-callbacks">
+<h2>Using Callbacks<a class="headerlink" href="#using-callbacks" title="Link to this heading">#</a></h2>
+<p>Callbacks can be used to customize the environment. Here is some examples of how to use callbacks:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All the callbacks are optional, and you can use them in any combination.</p>
+</div>
+<section id="test-speed">
+<h3>Test Speed<a class="headerlink" href="#test-speed" title="Link to this heading">#</a></h3>
+<p>We provide a callback to test the speed of the simulator by hooking into the <code class="docutils literal notranslate"><span class="pre">before_step</span></code> and <code class="docutils literal notranslate"><span class="pre">after_step</span></code> methods.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">minestudio.simulator.callbacks</span> <span class="kn">import</span> <span class="n">SpeedTestCallback</span>
+
+<span class="n">sim</span> <span class="o">=</span> <span class="n">MinecraftSim</span><span class="p">(</span><span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">SpeedTestCallback</span><span class="p">(</span><span class="n">interval</span><span class="o">=</span><span class="mi">50</span><span class="p">)])</span>
+</pre></div>
+</div>
+<p>If you run the above code, you will see the following output:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Speed</span> <span class="n">Test</span> <span class="n">Status</span><span class="p">:</span> 
+<span class="n">Average</span> <span class="n">Time</span><span class="p">:</span> <span class="mf">0.03</span> 
+<span class="n">Average</span> <span class="n">FPS</span><span class="p">:</span> <span class="mf">38.46</span> 
+<span class="n">Total</span> <span class="n">Steps</span><span class="p">:</span> <span class="mi">50</span> 
+
+<span class="n">Speed</span> <span class="n">Test</span> <span class="n">Status</span><span class="p">:</span> 
+<span class="n">Average</span> <span class="n">Time</span><span class="p">:</span> <span class="mf">0.02</span> 
+<span class="n">Average</span> <span class="n">FPS</span><span class="p">:</span> <span class="mf">45.08</span> 
+<span class="n">Total</span> <span class="n">Steps</span><span class="p">:</span> <span class="mi">100</span> 
+</pre></div>
+</div>
+</section>
+<section id="send-chat-commands">
+<h3>Send Chat Commands<a class="headerlink" href="#send-chat-commands" title="Link to this heading">#</a></h3>
+<p>We provide a callback to send chat commands to the Minecraft server <strong>when the environment is reset</strong>. This enable users to customize the environment initialization.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">minestudio.simulator.callbacks</span> <span class="kn">import</span> <span class="n">CommandsCallback</span>
+
+<span class="n">sim</span> <span class="o">=</span> <span class="n">MinecraftSim</span><span class="p">(</span><span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">CommandsCallback</span><span class="p">(</span><span class="n">commands</span><span class="o">=</span><span class="p">[</span>
+    <span class="s2">&quot;/time set day&quot;</span><span class="p">,</span> 
+    <span class="s2">&quot;/weather clear&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;/give @p minecraft:iron_sword 1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;/give @p minecraft:diamond 64&quot;</span><span class="p">,</span>
+<span class="p">])])</span>
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>The commands will be executed in the order they are provided.</p>
+</div>
+</section>
+<section id="custom-reward-function">
+<h3>Custom Reward Function<a class="headerlink" href="#custom-reward-function" title="Link to this heading">#</a></h3>
+<p>We provide a simple callback to customize the reward function. This callback will be called after each step, and detect the event in <code class="docutils literal notranslate"><span class="pre">info</span></code> to calculate the reward.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">minestudio.simulator.callbacks</span> <span class="kn">import</span> <span class="n">RewardsCallback</span>
+
+<span class="n">sim</span> <span class="o">=</span> <span class="n">MinecraftSim</span><span class="p">(</span><span class="n">callbacks</span><span class="o">=</span><span class="p">[</span>
+    <span class="n">RewardsCallback</span><span class="p">([{</span>
+        <span class="s1">&#39;event&#39;</span><span class="p">:</span> <span class="s1">&#39;kill_entity&#39;</span><span class="p">,</span> 
+        <span class="s1">&#39;objects&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;cow&#39;</span><span class="p">,</span> <span class="s1">&#39;sheep&#39;</span><span class="p">],</span> 
+        <span class="s1">&#39;reward&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> 
+        <span class="s1">&#39;identity&#39;</span><span class="p">:</span> <span class="s1">&#39;kill sheep or cow&#39;</span><span class="p">,</span> 
+        <span class="s1">&#39;max_reward_times&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> 
+    <span class="p">}])</span>
+<span class="p">])</span>
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>This example will give a reward of 1.0 when the agent kills a sheep or cow. The maximum reward times is 5.</p>
+</div>
+</section>
+<section id="fast-reset">
+<h3>Fast Reset<a class="headerlink" href="#fast-reset" title="Link to this heading">#</a></h3>
+<p>Generally, the environment reset is slow because it needs to restart the Minecraft server. We provide a callback to speed up the reset process by hooking into the <code class="docutils literal notranslate"><span class="pre">before_reset</span></code> method. This would be pretty useful when you want to reset the environment frequently, like in RL training.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">minestudio.simulator.callbacks</span> <span class="kn">import</span> <span class="n">FastResetCallback</span>
+
+<span class="n">sim</span> <span class="o">=</span> <span class="n">MinecraftSim</span><span class="p">(</span><span class="n">callbacks</span><span class="o">=</span><span class="p">[</span>
+    <span class="n">FastResetCallback</span><span class="p">(</span>
+        <span class="n">biomes</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;mountains&#39;</span><span class="p">],</span>
+        <span class="n">random_tp_range</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+    <span class="p">),</span> 
+<span class="p">])</span>
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>Fast reset is implemented by killing the agent and teleporting it to a random location.</p>
+</div>
+</section>
+<section id="record-trajectories">
+<h3>Record Trajectories<a class="headerlink" href="#record-trajectories" title="Link to this heading">#</a></h3>
+<p>We provide a callback to record trajectories. It will records the observation, action, info at each step, and save them to a specified path.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">minestudio.simulator.callbacks</span> <span class="kn">import</span> <span class="n">RecordCallback</span>
+
+<span class="n">sim</span> <span class="o">=</span> <span class="n">MinecraftSim</span><span class="p">(</span><span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">RecordCallback</span><span class="p">(</span><span class="n">record_path</span><span class="o">=</span><span class="s2">&quot;./output&quot;</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="mi">30</span><span class="p">)])</span>
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>You can use this callback to record the agent’s behavior and analyze it later. Or you can use it to generate a dataset for imitation learning.</p>
+</div>
+</section>
+</section>
 </section>
 
 <div class="section ablog__blog_comments">
@@ -567,11 +703,11 @@
       </div>
     </a>
     <a class="right-next"
-       href="../data/index.html"
+       href="general-information.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Data</p>
+        <p class="prev-next-title">General Information</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -585,6 +721,26 @@
                 <dialog id="pst-secondary-sidebar-modal"></dialog>
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hello-world">Hello World</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-callbacks">Using Callbacks</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#test-speed">Test Speed</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#send-chat-commands">Send Chat Commands</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#custom-reward-function">Custom Reward Function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fast-reset">Fast Reset</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#record-trajectories">Record Trajectories</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
 
   <div class="sidebar-secondary-item">
 
