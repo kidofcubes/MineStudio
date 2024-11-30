@@ -36,9 +36,8 @@
     <link rel="stylesheet" type="text/css" href="../_static/jupyter-sphinx.css" />
     <link rel="stylesheet" type="text/css" href="../_static/thebelab.css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Vibur" />
-    <link rel="stylesheet" type="text/css" href="../_static/jupyterlite_sphinx.css?v=ca70e7f1" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=921ba6ce" />
   
   <!-- So that users can add custom icons -->
   <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
@@ -52,7 +51,6 @@
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
     <script src="../_static/thebelab-helper.js"></script>
-    <script src="../_static/jupyterlite_sphinx.js?v=d6bdf5f8"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -63,11 +61,13 @@
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'overview/getting-started';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="MineStudio Simulator" href="../simulator/index.html" />
-    <link rel="prev" title="Installation" href="installation.html" />
+    <link rel="next" title="Agents" href="../agents/index.html" />
+    <link rel="prev" title="Benchmark" href="../benchmark/index.html" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -485,6 +485,19 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 </ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">MineStudio Libraries</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../simulator/index.html">Simulator</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../simulator/general-information.html">General Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../simulator/design-principles.html">Design Principles</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../data/index.html">Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/index.html">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../train/index.html">Train</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../inference/index.html">Inference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../benchmark/index.html">Benchmark</a></li>
+</ul>
 </div>
 </nav></div>
     </div>
@@ -539,23 +552,359 @@
 <!--
  * @Date: 2024-11-29 08:08:13
  * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-11-29 14:25:20
+ * @LastEditTime: 2024-11-30 05:18:33
  * @FilePath: /MineStudio/docs/source/overview/getting-started.md
 -->
 <section id="getting-started">
 <h1>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading">#</a></h1>
 <div class="toctree-wrapper compound">
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#install-jdk-8">Install JDK 8</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#install-minestudio">Install MineStudio</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#install-the-rendering-tool">Install the rendering tool</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#verify-by-running-simulator">Verify by running simulator</a></li>
-</ul>
-</li>
-</ul>
 </div>
+<div class="toctree-wrapper compound">
+</div>
+<p>Before you start, make sure you have installed MineStudio.</p>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Installation MineStudio</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<!--
+ * @Date: 2024-11-28 22:13:52
+ * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
+ * @LastEditTime: 2024-11-29 13:56:21
+ * @FilePath: /MineStudio/docs/source/overview/installation.md
+-->
+<h1 class="rubric" id="installation"><span id="gentle-intro"></span>Installation</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p class="sd-card-text">If you encounter any issues during installation, please open an issue on <a class="reference external" href="https://github.com/phython96/MineStudio/issues">GitHub</a>.</p>
+</div>
+<p class="sd-card-text">Welcome to MineStudio, please follow the tutorial below for installation.</p>
+<h2 class="rubric" id="install-jdk-8">Install JDK 8</h2>
+<p class="sd-card-text">To ensure that the Simulator runs smoothly, please make sure that JDK 8 is installed on your system. We recommend using conda to maintain an environment on Linux systems.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>minestudio<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.10<span class="w"> </span>-y
+<span class="gp">$ </span>conda<span class="w"> </span>activate<span class="w"> </span>minestudio
+<span class="gp">$ </span>conda<span class="w"> </span>install<span class="w"> </span>--channel<span class="o">=</span>conda-forge<span class="w"> </span><span class="nv">openjdk</span><span class="o">=</span><span class="m">8</span><span class="w"> </span>-y
+</pre></div>
+</div>
+<h2 class="rubric" id="install-minestudio">Install MineStudio</h2>
+<p class="sd-card-text">a. Install MineStudio from the <a class="reference external" href="https://github.com/phython96/MineStudio">GitHub</a>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/phython96/MineStudio.git
+</pre></div>
+</div>
+<p class="sd-card-text">b. Install MineStudio from <a class="reference external" href="https://pypi.org/project/minestudio/">PyPI</a>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip<span class="w"> </span>install<span class="w"> </span>minestudio
+</pre></div>
+</div>
+<h2 class="rubric" id="install-the-rendering-tool">Install the rendering tool</h2>
+<p class="sd-card-text">For users with <em>nvidia graphics cards</em>, we recommend installing <strong>VirtualGL</strong>; for other users, we recommend using <strong>Xvfb</strong>, which supports CPU rendering but is relatively slower.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p class="sd-card-text">Installing rendering tools may require <strong>root</strong> permissions.</p>
+</div>
+<p class="sd-card-text">There are two options:</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-0">
+Xvfb</label><div class="sd-tab-content docutils">
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>apt<span class="w"> </span>update<span class="w"> </span>
+<span class="gp">$ </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>xvfb<span class="w"> </span>mesa-utils<span class="w"> </span>libegl1-mesa<span class="w"> </span>libgl1-mesa-dev<span class="w"> </span>libglu1-mesa-dev<span class="w"> </span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-1">
+VirtualGL</label><div class="sd-tab-content docutils">
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p class="sd-card-text">Not all graphics cards support virtualGL. If you do not have speed requirements, it is recommended to use the easier-to-install xvfb rendering tool.</p>
+</div>
+<p class="sd-card-text">You need to download the following sources:</p>
+<ul class="simple">
+<li><p class="sd-card-text"><a class="reference external" href="https://sourceforge.net/projects/virtualgl/files/3.1/virtualgl_3.1_amd64.deb/download">virtualgl_3.1_amd64.deb</a></p></li>
+<li><p class="sd-card-text"><a class="reference internal" href="#"><span class="xref myst">vgl_entrypoint.sh</span></a></p></li>
+</ul>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>apt<span class="w"> </span>update<span class="w"> </span>
+<span class="gp">$ </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>xvfb<span class="w"> </span>mesa-utils<span class="w"> </span>libegl1-mesa<span class="w"> </span>libgl1-mesa-dev<span class="w"> </span>libglu1-mesa-dev<span class="w"> </span>
+</pre></div>
+</div>
+<p class="sd-card-text">Install the downloaded package.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dpkg<span class="w"> </span>-i<span class="w"> </span>virtualgl_3.1_amd64.deb
+</pre></div>
+</div>
+<p class="sd-card-text">Shutdown the display manager and configure VirtualGL.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>service<span class="w"> </span>gdm<span class="w"> </span>stop<span class="w"> </span>
+</pre></div>
+</div>
+<p class="sd-card-text">Configure VirtualGL.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>/opt/VirtualGL/bin/vglserver_config<span class="w"> </span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p class="sd-card-text">First choose 1，then Yes, No, No, No，finally enter X</p>
+</div>
+<p class="sd-card-text">Start the display manager.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>service<span class="w"> </span>gdm<span class="w"> </span>start
+</pre></div>
+</div>
+<p class="sd-card-text">Start the VirtualGL server.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>bash<span class="w"> </span>vgl_entrypoint.sh
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p class="sd-card-text">Each time the system is restarted, it may be necessary to run <code class="docutils literal notranslate"><span class="pre">vgl_entrypoint.sh</span></code>.</p>
+</div>
+<p class="sd-card-text">Configure the environment variables.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">PATH</span><span class="si">}</span><span class="s2">:/opt/VirtualGL/bin&quot;</span><span class="w"> </span>
+<span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="s2">&quot;/usr/lib/libreoffice/program:</span><span class="si">${</span><span class="nv">LD_LIBRARY_PATH</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>
+<span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">VGL_DISPLAY</span><span class="o">=</span><span class="s2">&quot;egl&quot;</span><span class="w"> </span>
+<span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">VGL_REFRESHRATE</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$REFRESH</span><span class="s2">&quot;</span>
+<span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">DISPLAY</span><span class="o">=</span>:1
+</pre></div>
+</div>
+</div>
+</div>
+<h2 class="rubric" id="verify-by-running-simulator">Verify by running simulator</h2>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p class="sd-card-text">The first time you run it, the script will ask whether to download the compiled model from Hugging Face; just choose Y.</p>
+</div>
+<p class="sd-card-text">If you are using <strong>Xvfb</strong>, run the following command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python<span class="w"> </span>-m<span class="w"> </span>minestudio.simulator.entry
+</pre></div>
+</div>
+<p class="sd-card-text">If you are using <strong>VirtualGL</strong>, run the following command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nv">MINESTUDIO_GPU_RENDER</span><span class="o">=</span><span class="m">1</span><span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>minestudio.simulator.entry
+</pre></div>
+</div>
+<p class="sd-card-text">If you see the following output, the installation is successful.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Speed</span> <span class="n">Test</span> <span class="n">Status</span><span class="p">:</span> 
+<span class="n">Average</span> <span class="n">Time</span><span class="p">:</span> <span class="mf">0.03</span> 
+<span class="n">Average</span> <span class="n">FPS</span><span class="p">:</span> <span class="mf">38.46</span> 
+<span class="n">Total</span> <span class="n">Steps</span><span class="p">:</span> <span class="mi">50</span> 
+
+<span class="n">Speed</span> <span class="n">Test</span> <span class="n">Status</span><span class="p">:</span> 
+<span class="n">Average</span> <span class="n">Time</span><span class="p">:</span> <span class="mf">0.02</span> 
+<span class="n">Average</span> <span class="n">FPS</span><span class="p">:</span> <span class="mf">45.08</span> 
+<span class="n">Total</span> <span class="n">Steps</span><span class="p">:</span> <span class="mi">100</span> 
+</pre></div>
+</div>
+</div>
+</details><section id="minestudio-libraries-quickstart">
+<h2>MineStudio Libraries Quickstart<a class="headerlink" href="#minestudio-libraries-quickstart" title="Link to this heading">#</a></h2>
+<p>Click on the dropdowns for your desired library to get started:</p>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Simulator: Customizable Minecraft Environment</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<!--
+ * @Date: 2024-11-29 08:09:07
+ * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
+ * @LastEditTime: 2024-11-30 05:12:53
+ * @FilePath: /MineStudio/docs/source/simulator/index.md
+-->
+<h1 class="rubric" id="simulator">Simulator</h1>
+<p class="sd-card-text">We provide an easily customizable Minecraft simulator that is developed based on <a class="reference external" href="https://github.com/minerllabs/minerl">MineRL</a>. We designed a Gym-style Minecraft Wrapper, which supports a callbacks mechanism, allowing users to customize their own environment, including custom reward functions, environment initialization, trajectory recording, and more.</p>
+<div class="toctree-wrapper compound">
+</div>
+<h2 class="rubric" id="hello-world">Hello World</h2>
+<p class="sd-card-text">Here is a minimal example of how to use the simulator:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">minestudio.simulator</span> <span class="kn">import</span> <span class="n">MinecraftSim</span>
+
+<span class="n">sim</span> <span class="o">=</span> <span class="n">MinecraftSim</span><span class="p">(</span><span class="n">action_type</span><span class="o">=</span><span class="s2">&quot;env&quot;</span><span class="p">)</span>
+<span class="n">obs</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+    <span class="n">action</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">action_space</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
+    <span class="n">obs</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">terminated</span><span class="p">,</span> <span class="n">truncated</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<h2 class="rubric" id="basic-arguments">Basic Arguments</h2>
+<p class="sd-card-text">The simulator has several arguments that can be used to customize the environment.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p class="sd-card-text">Argument</p></th>
+<th class="head"><p class="sd-card-text">Default</p></th>
+<th class="head"><p class="sd-card-text">Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p class="sd-card-text">action_type</p></td>
+<td><p class="sd-card-text">“agent”</p></td>
+<td><p class="sd-card-text">The style of the action space</p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">obs_size</p></td>
+<td><p class="sd-card-text">(224, 224)</p></td>
+<td><p class="sd-card-text">The resolution of the observation (cv2 resize)</p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">render_size</p></td>
+<td><p class="sd-card-text">(640, 360)</p></td>
+<td><p class="sd-card-text">The original resolution of the game is 640x360</p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">seed</p></td>
+<td><p class="sd-card-text">0</p></td>
+<td><p class="sd-card-text">The seed of the minecraft world</p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">inventory</p></td>
+<td><p class="sd-card-text">{}</p></td>
+<td><p class="sd-card-text">The initial inventory of the agent</p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">preferred_spawn_biome</p></td>
+<td><p class="sd-card-text">None</p></td>
+<td><p class="sd-card-text">The preferred spawn biome when call reset</p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">num_empty_frames</p></td>
+<td><p class="sd-card-text">20</p></td>
+<td><p class="sd-card-text">The number of empty frames to skip when calling reset</p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">callbacks</p></td>
+<td><p class="sd-card-text">[]</p></td>
+<td><p class="sd-card-text">The callbacks to customize the environment (<strong>advanced</strong>)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 class="rubric" id="using-callbacks">Using Callbacks</h2>
+<p class="sd-card-text">Callbacks can be used to customize the environment in a flexible way. We provide several built-in callbacks, and users can also implement their own callbacks.</p>
+<p class="sd-card-text">Here is some examples of how to use callbacks:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p class="sd-card-text">All the callbacks are optional, and you can use them in any combination.</p>
+</div>
+<h3 class="rubric" id="test-speed">Test Speed</h3>
+<p class="sd-card-text">We provide a callback to test the speed of the simulator by hooking into the <code class="docutils literal notranslate"><span class="pre">before_step</span></code> and <code class="docutils literal notranslate"><span class="pre">after_step</span></code> methods.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">minestudio.simulator.callbacks</span> <span class="kn">import</span> <span class="n">SpeedTestCallback</span>
+
+<span class="n">sim</span> <span class="o">=</span> <span class="n">MinecraftSim</span><span class="p">(</span><span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">SpeedTestCallback</span><span class="p">(</span><span class="n">interval</span><span class="o">=</span><span class="mi">50</span><span class="p">)])</span>
+</pre></div>
+</div>
+<p class="sd-card-text">If you run the above code, you will see the following output:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Speed</span> <span class="n">Test</span> <span class="n">Status</span><span class="p">:</span> 
+<span class="n">Average</span> <span class="n">Time</span><span class="p">:</span> <span class="mf">0.03</span> 
+<span class="n">Average</span> <span class="n">FPS</span><span class="p">:</span> <span class="mf">38.46</span> 
+<span class="n">Total</span> <span class="n">Steps</span><span class="p">:</span> <span class="mi">50</span> 
+
+<span class="n">Speed</span> <span class="n">Test</span> <span class="n">Status</span><span class="p">:</span> 
+<span class="n">Average</span> <span class="n">Time</span><span class="p">:</span> <span class="mf">0.02</span> 
+<span class="n">Average</span> <span class="n">FPS</span><span class="p">:</span> <span class="mf">45.08</span> 
+<span class="n">Total</span> <span class="n">Steps</span><span class="p">:</span> <span class="mi">100</span> 
+</pre></div>
+</div>
+<h3 class="rubric" id="send-chat-commands">Send Chat Commands</h3>
+<p class="sd-card-text">We provide a callback to send chat commands to the Minecraft server <strong>when the environment is reset</strong>. This enable users to customize the environment initialization.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">minestudio.simulator.callbacks</span> <span class="kn">import</span> <span class="n">CommandsCallback</span>
+
+<span class="n">sim</span> <span class="o">=</span> <span class="n">MinecraftSim</span><span class="p">(</span><span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">CommandsCallback</span><span class="p">(</span><span class="n">commands</span><span class="o">=</span><span class="p">[</span>
+    <span class="s2">&quot;/time set day&quot;</span><span class="p">,</span> 
+    <span class="s2">&quot;/weather clear&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;/give @p minecraft:iron_sword 1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;/give @p minecraft:diamond 64&quot;</span><span class="p">,</span>
+<span class="p">])])</span>
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p class="sd-card-text">The commands will be executed in the order they are provided.</p>
+</div>
+<h3 class="rubric" id="custom-reward-function">Custom Reward Function</h3>
+<p class="sd-card-text">We provide a simple callback to customize the reward function. This callback will be called after each step, and detect the event in <code class="docutils literal notranslate"><span class="pre">info</span></code> to calculate the reward.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">minestudio.simulator.callbacks</span> <span class="kn">import</span> <span class="n">RewardsCallback</span>
+
+<span class="n">sim</span> <span class="o">=</span> <span class="n">MinecraftSim</span><span class="p">(</span><span class="n">callbacks</span><span class="o">=</span><span class="p">[</span>
+    <span class="n">RewardsCallback</span><span class="p">([{</span>
+        <span class="s1">&#39;event&#39;</span><span class="p">:</span> <span class="s1">&#39;kill_entity&#39;</span><span class="p">,</span> 
+        <span class="s1">&#39;objects&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;cow&#39;</span><span class="p">,</span> <span class="s1">&#39;sheep&#39;</span><span class="p">],</span> 
+        <span class="s1">&#39;reward&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> 
+        <span class="s1">&#39;identity&#39;</span><span class="p">:</span> <span class="s1">&#39;kill sheep or cow&#39;</span><span class="p">,</span> 
+        <span class="s1">&#39;max_reward_times&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> 
+    <span class="p">}])</span>
+<span class="p">])</span>
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p class="sd-card-text">This example will give a reward of 1.0 when the agent kills a sheep or cow. The maximum reward times is 5.</p>
+</div>
+<h3 class="rubric" id="fast-reset">Fast Reset</h3>
+<p class="sd-card-text">Generally, the environment reset is slow because it needs to restart the Minecraft server. We provide a callback to speed up the reset process by hooking into the <code class="docutils literal notranslate"><span class="pre">before_reset</span></code> method. This would be pretty useful when you want to reset the environment frequently, like in RL training.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">minestudio.simulator.callbacks</span> <span class="kn">import</span> <span class="n">FastResetCallback</span>
+
+<span class="n">sim</span> <span class="o">=</span> <span class="n">MinecraftSim</span><span class="p">(</span><span class="n">callbacks</span><span class="o">=</span><span class="p">[</span>
+    <span class="n">FastResetCallback</span><span class="p">(</span>
+        <span class="n">biomes</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;mountains&#39;</span><span class="p">],</span>
+        <span class="n">random_tp_range</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+    <span class="p">),</span> 
+<span class="p">])</span>
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p class="sd-card-text">Fast reset is implemented by killing the agent and teleporting it to a random location.</p>
+</div>
+<h3 class="rubric" id="record-trajectories">Record Trajectories</h3>
+<p class="sd-card-text">We provide a callback to record trajectories. It will records the observation, action, info at each step, and save them to a specified path.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">minestudio.simulator.callbacks</span> <span class="kn">import</span> <span class="n">RecordCallback</span>
+
+<span class="n">sim</span> <span class="o">=</span> <span class="n">MinecraftSim</span><span class="p">(</span><span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">RecordCallback</span><span class="p">(</span><span class="n">record_path</span><span class="o">=</span><span class="s2">&quot;./output&quot;</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="mi">30</span><span class="p">)])</span>
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p class="sd-card-text">You can use this callback to record the agent’s behavior and analyze it later. Or you can use it to generate a dataset for imitation learning.</p>
+</div>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Data: Flexible Data Structures and Efficient Data Processing</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<!--
+ * @Date: 2024-11-29 08:08:34
+ * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
+ * @LastEditTime: 2024-11-29 08:10:36
+ * @FilePath: /MineStudio/docs/source/data/index.md
+-->
+<h1 class="rubric" id="data">Data</h1>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Models: Policy Template and Baseline Models</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<h1 class="rubric" id="models">Models</h1>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Train: Training Policy with Offline Data</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<!--
+ * @Date: 2024-11-29 08:09:45
+ * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
+ * @LastEditTime: 2024-11-29 08:23:19
+ * @FilePath: /MineStudio/docs/source/train/index.md
+-->
+<h1 class="rubric" id="train">Train</h1>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Inference: Parallel Inference and Record Trajectories</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<!--
+ * @Date: 2024-11-29 08:10:04
+ * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
+ * @LastEditTime: 2024-11-29 08:12:08
+ * @FilePath: /MineStudio/docs/source/inference/index.md
+-->
+<h1 class="rubric" id="inference">Inference</h1>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Benchmark: Benchmarking and Evaluation</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<h1 class="rubric" id="benchmark">Benchmark</h1>
+</div>
+</details></section>
+<section id="papers">
+<h2>Papers<a class="headerlink" href="#papers" title="Link to this heading">#</a></h2>
+<p>Our library directly supports the following papers:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://arxiv.org/abs/2206.11795">Video PreTraining (VPT): Learning to Act by Watching Unlabeled Online Videos</a></p></li>
+<li><p><a class="reference external" href="https://arxiv.org/abs/2306.00937">STEVE-1: A Generative Model for Text-to-Behavior in Minecraft</a></p></li>
+<li><p><a class="reference external" href="https://arxiv.org/abs/2310.08235">GROOT: Learning to Follow Instructions by Watching Gameplay Videos</a></p></li>
+<li><p><a class="reference external" href="https://arxiv.org/abs/2410.17856">ROCKET-1: Mastering Open-World Interaction with Visual-Temporal Context Prompting</a></p></li>
+</ul>
+</section>
 </section>
 
 <div class="section ablog__blog_comments">
@@ -573,20 +922,20 @@
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="installation.html"
+       href="../benchmark/index.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Installation</p>
+        <p class="prev-next-title">Benchmark</p>
       </div>
     </a>
     <a class="right-next"
-       href="../simulator/index.html"
+       href="../agents/index.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">MineStudio Simulator</p>
+        <p class="prev-next-title">Agents</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -600,6 +949,19 @@
                 <dialog id="pst-secondary-sidebar-modal"></dialog>
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio-libraries-quickstart">MineStudio Libraries Quickstart</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#papers">Papers</a></li>
+</ul>
+  </nav></div>
 
   <div class="sidebar-secondary-item">
 
