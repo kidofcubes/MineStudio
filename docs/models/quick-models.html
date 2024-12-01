@@ -37,7 +37,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/thebelab.css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=163173a2" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=b5e26e65" />
   
   <!-- So that users can add custom icons -->
   <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
@@ -61,7 +61,7 @@
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'overview/quick-simulator';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'models/quick-models';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
 
@@ -175,14 +175,14 @@
   <ul class="bd-navbar-elements navbar-nav">
     
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="index.html">
+  <a class="nav-link nav-internal" href="../overview/index.html">
     Overview
   </a>
 </li>
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="getting-started.html">
+  <a class="nav-link nav-internal" href="../overview/getting-started.html">
     Getting Started
   </a>
 </li>
@@ -203,7 +203,7 @@
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="../models/index.html">
+  <a class="nav-link nav-internal" href="index.html">
     Models
   </a>
 </li>
@@ -371,14 +371,14 @@
   <ul class="bd-navbar-elements navbar-nav">
     
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="index.html">
+  <a class="nav-link nav-internal" href="../overview/index.html">
     Overview
   </a>
 </li>
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="getting-started.html">
+  <a class="nav-link nav-internal" href="../overview/getting-started.html">
     Getting Started
   </a>
 </li>
@@ -399,7 +399,7 @@
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="../models/index.html">
+  <a class="nav-link nav-internal" href="index.html">
     Models
   </a>
 </li>
@@ -529,69 +529,6 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-<!--
- * @Date: 2024-11-30 05:44:44
- * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-11-30 05:55:49
- * @FilePath: /MineStudio/docs/source/overview/quick-simulator.md
--->
-<p>Here is a minimal example of how to use the simulator:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">minestudio.simulator</span> <span class="kn">import</span> <span class="n">MinecraftSim</span>
-
-<span class="n">sim</span> <span class="o">=</span> <span class="n">MinecraftSim</span><span class="p">(</span><span class="n">action_type</span><span class="o">=</span><span class="s2">&quot;env&quot;</span><span class="p">)</span>
-<span class="n">obs</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
-<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
-    <span class="n">action</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">action_space</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
-    <span class="n">obs</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">terminated</span><span class="p">,</span> <span class="n">truncated</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
-<span class="n">sim</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</pre></div>
-</div>
-<p>Also, you can customize the environment by chaining multiple callbacks. Here is an example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">minestudio.simulator</span> <span class="kn">import</span> <span class="n">MinecraftSim</span>
-<span class="kn">from</span> <span class="nn">minestudio.simulator.callbacks</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">SpeedTestCallback</span><span class="p">,</span> 
-    <span class="n">RecordCallback</span><span class="p">,</span> 
-    <span class="n">SummonMobsCallback</span><span class="p">,</span> 
-    <span class="n">MaskActionsCallback</span><span class="p">,</span> 
-    <span class="n">RewardsCallback</span><span class="p">,</span> 
-    <span class="n">CommandsCallback</span><span class="p">,</span> 
-    <span class="n">FastResetCallback</span>
-<span class="p">)</span>
-
-<span class="n">sim</span> <span class="o">=</span> <span class="n">MinecraftSim</span><span class="p">(</span>
-    <span class="n">action_type</span><span class="o">=</span><span class="s2">&quot;env&quot;</span><span class="p">,</span>
-    <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span>
-        <span class="n">SpeedTestCallback</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span> 
-        <span class="n">SummonMobsCallback</span><span class="p">([{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;cow&#39;</span><span class="p">,</span> <span class="s1">&#39;number&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;range_x&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="s1">&#39;range_z&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">]}]),</span>
-        <span class="n">MaskActionsCallback</span><span class="p">(</span><span class="n">inventory</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">camera</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">])),</span> 
-        <span class="n">RecordCallback</span><span class="p">(</span><span class="n">record_path</span><span class="o">=</span><span class="s2">&quot;./output&quot;</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="mi">30</span><span class="p">),</span>
-        <span class="n">RewardsCallback</span><span class="p">([{</span>
-            <span class="s1">&#39;event&#39;</span><span class="p">:</span> <span class="s1">&#39;kill_entity&#39;</span><span class="p">,</span> 
-            <span class="s1">&#39;objects&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;cow&#39;</span><span class="p">,</span> <span class="s1">&#39;sheep&#39;</span><span class="p">],</span> 
-            <span class="s1">&#39;reward&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> 
-            <span class="s1">&#39;identity&#39;</span><span class="p">:</span> <span class="s1">&#39;kill sheep or cow&#39;</span><span class="p">,</span> 
-            <span class="s1">&#39;max_reward_times&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> 
-        <span class="p">}]),</span>
-        <span class="n">CommandsCallback</span><span class="p">(</span><span class="n">commands</span><span class="o">=</span><span class="p">[</span>
-            <span class="s1">&#39;/give @p minecraft:iron_sword 1&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;/give @p minecraft:diamond 64&#39;</span><span class="p">,</span>
-        <span class="p">]),</span> 
-        <span class="n">FastResetCallback</span><span class="p">(</span>
-            <span class="n">biomes</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;mountains&#39;</span><span class="p">],</span>
-            <span class="n">random_tp_range</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
-        <span class="p">)</span>
-    <span class="p">]</span>
-<span class="p">)</span>
-<span class="n">obs</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">action_space</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
-    <span class="n">action</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">action_space</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
-    <span class="n">obs</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">terminated</span><span class="p">,</span> <span class="n">truncated</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
-<span class="n">sim</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</pre></div>
-</div>
-<p><span class="sd-d-grid"><a class="sd-sphinx-override sd-btn sd-text-wrap sd-btn-outline-primary reference internal" href="../simulator/index.html"><span class="doc">Learn more about MineStudio Simulator</span></a></span></p>
 
 <div class="section ablog__blog_comments">
   
@@ -633,7 +570,7 @@
   <div class="sidebar-secondary-item">
 
   <div class="tocsection sourcelink">
-    <a href="../_sources/overview/quick-simulator.md.txt">
+    <a href="../_sources/models/quick-models.md.txt">
       <i class="fa-solid fa-file-lines"></i> Show Source
     </a>
   </div>

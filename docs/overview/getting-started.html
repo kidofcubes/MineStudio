@@ -37,7 +37,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/thebelab.css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=163173a2" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=b5e26e65" />
   
   <!-- So that users can add custom icons -->
   <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
@@ -500,7 +500,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../simulator/design-principles.html">Design Principles</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1"><a class="reference internal" href="../data/index.html">Data</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../data/index.html">Data</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../data/dataset-raw.html">Raw Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/dataset-event.html">Event Dataset</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="../models/index.html">Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../train/index.html">Train</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../inference/index.html">Inference</a></li>
@@ -560,7 +564,7 @@
 <!--
  * @Date: 2024-11-29 08:08:13
  * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-11-30 13:33:38
+ * @LastEditTime: 2024-12-01 08:33:39
  * @FilePath: /MineStudio/docs/source/overview/getting-started.md
 -->
 <section id="getting-started">
@@ -706,8 +710,8 @@ VirtualGL</label><div class="sd-tab-content docutils">
 <!--
  * @Date: 2024-11-30 05:44:44
  * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-11-30 05:55:49
- * @FilePath: /MineStudio/docs/source/overview/quick-simulator.md
+ * @LastEditTime: 2024-12-01 08:28:50
+ * @FilePath: /MineStudio/docs/source/simulator/quick-simulator.md
 -->
 <p class="sd-card-text">Here is a minimal example of how to use the simulator:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">minestudio.simulator</span> <span class="kn">import</span> <span class="n">MinecraftSim</span>
@@ -769,11 +773,72 @@ VirtualGL</label><div class="sd-tab-content docutils">
 </div>
 </details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
 <summary class="sd-summary-title sd-card-header">
-<span class="sd-summary-text"><img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Data: Flexible Data Structures and Efficient Data Processing</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<span class="sd-summary-text"><img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Data: Flexible Data Structures and Fast Dataloaders</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<!--
+ * @Date: 2024-12-01 08:30:33
+ * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
+ * @LastEditTime: 2024-12-01 08:41:00
+ * @FilePath: /MineStudio/docs/source/data/quick-data.md
+-->
+<p class="sd-card-text">Here is a minimal example to show how we load a trajectory from the dataset.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">minestudio.data</span> <span class="kn">import</span> <span class="n">RawDataset</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">RawDataset</span><span class="p">(</span>
+    <span class="n">dataset_dirs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;/nfs/data/contractors/dataset_7xx&#39;</span><span class="p">],</span> 
+    <span class="n">enable_video</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">enable_action</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">frame_width</span><span class="o">=</span><span class="mi">224</span><span class="p">,</span> 
+    <span class="n">frame_height</span><span class="o">=</span><span class="mi">224</span><span class="p">,</span>
+    <span class="n">win_len</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> 
+    <span class="n">split</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> 
+    <span class="n">split_ratio</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> 
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+<span class="n">item</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+</pre></div>
+</div>
+<p class="sd-card-text">You may see the output like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">08</span><span class="p">:</span><span class="mi">14</span><span class="p">:</span><span class="mi">15</span><span class="p">]</span> <span class="p">[</span><span class="n">Kernel</span><span class="p">]</span> <span class="n">Driver</span> <span class="n">video</span> <span class="n">load</span> <span class="mi">4617</span> <span class="n">episodes</span><span class="o">.</span>  
+<span class="p">[</span><span class="mi">08</span><span class="p">:</span><span class="mi">14</span><span class="p">:</span><span class="mi">15</span><span class="p">]</span> <span class="p">[</span><span class="n">Kernel</span><span class="p">]</span> <span class="n">Driver</span> <span class="n">action</span> <span class="n">load</span> <span class="mi">4681</span> <span class="n">episodes</span><span class="o">.</span> 
+<span class="p">[</span><span class="mi">08</span><span class="p">:</span><span class="mi">14</span><span class="p">:</span><span class="mi">15</span><span class="p">]</span> <span class="p">[</span><span class="n">Kernel</span><span class="p">]</span> <span class="n">episodes</span><span class="p">:</span> <span class="mi">4568</span><span class="p">,</span> <span class="n">frames</span><span class="p">:</span> <span class="mf">65291168.</span> 
+<span class="n">dict_keys</span><span class="p">([</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="s1">&#39;timestamp&#39;</span><span class="p">,</span> <span class="s1">&#39;episode&#39;</span><span class="p">,</span> <span class="s1">&#39;progress&#39;</span><span class="p">,</span> <span class="s1">&#39;env_action&#39;</span><span class="p">,</span> <span class="s1">&#39;agent_action&#39;</span><span class="p">,</span> <span class="s1">&#39;env_prev_action&#39;</span><span class="p">,</span> <span class="s1">&#39;agent_prev_action&#39;</span><span class="p">,</span> <span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="s1">&#39;mask&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p class="sd-card-text"><span class="sd-d-grid"><span class="sd-sphinx-override sd-btn sd-text-wrap sd-btn-outline-primary">Learn more about Raw Dataset</span></span></p>
+<p class="sd-card-text">Alternatively, you can also load trajectories that have specific events, for example, loading all trajectories that contain the <code class="docutils literal notranslate"><span class="pre">kill</span> <span class="pre">entity</span></code> event.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">minestudio.data</span> <span class="kn">import</span> <span class="n">EventDataset</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">EventDataset</span><span class="p">(</span>
+    <span class="n">dataset_dirs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;/nfs/data/contractors/dataset_7xx&#39;</span><span class="p">],</span> 
+    <span class="n">enable_video</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">enable_action</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">frame_width</span><span class="o">=</span><span class="mi">224</span><span class="p">,</span> 
+    <span class="n">frame_height</span><span class="o">=</span><span class="mi">224</span><span class="p">,</span>
+    <span class="n">win_len</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> 
+    <span class="n">split</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> 
+    <span class="n">split_ratio</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> 
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">event_regex</span><span class="o">=</span><span class="s1">&#39;minecraft.kill_entity:.*&#39;</span>
+<span class="p">)</span>
+<span class="n">item</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+</pre></div>
+</div>
+<p class="sd-card-text">You may see the output like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">08</span><span class="p">:</span><span class="mi">19</span><span class="p">:</span><span class="mi">14</span><span class="p">]</span> <span class="p">[</span><span class="n">Kernel</span><span class="p">]</span> <span class="n">Driver</span> <span class="n">video</span> <span class="n">load</span> <span class="mi">4617</span> <span class="n">episodes</span><span class="o">.</span>
+<span class="p">[</span><span class="mi">08</span><span class="p">:</span><span class="mi">19</span><span class="p">:</span><span class="mi">14</span><span class="p">]</span> <span class="p">[</span><span class="n">Kernel</span><span class="p">]</span> <span class="n">Driver</span> <span class="n">action</span> <span class="n">load</span> <span class="mi">4681</span> <span class="n">episodes</span><span class="o">.</span> 
+<span class="p">[</span><span class="mi">08</span><span class="p">:</span><span class="mi">19</span><span class="p">:</span><span class="mi">14</span><span class="p">]</span> <span class="p">[</span><span class="n">Kernel</span><span class="p">]</span> <span class="n">episodes</span><span class="p">:</span> <span class="mi">4568</span><span class="p">,</span> <span class="n">frames</span><span class="p">:</span> <span class="mf">65291168.</span> 
+<span class="p">[</span><span class="mi">08</span><span class="p">:</span><span class="mi">19</span><span class="p">:</span><span class="mi">14</span><span class="p">]</span> <span class="p">[</span><span class="n">Event</span> <span class="n">Kernel</span><span class="p">]</span> <span class="n">Number</span> <span class="n">of</span> <span class="n">loaded</span> <span class="n">events</span><span class="p">:</span> <span class="mf">58.</span> 
+<span class="p">[</span><span class="mi">08</span><span class="p">:</span><span class="mi">19</span><span class="p">:</span><span class="mi">14</span><span class="p">]</span> <span class="p">[</span><span class="n">Event</span> <span class="n">Dataset</span><span class="p">]</span> <span class="n">Regex</span><span class="p">:</span> <span class="n">minecraft</span><span class="o">.</span><span class="n">kill_entity</span><span class="p">:</span><span class="o">.*</span><span class="p">,</span> <span class="n">Number</span> <span class="n">of</span> <span class="n">events</span><span class="p">:</span> <span class="mi">58</span><span class="p">,</span> <span class="n">number</span> <span class="n">of</span> <span class="n">items</span><span class="p">:</span> <span class="mi">19652</span>
+<span class="n">dict_keys</span><span class="p">([</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="s1">&#39;env_action&#39;</span><span class="p">,</span> <span class="s1">&#39;agent_action&#39;</span><span class="p">,</span> <span class="s1">&#39;env_prev_action&#39;</span><span class="p">,</span> <span class="s1">&#39;agent_prev_action&#39;</span><span class="p">,</span> <span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="s1">&#39;mask&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p class="sd-card-text"><span class="sd-d-grid"><span class="sd-sphinx-override sd-btn sd-text-wrap sd-btn-outline-primary">Learn more about Event Dataset</span></span></p>
 </div>
 </details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
 <summary class="sd-summary-title sd-card-header">
-<span class="sd-summary-text"><img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Models: Policy Template and Baseline Models</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<span class="sd-summary-text"><img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Models: Policy Template and Baselines</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
 </div>
 </details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
 <summary class="sd-summary-title sd-card-header">
@@ -781,7 +846,7 @@ VirtualGL</label><div class="sd-tab-content docutils">
 </div>
 </details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
 <summary class="sd-summary-title sd-card-header">
-<span class="sd-summary-text"><img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Inference: Parallel Inference and Record Trajectories</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<span class="sd-summary-text"><img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Inference: Parallel Inference and Record Demonstrations</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
 </div>
 </details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
 <summary class="sd-summary-title sd-card-header">
