@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-10 15:52:16
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-11-30 16:19:52
+LastEditTime: 2024-12-01 12:14:33
 FilePath: /MineStudio/minestudio/models/rocket_one/body.py
 '''
 import torch
@@ -41,6 +41,7 @@ class RocketPolicy(MinePolicy):
                 nhead=num_heads, 
                 dim_feedforward=hiddim*2, 
                 dropout=0.1,
+                batch_first=True
             ), 
             num_layers=2,
         )
@@ -117,6 +118,7 @@ if __name__ == '__main__':
         num_layers=8,
     ).to("cuda")
     num_params = sum(p.numel() for p in model.parameters())
+    # num_params = sum(p.numel() for p in model.pooling.parameters())
     print(f"Params (MB): {num_params / 1e6 :.2f}")
     output, memory = model(
         input={
