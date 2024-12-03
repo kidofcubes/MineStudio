@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-25 08:35:59
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-11-25 12:36:07
+LastEditTime: 2024-12-02 11:59:51
 FilePath: /MineStudio/minestudio/inference/generator/mine_generator.py
 '''
 import os
@@ -25,6 +25,7 @@ class Worker:
         self.num_episodes = num_episodes
         self.env = env_generator()
         self.agent = agent_generator().to("cuda")
+        self.agent.eval()
         self.image_media = image_media
         self.tmpdir = tmpdir
 

@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-10 13:44:13
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-11-28 16:14:02
+LastEditTime: 2024-12-02 15:18:07
 FilePath: /MineStudio/minestudio/train/trainer.py
 '''
 import os
