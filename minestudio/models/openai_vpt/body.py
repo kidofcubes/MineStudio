@@ -19,7 +19,7 @@ from typing import List, Dict, Optional, Callable, Union, Tuple, Any
 from minestudio.utils.vpt_lib.impala_cnn import ImpalaCNN
 from minestudio.utils.vpt_lib.util import FanInInitReLULayer, ResidualRecurrentBlocks
 from minestudio.models.base_policy import MinePolicy
-
+from minestudio.online.utils import auto_stack, auto_to_torch
 class ImgPreprocessing(nn.Module):
     """Normalize incoming images.
 
@@ -242,11 +242,43 @@ class OpenAIPolicy(MinePolicy):
         B, T = input["image"].shape[:2]
         first = torch.tensor([[False]], device=self.device).repeat(B, T)
         state_in = self.initial_state(B) if state_in is None else state_in
-        (pi_h, v_h), state_out = self.net(input, state_in, context={"first": first})
+
+        #input: 1, 128, 128, 128, 3
+        #first: 1, 128
+        # state_in[0]: 1, 1, 1, 128
+        # state_in[1]: 1, 1, 128, 128
+        try:
+            (pi_h, v_h), state_out = self.net(input, state_in, context={"first": first})
+        except Exception as e:
+            import ray
+            ray.util.pdb.set_trace()
         pi_logits = self.pi_head(pi_h)
         vpred = self.value_head(v_h)
         latents = {'pi_logits': pi_logits, 'vpred': vpred}
         return latents, state_out
+    
+    def merge_input(self, inputs) -> torch.tensor:
+        inputs = auto_to_torch(inputs, device=self.device)
+        if inputs[0]["image"].dim() == 3:
+            in_inputs=[{"image": input["image"]} for input in inputs]
+            out_inputs = auto_to_torch(auto_stack([auto_stack([input]) for input in in_inputs]), device=self.device)
+            return out_inputs
+        elif inputs[0]["image"].dim() == 4:
+            out_inputs = auto_to_torch(auto_stack([input["image"] for input in inputs]), device=self.device)
+            return out_inputs
+        
+    def merge_state(self, states) -> Optional[List[torch.Tensor]]:
+        result_states = []
+        for i in range(len(states[0])):
+            result_states.append(auto_to_torch(torch.cat([state[i] for state in states], 0), device=self.device))
+        return result_states
+
+    def split_state(self, states, split_num) -> Optional[List[List[torch.Tensor]]]:
+        result_states = [
+            [states[j][i:i+1] for j in range(len(states))]
+            for i in range(split_num)
+        ]
+        return result_states
 
 def load_openai_policy(model_path: str, weights_path: str):
     model = pickle.load(Path(model_path).open("rb"))
