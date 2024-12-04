@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-11-29 08:08:13
  * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-12-01 09:11:02
+ * @LastEditTime: 2024-12-03 05:50:13
  * @FilePath: /MineStudio/docs/source/overview/getting-started.md
 -->
 
@@ -54,7 +54,7 @@ Learn more about MineStudio Simulator
 ````
 
 ````{dropdown} <img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Models: Policy Template and Baselines
-```{include} quick-models.md
+```{include} ../models/quick-models.md
 ```
 ````
 
