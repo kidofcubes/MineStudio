@@ -36,7 +36,7 @@ def main(args):
         warmup_steps=args.warmup_steps,
         weight_decay=args.weight_decay,
         callbacks=[
-            BehaviorCloneCallback(weight=1.0),
+            BehaviorCloneCallback(weight=args.objective_weight),
         ], 
         hyperparameters=convert_to_normal(args),
     )

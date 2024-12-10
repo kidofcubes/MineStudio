@@ -1,8 +1,8 @@
 '''
 Date: 2024-11-11 15:59:37
-LastEditors: muzhancun muzhancun@stu.pku.edu.cn
-LastEditTime: 2024-11-18 16:13:28
-FilePath: /Minestudio/minestudio/models/base_policy.py
+LastEditors: caishaofei caishaofei@stu.pku.edu.cn
+LastEditTime: 2024-12-09 13:10:32
+FilePath: /MineStudio/minestudio/models/base_policy.py
 '''
 from abc import ABC, abstractmethod
 import numpy as np
@@ -39,14 +39,15 @@ def recursive_tensor_op(fn, d: T) -> T:
 
 class MinePolicy(torch.nn.Module, ABC):
     def __init__(self, hiddim, action_space=None) -> None:
+        torch.manual_seed(0)
         torch.nn.Module.__init__(self)
         if action_space is None:
             action_space = gymnasium.spaces.Dict({
                 "camera": gymnasium.spaces.MultiDiscrete([121]), 
                 "buttons": gymnasium.spaces.MultiDiscrete([8641]),
             })
-        self.pi_head = make_action_head(action_space, hiddim, temperature=2.0)
         self.value_head = ScaledMSEHead(hiddim, 1, norm_type="ewma", norm_kwargs=None)
+        self.pi_head = make_action_head(action_space, hiddim, temperature=1.0) #! need to be verified. 
 
     def reset_parameters(self):
         self.pi_head.reset_parameters()

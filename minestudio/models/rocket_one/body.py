@@ -124,8 +124,12 @@ if __name__ == '__main__':
         num_layers=4,
     ).to("cuda")
     num_params = sum(p.numel() for p in model.parameters())
-    # num_params = sum(p.numel() for p in model.pooling.parameters())
     print(f"Params (MB): {num_params / 1e6 :.2f}")
+    
+    for key in ["backbone", "updim", "pooling", "interaction", "recurrent", "lastlayer", "final_ln"]:
+        num_params = sum(p.numel() for p in getattr(model, key).parameters())
+        print(f"{key} Params (MB): {num_params / 1e6 :.2f}")
+
     output, memory = model(
         input={
             'image': torch.zeros(1, 128, 224, 224, 3).to("cuda"), 

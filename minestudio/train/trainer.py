@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-10 13:44:13
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-12-02 15:18:07
+LastEditTime: 2024-12-09 09:45:59
 FilePath: /MineStudio/minestudio/train/trainer.py
 '''
 import os
@@ -57,6 +57,7 @@ class MineLightning(L.LightningModule):
             "init_memory": None, 
             "last_timestamp": None,
         }
+        self.automatic_optimization = True
         self.save_hyperparameters(hyperparameters)
 
     def _make_memory(self, batch):
@@ -79,7 +80,8 @@ class MineLightning(L.LightningModule):
 
     def _batch_step(self, batch, batch_idx, step_name):
         result = {'loss': 0}
-        memory_in = self._make_memory(batch)
+        # memory_in = self._make_memory(batch)
+        memory_in = None
         latents, memory_out = self.mine_policy(batch, memory_in)
         self.memory_dict["memory"] = tree_detach(memory_out)
         for callback in self.callbacks:

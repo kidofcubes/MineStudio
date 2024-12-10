@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-12 13:59:08
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-11-28 16:11:56
+LastEditTime: 2024-12-09 15:51:34
 FilePath: /MineStudio/minestudio/train/mine_callbacks/behavior_clone.py
 '''
 
@@ -39,7 +39,7 @@ class BehaviorCloneCallback(ObjectiveCallback):
         bc_loss = camera_loss + button_loss
         entropy = entropy_camera + entropy_buttons
         result = {
-            'loss': bc_loss.mean(),
+            'loss': bc_loss.mean() * self.weight,
             'camera_loss': camera_loss.mean(),
             'button_loss': button_loss.mean(),
             'entropy': entropy.mean(),
