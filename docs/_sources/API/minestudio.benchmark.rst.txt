@@ -5,3 +5,18 @@ minestudio.benchmark package
    :members:
    :undoc-members:
    :show-inheritance:
+
+Submodules
+----------
+
+
+.. automodule:: minestudio.benchmark.read_conf
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+.. automodule:: minestudio.benchmark.test
+   :members:
+   :undoc-members:
+   :show-inheritance:
