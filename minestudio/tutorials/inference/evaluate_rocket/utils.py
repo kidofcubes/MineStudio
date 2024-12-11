@@ -127,7 +127,7 @@ class Session:
     def reset(self, env_name: str):
         self.image_history = []
         # self.env = MinecraftWrapper(env_name, prev_action_obs=False)
-        self.env = MinecraftSim(preferred_spawn_biome="forest")
+        self.env = MinecraftSim(preferred_spawn_biome="plains")
         self.obs, self.info = self.env.reset()
         for i in range(30): #! better init
             time.sleep(0.1)

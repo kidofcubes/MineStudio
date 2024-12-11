@@ -11,7 +11,7 @@ import numpy as np
 from io import BytesIO
 from PIL import Image, ImageDraw
 
-from utils import Session, Pointer
+from minestudio.tutorials.inference.evaluate_rocket.utils import Session, Pointer
 
 COLORS = [
     (255, 0, 0), (0, 255, 0), (0, 0, 255), 
@@ -276,7 +276,7 @@ def draw_gradio_components(args):
         demo.queue()
         demo.launch(share=False,server_port=args.port)
 
-if __name__ == '__main__':
+def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--port", type=int, default=7862)
     parser.add_argument("--model-loader", type=str, default="load_rocket_policy")
@@ -286,3 +286,6 @@ if __name__ == '__main__':
     parser.add_argument("--molmo-url", type=str, default="http://127.0.0.1:8000/v1")
     args = parser.parse_args()
     draw_gradio_components(args)
+
+if __name__ == "__main__":
+    main()
