@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-10 15:52:16
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-12-03 02:47:07
+LastEditTime: 2024-12-11 02:37:39
 FilePath: /MineStudio/minestudio/models/rocket_one/body.py
 '''
 import torch
@@ -14,7 +14,9 @@ from typing import List, Dict, Any, Tuple, Optional
 import timm
 from minestudio.models.base_policy import MinePolicy
 from minestudio.utils.vpt_lib.util import FanInInitReLULayer, ResidualRecurrentBlocks
+from minestudio.utils.register import Registers
 
+@Registers.model.register
 class RocketPolicy(MinePolicy):
     
     def __init__(self, 
@@ -103,11 +105,12 @@ class RocketPolicy(MinePolicy):
         latents = {"pi_logits": pi_logits, "vpred": vpred}
         return latents, memory
 
-    def initial_state(self, batch_size: int):
+    def initial_state(self, batch_size: int = None):
         if batch_size is None:
             return [t.squeeze(0).to(self.device) for t in self.recurrent.initial_state(1)]
         return [t.to(self.device) for t in self.recurrent.initial_state(batch_size)]
 
+@Registers.model_loader.register
 def load_rocket_policy(ckpt_path: str):
     ckpt = torch.load(ckpt_path)
     model = RocketPolicy(**ckpt['hyper_parameters']['model'])

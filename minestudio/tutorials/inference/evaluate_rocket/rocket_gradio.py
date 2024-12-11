@@ -78,6 +78,7 @@ def get_points_with_draw(image, label, session, evt: gr.SelectData):
     point_radius, point_color = 5, (0, 255, 0) if label == 'Add Points' else (255, 0, 0)
     points.append([x, y])
     point_label.append(1 if label == 'Add Points' else 0)
+    image = np.copy(image)
     cv2.circle(image, (x, y), point_radius, point_color, -1)
     return image, session
 
@@ -147,10 +148,8 @@ def molmo_fn(molmo_text, molmo_session, rocket_session, display_image):
     return molmo_result, display_image
 
 def extract_points(data):
-    # 匹配 x 和 y 坐标的值，支持 <points> 和 <point> 标签
     pattern = r'x\d?="([-+]?\d*\.\d+|\d+)" y\d?="([-+]?\d*\.\d+|\d+)"'
     points = re.findall(pattern, data)
-    # 将提取到的坐标转换为浮点数
     points = [(float(x)/100*640, float(y)/100*360) for x, y in points]
     return points
 
@@ -178,7 +177,8 @@ def draw_gradio_components(args):
         )
         
         rocket_session = gr.State(Session(
-            rocket_path=args.rocket_path,
+            model_loader=args.model_loader,
+            model_path=args.model_path,
             sam_path=args.sam_path,
         ))
         molmo_session = gr.State(Pointer(
@@ -279,7 +279,8 @@ def draw_gradio_components(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--port", type=int, default=7862)
-    parser.add_argument("--rocket-path", type=str, required=True)
+    parser.add_argument("--model-loader", type=str, default="load_rocket_policy")
+    parser.add_argument("--model-path", type=str, required=True)
     parser.add_argument("--sam-path", type=str, required=True)
     parser.add_argument("--molmo-id", type=str, default="molmo-72b-0924")
     parser.add_argument("--molmo-url", type=str, default="http://127.0.0.1:8000/v1")

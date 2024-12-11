@@ -6,12 +6,10 @@ import torch
 import numpy as np
 from PIL import Image, ImageDraw
 
+import minestudio.models
 from minestudio.simulator import MinecraftSim
-from minestudio.models import load_rocket_policy
+from minestudio.utils import Registers
 
-# from jarvis.stark_tech.env_interface import MinecraftWrapper
-# from jarvis.arm.models import ConditionedAgent
-# from planner.molmo import Molmo
 from sam2.build_sam import build_sam2_camera_predictor
 import re
 from openai import OpenAI
@@ -33,39 +31,40 @@ SEGMENT_MAPPING = {
 }
 
 
-NOOP_ACTION = {
-    "ESC": 0,
-    "back": 0,
-    "drop": 0,
-    "forward": 0,
-    "hotbar.1": 0,
-    "hotbar.2": 0,
-    "hotbar.3": 0,
-    "hotbar.4": 0,
-    "hotbar.5": 0,
-    "hotbar.6": 0,
-    "hotbar.7": 0,
-    "hotbar.8": 0,
-    "hotbar.9": 0,
-    "inventory": 0,
-    "jump": 0,
-    "left": 0,
-    "right": 0,
-    "sneak": 0,
-    "sprint": 0,
-    "swapHands": 0,
-    "camera": np.array([0, 0]),
-    "attack": 0,
-    "use": 0,
-    "pickItem": 0,
-}
+# NOOP_ACTION = {
+#     "ESC": 0,
+#     "back": 0,
+#     "drop": 0,
+#     "forward": 0,
+#     "hotbar.1": 0,
+#     "hotbar.2": 0,
+#     "hotbar.3": 0,
+#     "hotbar.4": 0,
+#     "hotbar.5": 0,
+#     "hotbar.6": 0,
+#     "hotbar.7": 0,
+#     "hotbar.8": 0,
+#     "hotbar.9": 0,
+#     "inventory": 0,
+#     "jump": 0,
+#     "left": 0,
+#     "right": 0,
+#     "sneak": 0,
+#     "sprint": 0,
+#     "swapHands": 0,
+#     "camera": np.array([0, 0]),
+#     "attack": 0,
+#     "use": 0,
+#     "pickItem": 0,
+# }
 
 class Session:
     
-    def __init__(self, rocket_path: str, sam_path: str):
+    def __init__(self, model_loader: str, model_path: str, sam_path: str):
         start_image = np.zeros((360, 640, 3), dtype=np.uint8)
         self.current_image = np.array(start_image)
-        self.rocket_path = rocket_path
+        self.model_loader = model_loader
+        self.model_path = model_path
         self.sam_path = sam_path
         self.clear_points()
         
@@ -132,19 +131,12 @@ class Session:
         self.obs, self.info = self.env.reset()
         for i in range(30): #! better init
             time.sleep(0.1)
-            self.obs, self.reward, terminated, truncated, self.info = self.env.step(NOOP_ACTION)
+            noop_action = self.env.noop_action()
+            self.obs, self.reward, terminated, truncated, self.info = self.env.step(noop_action)
         
         self.reward = 0
-        # rocket_ckpt = "/nfs-shared/shaofei/jarvisbase/output/BOYA/2024-10-06/16-08-47/weights/weight-epoch=5-step=110000-EMA.ckpt"
-        # rocket_ckpt = "/nfs-shared/shaofei/jarvisbase/output/BOYA/2024-10-08/21-40-30/weights/weight-epoch=5-step=100000-EMA.ckpt"
-        # self.agent = ConditionedAgent.from_pretrained(
-        #     # rocket_ckpt, 
-        #     self.rocket_path, 
-        #     obs_space=self.env.observation_space, 
-        #     action_space={'minecraft': self.env.action_space},
-        #     infer_env='minecraft', 
-        # ).to("cuda")
-        self.agent = load_rocket_policy(self.rocket_path)
+        model_loader = Registers.model_loader[self.model_loader]
+        self.agent = model_loader(self.model_path).to("cuda")
         self.agent.eval()
         self.clear_agent_memory()
         self.current_image = self.info["pov"]
@@ -168,13 +160,13 @@ class Session:
             obj_mask = cv2.resize(obj_mask, (224, 224), interpolation=cv2.INTER_NEAREST)
             obj_mask = torch.tensor(obj_mask, dtype=torch.uint8)
             obs = {
-                'image': self.obs['img'], 
+                'image': self.obs['image'], 
                 'segment': {
                     'obj_id': obj_id, 
                     'obj_mask': obj_mask, 
                 }
             }
-            action, self.state = self.agent.get_action(obs, self.state, first=None, input_shape="*")
+            action, self.state = self.agent.get_action(obs, self.state, input_shape="*")
 
         self.obs, self.reward, terminated, truncated, self.info = self.env.step(action)
         self.current_image = self.info["pov"]
@@ -283,7 +275,8 @@ def reset_fn(env_name, session):
     return image, session
 
 def step_fn(act_key, session):
-    action = NOOP_ACTION.copy()
+    # action = NOOP_ACTION.copy()
+    action = self.env.noop_action()
     if act_key != "null":
         action[act_key] = 1
     image = session.step(action)

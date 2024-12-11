@@ -41,6 +41,7 @@ dependencies = [
     "pyglet",
     "imgui",
     "pyopengl",
+    "absl-py"
 ]
 authors = [
     {name="CraftJarvis", email="craftjarvis@outlook.com"}
