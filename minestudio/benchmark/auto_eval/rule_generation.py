@@ -1,3 +1,9 @@
+'''
+Date: 2024-11-21 21:38:32
+LastEditors: zhengxinyue
+LastEditTime: 2024-12-06 16:39:05
+FilePath: /MineStudio/minestudio/benchmark/auto_eval/rule_generation.py
+'''
 import os
 import argparse
 import numpy as np
