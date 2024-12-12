@@ -1,0 +1,15 @@
+minestudio.tutorials package
+============================
+
+.. automodule:: minestudio.tutorials
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   minestudio.tutorials.inference

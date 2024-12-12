@@ -1,0 +1,24 @@
+minestudio.tutorials.inference package
+======================================
+
+.. automodule:: minestudio.tutorials.inference
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   minestudio.tutorials.inference.evaluate_rocket
+
+Submodules
+----------
+
+
+.. automodule:: minestudio.tutorials.inference.example
+   :members:
+   :undoc-members:
+   :show-inheritance:

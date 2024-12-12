@@ -529,6 +529,39 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
+<!--
+ * @Date: 2024-12-03 04:54:21
+ * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
+ * @LastEditTime: 2024-12-03 06:02:49
+ * @FilePath: /MineStudio/docs/source/models/quick-models.md
+-->
+<p>Here is an example that shows how to load the OpenAI’s VPT policy in the Minecraft environment.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">minestudio.simulator</span> <span class="kn">import</span> <span class="n">MinecraftSim</span>
+<span class="kn">from</span> <span class="nn">minestudio.simulator.callbacks</span> <span class="kn">import</span> <span class="n">RecordCallback</span>
+<span class="kn">from</span> <span class="nn">minestudio.models</span> <span class="kn">import</span> <span class="n">load_openai_policy</span>
+
+<span class="n">policy</span> <span class="o">=</span> <span class="n">load_openai_policy</span><span class="p">(</span>
+    <span class="n">model_path</span><span class="o">=</span><span class="s2">&quot;/path/to/foundation-model-2x.model&quot;</span><span class="p">,</span> 
+    <span class="n">weights_path</span><span class="o">=</span><span class="s2">&quot;/path/to/foundation-model-2x.weights&quot;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span><span class="p">)</span>
+<span class="n">policy</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+
+<span class="n">env</span> <span class="o">=</span> <span class="n">MinecraftSim</span><span class="p">(</span>
+    <span class="n">obs_size</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span> 
+    <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">RecordCallback</span><span class="p">(</span><span class="n">record_path</span><span class="o">=</span><span class="s2">&quot;./output&quot;</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">frame_type</span><span class="o">=</span><span class="s2">&quot;pov&quot;</span><span class="p">)]</span>
+<span class="p">)</span>
+<span class="n">memory</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">obs</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1200</span><span class="p">):</span>
+    <span class="n">action</span><span class="p">,</span> <span class="n">memory</span> <span class="o">=</span> <span class="n">policy</span><span class="o">.</span><span class="n">get_action</span><span class="p">(</span><span class="n">obs</span><span class="p">,</span> <span class="n">memory</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="s1">&#39;*&#39;</span><span class="p">)</span>
+    <span class="n">obs</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">terminated</span><span class="p">,</span> <span class="n">truncated</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+<span class="n">env</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>In this example, the recorded video will be saved in the <code class="docutils literal notranslate"><span class="pre">./output</span></code> directory.</p>
+</div>
 
 <div class="section ablog__blog_comments">
   

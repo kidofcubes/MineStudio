@@ -19,4 +19,5 @@ Subpackages
    minestudio.models
    minestudio.simulator
    minestudio.train
+   minestudio.tutorials
    minestudio.utils

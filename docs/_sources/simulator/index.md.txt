@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-11-29 08:09:07
- * @LastEditors: muzhancun muzhancun@126.com
- * @LastEditTime: 2024-12-02 21:41:46
+ * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
+ * @LastEditTime: 2024-12-12 05:46:38
  * @FilePath: /MineStudio/docs/source/simulator/index.md
 -->
 
@@ -135,4 +135,9 @@ sim = MinecraftSim(callbacks=[RecordCallback(record_path="./output", fps=30)])
 You can use this callback to record the agent's behavior and analyze it later. Or you can use it to generate a dataset for imitation learning. 
 ```
 
-
+```{button-ref}  ./design-principles
+:color: primary
+:outline:
+:expand:
+Learn more about MineStudio Simulator callbacks
+```

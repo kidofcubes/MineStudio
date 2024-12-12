@@ -13,3 +13,12 @@ Subpackages
    :maxdepth: 4
 
    minestudio.utils.vpt_lib
+
+Submodules
+----------
+
+
+.. automodule:: minestudio.utils.register
+   :members:
+   :undoc-members:
+   :show-inheritance:
