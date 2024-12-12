@@ -25,7 +25,6 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
-rocket.mp4
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -171,6 +170,8 @@ output/
 lightning_logs/
 wandb/
 outputs/
+node_modules/
+record/
 
 minestudio/models/realtime_sam/notebooks/*.jpg
 minestudio/models/realtime_sam/checkpoints/*.pt
