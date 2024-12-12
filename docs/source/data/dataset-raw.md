@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-12-01 08:37:10
  * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-12-12 05:44:51
+ * @LastEditTime: 2024-12-12 09:07:39
  * @FilePath: /MineStudio/docs/source/data/dataset-raw.md
 -->
 
@@ -18,6 +18,13 @@ Here are the special arguments of the `RawDataset` class:
 
 | Arguments | Description |
 | --- | --- |
+| `dataset_dirs` | the directories of the dataset |
+| `enable_video` | whether to load video data |
+| `enable_action` | whether to load action data |
+| `enable_contractor_info` | whether to load contractor meta information |
+| `enable_segment` | whether to load segmentation data |
+| `frame_width` | the width of the frame |
+| `frame_height` | the height of the frame |
 | `win_len` | segment length of an item | 
 | `skip_frame` | the number of frames to skip when building the segment item |
 | `split` | the split mode of the dataset, including `train`, `val` |
