@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-11-29 08:08:34
  * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-12-01 08:38:35
+ * @LastEditTime: 2024-12-12 07:18:49
  * @FilePath: /MineStudio/docs/source/data/index.md
 -->
 # Data
@@ -35,7 +35,9 @@ For video data, the efficiency of random access is usually low because decoding 
 We adopt a compromise solution by saving the video data in video segments, which allows for relatively high read efficiency while not occupying too much storage space. When user wants to read a sequence of continuous frames, we only need to retrieve the corresponding segments and decode them. 
 ```
 
-![](./read_video_fig.png)
+```{image} ./read_video_fig.png
+:width: 80%
+```
 
 ````{dropdown} <i class="fa-solid fa-lightbulb" height="35px" width="20px"></i> Learn more about the details
 
