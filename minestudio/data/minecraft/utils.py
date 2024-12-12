@@ -1,15 +1,18 @@
 '''
 Date: 2024-11-10 10:06:28
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-11-24 06:11:07
+LastEditTime: 2024-12-12 11:25:52
 FilePath: /MineStudio/minestudio/data/minecraft/utils.py
 '''
+import os
 import av
 import cv2
 import numpy as np
+from datetime import datetime
 import torch
 import torch.distributed as dist
 from torch.utils.data import Sampler
+from tqdm import tqdm
 from typing import Union, Tuple, List, Dict, Callable, Sequence, Mapping, Any, Optional
 
 def write_video(
@@ -25,6 +28,7 @@ def write_video(
         stream.width = width
         stream.height = height
         for frame in frames:
+            assert frame.shape[1] == width and frame.shape[0] == height, f"frame shape {frame.shape} not match {width}x{height}"
             frame = av.VideoFrame.from_ndarray(frame, format="rgb24")
             for packet in stream.encode(frame):
                 container.mux(packet)
@@ -62,12 +66,17 @@ class MineDistributedBatchSampler(Sampler):
         if num_replicas is None:
             if not dist.is_available():
                 raise RuntimeError("Requires distributed package to be available")
-            num_replicas = dist.get_world_size()
+            try:
+                num_replicas = dist.get_world_size()
+            except:
+                num_replicas = 1
         if rank is None:
             if not dist.is_available():
                 raise RuntimeError("Requires distributed package to be available")
-            rank = dist.get_rank()
-        
+            try:
+                rank = dist.get_rank()
+            except:
+                rank = 0
         assert shuffle is False, "shuffle must be False in sampler."
         assert drop_last is True, "drop_last must be True in sampler."
         # print(f"{rank = }, {num_replicas = }")
@@ -132,3 +141,127 @@ class MineDistributedBatchSampler(Sampler):
 
     def __len__(self):
         return self.num_samples_per_replica // self.batch_size
+
+
+def visualize_dataloader(
+    dataloader, 
+    num_samples: int = 1, 
+    resolution: Tuple[int, int] = (320, 180), 
+    legend: bool = False,
+    save_fps: int = 20, 
+    output_dir: str = "./",
+    **kwargs,
+) -> None:
+    frames = []
+    for idx, data in enumerate(tqdm(dataloader)):
+        # continue
+        if idx > num_samples:
+            break
+        action = data['env_action']
+        prev_action = data.get("env_prev_action", None)
+        image = data['image'].numpy()
+        text = data['text']
+
+        color = (255, 0, 0)
+        for bidx, (tframes, txt) in enumerate(zip(image, text)):
+            cache_frames = []
+            for tidx, frame in enumerate(tframes):
+                frame = cv2.resize(frame, resolution, interpolation=cv2.INTER_LINEAR)
+                if 'segment' in data:
+                    COLORS = [
+                        (255, 0, 0), (0, 255, 0), (0, 0, 255), 
+                        (255, 255, 0), (255, 0, 255), (0, 255, 255),
+                        (255, 255, 255), (0, 0, 0), (128, 128, 128),
+                        (128, 0, 0), (128, 128, 0), (0, 128, 0),
+                        (128, 0, 128), (0, 128, 128), (0, 0, 128),
+                    ]
+                    obj_id = data['segment']['obj_id'][bidx][tidx].item()
+                    if obj_id != -1:
+                        segment_mask = data['segment']['obj_mask'][bidx][tidx]
+                        if isinstance(segment_mask, torch.Tensor):
+                            segment_mask = segment_mask.numpy()
+                        colors = np.array(COLORS[obj_id]).reshape(1, 1, 3)
+                        segment_mask = (segment_mask[..., None] * colors).astype(np.uint8)
+                        segment_mask = segment_mask[:, :, ::-1] # bgr -> rgb
+                        frame = cv2.addWeighted(frame, 1.0, segment_mask, 0.5, 0.0)
+
+                if 'timestamp' in data:
+                    timestamp = data['timestamp'][bidx][tidx]
+                    cv2.putText(frame, f"timestamp: {timestamp}", (150, 70), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (200, 0, 55), 2)
+
+                if legend:
+                    cv2.putText(frame, f"frame: {tidx}", (10, 25), cv2.FONT_HERSHEY_SIMPLEX, 0.75, color, 2)
+                    cv2.putText(frame, txt, (200, 25), cv2.FONT_HERSHEY_SIMPLEX, 0.75, color, 2)
+                    
+                    if 'contractor_info' in data:
+                        try:
+                            pitch = data['contractor_info']['pitch'][bidx][tidx]
+                            yaw = data['contractor_info']['yaw'][bidx][tidx]
+                            cursor_x = data['contractor_info']['cursor_x'][bidx][tidx]
+                            cursor_y = data['contractor_info']['cursor_y'][bidx][tidx]
+                            isGuiInventory = data['contractor_info']['isGuiInventory'][bidx][tidx]
+                            isGuiOpen = data['contractor_info']['isGuiOpen'][bidx][tidx]
+                            cv2.putText(frame, f"Pitch: {pitch:.2f}", (150, 90), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
+                            cv2.putText(frame, f"Yaw: {yaw:.2f}", (150, 110), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
+                            cv2.putText(frame, f"isGuiOpen: {isGuiOpen}", (150, 130), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
+                            cv2.putText(frame, f"isGuiInventory: {isGuiInventory}", (150, 150), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
+                            cv2.putText(frame, f"CursorX: {cursor_x:.2f}", (150, 170), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
+                            cv2.putText(frame, f"CursorY: {cursor_y:.2f}", (150, 190), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
+                        except:
+                            cv2.putText(frame, f"No Contractor Info", (150, 90), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
+
+                    act = {k: v[bidx][tidx].numpy() for k, v in action.items()}
+                    if prev_action is not None:
+                        pre_act = {k: v[bidx][tidx].numpy() for k, v in prev_action.items()}
+                    for row, ((k, v), (_, pv)) in enumerate(zip(act.items(), pre_act.items())):
+                        if k != 'camera':
+                            v = int(v.item())
+                            pv = int(pv.item())
+                        cv2.putText(frame, f"{k}: {v}({pv})", (10, 45 + row*15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
+                
+                cache_frames.append(frame.astype(np.uint8))
+            
+            frames = frames + cache_frames
+    
+    timestamp = datetime.now().strftime("%m-%d_%H-%M")
+    file_name = f"save_{timestamp}.mp4"
+    file_path = os.path.join(output_dir, file_name)
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+    write_video(file_path, frames, fps=save_fps, width=resolution[0], height=resolution[1])
+
+def dump_trajectories(
+    dataloader, 
+    num_samples: int = 1, 
+    save_fps: int = 20, 
+    **kwargs
+) -> None:
+    
+    def un_batchify_actions(actions_in: Dict[str, torch.Tensor]) -> List[Dict]:
+        actions_out = []
+        for bidx in range(len(actions_in['attack'])):
+            action = {}
+            for k, v in actions_in.items():
+                action[k] = v[bidx].numpy()
+            actions_out.append(action)
+        return actions_out
+    
+    traj_dir = Path("./traj_dir")
+    video_dir = traj_dir / "videos"
+    action_dir = traj_dir / "actions"
+    video_dir.mkdir(parents=True, exist_ok=True)
+    action_dir.mkdir(parents=True, exist_ok=True)
+    for idx, data in enumerate(tqdm(dataloader)):
+        if idx > num_samples: break
+        image = data['img']
+        action = data['action']
+        action = un_batchify_actions(action)
+        B, T = image.shape[:2]
+        for i in range(B):
+            vid = ''.join(random.choices(string.ascii_letters + string.digits, k=11))
+            write_video(
+                file_name=str(video_dir / f"{vid}.mp4"),
+                frames=image[i].numpy().astype(np.uint8),
+            )
+            with open(action_dir / f"{vid}.pkl", 'wb') as f:
+                pickle.dump(action[i], f)
