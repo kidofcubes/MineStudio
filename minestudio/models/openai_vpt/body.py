@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-11 20:54:15
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-11-30 16:30:12
+LastEditTime: 2024-12-11 06:03:20
 FilePath: /MineStudio/minestudio/models/openai_vpt/body.py
 '''
 import os
@@ -19,6 +19,7 @@ from typing import List, Dict, Optional, Callable, Union, Tuple, Any
 from minestudio.utils.vpt_lib.impala_cnn import ImpalaCNN
 from minestudio.utils.vpt_lib.util import FanInInitReLULayer, ResidualRecurrentBlocks
 from minestudio.models.base_policy import MinePolicy
+from minestudio.utils.register import Registers
 
 class ImgPreprocessing(nn.Module):
     """Normalize incoming images.
@@ -221,6 +222,7 @@ class MinecraftPolicy(nn.Module):
         else:
             return None
 
+@Registers.model.register
 class OpenAIPolicy(MinePolicy):
 
     def __init__(self, policy_kwargs, action_space=None):
@@ -246,6 +248,7 @@ class OpenAIPolicy(MinePolicy):
         latents = {'pi_logits': pi_logits, 'vpred': vpred}
         return latents, state_out
 
+@Registers.model_loader.register
 def load_openai_policy(model_path: str, weights_path: str):
     model = pickle.load(Path(model_path).open("rb"))
     policy_kwargs = model['model']['args']['net']['args']

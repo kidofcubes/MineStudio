@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-10 10:25:38
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-11-10 13:40:24
+LastEditTime: 2024-12-04 15:53:20
 FilePath: /MineStudio/minestudio/data/minecraft/dataset.py
 '''
 import torch

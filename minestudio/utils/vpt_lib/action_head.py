@@ -211,7 +211,7 @@ class CategoricalActionHead(ActionHead):
             
             return torch.argmax(logits - torch.log(-torch.log(u)), dim=-1)
     
-    def sample(self, logits: torch.Tensor, deterministic: bool = False, p: float = 0.80, **kwargs) -> Any:
+    def sample(self, logits: torch.Tensor, deterministic: bool = False, p: float = 0.85, **kwargs) -> Any:
         """The nucleus sample function. """
         # assert not deterministic, "Not deterministic"
         if random.randint(0, 99) < 5 or deterministic:

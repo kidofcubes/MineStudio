@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-10 15:52:16
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-11-30 16:19:52
+LastEditTime: 2024-12-11 02:37:39
 FilePath: /MineStudio/minestudio/models/rocket_one/body.py
 '''
 import torch
@@ -14,13 +14,15 @@ from typing import List, Dict, Any, Tuple, Optional
 import timm
 from minestudio.models.base_policy import MinePolicy
 from minestudio.utils.vpt_lib.util import FanInInitReLULayer, ResidualRecurrentBlocks
+from minestudio.utils.register import Registers
 
+@Registers.model.register
 class RocketPolicy(MinePolicy):
     
     def __init__(self, 
         backbone: str = 'efficientnet_b0.ra_in1k', 
         hiddim: int = 1024,
-        num_heads: int = 16,
+        num_heads: int = 8,
         num_layers: int = 4,
         timesteps: int = 128,
         mem_len: int = 128,
@@ -41,6 +43,7 @@ class RocketPolicy(MinePolicy):
                 nhead=num_heads, 
                 dim_feedforward=hiddim*2, 
                 dropout=0.1,
+                batch_first=True
             ), 
             num_layers=2,
         )
@@ -49,7 +52,7 @@ class RocketPolicy(MinePolicy):
 
         self.recurrent = ResidualRecurrentBlocks(
             hidsize=hiddim,
-            timesteps=timesteps, 
+            timesteps=timesteps*2, 
             recurrence_type="transformer", 
             is_residual=True,
             use_pointwise_layer=True,
@@ -57,7 +60,7 @@ class RocketPolicy(MinePolicy):
             pointwise_use_activation=False, 
             attention_mask_style="clipped_causal", 
             attention_heads=num_heads,
-            attention_memory_size=mem_len + timesteps,
+            attention_memory_size=mem_len+timesteps*2,
             n_block=num_layers,
         )
         self.lastlayer = FanInInitReLULayer(hiddim, hiddim, layer_type="linear", batch_norm=False, layer_norm=True)
@@ -74,18 +77,24 @@ class RocketPolicy(MinePolicy):
         feats = self.backbone(x)
         x = self.updim(feats[-1])
         x = rearrange(x, 'b c h w -> b (h w) c')
+        x = self.pooling(x).mean(dim=1)[:, None] # (b t) 1 c
 
-        y = rearrange(input['segment']['obj_id'], 'b t -> (b t) 1')
-        y = self.interaction(y + 1) # add 1 to avoid -1 index
-        z = torch.cat([x, y], dim=1)
-        z = self.pooling(z).mean(dim=1)
-        z = rearrange(z, '(b t) c -> b t c', b=b, t=t)
+        y = rearrange(input['segment']['obj_id'] + 1, 'b t -> (b t) 1') # plus 1 to avoid `-1` as index
+        y = self.interaction(y) # (b t) 1 c
+        # z = torch.cat([x, y], dim=1)
+        # z = self.pooling(z).mean(dim=1)
+        # z = rearrange(z, '(b t) c -> b t c', b=b, t=t)
+
+        tokens = rearrange(torch.cat([y, x], dim=1), "(b t) x c -> b (t x) c", b=b, t=t)
 
         if not hasattr(self, 'first'):
-            self.first = torch.tensor([[False]], device=z.device).repeat(b, t)
+            self.first = torch.tensor([[False]], device=x.device).repeat(b, tokens.shape[1])
         if memory is None:
-            memory = [state.to(z.device) for state in self.recurrent.initial_state(b)]
-        z, memory = self.recurrent(z, self.first, memory)
+            memory = [state.to(x.device) for state in self.recurrent.initial_state(b)]
+        
+        # tokens = z
+        tokens, memory = self.recurrent(tokens, self.first, memory)
+        z = rearrange(tokens, 'b (t x) c -> b t x c', t=t)[:, :, 1]
         
         z = F.relu(z, inplace=False)
         z = self.lastlayer(z)
@@ -96,11 +105,12 @@ class RocketPolicy(MinePolicy):
         latents = {"pi_logits": pi_logits, "vpred": vpred}
         return latents, memory
 
-    def initial_state(self, batch_size: int):
+    def initial_state(self, batch_size: int = None):
         if batch_size is None:
             return [t.squeeze(0).to(self.device) for t in self.recurrent.initial_state(1)]
         return [t.to(self.device) for t in self.recurrent.initial_state(batch_size)]
 
+@Registers.model_loader.register
 def load_rocket_policy(ckpt_path: str):
     ckpt = torch.load(ckpt_path)
     model = RocketPolicy(**ckpt['hyper_parameters']['model'])
@@ -113,17 +123,22 @@ if __name__ == '__main__':
     # model = load_rocket_policy(ckpt_path).to("cuda")
     model = RocketPolicy(
         backbone='efficientnet_b0.ra_in1k', 
-        hiddim=2048, 
-        num_layers=8,
+        hiddim=1024, 
+        num_layers=4,
     ).to("cuda")
     num_params = sum(p.numel() for p in model.parameters())
     print(f"Params (MB): {num_params / 1e6 :.2f}")
+    
+    for key in ["backbone", "updim", "pooling", "interaction", "recurrent", "lastlayer", "final_ln"]:
+        num_params = sum(p.numel() for p in getattr(model, key).parameters())
+        print(f"{key} Params (MB): {num_params / 1e6 :.2f}")
+
     output, memory = model(
         input={
-            'image': torch.zeros(1, 8, 224, 224, 3).to("cuda"), 
+            'image': torch.zeros(1, 128, 224, 224, 3).to("cuda"), 
             'segment': {
-                'obj_id': torch.zeros(1, 8, dtype=torch.long).to("cuda"),
-                'obj_mask': torch.zeros(1, 8, 224, 224).to("cuda"),
+                'obj_id': torch.zeros(1, 128, dtype=torch.long).to("cuda"),
+                'obj_mask': torch.zeros(1, 128, 224, 224).to("cuda"),
             }
         }
     )

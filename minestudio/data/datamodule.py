@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-10 12:31:33
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-12-01 08:06:07
+LastEditTime: 2024-12-08 13:13:15
 FilePath: /MineStudio/minestudio/data/datamodule.py
 '''
 
@@ -31,6 +31,7 @@ class MineDataModule(pl.LightningDataModule):
         num_workers: int = 0,
         shuffle_episodes: bool = False,
         prefetch_factor: Optional[int] = None,
+        episode_continuous_batch: bool = False,
         **kwargs, 
     ):
         super().__init__()
@@ -39,6 +40,7 @@ class MineDataModule(pl.LightningDataModule):
         self.num_workers = num_workers
         self.shuffle_episodes = shuffle_episodes
         self.prefetch_factor = prefetch_factor
+        self.episode_continuous_batch = episode_continuous_batch
         self.kwargs = kwargs
     
     def setup(self, stage: Optional[str] = None):
@@ -46,7 +48,8 @@ class MineDataModule(pl.LightningDataModule):
         self.val_dataset   = MinecraftDataset(split='val', shuffle=self.shuffle_episodes, **self.data_params, **self.kwargs)
 
     def train_dataloader(self):
-        if self.data_params['mode'] == 'raw':
+        if self.episode_continuous_batch:
+            assert self.data_params['mode'] == 'raw', "episode_continuous_batch only support raw mode"
             # using MineDistributedBatchSampler for loading continuous video frames
             batch_sampler = MineDistributedBatchSampler(
                 dataset=self.train_dataset, 
@@ -69,11 +72,13 @@ class MineDataModule(pl.LightningDataModule):
                 collate_fn=batchify,
                 prefetch_factor=self.prefetch_factor,
                 pin_memory=True,
+                drop_last=True,
             )
         return train_loader
 
     def val_dataloader(self):
-        if self.data_params['mode'] == 'raw':
+        if self.episode_continuous_batch:
+            assert self.data_params['mode'] == 'raw', "episode_continuous_batch only support raw mode"
             # using MineDistributedBatchSampler for loading continuous video frames
             batch_sampler = MineDistributedBatchSampler(
                 dataset=self.val_dataset, 
@@ -96,18 +101,23 @@ class MineDataModule(pl.LightningDataModule):
                 collate_fn=batchify,
                 prefetch_factor=self.prefetch_factor,
                 pin_memory=True,
+                drop_last=True,
             )
         return val_loader
 
 if __name__ == '__main__':
     import lightning as L
     from tqdm import tqdm
-    fabric = L.Fabric(accelerator="cuda", devices=8, strategy="ddp")
+    fabric = L.Fabric(accelerator="cuda", devices=1, strategy="ddp")
     fabric.launch()
     data_module = MineDataModule(
         data_params=dict(
             mode='raw',
             dataset_dirs=[
+                '/nfs-shared-2/data/contractors/dataset_6xx',
+                '/nfs-shared-2/data/contractors/dataset_7xx',
+                '/nfs-shared-2/data/contractors/dataset_8xx',
+                '/nfs-shared-2/data/contractors/dataset_9xx',
                 '/nfs-shared-2/data/contractors/dataset_10xx',
             ],
             enable_contractor_info=False,
@@ -116,18 +126,25 @@ if __name__ == '__main__':
             frame_height=224,
             win_len=128,
             skip_frame=1,
-            split_ratio=0.2,
+            split_ratio=0.8,
         ),
-        batch_size=8,
-        num_workers=8,
+        batch_size=1,
+        num_workers=2,
         shuffle_episodes=True,
         prefetch_factor=4,
+        episode_continuous_batch=False, 
     )
     data_module.setup()
+    # for i in range(5):
+    #     print(i, data_module.train_dataset[i]['image'].float().mean())
+    # exit()
     train_loader = data_module.train_dataloader()
     train_loader = fabric.setup_dataloaders(train_loader, use_distributed_sampler=False)
     rank = fabric.local_rank
     for idx, batch in enumerate(tqdm(train_loader, disable=True)):
+        # print(idx, batch["image"].float().mean())
+        # if idx > 5:
+        #     break
         print(
             f"{rank = } \t" + "\t".join(
                 [f"{a[-20:]} {b}" for a, b in zip(batch['episode'], batch['progress'])]

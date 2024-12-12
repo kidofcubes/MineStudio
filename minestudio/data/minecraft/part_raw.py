@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-10 10:26:32
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-11-28 10:07:55
+LastEditTime: 2024-12-12 04:32:18
 FilePath: /MineStudio/minestudio/data/minecraft/part_raw.py
 '''
 import io
@@ -45,8 +45,9 @@ class RawDataset(BaseDataset):
         _episodes_with_length = list(self.episodes_with_length.items())
 
         if self.shuffle:
-            print("[Raw Dataset] Shuffling episodes ...")
-            random.seed(44) # ensure the same shuffle order for all workers
+            seed = 44
+            print(f"[Raw Dataset] Shuffling episodes with seed {seed}. ")
+            random.seed(seed) # ensure the same shuffle order for all workers
             random.shuffle(_episodes_with_length)
 
         divider = int(len(_episodes_with_length) * self.split_ratio)
@@ -100,12 +101,11 @@ if __name__ == '__main__':
     
     kernel_kwargs = dict(
         dataset_dirs=[
-            # '/nfs-readonly/jarvisbase/database/contractors/dataset_6xx', 
-            # '/nfs-readonly/jarvisbase/database/contractors/dataset_7xx', 
-            # '/nfs-readonly/jarvisbase/database/contractors/dataset_8xx', 
-            # '/nfs-readonly/jarvisbase/database/contractors/dataset_9xx', 
-            # '/nfs-readonly/jarvisbase/database/contractors/dataset_10xx', 
+            '/nfs-shared-2/data/contractors/dataset_6xx', 
             '/nfs-shared-2/data/contractors/dataset_7xx', 
+            '/nfs-shared-2/data/contractors/dataset_8xx', 
+            '/nfs-shared-2/data/contractors/dataset_9xx', 
+            '/nfs-shared-2/data/contractors/dataset_10xx', 
         ], 
         enable_contractor_info=False, 
         enable_segment=True, 
@@ -127,9 +127,11 @@ if __name__ == '__main__':
     from torch.utils.data import DataLoader
     from tqdm import tqdm
     loader = DataLoader(dataset, batch_sampler=sampler, num_workers=4)
-    for batch in loader:
+    for idx, batch in enumerate(loader):
         print(
             "\t".join(
                 [f"{a} {b}" for a, b in zip(batch['episode'], batch['progress'])]
             )
         )
+        if idx > 50:
+            break
