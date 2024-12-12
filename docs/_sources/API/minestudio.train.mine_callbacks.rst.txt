@@ -20,3 +20,9 @@ Submodules
    :members:
    :undoc-members:
    :show-inheritance:
+
+
+.. automodule:: minestudio.train.mine_callbacks.kl_divergence
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-12-12 09:18:35
  * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-12-12 11:40:10
+ * @LastEditTime: 2024-12-12 12:13:31
  * @FilePath: /MineStudio/docs/source/data/visualization.md
 -->
 
@@ -63,6 +63,9 @@ visualize_dataloader(
 ```
 
 Here is the example video:
+```{youtube} JvlFptYjOm0
+```
+
 
 
 ## Visualize Batches with Special Events
@@ -105,3 +108,5 @@ visualize_dataloader(
 
 Here is the example video:
 
+```{youtube} 9YU3y0ZWh8Y
+```
