@@ -99,9 +99,6 @@ def save_data_json(ans, task_name, video_path_a, video_path_b):
 
     return result_dict  
 
-
-
-
 def process_video(video_path):
     video = cv2.VideoCapture(video_path)
     base64Frames = []

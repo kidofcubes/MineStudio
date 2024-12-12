@@ -66,7 +66,3 @@ for item in data:
     with open(save_path + f"{rule_file}.txt", 'w') as file:  
         file.write(ans)
 
-
-
-
-
