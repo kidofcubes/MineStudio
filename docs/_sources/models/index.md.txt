@@ -1,12 +1,22 @@
 <!--
  * @Date: 2024-12-03 04:47:37
- * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-12-03 06:27:07
+ * @LastEditors: muzhancun muzhancun@126.com
+ * @LastEditTime: 2024-12-12 20:31:15
  * @FilePath: /MineStudio/docs/source/models/index.md
 -->
 # Models
 
 We provided a template for the Minecraft Policy and based on this template, we created various different baseline models, including VPT, STEVE-1, GROOT, ROCKET-1, etc. 
+
+
+```{toctree}
+:caption: MineStudio Models
+
+baseline-vpt
+baseline-steve1
+baseline-groot
+baseline-rocket1
+```
 
 ## Quick Start
 ```{include} quick-models.md

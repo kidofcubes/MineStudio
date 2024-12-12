@@ -61,10 +61,12 @@
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'models/index';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Train" href="../train/index.html" />
+    <link rel="next" title="&lt;no title&gt;" href="baseline-vpt.html" />
     <link rel="prev" title="Visualization Script" href="../data/visualization.html" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -299,6 +301,18 @@
           <a href="https://pypi.org/project/minestudio" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-custom fa-pypi fa-lg" aria-hidden="true"></i>
             <span class="sr-only">PyPI</span></a>
         </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://arxiv.org/pdf/2310.08235" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="ai ai-arxiv fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">ArXiv</span></a>
+        </li>
 </ul></div>
       
     </div>
@@ -476,6 +490,18 @@
           <a href="https://pypi.org/project/minestudio" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-custom fa-pypi fa-lg" aria-hidden="true"></i>
             <span class="sr-only">PyPI</span></a>
         </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://arxiv.org/pdf/2310.08235" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="ai ai-arxiv fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">ArXiv</span></a>
+        </li>
 </ul></div>
         
       </div>
@@ -505,7 +531,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../data/visualization.html">Visualization Script</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Models</a></li>
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Models</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="baseline-groot.html">GROOT: Learning to Follow Instructions by Watching Gameplay Videos</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="../train/index.html">Train</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../inference/index.html">Inference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../benchmark/index.html">Benchmark</a></li>
@@ -566,13 +595,24 @@
                   
 <!--
  * @Date: 2024-12-03 04:47:37
- * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-12-03 06:27:07
+ * @LastEditors: muzhancun muzhancun@126.com
+ * @LastEditTime: 2024-12-12 20:31:15
  * @FilePath: /MineStudio/docs/source/models/index.md
 -->
 <section id="models">
 <h1>Models<a class="headerlink" href="#models" title="Link to this heading">#</a></h1>
 <p>We provided a template for the Minecraft Policy and based on this template, we created various different baseline models, including VPT, STEVE-1, GROOT, ROCKET-1, etc.</p>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">MineStudio Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="baseline-groot.html">GROOT: Learning to Follow Instructions by Watching Gameplay Videos</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="baseline-groot.html#insights">Insights</a></li>
+<li class="toctree-l2"><a class="reference internal" href="baseline-groot.html#method">Method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="baseline-groot.html#architecture">Architecture</a></li>
+</ul>
+</li>
+</ul>
+</div>
 <section id="quick-start">
 <h2>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading">#</a></h2>
 <!--
@@ -819,11 +859,11 @@ We emperically find that setting <code class="docutils literal notranslate"><spa
       </div>
     </a>
     <a class="right-next"
-       href="../train/index.html"
+       href="baseline-vpt.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Train</p>
+        <p class="prev-next-title">&lt;no title&gt;</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
