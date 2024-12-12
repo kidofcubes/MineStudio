@@ -127,7 +127,6 @@ Using Lightning to simplify the data loading process (especially for distributed
 
 ```python
 import lightning as L
-from tqdm import tqdm
 from minestudio.data import MineDataModule
 
 fabric = L.Fabric(accelerator="cuda", devices=2, strategy="ddp")
@@ -153,7 +152,7 @@ data_module.setup()
 train_loader = data_module.train_dataloader()
 train_loader = fabric.setup_dataloaders(train_loader, use_distributed_sampler=True)
 rank = fabric.local_rank
-for idx, batch in enumerate(tqdm(train_loader, disable=True)):
+for idx, batch in enumerate(train_loader):
     print(
         f"{rank = } \t" + "\t".join(
             [f"{a.shape} {b}" for a, b in zip(batch['image'], batch['text'])]

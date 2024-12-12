@@ -64,7 +64,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'data/dataset-event';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Models" href="../models/index.html" />
+    <link rel="next" title="Visualization Script" href="visualization.html" />
     <link rel="prev" title="Raw Dataset" href="dataset-raw.html" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -502,6 +502,7 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Data</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="dataset-raw.html">Raw Dataset</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Event Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="visualization.html">Visualization Script</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../models/index.html">Models</a></li>
@@ -722,7 +723,6 @@
 <h2>Using Lightning to Simplify Data Loading Process<a class="headerlink" href="#using-lightning-to-simplify-data-loading-process" title="Link to this heading">#</a></h2>
 <p>Using Lightning to simplify the data loading process (especially for distributed training situation) is a good choice. Here is an example:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">lightning</span> <span class="k">as</span> <span class="nn">L</span>
-<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
 <span class="kn">from</span> <span class="nn">minestudio.data</span> <span class="kn">import</span> <span class="n">MineDataModule</span>
 
 <span class="n">fabric</span> <span class="o">=</span> <span class="n">L</span><span class="o">.</span><span class="n">Fabric</span><span class="p">(</span><span class="n">accelerator</span><span class="o">=</span><span class="s2">&quot;cuda&quot;</span><span class="p">,</span> <span class="n">devices</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;ddp&quot;</span><span class="p">)</span>
@@ -748,7 +748,7 @@
 <span class="n">train_loader</span> <span class="o">=</span> <span class="n">data_module</span><span class="o">.</span><span class="n">train_dataloader</span><span class="p">()</span>
 <span class="n">train_loader</span> <span class="o">=</span> <span class="n">fabric</span><span class="o">.</span><span class="n">setup_dataloaders</span><span class="p">(</span><span class="n">train_loader</span><span class="p">,</span> <span class="n">use_distributed_sampler</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">rank</span> <span class="o">=</span> <span class="n">fabric</span><span class="o">.</span><span class="n">local_rank</span>
-<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">batch</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tqdm</span><span class="p">(</span><span class="n">train_loader</span><span class="p">,</span> <span class="n">disable</span><span class="o">=</span><span class="kc">True</span><span class="p">)):</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">batch</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">train_loader</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span>
         <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">rank</span><span class="w"> </span><span class="si">= }</span><span class="s2"> </span><span class="se">\t</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
             <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">batch</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">],</span> <span class="n">batch</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">])]</span>
@@ -804,11 +804,11 @@
       </div>
     </a>
     <a class="right-next"
-       href="../models/index.html"
+       href="visualization.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Models</p>
+        <p class="prev-next-title">Visualization Script</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
