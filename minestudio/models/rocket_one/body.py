@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-10 15:52:16
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-12-11 02:37:39
+LastEditTime: 2024-12-12 12:23:55
 FilePath: /MineStudio/minestudio/models/rocket_one/body.py
 '''
 import torch
@@ -49,7 +49,6 @@ class RocketPolicy(MinePolicy):
         )
         
         self.interaction = nn.Embedding(10, hiddim) # denotes the number of interaction types
-
         self.recurrent = ResidualRecurrentBlocks(
             hidsize=hiddim,
             timesteps=timesteps*2, 
@@ -105,7 +104,7 @@ class RocketPolicy(MinePolicy):
         latents = {"pi_logits": pi_logits, "vpred": vpred}
         return latents, memory
 
-    def initial_state(self, batch_size: int = None):
+    def initial_state(self, batch_size: int = None) -> List[torch.Tensor]:
         if batch_size is None:
             return [t.squeeze(0).to(self.device) for t in self.recurrent.initial_state(1)]
         return [t.to(self.device) for t in self.recurrent.initial_state(batch_size)]
