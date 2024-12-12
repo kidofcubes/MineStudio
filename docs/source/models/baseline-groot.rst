@@ -14,7 +14,7 @@ To develop an effective instruction-following controller, defining a robust goal
 Method
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Formally, the future state prediction problem is defined as maximizing the log-likelihood of future states given past ones: :math:\log p_{\theta}(s_{t+1:T} | s_{0:t}). By introducing :math:g as a latent variable conditioned on past states, the evidence lower bound (ELBO) can be expressed as:
+Formally, the future state prediction problem is defined as maximizing the log-likelihood of future states given past ones: :math:\log p_{\theta}(s_{t+1:T} | s_{0:t}). By introducing :math:`g` as a latent variable conditioned on past states, the evidence lower bound (ELBO) can be expressed as:
 
 .. math::
 
