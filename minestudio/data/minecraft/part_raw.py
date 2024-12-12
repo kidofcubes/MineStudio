@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-10 10:26:32
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-12-09 15:49:51
+LastEditTime: 2024-12-12 04:32:18
 FilePath: /MineStudio/minestudio/data/minecraft/part_raw.py
 '''
 import io
@@ -127,9 +127,11 @@ if __name__ == '__main__':
     from torch.utils.data import DataLoader
     from tqdm import tqdm
     loader = DataLoader(dataset, batch_sampler=sampler, num_workers=4)
-    for batch in loader:
+    for idx, batch in enumerate(loader):
         print(
             "\t".join(
                 [f"{a} {b}" for a, b in zip(batch['episode'], batch['progress'])]
             )
         )
+        if idx > 50:
+            break

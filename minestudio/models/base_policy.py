@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-11 15:59:37
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-12-09 13:10:32
+LastEditTime: 2024-12-11 15:09:36
 FilePath: /MineStudio/minestudio/models/base_policy.py
 '''
 from abc import ABC, abstractmethod
