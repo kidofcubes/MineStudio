@@ -37,7 +37,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/thebelab.css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=b5e26e65" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=3403bf4f" />
   
   <!-- So that users can add custom icons -->
   <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
@@ -569,7 +569,7 @@
 <!--
  * @Date: 2024-12-01 08:37:10
  * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-12-12 05:44:51
+ * @LastEditTime: 2024-12-12 09:07:39
  * @FilePath: /MineStudio/docs/source/data/dataset-raw.md
 -->
 <section id="raw-dataset">
@@ -589,22 +589,43 @@
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">win_len</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">dataset_dirs</span></code></p></td>
+<td><p>the directories of the dataset</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">enable_video</span></code></p></td>
+<td><p>whether to load video data</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">enable_action</span></code></p></td>
+<td><p>whether to load action data</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">enable_contractor_info</span></code></p></td>
+<td><p>whether to load contractor meta information</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">enable_segment</span></code></p></td>
+<td><p>whether to load segmentation data</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">frame_width</span></code></p></td>
+<td><p>the width of the frame</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">frame_height</span></code></p></td>
+<td><p>the height of the frame</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">win_len</span></code></p></td>
 <td><p>segment length of an item</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">skip_frame</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">skip_frame</span></code></p></td>
 <td><p>the number of frames to skip when building the segment item</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">split</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">split</span></code></p></td>
 <td><p>the split mode of the dataset, including <code class="docutils literal notranslate"><span class="pre">train</span></code>, <code class="docutils literal notranslate"><span class="pre">val</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">split_ratio</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">split_ratio</span></code></p></td>
 <td><p>the ratio of the split mode, e.g., <code class="docutils literal notranslate"><span class="pre">0.8</span></code> means <code class="docutils literal notranslate"><span class="pre">train</span></code>:<code class="docutils literal notranslate"><span class="pre">val</span></code>=8:2</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">shuffle</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">shuffle</span></code></p></td>
 <td><p>whether to shuffle trajectory order, this could affect train-val split</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">verbose</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">verbose</span></code></p></td>
 <td><p>whether to print the information of the dataset</p></td>
 </tr>
 </tbody>
