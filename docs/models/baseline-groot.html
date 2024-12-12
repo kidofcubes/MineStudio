@@ -611,7 +611,7 @@
 </section>
 <section id="method">
 <h2>Method<a class="headerlink" href="#method" title="Link to this heading">#</a></h2>
-<p>Formally, the future state prediction problem is defined as maximizing the log-likelihood of future states given past ones: :math:log p_{theta}(s_{t+1:T} | s_{0:t}). By introducing :math:g as a latent variable conditioned on past states, the evidence lower bound (ELBO) can be expressed as:</p>
+<p>Formally, the future state prediction problem is defined as maximizing the log-likelihood of future states given past ones: :math:log p_{theta}(s_{t+1:T} | s_{0:t}). By introducing <span class="math notranslate nohighlight">\(g\)</span> as a latent variable conditioned on past states, the evidence lower bound (ELBO) can be expressed as:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\log p_{\theta}(s_{t+1:T} | s_{0:t}) &amp;= \log \sum_g p_{\theta}(s_{t+1:T}, g | s_{0:t}) \\
 &amp;\geq \mathbb{E}_{g \sim q_\phi(\cdot | s_{0:t})} \left[ \log p_{\theta}(s_{t+1:T} | g, s_{0:t}) \right] - D_{\text{KL}}(q_\phi(g | s_{0:T}) || p_\theta(g|s_{0:t})),\end{split}\]</div>
