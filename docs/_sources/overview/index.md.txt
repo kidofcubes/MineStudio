@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-11-29 08:07:44
  * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-11-30 05:36:11
+ * @LastEditTime: 2024-12-13 15:13:58
  * @FilePath: /MineStudio/docs/source/overview/index.md
 -->
 
@@ -25,7 +25,7 @@ installation
 ../simulator/index
 ../data/index
 ../models/index
-../train/index
+../offline/index
 ../inference/index
 ../benchmark/index
 ```

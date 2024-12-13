@@ -18,6 +18,12 @@ Submodules
 ----------
 
 
+.. automodule:: minestudio.tutorials.inference.evaluate_hunt_vpt
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
 .. automodule:: minestudio.tutorials.inference.example
    :members:
    :undoc-members:

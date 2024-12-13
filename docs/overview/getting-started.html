@@ -66,7 +66,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'overview/getting-started';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Agents" href="../agents/index.html" />
+    <link rel="next" title="Online Training" href="../online/index.html" />
     <link rel="prev" title="Automatic Evaluation Pipeline" href="../benchmark/automatic-evaluation.html" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -219,22 +219,15 @@
                 <ul id="pst-nav-more-links" class="dropdown-menu">
                     
 <li class=" ">
-  <a class="nav-link dropdown-item nav-internal" href="../agents/index.html">
-    Agents
+  <a class="nav-link dropdown-item nav-internal" href="../offline/index.html">
+    Offline
   </a>
 </li>
 
 
 <li class=" ">
-  <a class="nav-link dropdown-item nav-internal" href="../benchmark/index.html">
-    Benchmark
-  </a>
-</li>
-
-
-<li class=" ">
-  <a class="nav-link dropdown-item nav-internal" href="../train/index.html">
-    Train
+  <a class="nav-link dropdown-item nav-internal" href="../online/index.html">
+    Online
   </a>
 </li>
 
@@ -247,8 +240,8 @@
 
 
 <li class=" ">
-  <a class="nav-link dropdown-item nav-internal" href="../online/index.html">
-    Online
+  <a class="nav-link dropdown-item nav-internal" href="../benchmark/index.html">
+    Benchmark
   </a>
 </li>
 
@@ -427,22 +420,15 @@
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="../agents/index.html">
-    Agents
+  <a class="nav-link nav-internal" href="../offline/index.html">
+    Offline
   </a>
 </li>
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="../benchmark/index.html">
-    Benchmark
-  </a>
-</li>
-
-
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="../train/index.html">
-    Train
+  <a class="nav-link nav-internal" href="../online/index.html">
+    Online
   </a>
 </li>
 
@@ -455,8 +441,8 @@
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="../online/index.html">
-    Online
+  <a class="nav-link nav-internal" href="../benchmark/index.html">
+    Benchmark
   </a>
 </li>
 
@@ -552,7 +538,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../models/baseline-rocket1.html">Built-in ROCKET-1 Model</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1"><a class="reference internal" href="../train/index.html">Train</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../offline/index.html">Offline</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../inference/index.html">Inference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../inference/baseline-groot.html">Inference with GROOT</a></li>
 </ul>
@@ -617,10 +603,11 @@
 <!--
  * @Date: 2024-11-29 08:08:13
  * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-12-03 05:50:13
+ * @LastEditTime: 2024-12-13 16:41:35
  * @FilePath: /MineStudio/docs/source/overview/getting-started.md
 -->
-<p><img alt="" src="../_images/banner.png" /></p>
+<a class="reference internal image-reference" href="../_images/banner.png"><img alt="../_images/banner.png" src="../_images/banner.png" style="width: 90%;" />
+</a>
 <section id="getting-started">
 <h1>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading">#</a></h1>
 <div class="toctree-wrapper compound">
@@ -929,7 +916,94 @@ VirtualGL</label><div class="sd-tab-content docutils">
 </div>
 </details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
 <summary class="sd-summary-title sd-card-header">
-<span class="sd-summary-text"><img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Train: Training Policy with Offline Data</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<span class="sd-summary-text"><img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Offline: Pre-Training Policy with Offline Data</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p class="sd-card-text">Training a Minecraft policy in MineStudio is really simple.</p>
+</div>
+<p class="sd-card-text">The following code snippet shows how to finetune a VPT policy to hunt animals in Minecraft using offline data.</p>
+<ol class="arabic">
+<li><p class="sd-card-text">Import some dependencies:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">lightning</span> <span class="k">as</span> <span class="nn">L</span>
+<span class="kn">from</span> <span class="nn">lightning.pytorch.loggers</span> <span class="kn">import</span> <span class="n">WandbLogger</span>
+<span class="kn">from</span> <span class="nn">lightning.pytorch.callbacks</span> <span class="kn">import</span> <span class="n">LearningRateMonitor</span>
+<span class="c1"># below are MineStudio dependencies</span>
+<span class="kn">from</span> <span class="nn">minestudio.data</span> <span class="kn">import</span> <span class="n">MineDataModule</span>
+<span class="kn">from</span> <span class="nn">minestudio.train</span> <span class="kn">import</span> <span class="n">MineLightning</span>
+<span class="kn">from</span> <span class="nn">minestudio.models</span> <span class="kn">import</span> <span class="n">load_vpt_policy</span>
+<span class="kn">from</span> <span class="nn">minestudio.train.mine_callbacks</span> <span class="kn">import</span> <span class="n">BehaviorCloneCallback</span>
+<span class="kn">from</span> <span class="nn">minestudio.train.lightning_callbacks</span> <span class="kn">import</span> <span class="n">SmartCheckpointCallback</span><span class="p">,</span> <span class="n">SpeedMonitorCallback</span>
+</pre></div>
+</div>
+</li>
+<li><p class="sd-card-text">Configure the policy model and the training process:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">policy</span> <span class="o">=</span> <span class="n">load_vpt_policy</span><span class="p">(</span><span class="n">model_path</span><span class="o">=</span><span class="s2">&quot;/path/to/1x.model&quot;</span><span class="p">,</span> <span class="n">weights_path</span><span class="o">=</span><span class="s2">&quot;/path/to/1x.weights&quot;</span><span class="p">)</span>
+<span class="n">mine_lightning</span> <span class="o">=</span> <span class="n">MineLightning</span><span class="p">(</span>
+    <span class="n">mine_policy</span><span class="o">=</span><span class="n">policy</span><span class="p">,</span>
+    <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.00004</span><span class="p">,</span>
+    <span class="n">warmup_steps</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span>
+    <span class="n">weight_decay</span><span class="o">=</span><span class="mf">0.000181</span><span class="p">,</span>
+    <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">BehaviorCloneCallback</span><span class="p">(</span><span class="n">weight</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="sd-card-text">Configure the data module that contains all the <code class="docutils literal notranslate"><span class="pre">kill_entity</span></code> trajectory segments:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">episode_continuous_batch</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">mine_data</span> <span class="o">=</span> <span class="n">MineDataModule</span><span class="p">(</span>
+    <span class="n">data_params</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+        <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;event&#39;</span><span class="p">,</span> 
+        <span class="n">dataset_dirs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;/nfs-shared-2/data/contractors/dataset_6xx&#39;</span><span class="p">],</span>
+        <span class="n">win_len</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span>
+        <span class="n">frame_width</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span>
+        <span class="n">frame_height</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span>
+        <span class="n">event_regex</span><span class="o">=</span><span class="s2">&quot;minecraft.kill_entity:.*&quot;</span>
+        <span class="n">bias</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
+        <span class="n">min_nearby</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">batch_size</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+    <span class="n">num_workers</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+    <span class="n">prefetch_factor</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+    <span class="n">split_ratio</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> 
+    <span class="n">shuffle_episodes</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">episode_continuous_batch</span><span class="o">=</span><span class="n">episode_continuous_batch</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p class="sd-card-text">If <code class="docutils literal notranslate"><span class="pre">episode_continuous_batch=True</span></code>, then the dataloader will automatically use our distributed batch sampler. When configuring the <code class="docutils literal notranslate"><span class="pre">trainer</span></code>, we need to set <code class="docutils literal notranslate"><span class="pre">use_distributed_sampler=False</span></code>.</p>
+</div>
+</li>
+<li><p class="sd-card-text">Configure the <code class="docutils literal notranslate"><span class="pre">trainer</span></code> with your preferred <a class="reference external" href="https://lightning.ai/">PyTorch Lightning</a> callbacks:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L</span><span class="o">.</span><span class="n">Trainer</span><span class="p">(</span>
+    <span class="n">logger</span><span class="o">=</span><span class="n">WandbLogger</span><span class="p">(</span><span class="n">project</span><span class="o">=</span><span class="s2">&quot;minestudio-vpt&quot;</span><span class="p">),</span> 
+    <span class="n">devices</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> 
+    <span class="n">precision</span><span class="o">=</span><span class="s2">&quot;bf16&quot;</span><span class="p">,</span> 
+    <span class="n">strategy</span><span class="o">=</span><span class="s1">&#39;ddp_find_unused_parameters_true&#39;</span><span class="p">,</span> 
+    <span class="n">use_distributed_sampler</span><span class="o">=</span><span class="ow">not</span> <span class="n">episode_continuous_batch</span><span class="p">,</span> 
+    <span class="n">gradient_clip_val</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> 
+    <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">LearningRateMonitor</span><span class="p">(</span><span class="n">logging_interval</span><span class="o">=</span><span class="s1">&#39;step&#39;</span><span class="p">),</span> 
+        <span class="n">SpeedMonitorCallback</span><span class="p">(),</span>
+        <span class="n">SmartCheckpointCallback</span><span class="p">(</span>
+            <span class="n">dirpath</span><span class="o">=</span><span class="s1">&#39;./weights&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;weight-</span><span class="si">{epoch}</span><span class="s1">-</span><span class="si">{step}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">save_top_k</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> 
+            <span class="n">every_n_train_steps</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">save_weights_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">),</span> 
+        <span class="n">SmartCheckpointCallback</span><span class="p">(</span>
+            <span class="n">dirpath</span><span class="o">=</span><span class="s1">&#39;./checkpoints&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;ckpt-</span><span class="si">{epoch}</span><span class="s1">-</span><span class="si">{step}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">save_top_k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> 
+            <span class="n">every_n_train_steps</span><span class="o">=</span><span class="mi">2000</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">save_weights_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="p">]</span>
+<span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">mine_lightning</span><span class="p">,</span> <span class="n">datamodule</span><span class="o">=</span><span class="n">mine_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text"><img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Online: Finetuning Policy via Online Interaction</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
 </div>
 </details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
 <summary class="sd-summary-title sd-card-header">
@@ -976,11 +1050,11 @@ VirtualGL</label><div class="sd-tab-content docutils">
       </div>
     </a>
     <a class="right-next"
-       href="../agents/index.html"
+       href="../online/index.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Agents</p>
+        <p class="prev-next-title">Online Training</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

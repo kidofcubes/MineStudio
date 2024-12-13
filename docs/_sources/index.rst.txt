@@ -16,8 +16,7 @@
    Simulator <simulator/index>
    Data <data/index>
    Models <models/index>
-   Agents <agents/index>
-   Benchmark <benchmark/index>
-   Train <train/index>
-   Inference <inference/index>
+   Offline <offline/index>
    Online <online/index>
+   Inference <inference/index>
+   Benchmark <benchmark/index>
