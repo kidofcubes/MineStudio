@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>&lt;no title&gt; &#8212; MineStudio 1.0.0</title>
+    <title>General Information &#8212; MineStudio 1.0.0</title>
   
   
   
@@ -61,10 +61,11 @@
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'online/customization';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'online/general-information';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="General Information" href="general-information.html" />
+    <link rel="next" title="&lt;no title&gt;" href="customization.html" />
+    <link rel="prev" title="Online Training" href="index.html" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -525,8 +526,8 @@
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">MineStudio Online Training</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="general-information.html">General Information</a></li>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">General Information</a></li>
 </ul>
 </div>
 </nav></div>
@@ -565,7 +566,7 @@
     
     <li class="breadcrumb-item"><a href="index.html" class="nav-link">Online Training</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">&lt;no title&gt;</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">General Information</span></li>
   </ul>
 </nav>
 </div>
@@ -582,6 +583,26 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
+<section id="general-information">
+<h1>General Information<a class="headerlink" href="#general-information" title="Link to this heading">#</a></h1>
+<p>The code in the Online Training Module is mainly divided into four parts: <code class="docutils literal notranslate"><span class="pre">run</span></code>, <code class="docutils literal notranslate"><span class="pre">rollout</span></code>, and <code class="docutils literal notranslate"><span class="pre">train</span></code>. Each part is contained in its corresponding subfolder under the <code class="docutils literal notranslate"><span class="pre">online</span></code> folder.</p>
+<section id="run">
+<h2>Run<a class="headerlink" href="#run" title="Link to this heading">#</a></h2>
+<p>Under <code class="docutils literal notranslate"><span class="pre">Online/run</span></code>, We have provided a simple example to run our framework. Please refer to the <a class="reference internal" href="quick-online.html"><span class="doc std std-doc">Quickstart</span></a> for details.</p>
+</section>
+<section id="rollout">
+<h2>Rollout<a class="headerlink" href="#rollout" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">rollout</span></code> section is located under <code class="docutils literal notranslate"><span class="pre">online/rollout</span></code> and mainly consists of several parts:</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">EnvWorker</span></code>  can obtain control information such as actions from the <code class="docutils literal notranslate"><span class="pre">RolloutWorker</span></code>. interact directly with the environment and pass the obtained information to the <code class="docutils literal notranslate"><span class="pre">RolloutWorker</span></code>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">RolloutWorker</span></code> is responsible for compressing the observations, states, and other information from multiple <code class="docutils literal notranslate"><span class="pre">EnvWorker</span></code>s into a batches, passing them to the agent for efficient computation of actions, and then distributing the actions to the corresponding <code class="docutils literal notranslate"><span class="pre">EnvWorker</span></code>s. At the same time, it sends all the information to the <code class="docutils literal notranslate"><span class="pre">ReplayManager</span></code>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">RolloutManager</span></code> receives the information from the <code class="docutils literal notranslate"><span class="pre">RolloutWorker</span></code> and internally maintains the work progress of all <code class="docutils literal notranslate"><span class="pre">EnvWorker</span></code>s. When a worker has been working for a certain number of consecutive frames, it clips the work into fragments and sends them, along with the information, to the <code class="docutils literal notranslate"><span class="pre">ReplayBuffer</span></code>.</p>
+</section>
+<section id="trainer">
+<h2>Trainer<a class="headerlink" href="#trainer" title="Link to this heading">#</a></h2>
+<p>This folder contains our defined Online Trainer, including the parent class <code class="docutils literal notranslate"><span class="pre">BaseTrainer</span></code> and subclasses such as <code class="docutils literal notranslate"><span class="pre">PPOTrainer</span></code>. These trainers accept <code class="docutils literal notranslate"><span class="pre">config</span></code> and the computation results of <code class="docutils literal notranslate"><span class="pre">GaeWorker</span></code> on the <code class="docutils literal notranslate"><span class="pre">ReplayBuffer</span></code> as parameters.</p>
+<p>By inheriting from <code class="docutils literal notranslate"><span class="pre">BaseTrainer</span></code>, you can customize the trainer according to your needs. Refer to <a class="reference internal" href="quick-online.html"><span class="doc std std-doc">Customization</span></a> for details.</p>
+</section>
+</section>
 
 <div class="section ablog__blog_comments">
   
@@ -598,13 +619,22 @@
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="general-information.html"
+       href="index.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">General Information</p>
+        <p class="prev-next-title">Online Training</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="customization.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">&lt;no title&gt;</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
@@ -624,15 +654,17 @@
     <i class="fa-solid fa-list"></i> On this page
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
-    <ul class="simple visible nav section-nav flex-column">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run">Run</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rollout">Rollout</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#trainer">Trainer</a></li>
 </ul>
-
   </nav></div>
 
   <div class="sidebar-secondary-item">
 
   <div class="tocsection sourcelink">
-    <a href="../_sources/online/customization.md.txt">
+    <a href="../_sources/online/general-information.md.txt">
       <i class="fa-solid fa-file-lines"></i> Show Source
     </a>
   </div>
