@@ -74,8 +74,9 @@ online_dict = {
         "keep_interval": 40,
         "record_video_interval": 2,
         "fix_decoder": False,
-        "resume": "/scratch/hekaichen/tmpdir/ray/session_2024-12-12_21-10-40_218613_2665801/artifacts/2024-12-12_21-10-58/TorchTrainer_2024-12-12_21-10-58/working_dirs/TorchTrainer_8758b_00000_0_2024-12-12_21-10-58/checkpoints/150",
+        "resume": None, #"/scratch/hekaichen/tmpdir/ray/session_2024-12-12_21-10-40_218613_2665801/artifacts/2024-12-12_21-10-58/TorchTrainer_2024-12-12_21-10-58/working_dirs/TorchTrainer_8758b_00000_0_2024-12-12_21-10-58/checkpoints/150",
         "resume_optimizer": True,
+        "save_path": "/scratch/hekaichen/workspace/MineStudio/minestudio/online/run/output"
     },
 
     "logger_config": {
@@ -85,16 +86,12 @@ online_dict = {
 }
 
 def env_generator():
-    import numpy as np
     from minestudio.simulator import MinecraftSim
     from minestudio.simulator.callbacks import (
-        SpeedTestCallback, 
-        RecordCallback, 
         SummonMobsCallback, 
         MaskActionsCallback, 
         RewardsCallback, 
         CommandsCallback, 
-        TaskCallback,
         JudgeResetCallback,
         FastResetCallback
     )
@@ -123,10 +120,6 @@ def env_generator():
                 random_tp_range=1000,
             ),
             JudgeResetCallback(600),
-            # TaskCallback([
-            #     {'name': 'chop', 'text': 'mine the oak logs'}, 
-            #     {'name': 'diamond', 'text': 'mine the diamond ore'},
-            # ])
         ]
     )
     return sim

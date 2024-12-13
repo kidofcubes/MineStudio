@@ -1,7 +1,7 @@
 ps  -elf | grep 'multiprocess' | awk '{print $4}' | xargs kill -9 
 ps  -elf | grep 'ray' | awk '{print $4}' | xargs kill -9 
 
-LOG_FILE="/scratch/hekaichen/workspace/MineStudio/minestudio/online/run/output/memory_log.txt"  # 日志文件路径，可以根据需要修改
+LOG_FILE="output/memory_log.txt"  # 日志文件路径，可以根据需要修改
 > "$LOG_FILE"
 # 确保日志文件存在
 touch "$LOG_FILE"

@@ -5,7 +5,7 @@ import numpy as np
 from pathlib import Path
 from contextlib import nullcontext
 from minestudio.online.utils.train.data import prepare_batch, data_iter
-from typing import Tuple, List
+from typing import Tuple, List, Optional
 from minestudio.online.utils.rollout.datatypes import FragmentIndex, SampleFragment, FragmentDataDict
 from minestudio.online.utils import auto_slice, recursive_detach
 import minestudio.online.utils.train.wandb_logger as wandb_logger
@@ -14,6 +14,7 @@ from minestudio.simulator import MinecraftSim
 import time
 import ray
 import ray.train.torch
+import os
 import torchmetrics
 import logging
 from minestudio.online.trainer.basetrainer import BaseTrainer
@@ -62,6 +63,7 @@ class PPOTrainer(BaseTrainer):
         normalize_advantage_full_batch: bool,
         record_video_interval: int,
         save_interval: int,
+        save_path: Optional[str],
         keep_interval: int,
         log_ratio_range: float,
         fix_decoder: False,
@@ -97,6 +99,7 @@ class PPOTrainer(BaseTrainer):
         self.save_interval = save_interval
         self.keep_interval = keep_interval
         self.fix_decoder = fix_decoder
+        self.save_path = save_path
         assert self.batches_per_iteration % self.gradient_accumulation == 0
 
     def setup_model_and_optimizer(self, policy_generator) -> Tuple[MinePolicy, torch.optim.Optimizer]:
@@ -428,7 +431,12 @@ class PPOTrainer(BaseTrainer):
             if self.num_updates % self.save_interval == 0:
                 # TODO: this may cause problem in distributed training
                 logging.getLogger("ray").info(f"Saving checkpoint at update count {self.num_updates}...")
-                checkpoint_dir = Path(f'checkpoints/{self.num_updates}')
+                
+                if self.save_path == None:     
+                    checkpoint_dir = Path(f'checkpoints/{self.num_updates}')
+                else:
+                    checkpoint_dir = Path(os.path.join(Path(f'{self.save_path}'), Path(f'checkpoints/{self.num_updates}')))
+
                 logging.getLogger("ray").info(f"Checkpoint dir: {checkpoint_dir.absolute()}")
                 if not checkpoint_dir.exists():
                     checkpoint_dir.mkdir(parents=True)
