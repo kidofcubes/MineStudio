@@ -40,8 +40,9 @@ class BaseTrainer:
         context_length: int,
         use_normalized_vf: bool,
         inference_batch_size_per_gpu: int,
+        resume: Optional[str],
+        resume_optimizer: bool,
         **kwargs,
-        #resume: Optional[str],
     ):
         self.rollout_manager = rollout_manager
         self.policy_generator = policy_generator
@@ -56,7 +57,8 @@ class BaseTrainer:
         self.context_length = context_length
 
         print("Warning: resume is not implemented")
-        self.resume = False #resume is not implemented
+        self.resume = resume
+        self.resume_optimizer = resume_optimizer
         self.num_updates = 0
         self.num_optimized = 0
        
@@ -145,22 +147,17 @@ class BaseTrainer:
                     except:
                         ray.util.pdb.set_trace()
     
-                    # pi_latent, vf_latent = latents['pi_latent'], latents['vf_latent']
                     if torch.isnan(forward_result['pi_logits']['buttons']).any():
                         ray.util.pdb.set_trace()
-                    # with torch.no_grad():s
-                    #     pi_logits = self.inner_model.pi_head()(pi_latent)
-                    #     vpred = self.inner_model.value_head(vf_latent)
-                    
-                    # forward_result["pi_logits"] = pi_logits
-                    # forward_result["vpred"] = vpred
                     
                     _forward_results.append(forward_result)
-
                 forward_result = auto_cat(_forward_results, dim=1)
-
+                
                 with torch.no_grad():
                     logp = self.inner_model.pi_head.logprob(batch['action'], forward_result["pi_logits"])
+                    #pi_logits should be [1,128,1,8641]?
+                    #ray.util.pdb.set_trace()
+                    logging.getLogger("ray").info(f"logp's shape: {logp.shape}")
                 pi_logits: Union[Dict[str, torch.Tensor], torch.Tensor] = forward_result["pi_logits"]
                 vpred = forward_result["vpred"].reshape(B, T)
                 if torch.isnan(vpred).any():
@@ -243,12 +240,6 @@ class BaseTrainer:
         if self.resume:
             logging.getLogger("ray").info(f"Resuming from {self.resume}")
             state_dict_model = torch.load(os.path.join(self.resume, "model.ckpt"), map_location=self.inner_model.device)
-
-            #this is patch alongwith ppotrainer setup_model_and_optimizer
-            # for key in list(state_dict_model.keys()):
-            #     if "zv_alpha" in key:
-            #         state_dict_model.pop(key)
-            
             self.inner_model.load_state_dict(state_dict_model, strict=False)
             del state_dict_model
             # optimizer: see below

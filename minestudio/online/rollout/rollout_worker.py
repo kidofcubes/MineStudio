@@ -39,6 +39,7 @@ class RolloutWorker():
                  batch_size: int = 1,
                  video_fps: int = 20,
                  video_output_dir: str = "./output",
+                 resume: Optional[str] = None,
                  restart_interval: Optional[int] = None,
                  moving_stat_duration: int = 300,
                  log_interval: Optional[int] = None, 
@@ -97,6 +98,8 @@ class RolloutWorker():
         # the input size of the model is not fixed, so cudnn.benchmark must be disabled
 
         self.agent: MinePolicy = policy_generator()
+        if resume is not None:
+            self.load_weights(torch.load(resume+"/model.ckpt"))
         self.agent.eval()
         self.agent.to(self.model_device)
 
@@ -171,7 +174,9 @@ class RolloutWorker():
                         if video_step is not None and video_step > self.video_step:
                             self.video_step = video_step
                             conn.send(video_step)
-                    else:    
+                        else:    
+                            conn.send(None)
+                    else:
                         conn.send(None)
                 else:
                     raise NotImplementedError
@@ -188,6 +193,7 @@ class RolloutWorker():
             self.pipeline_monitor.report_enter('send_action', pipeline_id=self.worker_uuids[idx])
             self.agent_states[idx] = state
             # logger.info(f"sending action: {action}")
+            action = {k: v.reshape(-1) for k, v in action.items()}
             self.env_conns[idx].send((action, denormalized_vpred))
             if self.progress_handler is not None:
                 self.progress_handler(

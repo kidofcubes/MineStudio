@@ -18,12 +18,13 @@ def start_rolloutmanager(policy_generator, env_generator, online_cfg):
     rollout_manager_kwargs = dict(
         policy_generator = policy_generator,
         env_generator = env_generator,
+        resume = online_cfg.train_config.resume,
         discount=online_cfg.train_config.discount,
         use_normalized_vf=online_cfg.train_config.use_normalized_vf,
         **online_cfg.rollout_config
     )
 
-
+    print("rollout_manager_kwargs", rollout_manager_kwargs)
     if rollout_manager is not None:
         if (ray.get(rollout_manager.get_saved_config.remote()) != rollout_manager_kwargs):
             logger.warning("Rollout manager config changed, killing and restarting rollout manager")

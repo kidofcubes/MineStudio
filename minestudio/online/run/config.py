@@ -14,21 +14,21 @@ online_dict = {
     "trainer_name": "PPOTrainer",
     "detach_rollout_manager": True,
     "rollout_config": {
-        "num_rollout_workers": 1,
+        "num_rollout_workers": 2,
         "num_gpus_per_worker": 1.0,
         "num_cpus_per_worker": 1,
         "fragment_length": 256,
         "to_send_queue_size": 4,
         "worker_config": {
-            "num_envs": 4,
+            "num_envs": 16,
             "batch_size": 2,
             "restart_interval": 3600,  # 1h
             "video_fps": 20,
-            "video_output_dir": "output/output/videos",
+            "video_output_dir": "output/videos",
         },
         "replay_buffer_config": {
             "max_chunks": 4800,
-            "max_reuse": 1,
+            "max_reuse": 2,
             "max_staleness": 2,
             "fragments_per_report": 40,
             "fragments_per_chunk": 1,
@@ -49,10 +49,10 @@ online_dict = {
         "weight_decay": 0.04,
         "adam_eps": 1e-8,
         "batch_size_per_gpu": 1,
-        "batches_per_iteration": 20,
+        "batches_per_iteration": 50,
         "gradient_accumulation": 10,  # TODO: check
         "epochs_per_iteration": 1,  # TODO: check
-        "context_length": 128,
+        "context_length": 64,
         "discount": 0.999,
         "gae_lambda": 0.95,
         "ppo_clip": 0.2,
@@ -72,14 +72,15 @@ online_dict = {
         "prefetch_batches": 2,
         "save_interval": 10,
         "keep_interval": 40,
-        "record_video_interval": 1,
+        "record_video_interval": 2,
         "fix_decoder": False,
-        "resume": None
+        "resume": "/scratch/hekaichen/tmpdir/ray/session_2024-12-12_21-10-40_218613_2665801/artifacts/2024-12-12_21-10-58/TorchTrainer_2024-12-12_21-10-58/working_dirs/TorchTrainer_8758b_00000_0_2024-12-12_21-10-58/checkpoints/150",
+        "resume_optimizer": True,
     },
 
     "logger_config": {
         "project": "minestudio_online",
-        "name": "bow"
+        "name": "cow"
     },
 }
 
@@ -94,32 +95,34 @@ def env_generator():
         RewardsCallback, 
         CommandsCallback, 
         TaskCallback,
+        JudgeResetCallback,
         FastResetCallback
     )
     sim = MinecraftSim(
         obs_size=(128, 128), 
         preferred_spawn_biome="plains", 
         action_type = "agent",
+        timestep_limit=1000,
         callbacks=[
-            SpeedTestCallback(50), 
             SummonMobsCallback([{'name': 'cow', 'number': 10, 'range_x': [-5, 5], 'range_z': [-5, 5]}]),
-            MaskActionsCallback(inventory=0, camera=np.array([[0]])), 
-            #RecordCallback(record_path="./output", fps=30),
+            MaskActionsCallback(inventory=0), 
             RewardsCallback([{
                 'event': 'kill_entity', 
-                'objects': ['cow', 'sheep'], 
+                'objects': ['cow'], 
                 'reward': 1.0, 
-                'identity': 'kill sheep or cow', 
-                'max_reward_times': 5, 
+                'identity': 'chop_tree', 
+                'max_reward_times': 30, 
             }]),
             CommandsCallback(commands=[
                 '/give @p minecraft:iron_sword 1',
                 '/give @p minecraft:diamond 64',
-            ]), 
+                '/effect @p 5 9999 255 true',
+            ]),
             FastResetCallback(
-                biomes=['mountains'],
+                biomes=['plains'],
                 random_tp_range=1000,
-            ), 
+            ),
+            JudgeResetCallback(600),
             # TaskCallback([
             #     {'name': 'chop', 'text': 'mine the oak logs'}, 
             #     {'name': 'diamond', 'text': 'mine the diamond ore'},

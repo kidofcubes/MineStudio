@@ -26,7 +26,12 @@ if __name__ == '__main__':
     )
     memory = None
     obs, info = env.reset()
-    for i in range(1200):
+    for i in range(600):
+        action, memory = policy.get_action(obs, memory, input_shape='*')
+        obs, reward, terminated, truncated, info = env.step(action)
+    env.reset()
+    print("Resetting the environment")
+    for i in range(600):
         action, memory = policy.get_action(obs, memory, input_shape='*')
         obs, reward, terminated, truncated, info = env.step(action)
     env.close()

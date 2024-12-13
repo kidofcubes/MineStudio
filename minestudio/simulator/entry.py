@@ -104,13 +104,20 @@ class MinecraftSim(gymnasium.Env):
         action = action_mapper.to_factored(action)
         action = action_transformer.policy2env(action)
         return action
+
+    def énv_action_to_agent_action(self, action: Dict[str, Any]):
+        action = action_transformer.env2policy(action)
+        action = action_mapper.from_factored(action)
+        return action
     
     def step(self, action: Dict[str, Any]) -> Tuple[np.ndarray, float, bool, bool, Dict[str, Any]]:
-        for callback in self.callbacks:
-            action = callback.before_step(self, action)
+
         if self.action_type == 'agent':
             action = self.agent_action_to_env_action(action)
+        for callback in self.callbacks:
+            action = callback.before_step(self, action)
         obs, reward, done, info = self.env.step(action.copy()) 
+
         terminated, truncated = done, done
         obs, info = self._wrap_obs_info(obs, info)
         for callback in self.callbacks:

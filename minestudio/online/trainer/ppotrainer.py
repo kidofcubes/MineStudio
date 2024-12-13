@@ -287,7 +287,7 @@ class PPOTrainer(BaseTrainer):
 
                         if self.kl_divergence_coef_rho != 0:
                             with torch.inference_mode():#torch.inference_mode
-                                ref_forward_result, new_ref_state, _ = self.ref_model(input=chunk_obs, state_in=new_ref_state, context={"first":chunk_first})#, train_iter = str(self.num_updates))#, train_iter = uuid.uuid1().hex)#), train_iters = 2*self.num_optimized+1) # type: ignore
+                                ref_forward_result, new_ref_state = self.ref_model(input=chunk_obs, state_in=new_ref_state, context={"first":chunk_first})#, train_iter = str(self.num_updates))#, train_iter = uuid.uuid1().hex)#), train_iters = 2*self.num_optimized+1) # type: ignore
                                 ref_pi_logit = ref_forward_result["pi_logits"]
                             epsilon = 1e-8
                             #print("pi_logits_sum_1", torch.exp(pi_logits['buttons']).sum(dim = -1))
@@ -448,7 +448,7 @@ class PPOTrainer(BaseTrainer):
             self.last_log_time = time.time()
             info["trainer/env_SPS_all_workers"] = SPS_all_workers
             info["trainer/env_steps_all_workers"] = self.trained_steps_all_workers
-            print("I have send signal to manager: " + str(self.num_updates % self.record_video_interval == 1))
-            ray.get(self.rollout_manager.log_statistics.remote(self.trained_steps_all_workers, self.num_updates % self.record_video_interval == 1))
+            print("I have send signal to manager: " + str(self.num_updates % self.record_video_interval == 0))
+            ray.get(self.rollout_manager.log_statistics.remote(self.trained_steps_all_workers, self.num_updates % self.record_video_interval == 0))
             wandb_logger.log(info)
             

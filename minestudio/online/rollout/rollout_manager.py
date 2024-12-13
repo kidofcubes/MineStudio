@@ -28,6 +28,7 @@ class RolloutWorkerWrapper:
             episode_statistics: ActorHandle,
             to_send_queue_size: int,
             use_normalized_vf: bool,
+            resume: Optional[str],
             max_staleness: int,
             rollout_worker_id: int,
     ):
@@ -39,7 +40,9 @@ class RolloutWorkerWrapper:
         self.rollout_worker = RolloutWorker(
             model_device="cuda",
             progress_handler=self.progress_handler,
+            episode_statistics=episode_statistics,
             use_normalized_vf=self.use_normalized_vf,
+            resume=resume,
             next_model_version = self.next_model_version,
             rollout_worker_id = rollout_worker_id,
             policy_generator=policy_generator,
@@ -169,6 +172,7 @@ class _RolloutManager:
             num_gpus_per_worker: int,
             to_send_queue_size: int,
             fragment_length: int,
+            resume: Optional[str],
             replay_buffer_config: DictConfig,
             worker_config: DictConfig,
             episode_statistics_config: DictConfig,
@@ -220,6 +224,7 @@ class _RolloutManager:
                 fragment_length=self.fragment_length,
                 policy_generator=self.policy_generator,
                 env_generator=self.env_generator,
+                resume = resume,
                 worker_config=self.worker_config,
                 episode_statistics=self.episode_statistics,
                 max_staleness=self.replay_buffer_config.max_staleness,
