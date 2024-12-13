@@ -1,3 +1,9 @@
+'''
+Date: 2024-12-13 22:39:49
+LastEditors: muzhancun muzhancun@126.com
+LastEditTime: 2024-12-13 23:10:46
+FilePath: /MineStudio/minestudio/tutorials/inference/evaluate_groot/main.py
+'''
 from minestudio.simulator import MinecraftSim
 from minestudio.simulator.callbacks import RecordCallback, SpeedTestCallback, CommandsCallback, DemonstrationCallback
 from minestudio.models import GrootPolicy, load_groot_policy
@@ -16,7 +22,7 @@ if __name__ == '__main__':
 
     resolution = (224, 224)
     
-    file_path = "/home/zhwang/workspace/MineStudio/minestudio/benchmark/task_configs/simple/collect_wood.yaml"
+    file_path = "../../../benchmark/task_configs/simple/collect_wood.yaml"
     commands_callback, task_callback = convert_yaml_to_callbacks(file_path)
     print(f'Task: {task_callback}')
     print(f'Init commands: {commands_callback}')
@@ -56,7 +62,7 @@ if __name__ == '__main__':
         ), 
         episode_filter=InfoBaseFilter(
             key="mine_block",
-            val="log",
+            val="oak_log",
             num=1,
         ),
     )
