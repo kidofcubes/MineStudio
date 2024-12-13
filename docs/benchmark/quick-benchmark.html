@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Key Functionalities &#8212; MineStudio 1.0.0</title>
+    <title>Quick benchmark &#8212; MineStudio 1.0.0</title>
   
   
   
@@ -64,6 +64,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'benchmark/quick-benchmark';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Automatic Evaluation Pipeline" href="automatic-evaluation.html" />
+    <link rel="prev" title="Benchmark" href="index.html" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -174,7 +176,7 @@
 <nav>
   <ul class="bd-navbar-elements navbar-nav">
     
-<li class="nav-item ">
+<li class="nav-item current active">
   <a class="nav-link nav-internal" href="../overview/index.html">
     Overview
   </a>
@@ -341,10 +343,8 @@
       
       
       
-        
-      
       <dialog id="pst-primary-sidebar-modal"></dialog>
-      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -382,7 +382,7 @@
 <nav>
   <ul class="bd-navbar-elements navbar-nav">
     
-<li class="nav-item ">
+<li class="nav-item current active">
   <a class="nav-link nav-internal" href="../overview/index.html">
     Overview
   </a>
@@ -506,6 +506,45 @@
     
   </div>
   
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../overview/installation.html">Installation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">MineStudio Libraries</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../simulator/index.html">Simulator</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../simulator/general-information.html">General Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../simulator/design-principles.html">Design Principles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../simulator/play.html">Graphical User Interfaces</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../data/index.html">Data</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../data/dataset-raw.html">Raw Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/dataset-event.html">Event Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/visualization.html">Visualization Script</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../models/index.html">Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../models/baseline-groot.html">GROOT: Learning to Follow Instructions by Watching Gameplay Videos</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../train/index.html">Train</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../inference/index.html">Inference</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Benchmark</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Quick benchmark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="automatic-evaluation.html">Automatic Evaluation Pipeline</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
   </div>
@@ -536,7 +575,13 @@
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Key Functionalities</span></li>
+    
+    <li class="breadcrumb-item"><a href="../overview/index.html" class="nav-link">Overview</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Benchmark</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Quick benchmark</span></li>
   </ul>
 </nav>
 </div>
@@ -553,100 +598,104 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span><span class="gh"># MineStudio Benchmark Automation Tutorial</span>
-
-This tutorial introduces the codebase for automating and batch-testing tasks in the MineStudio benchmark. The framework is designed to evaluate agents&#39; performance on Minecraft-based tasks using automated pipelines. It provides a modular, scalable structure to handle a variety of evaluation scenarios.
-
----
-
-<span class="gu">## Overview</span>
-
-The MineStudio benchmark framework enables:
-<span class="k">-</span><span class="w"> </span><span class="gs">**Automated Evaluation**</span>: Analyze agent performance on individual tasks or batches of tasks.
-<span class="k">-</span><span class="w"> </span><span class="gs">**Video-Based Scoring**</span>: Evaluate task success using recorded videos.
-<span class="k">-</span><span class="w"> </span><span class="gs">**Batch Processing**</span>: Execute tasks in parallel to improve testing efficiency.
-<span class="k">-</span><span class="w"> </span><span class="gs">**Customizable Configurations**</span>: Use YAML-based configurations for flexible task definitions.
-
-The structure is divided into several key modules, ensuring clarity and extensibility for researchers and developers.
-
----
-
-<span class="gu">## Code Structure</span>
-
-<span class="gu">### Directory Layout</span>
-
-```plaintext
-├─ auto_eval/
-│  ├─ batch_video_rating.py      # Batch evaluation of videos for task performance.
-│  ├─ eval_video/                # Example videos for evaluation.
-│  │  ├─ build_pillar/           # Task: Build a pillar (videos for evaluation).
-│  │  ├─ combat_spider/          # Task: Combat a spider (videos for evaluation).
-│  ├─ individual_video_rating.py # Evaluate videos individually for detailed analysis.
-│  ├─ video_comparison.py        # Compare videos to measure performance differences.
-├─ output/                       # Directory for task-generated videos and outputs.
-│  ├─ make_obsidian_by_wate/
-│  ├─ find_forest/
-│  ├─ smelt_food/
-├─ task_configs/                 # Task configuration files (YAML-based).
-│  ├─ simple/                    # Simple task definitions.
-│  ├─ hard/                      # More complex task definitions.
-├─ test_pipeline.py              # Script for batch testing and parallelization.
-├─ test.py                       # Script for individual or small-batch task testing.
-├─ utility/                      # Utility scripts for callbacks and configuration.
-│  ├─ record_call.py             # Handles recording of task-related data.
-│  ├─ read_conf.py               # Reads YAML configs and generates callbacks.
-│  ├─ task_call.py               # Implements task-specific logic.
+<section id="quick-benchmark">
+<h1>Quick benchmark<a class="headerlink" href="#quick-benchmark" title="Link to this heading">#</a></h1>
+<section id="code-structure">
+<h2>Code structure<a class="headerlink" href="#code-structure" title="Link to this heading">#</a></h2>
+<div class="highlight-plaintext notranslate"><div class="highlight"><pre><span></span>benchmark/
+    ├── task_configs/ 
+    │   ├── simple/ 
+    │   │   └── Task definitions for simple tasks.
+    │   ├── hard/
+    │       └── Task definitions for complex tasks.
+    ├── test_pipeline.py
+    │   └── Example script for parallelized and batched task execution.
+    ├── test.py
+    │   └── Example script for running batch tests.
+    ├── utility/
+    │   └── Functionality for input reading and callback features.
 </pre></div>
 </div>
+</section>
 <hr class="docutils" />
-<section id="key-functionalities">
-<h1>Key Functionalities<a class="headerlink" href="#key-functionalities" title="Link to this heading">#</a></h1>
-<section id="automated-evaluation">
-<h2>1. <strong>Automated Evaluation</strong><a class="headerlink" href="#automated-evaluation" title="Link to this heading">#</a></h2>
-<ul class="simple">
-<li><p>The framework uses YAML files in <code class="docutils literal notranslate"><span class="pre">task_configs/</span></code> to define tasks.</p></li>
-<li><p>Video evaluations are stored under <code class="docutils literal notranslate"><span class="pre">auto_eval/eval_video/</span></code> and can be processed using scripts like <code class="docutils literal notranslate"><span class="pre">batch_video_rating.py</span></code>.</p></li>
-</ul>
-</section>
-<section id="video-based-scoring">
-<h2>2. <strong>Video-Based Scoring</strong><a class="headerlink" href="#video-based-scoring" title="Link to this heading">#</a></h2>
-<ul class="simple">
-<li><p>Videos recorded during tasks are saved in the <code class="docutils literal notranslate"><span class="pre">output/</span></code> directory.</p></li>
-<li><p>Evaluation can be performed on individual videos (<code class="docutils literal notranslate"><span class="pre">individual_video_rating.py</span></code>) or in batches (<code class="docutils literal notranslate"><span class="pre">batch_video_rating.py</span></code>).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">video_comparison.py</span></code> allows comparing agent behaviors across different videos.</p></li>
-</ul>
-</section>
-<section id="batch-processing-and-parallelization">
-<h2>3. <strong>Batch Processing and Parallelization</strong><a class="headerlink" href="#batch-processing-and-parallelization" title="Link to this heading">#</a></h2>
-<ul class="simple">
-<li><p>The <code class="docutils literal notranslate"><span class="pre">test_pipeline.py</span></code> script leverages <a class="reference external" href="https://www.ray.io/">Ray</a> for parallel execution of tasks, significantly speeding up evaluations.</p></li>
-<li><p>The <code class="docutils literal notranslate"><span class="pre">test.py</span></code> script demonstrates running small-scale batch tests for quick validations.</p></li>
-</ul>
-<hr class="docutils" />
-</section>
-</section>
 <section id="workflow-overview">
-<h1>Workflow Overview<a class="headerlink" href="#workflow-overview" title="Link to this heading">#</a></h1>
+<h2>Workflow Overview<a class="headerlink" href="#workflow-overview" title="Link to this heading">#</a></h2>
 <section id="task-configuration">
-<h2>Task Configuration<a class="headerlink" href="#task-configuration" title="Link to this heading">#</a></h2>
+<h3>Task Configuration<a class="headerlink" href="#task-configuration" title="Link to this heading">#</a></h3>
 <p>Tasks are defined in YAML files located in the <code class="docutils literal notranslate"><span class="pre">task_configs/</span></code> directory. Each YAML file includes:</p>
 <ul class="simple">
 <li><p><strong>Initial Setup</strong>: Commands to configure the environment.</p></li>
 <li><p><strong>Task Goals</strong>: Objectives for the agent to accomplish.</p></li>
 </ul>
 <p>Example YAML:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">find_forest</span>
-<span class="nt">init_commands</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/give @p compass</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/time set day</span>
-<span class="nt">task_goal</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Navigate to the nearest forest biome.</span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">custom_init_commands</span><span class="p">:</span><span class="w"> </span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/give @s minecraft:water_bucket 3</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/give @s minecraft:stone 64</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/give @s minecraft:dirt 64</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/give @s minecraft:shovel{Enchantments:[{id:&quot;minecraft:efficiency&quot;,lvl:1}]} 1</span>
+<span class="nt">text</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Build a waterfall in your Minecraft world.</span>
 </pre></div>
 </div>
+<p>Key Elements of the YAML File:</p>
+<ol class="arabic simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">custom_init_commands</span></code></strong>:</p>
+<ul class="simple">
+<li><p>Specifies commands to initialize the Minecraft environment for the task.</p></li>
+<li><p>Examples:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">/give</span> <span class="pre">&#64;s</span> <span class="pre">minecraft:water_bucket</span> <span class="pre">3</span></code>: Gives the agent three water buckets.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/give</span> <span class="pre">&#64;s</span> <span class="pre">minecraft:stone</span> <span class="pre">64</span></code>: Provides a stack of stone blocks.</p></li>
+</ul>
+</li>
+<li><p>These commands ensure the agent has the necessary tools and resources to perform the task.</p></li>
+</ul>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">text</span></code></strong>:</p>
+<ul class="simple">
+<li><p>Provides a natural language description of the task.</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">&quot;Build</span> <span class="pre">a</span> <span class="pre">waterfall</span> <span class="pre">in</span> <span class="pre">your</span> <span class="pre">Minecraft</span> <span class="pre">world.&quot;</span></code></p></li>
+</ul>
+</li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="using-yaml-in-the-framework">
+<h3>Using YAML in the Framework<a class="headerlink" href="#using-yaml-in-the-framework" title="Link to this heading">#</a></h3>
+<ol class="arabic">
+<li><p><strong>Location</strong>:</p>
+<ul class="simple">
+<li><p>Save the YAML file in the <code class="docutils literal notranslate"><span class="pre">task_configs/</span></code> directory under the appropriate difficulty subdirectory (e.g., <code class="docutils literal notranslate"><span class="pre">simple/</span></code> or <code class="docutils literal notranslate"><span class="pre">hard/</span></code>).</p></li>
+</ul>
+</li>
+<li><p><strong>Loading the YAML</strong>:</p>
+<ul>
+<li><p>Use the provided <code class="docutils literal notranslate"><span class="pre">read_conf.py</span></code> script to load and parse YAML files.</p></li>
+<li><p>Example usage:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">utility.read_conf</span> <span class="kn">import</span> <span class="n">convert_yaml_to_callbacks</span>
+
+<span class="n">commands_callback</span><span class="p">,</span> <span class="n">task_callback</span> <span class="o">=</span> <span class="n">convert_yaml_to_callbacks</span><span class="p">(</span><span class="s2">&quot;task_configs/simple/build_waterfall.yaml&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><strong>Task Execution</strong>:</p>
+<ul>
+<li><p>The parsed callbacks are passed to the simulation during environment initialization:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">env</span> <span class="o">=</span> <span class="n">MinecraftSim</span><span class="p">(</span><span class="n">callbacks</span><span class="o">=</span><span class="p">[</span>
+    <span class="n">CommandsCallback</span><span class="p">(</span><span class="n">commands_callback</span><span class="p">),</span>
+    <span class="n">TaskCallback</span><span class="p">(</span><span class="n">task_callback</span><span class="p">)</span>
+<span class="p">])</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+</ol>
 </section>
 <hr class="docutils" />
 <section id="running-tests">
-<h2>Running Tests<a class="headerlink" href="#running-tests" title="Link to this heading">#</a></h2>
+<h3>Running Tests<a class="headerlink" href="#running-tests" title="Link to this heading">#</a></h3>
 <ol class="arabic">
 <li><p><strong>Individual or Small-Scale Tests</strong>:</p>
 <ul>
@@ -668,21 +717,10 @@ The structure is divided into several key modules, ensuring clarity and extensib
 </li>
 </ul>
 </li>
-<li><p><strong>Video Evaluation</strong>:</p>
-<ul>
-<li><p>Evaluate recorded videos in <code class="docutils literal notranslate"><span class="pre">output/</span></code> using scripts in <code class="docutils literal notranslate"><span class="pre">auto_eval/</span></code>.</p></li>
-<li><p>Batch evaluation:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>auto_eval/batch_video_rating.py
-</pre></div>
-</div>
-</li>
-</ul>
-</li>
 </ol>
-</section>
 <hr class="docutils" />
 <section id="code-explanation-test-py">
-<h2>Code Explanation: <code class="docutils literal notranslate"><span class="pre">test.py</span></code><a class="headerlink" href="#code-explanation-test-py" title="Link to this heading">#</a></h2>
+<h4>Code Explanation: <code class="docutils literal notranslate"><span class="pre">test.py</span></code><a class="headerlink" href="#code-explanation-test-py" title="Link to this heading">#</a></h4>
 <p>This script demonstrates how to evaluate tasks using YAML-based configurations. Below is an outline of its workflow:</p>
 <ol class="arabic simple">
 <li><p><strong>Task Setup</strong>:</p>
@@ -703,15 +741,9 @@ The structure is divided into several key modules, ensuring clarity and extensib
 </li>
 </ul>
 </li>
-<li><p><strong>Policy Loading</strong>:</p>
-<ul class="simple">
-<li><p>Load a pretrained Vision-Language Model (VLM) for decision-making.</p></li>
-<li><p>Utilize GPU acceleration for enhanced performance.</p></li>
-</ul>
-</li>
 <li><p><strong>Task Execution</strong>:</p>
 <ul class="simple">
-<li><p>Reset the environment and run the task for 12 steps.</p></li>
+<li><p>Reset the environment and run the task for multiple steps.</p></li>
 <li><p>Save observations, actions, and outputs for analysis.</p></li>
 </ul>
 </li>
@@ -721,43 +753,33 @@ The structure is divided into several key modules, ensuring clarity and extensib
 </ul>
 </li>
 </ol>
-</section>
 <section id="example-code">
-<h2>Example Code<a class="headerlink" href="#example-code" title="Link to this heading">#</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">file_name</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">conf_path</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">file_name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.yaml&#39;</span><span class="p">):</span>
-        <span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">conf_path</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span>
-        <span class="n">commands_callback</span><span class="p">,</span> <span class="n">task_callback</span> <span class="o">=</span> <span class="n">convert_yaml_to_callbacks</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+<h5>Example Code<a class="headerlink" href="#example-code" title="Link to this heading">#</a></h5>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">commands_callback</span><span class="p">,</span> <span class="n">task_callback</span> <span class="o">=</span> <span class="n">convert_yaml_to_callbacks</span><span class="p">(</span><span class="s2">&quot;task_configs/simple/build_waterfall.yaml&quot;</span><span class="p">)</span>
+<span class="n">env</span> <span class="o">=</span> <span class="n">MinecraftSim</span><span class="p">(</span>
+   <span class="n">obs_size</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span> 
+   <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span>
+         <span class="n">RecordCallback</span><span class="p">(</span><span class="n">record_path</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;./output/&quot;</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">frame_type</span><span class="o">=</span><span class="s2">&quot;pov&quot;</span><span class="p">),</span>
+         <span class="n">CommandsCallback</span><span class="p">(</span><span class="n">commands_callback</span><span class="p">),</span>
+         <span class="n">TaskCallback</span><span class="p">(</span><span class="n">task_callback</span><span class="p">),</span>
+   <span class="p">]</span>
+<span class="p">)</span>
+<span class="n">policy</span> <span class="o">=</span> <span class="n">load_openai_policy</span><span class="p">(</span>
+   <span class="n">model_path</span><span class="o">=</span><span class="s2">&quot;/nfs-shared/jarvisbase/pretrained/foundation-model-2x.model&quot;</span><span class="p">,</span>
+   <span class="n">weights_path</span><span class="o">=</span><span class="s2">&quot;/nfs-shared/jarvisbase/pretrained/foundation-model-2x.weights&quot;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span><span class="p">)</span>
 
-        <span class="n">env</span> <span class="o">=</span> <span class="n">MinecraftSim</span><span class="p">(</span>
-            <span class="n">obs_size</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span> 
-            <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span>
-                <span class="n">RecordCallback</span><span class="p">(</span><span class="n">record_path</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;./output/</span><span class="si">{</span><span class="n">file_name</span><span class="p">[:</span><span class="o">-</span><span class="mi">5</span><span class="p">]</span><span class="si">}</span><span class="s2">/&quot;</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">frame_type</span><span class="o">=</span><span class="s2">&quot;pov&quot;</span><span class="p">),</span>
-                <span class="n">CommandsCallback</span><span class="p">(</span><span class="n">commands_callback</span><span class="p">),</span>
-                <span class="n">TaskCallback</span><span class="p">(</span><span class="n">task_callback</span><span class="p">),</span>
-            <span class="p">]</span>
-        <span class="p">)</span>
-        <span class="n">policy</span> <span class="o">=</span> <span class="n">load_openai_policy</span><span class="p">(</span>
-            <span class="n">model_path</span><span class="o">=</span><span class="s2">&quot;/nfs-shared/jarvisbase/pretrained/foundation-model-2x.model&quot;</span><span class="p">,</span>
-            <span class="n">weights_path</span><span class="o">=</span><span class="s2">&quot;/nfs-shared/jarvisbase/pretrained/foundation-model-2x.weights&quot;</span>
-        <span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span><span class="p">)</span>
-
-        <span class="n">obs</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">12</span><span class="p">):</span>
-            <span class="n">action</span><span class="p">,</span> <span class="n">memory</span> <span class="o">=</span> <span class="n">policy</span><span class="o">.</span><span class="n">get_action</span><span class="p">(</span><span class="n">obs</span><span class="p">,</span> <span class="n">memory</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="s1">&#39;*&#39;</span><span class="p">)</span>
-            <span class="n">obs</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">terminated</span><span class="p">,</span> <span class="n">truncated</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
-        <span class="n">env</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">obs</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">12000</span><span class="p">):</span>
+   <span class="n">action</span><span class="p">,</span> <span class="n">memory</span> <span class="o">=</span> <span class="n">policy</span><span class="o">.</span><span class="n">get_action</span><span class="p">(</span><span class="n">obs</span><span class="p">,</span> <span class="n">memory</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="s1">&#39;*&#39;</span><span class="p">)</span>
+   <span class="n">obs</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">terminated</span><span class="p">,</span> <span class="n">truncated</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+<span class="n">env</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 </div>
-<hr class="docutils" />
 </section>
 </section>
-<section id="conclusion">
-<h1>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h1>
-<p>The MineStudio benchmark framework is a powerful tool for evaluating agent performance in Minecraft-based tasks. With modular design, video-based evaluation, and batch processing capabilities, it caters to a wide range of research scenarios. Customize tasks using YAML configurations and use the provided scripts for efficient testing and evaluation.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
+</section>
+</section>
 </section>
 
 <div class="section ablog__blog_comments">
@@ -774,6 +796,24 @@ The structure is divided into several key modules, ensuring clarity and extensib
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Benchmark</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="automatic-evaluation.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Automatic Evaluation Pipeline</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -793,22 +833,20 @@ The structure is divided into several key modules, ensuring clarity and extensib
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Key Functionalities</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-evaluation">1. <strong>Automated Evaluation</strong></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#video-based-scoring">2. <strong>Video-Based Scoring</strong></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#batch-processing-and-parallelization">3. <strong>Batch Processing and Parallelization</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-structure">Code structure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#workflow-overview">Workflow Overview</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#task-configuration">Task Configuration</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-yaml-in-the-framework">Using YAML in the Framework</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#running-tests">Running Tests</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#code-explanation-test-py">Code Explanation: <code class="docutils literal notranslate"><span class="pre">test.py</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#example-code">Example Code</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#workflow-overview">Workflow Overview</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#task-configuration">Task Configuration</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-tests">Running Tests</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-explanation-test-py">Code Explanation: <code class="docutils literal notranslate"><span class="pre">test.py</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-code">Example Code</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
 </ul>
-
+</li>
+</ul>
   </nav></div>
 
   <div class="sidebar-secondary-item">

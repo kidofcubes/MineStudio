@@ -64,7 +64,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'benchmark/index';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Getting Started" href="../overview/getting-started.html" />
+    <link rel="next" title="Quick benchmark" href="quick-benchmark.html" />
     <link rel="prev" title="Inference" href="../inference/index.html" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -535,7 +535,11 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../train/index.html">Train</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../inference/index.html">Inference</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Benchmark</a></li>
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Benchmark</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="quick-benchmark.html">Quick benchmark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="automatic-evaluation.html">Automatic Evaluation Pipeline</a></li>
+</ul>
+</details></li>
 </ul>
 </div>
 </nav></div>
@@ -594,166 +598,65 @@
 <section id="benchmark">
 <h1>Benchmark<a class="headerlink" href="#benchmark" title="Link to this heading">#</a></h1>
 <p>This tutorial provides an overview of the codebase for automating and batch-testing tasks in the MineStudio benchmark. It includes the structure, purpose, and main functionalities of the framework.</p>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">MineStudio Benchmark</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quick-benchmark.html">Quick benchmark</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quick-benchmark.html#code-structure">Code structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quick-benchmark.html#workflow-overview">Workflow Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quick-benchmark.html#task-configuration">Task Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quick-benchmark.html#using-yaml-in-the-framework">Using YAML in the Framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quick-benchmark.html#running-tests">Running Tests</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="quick-benchmark.html#code-explanation-test-py">Code Explanation: <code class="docutils literal notranslate"><span class="pre">test.py</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="quick-benchmark.html#example-code">Example Code</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="automatic-evaluation.html">Automatic Evaluation Pipeline</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="automatic-evaluation.html#code-structure">Code Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="automatic-evaluation.html#evaluating-videos-with-vision-language-models-vlm">Evaluating Videos with Vision-Language Models (VLM)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="automatic-evaluation.html#compare-two-videos">1. Compare Two Videos</a></li>
+<li class="toctree-l3"><a class="reference internal" href="automatic-evaluation.html#individual-video-evaluation">2. Individual Video Evaluation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="automatic-evaluation.html#batch-video-evaluation">3. Batch Video Evaluation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="automatic-evaluation.html#organizing-files-for-batch-evaluation">Organizing Files for Batch Evaluation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="automatic-evaluation.html#video-directory-structure">Video Directory Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="automatic-evaluation.html#criteria-files-directory-structure">Criteria Files Directory Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="automatic-evaluation.html#example-output">Example Output</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="automatic-evaluation.html#example-output-format">Example Output Format</a></li>
+<li class="toctree-l4"><a class="reference internal" href="automatic-evaluation.html#key-features">Key Features</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
 <hr class="docutils" />
 <section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h2>
-<p>The MineStudio benchmark is designed to evaluate agent performance on various Minecraft-based tasks using automated pipelines. This framework supports the following key functionalities:</p>
+<p>The MineStudio benchmark is a comprehensive framework for evaluating agent performance across a wide range of Minecraft-based tasks. It offers the following key features:</p>
 <ul class="simple">
-<li><p><strong>Task Criteria Management</strong>: Store and apply specific evaluation criteria for tasks.</p></li>
-<li><p><strong>Video-Based Evaluation</strong>: Analyze videos generated during tasks for automated scoring.</p></li>
-<li><p><strong>Batch Task Execution</strong>: Run multiple tasks in parallel to streamline testing.</p></li>
-<li><p><strong>Customizable Callbacks</strong>: Leverage task-specific callbacks for seamless integration with simulations.</p></li>
+<li><p><strong>Diverse Task Support</strong>: Evaluate agents on tasks such as building, mining, crafting, collecting, tool usage, and more.</p></li>
+<li><p><strong>Game Mode Variability</strong>: Includes both simple and challenging game modes to test agents under varying levels of difficulty.</p></li>
+<li><p><strong>Batch Task Execution</strong>: Run multiple tasks simultaneously and record task completion videos for analysis.</p></li>
+<li><p><strong>VLM-Based Evaluation</strong>: Leverage Vision-Language Models to analyze task videos and provide automated scoring.</p></li>
 </ul>
-<p>The provided structure ensures modularity, reusability, and ease of scalability for diverse testing scenarios.</p>
-</section>
-<hr class="docutils" />
-<section id="code-structure">
-<h2>Code Structure<a class="headerlink" href="#code-structure" title="Link to this heading">#</a></h2>
-<section id="directory-layout">
-<h3>Directory Layout<a class="headerlink" href="#directory-layout" title="Link to this heading">#</a></h3>
-<div class="highlight-plaintext notranslate"><div class="highlight"><pre><span></span>criteria files/
-    └── Contains criteria files for evaluating videos for each task.
-
-eval_video/
-    └── Stores example videos and provides a structure for saving task-specific evaluation videos.
-
-benchmark/
-    ├── test_pipeline.py
-        └── Example script for parallelized and batched task execution.
-    ├── test.py
-        └── Example script for running batch tests.
-    ├── utility/
-        ├── record_call.py
-            └── Callback for recording task-related data.
-        ├── read_conf.py
-            └── Parses task configuration files and converts them into callbacks.
-        ├── task_call.py
-            └── Task-specific callback implementation.
-</pre></div>
-</div>
-<div class="highlight-plaintext notranslate"><div class="highlight"><pre><span></span>├─ auto_eval/
-│  ├─ batch_video_rating.py      # Batch evaluation of videos for task performance.
-│  ├─ eval_video/                # Example videos for evaluation.
-│  │  ├─ build_pillar/           # Task: Build a pillar (videos for evaluation).
-│  │  ├─ combat_spider/          # Task: Combat a spider (videos for evaluation).
-│  ├─ individual_video_rating.py # Evaluate videos individually for detailed analysis.
-│  ├─ video_comparison.py        # Compare videos to measure performance differences.
-├─ output/                       # Directory for task-generated videos and outputs.
-│  ├─ make_obsidian_by_wate/
-│  ├─ find_forest/
-│  ├─ smelt_food/
-├─ task_configs/                 # Task configuration files (YAML-based).
-│  ├─ simple/                    # Simple task definitions.
-│  ├─ hard/                      # More complex task definitions.
-├─ test_pipeline.py              # Script for batch testing and parallelization.
-├─ test.py                       # Script for individual or small-batch task testing.
-├─ utility/                      # Utility scripts for callbacks and configuration.
-│  ├─ record_call.py             # Handles recording of task-related data.
-│  ├─ read_conf.py               # Reads YAML configs and generates callbacks.
-│  ├─ task_call.py               # Implements task-specific logic.
-
----
-
-## Purpose of Each Component
-
-### 1. **Criteria Files**
-   - Stores YAML configuration files defining task-specific evaluation criteria.
-   - Ensures consistency in assessing agent performance.
-
-### 2. **Eval Video Directory**
-   - Holds videos generated during task execution.
-   - Acts as a repository for manual or automated evaluations.
-
-### 3. **Utility Scripts**
-   - **`record_call.py`**: Records key metrics, observations, or outputs during task execution.
-   - **`read_conf.py`**: Reads YAML configuration files and generates corresponding callbacks.
-   - **`task_call.py`**: Defines task-specific behaviors and integrates them into the simulator.
-
----
-
-## Main Functionalities
-
-### 1. **Automated Task Evaluation**
-The `test.py` script demonstrates how to automatically evaluate tasks using YAML-defined configurations. It employs modular callbacks for task initialization, reward tracking, and recording outputs.
-
-Key Features:
-- **Episode Pipeline**: Automatically resets and runs tasks.
-- **Callback Integration**: Supports various callbacks to customize task interactions.
-
-### 2. **Batch Testing with Parallelization**
-The `test_pipeline.py` script enables parallel execution of multiple tasks using [Ray](https://www.ray.io/). This significantly accelerates the testing process by distributing workloads across multiple cores or nodes.
-
----
-
-## Detailed Explanation of `test.py`
-
-Below is a breakdown of the script&#39;s functionality:
-
-1. **Initialization**:
-   - Uses `ray.init()` to initialize distributed computing.
-   - Loads task configurations from `./task_configs/simple`.
-
-2. **Callback Creation**:
-   - Reads each YAML file in the configuration directory.
-   - Converts the YAML file into task-specific callbacks using `convert_yaml_to_callbacks`.
-
-3. **Environment Setup**:
-   - Creates a Minecraft simulation environment using `MinecraftSim`.
-   - Integrates three callbacks:
-     - `RecordCallback`: Saves POV frames as videos.
-     - `CommandsCallback`: Executes initial setup commands.
-     - `TaskCallback`: Implements the specific task logic.
-
-4. **Policy Loading**:
-   - Loads a pretrained Vision-Language Model (VLM) for decision-making.
-   - Utilizes GPU acceleration (`.to(&quot;cuda&quot;)`).
-
-5. **Task Execution**:
-   - Resets the environment and begins a new rollout.
-   - Executes 12 steps in the simulation, generating observations, rewards, and other metrics.
-   - Closes the environment upon completion.
-
-### Example Code Snippet
-```python
-for file_name in os.listdir(conf_path):
-    if file_name.endswith(&#39;.yaml&#39;):
-        file_path = os.path.join(conf_path, file_name)
-        commands_callback, task_callback = convert_yaml_to_callbacks(file_path)
-
-        env = MinecraftSim(
-            obs_size=(128, 128), 
-            callbacks=[
-                RecordCallback(record_path=f&quot;./output/{file_name[:-5]}/&quot;, fps=30, frame_type=&quot;pov&quot;),
-                CommandsCallback(commands_callback),
-                TaskCallback(task_callback),
-            ]
-        )
-        policy = load_openai_policy(
-            model_path=&quot;/nfs-shared/jarvisbase/pretrained/foundation-model-2x.model&quot;,
-            weights_path=&quot;/nfs-shared/jarvisbase/pretrained/foundation-model-2x.weights&quot;
-        ).to(&quot;cuda&quot;)
-
-        obs, info = env.reset()
-        for i in range(12):
-            action, memory = policy.get_action(obs, memory, input_shape=&#39;*&#39;)
-            obs, reward, terminated, truncated, info = env.step(action)
-        env.close()
-</pre></div>
-</div>
-</section>
 </section>
 <hr class="docutils" />
 <section id="how-to-use">
 <h2>How to Use<a class="headerlink" href="#how-to-use" title="Link to this heading">#</a></h2>
 <ol class="arabic simple">
-<li><p><strong>Prepare Task Configurations</strong>:</p>
-<ul class="simple">
-<li><p>Write YAML files in the <code class="docutils literal notranslate"><span class="pre">criteria</span> <span class="pre">files</span></code> folder to define task settings.</p></li>
-</ul>
-</li>
 <li><p><strong>Run Batch Tests</strong>:</p>
 <ul class="simple">
-<li><p>Use <code class="docutils literal notranslate"><span class="pre">test_pipeline.py</span></code> or <code class="docutils literal notranslate"><span class="pre">test.py</span></code> to execute multiple tasks.</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">test_pipeline.py</span></code> or <code class="docutils literal notranslate"><span class="pre">test.py</span></code> to execute tasks.</p></li>
 <li><p>Ensure your environment supports GPU acceleration for optimal performance.</p></li>
 </ul>
 </li>
@@ -764,17 +667,6 @@ for file_name in os.listdir(conf_path):
 </ul>
 </li>
 </ol>
-</section>
-<hr class="docutils" />
-<section id="conclusion">
-<h2>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h2>
-<p>This benchmark provides a robust framework for automating the evaluation of agent performance in Minecraft-based tasks. Its modular design and batch testing capabilities make it highly adaptable for diverse research and development needs. Customize task configurations and callbacks to explore new experiments or refine existing setups.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
-
-
-
-</pre></div>
-</div>
 </section>
 </section>
 
@@ -802,11 +694,11 @@ for file_name in os.listdir(conf_path):
       </div>
     </a>
     <a class="right-next"
-       href="../overview/getting-started.html"
+       href="quick-benchmark.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Getting Started</p>
+        <p class="prev-next-title">Quick benchmark</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -830,12 +722,7 @@ for file_name in os.listdir(conf_path):
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-structure">Code Structure</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#directory-layout">Directory Layout</a></li>
-</ul>
-</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-use">How to Use</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
 </ul>
   </nav></div>
 

@@ -64,6 +64,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'benchmark/automatic-evaluation';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Getting Started" href="../overview/getting-started.html" />
+    <link rel="prev" title="Quick benchmark" href="quick-benchmark.html" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -174,7 +176,7 @@
 <nav>
   <ul class="bd-navbar-elements navbar-nav">
     
-<li class="nav-item ">
+<li class="nav-item current active">
   <a class="nav-link nav-internal" href="../overview/index.html">
     Overview
   </a>
@@ -341,10 +343,8 @@
       
       
       
-        
-      
       <dialog id="pst-primary-sidebar-modal"></dialog>
-      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -382,7 +382,7 @@
 <nav>
   <ul class="bd-navbar-elements navbar-nav">
     
-<li class="nav-item ">
+<li class="nav-item current active">
   <a class="nav-link nav-internal" href="../overview/index.html">
     Overview
   </a>
@@ -506,6 +506,45 @@
     
   </div>
   
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../overview/installation.html">Installation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">MineStudio Libraries</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../simulator/index.html">Simulator</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../simulator/general-information.html">General Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../simulator/design-principles.html">Design Principles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../simulator/play.html">Graphical User Interfaces</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../data/index.html">Data</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../data/dataset-raw.html">Raw Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/dataset-event.html">Event Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/visualization.html">Visualization Script</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../models/index.html">Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../models/baseline-groot.html">GROOT: Learning to Follow Instructions by Watching Gameplay Videos</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../train/index.html">Train</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../inference/index.html">Inference</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Benchmark</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="quick-benchmark.html">Quick benchmark</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Automatic Evaluation Pipeline</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
   </div>
@@ -536,6 +575,12 @@
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
+    
+    <li class="breadcrumb-item"><a href="../overview/index.html" class="nav-link">Overview</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Benchmark</a></li>
+    
     <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Automatic Evaluation Pipeline</span></li>
   </ul>
 </nav>
@@ -557,21 +602,28 @@
 <h1>Automatic Evaluation Pipeline<a class="headerlink" href="#automatic-evaluation-pipeline" title="Link to this heading">#</a></h1>
 <p>The pipeline automates evaluation tasks in the MineStudio framework, enabling the generation of criteria and video evaluation for agent performance analysis.</p>
 <hr class="docutils" />
-<section id="generating-criteria-files">
-<h2>Generating Criteria Files<a class="headerlink" href="#generating-criteria-files" title="Link to this heading">#</a></h2>
-<p>To create criteria files for new tasks:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>auto_eval/
-python<span class="w"> </span>rule_generation.py
+<section id="code-structure">
+<h2>Code Structure<a class="headerlink" href="#code-structure" title="Link to this heading">#</a></h2>
+<div class="highlight-plaintext notranslate"><div class="highlight"><pre><span></span>
+auto_eval/
+    ├── criteria_files/
+    │   └── Contains criteria files for evaluating videos for each task.
+    ├── eval_video/
+    │   └── Stores example videos and provides a structure for saving task-specific evaluation videos.
+    ├── batch_video_rating.py
+    │   └── Batch evaluation of videos for task performance.
+    ├── individual_video_rating.py
+    │   └── Evaluate videos individually for detailed analysis.
+    ├── video_comparison.py
+        └── Compare videos to measure performance differences.
 </pre></div>
 </div>
-<hr class="docutils" />
-</section>
 </section>
 <section id="evaluating-videos-with-vision-language-models-vlm">
-<h1>Evaluating Videos with Vision-Language Models (VLM)<a class="headerlink" href="#evaluating-videos-with-vision-language-models-vlm" title="Link to this heading">#</a></h1>
+<h2>Evaluating Videos with Vision-Language Models (VLM)<a class="headerlink" href="#evaluating-videos-with-vision-language-models-vlm" title="Link to this heading">#</a></h2>
 <p>The following commands evaluate task performance using pre-recorded videos and predefined criteria.</p>
 <section id="compare-two-videos">
-<h2>1. Compare Two Videos<a class="headerlink" href="#compare-two-videos" title="Link to this heading">#</a></h2>
+<h3>1. Compare Two Videos<a class="headerlink" href="#compare-two-videos" title="Link to this heading">#</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>video_comparison.py<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--video_path_a<span class="o">=</span><span class="s1">&#39;./eval_video/build_gate/build_gate_5.mp4&#39;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--video_path_b<span class="o">=</span><span class="s1">&#39;./eval_video/build_gate/build_gate_7.mp4&#39;</span><span class="w"> </span><span class="se">\</span>
@@ -580,7 +632,7 @@ python<span class="w"> </span>rule_generation.py
 </div>
 </section>
 <section id="individual-video-evaluation">
-<h2>2. Individual Video Evaluation<a class="headerlink" href="#individual-video-evaluation" title="Link to this heading">#</a></h2>
+<h3>2. Individual Video Evaluation<a class="headerlink" href="#individual-video-evaluation" title="Link to this heading">#</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>individual_video_rating.py<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--video_path<span class="o">=</span><span class="s1">&#39;./eval_video/build_gate/build_gate_5.mp4&#39;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--criteria_path<span class="o">=</span><span class="s1">&#39;./auto_eval/criteria_files/build_gate.txt&#39;</span>
@@ -588,19 +640,19 @@ python<span class="w"> </span>rule_generation.py
 </div>
 </section>
 <section id="batch-video-evaluation">
-<h2>3. Batch Video Evaluation<a class="headerlink" href="#batch-video-evaluation" title="Link to this heading">#</a></h2>
+<h3>3. Batch Video Evaluation<a class="headerlink" href="#batch-video-evaluation" title="Link to this heading">#</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>batch_video_rating.py<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--videos_path<span class="o">=</span><span class="s1">&#39;./eval_video/&#39;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--criteria_files_path<span class="o">=</span><span class="s1">&#39;./auto_eval/criteria_files/&#39;</span>
 </pre></div>
 </div>
+</section>
+</section>
 <hr class="docutils" />
-</section>
-</section>
 <section id="organizing-files-for-batch-evaluation">
-<h1>Organizing Files for Batch Evaluation<a class="headerlink" href="#organizing-files-for-batch-evaluation" title="Link to this heading">#</a></h1>
+<h2>Organizing Files for Batch Evaluation<a class="headerlink" href="#organizing-files-for-batch-evaluation" title="Link to this heading">#</a></h2>
 <section id="video-directory-structure">
-<h2>Video Directory Structure<a class="headerlink" href="#video-directory-structure" title="Link to this heading">#</a></h2>
+<h3>Video Directory Structure<a class="headerlink" href="#video-directory-structure" title="Link to this heading">#</a></h3>
 <p>Organize your task-specific videos under the <code class="docutils literal notranslate"><span class="pre">videos_path</span></code> directory:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>videos_path     
 ├── build_waterfall     # task_name_1     
@@ -616,7 +668,7 @@ python<span class="w"> </span>rule_generation.py
 </div>
 </section>
 <section id="criteria-files-directory-structure">
-<h2>Criteria Files Directory Structure<a class="headerlink" href="#criteria-files-directory-structure" title="Link to this heading">#</a></h2>
+<h3>Criteria Files Directory Structure<a class="headerlink" href="#criteria-files-directory-structure" title="Link to this heading">#</a></h3>
 <p>Store criteria files under the <code class="docutils literal notranslate"><span class="pre">criteria_files_path</span></code> directory, matching the task names:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>criteria_files_path     
 ├── build_waterfall.txt # task_name_1     
@@ -624,8 +676,72 @@ python<span class="w"> </span>rule_generation.py
 ├── task_name_3.txt
 </pre></div>
 </div>
-<hr class="docutils" />
 <p>By adhering to the outlined file structures and using the provided scripts, you can efficiently evaluate agent performance across multiple tasks in the MineStudio framework.</p>
+</section>
+<hr class="docutils" />
+<section id="example-output">
+<h3>Example Output<a class="headerlink" href="#example-output" title="Link to this heading">#</a></h3>
+<p>The following is an example output of the <strong>Automatic Evaluation Pipeline</strong>, showcasing how two videos are compared across several evaluation criteria. Each criterion is explained with observations, and an overall assessment is provided. This structured format ensures transparency and consistency in evaluating agent performance.</p>
+<hr class="docutils" />
+<section id="example-output-format">
+<h4>Example Output Format<a class="headerlink" href="#example-output-format" title="Link to this heading">#</a></h4>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;Task Progress&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;B is better&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;Action Control&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;B is better&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;Error Recognition and Correction&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;B is better&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;Creative Attempts&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;tie&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;Task Completion Efficiency&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;B is better&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;Material Selection and Usage&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;tie&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;video_1_path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;./eval_video/build_gate_5.mp4&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;video_2_path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;./eval_video/build_gate_7.mp4&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="s2">&quot;Task Progress:\n- Video B constructs two pillars and an arch; A does not complete the arch.\nresult: B is better\n\nAction Control:\n- Video A shows more wandering and redundant actions.\nresult: B is better\n\nError Recognition and Correction:\n- Video B corrects structure misalignments.\nresult: B is better\n\nCreative Attempts:\n- Neither video shows creative elements like decorations.\nresult: tie\n\nTask Completion Efficiency:\n- Video B completes the task faster and more efficiently.\nresult: B is better\n\nMaterial Selection and Usage:\n- Both use oak planks appropriately.\nresult: tie\n&quot;</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="key-features">
+<h4>Key Features<a class="headerlink" href="#key-features" title="Link to this heading">#</a></h4>
+<ol class="arabic simple">
+<li><p><strong>Assessment Dimensions</strong>:</p></li>
+</ol>
+<ul class="simple">
+<li><p><strong>Task Progress</strong>: Measures how much of the task is completed.</p></li>
+<li><p><strong>Action Control</strong>: Assesses movement precision and avoidance of redundant actions.</p></li>
+<li><p><strong>Error Recognition and Correction</strong>: Evaluates the agent’s ability to detect and fix mistakes.</p></li>
+<li><p><strong>Creative Attempts</strong>: Considers innovative or decorative efforts beyond task requirements.</p></li>
+<li><p><strong>Task Completion Efficiency</strong>: Tracks speed and resourcefulness in completing the task.</p></li>
+<li><p><strong>Material Selection and Usage</strong>: Ensures appropriate materials are used.</p></li>
+</ul>
+<ol class="arabic simple" start="2">
+<li><p><strong>Structured Results</strong>:</p>
+<ul class="simple">
+<li><p>The first section provides a concise summary of the evaluation for each criterion.</p></li>
+<li><p>Example:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Task</span> <span class="pre">Progress&quot;:</span> <span class="pre">&quot;B</span> <span class="pre">is</span> <span class="pre">better&quot;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Creative</span> <span class="pre">Attempts&quot;:</span> <span class="pre">&quot;tie&quot;</span></code></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Detailed Observations</strong>:</p>
+<ul class="simple">
+<li><p>The second section explains the reasoning behind each result.</p></li>
+<li><p>Example:</p>
+<ul>
+<li><p><strong>Task Progress</strong>: “Video B constructs two pillars and an arch; A does not complete the arch.”</p></li>
+<li><p><strong>Creative Attempts</strong>: “Neither video shows creative elements like decorations.”</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<hr class="docutils" />
+</section>
+</section>
 </section>
 </section>
 
@@ -643,6 +759,24 @@ python<span class="w"> </span>rule_generation.py
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="quick-benchmark.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Quick benchmark</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../overview/getting-started.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Getting Started</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -662,23 +796,24 @@ python<span class="w"> </span>rule_generation.py
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Automatic Evaluation Pipeline</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generating-criteria-files">Generating Criteria Files</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-structure">Code Structure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluating-videos-with-vision-language-models-vlm">Evaluating Videos with Vision-Language Models (VLM)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#compare-two-videos">1. Compare Two Videos</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#individual-video-evaluation">2. Individual Video Evaluation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#batch-video-evaluation">3. Batch Video Evaluation</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluating-videos-with-vision-language-models-vlm">Evaluating Videos with Vision-Language Models (VLM)</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compare-two-videos">1. Compare Two Videos</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#individual-video-evaluation">2. Individual Video Evaluation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#batch-video-evaluation">3. Batch Video Evaluation</a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#organizing-files-for-batch-evaluation">Organizing Files for Batch Evaluation</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#video-directory-structure">Video Directory Structure</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#criteria-files-directory-structure">Criteria Files Directory Structure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#organizing-files-for-batch-evaluation">Organizing Files for Batch Evaluation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#video-directory-structure">Video Directory Structure</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#criteria-files-directory-structure">Criteria Files Directory Structure</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-output">Example Output</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-output-format">Example Output Format</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#key-features">Key Features</a></li>
 </ul>
 </li>
 </ul>
-
+</li>
+</ul>
   </nav></div>
 
   <div class="sidebar-secondary-item">
