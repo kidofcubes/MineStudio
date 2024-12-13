@@ -605,6 +605,7 @@
 <h1>Quick benchmark<a class="headerlink" href="#quick-benchmark" title="Link to this heading">#</a></h1>
 <section id="code-structure">
 <h2>Code structure<a class="headerlink" href="#code-structure" title="Link to this heading">#</a></h2>
+<p>Below is the structure of the benchmark module, which organizes task definitions and testing scripts for evaluation:</p>
 <div class="highlight-plaintext notranslate"><div class="highlight"><pre><span></span>benchmark/
     ├── task_configs/ 
     │   ├── simple/ 
@@ -620,17 +621,12 @@
 </pre></div>
 </div>
 </section>
-<hr class="docutils" />
 <section id="workflow-overview">
 <h2>Workflow Overview<a class="headerlink" href="#workflow-overview" title="Link to this heading">#</a></h2>
 <section id="task-configuration">
 <h3>Task Configuration<a class="headerlink" href="#task-configuration" title="Link to this heading">#</a></h3>
-<p>Tasks are defined in YAML files located in the <code class="docutils literal notranslate"><span class="pre">task_configs/</span></code> directory. Each YAML file includes:</p>
-<ul class="simple">
-<li><p><strong>Initial Setup</strong>: Commands to configure the environment.</p></li>
-<li><p><strong>Task Goals</strong>: Objectives for the agent to accomplish.</p></li>
-</ul>
-<p>Example YAML:</p>
+<p>Tasks are defined in YAML files located in the <code class="docutils literal notranslate"><span class="pre">task_configs/</span></code> directory. under the appropriate difficulty subdirectory (e.g., <code class="docutils literal notranslate"><span class="pre">simple/</span></code> or <code class="docutils literal notranslate"><span class="pre">hard/</span></code>).
+Example YAML:</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">custom_init_commands</span><span class="p">:</span><span class="w"> </span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/give @s minecraft:water_bucket 3</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/give @s minecraft:stone 64</span>
@@ -661,50 +657,13 @@
 </li>
 </ol>
 </section>
-<hr class="docutils" />
-<section id="using-yaml-in-the-framework">
-<h3>Using YAML in the Framework<a class="headerlink" href="#using-yaml-in-the-framework" title="Link to this heading">#</a></h3>
-<ol class="arabic">
-<li><p><strong>Location</strong>:</p>
-<ul class="simple">
-<li><p>Save the YAML file in the <code class="docutils literal notranslate"><span class="pre">task_configs/</span></code> directory under the appropriate difficulty subdirectory (e.g., <code class="docutils literal notranslate"><span class="pre">simple/</span></code> or <code class="docutils literal notranslate"><span class="pre">hard/</span></code>).</p></li>
-</ul>
-</li>
-<li><p><strong>Loading the YAML</strong>:</p>
-<ul>
-<li><p>Use the provided <code class="docutils literal notranslate"><span class="pre">read_conf.py</span></code> script to load and parse YAML files.</p></li>
-<li><p>Example usage:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">utility.read_conf</span> <span class="kn">import</span> <span class="n">convert_yaml_to_callbacks</span>
-
-<span class="n">commands_callback</span><span class="p">,</span> <span class="n">task_callback</span> <span class="o">=</span> <span class="n">convert_yaml_to_callbacks</span><span class="p">(</span><span class="s2">&quot;task_configs/simple/build_waterfall.yaml&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</li>
-</ul>
-</li>
-<li><p><strong>Task Execution</strong>:</p>
-<ul>
-<li><p>The parsed callbacks are passed to the simulation during environment initialization:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">env</span> <span class="o">=</span> <span class="n">MinecraftSim</span><span class="p">(</span><span class="n">callbacks</span><span class="o">=</span><span class="p">[</span>
-    <span class="n">CommandsCallback</span><span class="p">(</span><span class="n">commands_callback</span><span class="p">),</span>
-    <span class="n">TaskCallback</span><span class="p">(</span><span class="n">task_callback</span><span class="p">)</span>
-<span class="p">])</span>
-</pre></div>
-</div>
-</li>
-</ul>
-</li>
-</ol>
-</section>
-<hr class="docutils" />
 <section id="running-tests">
 <h3>Running Tests<a class="headerlink" href="#running-tests" title="Link to this heading">#</a></h3>
 <ol class="arabic">
 <li><p><strong>Individual or Small-Scale Tests</strong>:</p>
 <ul>
-<li><p>Use <code class="docutils literal notranslate"><span class="pre">test.py</span></code> for running specific tasks or testing new configurations.</p></li>
-<li><p>Example:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>test.py
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">test.py</span></code> for running specific tasks or testing new configurations.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python<span class="w"> </span>test.py
 </pre></div>
 </div>
 </li>
@@ -712,9 +671,8 @@
 </li>
 <li><p><strong>Batch Testing with Parallelization</strong>:</p>
 <ul>
-<li><p>Use <code class="docutils literal notranslate"><span class="pre">test_pipeline.py</span></code> for executing tasks in parallel.</p></li>
-<li><p>Example:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>test_pipeline.py
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">test_pipeline.py</span></code> for executing tasks in parallel.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python<span class="w"> </span>test_pipeline.py
 </pre></div>
 </div>
 </li>
@@ -722,8 +680,8 @@
 </li>
 </ol>
 <hr class="docutils" />
-<section id="code-explanation-test-py">
-<h4>Code Explanation: <code class="docutils literal notranslate"><span class="pre">test.py</span></code><a class="headerlink" href="#code-explanation-test-py" title="Link to this heading">#</a></h4>
+<section id="an-example-test-py">
+<h4>An Example: <code class="docutils literal notranslate"><span class="pre">test.py</span></code><a class="headerlink" href="#an-example-test-py" title="Link to this heading">#</a></h4>
 <p>This script demonstrates how to evaluate tasks using YAML-based configurations. Below is an outline of its workflow:</p>
 <ol class="arabic simple">
 <li><p><strong>Task Setup</strong>:</p>
@@ -756,9 +714,7 @@
 </ul>
 </li>
 </ol>
-<section id="example-code">
-<h5>Example Code<a class="headerlink" href="#example-code" title="Link to this heading">#</a></h5>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">commands_callback</span><span class="p">,</span> <span class="n">task_callback</span> <span class="o">=</span> <span class="n">convert_yaml_to_callbacks</span><span class="p">(</span><span class="s2">&quot;task_configs/simple/build_waterfall.yaml&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">commands_callback</span><span class="p">,</span> <span class="n">task_callback</span> <span class="o">=</span> <span class="n">convert_yaml_to_callbacks</span><span class="p">(</span><span class="s2">&quot;./task_configs/simple/build_waterfall.yaml&quot;</span><span class="p">)</span>
 <span class="n">env</span> <span class="o">=</span> <span class="n">MinecraftSim</span><span class="p">(</span>
    <span class="n">obs_size</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span> 
    <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span>
@@ -779,7 +735,6 @@
 <span class="n">env</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 </div>
-</section>
 </section>
 </section>
 </section>
@@ -839,12 +794,8 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-structure">Code structure</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#workflow-overview">Workflow Overview</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#task-configuration">Task Configuration</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-yaml-in-the-framework">Using YAML in the Framework</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#running-tests">Running Tests</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#code-explanation-test-py">Code Explanation: <code class="docutils literal notranslate"><span class="pre">test.py</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#example-code">Example Code</a></li>
-</ul>
-</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#an-example-test-py">An Example: <code class="docutils literal notranslate"><span class="pre">test.py</span></code></a></li>
 </ul>
 </li>
 </ul>

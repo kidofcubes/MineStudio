@@ -7,6 +7,8 @@ The pipeline automates evaluation tasks in the MineStudio framework, enabling th
 
 ## Code Structure
 
+The following is the structure of the evaluation module, with each file and folder serving specific purposes:
+
 ```plaintext
 
 auto_eval/
@@ -23,79 +25,33 @@ auto_eval/
 ```
 
 
-## Evaluating Videos with Vision-Language Models (VLM)
+## Evaluating Videos with Vision-Language Models
 
-The following commands evaluate task performance using pre-recorded videos and predefined criteria.
+### An Example: Comparing Videos Using `video_comparison.py`
 
-### 1. Compare Two Videos
+Below is a simplified guide to using `video_comparison.py` for video comparison:
 
-```bash
-python video_comparison.py \
-  --video_path_a='./eval_video/build_gate/build_gate_5.mp4' \
-  --video_path_b='./eval_video/build_gate/build_gate_7.mp4' \
-  --criteria_path='./auto_eval/criteria_files/build_gate.txt'
-```
+1. **Prepare Videos:**
+   Ensure your video files (e.g., `video_a.mp4` and `video_b.mp4`) are placed in the `eval_video/` directory.
 
-### 2. Individual Video Evaluation
+2. **Define Criteria:**
+   Define task-specific criteria files in `criteria_files/` (e.g., `build_gate.txt`).
 
-```bash
-python individual_video_rating.py \
-  --video_path='./eval_video/build_gate/build_gate_5.mp4' \
-  --criteria_path='./auto_eval/criteria_files/build_gate.txt'
-```
+3. **Run the Script:**
+   Use the following command to compare two videos:
+   ```bash
+   python video_comparison.py \
+     --video_path_a='./eval_video/build_gate/build_gate_5.mp4' \
+     --video_path_b='./eval_video/build_gate/build_gate_7.mp4' \
+     --criteria_path='./auto_eval/criteria_files/build_gate.txt'
+   ```
 
-### 3. Batch Video Evaluation
-
-```bash
-python batch_video_rating.py \
-  --videos_path='./eval_video/' \
-  --criteria_files_path='./auto_eval/criteria_files/'
-```
-
----
-
-## Organizing Files for Batch Evaluation
-
-### Video Directory Structure
-
-Organize your task-specific videos under the `videos_path` directory:
-
-```
-videos_path     
-├── build_waterfall     # task_name_1     
-│     ├── episode_1.mp4
-│     ├── episode_2.mp4
-├── build_house         # task_name_2
-│     ├── episode_1.mp4
-│     ├── episode_2.mp4
-├── task_name_3
-│     ├── episode_1.mp4
-│     ├── episode_2.mp4
-```
-
-### Criteria Files Directory Structure
-
-Store criteria files under the `criteria_files_path` directory, matching the task names:
-
-```
-criteria_files_path     
-├── build_waterfall.txt # task_name_1     
-├── build_house.txt     # task_name_2
-├── task_name_3.txt
-```
+4. **Analyze Results:**
+   After running the script, the evaluation results will be saved as a JSON file in the `vlm_rating_res/` directory.
 
 
-By adhering to the outlined file structures and using the provided scripts, you can efficiently evaluate agent performance across multiple tasks in the MineStudio framework.
+The following is an **example output**, showcasing how two videos are compared across several evaluation criteria. Each criterion is explained with observations, and an overall assessment is provided. This structured format ensures transparency and consistency in evaluating agent performance.
 
----
-
-### Example Output
-
-The following is an example output of the **Automatic Evaluation Pipeline**, showcasing how two videos are compared across several evaluation criteria. Each criterion is explained with observations, and an overall assessment is provided. This structured format ensures transparency and consistency in evaluating agent performance.
-
----
-
-#### Example Output Format
 
 ```json
 [
@@ -113,17 +69,13 @@ The following is an example output of the **Automatic Evaluation Pipeline**, sho
 ]
 ```
 
----
-
-#### Key Features
-
 1. **Assessment Dimensions**:
-  - **Task Progress**: Measures how much of the task is completed.
-  - **Action Control**: Assesses movement precision and avoidance of redundant actions.
-  - **Error Recognition and Correction**: Evaluates the agent’s ability to detect and fix mistakes.
-  - **Creative Attempts**: Considers innovative or decorative efforts beyond task requirements.
-  - **Task Completion Efficiency**: Tracks speed and resourcefulness in completing the task.
-  - **Material Selection and Usage**: Ensures appropriate materials are used.
+   - **Task Progress**: Measures how much of the task is completed.
+   - **Action Control**: Assesses movement precision and avoidance of redundant actions.
+   - **Error Recognition and Correction**: Evaluates the agent’s ability to detect and fix mistakes.
+   - **Creative Attempts**: Considers innovative or decorative efforts beyond task requirements.
+   - **Task Completion Efficiency**: Tracks speed and resourcefulness in completing the task.
+   - **Material Selection and Usage**: Ensures appropriate materials are used.
 
 2. **Structured Results**:
    - The first section provides a concise summary of the evaluation for each criterion.
@@ -137,4 +89,78 @@ The following is an example output of the **Automatic Evaluation Pipeline**, sho
      - **Task Progress**: "Video B constructs two pillars and an arch; A does not complete the arch."
      - **Creative Attempts**: "Neither video shows creative elements like decorations."
 
----
+
+
+
+### Organizing Files for Batch Evaluation
+
+- **Batch Video Evaluation:**
+
+   Evaluate all videos in a directory using their respective criteria.
+
+   ```bash
+   python batch_video_rating.py \
+     --videos_path='./eval_video/' \
+     --criteria_files_path='./auto_eval/criteria_files/'
+   ```
+
+Organize your task-specific videos under the `videos_path` directory:
+
+```
+videos_path     
+├── build_waterfall     # task_name_1     
+│     ├── episode_1.mp4
+│     ├── episode_2.mp4
+├── build_house         # task_name_2
+│     ├── episode_1.mp4
+│     ├── episode_2.mp4
+├── task_name_3
+│     ├── episode_1.mp4
+│     ├── episode_2.mp4
+```
+
+Store criteria files under the `criteria_files_path` directory, matching the task names:
+
+```
+criteria_files_path     
+├── build_waterfall.txt # task_name_1     
+├── build_house.txt     # task_name_2
+├── task_name_3.txt
+```
+
+
+To evaluate task performance using pre-recorded videos and criteria, you can use the following commands depending on your needs:
+
+- **Compare Two Videos:**
+
+   Compare two videos of the same task to analyze differences in agent performance.  
+
+   ```bash
+   python video_comparison.py \
+     --video_path_a='./eval_video/build_gate/build_gate_5.mp4' \
+     --video_path_b='./eval_video/build_gate/build_gate_7.mp4' \
+     --criteria_path='./auto_eval/criteria_files/build_gate.txt'
+   ```
+
+- **Individual Video Evaluation:**
+
+   Evaluate a single video against predefined criteria.
+
+   ```bash
+   python individual_video_rating.py \
+     --video_path='./eval_video/build_gate/build_gate_5.mp4' \
+     --criteria_path='./auto_eval/criteria_files/build_gate.txt'
+   ```
+
+- **Batch Video Evaluation:**
+
+   Evaluate all videos in a directory using their respective criteria.
+
+   ```bash
+   python batch_video_rating.py \
+     --videos_path='./eval_video/' \
+     --criteria_files_path='./auto_eval/criteria_files/'
+   ```
+
+
+This tutorial covers the essentials of setting up and running the automatic evaluation pipeline. For more advanced usage, explore the provided code files for customization options.

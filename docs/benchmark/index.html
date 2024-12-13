@@ -608,12 +608,8 @@
 <li class="toctree-l2"><a class="reference internal" href="quick-benchmark.html#code-structure">Code structure</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quick-benchmark.html#workflow-overview">Workflow Overview</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="quick-benchmark.html#task-configuration">Task Configuration</a></li>
-<li class="toctree-l3"><a class="reference internal" href="quick-benchmark.html#using-yaml-in-the-framework">Using YAML in the Framework</a></li>
 <li class="toctree-l3"><a class="reference internal" href="quick-benchmark.html#running-tests">Running Tests</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="quick-benchmark.html#code-explanation-test-py">Code Explanation: <code class="docutils literal notranslate"><span class="pre">test.py</span></code></a><ul>
-<li class="toctree-l5"><a class="reference internal" href="quick-benchmark.html#example-code">Example Code</a></li>
-</ul>
-</li>
+<li class="toctree-l4"><a class="reference internal" href="quick-benchmark.html#an-example-test-py">An Example: <code class="docutils literal notranslate"><span class="pre">test.py</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -622,20 +618,9 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="automatic-evaluation.html">Automatic Evaluation Pipeline</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="automatic-evaluation.html#code-structure">Code Structure</a></li>
-<li class="toctree-l2"><a class="reference internal" href="automatic-evaluation.html#evaluating-videos-with-vision-language-models-vlm">Evaluating Videos with Vision-Language Models (VLM)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="automatic-evaluation.html#compare-two-videos">1. Compare Two Videos</a></li>
-<li class="toctree-l3"><a class="reference internal" href="automatic-evaluation.html#individual-video-evaluation">2. Individual Video Evaluation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="automatic-evaluation.html#batch-video-evaluation">3. Batch Video Evaluation</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="automatic-evaluation.html#organizing-files-for-batch-evaluation">Organizing Files for Batch Evaluation</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="automatic-evaluation.html#video-directory-structure">Video Directory Structure</a></li>
-<li class="toctree-l3"><a class="reference internal" href="automatic-evaluation.html#criteria-files-directory-structure">Criteria Files Directory Structure</a></li>
-<li class="toctree-l3"><a class="reference internal" href="automatic-evaluation.html#example-output">Example Output</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="automatic-evaluation.html#example-output-format">Example Output Format</a></li>
-<li class="toctree-l4"><a class="reference internal" href="automatic-evaluation.html#key-features">Key Features</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="automatic-evaluation.html#evaluating-videos-with-vision-language-models">Evaluating Videos with Vision-Language Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="automatic-evaluation.html#an-example-comparing-videos-using-video-comparison-py">An Example: Comparing Videos Using <code class="docutils literal notranslate"><span class="pre">video_comparison.py</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="automatic-evaluation.html#organizing-files-for-batch-evaluation">Organizing Files for Batch Evaluation</a></li>
 </ul>
 </li>
 </ul>
@@ -647,10 +632,10 @@
 <h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h2>
 <p>The MineStudio benchmark is a comprehensive framework for evaluating agent performance across a wide range of Minecraft-based tasks. It offers the following key features:</p>
 <ul class="simple">
-<li><p><strong>Diverse Task Support</strong>: Evaluate agents on tasks such as building, mining, crafting, collecting, tool usage, and more.</p></li>
-<li><p><strong>Game Mode Variability</strong>: Includes both simple and challenging game modes to test agents under varying levels of difficulty.</p></li>
+<li><p><strong>Diverse Task Support</strong>: Evaluate agents on tasks such as building, mining, crafting, collecting, and more.</p></li>
+<li><p><strong>Game Mode Variability</strong>: Includes both simple and hard game modes to test agents under varying levels of difficulty.</p></li>
 <li><p><strong>Batch Task Execution</strong>: Run multiple tasks simultaneously and record task completion videos for analysis.</p></li>
-<li><p><strong>VLM-Based Evaluation</strong>: Leverage Vision-Language Models to analyze task videos and provide automated scoring.</p></li>
+<li><p><strong>VLM-Based Evaluation</strong>: Leverage Vision-Language Models to analyze and score task videos.</p></li>
 </ul>
 </section>
 <hr class="docutils" />

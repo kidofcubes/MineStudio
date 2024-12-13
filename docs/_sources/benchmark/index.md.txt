@@ -17,10 +17,10 @@ automatic-evaluation
 
 The MineStudio benchmark is a comprehensive framework for evaluating agent performance across a wide range of Minecraft-based tasks. It offers the following key features:  
 
-- **Diverse Task Support**: Evaluate agents on tasks such as building, mining, crafting, collecting, tool usage, and more.  
-- **Game Mode Variability**: Includes both simple and challenging game modes to test agents under varying levels of difficulty.  
+- **Diverse Task Support**: Evaluate agents on tasks such as building, mining, crafting, collecting, and more.  
+- **Game Mode Variability**: Includes both simple and hard game modes to test agents under varying levels of difficulty.  
 - **Batch Task Execution**: Run multiple tasks simultaneously and record task completion videos for analysis.  
-- **VLM-Based Evaluation**: Leverage Vision-Language Models to analyze task videos and provide automated scoring.  
+- **VLM-Based Evaluation**: Leverage Vision-Language Models to analyze and score task videos.  
 
 ---
 

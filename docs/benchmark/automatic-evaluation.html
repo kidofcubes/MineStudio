@@ -607,6 +607,7 @@
 <hr class="docutils" />
 <section id="code-structure">
 <h2>Code Structure<a class="headerlink" href="#code-structure" title="Link to this heading">#</a></h2>
+<p>The following is the structure of the evaluation module, with each file and folder serving specific purposes:</p>
 <div class="highlight-plaintext notranslate"><div class="highlight"><pre><span></span>
 auto_eval/
     ├── criteria_files/
@@ -622,72 +623,29 @@ auto_eval/
 </pre></div>
 </div>
 </section>
-<section id="evaluating-videos-with-vision-language-models-vlm">
-<h2>Evaluating Videos with Vision-Language Models (VLM)<a class="headerlink" href="#evaluating-videos-with-vision-language-models-vlm" title="Link to this heading">#</a></h2>
-<p>The following commands evaluate task performance using pre-recorded videos and predefined criteria.</p>
-<section id="compare-two-videos">
-<h3>1. Compare Two Videos<a class="headerlink" href="#compare-two-videos" title="Link to this heading">#</a></h3>
+<section id="evaluating-videos-with-vision-language-models">
+<h2>Evaluating Videos with Vision-Language Models<a class="headerlink" href="#evaluating-videos-with-vision-language-models" title="Link to this heading">#</a></h2>
+<section id="an-example-comparing-videos-using-video-comparison-py">
+<h3>An Example: Comparing Videos Using <code class="docutils literal notranslate"><span class="pre">video_comparison.py</span></code><a class="headerlink" href="#an-example-comparing-videos-using-video-comparison-py" title="Link to this heading">#</a></h3>
+<p>Below is a simplified guide to using <code class="docutils literal notranslate"><span class="pre">video_comparison.py</span></code> for video comparison:</p>
+<ol class="arabic">
+<li><p><strong>Prepare Videos:</strong>
+Ensure your video files (e.g., <code class="docutils literal notranslate"><span class="pre">video_a.mp4</span></code> and <code class="docutils literal notranslate"><span class="pre">video_b.mp4</span></code>) are placed in the <code class="docutils literal notranslate"><span class="pre">eval_video/</span></code> directory.</p></li>
+<li><p><strong>Define Criteria:</strong>
+Define task-specific criteria files in <code class="docutils literal notranslate"><span class="pre">criteria_files/</span></code> (e.g., <code class="docutils literal notranslate"><span class="pre">build_gate.txt</span></code>).</p></li>
+<li><p><strong>Run the Script:</strong>
+Use the following command to compare two videos:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>video_comparison.py<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--video_path_a<span class="o">=</span><span class="s1">&#39;./eval_video/build_gate/build_gate_5.mp4&#39;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--video_path_b<span class="o">=</span><span class="s1">&#39;./eval_video/build_gate/build_gate_7.mp4&#39;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--criteria_path<span class="o">=</span><span class="s1">&#39;./auto_eval/criteria_files/build_gate.txt&#39;</span>
 </pre></div>
 </div>
-</section>
-<section id="individual-video-evaluation">
-<h3>2. Individual Video Evaluation<a class="headerlink" href="#individual-video-evaluation" title="Link to this heading">#</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>individual_video_rating.py<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--video_path<span class="o">=</span><span class="s1">&#39;./eval_video/build_gate/build_gate_5.mp4&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--criteria_path<span class="o">=</span><span class="s1">&#39;./auto_eval/criteria_files/build_gate.txt&#39;</span>
-</pre></div>
-</div>
-</section>
-<section id="batch-video-evaluation">
-<h3>3. Batch Video Evaluation<a class="headerlink" href="#batch-video-evaluation" title="Link to this heading">#</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>batch_video_rating.py<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--videos_path<span class="o">=</span><span class="s1">&#39;./eval_video/&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--criteria_files_path<span class="o">=</span><span class="s1">&#39;./auto_eval/criteria_files/&#39;</span>
-</pre></div>
-</div>
-</section>
-</section>
-<hr class="docutils" />
-<section id="organizing-files-for-batch-evaluation">
-<h2>Organizing Files for Batch Evaluation<a class="headerlink" href="#organizing-files-for-batch-evaluation" title="Link to this heading">#</a></h2>
-<section id="video-directory-structure">
-<h3>Video Directory Structure<a class="headerlink" href="#video-directory-structure" title="Link to this heading">#</a></h3>
-<p>Organize your task-specific videos under the <code class="docutils literal notranslate"><span class="pre">videos_path</span></code> directory:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>videos_path     
-├── build_waterfall     # task_name_1     
-│     ├── episode_1.mp4
-│     ├── episode_2.mp4
-├── build_house         # task_name_2
-│     ├── episode_1.mp4
-│     ├── episode_2.mp4
-├── task_name_3
-│     ├── episode_1.mp4
-│     ├── episode_2.mp4
-</pre></div>
-</div>
-</section>
-<section id="criteria-files-directory-structure">
-<h3>Criteria Files Directory Structure<a class="headerlink" href="#criteria-files-directory-structure" title="Link to this heading">#</a></h3>
-<p>Store criteria files under the <code class="docutils literal notranslate"><span class="pre">criteria_files_path</span></code> directory, matching the task names:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>criteria_files_path     
-├── build_waterfall.txt # task_name_1     
-├── build_house.txt     # task_name_2
-├── task_name_3.txt
-</pre></div>
-</div>
-<p>By adhering to the outlined file structures and using the provided scripts, you can efficiently evaluate agent performance across multiple tasks in the MineStudio framework.</p>
-</section>
-<hr class="docutils" />
-<section id="example-output">
-<h3>Example Output<a class="headerlink" href="#example-output" title="Link to this heading">#</a></h3>
-<p>The following is an example output of the <strong>Automatic Evaluation Pipeline</strong>, showcasing how two videos are compared across several evaluation criteria. Each criterion is explained with observations, and an overall assessment is provided. This structured format ensures transparency and consistency in evaluating agent performance.</p>
-<hr class="docutils" />
-<section id="example-output-format">
-<h4>Example Output Format<a class="headerlink" href="#example-output-format" title="Link to this heading">#</a></h4>
+</li>
+<li><p><strong>Analyze Results:</strong>
+After running the script, the evaluation results will be saved as a JSON file in the <code class="docutils literal notranslate"><span class="pre">vlm_rating_res/</span></code> directory.</p></li>
+</ol>
+<p>The following is an <strong>example output</strong>, showcasing how two videos are compared across several evaluation criteria. Each criterion is explained with observations, and an overall assessment is provided. This structured format ensures transparency and consistency in evaluating agent performance.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
 <span class="w">    </span><span class="p">{</span>
 <span class="w">        </span><span class="nt">&quot;Task Progress&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;B is better&quot;</span><span class="p">,</span>
@@ -703,13 +661,8 @@ auto_eval/
 <span class="p">]</span>
 </pre></div>
 </div>
-</section>
-<hr class="docutils" />
-<section id="key-features">
-<h4>Key Features<a class="headerlink" href="#key-features" title="Link to this heading">#</a></h4>
 <ol class="arabic simple">
-<li><p><strong>Assessment Dimensions</strong>:</p></li>
-</ol>
+<li><p><strong>Assessment Dimensions</strong>:</p>
 <ul class="simple">
 <li><p><strong>Task Progress</strong>: Measures how much of the task is completed.</p></li>
 <li><p><strong>Action Control</strong>: Assesses movement precision and avoidance of redundant actions.</p></li>
@@ -718,7 +671,7 @@ auto_eval/
 <li><p><strong>Task Completion Efficiency</strong>: Tracks speed and resourcefulness in completing the task.</p></li>
 <li><p><strong>Material Selection and Usage</strong>: Ensures appropriate materials are used.</p></li>
 </ul>
-<ol class="arabic simple" start="2">
+</li>
 <li><p><strong>Structured Results</strong>:</p>
 <ul class="simple">
 <li><p>The first section provides a concise summary of the evaluation for each criterion.</p></li>
@@ -742,8 +695,68 @@ auto_eval/
 </ul>
 </li>
 </ol>
-<hr class="docutils" />
 </section>
+<section id="organizing-files-for-batch-evaluation">
+<h3>Organizing Files for Batch Evaluation<a class="headerlink" href="#organizing-files-for-batch-evaluation" title="Link to this heading">#</a></h3>
+<ul>
+<li><p><strong>Batch Video Evaluation:</strong></p>
+<p>Evaluate all videos in a directory using their respective criteria.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>batch_video_rating.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--videos_path<span class="o">=</span><span class="s1">&#39;./eval_video/&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--criteria_files_path<span class="o">=</span><span class="s1">&#39;./auto_eval/criteria_files/&#39;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Organize your task-specific videos under the <code class="docutils literal notranslate"><span class="pre">videos_path</span></code> directory:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>videos_path     
+├── build_waterfall     # task_name_1     
+│     ├── episode_1.mp4
+│     ├── episode_2.mp4
+├── build_house         # task_name_2
+│     ├── episode_1.mp4
+│     ├── episode_2.mp4
+├── task_name_3
+│     ├── episode_1.mp4
+│     ├── episode_2.mp4
+</pre></div>
+</div>
+<p>Store criteria files under the <code class="docutils literal notranslate"><span class="pre">criteria_files_path</span></code> directory, matching the task names:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>criteria_files_path     
+├── build_waterfall.txt # task_name_1     
+├── build_house.txt     # task_name_2
+├── task_name_3.txt
+</pre></div>
+</div>
+<p>To evaluate task performance using pre-recorded videos and criteria, you can use the following commands depending on your needs:</p>
+<ul>
+<li><p><strong>Compare Two Videos:</strong></p>
+<p>Compare two videos of the same task to analyze differences in agent performance.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>video_comparison.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--video_path_a<span class="o">=</span><span class="s1">&#39;./eval_video/build_gate/build_gate_5.mp4&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--video_path_b<span class="o">=</span><span class="s1">&#39;./eval_video/build_gate/build_gate_7.mp4&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--criteria_path<span class="o">=</span><span class="s1">&#39;./auto_eval/criteria_files/build_gate.txt&#39;</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Individual Video Evaluation:</strong></p>
+<p>Evaluate a single video against predefined criteria.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>individual_video_rating.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--video_path<span class="o">=</span><span class="s1">&#39;./eval_video/build_gate/build_gate_5.mp4&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--criteria_path<span class="o">=</span><span class="s1">&#39;./auto_eval/criteria_files/build_gate.txt&#39;</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Batch Video Evaluation:</strong></p>
+<p>Evaluate all videos in a directory using their respective criteria.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>batch_video_rating.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--videos_path<span class="o">=</span><span class="s1">&#39;./eval_video/&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--criteria_files_path<span class="o">=</span><span class="s1">&#39;./auto_eval/criteria_files/&#39;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>This tutorial covers the essentials of setting up and running the automatic evaluation pipeline. For more advanced usage, explore the provided code files for customization options.</p>
 </section>
 </section>
 </section>
@@ -800,20 +813,9 @@ auto_eval/
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-structure">Code Structure</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluating-videos-with-vision-language-models-vlm">Evaluating Videos with Vision-Language Models (VLM)</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#compare-two-videos">1. Compare Two Videos</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#individual-video-evaluation">2. Individual Video Evaluation</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#batch-video-evaluation">3. Batch Video Evaluation</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#organizing-files-for-batch-evaluation">Organizing Files for Batch Evaluation</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#video-directory-structure">Video Directory Structure</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#criteria-files-directory-structure">Criteria Files Directory Structure</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-output">Example Output</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-output-format">Example Output Format</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#key-features">Key Features</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluating-videos-with-vision-language-models">Evaluating Videos with Vision-Language Models</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#an-example-comparing-videos-using-video-comparison-py">An Example: Comparing Videos Using <code class="docutils literal notranslate"><span class="pre">video_comparison.py</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#organizing-files-for-batch-evaluation">Organizing Files for Batch Evaluation</a></li>
 </ul>
 </li>
 </ul>
