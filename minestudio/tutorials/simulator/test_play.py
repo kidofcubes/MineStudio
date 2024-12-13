@@ -5,7 +5,7 @@ from minestudio.simulator.callbacks import (
 )
 from minestudio.simulator.utils.gui import RecordDrawCall, CommandModeDrawCall, SegmentDrawCall
 from functools import partial
-from minestudio.models import load_openai_policy, load_rocket_policy
+from minestudio.models import load_vpt_policy, load_rocket_policy
 if __name__ == '__main__':
     agent_generator = partial(
         load_rocket_policy,

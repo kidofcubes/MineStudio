@@ -8,8 +8,10 @@ import torch
 import torch.nn.functional as F
 import torchvision
 from torch import nn
+import numpy as np
 from einops import rearrange, repeat
 from typing import List, Dict, Any, Tuple, Optional
+import av
 
 import timm
 from minestudio.models.base_policy import MinePolicy
@@ -184,6 +186,7 @@ class GrootPolicy(MinePolicy):
         self.video_encoder = VideoEncoder(hiddim, **video_encoder_kwargs)
         self.image_encoder = ImageEncoder(hiddim, **image_encoder_kwargs)
         self.decoder = Decoder(hiddim, **decoder_kwargs)
+        self.timesteps = decoder_kwargs['timesteps']
         self.fuser = nn.TransformerEncoder(
             nn.TransformerEncoderLayer(
                 d_model=hiddim, 
@@ -199,6 +202,45 @@ class GrootPolicy(MinePolicy):
             for param in self.backbone.parameters():
                 param.requires_grad = False
 
+        self.condition = None
+
+    def encode_video(self, ref_video_path: str, resolution: Tuple[int, int] = (224, 224)) -> Dict:
+        frames = []
+        ref_video_path = ref_video_path[0][0] # unbatchify
+
+        with av.open(ref_video_path, "r") as container:
+            for fid, frame in enumerate(container.decode(video=0)):
+                frame = frame.reformat(width=resolution[0], height=resolution[1]).to_ndarray(format="rgb24")
+                frames.append(frame)
+
+        reference = torch.from_numpy(np.stack(frames[:self.timesteps], axis=0) ).unsqueeze(0).to(self.device)
+        reference = rearrange(reference, 'b t h w c -> (b t) c h w')
+        reference = self.transforms(reference)
+        reference = self.backbone(reference)[-1]
+        reference = self.updim(reference)
+        reference = rearrange(reference, '(b t) c h w -> b t c h w', b=1)
+        posterior_dist = self.video_encoder(reference)
+        prior_dist = self.image_encoder(reference[:, 0])
+
+        posterior_dist['z'] = posterior_dist['z'].unsqueeze(0)
+        prior_dist['z'] = prior_dist['z'].unsqueeze(0)
+
+        print(
+            "=======================================================\n"
+            f"Ref video is from: {ref_video_path};\n"
+            f"Num frames: {len(frames)}. \n"
+            "=======================================================\n"
+        )
+
+        print(f"[📚] latent shape: {posterior_dist['z'].shape} | mean: {posterior_dist['z'].mean().item(): .3f} | std: {posterior_dist['z'].std(): .3f}")
+
+        self.condition = {
+            "posterior_dist": posterior_dist,
+            "prior_dist": prior_dist
+        }
+
+        return self.condition
+
     def forward(self, input: Dict, memory: Optional[List[torch.Tensor]] = None) -> Dict:
         b, t = input['image'].shape[:2]
 
@@ -208,19 +250,20 @@ class GrootPolicy(MinePolicy):
         image = self.updim(image)
         image = rearrange(image, '(b t) c h w -> b t c h w', b=b)
 
-        if 'reference' in input:
-            reference = input['reference']
-            reference = rearrange(reference, 'b t h w c -> (b t) c h w')
-            reference = self.transforms(reference)
-            reference = self.backbone(reference)[-1]
-            reference = self.updim(reference)
-            reference = rearrange(reference, '(b t) c h w -> b t c h w', b=b)
+        if 'ref_video_path' in input or self.condition is not None:
+            if self.condition is None:
+                self.encode_video(input['ref_video_path'])
+            condition = self.condition
+            posterior_dist = condition['posterior_dist']
+            prior_dist = condition['prior_dist']
+            z = posterior_dist['z']
         else:
+            # self-supervised training
             reference = image
+            posterior_dist = self.video_encoder(reference)
+            prior_dist = self.image_encoder(reference[:, 0])
+            z = repeat(posterior_dist['z'], 'b c -> (b t) 1 c', t=t)
 
-        posterior_dist = self.video_encoder(reference)
-        prior_dist = self.image_encoder(reference[:, 0])
-        z = repeat(posterior_dist['z'], 'b c -> (b t) 1 c', t=t)
         x = rearrange(image, 'b t c h w -> (b t) (h w) c')
         x = torch.cat([x, z], dim=1)
         x = self.fuser(x)

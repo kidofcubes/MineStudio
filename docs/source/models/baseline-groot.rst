@@ -1,5 +1,7 @@
-GROOT: Learning to Follow Instructions by Watching Gameplay Videos
+Built-in GROOT Model
 ======================================================================
+
+`GROOT: Learning to Follow Instructions by Watching Gameplay Videos <https://arxiv.org/abs/2310.08235>`_
 
 .. admonition:: Quick Facts
     
@@ -123,7 +125,7 @@ Here we provide a brief overview and workflow of the components:
     6. The image features and goal embeddings are concatenated and fused to form the input for the decoder.
     7. The decoder autoregressively predicts the action logits as well as generates next memory.
 
-Training GROOT
+Train GROOT
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To implement the training objective of GROOT, we add a ``kl_divergence`` callback in ``minestudio/train/mine_callbacks``. This callback calculates the KL divergence between the posterior and prior distributions and adds it to the loss.
@@ -133,10 +135,10 @@ Specify this file path with hydra to start training:
 
 .. code-block:: bash
 
-   cd minestudio/tutorials/train
-   python main.py -m 3_pretrain_groots/groot_config.yaml
+   $ cd minestudio/tutorials/train
+   $ python main.py -m 3_pretrain_groots/groot_config.yaml
 
-Evaluation
+Evaluate GROOT
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Here is an example of how to evaluate the trained GROOT model. Provide it with a reference video and let it run!

@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-25 08:11:33
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-11-25 14:47:30
+LastEditTime: 2024-12-13 07:33:29
 FilePath: /MineStudio/minestudio/tutorials/inference/example.py
 '''
 import ray
@@ -9,7 +9,7 @@ from rich import print
 from minestudio.inference import EpisodePipeline, MineGenerator, InfoBaseFilter
 
 from functools import partial
-from minestudio.models import load_openai_policy
+from minestudio.models import load_vpt_policy
 from minestudio.simulator import MinecraftSim
 
 if __name__ == '__main__':
@@ -20,7 +20,7 @@ if __name__ == '__main__':
         preferred_spawn_biome="forest", 
     )
     agent_generator = partial(
-        load_openai_policy,
+        load_vpt_policy,
         model_path="/nfs-shared/jarvisbase/pretrained/foundation-model-2x.model",
         weights_path="/nfs-shared/jarvisbase/pretrained/rl-from-early-game-2x.weights"
     )

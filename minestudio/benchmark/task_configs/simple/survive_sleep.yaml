@@ -2,7 +2,6 @@ custom_init_commands:
 - /give @s minecraft:white_bed 1
 - /time set night
 - /effect give @a resistance 99999 250 true
-- /summon minecraft:wolf ~2 ~ ~ {Owner:"@p"}
 defaults:
 - base
 - _self_

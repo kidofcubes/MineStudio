@@ -1,5 +1,4 @@
 custom_init_commands:
-- /locate biome minecraft:forest
 - /give @s minecraft:compass
 - /give @s minecraft:oak_sapling 10
 - /give @s minecraft:torch 20

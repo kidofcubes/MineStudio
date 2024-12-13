@@ -1,7 +1,6 @@
 custom_init_commands:
 - /replaceitem entity @s weapon.mainhand minecraft:wooden_sword
 - /give @s minecraft:bread 10
-- /summon minecraft:cow ~2 ~ ~
 - /summon minecraft:pig ~3 ~ ~
 - /summon minecraft:chicken ~4 ~ ~
 defaults:
