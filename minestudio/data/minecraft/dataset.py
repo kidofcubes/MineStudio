@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-10 10:25:38
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-11-10 13:40:24
+LastEditTime: 2024-12-12 11:34:15
 FilePath: /MineStudio/minestudio/data/minecraft/dataset.py
 '''
 import torch
@@ -33,6 +33,7 @@ class MinecraftDataset(Dataset):
         win_len: int = 128,
         skip_frame: int = 1,
         split_ratio: float = 0.9, 
+        shuffle: bool = False, # episode-level shuffle
         # below are parameters for event dataset
         bias: int = 0,
         event_regex: str = '',
@@ -41,7 +42,7 @@ class MinecraftDataset(Dataset):
         **kwargs,
     ) -> None:
         
-        super().__init__(**kwargs)
+        super().__init__()
         self.mode = mode
         self.split = split
         self.common_kwargs = dict(
@@ -54,6 +55,7 @@ class MinecraftDataset(Dataset):
             frame_width = frame_width,
             frame_height = frame_height,
             enable_resize = enable_resize,
+            shuffle = shuffle,
         )
         self.raw_dataset_kwargs = dict(
             win_len = win_len,

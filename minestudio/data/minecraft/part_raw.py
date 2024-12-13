@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-10 10:26:32
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-11-12 15:56:15
+LastEditTime: 2024-12-12 04:32:18
 FilePath: /MineStudio/minestudio/data/minecraft/part_raw.py
 '''
 import io
@@ -25,25 +25,33 @@ class RawDataset(BaseDataset):
     def __init__(self, 
         win_len: int = 1, 
         skip_frame: int = 1, 
-        split_type: Literal['train', 'val'] = 'train',
+        split: Literal['train', 'val'] = 'train',
         split_ratio: float = 0.8,
         verbose: bool = True,
+        shuffle: bool = False, 
         **kernel_kwargs, 
     ) -> Any:
         super(RawDataset, self).__init__(verbose=verbose, **kernel_kwargs)
         self.win_len = win_len
         self.skip_frame = skip_frame
-        self.split_type = split_type
+        self.split = split
         self.split_ratio = split_ratio
         self.verbose = verbose
+        self.shuffle = shuffle
         self.build_items()
     
     def build_items(self) -> None:
-        
         self.episodes_with_length = self.kernel.get_episodes_with_length()
         _episodes_with_length = list(self.episodes_with_length.items())
+
+        if self.shuffle:
+            seed = 44
+            print(f"[Raw Dataset] Shuffling episodes with seed {seed}. ")
+            random.seed(seed) # ensure the same shuffle order for all workers
+            random.shuffle(_episodes_with_length)
+
         divider = int(len(_episodes_with_length) * self.split_ratio)
-        if self.split_type == 'train':
+        if self.split == 'train':
             _episodes_with_length = _episodes_with_length[:divider]
         else:
             _episodes_with_length = _episodes_with_length[divider:]
@@ -93,12 +101,11 @@ if __name__ == '__main__':
     
     kernel_kwargs = dict(
         dataset_dirs=[
-            # '/nfs-readonly/jarvisbase/database/contractors/dataset_6xx', 
-            # '/nfs-readonly/jarvisbase/database/contractors/dataset_7xx', 
-            # '/nfs-readonly/jarvisbase/database/contractors/dataset_8xx', 
-            # '/nfs-readonly/jarvisbase/database/contractors/dataset_9xx', 
-            # '/nfs-readonly/jarvisbase/database/contractors/dataset_10xx', 
+            '/nfs-shared-2/data/contractors/dataset_6xx', 
             '/nfs-shared-2/data/contractors/dataset_7xx', 
+            '/nfs-shared-2/data/contractors/dataset_8xx', 
+            '/nfs-shared-2/data/contractors/dataset_9xx', 
+            '/nfs-shared-2/data/contractors/dataset_10xx', 
         ], 
         enable_contractor_info=False, 
         enable_segment=True, 
@@ -109,7 +116,7 @@ if __name__ == '__main__':
         frame_height=224,
         win_len=128, 
         skip_frame=1,
-        split_type='train',
+        split='train',
         split_ratio=0.8,
         verbose=True,
         **kernel_kwargs, 
@@ -120,9 +127,11 @@ if __name__ == '__main__':
     from torch.utils.data import DataLoader
     from tqdm import tqdm
     loader = DataLoader(dataset, batch_sampler=sampler, num_workers=4)
-    for batch in loader:
+    for idx, batch in enumerate(loader):
         print(
             "\t".join(
                 [f"{a} {b}" for a, b in zip(batch['episode'], batch['progress'])]
             )
         )
+        if idx > 50:
+            break

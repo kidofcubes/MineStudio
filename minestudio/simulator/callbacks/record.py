@@ -41,7 +41,7 @@ class RecordCallback(MinecraftCallback):
         return obs, info
     
     def after_step(self, sim, obs, reward, terminated, truncated, info):
-        if self.recording and not info.get('R', False):
+        if self.recording and not info.get('R', True):
             self.recording = False
             print(f'[red]Recording stopped[/red]')
             self._save_episode()

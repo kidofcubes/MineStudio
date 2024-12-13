@@ -1,8 +1,8 @@
 '''
 Date: 2024-11-11 20:54:15
-LastEditors: muzhancun muzhancun@stu.pku.edu.cn
-LastEditTime: 2024-11-18 17:32:46
-FilePath: /Minestudio/minestudio/models/openai_vpt/body.py
+LastEditors: caishaofei caishaofei@stu.pku.edu.cn
+LastEditTime: 2024-12-11 06:03:20
+FilePath: /MineStudio/minestudio/models/openai_vpt/body.py
 '''
 import os
 import pickle
@@ -20,6 +20,8 @@ from minestudio.utils.vpt_lib.impala_cnn import ImpalaCNN
 from minestudio.utils.vpt_lib.util import FanInInitReLULayer, ResidualRecurrentBlocks
 from minestudio.models.base_policy import MinePolicy
 from minestudio.online.utils import auto_stack, auto_to_torch
+from minestudio.utils.register import Registers
+
 class ImgPreprocessing(nn.Module):
     """Normalize incoming images.
 
@@ -169,8 +171,6 @@ class MinecraftPolicy(nn.Module):
         self.diff_obs_process = None
 
         self.recurrence_type = recurrence_type
-
-        self.recurrent_layer = None
         self.recurrent_layer = ResidualRecurrentBlocks(
             hidsize=hidsize,
             timesteps=timesteps,
@@ -223,6 +223,7 @@ class MinecraftPolicy(nn.Module):
         else:
             return None
 
+@Registers.model.register
 class OpenAIPolicy(MinePolicy):
 
     def __init__(self, policy_kwargs, action_space=None):
@@ -280,6 +281,7 @@ class OpenAIPolicy(MinePolicy):
         ]
         return result_states
 
+@Registers.model_loader.register
 def load_openai_policy(model_path: str, weights_path: str):
     model = pickle.load(Path(model_path).open("rb"))
     policy_kwargs = model['model']['args']['net']['args']
