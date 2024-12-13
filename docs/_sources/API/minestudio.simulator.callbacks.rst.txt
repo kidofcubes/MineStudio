@@ -28,6 +28,12 @@ Submodules
    :show-inheritance:
 
 
+.. automodule:: minestudio.simulator.callbacks.judgereset
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
 .. automodule:: minestudio.simulator.callbacks.mask_actions
    :members:
    :undoc-members:

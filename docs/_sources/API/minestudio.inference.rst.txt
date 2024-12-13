@@ -26,6 +26,12 @@ Submodules
    :show-inheritance:
 
 
+.. automodule:: minestudio.inference.example_online
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
 .. automodule:: minestudio.inference.pipeline
    :members:
    :undoc-members:
