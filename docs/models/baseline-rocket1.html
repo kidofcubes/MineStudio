@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>ROCKET-1: Mastering Open-World Interaction with Visual-Temporal Context Prompting &#8212; MineStudio 1.0.0</title>
+    <title>Built-in ROCKET-1 Model &#8212; MineStudio 1.0.0</title>
   
   
   
@@ -61,11 +61,13 @@
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'models/baseline-rocket1';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Train" href="../train/index.html" />
-    <link rel="prev" title="GROOT: Learning to Follow Instructions by Watching Gameplay Videos" href="baseline-groot.html" />
+    <link rel="prev" title="Built-in GROOT Model" href="baseline-groot.html" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -530,10 +532,10 @@
 </ul>
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Models</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="baseline-vpt.html">Video Pretraining (vpt): Learning to Act by Watching Unlabeled Online Videos</a></li>
-<li class="toctree-l2"><a class="reference internal" href="baseline-steve1.html">STEVE-1: A Generative Model for Text-to-Behavior in Minecraft</a></li>
-<li class="toctree-l2"><a class="reference internal" href="baseline-groot.html">GROOT: Learning to Follow Instructions by Watching Gameplay Videos</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">ROCKET-1: Mastering Open-World Interaction with Visual-Temporal Context Prompting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="baseline-vpt.html">Built-in VPT Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="baseline-steve1.html">Built-in STEVE-1 Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="baseline-groot.html">Built-in GROOT Model</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Built-in ROCKET-1 Model</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../train/index.html">Train</a></li>
@@ -584,7 +586,7 @@
     
     <li class="breadcrumb-item"><a href="index.html" class="nav-link">Models</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">ROCKET-1: Mastering Open-World Interaction with Visual-Temporal Context Prompting</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Built-in ROCKET-1 Model</span></li>
   </ul>
 </nav>
 </div>
@@ -601,14 +603,84 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-<!--
- * @Date: 2024-12-12 14:16:44
- * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-12-12 14:19:54
- * @FilePath: /MineStudio/docs/source/models/baseline-rocket1.md
--->
-<section id="rocket-1-mastering-open-world-interaction-with-visual-temporal-context-prompting">
-<h1>ROCKET-1: Mastering Open-World Interaction with Visual-Temporal Context Prompting<a class="headerlink" href="#rocket-1-mastering-open-world-interaction-with-visual-temporal-context-prompting" title="Link to this heading">#</a></h1>
+<section id="built-in-rocket-1-model">
+<h1>Built-in ROCKET-1 Model<a class="headerlink" href="#built-in-rocket-1-model" title="Link to this heading">#</a></h1>
+<p><a class="reference external" href="https://arxiv.org/abs/2410.17856">ROCKET-1: Mastering Open-World Interaction with Visual-Temporal Context Prompting</a></p>
+<div class="admonition-quick-facts admonition">
+<p class="admonition-title">Quick Facts</p>
+<p>ROCKET-1 is actually a segmentation-conditioned policy. Human or other high-level reasoners can pinpoint an object by segmenting it from the background. ROCKET-1 leverages this ability to interact with the Minecraft environment by using a segmentation mask as a prompt.</p>
+</div>
+<section id="insights">
+<h2>Insights<a class="headerlink" href="#insights" title="Link to this heading">#</a></h2>
+<p>Hierarchical agent architectures have become a popular approach to addressing open-world interaction challenges. These architectures leverage the reasoning capabilities of large language models (LLMs) to decompose tasks into subgoals, which are then communicated to the low-level controller through language. However, this method struggles to convey precise spatial details. In this paper, we propose visual-temporal context prompting, a novel technique that enables the high-level reasoner and low-level controller to communicate interaction intents more effectively by utilizing semantic segmentation of the current visual frames. This approach significantly improves the transmission of spatial details, enhancing the agent’s interaction efficiency.</p>
+</section>
+<section id="method">
+<h2>Method<a class="headerlink" href="#method" title="Link to this heading">#</a></h2>
+<figure class="align-center" id="id1">
+<a class="reference internal image-reference" href="../_images/rocket-pipeline.png"><img alt="../_images/rocket-pipeline.png" src="../_images/rocket-pipeline.png" style="width: 800px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">ROCKET-1 policy architecture</span><a class="headerlink" href="#id1" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>To train ROCKET1, we prepare interaction trajectory data in the format: <span class="math notranslate nohighlight">\(\tau = (o_{1:T} , a_{1:T} , 𝑚_{1:T} , c_{1:T} )\)</span>, where <span class="math notranslate nohighlight">\(o_t \in \mathbb{R}^{3\times H \times W}\)</span> is the visual observation at time <span class="math notranslate nohighlight">\(t\)</span>, <span class="math notranslate nohighlight">\(m_t \in \{0, 1\}_{1 \times H \times W}\)</span> is a binary mask highlighting the object in <span class="math notranslate nohighlight">\(o_t\)</span> for future interaction, <span class="math notranslate nohighlight">\(c_t \in \mathbb{N}\)</span> denotes the interaction type, and <span class="math notranslate nohighlight">\(a_t\)</span> is the action. If both <span class="math notranslate nohighlight">\(m_t\)</span> and <span class="math notranslate nohighlight">\(c_t\)</span> are zeros, no region is highlighted at
+<span class="math notranslate nohighlight">\(o_t\)</span>.</p>
+<p>The optimizing objective is to maximize the log-likelihood of the interaction trajectory data:</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{L} = -\sum_{t=1}^{|\tau|} \log \pi(a_t | o_{1:t}, m_{1:t} \odot w_{1:t}, c_{1:t} \odot w_{1:t})\]</div>
+<p>where <span class="math notranslate nohighlight">\(w_t \sim \text{Bernoulli}(1-p)\)</span> represents a mask, with <span class="math notranslate nohighlight">\(p\)</span> denoting the dropping probability, <span class="math notranslate nohighlight">\(\odot\)</span> denotes the product operation over time dimension.</p>
+</section>
+<section id="our-implementation">
+<h2>Our Implementation<a class="headerlink" href="#our-implementation" title="Link to this heading">#</a></h2>
+<p>We utilize EfficientNet as the visual backbone, modifying its input channels from 3 to 4 to accommodate semantic segmentation masks. Additionally, we employ PyTorch’s built-in <code class="docutils literal notranslate"><span class="pre">TransformerEncoder</span></code> for self-attention pooling of visual patches. The visual features and interaction types are then alternately arranged into a token sequence, which is processed using the TransformerXL module from the <a class="reference external" href="https://github.com/openai/Video-Pre-Training">VPT repository</a>. For the action head, we reuse the hierarchical action head implementation from the VPT repository.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can find our implementation in the module <code class="docutils literal notranslate"><span class="pre">minestudio.models.rocket_one</span></code>.</p>
+</div>
+</section>
+<section id="train-rocket-1">
+<h2>Train ROCKET-1<a class="headerlink" href="#train-rocket-1" title="Link to this heading">#</a></h2>
+<p>We provide a simple example in the tutorials <code class="docutils literal notranslate"><span class="pre">minestudio.tutorials.train.2_pretrain_vpts</span></code>.</p>
+<p>You can simply copy the directory and change dir to the copied directory. Then, run the following command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python<span class="w"> </span>train.py<span class="w"> </span>--config<span class="w"> </span>reocket_config.yaml
+</pre></div>
+</div>
+</section>
+<section id="evaluate-rocket-1">
+<h2>Evaluate ROCKET-1<a class="headerlink" href="#evaluate-rocket-1" title="Link to this heading">#</a></h2>
+<p>Evaluating the trained ROCKET-1 in your own scripts is easy:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">minestudio.models</span> <span class="kn">import</span> <span class="n">load_rocket_policy</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">load_rocket_policy</span><span class="p">(</span><span class="s1">&#39;/path/to/rocket.ckpt&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;cuda&#39;</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+<span class="nb">input</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;image&#39;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span><span class="p">),</span>
+    <span class="s1">&#39;segment&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;obj_id&#39;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span><span class="p">),</span>
+        <span class="s1">&#39;obj_mask&#39;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span><span class="p">),</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="n">memory</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">output</span><span class="p">,</span> <span class="n">memory</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_action</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">memory</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="s1">&#39;*&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We provide a interactive gradio page to evaluate the ROCKET-1 model. You can run the following command to start the server:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python<span class="w"> </span>-m<span class="w"> </span>minestudio.tutorials.inference.evaluate_rocket.rocket_gradio<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--port<span class="w"> </span><span class="m">7862</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--model-path<span class="w"> </span><span class="s1">&#39;/path/to/rocket.ckpt&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--sam-path<span class="w"> </span><span class="err">&#39;</span>/path/to/sam2
+</pre></div>
+</div>
+<p>Then, open your browser and go to <code class="docutils literal notranslate"><span class="pre">http://localhost:7862</span></code> to see the evaluation page.</p>
+<figure class="align-center" id="id2">
+<a class="reference internal image-reference" href="../_images/gradio-rocket.png"><img alt="../_images/gradio-rocket.png" src="../_images/gradio-rocket.png" style="width: 800px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">ROCKET-1 evaluation page</span><a class="headerlink" href="#id2" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
 </section>
 
 <div class="section ablog__blog_comments">
@@ -631,7 +703,7 @@
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">GROOT: Learning to Follow Instructions by Watching Gameplay Videos</p>
+        <p class="prev-next-title">Built-in GROOT Model</p>
       </div>
     </a>
     <a class="right-next"
@@ -655,9 +727,25 @@
 
 
   <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#insights">Insights</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#method">Method</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#our-implementation">Our Implementation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#train-rocket-1">Train ROCKET-1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-rocket-1">Evaluate ROCKET-1</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
 
   <div class="tocsection sourcelink">
-    <a href="../_sources/models/baseline-rocket1.md.txt">
+    <a href="../_sources/models/baseline-rocket1.rst.txt">
       <i class="fa-solid fa-file-lines"></i> Show Source
     </a>
   </div>

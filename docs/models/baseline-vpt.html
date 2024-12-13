@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Video Pretraining (vpt): Learning to Act by Watching Unlabeled Online Videos &#8212; MineStudio 1.0.0</title>
+    <title>Built-in VPT Model &#8212; MineStudio 1.0.0</title>
   
   
   
@@ -61,10 +61,12 @@
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'models/baseline-vpt';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="STEVE-1: A Generative Model for Text-to-Behavior in Minecraft" href="baseline-steve1.html" />
+    <link rel="next" title="Built-in STEVE-1 Model" href="baseline-steve1.html" />
     <link rel="prev" title="Models" href="index.html" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -530,10 +532,10 @@
 </ul>
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Models</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Video Pretraining (vpt): Learning to Act by Watching Unlabeled Online Videos</a></li>
-<li class="toctree-l2"><a class="reference internal" href="baseline-steve1.html">STEVE-1: A Generative Model for Text-to-Behavior in Minecraft</a></li>
-<li class="toctree-l2"><a class="reference internal" href="baseline-groot.html">GROOT: Learning to Follow Instructions by Watching Gameplay Videos</a></li>
-<li class="toctree-l2"><a class="reference internal" href="baseline-rocket1.html">ROCKET-1: Mastering Open-World Interaction with Visual-Temporal Context Prompting</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Built-in VPT Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="baseline-steve1.html">Built-in STEVE-1 Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="baseline-groot.html">Built-in GROOT Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="baseline-rocket1.html">Built-in ROCKET-1 Model</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../train/index.html">Train</a></li>
@@ -584,7 +586,7 @@
     
     <li class="breadcrumb-item"><a href="index.html" class="nav-link">Models</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Video Pretraining (vpt): Learning to Act by Watching Unlabeled Online Videos</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Built-in VPT Model</span></li>
   </ul>
 </nav>
 </div>
@@ -601,8 +603,96 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-<section id="video-pretraining-vpt-learning-to-act-by-watching-unlabeled-online-videos">
-<h1>Video Pretraining (vpt): Learning to Act by Watching Unlabeled Online Videos<a class="headerlink" href="#video-pretraining-vpt-learning-to-act-by-watching-unlabeled-online-videos" title="Link to this heading">#</a></h1>
+<section id="built-in-vpt-model">
+<h1>Built-in VPT Model<a class="headerlink" href="#built-in-vpt-model" title="Link to this heading">#</a></h1>
+<p><a class="reference external" href="https://arxiv.org/abs/2206.11795">Video Pretraining (vpt): Learning to Act by Watching Unlabeled Online Videos</a></p>
+<div class="admonition-quick-facts admonition">
+<p class="admonition-title">Quick Facts</p>
+<p>The paper utilizes <cite>next token prediction</cite> to pre-train a foundational policy model <code class="docutils literal notranslate"><span class="pre">VPT</span></code> on the Minecraft trajectory dataset and demonstrates that it can be efficiently fine-tuned for other complex tasks (such as mining diamonds from scratch).</p>
+</div>
+<section id="insights">
+<h2>Insights<a class="headerlink" href="#insights" title="Link to this heading">#</a></h2>
+<p>To develop foundational policy models in the Minecraft domain, it is crucial to pretrain on a large-scale dataset of human expert trajectories. This enables the model to learn a diverse range of behaviors and account for as many edge cases as possible. However, acquiring such trajectory data—which includes sequences of both states and actions—can be challenging, whereas video data from platforms like YouTube is relatively easier to obtain. To address this issue, this paper proposes leveraging a small amount of manually labeled trajectory data to train an Inverse Dynamics Model (IDM), which is then used to generate pseudo-labels for video data. This approach significantly scales up the trajectory dataset available for training. Inspired by GPT’s pretraining paradigm, VPT (Video Pretrained Transformer) trains a foundational policy model by predicting the next action, and subsequently fine-tunes it on specific tasks using reinforcement learning, achieving remarkable performance.</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../_images/vpt.png"><img alt="../_images/vpt.png" src="../_images/vpt.png" style="width: 800px;" />
+</a>
+</figure>
+</section>
+<section id="method">
+<h2>Method<a class="headerlink" href="#method" title="Link to this heading">#</a></h2>
+<p>Simple behavior cloning is used to train the foundation policy.</p>
+<div class="math notranslate nohighlight">
+\[\text{min}_\theta \sum_{t \in [1 \cdots T ]} - \log \pi_\theta (a_t | o_1, \cdots, o_t), \ \text{where} \ a_t \in p_{\text{IDM}} (a_t | o_1, \cdots, o_t, \cdots, o_T)\]</div>
+</section>
+<section id="our-implementation">
+<h2>Our Implementation<a class="headerlink" href="#our-implementation" title="Link to this heading">#</a></h2>
+<p>We mostly used the code provided by the <a class="reference external" href="https://github.com/openai/Video-Pre-Training">original repo</a> and encapsulated it using the Policy Template <code class="docutils literal notranslate"><span class="pre">MinePolicy</span></code> designed in MineStudio.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@Registers</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">register</span>
+<span class="k">class</span> <span class="nc">VPTPolicy</span><span class="p">(</span><span class="n">MinePolicy</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">policy_kwargs</span><span class="p">,</span> <span class="n">action_space</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">hiddim</span><span class="o">=</span><span class="n">policy_kwargs</span><span class="p">[</span><span class="s2">&quot;hidsize&quot;</span><span class="p">],</span> <span class="n">action_space</span><span class="o">=</span><span class="n">action_space</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">net</span> <span class="o">=</span> <span class="n">MinecraftPolicy</span><span class="p">(</span><span class="o">**</span><span class="n">policy_kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cached_init_states</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">initial_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">batch_size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="o">.</span><span class="n">initial_state</span><span class="p">(</span><span class="mi">1</span><span class="p">)]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">batch_size</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cached_init_states</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cached_init_states</span><span class="p">[</span><span class="n">batch_size</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="o">.</span><span class="n">initial_state</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)]</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cached_init_states</span><span class="p">[</span><span class="n">batch_size</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">state_in</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">B</span><span class="p">,</span> <span class="n">T</span> <span class="o">=</span> <span class="nb">input</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">first</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="kc">False</span><span class="p">]],</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
+        <span class="n">state_in</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial_state</span><span class="p">(</span><span class="n">B</span><span class="p">)</span> <span class="k">if</span> <span class="n">state_in</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">state_in</span>
+        <span class="p">(</span><span class="n">pi_h</span><span class="p">,</span> <span class="n">v_h</span><span class="p">),</span> <span class="n">state_out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">state_in</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;first&quot;</span><span class="p">:</span> <span class="n">first</span><span class="p">})</span>
+        <span class="n">pi_logits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pi_head</span><span class="p">(</span><span class="n">pi_h</span><span class="p">)</span>
+        <span class="n">vpred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">value_head</span><span class="p">(</span><span class="n">v_h</span><span class="p">)</span>
+        <span class="n">latents</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;pi_logits&#39;</span><span class="p">:</span> <span class="n">pi_logits</span><span class="p">,</span> <span class="s1">&#39;vpred&#39;</span><span class="p">:</span> <span class="n">vpred</span><span class="p">}</span>
+        <span class="k">return</span> <span class="n">latents</span><span class="p">,</span> <span class="n">state_out</span>
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p><code class="docutils literal notranslate"><span class="pre">MinecraftPolicy</span></code> comes from the original implementation of the <a class="reference external" href="https://github.com/openai/Video-Pre-Training">VPT repository</a>.</p>
+</div>
+</section>
+<section id="train-vpt">
+<h2>Train VPT<a class="headerlink" href="#train-vpt" title="Link to this heading">#</a></h2>
+<p>We provide a simple example in the tutorials <code class="docutils literal notranslate"><span class="pre">minestudio.tutorials.train.1_finetune_vpts</span></code>.</p>
+<p>You can simply copy the directory and change dir to the copied directory. Then, run the following command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python<span class="w"> </span>train.py<span class="w"> </span>--config<span class="w"> </span>vpt_config.yaml
+</pre></div>
+</div>
+</section>
+<section id="evaluate-vpt">
+<h2>Evaluate VPT<a class="headerlink" href="#evaluate-vpt" title="Link to this heading">#</a></h2>
+<p>Here is an example of how to evaluate the trained VPT model. Provide a model path and weights path and let it run!</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">minestudio.simulator</span> <span class="kn">import</span> <span class="n">MinecraftSim</span>
+<span class="kn">from</span> <span class="nn">minestudio.simulator.callbacks</span> <span class="kn">import</span> <span class="n">RecordCallback</span>
+<span class="kn">from</span> <span class="nn">minestudio.models</span> <span class="kn">import</span> <span class="n">load_vpt_policy</span>
+
+<span class="n">policy</span> <span class="o">=</span> <span class="n">load_vpt_policy</span><span class="p">(</span>
+    <span class="n">model_path</span><span class="o">=</span><span class="s2">&quot;/path/to/foundation-model-2x.model&quot;</span><span class="p">,</span>
+    <span class="n">weights_path</span><span class="o">=</span><span class="s2">&quot;/path/to/foundation-model-2x.weights&quot;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span><span class="p">)</span>
+<span class="n">policy</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+
+<span class="n">env</span> <span class="o">=</span> <span class="n">MinecraftSim</span><span class="p">(</span>
+    <span class="n">obs_size</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span>
+    <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">RecordCallback</span><span class="p">(</span><span class="n">record_path</span><span class="o">=</span><span class="s2">&quot;./output&quot;</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">frame_type</span><span class="o">=</span><span class="s2">&quot;pov&quot;</span><span class="p">)]</span>
+<span class="p">)</span>
+<span class="n">memory</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">obs</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1200</span><span class="p">):</span>
+    <span class="n">action</span><span class="p">,</span> <span class="n">memory</span> <span class="o">=</span> <span class="n">policy</span><span class="o">.</span><span class="n">get_action</span><span class="p">(</span><span class="n">obs</span><span class="p">,</span> <span class="n">memory</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="s1">&#39;*&#39;</span><span class="p">)</span>
+    <span class="n">obs</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">terminated</span><span class="p">,</span> <span class="n">truncated</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+<span class="n">env</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
 </section>
 
 <div class="section ablog__blog_comments">
@@ -633,7 +723,7 @@
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">STEVE-1: A Generative Model for Text-to-Behavior in Minecraft</p>
+        <p class="prev-next-title">Built-in STEVE-1 Model</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -649,9 +739,25 @@
 
 
   <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#insights">Insights</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#method">Method</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#our-implementation">Our Implementation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#train-vpt">Train VPT</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-vpt">Evaluate VPT</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
 
   <div class="tocsection sourcelink">
-    <a href="../_sources/models/baseline-vpt.md.txt">
+    <a href="../_sources/models/baseline-vpt.rst.txt">
       <i class="fa-solid fa-file-lines"></i> Show Source
     </a>
   </div>

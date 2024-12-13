@@ -13,9 +13,9 @@ Subpackages
    :maxdepth: 4
 
    minestudio.models.groot_one
-   minestudio.models.openai_vpt
    minestudio.models.rocket_one
    minestudio.models.steve_one
+   minestudio.models.vpt
 
 Submodules
 ----------

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>GROOT: Learning to Follow Instructions by Watching Gameplay Videos &#8212; MineStudio 1.0.0</title>
+    <title>Built-in GROOT Model &#8212; MineStudio 1.0.0</title>
   
   
   
@@ -66,8 +66,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'models/baseline-groot';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="ROCKET-1: Mastering Open-World Interaction with Visual-Temporal Context Prompting" href="baseline-rocket1.html" />
-    <link rel="prev" title="STEVE-1: A Generative Model for Text-to-Behavior in Minecraft" href="baseline-steve1.html" />
+    <link rel="next" title="Built-in ROCKET-1 Model" href="baseline-rocket1.html" />
+    <link rel="prev" title="Built-in STEVE-1 Model" href="baseline-steve1.html" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -532,10 +532,10 @@
 </ul>
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Models</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="baseline-vpt.html">Video Pretraining (vpt): Learning to Act by Watching Unlabeled Online Videos</a></li>
-<li class="toctree-l2"><a class="reference internal" href="baseline-steve1.html">STEVE-1: A Generative Model for Text-to-Behavior in Minecraft</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">GROOT: Learning to Follow Instructions by Watching Gameplay Videos</a></li>
-<li class="toctree-l2"><a class="reference internal" href="baseline-rocket1.html">ROCKET-1: Mastering Open-World Interaction with Visual-Temporal Context Prompting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="baseline-vpt.html">Built-in VPT Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="baseline-steve1.html">Built-in STEVE-1 Model</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Built-in GROOT Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="baseline-rocket1.html">Built-in ROCKET-1 Model</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../train/index.html">Train</a></li>
@@ -586,7 +586,7 @@
     
     <li class="breadcrumb-item"><a href="index.html" class="nav-link">Models</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">GROOT: Learning to Follow Instructions by Watching Gameplay Videos</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Built-in GROOT Model</span></li>
   </ul>
 </nav>
 </div>
@@ -603,8 +603,9 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-<section id="groot-learning-to-follow-instructions-by-watching-gameplay-videos">
-<h1>GROOT: Learning to Follow Instructions by Watching Gameplay Videos<a class="headerlink" href="#groot-learning-to-follow-instructions-by-watching-gameplay-videos" title="Link to this heading">#</a></h1>
+<section id="built-in-groot-model">
+<h1>Built-in GROOT Model<a class="headerlink" href="#built-in-groot-model" title="Link to this heading">#</a></h1>
+<p><a class="reference external" href="https://arxiv.org/abs/2310.08235">GROOT: Learning to Follow Instructions by Watching Gameplay Videos</a></p>
 <div class="admonition-quick-facts admonition">
 <p class="admonition-title">Quick Facts</p>
 <ul class="simple">
@@ -742,18 +743,18 @@ To see a detailed architecture, please refer to the <a class="reference external
 </ol>
 </div>
 </details></section>
-<section id="training-groot">
-<h2>Training GROOT<a class="headerlink" href="#training-groot" title="Link to this heading">#</a></h2>
+<section id="train-groot">
+<h2>Train GROOT<a class="headerlink" href="#train-groot" title="Link to this heading">#</a></h2>
 <p>To implement the training objective of GROOT, we add a <code class="docutils literal notranslate"><span class="pre">kl_divergence</span></code> callback in <code class="docutils literal notranslate"><span class="pre">minestudio/train/mine_callbacks</span></code>. This callback calculates the KL divergence between the posterior and prior distributions and adds it to the loss.</p>
 <p>To train GROOT, we provide a configuration file <code class="docutils literal notranslate"><span class="pre">minestudio/tutorials/train/3_pretrain_groots/groot_config.yaml</span></code>.
 Specify this file path with hydra to start training:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>minestudio/tutorials/train
-python<span class="w"> </span>main.py<span class="w"> </span>-m<span class="w"> </span>3_pretrain_groots/groot_config.yaml
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>minestudio/tutorials/train
+$<span class="w"> </span>python<span class="w"> </span>main.py<span class="w"> </span>-m<span class="w"> </span>3_pretrain_groots/groot_config.yaml
 </pre></div>
 </div>
 </section>
-<section id="evaluation">
-<h2>Evaluation<a class="headerlink" href="#evaluation" title="Link to this heading">#</a></h2>
+<section id="evaluate-groot">
+<h2>Evaluate GROOT<a class="headerlink" href="#evaluate-groot" title="Link to this heading">#</a></h2>
 <p>Here is an example of how to evaluate the trained GROOT model. Provide it with a reference video and let it run!</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">minestudio.simulator</span> <span class="kn">import</span> <span class="n">MinecraftSim</span>
 <span class="kn">from</span> <span class="nn">minestudio.simulator.callbacks</span> <span class="kn">import</span> <span class="n">RecordCallback</span><span class="p">,</span> <span class="n">SpeedTestCallback</span>
@@ -818,7 +819,7 @@ python<span class="w"> </span>main.py<span class="w"> </span>-m<span class="w"> 
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">STEVE-1: A Generative Model for Text-to-Behavior in Minecraft</p>
+        <p class="prev-next-title">Built-in STEVE-1 Model</p>
       </div>
     </a>
     <a class="right-next"
@@ -826,7 +827,7 @@ python<span class="w"> </span>main.py<span class="w"> </span>-m<span class="w"> 
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">ROCKET-1: Mastering Open-World Interaction with Visual-Temporal Context Prompting</p>
+        <p class="prev-next-title">Built-in ROCKET-1 Model</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -853,8 +854,8 @@ python<span class="w"> </span>main.py<span class="w"> </span>-m<span class="w"> 
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#method">Method</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#architecture">Architecture</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#our-implementation">Our Implementation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-groot">Training GROOT</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation">Evaluation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#train-groot">Train GROOT</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-groot">Evaluate GROOT</a></li>
 </ul>
   </nav></div>
 

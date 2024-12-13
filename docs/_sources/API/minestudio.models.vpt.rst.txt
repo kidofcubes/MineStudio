@@ -1,0 +1,16 @@
+minestudio.models.vpt package
+=============================
+
+.. automodule:: minestudio.models.vpt
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+
+.. automodule:: minestudio.models.vpt.body
+   :members:
+   :undoc-members:
+   :show-inheritance:
