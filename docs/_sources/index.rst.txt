@@ -20,3 +20,4 @@
    Benchmark <benchmark/index>
    Train <train/index>
    Inference <inference/index>
+   Online <online/index>
