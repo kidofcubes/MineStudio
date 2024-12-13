@@ -22,6 +22,12 @@ Submodules
    :show-inheritance:
 
 
+.. automodule:: minestudio.simulator.callbacks.demonstration
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
 .. automodule:: minestudio.simulator.callbacks.fast_reset
    :members:
    :undoc-members:
