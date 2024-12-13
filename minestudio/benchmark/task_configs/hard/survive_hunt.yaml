@@ -3,6 +3,7 @@ custom_init_commands:
 - /setblock ~2 ~ ~ minecraft:chest
 - /give @s minecraft:torch 20
 - /give @s minecraft:apple 10
+- /summon minecraft:sheep
 defaults:
 - base
 - _self_

@@ -3,6 +3,7 @@ custom_init_commands:
 - /give @s minecraft:water_bucket 5
 - /fill ~1 ~ ~1 ~5 ~ ~5 water
 - /give @s minecraft:flower_pot
+- /summon boat
 defaults:
 - base
 - _self_

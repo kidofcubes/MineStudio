@@ -4,7 +4,8 @@ custom_init_commands:
 - /execute as @p at @s run fill ~-5 ~-1 ~5 ~5 ~-1 ~15 water
 - /time set day
 - /give @s minecraft:fishing_rod 1
+- /give @s minecraft:oak_boat
 defaults:
 - base
 - _self_
-text: Craft a boat and place it in water to travel.
+text: use boat and place it in water to travel.

@@ -4,4 +4,4 @@ custom_init_commands:
 defaults:
 - base
 - _self_
-text: Build a 3x3 area filled with dirt blocks.
+text: Dig three blocks down and fill one block.

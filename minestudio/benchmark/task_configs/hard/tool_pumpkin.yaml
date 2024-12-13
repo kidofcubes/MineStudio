@@ -1,6 +1,7 @@
 custom_init_commands:
 - /give @s minecraft:pumpkin 5
 - /give @s minecraft:crafting_table
+- /give @s minecraft:shears 1
 - /summon minecraft:pig ~2 ~ ~
 - /give @s minecraft:torch 16
 defaults:
