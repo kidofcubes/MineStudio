@@ -1,4 +1,4 @@
-GROOT: Learning to Follow Instructions by Watching Gameplay Videos
+Built-in GROOT Model
 ======================================================================
 
 .. admonition:: Quick Facts
