@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-25 07:03:41
-LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-12-13 16:59:37
+LastEditors: muzhancun muzhancun@126.com
+LastEditTime: 2024-12-14 01:54:42
 FilePath: /MineStudio/minestudio/models/groot_one/body.py
 '''
 import torch
@@ -285,7 +285,14 @@ class GrootPolicy(MinePolicy):
         return self.decoder.initial_state(**kwargs)
 
 @Registers.model_loader.register
-def load_groot_policy(ckpt_path: str):
+def load_groot_policy(ckpt_path: str = None):
+    if ckpt_path is None:
+        from minestudio.models.utils.download import download_model
+        local_dir = download_model("GROOT")
+        if local_dir is None:
+            assert False, "Please specify the ckpt_path or download the model first."
+        ckpt_path = os.path.join(local_dir, "groot.ckpt")
+
     ckpt = torch.load(ckpt_path)
     model = GrootPolicy(**ckpt['hyper_parameters']['model'])
     state_dict = {k.replace('mine_policy.', ''): v for k, v in ckpt['state_dict'].items()}
@@ -293,6 +300,7 @@ def load_groot_policy(ckpt_path: str):
     return model
 
 if __name__ == '__main__':
+    load_groot_policy()
     model = GrootPolicy(
         backbone='vit_base_patch32_clip_224.openai', 
         hiddim=1024,

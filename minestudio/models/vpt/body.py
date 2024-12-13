@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-11 20:54:15
-LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-12-13 14:33:00
+LastEditors: muzhancun muzhancun@126.com
+LastEditTime: 2024-12-14 02:03:22
 FilePath: /MineStudio/minestudio/models/vpt/body.py
 '''
 import os
@@ -283,6 +283,14 @@ class VPTPolicy(MinePolicy):
 
 @Registers.model_loader.register
 def load_vpt_policy(model_path: str, weights_path: Optional[str] = None):
+    if model_path is None:
+        from minestudio.models.utils.download import download_model
+        local_dir = download_model("GROOT")
+        if local_dir is None:
+            assert False, "Please specify the ckpt_path or download the model first."
+        model_path = os.path.join(local_dir, "vpt.model")
+        weights_path = os.path.join(local_dir, "vpt.weights")
+
     model = pickle.load(Path(model_path).open("rb"))
     policy_kwargs = model['model']['args']['net']['args']
     vpt_policy = VPTPolicy(policy_kwargs=policy_kwargs)

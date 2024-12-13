@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-10 15:52:16
-LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-12-12 12:23:55
+LastEditors: muzhancun muzhancun@126.com
+LastEditTime: 2024-12-14 02:01:36
 FilePath: /MineStudio/minestudio/models/rocket_one/body.py
 '''
 import torch
@@ -111,6 +111,12 @@ class RocketPolicy(MinePolicy):
 
 @Registers.model_loader.register
 def load_rocket_policy(ckpt_path: str):
+    if ckpt_path is None:
+        from minestudio.models.utils.download import download_model
+        local_dir = download_model("ROCKET-1")
+        if local_dir is None:
+            assert False, "Please specify the ckpt_path or download the model first."
+        ckpt_path = os.path.join(local_dir, "rocket.ckpt")
     ckpt = torch.load(ckpt_path)
     model = RocketPolicy(**ckpt['hyper_parameters']['model'])
     state_dict = {k.replace('mine_policy.', ''): v for k, v in ckpt['state_dict'].items()}
