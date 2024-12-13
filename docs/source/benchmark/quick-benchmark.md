@@ -127,7 +127,7 @@ env = MinecraftSim(
          TaskCallback(task_callback),
    ]
 )
-policy = load_openai_policy(
+policy = load_vpt_policy(
    model_path="/nfs-shared/jarvisbase/pretrained/foundation-model-2x.model",
    weights_path="/nfs-shared/jarvisbase/pretrained/foundation-model-2x.weights"
 ).to("cuda")

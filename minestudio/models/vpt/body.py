@@ -1,8 +1,8 @@
 '''
 Date: 2024-11-11 20:54:15
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-12-11 06:03:20
-FilePath: /MineStudio/minestudio/models/openai_vpt/body.py
+LastEditTime: 2024-12-13 07:38:25
+FilePath: /MineStudio/minestudio/models/vpt/body.py
 '''
 import os
 import pickle
@@ -223,14 +223,14 @@ class MinecraftPolicy(nn.Module):
             return None
 
 @Registers.model.register
-class OpenAIPolicy(MinePolicy):
+class VPTPolicy(MinePolicy):
 
     def __init__(self, policy_kwargs, action_space=None):
         super().__init__(hiddim=policy_kwargs["hidsize"], action_space=action_space)
         self.net = MinecraftPolicy(**policy_kwargs)
         self.cached_init_states = dict()
 
-    def initial_state(self, batch_size: int):
+    def initial_state(self, batch_size: int=None):
         if batch_size is None:
             return [t.squeeze(0).to(self.device) for t in self.net.initial_state(1)]
         else:
@@ -249,10 +249,10 @@ class OpenAIPolicy(MinePolicy):
         return latents, state_out
 
 @Registers.model_loader.register
-def load_openai_policy(model_path: str, weights_path: str):
+def load_vpt_policy(model_path: str, weights_path: str):
     model = pickle.load(Path(model_path).open("rb"))
     policy_kwargs = model['model']['args']['net']['args']
-    openai_policy = OpenAIPolicy(policy_kwargs=policy_kwargs)
+    openai_policy = VPTPolicy(policy_kwargs=policy_kwargs)
     weights = torch.load(weights_path, map_location='cpu', weights_only=True)
     weights = {k: v for k, v in weights.items() if k in openai_policy.state_dict()}
     openai_policy.load_state_dict(weights, strict=True)
@@ -261,7 +261,7 @@ def load_openai_policy(model_path: str, weights_path: str):
 if __name__ == '__main__':
     model_path = '/nfs-shared/jarvisbase/pretrained/foundation-model-2x.model'
     weights_path = '/nfs-shared/jarvisbase/pretrained/rl-from-early-game-2x.weights'
-    policy = load_openai_policy(model_path, weights_path)
+    policy = load_vpt_policy(model_path, weights_path)
     dummy_input = {
         "image": torch.zeros(1, 1, 128, 128, 3), 
     }
