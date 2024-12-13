@@ -1,15 +1,11 @@
 '''
 Date: 2024-11-12 14:00:50
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-12-13 08:04:10
+LastEditTime: 2024-12-13 15:39:23
 FilePath: /MineStudio/minestudio/tutorials/train/1_finetune_vpts/main.py
 '''
 import hydra
-import torch
-import torch.nn as nn
 import lightning as L
-from einops import rearrange
-from typing import Dict, Any, Tuple
 
 from lightning.pytorch.loggers import WandbLogger
 from lightning.pytorch.callbacks import LearningRateMonitor
@@ -42,26 +38,22 @@ def main(args):
     )
 
     mine_data = MineDataModule(
-        data_params=dict(
-            mode='raw',
-            dataset_dirs=args.dataset_dirs,
-            frame_width=128,
-            frame_height=128,
-            win_len=128,
-        ),
+        data_params=convert_to_normal(args.data), 
         batch_size=args.batch_size,
         num_workers=args.num_workers,
         prefetch_factor=args.prefetch_factor,
         split_ratio=args.split_ratio, 
         shuffle_episodes=args.shuffle_episodes,
+        episode_continuous_batch=args.episode_continuous_batch,
     )
 
     L.Trainer(
         logger=logger, 
         devices=args.devices, 
-        precision=16, 
+        precision=args.precision, 
         strategy='ddp_find_unused_parameters_true', 
-        use_distributed_sampler=False, 
+        use_distributed_sampler=not args.episode_continuous_batch, 
+        gradient_clip_val=1.0, 
         callbacks=[
             LearningRateMonitor(logging_interval='step'), 
             SpeedMonitorCallback(),

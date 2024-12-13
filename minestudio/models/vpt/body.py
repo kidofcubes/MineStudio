@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-11 20:54:15
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-12-13 07:38:25
+LastEditTime: 2024-12-13 14:33:00
 FilePath: /MineStudio/minestudio/models/vpt/body.py
 '''
 import os
@@ -282,14 +282,18 @@ class VPTPolicy(MinePolicy):
         return result_states
 
 @Registers.model_loader.register
-def load_vpt_policy(model_path: str, weights_path: str):
+def load_vpt_policy(model_path: str, weights_path: Optional[str] = None):
     model = pickle.load(Path(model_path).open("rb"))
     policy_kwargs = model['model']['args']['net']['args']
-    openai_policy = VPTPolicy(policy_kwargs=policy_kwargs)
-    weights = torch.load(weights_path, map_location='cpu', weights_only=True)
-    weights = {k: v for k, v in weights.items() if k in openai_policy.state_dict()}
-    openai_policy.load_state_dict(weights, strict=True)
-    return openai_policy
+    vpt_policy = VPTPolicy(policy_kwargs=policy_kwargs)
+    if weights_path is None:
+        return vpt_policy
+    weights = torch.load(weights_path, map_location='cpu')
+    if 'state_dict' in weights:
+        weights = {k.replace('mine_policy.', ''): v for k, v in weights['state_dict'].items()}
+    weights = {k: v for k, v in weights.items() if k in vpt_policy.state_dict()}
+    vpt_policy.load_state_dict(weights, strict=True)
+    return vpt_policy
 
 if __name__ == '__main__':
     model_path = '/nfs-shared/jarvisbase/pretrained/foundation-model-2x.model'

@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-25 07:03:41
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-12-12 13:11:14
+LastEditTime: 2024-12-13 16:59:37
 FilePath: /MineStudio/minestudio/models/groot_one/body.py
 '''
 import torch
