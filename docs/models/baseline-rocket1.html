@@ -612,7 +612,7 @@
 </div>
 <section id="insights">
 <h2>Insights<a class="headerlink" href="#insights" title="Link to this heading">#</a></h2>
-<p>Hierarchical agent architectures have become a popular approach to addressing open-world interaction challenges. These architectures leverage the reasoning capabilities of large language models (LLMs) to decompose tasks into subgoals, which are then communicated to the low-level controller through language. However, this method struggles to convey precise spatial details. In this paper, we propose visual-temporal context prompting, a novel technique that enables the high-level reasoner and low-level controller to communicate interaction intents more effectively by utilizing semantic segmentation of the current visual frames. This approach significantly improves the transmission of spatial details, enhancing the agent’s interaction efficiency.</p>
+<p>Hierarchical agent architectures have become a popular approach to addressing open-world interaction challenges. These architectures leverage the reasoning capabilities of large language models (LLMs) to decompose tasks into subgoals, which are then communicated to the low-level controller through language. However, this method struggles to convey precise spatial details. This paper proposes visual-temporal context prompting, a novel technique that enables the high-level reasoner and low-level controller to communicate interaction intents more effectively by utilizing semantic segmentation of the current visual frames. This approach significantly improves the transmission of spatial details, enhancing the agent’s interaction efficiency.</p>
 </section>
 <section id="method">
 <h2>Method<a class="headerlink" href="#method" title="Link to this heading">#</a></h2>
@@ -623,8 +623,12 @@
 <p><span class="caption-text">ROCKET-1 policy architecture</span><a class="headerlink" href="#id1" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>To train ROCKET1, we prepare interaction trajectory data in the format: <span class="math notranslate nohighlight">\(\tau = (o_{1:T} , a_{1:T} , 𝑚_{1:T} , c_{1:T} )\)</span>, where <span class="math notranslate nohighlight">\(o_t \in \mathbb{R}^{3\times H \times W}\)</span> is the visual observation at time <span class="math notranslate nohighlight">\(t\)</span>, <span class="math notranslate nohighlight">\(m_t \in \{0, 1\}_{1 \times H \times W}\)</span> is a binary mask highlighting the object in <span class="math notranslate nohighlight">\(o_t\)</span> for future interaction, <span class="math notranslate nohighlight">\(c_t \in \mathbb{N}\)</span> denotes the interaction type, and <span class="math notranslate nohighlight">\(a_t\)</span> is the action. If both <span class="math notranslate nohighlight">\(m_t\)</span> and <span class="math notranslate nohighlight">\(c_t\)</span> are zeros, no region is highlighted at
+<p>To train ROCKET1, we need to prepare interaction trajectory data in the format: <span class="math notranslate nohighlight">\(\tau = (o_{1:T} , a_{1:T} , 𝑚_{1:T} , c_{1:T} )\)</span>, where <span class="math notranslate nohighlight">\(o_t \in \mathbb{R}^{3\times H \times W}\)</span> is the visual observation at time <span class="math notranslate nohighlight">\(t\)</span>, <span class="math notranslate nohighlight">\(m_t \in \{0, 1\}_{1 \times H \times W}\)</span> is a binary mask highlighting the object in <span class="math notranslate nohighlight">\(o_t\)</span> for future interaction, <span class="math notranslate nohighlight">\(c_t \in \mathbb{N}\)</span> denotes the interaction type, and <span class="math notranslate nohighlight">\(a_t\)</span> is the action. If both <span class="math notranslate nohighlight">\(m_t\)</span> and <span class="math notranslate nohighlight">\(c_t\)</span> are zeros, no region is highlighted at
 <span class="math notranslate nohighlight">\(o_t\)</span>.</p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>All these trajectory data, including segmentation masks, are provided by our <code class="docutils literal notranslate"><span class="pre">minestudio.data</span></code> part.</p>
+</div>
 <p>The optimizing objective is to maximize the log-likelihood of the interaction trajectory data:</p>
 <div class="math notranslate nohighlight">
 \[\mathcal{L} = -\sum_{t=1}^{|\tau|} \log \pi(a_t | o_{1:t}, m_{1:t} \odot w_{1:t}, c_{1:t} \odot w_{1:t})\]</div>
@@ -642,7 +646,7 @@
 <h2>Train ROCKET-1<a class="headerlink" href="#train-rocket-1" title="Link to this heading">#</a></h2>
 <p>We provide a simple example in the tutorials <code class="docutils literal notranslate"><span class="pre">minestudio.tutorials.train.2_pretrain_vpts</span></code>.</p>
 <p>You can simply copy the directory and change dir to the copied directory. Then, run the following command:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python<span class="w"> </span>train.py<span class="w"> </span>--config<span class="w"> </span>reocket_config.yaml
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python<span class="w"> </span>train.py<span class="w"> </span>--config<span class="w"> </span>rocket_config.yaml
 </pre></div>
 </div>
 </section>

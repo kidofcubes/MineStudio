@@ -10,7 +10,7 @@ Built-in ROCKET-1 Model
 Insights
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Hierarchical agent architectures have become a popular approach to addressing open-world interaction challenges. These architectures leverage the reasoning capabilities of large language models (LLMs) to decompose tasks into subgoals, which are then communicated to the low-level controller through language. However, this method struggles to convey precise spatial details. In this paper, we propose visual-temporal context prompting, a novel technique that enables the high-level reasoner and low-level controller to communicate interaction intents more effectively by utilizing semantic segmentation of the current visual frames. This approach significantly improves the transmission of spatial details, enhancing the agent’s interaction efficiency. 
+Hierarchical agent architectures have become a popular approach to addressing open-world interaction challenges. These architectures leverage the reasoning capabilities of large language models (LLMs) to decompose tasks into subgoals, which are then communicated to the low-level controller through language. However, this method struggles to convey precise spatial details. This paper proposes visual-temporal context prompting, a novel technique that enables the high-level reasoner and low-level controller to communicate interaction intents more effectively by utilizing semantic segmentation of the current visual frames. This approach significantly improves the transmission of spatial details, enhancing the agent’s interaction efficiency. 
 
 Method
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -21,8 +21,12 @@ Method
 
     ROCKET-1 policy architecture
 
-To train ROCKET1, we prepare interaction trajectory data in the format: :math:`\tau = (o_{1:T} , a_{1:T} , 𝑚_{1:T} , c_{1:T} )`, where :math:`o_t \in \mathbb{R}^{3\times H \times W}` is the visual observation at time :math:`t`, :math:`m_t \in \{0, 1\}_{1 \times H \times W}` is a binary mask highlighting the object in :math:`o_t` for future interaction, :math:`c_t \in \mathbb{N}` denotes the interaction type, and :math:`a_t` is the action. If both :math:`m_t` and :math:`c_t` are zeros, no region is highlighted at
+To train ROCKET1, we need to prepare interaction trajectory data in the format: :math:`\tau = (o_{1:T} , a_{1:T} , 𝑚_{1:T} , c_{1:T} )`, where :math:`o_t \in \mathbb{R}^{3\times H \times W}` is the visual observation at time :math:`t`, :math:`m_t \in \{0, 1\}_{1 \times H \times W}` is a binary mask highlighting the object in :math:`o_t` for future interaction, :math:`c_t \in \mathbb{N}` denotes the interaction type, and :math:`a_t` is the action. If both :math:`m_t` and :math:`c_t` are zeros, no region is highlighted at
 :math:`o_t`. 
+
+.. hint::
+    
+    All these trajectory data, including segmentation masks, are provided by our ``minestudio.data`` part. 
 
 The optimizing objective is to maximize the log-likelihood of the interaction trajectory data:
 
@@ -53,7 +57,7 @@ You can simply copy the directory and change dir to the copied directory. Then, 
 
 .. code-block:: console
 
-    $ python train.py --config reocket_config.yaml
+    $ python train.py --config rocket_config.yaml
 
 
 
