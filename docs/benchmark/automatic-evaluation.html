@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Benchmark &#8212; MineStudio 1.0.0</title>
+    <title>Automatic Evaluation Pipeline &#8212; MineStudio 1.0.0</title>
   
   
   
@@ -61,11 +61,9 @@
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'benchmark/index';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'benchmark/automatic-evaluation';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Getting Started" href="../overview/getting-started.html" />
-    <link rel="prev" title="Inference" href="../inference/index.html" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -176,7 +174,7 @@
 <nav>
   <ul class="bd-navbar-elements navbar-nav">
     
-<li class="nav-item current active">
+<li class="nav-item ">
   <a class="nav-link nav-internal" href="../overview/index.html">
     Overview
   </a>
@@ -224,7 +222,7 @@
 
 
 <li class=" ">
-  <a class="nav-link dropdown-item nav-internal" href="#">
+  <a class="nav-link dropdown-item nav-internal" href="index.html">
     Benchmark
   </a>
 </li>
@@ -343,8 +341,10 @@
       
       
       
+        
+      
       <dialog id="pst-primary-sidebar-modal"></dialog>
-      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
         
 
   
@@ -382,7 +382,7 @@
 <nav>
   <ul class="bd-navbar-elements navbar-nav">
     
-<li class="nav-item current active">
+<li class="nav-item ">
   <a class="nav-link nav-internal" href="../overview/index.html">
     Overview
   </a>
@@ -425,7 +425,7 @@
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="#">
+  <a class="nav-link nav-internal" href="index.html">
     Benchmark
   </a>
 </li>
@@ -506,41 +506,6 @@
     
   </div>
   
-    <div class="sidebar-primary-items__start sidebar-primary__section">
-        <div class="sidebar-primary-item">
-<nav class="bd-docs-nav bd-links"
-     aria-label="Section Navigation">
-  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../overview/installation.html">Installation</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">MineStudio Libraries</span></p>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../simulator/index.html">Simulator</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../simulator/general-information.html">General Information</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../simulator/design-principles.html">Design Principles</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../simulator/play.html">Graphical User Interfaces</a></li>
-</ul>
-</details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../data/index.html">Data</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../data/dataset-raw.html">Raw Dataset</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../data/dataset-event.html">Event Dataset</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../data/visualization.html">Visualization Script</a></li>
-</ul>
-</details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../models/index.html">Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../models/baseline-groot.html">GROOT: Learning to Follow Instructions by Watching Gameplay Videos</a></li>
-</ul>
-</details></li>
-<li class="toctree-l1"><a class="reference internal" href="../train/index.html">Train</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../inference/index.html">Inference</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Benchmark</a></li>
-</ul>
-</div>
-</nav></div>
-    </div>
-  
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
   </div>
@@ -571,10 +536,7 @@
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
-    
-    <li class="breadcrumb-item"><a href="../overview/index.html" class="nav-link">Overview</a></li>
-    
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Benchmark</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Automatic Evaluation Pipeline</span></li>
   </ul>
 </nav>
 </div>
@@ -591,190 +553,79 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-<section id="benchmark">
-<h1>Benchmark<a class="headerlink" href="#benchmark" title="Link to this heading">#</a></h1>
-<p>This tutorial provides an overview of the codebase for automating and batch-testing tasks in the MineStudio benchmark. It includes the structure, purpose, and main functionalities of the framework.</p>
+<section id="automatic-evaluation-pipeline">
+<h1>Automatic Evaluation Pipeline<a class="headerlink" href="#automatic-evaluation-pipeline" title="Link to this heading">#</a></h1>
+<p>The pipeline automates evaluation tasks in the MineStudio framework, enabling the generation of criteria and video evaluation for agent performance analysis.</p>
 <hr class="docutils" />
-<section id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h2>
-<p>The MineStudio benchmark is designed to evaluate agent performance on various Minecraft-based tasks using automated pipelines. This framework supports the following key functionalities:</p>
-<ul class="simple">
-<li><p><strong>Task Criteria Management</strong>: Store and apply specific evaluation criteria for tasks.</p></li>
-<li><p><strong>Video-Based Evaluation</strong>: Analyze videos generated during tasks for automated scoring.</p></li>
-<li><p><strong>Batch Task Execution</strong>: Run multiple tasks in parallel to streamline testing.</p></li>
-<li><p><strong>Customizable Callbacks</strong>: Leverage task-specific callbacks for seamless integration with simulations.</p></li>
-</ul>
-<p>The provided structure ensures modularity, reusability, and ease of scalability for diverse testing scenarios.</p>
-</section>
-<hr class="docutils" />
-<section id="code-structure">
-<h2>Code Structure<a class="headerlink" href="#code-structure" title="Link to this heading">#</a></h2>
-<section id="directory-layout">
-<h3>Directory Layout<a class="headerlink" href="#directory-layout" title="Link to this heading">#</a></h3>
-<div class="highlight-plaintext notranslate"><div class="highlight"><pre><span></span>criteria files/
-    └── Contains criteria files for evaluating videos for each task.
-
-eval_video/
-    └── Stores example videos and provides a structure for saving task-specific evaluation videos.
-
-benchmark/
-    ├── test_pipeline.py
-        └── Example script for parallelized and batched task execution.
-    ├── test.py
-        └── Example script for running batch tests.
-    ├── utility/
-        ├── record_call.py
-            └── Callback for recording task-related data.
-        ├── read_conf.py
-            └── Parses task configuration files and converts them into callbacks.
-        ├── task_call.py
-            └── Task-specific callback implementation.
+<section id="generating-criteria-files">
+<h2>Generating Criteria Files<a class="headerlink" href="#generating-criteria-files" title="Link to this heading">#</a></h2>
+<p>To create criteria files for new tasks:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>auto_eval/
+python<span class="w"> </span>rule_generation.py
 </pre></div>
 </div>
-<div class="highlight-plaintext notranslate"><div class="highlight"><pre><span></span>├─ auto_eval/
-│  ├─ batch_video_rating.py      # Batch evaluation of videos for task performance.
-│  ├─ eval_video/                # Example videos for evaluation.
-│  │  ├─ build_pillar/           # Task: Build a pillar (videos for evaluation).
-│  │  ├─ combat_spider/          # Task: Combat a spider (videos for evaluation).
-│  ├─ individual_video_rating.py # Evaluate videos individually for detailed analysis.
-│  ├─ video_comparison.py        # Compare videos to measure performance differences.
-├─ output/                       # Directory for task-generated videos and outputs.
-│  ├─ make_obsidian_by_wate/
-│  ├─ find_forest/
-│  ├─ smelt_food/
-├─ task_configs/                 # Task configuration files (YAML-based).
-│  ├─ simple/                    # Simple task definitions.
-│  ├─ hard/                      # More complex task definitions.
-├─ test_pipeline.py              # Script for batch testing and parallelization.
-├─ test.py                       # Script for individual or small-batch task testing.
-├─ utility/                      # Utility scripts for callbacks and configuration.
-│  ├─ record_call.py             # Handles recording of task-related data.
-│  ├─ read_conf.py               # Reads YAML configs and generates callbacks.
-│  ├─ task_call.py               # Implements task-specific logic.
-
----
-
-## Purpose of Each Component
-
-### 1. **Criteria Files**
-   - Stores YAML configuration files defining task-specific evaluation criteria.
-   - Ensures consistency in assessing agent performance.
-
-### 2. **Eval Video Directory**
-   - Holds videos generated during task execution.
-   - Acts as a repository for manual or automated evaluations.
-
-### 3. **Utility Scripts**
-   - **`record_call.py`**: Records key metrics, observations, or outputs during task execution.
-   - **`read_conf.py`**: Reads YAML configuration files and generates corresponding callbacks.
-   - **`task_call.py`**: Defines task-specific behaviors and integrates them into the simulator.
-
----
-
-## Main Functionalities
-
-### 1. **Automated Task Evaluation**
-The `test.py` script demonstrates how to automatically evaluate tasks using YAML-defined configurations. It employs modular callbacks for task initialization, reward tracking, and recording outputs.
-
-Key Features:
-- **Episode Pipeline**: Automatically resets and runs tasks.
-- **Callback Integration**: Supports various callbacks to customize task interactions.
-
-### 2. **Batch Testing with Parallelization**
-The `test_pipeline.py` script enables parallel execution of multiple tasks using [Ray](https://www.ray.io/). This significantly accelerates the testing process by distributing workloads across multiple cores or nodes.
-
----
-
-## Detailed Explanation of `test.py`
-
-Below is a breakdown of the script&#39;s functionality:
-
-1. **Initialization**:
-   - Uses `ray.init()` to initialize distributed computing.
-   - Loads task configurations from `./task_configs/simple`.
-
-2. **Callback Creation**:
-   - Reads each YAML file in the configuration directory.
-   - Converts the YAML file into task-specific callbacks using `convert_yaml_to_callbacks`.
-
-3. **Environment Setup**:
-   - Creates a Minecraft simulation environment using `MinecraftSim`.
-   - Integrates three callbacks:
-     - `RecordCallback`: Saves POV frames as videos.
-     - `CommandsCallback`: Executes initial setup commands.
-     - `TaskCallback`: Implements the specific task logic.
-
-4. **Policy Loading**:
-   - Loads a pretrained Vision-Language Model (VLM) for decision-making.
-   - Utilizes GPU acceleration (`.to(&quot;cuda&quot;)`).
-
-5. **Task Execution**:
-   - Resets the environment and begins a new rollout.
-   - Executes 12 steps in the simulation, generating observations, rewards, and other metrics.
-   - Closes the environment upon completion.
-
-### Example Code Snippet
-```python
-for file_name in os.listdir(conf_path):
-    if file_name.endswith(&#39;.yaml&#39;):
-        file_path = os.path.join(conf_path, file_name)
-        commands_callback, task_callback = convert_yaml_to_callbacks(file_path)
-
-        env = MinecraftSim(
-            obs_size=(128, 128), 
-            callbacks=[
-                RecordCallback(record_path=f&quot;./output/{file_name[:-5]}/&quot;, fps=30, frame_type=&quot;pov&quot;),
-                CommandsCallback(commands_callback),
-                TaskCallback(task_callback),
-            ]
-        )
-        policy = load_openai_policy(
-            model_path=&quot;/nfs-shared/jarvisbase/pretrained/foundation-model-2x.model&quot;,
-            weights_path=&quot;/nfs-shared/jarvisbase/pretrained/foundation-model-2x.weights&quot;
-        ).to(&quot;cuda&quot;)
-
-        obs, info = env.reset()
-        for i in range(12):
-            action, memory = policy.get_action(obs, memory, input_shape=&#39;*&#39;)
-            obs, reward, terminated, truncated, info = env.step(action)
-        env.close()
+<hr class="docutils" />
+</section>
+</section>
+<section id="evaluating-videos-with-vision-language-models-vlm">
+<h1>Evaluating Videos with Vision-Language Models (VLM)<a class="headerlink" href="#evaluating-videos-with-vision-language-models-vlm" title="Link to this heading">#</a></h1>
+<p>The following commands evaluate task performance using pre-recorded videos and predefined criteria.</p>
+<section id="compare-two-videos">
+<h2>1. Compare Two Videos<a class="headerlink" href="#compare-two-videos" title="Link to this heading">#</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>video_comparison.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--video_path_a<span class="o">=</span><span class="s1">&#39;./eval_video/build_gate/build_gate_5.mp4&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--video_path_b<span class="o">=</span><span class="s1">&#39;./eval_video/build_gate/build_gate_7.mp4&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--criteria_path<span class="o">=</span><span class="s1">&#39;./auto_eval/criteria_files/build_gate.txt&#39;</span>
 </pre></div>
 </div>
 </section>
-</section>
-<hr class="docutils" />
-<section id="how-to-use">
-<h2>How to Use<a class="headerlink" href="#how-to-use" title="Link to this heading">#</a></h2>
-<ol class="arabic simple">
-<li><p><strong>Prepare Task Configurations</strong>:</p>
-<ul class="simple">
-<li><p>Write YAML files in the <code class="docutils literal notranslate"><span class="pre">criteria</span> <span class="pre">files</span></code> folder to define task settings.</p></li>
-</ul>
-</li>
-<li><p><strong>Run Batch Tests</strong>:</p>
-<ul class="simple">
-<li><p>Use <code class="docutils literal notranslate"><span class="pre">test_pipeline.py</span></code> or <code class="docutils literal notranslate"><span class="pre">test.py</span></code> to execute multiple tasks.</p></li>
-<li><p>Ensure your environment supports GPU acceleration for optimal performance.</p></li>
-</ul>
-</li>
-<li><p><strong>Analyze Results</strong>:</p>
-<ul class="simple">
-<li><p>Review generated videos and metrics in the <code class="docutils literal notranslate"><span class="pre">eval_video</span></code> folder.</p></li>
-<li><p>Use criteria files to score and validate task completion.</p></li>
-</ul>
-</li>
-</ol>
-</section>
-<hr class="docutils" />
-<section id="conclusion">
-<h2>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h2>
-<p>This benchmark provides a robust framework for automating the evaluation of agent performance in Minecraft-based tasks. Its modular design and batch testing capabilities make it highly adaptable for diverse research and development needs. Customize task configurations and callbacks to explore new experiments or refine existing setups.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
-
-
-
+<section id="individual-video-evaluation">
+<h2>2. Individual Video Evaluation<a class="headerlink" href="#individual-video-evaluation" title="Link to this heading">#</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>individual_video_rating.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--video_path<span class="o">=</span><span class="s1">&#39;./eval_video/build_gate/build_gate_5.mp4&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--criteria_path<span class="o">=</span><span class="s1">&#39;./auto_eval/criteria_files/build_gate.txt&#39;</span>
 </pre></div>
 </div>
+</section>
+<section id="batch-video-evaluation">
+<h2>3. Batch Video Evaluation<a class="headerlink" href="#batch-video-evaluation" title="Link to this heading">#</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>batch_video_rating.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--videos_path<span class="o">=</span><span class="s1">&#39;./eval_video/&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--criteria_files_path<span class="o">=</span><span class="s1">&#39;./auto_eval/criteria_files/&#39;</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+</section>
+</section>
+<section id="organizing-files-for-batch-evaluation">
+<h1>Organizing Files for Batch Evaluation<a class="headerlink" href="#organizing-files-for-batch-evaluation" title="Link to this heading">#</a></h1>
+<section id="video-directory-structure">
+<h2>Video Directory Structure<a class="headerlink" href="#video-directory-structure" title="Link to this heading">#</a></h2>
+<p>Organize your task-specific videos under the <code class="docutils literal notranslate"><span class="pre">videos_path</span></code> directory:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>videos_path     
+├── build_waterfall     # task_name_1     
+│     ├── episode_1.mp4
+│     ├── episode_2.mp4
+├── build_house         # task_name_2
+│     ├── episode_1.mp4
+│     ├── episode_2.mp4
+├── task_name_3
+│     ├── episode_1.mp4
+│     ├── episode_2.mp4
+</pre></div>
+</div>
+</section>
+<section id="criteria-files-directory-structure">
+<h2>Criteria Files Directory Structure<a class="headerlink" href="#criteria-files-directory-structure" title="Link to this heading">#</a></h2>
+<p>Store criteria files under the <code class="docutils literal notranslate"><span class="pre">criteria_files_path</span></code> directory, matching the task names:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>criteria_files_path     
+├── build_waterfall.txt # task_name_1     
+├── build_house.txt     # task_name_2
+├── task_name_3.txt
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>By adhering to the outlined file structures and using the provided scripts, you can efficiently evaluate agent performance across multiple tasks in the MineStudio framework.</p>
 </section>
 </section>
 
@@ -792,24 +643,6 @@ for file_name in os.listdir(conf_path):
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="../inference/index.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Inference</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="../overview/getting-started.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Getting Started</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div>
                 </footer>
               
@@ -829,20 +662,29 @@ for file_name in os.listdir(conf_path):
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-structure">Code Structure</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#directory-layout">Directory Layout</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Automatic Evaluation Pipeline</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generating-criteria-files">Generating Criteria Files</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-use">How to Use</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluating-videos-with-vision-language-models-vlm">Evaluating Videos with Vision-Language Models (VLM)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compare-two-videos">1. Compare Two Videos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#individual-video-evaluation">2. Individual Video Evaluation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#batch-video-evaluation">3. Batch Video Evaluation</a></li>
 </ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#organizing-files-for-batch-evaluation">Organizing Files for Batch Evaluation</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#video-directory-structure">Video Directory Structure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#criteria-files-directory-structure">Criteria Files Directory Structure</a></li>
+</ul>
+</li>
+</ul>
+
   </nav></div>
 
   <div class="sidebar-secondary-item">
 
   <div class="tocsection sourcelink">
-    <a href="../_sources/benchmark/index.md.txt">
+    <a href="../_sources/benchmark/automatic-evaluation.md.txt">
       <i class="fa-solid fa-file-lines"></i> Show Source
     </a>
   </div>

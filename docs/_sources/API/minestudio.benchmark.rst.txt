@@ -10,13 +10,13 @@ Submodules
 ----------
 
 
-.. automodule:: minestudio.benchmark.read_conf
+.. automodule:: minestudio.benchmark.test
    :members:
    :undoc-members:
    :show-inheritance:
 
 
-.. automodule:: minestudio.benchmark.test
+.. automodule:: minestudio.benchmark.test_pipeline
    :members:
    :undoc-members:
    :show-inheritance:
