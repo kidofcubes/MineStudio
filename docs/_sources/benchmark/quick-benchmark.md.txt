@@ -1,6 +1,8 @@
 
 # Quick benchmark
 
+This document outlines the structure and workflow of the benchmark module, a comprehensive framework designed for evaluating agent performance in Minecraft environments.
+
 ## Code structure
 
 Below is the structure of the benchmark module, which organizes task definitions and testing scripts for evaluation:

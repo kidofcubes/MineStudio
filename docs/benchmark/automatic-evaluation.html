@@ -659,7 +659,7 @@ Use the following command to compare two videos:</p>
 <li><p><strong>Analyze Results:</strong>
 After running the script, the evaluation results will be saved as a JSON file in the <code class="docutils literal notranslate"><span class="pre">vlm_rating_res/</span></code> directory.</p></li>
 </ol>
-<p>The following is an <strong>example output</strong>, showcasing how two videos are compared across several evaluation criteria. Each criterion is explained with observations, and an overall assessment is provided. This structured format ensures transparency and consistency in evaluating agent performance.</p>
+<p>The following is an <strong>example output</strong>, showcasing how two videos are compared across several evaluation criteria. Each criterion is explained with observations, and an overall assessment is provided.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
 <span class="w">    </span><span class="p">{</span>
 <span class="w">        </span><span class="nt">&quot;Task Progress&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;B is better&quot;</span><span class="p">,</span>
@@ -712,16 +712,12 @@ After running the script, the evaluation results will be saved as a JSON file in
 </section>
 <section id="organizing-files-for-batch-evaluation">
 <h3>Organizing Files for Batch Evaluation<a class="headerlink" href="#organizing-files-for-batch-evaluation" title="Link to this heading">#</a></h3>
-<ul>
-<li><p><strong>Batch Video Evaluation:</strong></p>
 <p>Evaluate all videos in a directory using their respective criteria.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>batch_video_rating.py<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--videos_path<span class="o">=</span><span class="s1">&#39;./eval_video/&#39;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--criteria_files_path<span class="o">=</span><span class="s1">&#39;./auto_eval/criteria_files/&#39;</span>
 </pre></div>
 </div>
-</li>
-</ul>
 <p>Organize your task-specific videos under the <code class="docutils literal notranslate"><span class="pre">videos_path</span></code> directory:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>videos_path     
 ├── build_waterfall     # task_name_1     
@@ -742,6 +738,9 @@ After running the script, the evaluation results will be saved as a JSON file in
 ├── task_name_3.txt
 </pre></div>
 </div>
+</section>
+<section id="example-commands">
+<h3>Example Commands<a class="headerlink" href="#example-commands" title="Link to this heading">#</a></h3>
 <p>To evaluate task performance using pre-recorded videos and criteria, you can use the following commands depending on your needs:</p>
 <ul>
 <li><p><strong>Compare Two Videos:</strong></p>
@@ -830,6 +829,7 @@ After running the script, the evaluation results will be saved as a JSON file in
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluating-videos-with-vision-language-models">Evaluating Videos with Vision-Language Models</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#an-example-comparing-videos-using-video-comparison-py">An Example: Comparing Videos Using <code class="docutils literal notranslate"><span class="pre">video_comparison.py</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#organizing-files-for-batch-evaluation">Organizing Files for Batch Evaluation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-commands">Example Commands</a></li>
 </ul>
 </li>
 </ul>
