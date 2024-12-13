@@ -604,17 +604,204 @@
 <!--
  * @Date: 2024-11-29 08:10:04
  * @LastEditors: muzhancun muzhancun@126.com
- * @LastEditTime: 2024-12-13 23:04:47
+ * @LastEditTime: 2024-12-14 01:40:30
  * @FilePath: /MineStudio/docs/source/inference/index.md
 -->
 <section id="inference">
 <h1>Inference<a class="headerlink" href="#inference" title="Link to this heading">#</a></h1>
+<p>We provide a <a class="reference external" href="https://docs.ray.io/en/latest/index.html">Ray</a>-based inference framework for MineStudio, to support parallel and distributed inference. The framework is designed to consist of three parts: <code class="docutils literal notranslate"><span class="pre">generator</span></code>, <code class="docutils literal notranslate"><span class="pre">filter</span></code> and <code class="docutils literal notranslate"><span class="pre">recorder</span></code>, forming an inference pipeline for easily evaluating the performance of different agents.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We highly recommend readers to read the ray documentation before using the inference framework.</p>
+</div>
 <div class="toctree-wrapper compound">
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Inference with MineStudio</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="baseline-groot.html">Inference with GROOT</a></li>
 </ul>
 </div>
+<section id="quick-start">
+<h2>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading">#</a></h2>
+<!--
+ * @Date: 2024-12-02 21:23:42
+ * @LastEditors: muzhancun muzhancun@126.com
+ * @LastEditTime: 2024-12-14 01:10:23
+ * @FilePath: /MineStudio/docs/source/inference/quick-inference.md
+-->
+<p>Here is a minimal example of how to use the inference framework:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ray</span>
+<span class="kn">from</span> <span class="nn">minestudio.inference</span> <span class="kn">import</span> <span class="n">EpisodePipeline</span><span class="p">,</span> <span class="n">MineGenerator</span><span class="p">,</span> <span class="n">InfoBaseFilter</span>
+
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span> <span class="nn">minestudio.models</span> <span class="kn">import</span> <span class="n">load_vpt_policy</span>
+<span class="kn">from</span> <span class="nn">minestudio.simulator</span> <span class="kn">import</span> <span class="n">MinecraftSim</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">ray</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+    <span class="n">env_generator</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span>
+        <span class="n">MinecraftSim</span><span class="p">,</span> 
+        <span class="n">obs_size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span> 
+        <span class="n">preferred_spawn_biome</span> <span class="o">=</span> <span class="s2">&quot;forest&quot;</span><span class="p">,</span> 
+    <span class="p">)</span> <span class="c1"># generate the environment</span>
+    <span class="n">agent_generator</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span>
+        <span class="n">load_vpt_policy</span><span class="p">,</span>
+        <span class="n">model_path</span> <span class="o">=</span> <span class="c1"># provide the path to the model</span>
+        <span class="n">weights_path</span> <span class="o">=</span> <span class="c1"># provide the path to the weights</span>
+    <span class="p">)</span> <span class="c1"># generate the agent</span>
+    <span class="n">worker_kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">env_generator</span> <span class="o">=</span> <span class="n">env_generator</span><span class="p">,</span> 
+        <span class="n">agent_generator</span> <span class="o">=</span> <span class="n">agent_generator</span><span class="p">,</span>
+        <span class="n">num_max_steps</span> <span class="o">=</span> <span class="mi">12000</span><span class="p">,</span> <span class="c1"># provide the maximum number of steps</span>
+        <span class="n">num_episodes</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="c1"># provide the number of episodes for each worker</span>
+        <span class="n">tmpdir</span> <span class="o">=</span> <span class="s2">&quot;./output&quot;</span><span class="p">,</span>
+        <span class="n">image_media</span> <span class="o">=</span> <span class="s2">&quot;h264&quot;</span><span class="p">,</span>
+    <span class="p">)</span> <span class="c1"># provide the worker kwargs</span>
+    <span class="n">pipeline</span> <span class="o">=</span> <span class="n">EpisodePipeline</span><span class="p">(</span>
+        <span class="n">episode_generator</span> <span class="o">=</span> <span class="n">MineGenerator</span><span class="p">(</span>
+            <span class="n">num_workers</span> <span class="o">=</span> <span class="mi">8</span><span class="p">,</span> <span class="c1"># the number of workers</span>
+            <span class="n">num_gpus</span> <span class="o">=</span> <span class="mf">0.25</span><span class="p">,</span> <span class="c1"># the number of gpus</span>
+            <span class="n">max_restarts</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="c1"># the maximum number of restarts for failed workers</span>
+            <span class="o">**</span><span class="n">worker_kwargs</span><span class="p">,</span> 
+        <span class="p">),</span>
+        <span class="n">episode_filter</span> <span class="o">=</span> <span class="n">InfoBaseFilter</span><span class="p">(</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="s2">&quot;mine_block&quot;</span><span class="p">,</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="s2">&quot;diamond_ore&quot;</span><span class="p">,</span>
+            <span class="n">num</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="p">),</span> <span class="c1"># InfoBaseFilter will label episodes mine more than 1 diamond_ore</span>
+    <span class="p">)</span>
+    <span class="n">summary</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">summary</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="basic-components">
+<h2>Basic Components<a class="headerlink" href="#basic-components" title="Link to this heading">#</a></h2>
+<section id="generator">
+<h3>Generator<a class="headerlink" href="#generator" title="Link to this heading">#</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">MineGenerator</span></code> class is a subclass of <code class="docutils literal notranslate"><span class="pre">EpisodeGenerator</span></code> designed to manage distributed workers for generating episodes in a parallelized manner using the <code class="docutils literal notranslate"><span class="pre">ray</span></code> library. This class provides a framework for efficiently utilizing multiple workers and GPUs to produce episodes in a scalable fashion.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>num_workers</p></td>
+<td><p>1</p></td>
+<td><p>Number of workers to create for parallel processing.</p></td>
+</tr>
+<tr class="row-odd"><td><p>num_gpus</p></td>
+<td><p>0.5</p></td>
+<td><p>Amount of GPU resources allocated to each worker. A fractional value allows sharing GPUs between workers.</p></td>
+</tr>
+<tr class="row-even"><td><p>max_restarts</p></td>
+<td><p>3</p></td>
+<td><p>Maximum number of restarts allowed for a worker in case of failure.</p></td>
+</tr>
+<tr class="row-odd"><td><p>worker_kwargs</p></td>
+<td><p></p></td>
+<td><p>Additional keyword arguments to pass to the worker initialization.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">generate</span></code> method creates a generator to yield episodes produced by the workers. This method manages task assignment and result collection using ray. The workflow is as follows:</p>
+<ol class="arabic simple">
+<li><p>Initializes a pool of workers with ray.remote.</p></li>
+<li><p>Assigns tasks to workers and collects results.</p></li>
+<li><p>Waits for workers to complete tasks, retrieves completed episodes, and reassigns new tasks.</p></li>
+<li><p>Continues yielding episodes until all tasks are completed.</p></li>
+</ol>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<ul class="simple">
+<li><p>Fault Tolerance: Workers are configured with a <code class="docutils literal notranslate"><span class="pre">max_restarts</span></code> parameter to handle failures gracefully, ensuring system robustness.</p></li>
+<li><p>Scalability: The design supports scalable processing across multiple GPUs, making it suitable for computationally intensive tasks.</p></li>
+</ul>
+</div>
+<p>The worker initilized by <code class="docutils literal notranslate"><span class="pre">MineGenerator</span></code> is an instance of class <code class="docutils literal notranslate"><span class="pre">Worker</span></code>.
+The Worker class handles the generation of episodes in a simulation environment. It integrates an agent and an environment to collect data, process observations and actions, and store the results in serialized files. It supports saving image-based observations in multiple formats, making it adaptable for different data pipelines.</p>
+<p>Here are the arguments for the Worker class:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>env_generator</p></td>
+<td><p></p></td>
+<td><p>A callable that creates the simulation environment.</p></td>
+</tr>
+<tr class="row-odd"><td><p>agent_generator</p></td>
+<td><p></p></td>
+<td><p>A callable that creates the agent. The agent must support a <code class="docutils literal notranslate"><span class="pre">.to(&quot;cuda&quot;)</span></code> method and an <code class="docutils literal notranslate"><span class="pre">.eval()</span></code> method.</p></td>
+</tr>
+<tr class="row-even"><td><p>num_max_steps</p></td>
+<td><p></p></td>
+<td><p>The maximum number of steps per episode.</p></td>
+</tr>
+<tr class="row-odd"><td><p>num_episodes</p></td>
+<td><p></p></td>
+<td><p>The total number of episodes to generate.</p></td>
+</tr>
+<tr class="row-even"><td><p>tmpdir</p></td>
+<td><p>None</p></td>
+<td><p>Directory to store serialized output files.</p></td>
+</tr>
+<tr class="row-odd"><td><p>image_media</p></td>
+<td><p>“h264”</p></td>
+<td><p>Specifies the format for saving image observations: “h264” or “jpeg”.</p></td>
+</tr>
+<tr class="row-even"><td><p>unused_kwargs</p></td>
+<td><p></p></td>
+<td><p>Additional unused arguments, allowing flexibility in API compatibility.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>We list main methods of the Worker class below:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">append_image_and_info(self,</span> <span class="pre">info:</span> <span class="pre">Dict,</span> <span class="pre">images:</span> <span class="pre">List,</span> <span class="pre">infos:</span> <span class="pre">List)</span></code>: Processes the current step’s metadata and observation image, appending them to respective lists.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">save_to_file(self,</span> <span class="pre">images:</span> <span class="pre">List,</span> <span class="pre">actions:</span> <span class="pre">List,</span> <span class="pre">infos:</span> <span class="pre">List)</span></code>: Serializes and saves the episode’s data (images, actions, and metadata) to disk.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">_run(self)</span></code>: Core logic for episode generation. Runs the agent in the environment, collects data, and yields serialized results.</p>
+<ul>
+<li><p>It resets the environment and initializes storage for actions, images, and metadata. Then data is collected for <code class="docutils literal notranslate"><span class="pre">num_max_steps</span></code> steps per episode. Episode is saved to files and yields the result. The process is repeated for <code class="docutils literal notranslate"><span class="pre">num_episodes</span></code> episodes.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">get_next(self)</span></code>: Fetches the next serialized episode from the generator.</p></li>
+</ul>
+</section>
+<section id="filter">
+<h3>Filter<a class="headerlink" href="#filter" title="Link to this heading">#</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">EpisodeFilter</span></code> and its subclass <code class="docutils literal notranslate"><span class="pre">InfoBaseFilter</span></code> provide a framework for filtering episodes generated by a Generator. These classes allow users to apply custom filtering logic to episodes based on their metadata or other criteria.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">InfoBaseFilter</span></code> is initialized with <code class="docutils literal notranslate"><span class="pre">key</span></code>, <code class="docutils literal notranslate"><span class="pre">val</span></code>, <code class="docutils literal notranslate"><span class="pre">num</span></code> and <code class="docutils literal notranslate"><span class="pre">label</span></code>.
+It reads the metadata for each episode, checks the condition, and adds a label to episodes that satisfy the filter:</p>
+<ol class="arabic simple">
+<li><p>For each episode, reads its metadata from a file (<code class="docutils literal notranslate"><span class="pre">episode[&quot;info_path&quot;]</span></code>).</p></li>
+<li><p>Deserializes the metadata using pickle.</p></li>
+<li><p>Checks if the value associated with the given <code class="docutils literal notranslate"><span class="pre">key</span></code> and <code class="docutils literal notranslate"><span class="pre">val</span></code> meets or exceeds the num threshold.</p></li>
+<li><p>Adds the <code class="docutils literal notranslate"><span class="pre">label</span></code> with the value “yes” to episodes that pass the filter.</p></li>
+</ol>
+</section>
+<section id="recorder">
+<h3>Recorder<a class="headerlink" href="#recorder" title="Link to this heading">#</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">EpisodeRecorder</span></code> class is a utility designed to process episodes generated by a Generator, record relevant statistics, and calculate metrics. It analyzes the episodes to count the number of those marked with a specific status and provides an overall summary.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">record</span></code> method iterates through episodes in the <code class="docutils literal notranslate"><span class="pre">episode_generator</span></code>, counting the total number of episodes and those with <code class="docutils literal notranslate"><span class="pre">&quot;status&quot;</span> <span class="pre">==</span> <span class="pre">&quot;yes&quot;</span></code>. Finally it calculates the percentage of episodes with <code class="docutils literal notranslate"><span class="pre">&quot;status&quot;</span> <span class="pre">==</span> <span class="pre">&quot;yes&quot;</span></code> and prints the results.</p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">record</span></code> method is a simple example of how to process episodes and calculate metrics. Users can customize the logic to suit their specific requirements.</p>
+</div>
+</section>
+<section id="pipeline">
+<h3>Pipeline<a class="headerlink" href="#pipeline" title="Link to this heading">#</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">EpisodePipeline</span></code> class integrates episode generation, filtering, and recording into a single, streamlined process. It provides a flexible and extensible framework for applying filters and collecting statistics on generated episodes.</p>
+<p>It takes a <code class="docutils literal notranslate"><span class="pre">episode_generator</span></code>, <code class="docutils literal notranslate"><span class="pre">episode_filter</span></code>, and <code class="docutils literal notranslate"><span class="pre">episode_recorder</span></code> as arguments. The <code class="docutils literal notranslate"><span class="pre">run</span></code> method executes the pipeline, generating episodes, applying filters, and recording statistics.</p>
+<p>For more examples, please refer to inference examples with provided agents.</p>
+</section>
+</section>
 </section>
 
 <div class="section ablog__blog_comments">
@@ -659,6 +846,25 @@
                 <dialog id="pst-secondary-sidebar-modal"></dialog>
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-start">Quick Start</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-components">Basic Components</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generator">Generator</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#filter">Filter</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recorder">Recorder</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pipeline">Pipeline</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
 
   <div class="sidebar-secondary-item">
 
