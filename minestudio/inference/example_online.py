@@ -1,10 +1,10 @@
 from minestudio.simulator import MinecraftSim
 from minestudio.simulator.callbacks import RecordCallback, SpeedTestCallback, SummonMobsCallback, MaskActionsCallback, RewardsCallback, CommandsCallback, JudgeResetCallback, FastResetCallback
-from minestudio.models import OpenAIPolicy, load_openai_policy
+from minestudio.models import VPTPolicy, load_vpt_policy
 
 if __name__ == '__main__':
     
-    policy = load_openai_policy(
+    policy = load_vpt_policy(
         model_path="/nfs-shared/jarvisbase/pretrained/foundation-model-2x.model",
         weights_path="/nfs-shared/jarvisbase/pretrained/rl-from-early-game-2x.weights"
     ).to("cuda")

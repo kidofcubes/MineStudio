@@ -132,8 +132,8 @@ def env_generator():
     return sim
 
 def policy_generator():
-    from minestudio.models.openai_vpt.body import load_openai_policy
+    from minestudio.models import load_vpt_policy
     model_path = '/nfs-shared/jarvisbase/pretrained/foundation-model-2x.model'
     weights_path = '/nfs-shared/jarvisbase/pretrained/rl-from-early-game-2x.weights'
-    policy = load_openai_policy(model_path, weights_path)
+    policy = load_vpt_policy(model_path, weights_path)
     return policy

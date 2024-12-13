@@ -7,7 +7,7 @@ FilePath: /MineStudio/minestudio/inference/example.py
 
 from minestudio.simulator import MinecraftSim
 from minestudio.simulator.callbacks import RecordCallback, SpeedTestCallback
-from minestudio.models import OpenAIPolicy, load_vpt_policy
+from minestudio.models import VPTPolicy, load_vpt_policy
 
 if __name__ == '__main__':
     

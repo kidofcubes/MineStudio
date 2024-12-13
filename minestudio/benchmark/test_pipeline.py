@@ -11,7 +11,7 @@ from minestudio.simulator import MinecraftSim
 from minestudio.inference import EpisodePipeline, MineGenerator, InfoBaseFilter
 from minestudio.benchmark.utility.read_conf import convert_yaml_to_callbacks
 from minestudio.benchmark.utility.task_call import TaskCallback
-from minestudio.models import OpenAIPolicy, load_vpt_policy
+from minestudio.models import VPTPolicy, load_vpt_policy
 from minestudio.simulator.callbacks import (
     RecordCallback, 
     RewardsCallback, 
