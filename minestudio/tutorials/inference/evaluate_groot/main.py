@@ -1,7 +1,7 @@
 '''
 Date: 2024-12-13 22:39:49
 LastEditors: muzhancun muzhancun@126.com
-LastEditTime: 2024-12-13 23:10:46
+LastEditTime: 2024-12-14 02:39:14
 FilePath: /MineStudio/minestudio/tutorials/inference/evaluate_groot/main.py
 '''
 from minestudio.simulator import MinecraftSim
@@ -23,9 +23,9 @@ if __name__ == '__main__':
     resolution = (224, 224)
     
     file_path = "../../../benchmark/task_configs/simple/collect_wood.yaml"
-    commands_callback, task_callback = convert_yaml_to_callbacks(file_path)
-    print(f'Task: {task_callback}')
-    print(f'Init commands: {commands_callback}')
+    commands, task = convert_yaml_to_callbacks(file_path)
+    print(f'Task: {task}')
+    print(f'Init commands: {commands}')
 
     env_generator = partial(
         MinecraftSim,
@@ -34,14 +34,14 @@ if __name__ == '__main__':
         callbacks = [
             RecordCallback(record_path = "./output", fps = 30, frame_type="pov"),
             SpeedTestCallback(50),
-            CommandsCallback(commands_callback),
+            CommandsCallback(commands),
             DemonstrationCallback("collect_wood")
         ]
     )
 
     agent_generator = partial(
         load_groot_policy,
-        ckpt_path = "/home/zhwang/Desktop/zhancun/jarvisbase/pretrained/groot.ckpt"
+        ckpt_path = None
     )
 
     worker_kwargs = dict(
