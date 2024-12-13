@@ -1,7 +1,7 @@
 custom_init_commands:
 - /give @s minecraft:oak_planks 10
-- /setblock ~2 ~ ~ minecraft:crafting_table
 - /setblock ~3 ~ ~ minecraft:water
+- /summon boat
 defaults:
 - base
 - _self_

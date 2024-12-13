@@ -1,9 +1,6 @@
 custom_init_commands:
 - /give @s minecraft:map
-- /give @s minecraft:compass
-- /give @s minecraft:cooked_beef 16
-- /give @s minecraft:bread 16
-- /summon minecraft:fox ~2 ~ ~
+- /fill ~1 ~ ~1 ~5 ~ ~5 minecraft:gravel
 defaults:
 - base
 - _self_

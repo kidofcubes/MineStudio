@@ -41,7 +41,11 @@ dependencies = [
     "pyglet",
     "imgui",
     "pyopengl",
+<<<<<<< HEAD
+    "ray",
+=======
     "absl-py"
+>>>>>>> d9588a3d116927009c1ea462a6a83931f3e8b04f
 ]
 authors = [
     {name="CraftJarvis", email="craftjarvis@outlook.com"}

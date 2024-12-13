@@ -220,9 +220,12 @@ class CameraHierarchicalMapping(ActionMapping):
         if ac["camera"].ndim == 0:
             ac["camera"] = ac["camera"][None]
             ac["buttons"] = ac["buttons"][None]
-
-        assert ac["camera"].shape[-1] == 1
-        assert ac["buttons"].shape[-1] == 1
+        try:
+            assert ac["camera"].shape[-1] == 1
+            assert ac["buttons"].shape[-1] == 1
+        except:
+            import ray
+            ray.util.pdb.set_trace()
 
         new_button_ac = self.BUTTON_IDX_TO_FACTORED[np.squeeze(ac["buttons"], -1)]
         camera_off = self.BUTTON_IDX_TO_CAMERA_META_OFF[np.squeeze(ac["buttons"], -1)]

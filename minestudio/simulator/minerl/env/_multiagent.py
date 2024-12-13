@@ -38,7 +38,8 @@ TICK_LENGTH = 0.05
 
 logger = logging.getLogger(__name__)
 
-
+def multiagent_identity(x):
+    return x
 class _MultiAgentEnv(gym.Env):
     """
     The MineRLEnv class, a gym environment which implements stepping, and resetting, for the MineRL
@@ -90,7 +91,8 @@ class _MultiAgentEnv(gym.Env):
         self.instances = instances if instances is not None else []  # type: List[MinecraftInstance]
 
         # TO DEPRECATE (FOR ENV_SPECS)
-        self._xml_mutator_to_be_deprecated = _xml_mutator_to_be_deprecated or (lambda x: x)
+
+        self._xml_mutator_to_be_deprecated = _xml_mutator_to_be_deprecated or multiagent_identity
         self._refresh_inst_every = refresh_instances_every
         self._inst_setup_cntr = 0
         self.render_open = False

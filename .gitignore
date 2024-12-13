@@ -177,3 +177,5 @@ reference_videos/
 
 minestudio/models/realtime_sam/notebooks/*.jpg
 minestudio/models/realtime_sam/checkpoints/*.pt
+
+outputs

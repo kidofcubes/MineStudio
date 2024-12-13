@@ -3,6 +3,8 @@
 
 ## Code structure
 
+Below is the structure of the benchmark module, which organizes task definitions and testing scripts for evaluation:
+
 ```plaintext
 benchmark/
     ├── task_configs/ 
@@ -17,17 +19,15 @@ benchmark/
     ├── utility/
     │   └── Functionality for input reading and callback features.
 ```
----
+
 
 ## Workflow Overview
 
 ### Task Configuration
 
-Tasks are defined in YAML files located in the `task_configs/` directory. Each YAML file includes:
-- **Initial Setup**: Commands to configure the environment.
-- **Task Goals**: Objectives for the agent to accomplish.
+Tasks are defined in YAML files located in the `task_configs/` directory. under the appropriate difficulty subdirectory (e.g., `simple/` or `hard/`).
+ Example YAML:
 
-Example YAML:
 ```yaml
 custom_init_commands: 
 - /give @s minecraft:water_bucket 3
@@ -50,51 +50,23 @@ Key Elements of the YAML File:
    - Provides a natural language description of the task.
    - Example: `"Build a waterfall in your Minecraft world."`
 
----
-
-### Using YAML in the Framework 
-
-1. **Location**:
-   - Save the YAML file in the `task_configs/` directory under the appropriate difficulty subdirectory (e.g., `simple/` or `hard/`).
-
-2. **Loading the YAML**:
-   - Use the provided `read_conf.py` script to load and parse YAML files.
-   - Example usage:
-     ```python
-     from utility.read_conf import convert_yaml_to_callbacks
-
-     commands_callback, task_callback = convert_yaml_to_callbacks("task_configs/simple/build_waterfall.yaml")
-     ```
-
-3. **Task Execution**:
-   - The parsed callbacks are passed to the simulation during environment initialization:
-     ```python
-     env = MinecraftSim(callbacks=[
-         CommandsCallback(commands_callback),
-         TaskCallback(task_callback)
-     ])
-     ```
-
----
 
 ### Running Tests
 
 1. **Individual or Small-Scale Tests**:
    - Use `test.py` for running specific tasks or testing new configurations.
-   - Example:
-     ```bash
-     python test.py
+     ```console
+     $ python test.py
      ```
 
 2. **Batch Testing with Parallelization**:
    - Use `test_pipeline.py` for executing tasks in parallel.
-   - Example:
-     ```bash
-     python test_pipeline.py
+     ```console
+     $ python test_pipeline.py
      ```
 ---
 
-#### Code Explanation: `test.py`
+#### An Example: `test.py`
 
 This script demonstrates how to evaluate tasks using YAML-based configurations. Below is an outline of its workflow:
 
@@ -116,9 +88,9 @@ This script demonstrates how to evaluate tasks using YAML-based configurations. 
 4. **Result Storage**:
    - Videos and logs are saved in the `output/` directory.
 
-##### Example Code
+
 ```python
-commands_callback, task_callback = convert_yaml_to_callbacks("task_configs/simple/build_waterfall.yaml")
+commands_callback, task_callback = convert_yaml_to_callbacks("./task_configs/simple/build_waterfall.yaml")
 env = MinecraftSim(
    obs_size=(128, 128), 
    callbacks=[
@@ -127,7 +99,7 @@ env = MinecraftSim(
          TaskCallback(task_callback),
    ]
 )
-policy = load_openai_policy(
+policy = load_vpt_policy(
    model_path="/nfs-shared/jarvisbase/pretrained/foundation-model-2x.model",
    weights_path="/nfs-shared/jarvisbase/pretrained/foundation-model-2x.weights"
 ).to("cuda")

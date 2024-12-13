@@ -4,5 +4,4 @@ custom_init_commands:
 defaults:
 - base
 - _self_
-text: task you want to complete, and I'll help guide you through it in the required
-  format.
+text: Mine horizontally

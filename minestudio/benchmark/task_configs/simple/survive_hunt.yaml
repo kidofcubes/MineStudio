@@ -8,12 +8,7 @@ custom_init_commands:
 - /give @p minecraft:arrow 64
 - /give @p minecraft:cooked_beef 64
 - /give @p minecraft:shield
-- /give @p minecraft:tnt 64
-- /give @p minecraft:lava_bucket 3
-- /setblock ~2 ~ ~ minecraft:obsidian
-- /setblock ~3 ~ ~ minecraft:obsidian
-- /setblock ~2 ~1 ~ minecraft:torch
-- /setblock ~3 ~1 ~ minecraft:torch
+- /summon minecraft:sheep
 defaults:
 - base
 - _self_

@@ -14,7 +14,7 @@ from minestudio.benchmark.utility.read_conf import convert_yaml_to_callbacks
 # from minestudio.benchmark.utility.record_call import RecordCallback
 from minestudio.benchmark.utility.task_call import TaskCallback
 from functools import partial
-from minestudio.models import load_openai_policy
+from minestudio.models import load_vpt_policy
 from minestudio.simulator import MinecraftSim
 from minestudio.simulator.callbacks import RewardsCallback, CommandsCallback, RecordCallback
 
@@ -40,7 +40,7 @@ if __name__ == '__main__':
                     TaskCallback(task_callback),
                 ]
             )
-            policy = load_openai_policy(
+            policy = load_vpt_policy(
                 model_path="/nfs-shared/jarvisbase/pretrained/foundation-model-2x.model",
                 weights_path="/nfs-shared/jarvisbase/pretrained/foundation-model-2x.weights"
             ).to("cuda")

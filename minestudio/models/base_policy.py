@@ -47,7 +47,7 @@ class MinePolicy(torch.nn.Module, ABC):
                 "buttons": gymnasium.spaces.MultiDiscrete([8641]),
             })
         self.value_head = ScaledMSEHead(hiddim, 1, norm_type="ewma", norm_kwargs=None)
-        self.pi_head = make_action_head(action_space, hiddim, temperature=1.0) #! need to be verified. 
+        self.pi_head = make_action_head(action_space, hiddim, temperature=1.0)
 
     def reset_parameters(self):
         self.pi_head.reset_parameters()
@@ -107,5 +107,30 @@ class MinePolicy(torch.nn.Module, ABC):
             return elem.unsqueeze(0).unsqueeze(0).to(self.device)
         elif isinstance(elem, str):
             return [[elem]]
+        else:
+            raise NotImplementedError
+
+    # For online
+    def merge_input(self, inputs) -> torch.tensor:
+        raise NotImplementedError
+    
+    def merge_state(self, states) -> Optional[List[torch.Tensor]]:
+        raise NotImplementedError
+
+    def split_state(self, state, split_num) -> Optional[List[List[torch.Tensor]]]:
+        raise NotImplementedError
+    
+    def split_action(self, action, split_num) -> Optional[List[Dict[str, torch.Tensor]]]:
+        if isinstance(action, dict):
+            # for k, v in action.items():
+            #     action[k] = v.view(-1,1)
+            result_actions = [{k: v[i].cpu().numpy() for k, v in action.items()} for i in range(0, split_num)]
+            return result_actions
+        elif isinstance(action, torch.Tensor):
+            action_np = action.cpu().numpy()
+            result_actions = [action_np[i] for i in range(0, split_num)]
+            return result_actions
+        elif isinstance(action, list):
+            return action
         else:
             raise NotImplementedError

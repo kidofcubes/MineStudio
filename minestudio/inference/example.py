@@ -7,11 +7,11 @@ FilePath: /MineStudio/minestudio/inference/example.py
 
 from minestudio.simulator import MinecraftSim
 from minestudio.simulator.callbacks import RecordCallback, SpeedTestCallback
-from minestudio.models import OpenAIPolicy, load_openai_policy
+from minestudio.models import VPTPolicy, load_vpt_policy
 
 if __name__ == '__main__':
     
-    policy = load_openai_policy(
+    policy = load_vpt_policy(
         model_path="/nfs-shared/jarvisbase/pretrained/foundation-model-2x.model",
         weights_path="/nfs-shared/jarvisbase/pretrained/foundation-model-2x.weights"
     ).to("cuda")
@@ -26,7 +26,12 @@ if __name__ == '__main__':
     )
     memory = None
     obs, info = env.reset()
-    for i in range(1200):
+    for i in range(600):
+        action, memory = policy.get_action(obs, memory, input_shape='*')
+        obs, reward, terminated, truncated, info = env.step(action)
+    env.reset()
+    print("Resetting the environment")
+    for i in range(600):
         action, memory = policy.get_action(obs, memory, input_shape='*')
         obs, reward, terminated, truncated, info = env.step(action)
     env.close()

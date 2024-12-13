@@ -1,12 +1,12 @@
 <!--
  * @Date: 2024-12-03 04:47:37
- * @LastEditors: muzhancun muzhancun@126.com
- * @LastEditTime: 2024-12-12 20:31:15
+ * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
+ * @LastEditTime: 2024-12-13 08:48:33
  * @FilePath: /MineStudio/docs/source/models/index.md
 -->
 # Models
 
-We provided a template for the Minecraft Policy and based on this template, we created various different baseline models, including VPT, STEVE-1, GROOT, ROCKET-1, etc. 
+We provided a template for the Minecraft Policy and based on this template, we created various different baseline models, currently suppoerting VPT, STEVE-1, GROOT, ROCKET-1. 
 
 
 ```{toctree}
