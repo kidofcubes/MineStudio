@@ -11,12 +11,11 @@ def convert_yaml_to_callbacks(yaml_file):
     with open(yaml_file, 'r') as f:
         data = yaml.safe_load(f)
     commands = data.get('custom_init_commands', [])
-    commands_callback = commands
 
     text = data.get('text', '')
     task_name = os.path.splitext(os.path.basename(yaml_file))[0]
-    task_callback = {}
-    task_callback['name'] = task_name
-    task_callback['text'] = text
+    task_dict = {}
+    task_dict['name'] = task_name
+    task_dict['text'] = text
 
-    return commands_callback, task_callback
+    return commands, task_dict

@@ -50,7 +50,7 @@ Below is a simplified guide to using `video_comparison.py` for video comparison:
    After running the script, the evaluation results will be saved as a JSON file in the `vlm_rating_res/` directory.
 
 
-The following is an **example output**, showcasing how two videos are compared across several evaluation criteria. Each criterion is explained with observations, and an overall assessment is provided. This structured format ensures transparency and consistency in evaluating agent performance.
+The following is an **example output**, showcasing how two videos are compared across several evaluation criteria. Each criterion is explained with observations, and an overall assessment is provided.
 
 
 ```json
@@ -94,15 +94,13 @@ The following is an **example output**, showcasing how two videos are compared a
 
 ### Organizing Files for Batch Evaluation
 
-- **Batch Video Evaluation:**
+Evaluate all videos in a directory using their respective criteria.
 
-   Evaluate all videos in a directory using their respective criteria.
-
-   ```bash
-   python batch_video_rating.py \
-     --videos_path='./eval_video/' \
-     --criteria_files_path='./auto_eval/criteria_files/'
-   ```
+```bash
+python batch_video_rating.py \
+  --videos_path='./eval_video/' \
+  --criteria_files_path='./auto_eval/criteria_files/'
+```
 
 Organize your task-specific videos under the `videos_path` directory:
 
@@ -128,6 +126,8 @@ criteria_files_path
 ├── task_name_3.txt
 ```
 
+
+### Example Commands
 
 To evaluate task performance using pre-recorded videos and criteria, you can use the following commands depending on your needs:
 
