@@ -1,7 +1,5 @@
-Built-in GROOT Model
+GROOT: Learning to Follow Instructions by Watching Gameplay Videos
 ======================================================================
-
-`GROOT: Learning to Follow Instructions by Watching Gameplay Videos <https://arxiv.org/abs/2310.08235>`_
 
 .. admonition:: Quick Facts
     
@@ -125,7 +123,7 @@ Here we provide a brief overview and workflow of the components:
     6. The image features and goal embeddings are concatenated and fused to form the input for the decoder.
     7. The decoder autoregressively predicts the action logits as well as generates next memory.
 
-Train GROOT
+Training GROOT
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To implement the training objective of GROOT, we add a ``kl_divergence`` callback in ``minestudio/train/mine_callbacks``. This callback calculates the KL divergence between the posterior and prior distributions and adds it to the loss.
@@ -135,10 +133,10 @@ Specify this file path with hydra to start training:
 
 .. code-block:: bash
 
-   $ cd minestudio/tutorials/train
-   $ python main.py -m 3_pretrain_groots/groot_config.yaml
+   cd minestudio/tutorials/train/3_pretrain_groots
+   python main.py
 
-Evaluate GROOT
+Evaluation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Here is an example of how to evaluate the trained GROOT model. Provide it with a reference video and let it run!
@@ -169,17 +167,19 @@ Here is an example of how to evaluate the trained GROOT model. Provide it with a
         )
 
         ref_video_path = # specify the reference video path here
-        reference = []
-        with av.open(ref_video_path, "r") as container:
-            for fid, frame in enumerate(container.decode(video=0)):
-                frame = frame.reformat(width=resolution[0], height=resolution[1]).to_ndarray(format="rgb24")
-                reference.append(frame)
 
         memory = None
         obs, info = env.reset()
-        obs["reference"] = reference
+        obs["ref_video_path"] = ref_video_path
+
         for i in range(1200):
             action, memory = policy.get_action(obs, memory, input_shape='*')
             obs, reward, terminated, truncated, info = env.step(action)
-            obs["reference"] = reference
+
         env.close()
+
+.. note::
+
+    We provide a set of reference videos in `huggingface <https://huggingface.co/datasets/CraftJarvis/MinecraftReferenceVideos>`_.
+
+An example of inference code using our framework can be found in :any:`inferece-groot`.
