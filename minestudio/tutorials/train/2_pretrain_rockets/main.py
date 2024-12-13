@@ -56,12 +56,12 @@ def main(args):
             win_len=128,
             enable_segment=True,
         ),
-        shuffle_episodes=False, #! only for random sample 
         batch_size=args.batch_size,
         num_workers=args.num_workers,
         prefetch_factor=args.prefetch_factor,
         split_ratio=args.split_ratio, 
-        episode_continuous_batch=False,
+        shuffle_episodes=args.shuffle_episodes,
+        episode_continuous_batch=args.episode_continuous_batch,
     )
 
     callbacks=[
@@ -88,7 +88,7 @@ def main(args):
         devices=args.devices, 
         precision='bf16', 
         strategy='ddp_find_unused_parameters_true', 
-        use_distributed_sampler=True, #! only for random sample
+        use_distributed_sampler=not args.episode_continuous_batch,
         callbacks=callbacks, 
         gradient_clip_val=1.0, 
     ).fit(

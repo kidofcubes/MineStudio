@@ -1,11 +1,13 @@
 <!--
  * @Date: 2024-11-29 08:08:13
  * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-12-03 05:50:13
+ * @LastEditTime: 2024-12-13 16:41:35
  * @FilePath: /MineStudio/docs/source/overview/getting-started.md
 -->
 
-![](../_static/banner.png)
+```{image} ../_static/banner.png
+:width: 90%
+```
 
 # Getting Started
 
@@ -23,7 +25,7 @@ installation
 ../simulator/index
 ../data/index
 ../models/index
-../train/index
+../offline/index
 ../inference/index
 ../benchmark/index
 ```
@@ -58,8 +60,13 @@ Learn more about MineStudio Simulator
 ```
 ````
 
-````{dropdown} <img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Train: Training Policy with Offline Data
-```{include} quick-train.md
+````{dropdown} <img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Offline: Pre-Training Policy with Offline Data
+```{include} ../offline/quick-offline.md
+```
+````
+
+````{dropdown} <img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Online: Finetuning Policy via Online Interaction
+```{include} quick-online.md
 ```
 ````
 
@@ -71,6 +78,8 @@ Learn more about MineStudio Simulator
 ````{dropdown} <img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Benchmark: Benchmarking and Evaluation
 ```{include} quick-benchmark.md
 ```
+
+
 ````
 
 ## Papers

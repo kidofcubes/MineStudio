@@ -18,5 +18,5 @@
    Models <models/index>
    Agents <agents/index>
    Benchmark <benchmark/index>
-   Train <train/index>
+   Offline <offline/index>
    Inference <inference/index>

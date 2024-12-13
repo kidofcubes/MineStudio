@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-24 08:23:02
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-12-12 13:34:23
+LastEditTime: 2024-12-13 14:16:24
 FilePath: /MineStudio/minestudio/tutorials/train/3_pretrain_groots/main.py
 '''
 import hydra
@@ -28,6 +28,7 @@ def main(args):
     groot_policy = GrootPolicy(**convert_to_normal(args.model))
     mine_lightning = MineLightning(
         mine_policy=groot_policy, 
+        log_freq=20,
         learning_rate=args.learning_rate,
         warmup_steps=args.warmup_steps,
         weight_decay=args.weight_decay,
@@ -51,8 +52,8 @@ def main(args):
         num_workers=args.num_workers,
         prefetch_factor=args.prefetch_factor,
         split_ratio=args.split_ratio, 
-        shuffle_episodes=False,
-        episode_continuous_batch=False,
+        shuffle_episodes=args.shuffle_episodes,
+        episode_continuous_batch=args.episode_continuous_batch,
     )
 
     callbacks=[
@@ -79,7 +80,7 @@ def main(args):
         devices=args.devices, 
         precision='bf16', 
         strategy='ddp_find_unused_parameters_true', 
-        use_distributed_sampler=True, 
+        use_distributed_sampler=not args.episode_continuous_batch, 
         callbacks=callbacks, 
         gradient_clip_val=1.0, 
     ).fit(
