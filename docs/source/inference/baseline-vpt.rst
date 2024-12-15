@@ -31,8 +31,8 @@ Next, we create the ``env_generator`` and ``agent_generator`` separately to enab
     )
     agent_generator = partial(
         load_vpt_policy,
-        model_path="/nfs-shared/jarvisbase/pretrained/foundation-model-2x.model",
-        weights_path="/nfs-shared/jarvisbase/pretrained/rl-from-early-game-2x.weights"
+        model_path="/path/to/foundation-model-2x.model",
+        weights_path="/path/to/rl-from-early-game-2x.weights"
     )
 
 
