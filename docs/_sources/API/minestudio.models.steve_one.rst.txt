@@ -5,3 +5,12 @@ minestudio.models.steve\_one package
    :members:
    :undoc-members:
    :show-inheritance:
+
+Submodules
+----------
+
+
+.. automodule:: minestudio.models.steve_one.body
+   :members:
+   :undoc-members:
+   :show-inheritance:

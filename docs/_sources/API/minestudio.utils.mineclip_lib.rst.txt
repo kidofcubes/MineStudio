@@ -1,0 +1,16 @@
+minestudio.utils.mineclip\_lib package
+======================================
+
+.. automodule:: minestudio.utils.mineclip_lib
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   minestudio.utils.mineclip_lib.mineclip
+   minestudio.utils.mineclip_lib.utils

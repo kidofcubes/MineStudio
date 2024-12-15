@@ -12,6 +12,7 @@ Subpackages
 .. toctree::
    :maxdepth: 4
 
+   minestudio.utils.mineclip_lib
    minestudio.utils.vpt_lib
 
 Submodules
