@@ -41,6 +41,8 @@ dependencies = [
     "pyglet",
     "imgui",
     "pyopengl",
+    "dm-tree",
+    "x_transformers==0.27.1"
 ]
 authors = [
     {name="CraftJarvis", email="craftjarvis@outlook.com"}

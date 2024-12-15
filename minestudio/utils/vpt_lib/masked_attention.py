@@ -168,12 +168,10 @@ class MaskedAttention(nn.Module):
             use_muP_factor=use_muP_factor,
         )
 
-    def initial_state(self, batchsize: int, device=None):
+    def initial_state(self, batchsize: int):
         """Return the initial state mask (None) and the initial state of the transformer (zerod out keys and queries)"""
         state = self.orc_block.initial_state(batchsize, initial_T=self.maxlen)
-        state_mask = th.zeros((batchsize, 1, self.maxlen), dtype=th.bool, device=device)
-        if device is not None:
-            state = tree_map(lambda x: x.to(device), state)
+        state_mask = th.zeros((batchsize, 1, self.maxlen), dtype=th.bool, device=self.device)
         return state_mask, state
 
     def forward(self, input_bte, first_bt, state, **kwargs):
@@ -198,3 +196,7 @@ class MaskedAttention(nn.Module):
     def get_log_keys(self):
         # These are logged in xf.SelfAttentionLayer
         return [f"activation_{stat}/{self.log_scope}/{k}" for k in ["K", "Q", "V", "A", "Aproj"] for stat in ["mean", "std"]]
+    
+    @property
+    def device(self):
+        return next(self.parameters()).device

@@ -7,3 +7,4 @@ FilePath: /MineStudio/minestudio/models/__init__.py
 from minestudio.models.base_policy import MinePolicy
 from minestudio.models.rocket_one import RocketPolicy, load_rocket_policy
 from minestudio.models.openai_vpt import OpenAIPolicy, load_openai_policy
+from minestudio.models.steve_one import SteveOnePolicy, load_steve_one_policy

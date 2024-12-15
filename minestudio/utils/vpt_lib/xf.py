@@ -461,9 +461,13 @@ class SelfAttentionLayer(AttentionLayerBase):
 
     def initial_state(self, batchsize, initial_T=0):
         return (
-            th.zeros((batchsize, initial_T, self.x_size), dtype=self.dtype),
-            th.zeros((batchsize, initial_T, self.x_size), dtype=self.dtype),
+            th.zeros((batchsize, initial_T, self.x_size), device=self.device, dtype=self.dtype),
+            th.zeros((batchsize, initial_T, self.x_size), device=self.device, dtype=self.dtype),
         )
+
+    @property
+    def device(self):
+        return next(self.parameters()).device
 
     def empty_state(self):
         return None
