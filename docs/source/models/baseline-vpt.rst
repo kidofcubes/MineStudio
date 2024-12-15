@@ -1,5 +1,5 @@
 
-Built-in VPT Model
+Built-in Models: VPT
 ======================================================================
 
 `Video Pretraining (vpt): Learning to Act by Watching Unlabeled Online Videos <https://arxiv.org/abs/2206.11795>`_
