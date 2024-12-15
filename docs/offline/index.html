@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Offline &#8212; MineStudio 1.0.0</title>
+    <title>Offline Training &#8212; MineStudio 1.0.0</title>
   
   
   
@@ -37,7 +37,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/thebelab.css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=3403bf4f" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=f44ad8c8" />
   
   <!-- So that users can add custom icons -->
   <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
@@ -64,8 +64,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'offline/index';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Inference" href="../inference/index.html" />
-    <link rel="prev" title="Built-in ROCKET-1 Model" href="../models/baseline-rocket1.html" />
+    <link rel="next" title="Tutorial: Fine-tuning VPT to a Hunter" href="tutorial-vpt.html" />
+    <link rel="prev" title="Built-in Models: ROCKET-1" href="../models/baseline-rocket1.html" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -530,15 +530,30 @@
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../models/index.html">Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../models/baseline-vpt.html">Built-in VPT Model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../models/baseline-steve1.html">Built-in STEVE-1 Model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../models/baseline-groot.html">Built-in GROOT Model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../models/baseline-rocket1.html">Built-in ROCKET-1 Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/baseline-vpt.html">Built-in Models: VPT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/baseline-steve1.html">Built-in Models: STEVE-1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/baseline-groot.html">Built-in Models: GROOT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/baseline-rocket1.html">Built-in Models: ROCKET-1</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Offline</a></li>
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Offline Training</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial-vpt.html">Tutorial: Fine-tuning VPT to a Hunter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial-rocket.html">Tutorial: Pre-Training ROCKET-1 from Scratch</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../online/index.html">Online Training</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../online/general-information.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../online/config.html">Config</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../online/trainer.html">Trainer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../online/rollout.html">Rollout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../online/customization.html">Customize</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../inference/index.html">Inference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../inference/baseline-vpt.html">Inference with VPT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inference/baseline-steve1.html">Inference with STEVE-1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../inference/baseline-groot.html">Inference with GROOT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inference/baseline-rocket1.html">Inference with ROCKET-1</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../benchmark/index.html">Benchmark</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -592,7 +607,7 @@
     
     <li class="breadcrumb-item"><a href="../overview/index.html" class="nav-link">Overview</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Offline</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Offline Training</span></li>
   </ul>
 </nav>
 </div>
@@ -612,11 +627,11 @@
 <!--
  * @Date: 2024-11-29 08:09:45
  * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-12-13 17:10:13
+ * @LastEditTime: 2024-12-15 13:00:28
  * @FilePath: /MineStudio/docs/source/offline/index.md
 -->
-<section id="offline">
-<h1>Offline<a class="headerlink" href="#offline" title="Link to this heading">#</a></h1>
+<section id="offline-training">
+<h1>Offline Training<a class="headerlink" href="#offline-training" title="Link to this heading">#</a></h1>
 <p>Pre-training is a crucial approach for equipping policy models with diverse behaviors, as demonstrated in <a class="reference external" href="https://arxiv.org/abs/2206.11795">VPT</a>. MineStudio supports pre-training with offline data, enabling users to easily perform pre-training through a straightforward configuration file.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -624,93 +639,17 @@
 </div>
 <section id="quick-start">
 <h2>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading">#</a></h2>
-<div class="admonition hint">
-<p class="admonition-title">Hint</p>
-<p>Training a Minecraft policy in MineStudio is really simple.</p>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Offline Training with MineStudio</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorial-vpt.html">Tutorial: Fine-tuning VPT to a Hunter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial-rocket.html">Tutorial: Pre-Training ROCKET-1 from Scratch</a></li>
+</ul>
 </div>
-<p>The following code snippet shows how to finetune a VPT policy to hunt animals in Minecraft using offline data.</p>
-<ol class="arabic">
-<li><p>Import some dependencies:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">lightning</span> <span class="k">as</span> <span class="nn">L</span>
-<span class="kn">from</span> <span class="nn">lightning.pytorch.loggers</span> <span class="kn">import</span> <span class="n">WandbLogger</span>
-<span class="kn">from</span> <span class="nn">lightning.pytorch.callbacks</span> <span class="kn">import</span> <span class="n">LearningRateMonitor</span>
-<span class="c1"># below are MineStudio dependencies</span>
-<span class="kn">from</span> <span class="nn">minestudio.data</span> <span class="kn">import</span> <span class="n">MineDataModule</span>
-<span class="kn">from</span> <span class="nn">minestudio.train</span> <span class="kn">import</span> <span class="n">MineLightning</span>
-<span class="kn">from</span> <span class="nn">minestudio.models</span> <span class="kn">import</span> <span class="n">load_vpt_policy</span>
-<span class="kn">from</span> <span class="nn">minestudio.train.mine_callbacks</span> <span class="kn">import</span> <span class="n">BehaviorCloneCallback</span>
-<span class="kn">from</span> <span class="nn">minestudio.train.lightning_callbacks</span> <span class="kn">import</span> <span class="n">SmartCheckpointCallback</span><span class="p">,</span> <span class="n">SpeedMonitorCallback</span>
-</pre></div>
-</div>
-</li>
-<li><p>Configure the policy model and the training process:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">policy</span> <span class="o">=</span> <span class="n">load_vpt_policy</span><span class="p">(</span><span class="n">model_path</span><span class="o">=</span><span class="s2">&quot;/path/to/1x.model&quot;</span><span class="p">,</span> <span class="n">weights_path</span><span class="o">=</span><span class="s2">&quot;/path/to/1x.weights&quot;</span><span class="p">)</span>
-<span class="n">mine_lightning</span> <span class="o">=</span> <span class="n">MineLightning</span><span class="p">(</span>
-    <span class="n">mine_policy</span><span class="o">=</span><span class="n">policy</span><span class="p">,</span>
-    <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.00004</span><span class="p">,</span>
-    <span class="n">warmup_steps</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span>
-    <span class="n">weight_decay</span><span class="o">=</span><span class="mf">0.000181</span><span class="p">,</span>
-    <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">BehaviorCloneCallback</span><span class="p">(</span><span class="n">weight</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)]</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</li>
-<li><p>Configure the data module that contains all the <code class="docutils literal notranslate"><span class="pre">kill_entity</span></code> trajectory segments:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">episode_continuous_batch</span> <span class="o">=</span> <span class="kc">True</span>
-<span class="n">mine_data</span> <span class="o">=</span> <span class="n">MineDataModule</span><span class="p">(</span>
-    <span class="n">data_params</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
-        <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;event&#39;</span><span class="p">,</span> 
-        <span class="n">dataset_dirs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;/nfs-shared-2/data/contractors/dataset_6xx&#39;</span><span class="p">],</span>
-        <span class="n">win_len</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span>
-        <span class="n">frame_width</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span>
-        <span class="n">frame_height</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span>
-        <span class="n">event_regex</span><span class="o">=</span><span class="s2">&quot;minecraft.kill_entity:.*&quot;</span>
-        <span class="n">bias</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
-        <span class="n">min_nearby</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="n">batch_size</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
-    <span class="n">num_workers</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
-    <span class="n">prefetch_factor</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
-    <span class="n">split_ratio</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> 
-    <span class="n">shuffle_episodes</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">episode_continuous_batch</span><span class="o">=</span><span class="n">episode_continuous_batch</span><span class="p">,</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>If <code class="docutils literal notranslate"><span class="pre">episode_continuous_batch=True</span></code>, then the dataloader will automatically use our distributed batch sampler. When configuring the <code class="docutils literal notranslate"><span class="pre">trainer</span></code>, we need to set <code class="docutils literal notranslate"><span class="pre">use_distributed_sampler=False</span></code>.</p>
-</div>
-</li>
-<li><p>Configure the <code class="docutils literal notranslate"><span class="pre">trainer</span></code> with your preferred <a class="reference external" href="https://lightning.ai/">PyTorch Lightning</a> callbacks:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L</span><span class="o">.</span><span class="n">Trainer</span><span class="p">(</span>
-    <span class="n">logger</span><span class="o">=</span><span class="n">WandbLogger</span><span class="p">(</span><span class="n">project</span><span class="o">=</span><span class="s2">&quot;minestudio-vpt&quot;</span><span class="p">),</span> 
-    <span class="n">devices</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> 
-    <span class="n">precision</span><span class="o">=</span><span class="s2">&quot;bf16&quot;</span><span class="p">,</span> 
-    <span class="n">strategy</span><span class="o">=</span><span class="s1">&#39;ddp_find_unused_parameters_true&#39;</span><span class="p">,</span> 
-    <span class="n">use_distributed_sampler</span><span class="o">=</span><span class="ow">not</span> <span class="n">episode_continuous_batch</span><span class="p">,</span> 
-    <span class="n">gradient_clip_val</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> 
-    <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span>
-        <span class="n">LearningRateMonitor</span><span class="p">(</span><span class="n">logging_interval</span><span class="o">=</span><span class="s1">&#39;step&#39;</span><span class="p">),</span> 
-        <span class="n">SpeedMonitorCallback</span><span class="p">(),</span>
-        <span class="n">SmartCheckpointCallback</span><span class="p">(</span>
-            <span class="n">dirpath</span><span class="o">=</span><span class="s1">&#39;./weights&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;weight-</span><span class="si">{epoch}</span><span class="s1">-</span><span class="si">{step}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">save_top_k</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> 
-            <span class="n">every_n_train_steps</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">save_weights_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="p">),</span> 
-        <span class="n">SmartCheckpointCallback</span><span class="p">(</span>
-            <span class="n">dirpath</span><span class="o">=</span><span class="s1">&#39;./checkpoints&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;ckpt-</span><span class="si">{epoch}</span><span class="s1">-</span><span class="si">{step}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">save_top_k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> 
-            <span class="n">every_n_train_steps</span><span class="o">=</span><span class="mi">2000</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">save_weights_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="p">)</span>
-    <span class="p">]</span>
-<span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">mine_lightning</span><span class="p">,</span> <span class="n">datamodule</span><span class="o">=</span><span class="n">mine_data</span><span class="p">)</span>
-</pre></div>
-</div>
-</li>
-</ol>
 </section>
 <section id="basic-arguments">
 <h2>Basic Arguments<a class="headerlink" href="#basic-arguments" title="Link to this heading">#</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">minestudio.train.trainer.MineLightning</span></code> is the core class for offline training. It is a subclass of <code class="docutils literal notranslate"><span class="pre">lightning.LightningModule</span></code> and provides a simple interface for users to customize their training process.</p>
+<p><code class="docutils literal notranslate"><span class="pre">minestudio.offline.trainer.MineLightning</span></code> is the core class for offline training. It is a subclass of <code class="docutils literal notranslate"><span class="pre">lightning.LightningModule</span></code> and provides a simple interface for users to customize their training process.</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Arguments</p></th>
@@ -786,7 +725,7 @@
 <details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
 <summary class="sd-summary-title sd-card-header">
 <span class="sd-summary-icon"><svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-unlock" viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 4v2h7A1.5 1.5 0 0 1 14 7.5v6a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5v-6A1.5 1.5 0 0 1 3.499 6H4V4a4 4 0 0 1 7.371-2.154.75.75 0 0 1-1.264.808A2.5 2.5 0 0 0 5.5 4Zm-2 3.5v6h9v-6h-9Z"></path></svg></span><span class="sd-summary-text">Behavior Cloning Callback</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
-<p class="sd-card-text">The built-in <code class="docutils literal notranslate"><span class="pre">minestudio.train.mine_callbacks.BehaviorCloneCallback</span></code> looks like this:</p>
+<p class="sd-card-text">The built-in <code class="docutils literal notranslate"><span class="pre">minestudio.offline.mine_callbacks.BehaviorCloneCallback</span></code> looks like this:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">BehaviorCloneCallback</span><span class="p">(</span><span class="n">ObjectiveCallback</span><span class="p">):</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weight</span><span class="p">:</span> <span class="nb">float</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
@@ -841,7 +780,7 @@
 </details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
 <summary class="sd-summary-title sd-card-header">
 <span class="sd-summary-icon"><svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-unlock" viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 4v2h7A1.5 1.5 0 0 1 14 7.5v6a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5v-6A1.5 1.5 0 0 1 3.499 6H4V4a4 4 0 0 1 7.371-2.154.75.75 0 0 1-1.264.808A2.5 2.5 0 0 0 5.5 4Zm-2 3.5v6h9v-6h-9Z"></path></svg></span><span class="sd-summary-text">Kullback–Leibler Divergence Callback</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
-<p class="sd-card-text">The built-in <code class="docutils literal notranslate"><span class="pre">minestudio.train.mine_callbacks.KLDivergenceCallback</span></code> looks like this:</p>
+<p class="sd-card-text">The built-in <code class="docutils literal notranslate"><span class="pre">minestudio.offline.mine_callbacks.KLDivergenceCallback</span></code> looks like this:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">KLDivergenceCallback</span><span class="p">(</span><span class="n">ObjectiveCallback</span><span class="p">):</span>
         
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weight</span><span class="p">:</span> <span class="nb">float</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
@@ -919,15 +858,15 @@
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Built-in ROCKET-1 Model</p>
+        <p class="prev-next-title">Built-in Models: ROCKET-1</p>
       </div>
     </a>
     <a class="right-next"
-       href="../inference/index.html"
+       href="tutorial-vpt.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Inference</p>
+        <p class="prev-next-title">Tutorial: Fine-tuning VPT to a Hunter</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

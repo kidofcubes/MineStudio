@@ -1,11 +1,11 @@
 <!--
  * @Date: 2024-11-29 08:09:45
  * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-12-13 17:10:13
+ * @LastEditTime: 2024-12-15 13:00:28
  * @FilePath: /MineStudio/docs/source/offline/index.md
 -->
 
-# Offline
+# Offline Training
 
 Pre-training is a crucial approach for equipping policy models with diverse behaviors, as demonstrated in [VPT](https://arxiv.org/abs/2206.11795). MineStudio supports pre-training with offline data, enabling users to easily perform pre-training through a straightforward configuration file. 
 
@@ -13,15 +13,18 @@ Pre-training is a crucial approach for equipping policy models with diverse beha
 The MineStudio offline module is built on [PyTorch Lightning](https://lightning.ai/), providing high flexibility and enabling users to customize it to suit their specific needs.
 ```
 
-
 ## Quick Start
 
-```{include} quick-offline.md
+```{toctree}
+:caption: Offline Training with MineStudio
+
+tutorial-vpt
+tutorial-rocket
 ```
 
 ## Basic Arguments
 
-`minestudio.train.trainer.MineLightning` is the core class for offline training. It is a subclass of `lightning.LightningModule` and provides a simple interface for users to customize their training process. 
+`minestudio.offline.trainer.MineLightning` is the core class for offline training. It is a subclass of `lightning.LightningModule` and provides a simple interface for users to customize their training process. 
 
 | Arguments | Description |
 | --- | --- |
@@ -80,7 +83,7 @@ Here are some examples of built-in objective callbacks:
 `````{dropdown} Behavior Cloning Callback
 :icon: unlock
 
-The built-in `minestudio.train.mine_callbacks.BehaviorCloneCallback` looks like this:
+The built-in `minestudio.offline.mine_callbacks.BehaviorCloneCallback` looks like this:
 ```python
 class BehaviorCloneCallback(ObjectiveCallback):
 
@@ -138,7 +141,7 @@ def forward(self, input, state_in, **kwargs):
 `````{dropdown} Kullback–Leibler Divergence Callback
 :icon: unlock
 
-The built-in `minestudio.train.mine_callbacks.KLDivergenceCallback` looks like this:
+The built-in `minestudio.offline.mine_callbacks.KLDivergenceCallback` looks like this:
 
 ```python
 class KLDivergenceCallback(ObjectiveCallback):

@@ -17,7 +17,7 @@ Subpackages
    minestudio.data
    minestudio.inference
    minestudio.models
+   minestudio.offline
    minestudio.simulator
-   minestudio.train
    minestudio.tutorials
    minestudio.utils

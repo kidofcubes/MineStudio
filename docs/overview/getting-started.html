@@ -37,7 +37,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/thebelab.css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=3403bf4f" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=f44ad8c8" />
   
   <!-- So that users can add custom icons -->
   <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
@@ -66,7 +66,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'overview/getting-started';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="Customize" href="../online/customization.html" />
+    <link rel="prev" title="Automatic Evaluation Pipeline" href="../benchmark/automatic-evaluation.html" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -531,13 +531,17 @@
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../models/index.html">Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../models/baseline-vpt.html">Built-in VPT Model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../models/baseline-steve1.html">Built-in STEVE-1 Model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../models/baseline-groot.html">Built-in GROOT Model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../models/baseline-rocket1.html">Built-in ROCKET-1 Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/baseline-vpt.html">Built-in Models: VPT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/baseline-steve1.html">Built-in Models: STEVE-1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/baseline-groot.html">Built-in Models: GROOT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/baseline-rocket1.html">Built-in Models: ROCKET-1</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1"><a class="reference internal" href="../offline/index.html">Offline</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../offline/index.html">Offline Training</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../offline/tutorial-vpt.html">Tutorial: Fine-tuning VPT to a Hunter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../offline/tutorial-rocket.html">Tutorial: Pre-Training ROCKET-1 from Scratch</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../online/index.html">Online Training</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../online/general-information.html">Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../online/config.html">Config</a></li>
@@ -547,7 +551,10 @@
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../inference/index.html">Inference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../inference/baseline-vpt.html">Inference with VPT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inference/baseline-steve1.html">Inference with STEVE-1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../inference/baseline-groot.html">Inference with GROOT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inference/baseline-rocket1.html">Inference with ROCKET-1</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../benchmark/index.html">Benchmark</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -618,7 +625,7 @@
 <!--
  * @Date: 2024-11-29 08:08:13
  * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-12-13 16:41:35
+ * @LastEditTime: 2024-12-15 13:23:12
  * @FilePath: /MineStudio/docs/source/overview/getting-started.md
 -->
 <a class="reference internal image-reference" href="../_images/banner.png"><img alt="../_images/banner.png" src="../_images/banner.png" style="width: 90%;" />
@@ -932,10 +939,8 @@ VirtualGL</label><div class="sd-tab-content docutils">
 </details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
 <summary class="sd-summary-title sd-card-header">
 <span class="sd-summary-text"><img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Offline: Pre-Training Policy with Offline Data</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
-<div class="admonition hint">
-<p class="admonition-title">Hint</p>
-<p class="sd-card-text">Training a Minecraft policy in MineStudio is really simple.</p>
-</div>
+<h1 class="rubric" id="tutorial-fine-tuning-vpt-to-a-hunter">Tutorial: Fine-tuning VPT to a Hunter</h1>
+<p class="sd-card-text">Fine-tune a VPT policy in MineStudio is really simple.</p>
 <p class="sd-card-text">The following code snippet shows how to finetune a VPT policy to hunt animals in Minecraft using offline data.</p>
 <ol class="arabic">
 <li><p class="sd-card-text">Import some dependencies:</p>
@@ -944,10 +949,10 @@ VirtualGL</label><div class="sd-tab-content docutils">
 <span class="kn">from</span> <span class="nn">lightning.pytorch.callbacks</span> <span class="kn">import</span> <span class="n">LearningRateMonitor</span>
 <span class="c1"># below are MineStudio dependencies</span>
 <span class="kn">from</span> <span class="nn">minestudio.data</span> <span class="kn">import</span> <span class="n">MineDataModule</span>
-<span class="kn">from</span> <span class="nn">minestudio.train</span> <span class="kn">import</span> <span class="n">MineLightning</span>
+<span class="kn">from</span> <span class="nn">minestudio.offline</span> <span class="kn">import</span> <span class="n">MineLightning</span>
 <span class="kn">from</span> <span class="nn">minestudio.models</span> <span class="kn">import</span> <span class="n">load_vpt_policy</span>
-<span class="kn">from</span> <span class="nn">minestudio.train.mine_callbacks</span> <span class="kn">import</span> <span class="n">BehaviorCloneCallback</span>
-<span class="kn">from</span> <span class="nn">minestudio.train.lightning_callbacks</span> <span class="kn">import</span> <span class="n">SmartCheckpointCallback</span><span class="p">,</span> <span class="n">SpeedMonitorCallback</span>
+<span class="kn">from</span> <span class="nn">minestudio.offline.mine_callbacks</span> <span class="kn">import</span> <span class="n">BehaviorCloneCallback</span>
+<span class="kn">from</span> <span class="nn">minestudio.offline.lightning_callbacks</span> <span class="kn">import</span> <span class="n">SmartCheckpointCallback</span><span class="p">,</span> <span class="n">SpeedMonitorCallback</span>
 </pre></div>
 </div>
 </li>
@@ -1056,12 +1061,12 @@ VirtualGL</label><div class="sd-tab-content docutils">
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../online/customization.html"
+       href="../benchmark/automatic-evaluation.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Customize</p>
+        <p class="prev-next-title">Automatic Evaluation Pipeline</p>
       </div>
     </a>
 </div>

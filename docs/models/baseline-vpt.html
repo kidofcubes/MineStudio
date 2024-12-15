@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Built-in VPT Model &#8212; MineStudio 1.0.0</title>
+    <title>Built-in Models: VPT &#8212; MineStudio 1.0.0</title>
   
   
   
@@ -37,7 +37,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/thebelab.css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=3403bf4f" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=f44ad8c8" />
   
   <!-- So that users can add custom icons -->
   <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
@@ -66,7 +66,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'models/baseline-vpt';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Built-in STEVE-1 Model" href="baseline-steve1.html" />
+    <link rel="next" title="Built-in Models: STEVE-1" href="baseline-steve1.html" />
     <link rel="prev" title="Models" href="index.html" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -532,15 +532,30 @@
 </ul>
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Models</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Built-in VPT Model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="baseline-steve1.html">Built-in STEVE-1 Model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="baseline-groot.html">Built-in GROOT Model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="baseline-rocket1.html">Built-in ROCKET-1 Model</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Built-in Models: VPT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="baseline-steve1.html">Built-in Models: STEVE-1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="baseline-groot.html">Built-in Models: GROOT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="baseline-rocket1.html">Built-in Models: ROCKET-1</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1"><a class="reference internal" href="../offline/index.html">Offline</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../offline/index.html">Offline Training</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../offline/tutorial-vpt.html">Tutorial: Fine-tuning VPT to a Hunter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../offline/tutorial-rocket.html">Tutorial: Pre-Training ROCKET-1 from Scratch</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../online/index.html">Online Training</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../online/general-information.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../online/config.html">Config</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../online/trainer.html">Trainer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../online/rollout.html">Rollout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../online/customization.html">Customize</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../inference/index.html">Inference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../inference/baseline-vpt.html">Inference with VPT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inference/baseline-steve1.html">Inference with STEVE-1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../inference/baseline-groot.html">Inference with GROOT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inference/baseline-rocket1.html">Inference with ROCKET-1</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../benchmark/index.html">Benchmark</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -597,7 +612,7 @@
     
     <li class="breadcrumb-item"><a href="index.html" class="nav-link">Models</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Built-in VPT Model</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Built-in Models: VPT</span></li>
   </ul>
 </nav>
 </div>
@@ -614,8 +629,8 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-<section id="built-in-vpt-model">
-<h1>Built-in VPT Model<a class="headerlink" href="#built-in-vpt-model" title="Link to this heading">#</a></h1>
+<section id="built-in-models-vpt">
+<h1>Built-in Models: VPT<a class="headerlink" href="#built-in-models-vpt" title="Link to this heading">#</a></h1>
 <p><a class="reference external" href="https://arxiv.org/abs/2206.11795">Video Pretraining (vpt): Learning to Act by Watching Unlabeled Online Videos</a></p>
 <div class="admonition-quick-facts admonition">
 <p class="admonition-title">Quick Facts</p>
@@ -734,7 +749,7 @@
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Built-in STEVE-1 Model</p>
+        <p class="prev-next-title">Built-in Models: STEVE-1</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

@@ -1,4 +1,4 @@
-Built-in ROCKET-1 Model
+Built-in Models: ROCKET-1
 ======================================================================
 
 `ROCKET-1: Mastering Open-World Interaction with Visual-Temporal Context Prompting <https://arxiv.org/abs/2410.17856>`_
