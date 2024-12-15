@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-11 20:54:15
-LastEditors: muzhancun muzhancun@126.com
-LastEditTime: 2024-12-14 02:03:22
+LastEditors: caishaofei caishaofei@stu.pku.edu.cn
+LastEditTime: 2024-12-15 11:30:55
 FilePath: /MineStudio/minestudio/models/vpt/body.py
 '''
 import os
@@ -226,8 +226,8 @@ class MinecraftPolicy(nn.Module):
 @Registers.model.register
 class VPTPolicy(MinePolicy):
 
-    def __init__(self, policy_kwargs, action_space=None):
-        super().__init__(hiddim=policy_kwargs["hidsize"], action_space=action_space)
+    def __init__(self, policy_kwargs, action_space=None, **kwargs):
+        super().__init__(hiddim=policy_kwargs["hidsize"], action_space=action_space, **kwargs)
         self.net = MinecraftPolicy(**policy_kwargs)
         self.cached_init_states = dict()
 
@@ -293,7 +293,10 @@ def load_vpt_policy(model_path: str, weights_path: Optional[str] = None):
 
     model = pickle.load(Path(model_path).open("rb"))
     policy_kwargs = model['model']['args']['net']['args']
-    vpt_policy = VPTPolicy(policy_kwargs=policy_kwargs)
+    vpt_policy = VPTPolicy(
+        policy_kwargs=model['model']['args']['net']['args'], 
+        temperature=model['model']['args']['pi_head_opts']['temperature']
+    )
     if weights_path is None:
         return vpt_policy
     weights = torch.load(weights_path, map_location='cpu')
