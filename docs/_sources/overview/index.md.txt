@@ -28,4 +28,5 @@ installation
 ../offline/index
 ../inference/index
 ../benchmark/index
+../online/index
 ```

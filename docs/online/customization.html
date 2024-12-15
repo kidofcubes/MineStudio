@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>&lt;no title&gt; &#8212; MineStudio 1.0.0</title>
+    <title>Customize &#8212; MineStudio 1.0.0</title>
   
   
   
@@ -64,7 +64,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'online/customization';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="General Information" href="general-information.html" />
+    <link rel="next" title="Getting Started" href="../overview/getting-started.html" />
+    <link rel="prev" title="Rollout" href="rollout.html" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -175,14 +176,14 @@
 <nav>
   <ul class="bd-navbar-elements navbar-nav">
     
-<li class="nav-item ">
+<li class="nav-item current active">
   <a class="nav-link nav-internal" href="../overview/index.html">
     Overview
   </a>
 </li>
 
 
-<li class="nav-item current active">
+<li class="nav-item ">
   <a class="nav-link nav-internal" href="../overview/getting-started.html">
     Getting Started
   </a>
@@ -381,14 +382,14 @@
 <nav>
   <ul class="bd-navbar-elements navbar-nav">
     
-<li class="nav-item ">
+<li class="nav-item current active">
   <a class="nav-link nav-internal" href="../overview/index.html">
     Overview
   </a>
 </li>
 
 
-<li class="nav-item current active">
+<li class="nav-item ">
   <a class="nav-link nav-internal" href="../overview/getting-started.html">
     Getting Started
   </a>
@@ -515,7 +516,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../overview/installation.html">Installation</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">MineStudio Libraries</span></p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../simulator/index.html">Simulator</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../simulator/general-information.html">General Information</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../simulator/design-principles.html">Design Principles</a></li>
@@ -536,10 +537,6 @@
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../offline/index.html">Offline</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="index.html">Online Training</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="general-information.html">General Information</a></li>
-</ul>
-</details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../inference/index.html">Inference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../inference/baseline-groot.html">Inference with GROOT</a></li>
 </ul>
@@ -547,6 +544,14 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../benchmark/index.html">Benchmark</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../benchmark/quick-benchmark.html">Quick benchmark</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../benchmark/automatic-evaluation.html">Automatic Evaluation Pipeline</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Online Training</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="general-information.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html">Config</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trainer.html">Trainer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rollout.html">Rollout</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Customize</a></li>
 </ul>
 </details></li>
 </ul>
@@ -585,12 +590,12 @@
       </a>
     </li>
     
-    <li class="breadcrumb-item"><a href="../overview/getting-started.html" class="nav-link">Getting Started</a></li>
+    <li class="breadcrumb-item"><a href="../overview/index.html" class="nav-link">Overview</a></li>
     
     
     <li class="breadcrumb-item"><a href="index.html" class="nav-link">Online Training</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">&lt;no title&gt;</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Customize</span></li>
   </ul>
 </nav>
 </div>
@@ -607,6 +612,28 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
+<section id="customize">
+<h1>Customize<a class="headerlink" href="#customize" title="Link to this heading">#</a></h1>
+<p>Our framework supports customization of online algorithm details.</p>
+<section id="trainer">
+<h2>Trainer<a class="headerlink" href="#trainer" title="Link to this heading">#</a></h2>
+<p>To customize the trainer, you need to imply an class inherit from <code class="docutils literal notranslate"><span class="pre">minestudio.online.trainer.base_trainer.BaseTrainer</span></code> with and implement the abstract methods <code class="docutils literal notranslate"><span class="pre">setup_model_and_optimizer</span></code> and <code class="docutils literal notranslate"><span class="pre">train</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">setup_model_and_optimizer</span></code> return a pair <code class="docutils literal notranslate"><span class="pre">(model,</span> <span class="pre">optimizer)</span></code>.</p>
+<p>In the <code class="docutils literal notranslate"><span class="pre">train</span></code> function, you need to define the training loop. You can use the <code class="docutils literal notranslate"><span class="pre">fetch_fragments_and_estimate_advantages</span></code> method to obtain data from the replay buffer.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">minestudio.online.trainer.base_trainer</span> <span class="kn">import</span> <span class="n">BaseTrainer</span>
+<span class="k">class</span> <span class="nc">PPOTrainer</span><span class="p">(</span><span class="n">BaseTrainer</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setup_model_and_optimizer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Define model and optimizer</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Custom training logic</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+<p>Refer to <code class="docutils literal notranslate"><span class="pre">minestudio.online.trainer.ppotrainer.PPOTrainer</span></code> for an example.</p>
+</section>
+</section>
 
 <div class="section ablog__blog_comments">
   
@@ -623,13 +650,22 @@
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="general-information.html"
+       href="rollout.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">General Information</p>
+        <p class="prev-next-title">Rollout</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="../overview/getting-started.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Getting Started</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
@@ -649,9 +685,9 @@
     <i class="fa-solid fa-list"></i> On this page
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
-    <ul class="simple visible nav section-nav flex-column">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#trainer">Trainer</a></li>
 </ul>
-
   </nav></div>
 
   <div class="sidebar-secondary-item">

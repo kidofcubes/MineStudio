@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Quick benchmark &#8212; MineStudio 1.0.0</title>
+    <title>Trainer &#8212; MineStudio 1.0.0</title>
   
   
   
@@ -61,11 +61,11 @@
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'benchmark/quick-benchmark';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'online/trainer';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Automatic Evaluation Pipeline" href="automatic-evaluation.html" />
-    <link rel="prev" title="Benchmark" href="index.html" />
+    <link rel="next" title="Rollout" href="rollout.html" />
+    <link rel="prev" title="Config" href="config.html" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -224,7 +224,7 @@
 
 
 <li class=" ">
-  <a class="nav-link dropdown-item nav-internal" href="../online/index.html">
+  <a class="nav-link dropdown-item nav-internal" href="index.html">
     Online
   </a>
 </li>
@@ -238,7 +238,7 @@
 
 
 <li class=" ">
-  <a class="nav-link dropdown-item nav-internal" href="index.html">
+  <a class="nav-link dropdown-item nav-internal" href="../benchmark/index.html">
     Benchmark
   </a>
 </li>
@@ -425,7 +425,7 @@
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="../online/index.html">
+  <a class="nav-link nav-internal" href="index.html">
     Online
   </a>
 </li>
@@ -439,7 +439,7 @@
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="index.html">
+  <a class="nav-link nav-internal" href="../benchmark/index.html">
     Benchmark
   </a>
 </li>
@@ -541,17 +541,17 @@
 <li class="toctree-l2"><a class="reference internal" href="../inference/baseline-groot.html">Inference with GROOT</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Benchmark</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Quick benchmark</a></li>
-<li class="toctree-l2"><a class="reference internal" href="automatic-evaluation.html">Automatic Evaluation Pipeline</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../benchmark/index.html">Benchmark</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../benchmark/quick-benchmark.html">Quick benchmark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../benchmark/automatic-evaluation.html">Automatic Evaluation Pipeline</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../online/index.html">Online Training</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../online/general-information.html">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../online/config.html">Config</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../online/trainer.html">Trainer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../online/rollout.html">Rollout</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../online/customization.html">Customize</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Online Training</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="general-information.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html">Config</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Trainer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rollout.html">Rollout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customization.html">Customize</a></li>
 </ul>
 </details></li>
 </ul>
@@ -593,9 +593,9 @@
     <li class="breadcrumb-item"><a href="../overview/index.html" class="nav-link">Overview</a></li>
     
     
-    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Benchmark</a></li>
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Online Training</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Quick benchmark</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Trainer</span></li>
   </ul>
 </nav>
 </div>
@@ -612,143 +612,150 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-<section id="quick-benchmark">
-<h1>Quick benchmark<a class="headerlink" href="#quick-benchmark" title="Link to this heading">#</a></h1>
-<p>This document outlines the structure and workflow of the benchmark module, a comprehensive framework designed for evaluating agent performance in Minecraft environments.</p>
-<section id="code-structure">
-<h2>Code structure<a class="headerlink" href="#code-structure" title="Link to this heading">#</a></h2>
-<p>Below is the structure of the benchmark module, which organizes task definitions and testing scripts for evaluation:</p>
-<div class="highlight-plaintext notranslate"><div class="highlight"><pre><span></span>benchmark/
-    ├── task_configs/ 
-    │   ├── simple/ 
-    │   │   └── Task definitions for simple tasks.
-    │   ├── hard/
-    │       └── Task definitions for complex tasks.
-    ├── test_pipeline.py
-    │   └── Example script for parallelized and batched task execution.
-    ├── test.py
-    │   └── Example script for running batch tests.
-    ├── utility/
-    │   └── Functionality for input reading and callback features.
-</pre></div>
-</div>
-</section>
-<section id="workflow-overview">
-<h2>Workflow Overview<a class="headerlink" href="#workflow-overview" title="Link to this heading">#</a></h2>
-<section id="task-configuration">
-<h3>Task Configuration<a class="headerlink" href="#task-configuration" title="Link to this heading">#</a></h3>
-<p>Tasks are defined in YAML files located in the <code class="docutils literal notranslate"><span class="pre">task_configs/</span></code> directory. under the appropriate difficulty subdirectory (e.g., <code class="docutils literal notranslate"><span class="pre">simple/</span></code> or <code class="docutils literal notranslate"><span class="pre">hard/</span></code>).
-Example YAML:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">custom_init_commands</span><span class="p">:</span><span class="w"> </span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/give @s minecraft:water_bucket 3</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/give @s minecraft:stone 64</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/give @s minecraft:dirt 64</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/give @s minecraft:shovel{Enchantments:[{id:&quot;minecraft:efficiency&quot;,lvl:1}]} 1</span>
-<span class="nt">text</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Build a waterfall in your Minecraft world.</span>
-</pre></div>
-</div>
-<p>Key Elements of the YAML File:</p>
-<ol class="arabic simple">
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">custom_init_commands</span></code></strong>:</p>
-<ul class="simple">
-<li><p>Specifies commands to initialize the Minecraft environment for the task.</p></li>
-<li><p>Examples:</p>
-<ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">/give</span> <span class="pre">&#64;s</span> <span class="pre">minecraft:water_bucket</span> <span class="pre">3</span></code>: Gives the agent three water buckets.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">/give</span> <span class="pre">&#64;s</span> <span class="pre">minecraft:stone</span> <span class="pre">64</span></code>: Provides a stack of stone blocks.</p></li>
-</ul>
-</li>
-<li><p>These commands ensure the agent has the necessary tools and resources to perform the task.</p></li>
-</ul>
-</li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">text</span></code></strong>:</p>
-<ul class="simple">
-<li><p>Provides a natural language description of the task.</p></li>
-<li><p>Example: <code class="docutils literal notranslate"><span class="pre">&quot;Build</span> <span class="pre">a</span> <span class="pre">waterfall</span> <span class="pre">in</span> <span class="pre">your</span> <span class="pre">Minecraft</span> <span class="pre">world.&quot;</span></code></p></li>
-</ul>
-</li>
-</ol>
-</section>
-<section id="running-tests">
-<h3>Running Tests<a class="headerlink" href="#running-tests" title="Link to this heading">#</a></h3>
-<ol class="arabic">
-<li><p><strong>Individual or Small-Scale Tests</strong>:</p>
-<ul>
-<li><p>Use <code class="docutils literal notranslate"><span class="pre">test.py</span></code> for running specific tasks or testing new configurations.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python<span class="w"> </span>test.py
-</pre></div>
-</div>
-</li>
-</ul>
-</li>
-<li><p><strong>Batch Testing with Parallelization</strong>:</p>
-<ul>
-<li><p>Use <code class="docutils literal notranslate"><span class="pre">test_pipeline.py</span></code> for executing tasks in parallel.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python<span class="w"> </span>test_pipeline.py
-</pre></div>
-</div>
-</li>
-</ul>
-</li>
-</ol>
+<section id="trainer">
+<h1>Trainer<a class="headerlink" href="#trainer" title="Link to this heading">#</a></h1>
+<p>In <code class="docutils literal notranslate"><span class="pre">online/trainer</span></code>, we have defined <code class="docutils literal notranslate"><span class="pre">PPOTrainer</span></code> and other online trainers. These trainers need to inherit from <code class="docutils literal notranslate"><span class="pre">minestudio.online.trainer.basetrainer.BaseTrainer</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">BaseTrainer</span></code> is a foundational class in the MineStudio framework, designed to facilitate online reinforcement learning training. It manages the interaction between various components such as rollout workers, environment generators, and the policy model. Developers can extend this class to implement custom trainers for specific algorithms like PPO.</p>
+<p>You can launch <code class="docutils literal notranslate"><span class="pre">Trainer</span></code> directly by <code class="docutils literal notranslate"><span class="pre">minestudio.online.trainer.start_trainer</span></code>.</p>
 <hr class="docutils" />
-<section id="an-example-test-py">
-<h4>An Example: <code class="docutils literal notranslate"><span class="pre">test.py</span></code><a class="headerlink" href="#an-example-test-py" title="Link to this heading">#</a></h4>
-<p>This script demonstrates how to evaluate tasks using YAML-based configurations. Below is an outline of its workflow:</p>
-<ol class="arabic simple">
-<li><p><strong>Task Setup</strong>:</p>
+<section id="constructor">
+<h2>Constructor<a class="headerlink" href="#constructor" title="Link to this heading">#</a></h2>
+<section id="init">
+<h3><code class="docutils literal notranslate"><span class="pre">__init__</span></code><a class="headerlink" href="#init" title="Link to this heading">#</a></h3>
+<p>The constructor initializes the trainer with various configurations and components.</p>
+</section>
+<section id="parameters">
+<h3>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p>Load configuration files from <code class="docutils literal notranslate"><span class="pre">task_configs/simple</span></code>.</p></li>
-<li><p>Parse YAML files into callbacks using <code class="docutils literal notranslate"><span class="pre">convert_yaml_to_callbacks</span></code>.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">rollout_manager:</span> <span class="pre">ActorHandle</span></code></strong><br />
+Handles rollout workers.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">policy_generator:</span> <span class="pre">Callable[[],</span> <span class="pre">MinePolicy]</span></code></strong><br />
+Function to generate the policy.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">env_generator:</span> <span class="pre">Callable[[],</span> <span class="pre">MinecraftSim]</span></code></strong><br />
+Function to generate the environment.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">num_workers:</span> <span class="pre">int</span></code></strong><br />
+Number of workers for parallel training.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">num_readers:</span> <span class="pre">int</span></code></strong><br />
+Number of data readers.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">num_cpus_per_reader:</span> <span class="pre">int</span></code></strong><br />
+Number of CPUs allocated per reader.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">num_gpus_per_worker:</span> <span class="pre">int</span></code></strong><br />
+Number of GPUs allocated per worker.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">prefetch_batches:</span> <span class="pre">int</span></code></strong><br />
+Number of batches to prefetch.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">discount:</span> <span class="pre">float</span></code></strong><br />
+Discount factor for rewards.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">gae_lambda:</span> <span class="pre">float</span></code></strong><br />
+Lambda for Generalized Advantage Estimation (GAE).</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">context_length:</span> <span class="pre">int</span></code></strong><br />
+Maximum context length for model input.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">use_normalized_vf:</span> <span class="pre">bool</span></code></strong><br />
+Whether to normalize value function outputs.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">inference_batch_size_per_gpu:</span> <span class="pre">int</span></code></strong><br />
+Batch size per GPU during inference.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">resume:</span> <span class="pre">Optional[str]</span></code></strong><br />
+Path to checkpoint for resuming training.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">resume_optimizer:</span> <span class="pre">bool</span></code></strong><br />
+Whether to resume optimizer state from the checkpoint.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">kwargs</span></code></strong><br />
+Additional arguments.</p></li>
 </ul>
-</li>
-<li><p><strong>Environment Initialization</strong>:</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="methods">
+<h2>Methods<a class="headerlink" href="#methods" title="Link to this heading">#</a></h2>
+<section id="broadcast-model-to-rollout-workers">
+<h3><code class="docutils literal notranslate"><span class="pre">broadcast_model_to_rollout_workers</span></code><a class="headerlink" href="#broadcast-model-to-rollout-workers" title="Link to this heading">#</a></h3>
+<p>Broadcasts the updated model to rollout workers.</p>
+<section id="id1">
+<h4>Parameters<a class="headerlink" href="#id1" title="Link to this heading">#</a></h4>
 <ul class="simple">
-<li><p>Use <code class="docutils literal notranslate"><span class="pre">MinecraftSim</span></code> to create a simulation environment.</p></li>
-<li><p>Add callbacks:</p>
-<ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">RecordCallback</span></code>: Saves video frames for evaluation.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">CommandsCallback</span></code>: Initializes the environment.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">TaskCallback</span></code>: Implements task-specific behavior.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">new_version:</span> <span class="pre">bool</span></code></strong><br />
+Whether to increment the model version.</p></li>
 </ul>
-</li>
-</ul>
-</li>
-<li><p><strong>Task Execution</strong>:</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="fetch-fragments-and-estimate-advantages">
+<h3><code class="docutils literal notranslate"><span class="pre">fetch_fragments_and_estimate_advantages</span></code><a class="headerlink" href="#fetch-fragments-and-estimate-advantages" title="Link to this heading">#</a></h3>
+<p>Fetches fragments from the replay buffer, calculates advantages, and prepares data for training.</p>
+<section id="id2">
+<h4>Parameters<a class="headerlink" href="#id2" title="Link to this heading">#</a></h4>
 <ul class="simple">
-<li><p>Reset the environment and run the task for multiple steps.</p></li>
-<li><p>Save observations, actions, and outputs for analysis.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">num_fragments:</span> <span class="pre">int</span></code></strong><br />
+Number of fragments to fetch.</p></li>
 </ul>
-</li>
-<li><p><strong>Result Storage</strong>:</p>
+</section>
+<section id="returns">
+<h4>Returns<a class="headerlink" href="#returns" title="Link to this heading">#</a></h4>
 <ul class="simple">
-<li><p>Videos and logs are saved in the <code class="docutils literal notranslate"><span class="pre">output/</span></code> directory.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">Dict[str,</span> <span class="pre">Any]</span></code></strong>: Processed data including records, TD targets, advantages, and old policy information.</p></li>
 </ul>
-</li>
-</ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">commands_callback</span><span class="p">,</span> <span class="n">task_callback</span> <span class="o">=</span> <span class="n">convert_yaml_to_callbacks</span><span class="p">(</span><span class="s2">&quot;./task_configs/simple/build_waterfall.yaml&quot;</span><span class="p">)</span>
-<span class="n">env</span> <span class="o">=</span> <span class="n">MinecraftSim</span><span class="p">(</span>
-   <span class="n">obs_size</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span> 
-   <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span>
-         <span class="n">RecordCallback</span><span class="p">(</span><span class="n">record_path</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;./output/&quot;</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">frame_type</span><span class="o">=</span><span class="s2">&quot;pov&quot;</span><span class="p">),</span>
-         <span class="n">CommandsCallback</span><span class="p">(</span><span class="n">commands_callback</span><span class="p">),</span>
-         <span class="n">TaskCallback</span><span class="p">(</span><span class="n">task_callback</span><span class="p">),</span>
-   <span class="p">]</span>
-<span class="p">)</span>
-<span class="n">policy</span> <span class="o">=</span> <span class="n">load_vpt_policy</span><span class="p">(</span>
-   <span class="n">model_path</span><span class="o">=</span><span class="s2">&quot;/nfs-shared/jarvisbase/pretrained/foundation-model-2x.model&quot;</span><span class="p">,</span>
-   <span class="n">weights_path</span><span class="o">=</span><span class="s2">&quot;/nfs-shared/jarvisbase/pretrained/foundation-model-2x.weights&quot;</span>
-<span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span><span class="p">)</span>
+</section>
+</section>
+<hr class="docutils" />
+<section id="setup-model-and-optimizer">
+<h3><code class="docutils literal notranslate"><span class="pre">setup_model_and_optimizer</span></code><a class="headerlink" href="#setup-model-and-optimizer" title="Link to this heading">#</a></h3>
+<p>Abstract method to define the model and optimizer.</p>
+<section id="id3">
+<h4>Returns<a class="headerlink" href="#id3" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">Tuple[MinecraftSim,</span> <span class="pre">torch.optim.Optimizer]</span></code></strong>: Model and optimizer instances.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="train-func">
+<h3><code class="docutils literal notranslate"><span class="pre">_train_func</span></code><a class="headerlink" href="#train-func" title="Link to this heading">#</a></h3>
+<p>Main training loop function, executed by <code class="docutils literal notranslate"><span class="pre">TorchTrainer</span></code>.</p>
+</section>
+<hr class="docutils" />
+<section id="train">
+<h3><code class="docutils literal notranslate"><span class="pre">train</span></code><a class="headerlink" href="#train" title="Link to this heading">#</a></h3>
+<p>Abstract method to implement custom training logic.</p>
+</section>
+<hr class="docutils" />
+<section id="fit">
+<h3><code class="docutils literal notranslate"><span class="pre">fit</span></code><a class="headerlink" href="#fit" title="Link to this heading">#</a></h3>
+<p>Executes the training process using <code class="docutils literal notranslate"><span class="pre">TorchTrainer</span></code>.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Link to this heading">#</a></h2>
+<section id="rollout-manager">
+<h3><code class="docutils literal notranslate"><span class="pre">rollout_manager</span></code><a class="headerlink" href="#rollout-manager" title="Link to this heading">#</a></h3>
+<p>Manages rollout workers.</p>
+</section>
+<section id="policy-generator">
+<h3><code class="docutils literal notranslate"><span class="pre">policy_generator</span></code><a class="headerlink" href="#policy-generator" title="Link to this heading">#</a></h3>
+<p>Function to create the policy model.</p>
+</section>
+<section id="env-generator">
+<h3><code class="docutils literal notranslate"><span class="pre">env_generator</span></code><a class="headerlink" href="#env-generator" title="Link to this heading">#</a></h3>
+<p>Function to generate environments.</p>
+</section>
+<section id="gae-actor">
+<h3><code class="docutils literal notranslate"><span class="pre">gae_actor</span></code><a class="headerlink" href="#gae-actor" title="Link to this heading">#</a></h3>
+<p>Actor for calculating GAE and reward targets.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading">#</a></h2>
+<p>To use <code class="docutils literal notranslate"><span class="pre">BaseTrainer</span></code>, extend it and implement the abstract methods <code class="docutils literal notranslate"><span class="pre">setup_model_and_optimizer</span></code> and <code class="docutils literal notranslate"><span class="pre">train</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">PPOTrainer</span><span class="p">(</span><span class="n">BaseTrainer</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setup_model_and_optimizer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Define model and optimizer</span>
+        <span class="k">pass</span>
 
-<span class="n">obs</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">12000</span><span class="p">):</span>
-   <span class="n">action</span><span class="p">,</span> <span class="n">memory</span> <span class="o">=</span> <span class="n">policy</span><span class="o">.</span><span class="n">get_action</span><span class="p">(</span><span class="n">obs</span><span class="p">,</span> <span class="n">memory</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="s1">&#39;*&#39;</span><span class="p">)</span>
-   <span class="n">obs</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">terminated</span><span class="p">,</span> <span class="n">truncated</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
-<span class="n">env</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Custom training logic</span>
+        <span class="k">pass</span>
 </pre></div>
 </div>
-</section>
-</section>
+<p>Refer to <code class="docutils literal notranslate"><span class="pre">minestudio.online.trainer.ppotrainer.PPOTrainer</span></code> for an example.</p>
 </section>
 </section>
 
@@ -767,20 +774,20 @@ Example YAML:</p>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="index.html"
+       href="config.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Benchmark</p>
+        <p class="prev-next-title">Config</p>
       </div>
     </a>
     <a class="right-next"
-       href="automatic-evaluation.html"
+       href="rollout.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Automatic Evaluation Pipeline</p>
+        <p class="prev-next-title">Rollout</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -803,22 +810,45 @@ Example YAML:</p>
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-structure">Code structure</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#workflow-overview">Workflow Overview</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#task-configuration">Task Configuration</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#running-tests">Running Tests</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#an-example-test-py">An Example: <code class="docutils literal notranslate"><span class="pre">test.py</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constructor">Constructor</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#init"><code class="docutils literal notranslate"><span class="pre">__init__</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parameters">Parameters</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#methods">Methods</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#broadcast-model-to-rollout-workers"><code class="docutils literal notranslate"><span class="pre">broadcast_model_to_rollout_workers</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Parameters</a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fetch-fragments-and-estimate-advantages"><code class="docutils literal notranslate"><span class="pre">fetch_fragments_and_estimate_advantages</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Parameters</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#returns">Returns</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#setup-model-and-optimizer"><code class="docutils literal notranslate"><span class="pre">setup_model_and_optimizer</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Returns</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#train-func"><code class="docutils literal notranslate"><span class="pre">_train_func</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#train"><code class="docutils literal notranslate"><span class="pre">train</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fit"><code class="docutils literal notranslate"><span class="pre">fit</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#attributes">Attributes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rollout-manager"><code class="docutils literal notranslate"><span class="pre">rollout_manager</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#policy-generator"><code class="docutils literal notranslate"><span class="pre">policy_generator</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#env-generator"><code class="docutils literal notranslate"><span class="pre">env_generator</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gae-actor"><code class="docutils literal notranslate"><span class="pre">gae_actor</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#usage">Usage</a></li>
 </ul>
   </nav></div>
 
   <div class="sidebar-secondary-item">
 
   <div class="tocsection sourcelink">
-    <a href="../_sources/benchmark/quick-benchmark.md.txt">
+    <a href="../_sources/online/trainer.md.txt">
       <i class="fa-solid fa-file-lines"></i> Show Source
     </a>
   </div>

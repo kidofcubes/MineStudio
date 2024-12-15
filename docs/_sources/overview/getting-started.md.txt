@@ -29,6 +29,7 @@ installation
 ../online/index
 ../inference/index
 ../benchmark/index
+../online/index
 ```
 
 Before you start, make sure you have installed [MineStudio](https://github.com/phython96/MineStudio) and its dependencies. 
