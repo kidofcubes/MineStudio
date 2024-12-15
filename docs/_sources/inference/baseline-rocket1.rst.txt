@@ -1,4 +1,4 @@
 .. _inferece-rocket1:
 
-Inference with ROCKET-1
+Tutorial: Inference with ROCKET-1
 --------------------

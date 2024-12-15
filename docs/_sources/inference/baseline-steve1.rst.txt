@@ -1,4 +1,4 @@
 .. _inferece-steve1:
 
-Inference with STEVE-1
+Tutorial: Inference with STEVE-1
 --------------------

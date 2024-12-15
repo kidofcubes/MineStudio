@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Inference with VPT &#8212; MineStudio 1.0.0</title>
+    <title>Tutorial: Inference with VPT &#8212; MineStudio 1.0.0</title>
   
   
   
@@ -64,7 +64,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'inference/baseline-vpt';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Inference with STEVE-1" href="baseline-steve1.html" />
+    <link rel="next" title="Tutorial: Inference with STEVE-1" href="baseline-steve1.html" />
     <link rel="prev" title="Inference" href="index.html" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -550,10 +550,10 @@
 </ul>
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Inference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Inference with VPT</a></li>
-<li class="toctree-l2"><a class="reference internal" href="baseline-steve1.html">Inference with STEVE-1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="baseline-groot.html">Inference with GROOT</a></li>
-<li class="toctree-l2"><a class="reference internal" href="baseline-rocket1.html">Inference with ROCKET-1</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Tutorial: Inference with VPT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="baseline-steve1.html">Tutorial: Inference with STEVE-1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="baseline-groot.html">Tutorial: Inference with GROOT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="baseline-rocket1.html">Tutorial: Inference with ROCKET-1</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../benchmark/index.html">Benchmark</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -610,7 +610,7 @@
     
     <li class="breadcrumb-item"><a href="index.html" class="nav-link">Inference</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Inference with VPT</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Tutorial: Inference with VPT</span></li>
   </ul>
 </nav>
 </div>
@@ -627,8 +627,84 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-<section id="inference-with-vpt">
-<span id="inferece-vpt"></span><h1>Inference with VPT<a class="headerlink" href="#inference-with-vpt" title="Link to this heading">#</a></h1>
+<section id="tutorial-inference-with-vpt">
+<span id="inferece-vpt"></span><h1>Tutorial: Inference with VPT<a class="headerlink" href="#tutorial-inference-with-vpt" title="Link to this heading">#</a></h1>
+<p>We can easily perform batch evaluations on a VPT model. A simple example is evaluating the success rate of a policy model fine-tuned by OpenAI using reinforcement learning for the diamond-mining task:</p>
+<p>First, import the necessary dependencies. Since our episode generator, <code class="docutils literal notranslate"><span class="pre">MineGenerator</span></code>, is implemented based on <code class="docutils literal notranslate"><span class="pre">ray</span></code>, it is essential to initialize <code class="docutils literal notranslate"><span class="pre">ray</span></code> beforehand.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ray</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+
+<span class="kn">from</span> <span class="nn">minestudio.inference</span> <span class="kn">import</span> <span class="n">EpisodePipeline</span><span class="p">,</span> <span class="n">MineGenerator</span><span class="p">,</span> <span class="n">InfoBaseFilter</span>
+<span class="kn">from</span> <span class="nn">minestudio.models</span> <span class="kn">import</span> <span class="n">load_vpt_policy</span>
+<span class="kn">from</span> <span class="nn">minestudio.simulator</span> <span class="kn">import</span> <span class="n">MinecraftSim</span>
+
+<span class="n">ray</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Next, we create the <code class="docutils literal notranslate"><span class="pre">env_generator</span></code> and <code class="docutils literal notranslate"><span class="pre">agent_generator</span></code> separately to enable workers to generate resources.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">env_generator</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span>
+    <span class="n">MinecraftSim</span><span class="p">,</span>
+    <span class="n">obs_size</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span>
+    <span class="n">preferred_spawn_biome</span><span class="o">=</span><span class="s2">&quot;forest&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">agent_generator</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span>
+    <span class="n">load_vpt_policy</span><span class="p">,</span>
+    <span class="n">model_path</span><span class="o">=</span><span class="s2">&quot;/path/to/foundation-model-2x.model&quot;</span><span class="p">,</span>
+    <span class="n">weights_path</span><span class="o">=</span><span class="s2">&quot;/path/to/rl-from-early-game-2x.weights&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Next, we configure the worker parameters, including:</dt><dd><ul class="simple">
+<li><p>A maximum of 12,000 steps per episode,</p></li>
+<li><p>Each worker generating 2 episodes,</p></li>
+<li><p>The output folder set to <code class="docutils literal notranslate"><span class="pre">./output</span></code>,</p></li>
+<li><p>The output video format set to <code class="docutils literal notranslate"><span class="pre">h264</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">worker_kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">env_generator</span><span class="o">=</span><span class="n">env_generator</span><span class="p">,</span>
+    <span class="n">agent_generator</span><span class="o">=</span><span class="n">agent_generator</span><span class="p">,</span>
+    <span class="n">num_max_steps</span><span class="o">=</span><span class="mi">12000</span><span class="p">,</span>
+    <span class="n">num_episodes</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">tmpdir</span><span class="o">=</span><span class="s2">&quot;./output&quot;</span><span class="p">,</span>
+    <span class="n">image_media</span><span class="o">=</span><span class="s2">&quot;h264&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Finally, we create an <code class="docutils literal notranslate"><span class="pre">EpisodePipeline</span></code> object, passing <code class="docutils literal notranslate"><span class="pre">MineGenerator</span></code> as the episode generator and <code class="docutils literal notranslate"><span class="pre">InfoBaseFilter</span></code> as the episode filter.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pipeline</span> <span class="o">=</span> <span class="n">EpisodePipeline</span><span class="p">(</span>
+    <span class="n">episode_generator</span><span class="o">=</span><span class="n">MineGenerator</span><span class="p">(</span>
+        <span class="n">num_workers</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+        <span class="n">num_gpus</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span>
+        <span class="n">max_restarts</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">worker_kwargs</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="n">episode_filter</span><span class="o">=</span><span class="n">InfoBaseFilter</span><span class="p">(</span>
+        <span class="n">key</span><span class="o">=</span><span class="s2">&quot;mine_block&quot;</span><span class="p">,</span>
+        <span class="n">val</span><span class="o">=</span><span class="s2">&quot;diamond_ore&quot;</span><span class="p">,</span>
+        <span class="n">num</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="p">),</span>
+<span class="p">)</span>
+<span class="n">summary</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">summary</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We initialized 8 workers, with each worker utilizing 0.25 of a GPU and allowing up to 3 restarts.</p>
+<p>We used the built-in <code class="docutils literal notranslate"><span class="pre">InfoBaseFilter</span></code> to process the generated episodes, including detecting whether a <code class="docutils literal notranslate"><span class="pre">mine_block</span></code> event occurred with the <code class="docutils literal notranslate"><span class="pre">val</span></code> set to <code class="docutils literal notranslate"><span class="pre">diamond_ore</span></code>.</p>
+</div>
+<p>The summary of the pipeline will be printed to the console, showing the success rate and the number of episode.
+After the pipeline is finished, the console will print the summary of the pipeline like the following:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">...</span> <span class="o">...</span>
+<span class="p">{</span><span class="s1">&#39;num_yes&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;num_episodes&#39;</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span> <span class="s1">&#39;yes_rate&#39;</span><span class="p">:</span> <span class="s1">&#39;25.00%&#39;</span><span class="p">}</span>
+<span class="p">(</span><span class="n">Worker</span> <span class="n">pid</span><span class="o">=</span><span class="mi">1011772</span><span class="p">)</span> <span class="n">Speed</span> <span class="n">Test</span> <span class="n">Status</span><span class="p">:</span>
+<span class="p">(</span><span class="n">Worker</span> <span class="n">pid</span><span class="o">=</span><span class="mi">1011772</span><span class="p">)</span> <span class="n">Average</span> <span class="n">Time</span><span class="p">:</span> <span class="mf">0.02</span>
+<span class="p">(</span><span class="n">Worker</span> <span class="n">pid</span><span class="o">=</span><span class="mi">1011772</span><span class="p">)</span> <span class="n">Average</span> <span class="n">FPS</span><span class="p">:</span> <span class="mf">56.11</span>
+</pre></div>
+</div>
 </section>
 
 <div class="section ablog__blog_comments">
@@ -659,7 +735,7 @@
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Inference with STEVE-1</p>
+        <p class="prev-next-title">Tutorial: Inference with STEVE-1</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
