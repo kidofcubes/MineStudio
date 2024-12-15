@@ -26,6 +26,7 @@ installation
 ../data/index
 ../models/index
 ../offline/index
+../online/index
 ../inference/index
 ../benchmark/index
 ```

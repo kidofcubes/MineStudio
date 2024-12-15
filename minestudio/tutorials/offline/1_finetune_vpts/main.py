@@ -1,8 +1,8 @@
 '''
 Date: 2024-11-12 14:00:50
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-12-13 15:39:23
-FilePath: /MineStudio/minestudio/tutorials/train/1_finetune_vpts/main.py
+LastEditTime: 2024-12-15 12:18:56
+FilePath: /MineStudio/minestudio/tutorials/offline/1_finetune_vpts/main.py
 '''
 import hydra
 import lightning as L
@@ -11,11 +11,11 @@ from lightning.pytorch.loggers import WandbLogger
 from lightning.pytorch.callbacks import LearningRateMonitor
 
 from minestudio.data import MineDataModule
-from minestudio.train import MineLightning
 from minestudio.models import load_vpt_policy
-from minestudio.train.utils import convert_to_normal
-from minestudio.train.mine_callbacks import BehaviorCloneCallback
-from minestudio.train.lightning_callbacks import SmartCheckpointCallback, SpeedMonitorCallback
+from minestudio.offline import MineLightning
+from minestudio.offline.utils import convert_to_normal
+from minestudio.offline.mine_callbacks import BehaviorCloneCallback
+from minestudio.offline.lightning_callbacks import SmartCheckpointCallback, SpeedMonitorCallback
 
 logger = WandbLogger(project="minestudio")
 
