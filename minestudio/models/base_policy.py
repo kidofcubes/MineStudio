@@ -47,7 +47,7 @@ class MinePolicy(torch.nn.Module, ABC):
                 "buttons": gymnasium.spaces.MultiDiscrete([8641]),
             })
         self.value_head = ScaledMSEHead(hiddim, 1, norm_type="ewma", norm_kwargs=None)
-        self.pi_head = make_action_head(action_space, hiddim, temperature=1.0)
+        self.pi_head = make_action_head(action_space, hiddim, temperature=2.0)
 
     def reset_parameters(self):
         self.pi_head.reset_parameters()

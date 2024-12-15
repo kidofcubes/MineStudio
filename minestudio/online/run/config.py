@@ -18,10 +18,10 @@ online_dict = {
         "num_gpus_per_worker": 1.0,
         "num_cpus_per_worker": 1,
         "fragment_length": 256,
-        "to_send_queue_size": 12,
+        "to_send_queue_size": 6,
         "worker_config": {
-            "num_envs": 24,
-            "batch_size": 12,
+            "num_envs": 12,
+            "batch_size": 6,
             "restart_interval": 3600,  # 1h
             "video_fps": 20,
             "video_output_dir": "output/videos",
@@ -97,10 +97,10 @@ def env_generator():
     )
     env = MinecraftSim(
         obs_size=(128, 128), 
-        preferred_spawn_biome="forest", 
+        preferred_spawn_biome="plains", 
         callbacks=[
-            SummonMobsCallback([{'name': 'sheep', 'number': 50, 'range_x': [-20, 20], 'range_z': [-20, 20]}]),
-            #MaskActionsCallback(inventory=0), 
+            SummonMobsCallback([{'name': 'sheep', 'number': 50, 'range_x': [-15, 15], 'range_z': [-15, 15]}]),
+            MaskActionsCallback(inventory=0, attack = 0, forward = 0, back = 0, right = 0, left = 0), 
             RewardsCallback([{
                 'event': 'kill_entity', 
                 'objects': ['sheep'], 
@@ -112,7 +112,6 @@ def env_generator():
                 '/give @p minecraft:bow 1',
                 '/give @p minecraft:arrow 64',
                 '/give @p minecraft:arrow 64',
-                '/effect give @p minecraft:strength 999999 255',
             ]),
             FastResetCallback(
                 biomes=['plains'],

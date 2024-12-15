@@ -18,11 +18,11 @@ if __name__ == '__main__':
     
     env = MinecraftSim(
         obs_size=(128, 128), 
-        preferred_spawn_biome="forest", 
+        preferred_spawn_biome="plains", 
         callbacks=[
             RecordCallback(record_path="./output", fps=30, frame_type="pov", recording=True),
-            SummonMobsCallback([{'name': 'sheep', 'number': 50, 'range_x': [-20, 20], 'range_z': [-20, 20]}]),
-            #MaskActionsCallback(inventory=0), 
+            SummonMobsCallback([{'name': 'sheep', 'number': 50, 'range_x': [-15, 15], 'range_z': [-15, 15]}]),
+            MaskActionsCallback(inventory=0, attack = 0, forward = 0, back = 0, right = 0, left = 0), 
             RewardsCallback([{
                 'event': 'kill_entity', 
                 'objects': ['sheep'], 
@@ -34,10 +34,9 @@ if __name__ == '__main__':
                 '/give @p minecraft:bow 1',
                 '/give @p minecraft:arrow 64',
                 '/give @p minecraft:arrow 64',
-                '/effect give @p minecraft:strength 999999 255',
             ]),
             FastResetCallback(
-                biomes=['plains'],   
+                biomes=['plains'],
                 random_tp_range=1000,
             ),
             JudgeResetCallback(600),
