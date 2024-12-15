@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-28 17:46:44
-LastEditors: muzhancun muzhancun@126.com
-LastEditTime: 2024-12-12 21:27:17
+LastEditors: caishaofei caishaofei@stu.pku.edu.cn
+LastEditTime: 2024-12-15 13:10:00
 FilePath: /MineStudio/docs/source/conf.py
 '''
 import os

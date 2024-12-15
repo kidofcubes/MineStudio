@@ -1,10 +1,10 @@
 '''
 Date: 2024-11-14 19:42:09
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-11-24 08:20:17
+LastEditTime: 2024-12-15 13:36:22
 FilePath: /MineStudio/minestudio/inference/example.py
 '''
-
+import torch
 from minestudio.simulator import MinecraftSim
 from minestudio.simulator.callbacks import RecordCallback, SpeedTestCallback, SummonMobsCallback, MaskActionsCallback, RewardsCallback, CommandsCallback, FastResetCallback, JudgeResetCallback
 from minestudio.models import VPTPolicy, load_vpt_policy
@@ -13,8 +13,11 @@ if __name__ == '__main__':
     
     policy = load_vpt_policy(
         model_path="/nfs-shared/jarvisbase/pretrained/foundation-model-2x.model",
-        weights_path="/nfs-shared/jarvisbase/pretrained/foundation-model-2x.weights"
+        # weights_path="/nfs-shared/jarvisbase/pretrained/foundation-model-1x.weights", 
+        # weights_path="/nfs-shared/jarvisbase/pretrained/rl-from-early-game-2x.weights",
+        weights_path="/nfs-shared/jarvisbase/pretrained/bc-early-game-2x.weights", 
     ).to("cuda")
+    policy.eval()
     
     env = MinecraftSim(
         obs_size=(128, 128), 

@@ -1,4 +1,4 @@
-Built-in GROOT Model
+Built-in Models: GROOT
 ======================================================================
 
 .. admonition:: Quick Facts

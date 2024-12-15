@@ -1,8 +1,7 @@
 
+# Tutorial: Fine-tuning VPT to a Hunter
 
-```{hint}
-Training a Minecraft policy in MineStudio is really simple. 
-```
+Fine-tune a VPT policy in MineStudio is really simple. 
 
 The following code snippet shows how to finetune a VPT policy to hunt animals in Minecraft using offline data.
 
@@ -13,10 +12,10 @@ The following code snippet shows how to finetune a VPT policy to hunt animals in
     from lightning.pytorch.callbacks import LearningRateMonitor
     # below are MineStudio dependencies
     from minestudio.data import MineDataModule
-    from minestudio.train import MineLightning
+    from minestudio.offline import MineLightning
     from minestudio.models import load_vpt_policy
-    from minestudio.train.mine_callbacks import BehaviorCloneCallback
-    from minestudio.train.lightning_callbacks import SmartCheckpointCallback, SpeedMonitorCallback
+    from minestudio.offline.mine_callbacks import BehaviorCloneCallback
+    from minestudio.offline.lightning_callbacks import SmartCheckpointCallback, SpeedMonitorCallback
     ```
 
 2. Configure the policy model and the training process:

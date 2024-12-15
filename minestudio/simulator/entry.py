@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-11 05:20:17
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-11-29 11:23:38
+LastEditTime: 2024-12-15 11:46:37
 FilePath: /MineStudio/minestudio/simulator/entry.py
 '''
 

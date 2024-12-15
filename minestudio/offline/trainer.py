@@ -10,7 +10,7 @@ import torch.nn as nn
 import lightning as L
 from rich import print
 from minestudio.models import MinePolicy
-from minestudio.train.mine_callbacks import ObjectiveCallback
+from minestudio.offline.mine_callbacks import ObjectiveCallback
 from typing import List
 
 IMPORTANT_VARIABLES = [

@@ -1,11 +1,11 @@
 '''
 Date: 2024-11-28 15:37:18
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-11-28 15:47:19
-FilePath: /MineStudio/minestudio/train/lightning_callbacks/smart_checkpoint.py
+LastEditTime: 2024-12-15 12:17:37
+FilePath: /MineStudio/minestudio/offline/lightning_callbacks/smart_checkpoint.py
 '''
 from lightning.pytorch.callbacks import ModelCheckpoint
-from minestudio.train.lightning_callbacks.ema import EMA
+from minestudio.offline.lightning_callbacks.ema import EMA
 
 from typing import (
     Dict, List, Union, Sequence, Mapping, Any, Optional
