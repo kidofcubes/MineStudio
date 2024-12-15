@@ -4,14 +4,18 @@ The pipeline automates online training process in the MineStudio framework.
 
 ---
 
-## Code Structure
+## Overview
 
-The following is the structure of the online training module, with each file and folder serving specific purposes:
+The following is the overview of the Online module.
 
 ```{toctree}
 :caption: MineStudio Online Training
+:maxdepth: 2
 
 general-information
+config
+trainer
+rollout
 customization
 ```
 

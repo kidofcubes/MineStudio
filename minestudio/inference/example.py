@@ -6,7 +6,7 @@ FilePath: /MineStudio/minestudio/inference/example.py
 '''
 
 from minestudio.simulator import MinecraftSim
-from minestudio.simulator.callbacks import RecordCallback, SpeedTestCallback
+from minestudio.simulator.callbacks import RecordCallback, SpeedTestCallback, SummonMobsCallback, MaskActionsCallback, RewardsCallback, CommandsCallback, FastResetCallback, JudgeResetCallback
 from minestudio.models import VPTPolicy, load_vpt_policy
 
 if __name__ == '__main__':
@@ -20,18 +20,42 @@ if __name__ == '__main__':
         obs_size=(128, 128), 
         preferred_spawn_biome="forest", 
         callbacks=[
-            RecordCallback(record_path="./output", fps=30, frame_type="pov"),
-            SpeedTestCallback(50),
+            RecordCallback(record_path="./output", fps=30, frame_type="pov", recording=True),
+            SummonMobsCallback([{'name': 'sheep', 'number': 50, 'range_x': [-20, 20], 'range_z': [-20, 20]}]),
+            #MaskActionsCallback(inventory=0), 
+            RewardsCallback([{
+                'event': 'kill_entity', 
+                'objects': ['sheep'], 
+                'reward': 5.0, 
+                'identity': 'shoot_sheep', 
+                'max_reward_times': 30, 
+            }]),
+            CommandsCallback(commands=[
+                '/give @p minecraft:bow 1',
+                '/give @p minecraft:arrow 64',
+                '/give @p minecraft:arrow 64',
+                '/effect give @p minecraft:strength 999999 255',
+            ]),
+            FastResetCallback(
+                biomes=['plains'],   
+                random_tp_range=1000,
+            ),
+            JudgeResetCallback(600),
         ]
     )
     memory = None
     obs, info = env.reset()
-    for i in range(600):
-        action, memory = policy.get_action(obs, memory, input_shape='*')
-        obs, reward, terminated, truncated, info = env.step(action)
-    env.reset()
-    print("Resetting the environment")
-    for i in range(600):
-        action, memory = policy.get_action(obs, memory, input_shape='*')
-        obs, reward, terminated, truncated, info = env.step(action)
-    env.close()
+    reward_sum = 0
+    for j in range(100):
+        for i in range(600):
+            action, memory = policy.get_action(obs, memory, input_shape='*')
+            obs, reward, terminated, truncated, info = env.step(action)
+            reward_sum+=reward
+        env.reset()
+        print("Resetting the environment") 
+        for i in range(600):
+            action, memory = policy.get_action(obs, memory, input_shape='*')
+            obs, reward, terminated, truncated, info = env.step(action)
+            reward_sum+=reward
+        env.reset()
+        print("reward_sum: ", reward_sum)

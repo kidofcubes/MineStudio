@@ -137,7 +137,7 @@ online_dict = {
 
     "logger_config": {
         "project": "minestudio_online",
-        "name": "cow"
+        "name": "bow_cow"
     },
 }
 

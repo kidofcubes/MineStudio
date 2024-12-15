@@ -1,10 +1,6 @@
-# General Information
+# Overview
 
 The code in the Online Training Module is mainly divided into four parts: `run`, `rollout`, and `train`. Each part is contained in its corresponding subfolder under the `online` folder.
-
-## Run
-
-Under `Online/run`, We have provided a simple example to run our framework. Please refer to the [Quickstart](quick-online) for details.
 
 ## Rollout
 The `rollout` section is located under `online/rollout` and mainly consists of several parts:

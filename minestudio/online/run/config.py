@@ -18,10 +18,10 @@ online_dict = {
         "num_gpus_per_worker": 1.0,
         "num_cpus_per_worker": 1,
         "fragment_length": 256,
-        "to_send_queue_size": 4,
+        "to_send_queue_size": 12,
         "worker_config": {
-            "num_envs": 16,
-            "batch_size": 2,
+            "num_envs": 24,
+            "batch_size": 12,
             "restart_interval": 3600,  # 1h
             "video_fps": 20,
             "video_output_dir": "output/videos",
@@ -49,7 +49,7 @@ online_dict = {
         "weight_decay": 0.04,
         "adam_eps": 1e-8,
         "batch_size_per_gpu": 1,
-        "batches_per_iteration": 50,
+        "batches_per_iteration": 200,
         "gradient_accumulation": 10,  # TODO: check
         "epochs_per_iteration": 1,  # TODO: check
         "context_length": 64,
@@ -81,7 +81,7 @@ online_dict = {
 
     "logger_config": {
         "project": "minestudio_online",
-        "name": "cow"
+        "name": "bow_cow"
     },
 }
 
@@ -95,25 +95,24 @@ def env_generator():
         JudgeResetCallback,
         FastResetCallback
     )
-    sim = MinecraftSim(
+    env = MinecraftSim(
         obs_size=(128, 128), 
-        preferred_spawn_biome="plains", 
-        action_type = "agent",
-        timestep_limit=1000,
+        preferred_spawn_biome="forest", 
         callbacks=[
-            SummonMobsCallback([{'name': 'cow', 'number': 10, 'range_x': [-5, 5], 'range_z': [-5, 5]}]),
-            MaskActionsCallback(inventory=0), 
+            SummonMobsCallback([{'name': 'sheep', 'number': 50, 'range_x': [-20, 20], 'range_z': [-20, 20]}]),
+            #MaskActionsCallback(inventory=0), 
             RewardsCallback([{
                 'event': 'kill_entity', 
-                'objects': ['cow'], 
-                'reward': 1.0, 
-                'identity': 'chop_tree', 
+                'objects': ['sheep'], 
+                'reward': 5.0, 
+                'identity': 'shoot_sheep', 
                 'max_reward_times': 30, 
             }]),
             CommandsCallback(commands=[
-                '/give @p minecraft:iron_sword 1',
-                '/give @p minecraft:diamond 64',
-                '/effect @p 5 9999 255 true',
+                '/give @p minecraft:bow 1',
+                '/give @p minecraft:arrow 64',
+                '/give @p minecraft:arrow 64',
+                '/effect give @p minecraft:strength 999999 255',
             ]),
             FastResetCallback(
                 biomes=['plains'],
@@ -122,11 +121,12 @@ def env_generator():
             JudgeResetCallback(600),
         ]
     )
-    return sim
+    return env
 
 def policy_generator():
     from minestudio.models import load_vpt_policy
-    model_path = '/nfs-shared/jarvisbase/pretrained/foundation-model-2x.model'
-    weights_path = '/nfs-shared/jarvisbase/pretrained/rl-from-early-game-2x.weights'
-    policy = load_vpt_policy(model_path, weights_path)
+    policy = load_vpt_policy(
+        model_path="/nfs-shared/jarvisbase/pretrained/foundation-model-2x.model",
+        weights_path="/nfs-shared/jarvisbase/pretrained/foundation-model-2x.weights"
+    ).to("cuda")
     return policy
