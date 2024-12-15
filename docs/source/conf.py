@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-28 17:46:44
-LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-11-30 13:37:48
+LastEditors: muzhancun muzhancun@126.com
+LastEditTime: 2024-12-12 21:27:17
 FilePath: /MineStudio/docs/source/conf.py
 '''
 import os
@@ -80,6 +80,11 @@ html_theme_options = {
             "url": "https://pypi.org/project/minestudio",
             "icon": "fa-custom fa-pypi",
         },
+        {
+            "name": "ArXiv",
+            "url": "https://arxiv.org/pdf/2310.08235",
+            "icon": "ai ai-arxiv",
+        }
   ], 
   "navbar_align": "left",
   "show_toc_level": 1,

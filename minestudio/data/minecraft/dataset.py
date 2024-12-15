@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-10 10:25:38
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-11-10 13:40:24
+LastEditTime: 2024-12-12 11:34:15
 FilePath: /MineStudio/minestudio/data/minecraft/dataset.py
 '''
 import torch
@@ -42,7 +42,7 @@ class MinecraftDataset(Dataset):
         **kwargs,
     ) -> None:
         
-        super().__init__(**kwargs)
+        super().__init__()
         self.mode = mode
         self.split = split
         self.common_kwargs = dict(

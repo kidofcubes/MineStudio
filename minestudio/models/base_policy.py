@@ -1,8 +1,8 @@
 '''
 Date: 2024-11-11 15:59:37
-LastEditors: muzhancun muzhancun@stu.pku.edu.cn
-LastEditTime: 2024-11-18 16:13:28
-FilePath: /Minestudio/minestudio/models/base_policy.py
+LastEditors: caishaofei caishaofei@stu.pku.edu.cn
+LastEditTime: 2024-12-11 15:09:36
+FilePath: /MineStudio/minestudio/models/base_policy.py
 '''
 from abc import ABC, abstractmethod
 import numpy as np
@@ -39,14 +39,15 @@ def recursive_tensor_op(fn, d: T) -> T:
 
 class MinePolicy(torch.nn.Module, ABC):
     def __init__(self, hiddim, action_space=None) -> None:
+        torch.manual_seed(0)
         torch.nn.Module.__init__(self)
         if action_space is None:
             action_space = gymnasium.spaces.Dict({
                 "camera": gymnasium.spaces.MultiDiscrete([121]), 
                 "buttons": gymnasium.spaces.MultiDiscrete([8641]),
             })
-        self.pi_head = make_action_head(action_space, hiddim, temperature=2.0)
         self.value_head = ScaledMSEHead(hiddim, 1, norm_type="ewma", norm_kwargs=None)
+        self.pi_head = make_action_head(action_space, hiddim, temperature=1.0)
 
     def reset_parameters(self):
         self.pi_head.reset_parameters()
@@ -106,5 +107,30 @@ class MinePolicy(torch.nn.Module, ABC):
             return elem.unsqueeze(0).unsqueeze(0).to(self.device)
         elif isinstance(elem, str):
             return [[elem]]
+        else:
+            raise NotImplementedError
+
+    # For online
+    def merge_input(self, inputs) -> torch.tensor:
+        raise NotImplementedError
+    
+    def merge_state(self, states) -> Optional[List[torch.Tensor]]:
+        raise NotImplementedError
+
+    def split_state(self, state, split_num) -> Optional[List[List[torch.Tensor]]]:
+        raise NotImplementedError
+    
+    def split_action(self, action, split_num) -> Optional[List[Dict[str, torch.Tensor]]]:
+        if isinstance(action, dict):
+            # for k, v in action.items():
+            #     action[k] = v.view(-1,1)
+            result_actions = [{k: v[i].cpu().numpy() for k, v in action.items()} for i in range(0, split_num)]
+            return result_actions
+        elif isinstance(action, torch.Tensor):
+            action_np = action.cpu().numpy()
+            result_actions = [action_np[i] for i in range(0, split_num)]
+            return result_actions
+        elif isinstance(action, list):
+            return action
         else:
             raise NotImplementedError

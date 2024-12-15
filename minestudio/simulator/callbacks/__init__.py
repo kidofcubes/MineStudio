@@ -15,3 +15,5 @@ from minestudio.simulator.callbacks.commands import CommandsCallback
 from minestudio.simulator.callbacks.task import TaskCallback
 from minestudio.simulator.callbacks.play import PlayCallback
 from minestudio.simulator.callbacks.point import PointCallback, PlaySegmentCallback
+from minestudio.simulator.callbacks.demonstration import DemonstrationCallback
+from minestudio.simulator.callbacks.judgereset import JudgeResetCallback

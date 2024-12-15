@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-24 08:23:02
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-11-28 16:17:55
+LastEditTime: 2024-12-09 13:43:10
 FilePath: /MineStudio/minestudio/tutorials/train/2_pretrain_rockets/main.py
 '''
 import hydra
@@ -22,7 +22,7 @@ from minestudio.train.lightning_callbacks import SmartCheckpointCallback, SpeedM
 
 
 logger = WandbLogger(project="minestudio")
-
+# logger = None
 @hydra.main(config_path='.', config_name='rocket_config')
 def main(args):
 
@@ -42,7 +42,7 @@ def main(args):
         warmup_steps=args.warmup_steps,
         weight_decay=args.weight_decay,
         callbacks=[
-            BehaviorCloneCallback(weight=1.0),
+            BehaviorCloneCallback(weight=args.objective_weight),
         ], 
         hyperparameters=convert_to_normal(args),
     )
@@ -56,11 +56,12 @@ def main(args):
             win_len=128,
             enable_segment=True,
         ),
-        shuffle_episodes=True, 
         batch_size=args.batch_size,
         num_workers=args.num_workers,
         prefetch_factor=args.prefetch_factor,
         split_ratio=args.split_ratio, 
+        shuffle_episodes=args.shuffle_episodes,
+        episode_continuous_batch=args.episode_continuous_batch,
     )
 
     callbacks=[
@@ -85,13 +86,15 @@ def main(args):
     L.Trainer(
         logger=logger, 
         devices=args.devices, 
-        precision=16, 
+        precision='bf16', 
         strategy='ddp_find_unused_parameters_true', 
-        use_distributed_sampler=False, 
+        use_distributed_sampler=not args.episode_continuous_batch,
         callbacks=callbacks, 
+        gradient_clip_val=1.0, 
     ).fit(
         model=mine_lightning, 
-        datamodule=mine_data
+        datamodule=mine_data, 
+        ckpt_path=args.ckpt_path,
     )
 
 if __name__ == '__main__':

@@ -1,3 +1,9 @@
+'''
+Date: 2024-11-21 21:38:32
+LastEditors: zhengxinyue
+LastEditTime: 2024-12-06 16:39:13
+FilePath: /MineStudio/minestudio/benchmark/auto_eval/video_comparison.py
+'''
 import cv2  # We're using OpenCV to read video
 import base64
 import time
@@ -92,9 +98,6 @@ def save_data_json(ans, task_name, video_path_a, video_path_b):
         json.dump([result_dict, ans], f, indent = 4)
 
     return result_dict  
-
-
-
 
 def process_video(video_path):
     video = cv2.VideoCapture(video_path)

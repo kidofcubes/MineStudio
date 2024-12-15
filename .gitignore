@@ -51,6 +51,7 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 cover/
+rocket.mp4
 
 # Translations
 *.mo
@@ -170,6 +171,12 @@ output/
 lightning_logs/
 wandb/
 outputs/
+node_modules/
+record/
+reference_videos/
+downloads/
 
 minestudio/models/realtime_sam/notebooks/*.jpg
 minestudio/models/realtime_sam/checkpoints/*.pt
+
+outputs

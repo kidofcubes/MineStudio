@@ -78,9 +78,9 @@ def get_mask(first_b1t: th.Tensor, state_mask: th.Tensor, t: int, T: int, maxlen
         state_mask: updated state_mask
     """
     b = first_b1t.shape[0]
-
     if state_mask is None:
         state_mask = th.zeros((b, 1, T - t), dtype=th.bool, device=device)
+    
     assert state_mask.shape == (b, 1, T - t)
     
     m_btT = get_band_diagonal_mask(t, T, maxlen, b, device).clone()  # Should be shape B, t, T

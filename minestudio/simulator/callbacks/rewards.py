@@ -25,10 +25,12 @@ class RewardsCallback(MinecraftCallback):
         self.reward_cfg = reward_cfg
         self.prev_info = {}
         self.reward_memory = {}
+        self.current_step = 0
     
     def after_reset(self, sim, obs, info):
-        self.prev_info = {}
+        self.prev_info = info.copy()
         self.reward_memory = {}
+        self.current_step = 0
         return obs, info
     
     def after_step(self, sim, obs, reward, terminated, truncated, info):
@@ -45,7 +47,9 @@ class RewardsCallback(MinecraftCallback):
                     override_reward += reward_info['reward']
                     self.reward_memory[reward_info['identity']] = already_reward_times + 1
                 break
-        self.prev_info = info
+        self.prev_info = info.copy()
+
+        self.current_step += 1
         return obs, override_reward, terminated, truncated, info
 
     def _get_obj_num(self, info, event_type, obj):

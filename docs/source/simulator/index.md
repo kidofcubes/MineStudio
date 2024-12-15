@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-11-29 08:09:07
  * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-11-30 05:12:53
+ * @LastEditTime: 2024-12-12 05:46:38
  * @FilePath: /MineStudio/docs/source/simulator/index.md
 -->
 
@@ -14,21 +14,12 @@ We provide an easily customizable Minecraft simulator that is developed based on
 
 general-information
 design-principles
+play
 ```
 
-## Hello World
+## Quick Start
 
-Here is a minimal example of how to use the simulator:
-
-```python
-from minestudio.simulator import MinecraftSim
-
-sim = MinecraftSim(action_type="env")
-obs, info = sim.reset()
-for _ in range(100):
-    action = sim.action_space.sample()
-    obs, reward, terminated, truncated, info = sim.step(action)
-sim.close()
+```{include} quick-simulator.md
 ```
 
 ## Basic Arguments
@@ -144,4 +135,9 @@ sim = MinecraftSim(callbacks=[RecordCallback(record_path="./output", fps=30)])
 You can use this callback to record the agent's behavior and analyze it later. Or you can use it to generate a dataset for imitation learning. 
 ```
 
-
+```{button-ref}  ./design-principles
+:color: primary
+:outline:
+:expand:
+Learn more about MineStudio Simulator callbacks
+```

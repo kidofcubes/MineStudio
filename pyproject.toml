@@ -41,6 +41,8 @@ dependencies = [
     "pyglet",
     "imgui",
     "pyopengl",
+    "ray",
+    "absl-py"
     "dm-tree",
     "x_transformers==0.27.1"
 ]

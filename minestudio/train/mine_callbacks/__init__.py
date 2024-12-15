@@ -6,3 +6,4 @@ FilePath: /MineStudio/minestudio/train/mine_callbacks/__init__.py
 '''
 from minestudio.train.mine_callbacks.callback import ObjectiveCallback
 from minestudio.train.mine_callbacks.behavior_clone import BehaviorCloneCallback
+from minestudio.train.mine_callbacks.kl_divergence import KLDivergenceCallback

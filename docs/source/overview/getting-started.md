@@ -1,9 +1,14 @@
 <!--
  * @Date: 2024-11-29 08:08:13
  * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-11-30 13:33:38
+ * @LastEditTime: 2024-12-13 16:41:35
  * @FilePath: /MineStudio/docs/source/overview/getting-started.md
 -->
+
+```{image} ../_static/banner.png
+:width: 90%
+```
+
 # Getting Started
 
 ```{toctree}
@@ -20,7 +25,8 @@ installation
 ../simulator/index
 ../data/index
 ../models/index
-../train/index
+../offline/index
+../online/index
 ../inference/index
 ../benchmark/index
 ```
@@ -34,28 +40,52 @@ Before you start, make sure you have installed [MineStudio](https://github.com/p
 ## MineStudio Libraries Quickstart
 
 Click on the dropdowns for your desired library to get started:
-```{dropdown} <img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Simulator: Customizable Minecraft Environment
-```{include} quick-simulator.md
+````{dropdown} <img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Simulator: Customizable Minecraft Environment
+```{include} ../simulator/quick-simulator.md
 ```
-```{dropdown} <img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Data: Flexible Data Structures and Efficient Data Processing
-```{include} quick-data.md
+```{button-ref}  ../simulator/index
+:color: primary
+:outline:
+:expand:
+Learn more about MineStudio Simulator
 ```
-```{dropdown} <img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Models: Policy Template and Baseline Models
-```{include} quick-models.md
+````
+
+````{dropdown} <img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Data: Flexible Data Structures and Fast Dataloaders
+```{include} ../data/quick-data.md
 ```
-```{dropdown} <img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Train: Training Policy with Offline Data
-```{include} quick-train.md
+````
+
+````{dropdown} <img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Models: Policy Template and Baselines
+```{include} ../models/quick-models.md
 ```
-```{dropdown} <img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Inference: Parallel Inference and Record Trajectories
+````
+
+````{dropdown} <img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Offline: Pre-Training Policy with Offline Data
+```{include} ../offline/quick-offline.md
+```
+````
+
+````{dropdown} <img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Online: Finetuning Policy via Online Interaction
+```{include} quick-online.md
+```
+````
+
+````{dropdown} <img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Inference: Parallel Inference and Record Demonstrations
 ```{include} quick-inference.md
 ```
-```{dropdown} <img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Benchmark: Benchmarking and Evaluation
+````
+
+````{dropdown} <img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Benchmark: Benchmarking and Evaluation
 ```{include} quick-benchmark.md
 ```
 
+
+````
+
 ## Papers
 
-Our library directly supports the following papers:
+Our libraries directly support models from the following papers:
 
 - [Video PreTraining (VPT): Learning to Act by Watching Unlabeled Online Videos](https://arxiv.org/abs/2206.11795)
 - [STEVE-1: A Generative Model for Text-to-Behavior in Minecraft](https://arxiv.org/abs/2306.00937)
