@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-10 10:26:32
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-12-12 04:32:18
+LastEditTime: 2024-12-17 06:14:29
 FilePath: /MineStudio/minestudio/data/minecraft/part_raw.py
 '''
 import io
@@ -45,7 +45,7 @@ class RawDataset(BaseDataset):
         _episodes_with_length = list(self.episodes_with_length.items())
 
         if self.shuffle:
-            seed = 44
+            seed = 0
             print(f"[Raw Dataset] Shuffling episodes with seed {seed}. ")
             random.seed(seed) # ensure the same shuffle order for all workers
             random.shuffle(_episodes_with_length)
@@ -117,7 +117,7 @@ if __name__ == '__main__':
         win_len=128, 
         skip_frame=1,
         split='train',
-        split_ratio=0.8,
+        split_ratio=0.9,
         verbose=True,
         **kernel_kwargs, 
     )

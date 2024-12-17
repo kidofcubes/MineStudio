@@ -1,8 +1,8 @@
 '''
 Date: 2024-11-24 08:23:02
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-12-09 13:43:10
-FilePath: /MineStudio/minestudio/tutorials/train/2_pretrain_rockets/main.py
+LastEditTime: 2024-12-17 06:14:53
+FilePath: /MineStudio/minestudio/tutorials/offline/2_pretrain_rockets/main.py
 '''
 import hydra
 import torch

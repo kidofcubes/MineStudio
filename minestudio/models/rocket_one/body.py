@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-10 15:52:16
-LastEditors: muzhancun muzhancun@126.com
-LastEditTime: 2024-12-14 02:01:36
+LastEditors: caishaofei caishaofei@stu.pku.edu.cn
+LastEditTime: 2024-12-17 10:18:52
 FilePath: /MineStudio/minestudio/models/rocket_one/body.py
 '''
 import torch
@@ -51,7 +51,7 @@ class RocketPolicy(MinePolicy):
         self.interaction = nn.Embedding(10, hiddim) # denotes the number of interaction types
         self.recurrent = ResidualRecurrentBlocks(
             hidsize=hiddim,
-            timesteps=timesteps*2, 
+            timesteps=timesteps, 
             recurrence_type="transformer", 
             is_residual=True,
             use_pointwise_layer=True,
@@ -59,8 +59,9 @@ class RocketPolicy(MinePolicy):
             pointwise_use_activation=False, 
             attention_mask_style="clipped_causal", 
             attention_heads=num_heads,
-            attention_memory_size=mem_len+timesteps*2,
+            attention_memory_size=mem_len+timesteps,
             n_block=num_layers,
+            inject_condition=True, # inject obj_embedding as the condition
         )
         self.lastlayer = FanInInitReLULayer(hiddim, hiddim, layer_type="linear", batch_norm=False, layer_norm=True)
         self.final_ln = nn.LayerNorm(hiddim)
@@ -76,24 +77,16 @@ class RocketPolicy(MinePolicy):
         feats = self.backbone(x)
         x = self.updim(feats[-1])
         x = rearrange(x, 'b c h w -> b (h w) c')
-        x = self.pooling(x).mean(dim=1)[:, None] # (b t) 1 c
+        x = self.pooling(x).mean(dim=1) 
+        x = rearrange(x, "(b t) c -> b t c", b=b)
 
-        y = rearrange(input['segment']['obj_id'] + 1, 'b t -> (b t) 1') # plus 1 to avoid `-1` as index
-        y = self.interaction(y) # (b t) 1 c
-        # z = torch.cat([x, y], dim=1)
-        # z = self.pooling(z).mean(dim=1)
-        # z = rearrange(z, '(b t) c -> b t c', b=b, t=t)
-
-        tokens = rearrange(torch.cat([y, x], dim=1), "(b t) x c -> b (t x) c", b=b, t=t)
-
+        y = self.interaction(input['segment']['obj_id'] + 1) # b t c
         if not hasattr(self, 'first'):
-            self.first = torch.tensor([[False]], device=x.device).repeat(b, tokens.shape[1])
+            self.first = torch.tensor([[False]], device=x.device).repeat(b, t)
         if memory is None:
             memory = [state.to(x.device) for state in self.recurrent.initial_state(b)]
         
-        # tokens = z
-        tokens, memory = self.recurrent(tokens, self.first, memory)
-        z = rearrange(tokens, 'b (t x) c -> b t x c', t=t)[:, :, 1]
+        z, memory = self.recurrent(x, self.first, memory, ce_latent=y)
         
         z = F.relu(z, inplace=False)
         z = self.lastlayer(z)

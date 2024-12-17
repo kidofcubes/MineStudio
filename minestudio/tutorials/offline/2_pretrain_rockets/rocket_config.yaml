@@ -15,7 +15,7 @@ dataset_dirs:
 batch_size: 8
 num_workers: 6
 prefetch_factor: 4
-split_ratio: 0.95
+split_ratio: 0.90
 devices: 8
 learning_rate: 0.00004
 weight_decay: 0.001
@@ -23,8 +23,8 @@ warmup_steps: 2000
 save_freq: 10000
 ckpt_path: null
 objective_weight: 0.01
-shuffle_episodes: False
-episode_continuous_batch: False
+shuffle_episodes: True
+episode_continuous_batch: True
 
 model:
   backbone: 'efficientnet_b0.ra_in1k'
