@@ -212,6 +212,7 @@ class _RolloutManager:
             sim = env_generator()
             pickle.dumps(sim)
             print("env_generator is pickleable")
+            del sim
         except Exception as e:
             ray.util.pdb.set_trace
 

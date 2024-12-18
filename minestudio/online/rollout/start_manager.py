@@ -10,7 +10,7 @@ import uuid
 import torch
 
 def start_rolloutmanager(policy_generator, env_generator, online_cfg):
-    ray.init(address="auto", ignore_reinit_error=True, namespace="online")
+    ray.init(address="localhost:9899", ignore_reinit_error=True, namespace="online")
     logger = logging.getLogger("Main")
     torch.backends.cudnn.benchmark = False # type: ignore
 

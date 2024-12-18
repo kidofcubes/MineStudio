@@ -19,7 +19,7 @@ import os
 #from minestudio.simulator.entry import MinecraftSim
 import copy
 from minestudio.simulator import MinecraftSim
-
+import subprocess
 
 class VideoWriter(Thread):
     def __init__(self, video_fps: int, queue_size: int = 200):
@@ -129,9 +129,11 @@ class EnvWorker(Process):
         video_writer = VideoWriter(video_fps=self.video_fps)
         video_writer.start()
         record = False
+        self.env = self.env_generator()
         timestamp = time.strftime("%Y-%m-%d_%H-%M-%S", time.localtime())
         while True:
             time.sleep(random.randint(0,20))
+            self.env.close()
             self.env = self.env_generator()
             try:
                 start_time = time.time()
@@ -149,6 +151,10 @@ class EnvWorker(Process):
                     episode_uuid = str(uuid.uuid4())
                     while True:
                         if step%100==1:
+                            command = "ps aux | grep 'hekaich.*java' | grep -v grep | wc -l"
+                            result = subprocess.run(command, shell=True, capture_output=True, text=True)
+                            process_count = int(result.stdout.strip())
+                            logging.getLogger("ray").info(f"同时含有 'hekaich' 和 'java' 的进程数量: {process_count}\n")
                             logging.getLogger("ray").info(f"working..., max_fast_reset: {self.max_fast_reset}, env_id: {self.env_id}, rollout_worker_id: {self.rollout_worker_id}, step: {step}")
                         step += 1
                         action, vpred = self.step_agent(obs, 

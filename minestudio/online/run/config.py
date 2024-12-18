@@ -100,7 +100,7 @@ def env_generator():
         preferred_spawn_biome="plains", 
         callbacks=[
             SummonMobsCallback([{'name': 'sheep', 'number': 50, 'range_x': [-15, 15], 'range_z': [-15, 15]}]),
-            MaskActionsCallback(inventory=0, attack = 0, forward = 0, back = 0, right = 0, left = 0), 
+            MaskActionsCallback(attack = 0), 
             RewardsCallback([{
                 'event': 'kill_entity', 
                 'objects': ['sheep'], 
