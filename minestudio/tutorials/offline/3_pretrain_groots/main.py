@@ -14,11 +14,11 @@ from einops import rearrange
 from typing import Dict, Any, Tuple
 
 from minestudio.data import MineDataModule
-from minestudio.train import MineLightning
+from minestudio.offline import MineLightning
 from minestudio.models import GrootPolicy
-from minestudio.train.utils import convert_to_normal
-from minestudio.train.mine_callbacks import BehaviorCloneCallback, KLDivergenceCallback
-from minestudio.train.lightning_callbacks import SmartCheckpointCallback, SpeedMonitorCallback, EMA
+from minestudio.offline.utils import convert_to_normal
+from minestudio.offline.mine_callbacks import BehaviorCloneCallback, KLDivergenceCallback
+from minestudio.offline.lightning_callbacks import SmartCheckpointCallback, SpeedMonitorCallback, EMA
 
 
 logger = WandbLogger(project="minestudio")

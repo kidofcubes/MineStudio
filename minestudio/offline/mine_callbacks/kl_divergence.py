@@ -8,7 +8,7 @@ FilePath: /MineStudio/minestudio/train/mine_callbacks/kl_divergence.py
 import torch
 from typing import Dict, Any
 from minestudio.models import MinePolicy
-from minestudio.train.mine_callbacks.callback import ObjectiveCallback
+from minestudio.offline.mine_callbacks.callback import ObjectiveCallback
 
 class KLDivergenceCallback(ObjectiveCallback):
         

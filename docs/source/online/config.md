@@ -10,7 +10,10 @@ These are some of the more important elements in the settings:
 
 ### `trainer_name`
 
+
 # All Keys' Descriptioin
+
+
 
 ## Top-Level Keys
 

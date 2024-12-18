@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-11-29 08:08:13
  * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-12-13 16:41:35
+ * @LastEditTime: 2024-12-15 13:23:12
  * @FilePath: /MineStudio/docs/source/overview/getting-started.md
 -->
 
@@ -63,7 +63,7 @@ Learn more about MineStudio Simulator
 ````
 
 ````{dropdown} <img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Offline: Pre-Training Policy with Offline Data
-```{include} ../offline/quick-offline.md
+```{include} ../offline/tutorial-vpt.md
 ```
 ````
 

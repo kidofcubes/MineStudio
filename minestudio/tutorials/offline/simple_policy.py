@@ -11,9 +11,9 @@ from einops import rearrange
 from typing import Dict, Any, Tuple
 
 from minestudio.data import MineDataModule
-from minestudio.train import MineLightning
+from minestudio.offline import MineLightning
 from minestudio.models import MinePolicy
-from minestudio.train.callbacks import BehaviorCloneCallback
+from minestudio.offline.callbacks import BehaviorCloneCallback
 
 class SimplePolicy(MinePolicy):
 
