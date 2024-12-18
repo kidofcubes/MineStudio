@@ -16,8 +16,8 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!-- 
-    this give us a css class that will be invisible only if js is disabled 
+  <!--
+    this give us a css class that will be invisible only if js is disabled
   -->
   <noscript>
     <style>
@@ -27,8 +27,8 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
@@ -40,10 +40,10 @@
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=f44ad8c8" />
   
   <!-- So that users can add custom icons -->
-  <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../_static/documentation_options.js?v=8d563738"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
@@ -209,7 +209,9 @@
 </li>
 
             <li class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="pst-nav-more-links">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
                     More
                 </button>
                 <ul id="pst-nav-more-links" class="dropdown-menu">
@@ -508,9 +510,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -613,17 +620,17 @@ bash<span class="w"> </span>run.sh
 </div>
 <p><strong>Config</strong> which provide the hyper-parameters for online training:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">online_dict</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;trainer_name&quot;</span><span class="p">:</span> <span class="s2">&quot;PPOTrainer&quot;</span><span class="p">,</span>
+ <span class="s2">&quot;trainer_name&quot;</span><span class="p">:</span> <span class="s2">&quot;PPOTrainer&quot;</span><span class="p">,</span>
     <span class="s2">&quot;detach_rollout_manager&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
     <span class="s2">&quot;rollout_config&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="s2">&quot;num_rollout_workers&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
         <span class="s2">&quot;num_gpus_per_worker&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
         <span class="s2">&quot;num_cpus_per_worker&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
         <span class="s2">&quot;fragment_length&quot;</span><span class="p">:</span> <span class="mi">256</span><span class="p">,</span>
-        <span class="s2">&quot;to_send_queue_size&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="s2">&quot;to_send_queue_size&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
         <span class="s2">&quot;worker_config&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;num_envs&quot;</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span>
-            <span class="s2">&quot;batch_size&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+            <span class="s2">&quot;num_envs&quot;</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span>
+            <span class="s2">&quot;batch_size&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
             <span class="s2">&quot;restart_interval&quot;</span><span class="p">:</span> <span class="mi">3600</span><span class="p">,</span>  <span class="c1"># 1h</span>
             <span class="s2">&quot;video_fps&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
             <span class="s2">&quot;video_output_dir&quot;</span><span class="p">:</span> <span class="s2">&quot;output/videos&quot;</span><span class="p">,</span>
@@ -647,18 +654,18 @@ bash<span class="w"> </span>run.sh
         <span class="s2">&quot;num_iterations&quot;</span><span class="p">:</span> <span class="mi">4000</span><span class="p">,</span>
         <span class="s2">&quot;vf_warmup&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
         <span class="s2">&quot;learning_rate&quot;</span><span class="p">:</span> <span class="mf">0.00002</span><span class="p">,</span>
-        <span class="s2">&quot;anneal_lr_linearly&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="s2">&quot;anneal_lr_linearly&quot;</span><span class="p">:</span> 
         <span class="s2">&quot;weight_decay&quot;</span><span class="p">:</span> <span class="mf">0.04</span><span class="p">,</span>
         <span class="s2">&quot;adam_eps&quot;</span><span class="p">:</span> <span class="mf">1e-8</span><span class="p">,</span>
         <span class="s2">&quot;batch_size_per_gpu&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-        <span class="s2">&quot;batches_per_iteration&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+        <span class="s2">&quot;batches_per_iteration&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
         <span class="s2">&quot;gradient_accumulation&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> 
-        <span class="s2">&quot;epochs_per_iteration&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>  
+        <span class="s2">&quot;epochs_per_iteration&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> 
         <span class="s2">&quot;context_length&quot;</span><span class="p">:</span> <span class="mi">64</span><span class="p">,</span>
         <span class="s2">&quot;discount&quot;</span><span class="p">:</span> <span class="mf">0.999</span><span class="p">,</span>
         <span class="s2">&quot;gae_lambda&quot;</span><span class="p">:</span> <span class="mf">0.95</span><span class="p">,</span>
         <span class="s2">&quot;ppo_clip&quot;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span>
-        <span class="s2">&quot;clip_vloss&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="s2">&quot;clip_vloss&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> 
         <span class="s2">&quot;max_grad_norm&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> 
         <span class="s2">&quot;zero_initial_vf&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
         <span class="s2">&quot;ppo_policy_coef&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
@@ -673,12 +680,12 @@ bash<span class="w"> </span>run.sh
         <span class="s2">&quot;num_cpus_per_reader&quot;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
         <span class="s2">&quot;prefetch_batches&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
         <span class="s2">&quot;save_interval&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
-        <span class="s2">&quot;save_path&quot;</span><span class="p">:</span> <span class="kc">None</span>
         <span class="s2">&quot;keep_interval&quot;</span><span class="p">:</span> <span class="mi">40</span><span class="p">,</span>
         <span class="s2">&quot;record_video_interval&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
         <span class="s2">&quot;fix_decoder&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="s2">&quot;resume&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s2">&quot;resume&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> 
         <span class="s2">&quot;resume_optimizer&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s2">&quot;save_path&quot;</span><span class="p">:</span> <span class="s2">&quot;output&quot;</span>
     <span class="p">},</span>
 
     <span class="s2">&quot;logger_config&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -738,13 +745,13 @@ bash<span class="w"> </span>run.sh
   </nav></div>
 
   <div class="sidebar-secondary-item">
-
-  <div class="tocsection sourcelink">
-    <a href="../_sources/online/quick-online.md.txt">
-      <i class="fa-solid fa-file-lines"></i> Show Source
-    </a>
-  </div>
-</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/online/quick-online.md.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
 
 </div></div>
               
@@ -759,8 +766,8 @@ bash<span class="w"> </span>run.sh
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
-<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -793,7 +800,8 @@ bash<span class="w"> </span>run.sh
       
         <div class="footer-item">
 <p class="theme-version">
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.0.
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
 </p></div>
       
     </div>

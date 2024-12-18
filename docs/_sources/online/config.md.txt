@@ -2,7 +2,18 @@
 
 To launch our online code, we need to prepare a configuration (`config`) and pass it along with serializable functions `env_generator` and `policy_generator` into `online.rollout.start_manager.start_rolloutmanager` and `minestudio.online.trainer.start_trainer.start_trainer`. 
 
-The `online_dict` configuration is a dictionary that specifies parameters for training, rollout management, and logging in the online system. Below is the format and explanation for each element:
+The `online_dict` configuration is a dictionary that specifies parameters for training, rollout management, and logging in the online system. Below is the format and explanation for each element.
+
+These are some of the more important elements in the settings:
+
+## Important Config
+
+### `trainer_name`
+
+
+# All Keys' Descriptioin
+
+
 
 ## Top-Level Keys
 
