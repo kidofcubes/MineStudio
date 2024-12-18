@@ -68,7 +68,7 @@ Learn more about MineStudio Simulator
 ````
 
 ````{dropdown} <img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Online: Finetuning Policy via Online Interaction
-```{include} quick-online.md
+```{include} ../online/quick-online.md
 ```
 ````
 
