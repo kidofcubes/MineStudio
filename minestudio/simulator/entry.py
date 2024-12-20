@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-11 05:20:17
-LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-12-15 11:46:37
+LastEditors: muzhancun muzhancun@126.com
+LastEditTime: 2024-12-20 15:21:06
 FilePath: /MineStudio/minestudio/simulator/entry.py
 '''
 
@@ -35,7 +35,7 @@ def download_mcp_reborn():
     import huggingface_hub, zipfile
     local_dir = os.path.join(os.path.dirname(__file__), "minerl")
     print(f"Downloading MCP-Reborn to {local_dir}")
-    huggingface_hub.hf_hub_download(repo_id='phython96/ROCKET-MCP-Reborn', filename='MCP-Reborn.zip', local_dir=local_dir)
+    huggingface_hub.hf_hub_download(repo_id='CraftJarvis/ROCKET-MCP-Reborn', filename='MCP-Reborn.zip', local_dir=local_dir)
     with zipfile.ZipFile(os.path.join(local_dir, 'MCP-Reborn.zip'), 'r') as zip_ref:
         zip_ref.extractall(local_dir)
     os.remove(os.path.join(local_dir, 'MCP-Reborn.zip'))

@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-28 17:46:44
-LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-12-15 13:10:00
+LastEditors: muzhancun muzhancun@126.com
+LastEditTime: 2024-12-20 15:17:52
 FilePath: /MineStudio/docs/source/conf.py
 '''
 import os
@@ -72,7 +72,7 @@ html_theme_options = {
   "icon_links": [
         {
             "name": "GitHub",
-            "url": "https://github.com/phython96/MineStudio",
+            "url": "https://github.com/CraftJarvis/MineStudio",
             "icon": "fa-brands fa-github",
         },
         {

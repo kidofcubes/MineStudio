@@ -52,7 +52,7 @@ pip install MineStudio
 ```
 To install MineStudio from source, you can run the following command:
 ```bash
-pip install git+https://github.com/phython96/MineStudio.git
+pip install git+https://github.com/CraftJarvis/MineStudio.git
 ```
 
 Minecraft simulator requires rendering tools. For users with nvidia graphics cards, we recommend installing **VirtualGL**. For other users, we recommend using **Xvfb**, which supports CPU rendering but is relatively slower. Refer to the [documentation](https://craftjarvis.github.io/MineStudio/overview/installation.html#install-the-rendering-tool) for installation commands.
