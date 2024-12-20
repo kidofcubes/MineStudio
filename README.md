@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-11-30 13:20:04
  * @LastEditors: muzhancun muzhancun@126.com
- * @LastEditTime: 2024-12-20 15:12:10
+ * @LastEditTime: 2024-12-20 15:15:03
  * @FilePath: /MineStudio/README.md
 -->
 
@@ -66,7 +66,7 @@ MINESTUDIO_GPU_RENDER=1 python -m minestudio.simulator.entry # using VirtualGL
 ## Acknowledgement
 
 The simulation environment is built upon [MineRL](https://github.com/minerllabs/minerl) and [Project Malmo](https://github.com/microsoft/malmo).
-We also refer to [Ray](https://docs.ray.io/en/latest/index.html), [PyTorch Lightning]([https://pytorch-lightning.readthedocs.io/en/latest/) for distributed training and inference.
+We also refer to [Ray](https://docs.ray.io/en/latest/index.html), [PyTorch Lightning](https://pytorch-lightning.readthedocs.io/en/latest/) for distributed training and inference.
 Thanks for their great work.
 
 ## Citation
