@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-11-30 13:20:04
  * @LastEditors: muzhancun muzhancun@126.com
- * @LastEditTime: 2024-12-20 15:15:03
+ * @LastEditTime: 2024-12-20 15:16:08
  * @FilePath: /MineStudio/README.md
 -->
 
@@ -31,6 +31,8 @@ MineStudio contains a series of tools and APIs that can help you quickly develop
 - [Online Training](https://craftjarvis.github.io/MineStudio/online/index.html): Efficient RL implementation supporting memory-based policies and simulator crash recovery.
 - [Inference](https://craftjarvis.github.io/MineStudio/inference/index.html): Pallarelized and distributed inference framework based on [Ray](https://docs.ray.io/en/latest/index.html).
 - [Benchmark](https://craftjarvis.github.io/MineStudio/benchmark/index.html): Automating and batch-testing of diverse Minecraft tasks.
+
+**This repository is under development.** We welcome any contributions and suggestions.
 
 ## Installation
 
