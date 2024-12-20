@@ -104,6 +104,7 @@ class BaseTrainer:
         last_fragment_indexs = set(get_last_fragment_indexes([r[0] for r in _all_records]))
 
         old_logps, old_pi_logits, vpreds, next_obs_vpreds = FragmentDataDict(), FragmentDataDict(), FragmentDataDict(), FragmentDataDict()
+        rewards = FragmentDataDict()
 
         gae_infos: Dict[FragmentIndex, Dict[str, Any]] = defaultdict(dict)
 
@@ -166,7 +167,9 @@ class BaseTrainer:
                     gae_infos[index]['reward'] = fragment.reward
                     gae_infos[index]['next_done'] = fragment.next_done
                     
+                    rewards[index] = fragment.reward.sum()
                     vpreds[index] = vpred[i].cpu().numpy()
+
                     if self.use_normalized_vf:
                         denormalized_vpred = self.inner_model.value_head.denormalize(vpred).reshape(B, T) # type: ignore
                         gae_infos[index]['vpred'] = denormalized_vpred[i].cpu().numpy() # type: ignore
@@ -212,11 +215,11 @@ class BaseTrainer:
             ray.get(self.gae_actor.calculate_target.remote())
 
         torch.distributed.barrier()
-
         indexs = [r[0] for r in records]
         td_targets, advantages = ray.get(self.gae_actor.get_target.remote(indexs))
         return {
             "records": records,
+            "rewards": rewards,
             "td_targets": td_targets,
             "advantages": advantages,
             "old_logps": old_logps,

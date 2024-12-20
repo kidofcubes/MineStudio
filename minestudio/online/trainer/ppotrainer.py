@@ -21,6 +21,7 @@ from minestudio.online.trainer.basetrainer import BaseTrainer
 from ray.experimental import tqdm_ray
 from minestudio.online.utils import auto_stack
 import uuid
+import copy
 import torch.distributed as dist
 # def check_break_and_sync(is_broken: bool):
 #     # 将 is_broken 转换为 tensor 并与其他进程同步
@@ -66,7 +67,7 @@ class PPOTrainer(BaseTrainer):
         save_path: Optional[str],
         keep_interval: int,
         log_ratio_range: float,
-        fix_decoder: False,
+        enable_ref_update: False,
         **kwargs
     ):
         super().__init__(inference_batch_size_per_gpu=batch_size_per_gpu, **kwargs)
@@ -98,8 +99,8 @@ class PPOTrainer(BaseTrainer):
         self.record_video_interval = record_video_interval
         self.save_interval = save_interval
         self.keep_interval = keep_interval
-        self.fix_decoder = fix_decoder
         self.save_path = save_path
+        self.enable_ref_update = enable_ref_update
         assert self.batches_per_iteration % self.gradient_accumulation == 0
 
     def setup_model_and_optimizer(self, policy_generator) -> Tuple[MinePolicy, torch.optim.Optimizer]:
@@ -125,17 +126,17 @@ class PPOTrainer(BaseTrainer):
             ]
         )
         model.train()
-        if self.fix_decoder: 
-            try:
-                #ray.util.pdb.set_trace()
-                for name, param in model.named_parameters():
-                    if not any(part in name for part in ['policy.net.encoders', 'policy.value_head']):
-                        param.requires_grad = False
-                for name, param in model.named_parameters():
-                    if param.requires_grad:
-                        print(f"{name}: requires_grad={param.requires_grad}")
-            except:
-                ray.util.pdb.set_trace()
+        # if self.fix_decoder: 
+        #     try:
+        #         #ray.util.pdb.set_trace()
+        #         for name, param in model.named_parameters():
+        #             if not any(part in name for part in ['policy.net.encoders', 'policy.value_head']):
+        #                 param.requires_grad = False
+        #         for name, param in model.named_parameters():
+        #             if param.requires_grad:
+        #                 print(f"{name}: requires_grad={param.requires_grad}")
+        #     except:
+        #         ray.util.pdb.set_trace()
 
         if self.kl_divergence_coef_rho != 0:
             self.ref_model = self.policy_generator()
@@ -146,6 +147,8 @@ class PPOTrainer(BaseTrainer):
         return model, optimizer
     
     def train(self):
+        self.max_reward = 0
+        self.ref_version = 0
         print("Begining training....")
 
         if self.rank == 0:
@@ -188,7 +191,8 @@ class PPOTrainer(BaseTrainer):
             td_targets=gae_results["td_targets"],
             advantages=gae_results["advantages"],
             old_logps=gae_results["old_logps"],
-            old_vpreds=gae_results["old_vpreds"]
+            old_vpreds=gae_results["old_vpreds"],
+            rewards = gae_results["rewards"]
         )
 
         self.kl_divergence_coef_rho *= self.coef_rho_decay
@@ -198,7 +202,17 @@ class PPOTrainer(BaseTrainer):
                   td_targets: FragmentDataDict, 
                   advantages: FragmentDataDict,
                   old_logps: FragmentDataDict,
-                  old_vpreds: FragmentDataDict):
+                  old_vpreds: FragmentDataDict,
+                  rewards: FragmentDataDict
+                  ):
+        
+        self.buffer_reward = sum(rewards.values())
+        if self.enable_ref_update:
+            if self.buffer_reward>self.max_reward:
+                self.max_reward = sum(rewards.values())
+                self.ref_model = copy.deepcopy(self.inner_model)
+                self.ref_model.eval()
+                self.ref_version = self.num_updates
         mean_policy_loss = torchmetrics.MeanMetric().to(self.inner_model.device)
         mean_kl_divergence_loss = torchmetrics.MeanMetric().to(self.inner_model.device)
         mean_entropy_bonus = torchmetrics.MeanMetric().to(self.inner_model.device)
@@ -416,9 +430,10 @@ class PPOTrainer(BaseTrainer):
             "trainer/explained_var": explained_var_metric.compute().item(), # type: ignore
             "trainer/abs_advantage": mean_abs_advantage.compute().item(),
             "trainer/abs_td_target": mean_abs_td_target.compute().item(),
-            #"trainer/zv_alpha": self.inner_model.policy.net.zv_alpha.item(),
+            "trainer/ref_version": self.ref_version,
             "trainer/broken_num_lossnan": broken_num_lossnan,
             "trainer/broken_num_kl": broken_num_kl,
+            "trainer/buffer_reward": self.buffer_reward,
             #"trainer/max_bonus": torch.max(torch.abs(self.inner_model.policy.net.zv_bonus)).item(),
         }
         # if mean_kl_divergence_loss_item > 20:

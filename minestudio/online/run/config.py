@@ -18,10 +18,10 @@ online_dict = {
         "num_gpus_per_worker": 1.0,
         "num_cpus_per_worker": 1,
         "fragment_length": 256,
-        "to_send_queue_size": 6,
+        "to_send_queue_size": 8,
         "worker_config": {
-            "num_envs": 12,
-            "batch_size": 6,
+            "num_envs": 16,
+            "batch_size": 8,
             "restart_interval": 3600,  # 1h
             "video_fps": 20,
             "video_output_dir": "output/videos",
@@ -49,7 +49,7 @@ online_dict = {
         "weight_decay": 0.04,
         "adam_eps": 1e-8,
         "batch_size_per_gpu": 1,
-        "batches_per_iteration": 200,
+        "batches_per_iteration": 200, #200
         "gradient_accumulation": 10,  # TODO: check
         "epochs_per_iteration": 1,  # TODO: check
         "context_length": 64,
@@ -73,7 +73,7 @@ online_dict = {
         "save_interval": 10,
         "keep_interval": 40,
         "record_video_interval": 2,
-        "fix_decoder": False,
+        "enable_ref_update": True,
         "resume": None, #"/scratch/hekaichen/tmpdir/ray/session_2024-12-12_21-10-40_218613_2665801/artifacts/2024-12-12_21-10-58/TorchTrainer_2024-12-12_21-10-58/working_dirs/TorchTrainer_8758b_00000_0_2024-12-12_21-10-58/checkpoints/150",
         "resume_optimizer": True,
         "save_path": "/scratch/hekaichen/workspace/MineStudio/minestudio/online/run/output"

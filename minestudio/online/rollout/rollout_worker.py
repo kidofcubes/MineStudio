@@ -170,14 +170,14 @@ class RolloutWorker():
                 elif args[0] == "report_rewards":
                     rewards = args[1]
                     if self.episode_statistics is not None:
-                        video_step = ray.get(self.episode_statistics.report_episode.remote(rewards))
+                        video_step, episode_info = ray.get(self.episode_statistics.report_episode.remote(rewards))
                         if video_step is not None and video_step > self.video_step:
                             self.video_step = video_step
-                            conn.send(video_step)
+                            conn.send((video_step, episode_info))
                         else:    
-                            conn.send(None)
+                            conn.send((None, episode_info))
                     else:
-                        conn.send(None)
+                        conn.send((None, None))
                 else:
                     raise NotImplementedError
                 
