@@ -1,14 +1,14 @@
 <!--
  * @Date: 2024-11-28 22:13:52
- * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-11-29 13:56:21
+ * @LastEditors: muzhancun muzhancun@126.com
+ * @LastEditTime: 2024-12-20 15:20:25
  * @FilePath: /MineStudio/docs/source/overview/installation.md
 -->
 (gentle-intro)=
 # Installation
 
 ```{note}
-If you encounter any issues during installation, please open an issue on [GitHub](https://github.com/phython96/MineStudio/issues). 
+If you encounter any issues during installation, please open an issue on [GitHub](https://github.com/CraftJarvis/MineStudio/issues). 
 ```
 
 Welcome to MineStudio, please follow the tutorial below for installation.
@@ -23,9 +23,9 @@ $ conda install --channel=conda-forge openjdk=8 -y
 
 ## Install MineStudio
 
-a. Install MineStudio from the [GitHub](https://github.com/phython96/MineStudio). 
+a. Install MineStudio from the [GitHub](https://github.com/CraftJarvis/MineStudio). 
 ```console
-$ pip install git+https://github.com/phython96/MineStudio.git
+$ pip install git+https://github.com/CraftJarvis/MineStudio.git
 ```
 
 b. Install MineStudio from [PyPI](https://pypi.org/project/minestudio/). 

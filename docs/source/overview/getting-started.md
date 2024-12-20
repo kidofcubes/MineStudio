@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-11-29 08:08:13
- * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-12-15 13:23:12
+ * @LastEditors: muzhancun muzhancun@126.com
+ * @LastEditTime: 2024-12-20 15:20:10
  * @FilePath: /MineStudio/docs/source/overview/getting-started.md
 -->
 
@@ -32,7 +32,7 @@ installation
 ../online/index
 ```
 
-Before you start, make sure you have installed [MineStudio](https://github.com/phython96/MineStudio) and its dependencies. 
+Before you start, make sure you have installed [MineStudio](https://github.com/CraftJarvis/MineStudio) and its dependencies. 
 
 ```{dropdown} <img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Install MineStudio
 ```{include} installation.md

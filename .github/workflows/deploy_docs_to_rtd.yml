@@ -10,7 +10,7 @@ on:
       - "README.md"
 
 env:
-  REPO_SSH: git@github.com:phython96/MineStudio.git
+  REPO_SSH: git@github.com:CraftJarvis/MineStudio.git
   CLONE_URL: ${{ github.event.repository.clone_url }}
   USER_NAME: ${{ github.event.repository.owner.name }}
   USER_EMAIL: ${{ github.event.repository.owner.email }}
