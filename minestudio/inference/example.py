@@ -26,35 +26,36 @@ if __name__ == '__main__':
     
     policy = load_vpt_policy(
         model_path="/nfs-shared/jarvisbase/pretrained/foundation-model-2x.model",
-        # weights_path="/nfs-shared/jarvisbase/pretrained/foundation-model-1x.weights", 
-        # weights_path="/nfs-shared/jarvisbase/pretrained/rl-from-early-game-2x.weights",
-        weights_path="/nfs-shared/jarvisbase/pretrained/bc-early-game-2x.weights", 
+        weights_path="/nfs-shared/jarvisbase/pretrained/foundation-model-2x.weights", 
     ).to("cuda")
     policy.eval()
-    
+    from minestudio.simulator import MinecraftSim
+    from minestudio.simulator.callbacks import (
+        SummonMobsCallback, 
+        MaskActionsCallback, 
+        RewardsCallback, 
+        CommandsCallback, 
+        JudgeResetCallback,
+        FastResetCallback,
+        GateRewardsCallback,
+        VoxelsCallback,
+    )
     env = MinecraftSim(
         obs_size=(128, 128), 
         preferred_spawn_biome="plains", 
         callbacks=[
-            SummonMobsCallback([{'name': 'sheep', 'number': 50, 'range_x': [-15, 15], 'range_z': [-15, 15]}]),
-            MaskActionsCallback(attack = 0), 
-            RewardsCallback([{
-                'event': 'kill_entity', 
-                'objects': ['sheep'], 
-                'reward': 5.0, 
-                'identity': 'shoot_sheep', 
-                'max_reward_times': 30, 
-            }]),
+            MaskActionsCallback(inventory = 0), 
+            GateRewardsCallback(),
             CommandsCallback(commands=[
-                '/give @p minecraft:bow 1',
-                '/give @p minecraft:arrow 64',
-                '/give @p minecraft:arrow 64',
+                '/give @p minecraft:diamond_pickaxe 1',
+                '/replaceitem entity @s weapon.offhand minecraft:obsidian 64'
             ]),
             FastResetCallback(
                 biomes=['plains'],
                 random_tp_range=1000,
             ),
-            JudgeResetCallback(600),
+            JudgeResetCallback(2400),
+            VoxelsCallback()
         ]
     )
     

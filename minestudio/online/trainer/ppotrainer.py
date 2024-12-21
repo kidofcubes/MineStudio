@@ -68,6 +68,7 @@ class PPOTrainer(BaseTrainer):
         keep_interval: int,
         log_ratio_range: float,
         enable_ref_update: False,
+        whole_config: str,
         **kwargs
     ):
         super().__init__(inference_batch_size_per_gpu=batch_size_per_gpu, **kwargs)
@@ -101,6 +102,7 @@ class PPOTrainer(BaseTrainer):
         self.keep_interval = keep_interval
         self.save_path = save_path
         self.enable_ref_update = enable_ref_update
+        self.whole_config = whole_config
         assert self.batches_per_iteration % self.gradient_accumulation == 0
 
     def setup_model_and_optimizer(self, policy_generator) -> Tuple[MinePolicy, torch.optim.Optimizer]:
@@ -149,6 +151,7 @@ class PPOTrainer(BaseTrainer):
     def train(self):
         self.max_reward = 0
         self.ref_version = 0
+        self.time_stamp = time.strftime("%Y-%m-%d_%H-%M-%S", time.localtime())
         print("Begining training....")
 
         if self.rank == 0:
@@ -436,10 +439,7 @@ class PPOTrainer(BaseTrainer):
             "trainer/buffer_reward": self.buffer_reward,
             #"trainer/max_bonus": torch.max(torch.abs(self.inner_model.policy.net.zv_bonus)).item(),
         }
-        # if mean_kl_divergence_loss_item > 20:
-        #     raise ValueError("KL divergence is too high.")
-        # if mean_approx_kl.compute().item() > 1:
-        #     raise ValueError("Approx KL divergence is too high.")
+
         self.num_updates += 1
 
         if self.rank == 0:
@@ -447,16 +447,20 @@ class PPOTrainer(BaseTrainer):
                 # TODO: this may cause problem in distributed training
                 logging.getLogger("ray").info(f"Saving checkpoint at update count {self.num_updates}...")
                 
-                if self.save_path == None:     
-                    checkpoint_dir = Path(f'checkpoints/{self.num_updates}')
+                if self.save_path:
+                    checkpoint_dir = Path(self.save_path) / 'checkpoints' / self.time_stamp /str(self.num_updates)
                 else:
-                    checkpoint_dir = Path(os.path.join(Path(f'{self.save_path}'), Path(f'checkpoints/{self.num_updates}')))
+                    checkpoint_dir = Path("checkpoints") / self.time_stamp /str(self.num_updates)
 
                 logging.getLogger("ray").info(f"Checkpoint dir: {checkpoint_dir.absolute()}")
                 if not checkpoint_dir.exists():
                     checkpoint_dir.mkdir(parents=True)
+
+                #save model
                 torch.save(self.inner_model.state_dict(), str(checkpoint_dir / "model.ckpt"))
                 torch.save(self.optimizer.state_dict(), str(checkpoint_dir / "optimizer.ckpt"))
+                with open(checkpoint_dir / "whole_config.py", "w") as f:
+                    f.write(self.whole_config)
 
                 if (
                     self.last_checkpoint_dir

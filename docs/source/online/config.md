@@ -60,7 +60,7 @@ This is a standard config setting:
       "zero_initial_vf": True,
       "ppo_policy_coef": 1.0,
       "ppo_vf_coef": 0.5,  # TODO: check
-      "kl_divergence_coef_rho": 0.2,
+      "kl_divergence_coef_rho": 0.0,
       "entropy_bonus_coef": 0.0,
       "coef_rho_decay": 0.9995,
       "log_ratio_range": 50,  # for numerical stability
@@ -86,7 +86,7 @@ This is a standard config setting:
 ```
 
 These are some of the more important elements in the settings: 
-#### `trainer_name`: 
+````dropdown
 
 
 # All Keys' Descriptioin
