@@ -286,7 +286,7 @@
           
           
           
-          <a href="https://github.com/phython96/MineStudio" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+          <a href="https://github.com/CraftJarvis/MineStudio" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
             <span class="sr-only">GitHub</span></a>
         </li>
         <li class="nav-item">
@@ -475,7 +475,7 @@
           
           
           
-          <a href="https://github.com/phython96/MineStudio" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+          <a href="https://github.com/CraftJarvis/MineStudio" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
             <span class="sr-only">GitHub</span></a>
         </li>
         <li class="nav-item">
@@ -546,7 +546,6 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Online Training</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="general-information.html">Overview</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Config</a></li>
-
 <li class="toctree-l2"><a class="reference internal" href="trainer.html">Trainer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rollout.html">Rollout</a></li>
 <li class="toctree-l2"><a class="reference internal" href="customization.html">Customize</a></li>
@@ -567,7 +566,6 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Online Training</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="general-information.html">Overview</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Config</a></li>
-
 <li class="toctree-l2"><a class="reference internal" href="trainer.html">Trainer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rollout.html">Rollout</a></li>
 <li class="toctree-l2"><a class="reference internal" href="customization.html">Customize</a></li>
@@ -640,173 +638,196 @@
 <h1>Config<a class="headerlink" href="#config" title="Link to this heading">#</a></h1>
 <p>To launch our online code, we need to prepare a configuration (<code class="docutils literal notranslate"><span class="pre">config</span></code>) and pass it along with serializable functions <code class="docutils literal notranslate"><span class="pre">env_generator</span></code> and <code class="docutils literal notranslate"><span class="pre">policy_generator</span></code> into <code class="docutils literal notranslate"><span class="pre">online.rollout.start_manager.start_rolloutmanager</span></code> and <code class="docutils literal notranslate"><span class="pre">minestudio.online.trainer.start_trainer.start_trainer</span></code>.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">online_dict</span></code> configuration is a dictionary that specifies parameters for training, rollout management, and logging in the online system. Below is the format and explanation for each element.</p>
+<section id="example-config">
+<h2>Example Config<a class="headerlink" href="#example-config" title="Link to this heading">#</a></h2>
+<p>This is a standard config setting:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;trainer_name&quot;</span><span class="p">:</span> <span class="s2">&quot;PPOTrainer&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;detach_rollout_manager&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+  <span class="s2">&quot;rollout_config&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s2">&quot;num_rollout_workers&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+      <span class="s2">&quot;num_gpus_per_worker&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+      <span class="s2">&quot;num_cpus_per_worker&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+      <span class="s2">&quot;fragment_length&quot;</span><span class="p">:</span> <span class="mi">256</span><span class="p">,</span>
+      <span class="s2">&quot;to_send_queue_size&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+      <span class="s2">&quot;worker_config&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="s2">&quot;num_envs&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+          <span class="s2">&quot;batch_size&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+          <span class="s2">&quot;restart_interval&quot;</span><span class="p">:</span> <span class="mi">3600</span><span class="p">,</span>  <span class="c1"># 1h</span>
+          <span class="s2">&quot;video_fps&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+          <span class="s2">&quot;video_output_dir&quot;</span><span class="p">:</span> <span class="s2">&quot;output/videos&quot;</span><span class="p">,</span>
+      <span class="p">},</span>
+      <span class="s2">&quot;replay_buffer_config&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="s2">&quot;max_chunks&quot;</span><span class="p">:</span> <span class="mi">4800</span><span class="p">,</span>
+          <span class="s2">&quot;max_reuse&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+          <span class="s2">&quot;max_staleness&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+          <span class="s2">&quot;fragments_per_report&quot;</span><span class="p">:</span> <span class="mi">40</span><span class="p">,</span>
+          <span class="s2">&quot;fragments_per_chunk&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+          <span class="s2">&quot;database_config&quot;</span><span class="p">:</span> <span class="p">{</span>
+              <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;output/replay_buffer_cache&quot;</span><span class="p">,</span>
+              <span class="s2">&quot;num_shards&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+          <span class="p">},</span>
+      <span class="p">},</span>
+      <span class="s2">&quot;episode_statistics_config&quot;</span><span class="p">:</span> <span class="p">{},</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;train_config&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s2">&quot;num_workers&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+      <span class="s2">&quot;num_gpus_per_worker&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+      <span class="s2">&quot;num_iterations&quot;</span><span class="p">:</span> <span class="mi">4000</span><span class="p">,</span>
+      <span class="s2">&quot;vf_warmup&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+      <span class="s2">&quot;learning_rate&quot;</span><span class="p">:</span> <span class="mf">0.00002</span><span class="p">,</span>
+      <span class="s2">&quot;anneal_lr_linearly&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+      <span class="s2">&quot;weight_decay&quot;</span><span class="p">:</span> <span class="mf">0.04</span><span class="p">,</span>
+      <span class="s2">&quot;adam_eps&quot;</span><span class="p">:</span> <span class="mf">1e-8</span><span class="p">,</span>
+      <span class="s2">&quot;batch_size_per_gpu&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+      <span class="s2">&quot;batches_per_iteration&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="c1">#200</span>
+      <span class="s2">&quot;gradient_accumulation&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>  <span class="c1"># TODO: check</span>
+      <span class="s2">&quot;epochs_per_iteration&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>  <span class="c1"># TODO: check</span>
+      <span class="s2">&quot;context_length&quot;</span><span class="p">:</span> <span class="mi">64</span><span class="p">,</span>
+      <span class="s2">&quot;discount&quot;</span><span class="p">:</span> <span class="mf">0.999</span><span class="p">,</span>
+      <span class="s2">&quot;gae_lambda&quot;</span><span class="p">:</span> <span class="mf">0.95</span><span class="p">,</span>
+      <span class="s2">&quot;ppo_clip&quot;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span>
+      <span class="s2">&quot;clip_vloss&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>  <span class="c1"># TODO: check</span>
+      <span class="s2">&quot;max_grad_norm&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>  <span class="c1"># ????</span>
+      <span class="s2">&quot;zero_initial_vf&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+      <span class="s2">&quot;ppo_policy_coef&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+      <span class="s2">&quot;ppo_vf_coef&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>  <span class="c1"># TODO: check</span>
+      <span class="s2">&quot;kl_divergence_coef_rho&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+      <span class="s2">&quot;entropy_bonus_coef&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+      <span class="s2">&quot;coef_rho_decay&quot;</span><span class="p">:</span> <span class="mf">0.9995</span><span class="p">,</span>
+      <span class="s2">&quot;log_ratio_range&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>  <span class="c1"># for numerical stability</span>
+      <span class="s2">&quot;normalize_advantage_full_batch&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>  <span class="c1"># TODO: check!!!</span>
+      <span class="s2">&quot;use_normalized_vf&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+      <span class="s2">&quot;num_readers&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+      <span class="s2">&quot;num_cpus_per_reader&quot;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
+      <span class="s2">&quot;prefetch_batches&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+      <span class="s2">&quot;save_interval&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+      <span class="s2">&quot;keep_interval&quot;</span><span class="p">:</span> <span class="mi">40</span><span class="p">,</span>
+      <span class="s2">&quot;record_video_interval&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+      <span class="s2">&quot;enable_ref_update&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+      <span class="s2">&quot;resume&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> 
+      <span class="s2">&quot;resume_optimizer&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+      <span class="s2">&quot;save_path&quot;</span><span class="p">:</span> <span class="s2">&quot;/scratch/hekaichen/workspace/MineStudio/minestudio/online/run/output&quot;</span>
+  <span class="p">},</span>
+
+  <span class="s2">&quot;logger_config&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s2">&quot;project&quot;</span><span class="p">:</span> <span class="s2">&quot;minestudio_online&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;bow_cow&quot;</span>
+  <span class="p">},</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <p>These are some of the more important elements in the settings:</p>
-<section id="important-config">
-<h2>Important Config<a class="headerlink" href="#important-config" title="Link to this heading">#</a></h2>
-<section id="trainer-name">
-<h3><code class="docutils literal notranslate"><span class="pre">trainer_name</span></code><a class="headerlink" href="#trainer-name" title="Link to this heading">#</a></h3>
-</section>
-</section>
-</section>
-<section id="all-keys-descriptioin">
-<h1>All Keys’ Descriptioin<a class="headerlink" href="#all-keys-descriptioin" title="Link to this heading">#</a></h1>
-<section id="top-level-keys">
-<h2>Top-Level Keys<a class="headerlink" href="#top-level-keys" title="Link to this heading">#</a></h2>
-<section id="id1">
-<h3><code class="docutils literal notranslate"><span class="pre">trainer_name</span></code><a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
-<ul class="simple">
-<li><p><strong>Type</strong>: String</p></li>
-<li><p><strong>Description</strong>: Specifies the trainer to use.</p></li>
-<li><p><strong>Example</strong>: <code class="docutils literal notranslate"><span class="pre">&quot;PPOTrainer&quot;</span></code></p></li>
-</ul>
-</section>
-<section id="detach-rollout-manager">
-<h3><code class="docutils literal notranslate"><span class="pre">detach_rollout_manager</span></code><a class="headerlink" href="#detach-rollout-manager" title="Link to this heading">#</a></h3>
-<ul class="simple">
-<li><p><strong>Type</strong>: Boolean</p></li>
-<li><p><strong>Description</strong>: Indicates whether to detach the rollout manager process.</p></li>
-<li><p><strong>Example</strong>: <code class="docutils literal notranslate"><span class="pre">True</span></code></p></li>
-</ul>
-</section>
-</section>
-<hr class="docutils" />
-<section id="rollout-config">
-<h2><code class="docutils literal notranslate"><span class="pre">rollout_config</span></code><a class="headerlink" href="#rollout-config" title="Link to this heading">#</a></h2>
-<p>Configuration related to the rollout manager.</p>
-<section id="num-rollout-workers">
-<h3><code class="docutils literal notranslate"><span class="pre">num_rollout_workers</span></code><a class="headerlink" href="#num-rollout-workers" title="Link to this heading">#</a></h3>
-<ul class="simple">
-<li><p><strong>Type</strong>: Integer</p></li>
-<li><p><strong>Description</strong>: Number of rollout worker processes.</p></li>
-<li><p><strong>Example</strong>: <code class="docutils literal notranslate"><span class="pre">2</span></code></p></li>
-</ul>
-</section>
-<section id="num-gpus-per-worker">
-<h3><code class="docutils literal notranslate"><span class="pre">num_gpus_per_worker</span></code><a class="headerlink" href="#num-gpus-per-worker" title="Link to this heading">#</a></h3>
-<ul class="simple">
-<li><p><strong>Type</strong>: Float</p></li>
-<li><p><strong>Description</strong>: Number of GPUs allocated per rollout worker.</p></li>
-<li><p><strong>Example</strong>: <code class="docutils literal notranslate"><span class="pre">1.0</span></code></p></li>
-</ul>
-</section>
-<section id="num-cpus-per-worker">
-<h3><code class="docutils literal notranslate"><span class="pre">num_cpus_per_worker</span></code><a class="headerlink" href="#num-cpus-per-worker" title="Link to this heading">#</a></h3>
-<ul class="simple">
-<li><p><strong>Type</strong>: Integer</p></li>
-<li><p><strong>Description</strong>: Number of CPUs allocated per rollout worker.</p></li>
-<li><p><strong>Example</strong>: <code class="docutils literal notranslate"><span class="pre">1</span></code></p></li>
-</ul>
-</section>
-<section id="fragment-length">
-<h3><code class="docutils literal notranslate"><span class="pre">fragment_length</span></code><a class="headerlink" href="#fragment-length" title="Link to this heading">#</a></h3>
-<ul class="simple">
-<li><p><strong>Type</strong>: Integer</p></li>
-<li><p><strong>Description</strong>: Number of steps per rollout fragment.</p></li>
-<li><p><strong>Example</strong>: <code class="docutils literal notranslate"><span class="pre">256</span></code></p></li>
-</ul>
-</section>
-<section id="to-send-queue-size">
-<h3><code class="docutils literal notranslate"><span class="pre">to_send_queue_size</span></code><a class="headerlink" href="#to-send-queue-size" title="Link to this heading">#</a></h3>
-<ul class="simple">
-<li><p><strong>Type</strong>: Integer</p></li>
-<li><p><strong>Description</strong>: Size of the queue for sending rollout data to the trainer.</p></li>
-<li><p><strong>Example</strong>: <code class="docutils literal notranslate"><span class="pre">4</span></code></p></li>
-</ul>
-<section id="worker-config">
-<h4><code class="docutils literal notranslate"><span class="pre">worker_config</span></code><a class="headerlink" href="#worker-config" title="Link to this heading">#</a></h4>
-<ul class="simple">
-<li><p><strong>Description</strong>: Configuration for individual rollout workers.</p>
-<ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">num_envs</span></code>: Number of environments per worker. <strong>Example</strong>: <code class="docutils literal notranslate"><span class="pre">16</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">batch_size</span></code>: Batch size for each worker. <strong>Example</strong>: <code class="docutils literal notranslate"><span class="pre">2</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">restart_interval</span></code>: Restart interval for workers (in seconds). <strong>Example</strong>: <code class="docutils literal notranslate"><span class="pre">3600</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">video_fps</span></code>: Frames per second for video output. <strong>Example</strong>: <code class="docutils literal notranslate"><span class="pre">20</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">video_output_dir</span></code>: Directory for video outputs. <strong>Example</strong>: <code class="docutils literal notranslate"><span class="pre">&quot;output/videos&quot;</span></code></p></li>
-</ul>
-</li>
-</ul>
-</section>
-<section id="replay-buffer-config">
-<h4><code class="docutils literal notranslate"><span class="pre">replay_buffer_config</span></code><a class="headerlink" href="#replay-buffer-config" title="Link to this heading">#</a></h4>
-<ul class="simple">
-<li><p><strong>Description</strong>: Configuration for the replay buffer.</p>
-<ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">max_chunks</span></code>: Maximum number of chunks in the buffer. <strong>Example</strong>: <code class="docutils literal notranslate"><span class="pre">4800</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">max_reuse</span></code>: Maximum reuse count for data chunks. <strong>Example</strong>: <code class="docutils literal notranslate"><span class="pre">2</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">max_staleness</span></code>: Maximum staleness of data chunks. <strong>Example</strong>: <code class="docutils literal notranslate"><span class="pre">2</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">fragments_per_report</span></code>: Fragments to report per iteration. <strong>Example</strong>: <code class="docutils literal notranslate"><span class="pre">40</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">fragments_per_chunk</span></code>: Fragments stored per chunk. <strong>Example</strong>: <code class="docutils literal notranslate"><span class="pre">1</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">database_config</span></code>: Configuration for the database.</p>
-<ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">path</span></code>: Path to database files. <strong>Example</strong>: <code class="docutils literal notranslate"><span class="pre">&quot;output/replay_buffer_cache&quot;</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">num_shards</span></code>: Number of shards in the database. <strong>Example</strong>: <code class="docutils literal notranslate"><span class="pre">8</span></code></p></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</section>
-</section>
-</section>
-<hr class="docutils" />
-<section id="train-config">
-<h2><code class="docutils literal notranslate"><span class="pre">train_config</span></code><a class="headerlink" href="#train-config" title="Link to this heading">#</a></h2>
-<p>Configuration related to training.</p>
-<section id="num-workers">
-<h3><code class="docutils literal notranslate"><span class="pre">num_workers</span></code><a class="headerlink" href="#num-workers" title="Link to this heading">#</a></h3>
-<ul class="simple">
-<li><p><strong>Type</strong>: Integer</p></li>
-<li><p><strong>Description</strong>: Number of training worker processes.</p></li>
-<li><p><strong>Example</strong>: <code class="docutils literal notranslate"><span class="pre">2</span></code></p></li>
-</ul>
-</section>
-<section id="id2">
-<h3><code class="docutils literal notranslate"><span class="pre">num_gpus_per_worker</span></code><a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
-<ul class="simple">
-<li><p><strong>Type</strong>: Float</p></li>
-<li><p><strong>Description</strong>: Number of GPUs allocated per training worker.</p></li>
-<li><p><strong>Example</strong>: <code class="docutils literal notranslate"><span class="pre">1.0</span></code></p></li>
-</ul>
-</section>
-<section id="num-iterations">
-<h3><code class="docutils literal notranslate"><span class="pre">num_iterations</span></code><a class="headerlink" href="#num-iterations" title="Link to this heading">#</a></h3>
-<ul class="simple">
-<li><p><strong>Type</strong>: Integer</p></li>
-<li><p><strong>Description</strong>: Number of training iterations.</p></li>
-<li><p><strong>Example</strong>: <code class="docutils literal notranslate"><span class="pre">4000</span></code></p></li>
-</ul>
-</section>
-<section id="other-parameters">
-<h3>Other Parameters<a class="headerlink" href="#other-parameters" title="Link to this heading">#</a></h3>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">learning_rate</span></code>: Learning rate for the optimizer. <strong>Example</strong>: <code class="docutils literal notranslate"><span class="pre">0.00002</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">batch_size_per_gpu</span></code>: Batch size per GPU. <strong>Example</strong>: <code class="docutils literal notranslate"><span class="pre">1</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ppo_clip</span></code>: PPO clip range. <strong>Example</strong>: <code class="docutils literal notranslate"><span class="pre">0.2</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">save_interval</span></code>: Interval for saving models. <strong>Example</strong>: <code class="docutils literal notranslate"><span class="pre">10</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">save_path</span></code>: Directory for saving models. The default saving path is in ray’s default working path: <strong>~/ray_results</strong>, <strong>Example</strong>: <code class="docutils literal notranslate"><span class="pre">output</span></code> would save checkpoints in <strong>~/ray_results/output</strong>, you can also pass absolute path in it.</p></li>
-</ul>
-</section>
-</section>
-<hr class="docutils" />
-<section id="logger-config">
-<h2><code class="docutils literal notranslate"><span class="pre">logger_config</span></code><a class="headerlink" href="#logger-config" title="Link to this heading">#</a></h2>
-<p>Configuration for wandb logging.</p>
-<section id="project">
-<h3><code class="docutils literal notranslate"><span class="pre">project</span></code><a class="headerlink" href="#project" title="Link to this heading">#</a></h3>
-<ul class="simple">
-<li><p><strong>Type</strong>: String</p></li>
-<li><p><strong>Description</strong>: Name of the logging project.</p></li>
-<li><p><strong>Example</strong>: <code class="docutils literal notranslate"><span class="pre">&quot;minestudio_online&quot;</span></code></p></li>
-</ul>
-</section>
-<section id="name">
-<h3><code class="docutils literal notranslate"><span class="pre">name</span></code><a class="headerlink" href="#name" title="Link to this heading">#</a></h3>
-<ul class="simple">
-<li><p><strong>Type</strong>: String</p></li>
-<li><p><strong>Description</strong>: Name of the logging instance.</p></li>
-<li><p><strong>Example</strong>: <code class="docutils literal notranslate"><span class="pre">&quot;cow&quot;</span></code></p></li>
-</ul>
-</section>
+<div class="highlight-dropdown notranslate"><div class="highlight"><pre><span></span>
+
+# All Keys&#39; Descriptioin
+
+
+
+## Top-Level Keys
+
+### `trainer_name`
+- **Type**: String  
+- **Description**: Specifies the trainer to use.  
+- **Example**: `&quot;PPOTrainer&quot;`
+
+### `detach_rollout_manager`
+- **Type**: Boolean  
+- **Description**: Indicates whether to detach the rollout manager process.  
+- **Example**: `True`
+
+---
+
+## `rollout_config`
+Configuration related to the rollout manager.
+
+### `num_rollout_workers`
+- **Type**: Integer  
+- **Description**: Number of rollout worker processes.  
+- **Example**: `2`
+
+### `num_gpus_per_worker`
+- **Type**: Float  
+- **Description**: Number of GPUs allocated per rollout worker.  
+- **Example**: `1.0`
+
+### `num_cpus_per_worker`
+- **Type**: Integer  
+- **Description**: Number of CPUs allocated per rollout worker.  
+- **Example**: `1`
+
+### `fragment_length`
+- **Type**: Integer  
+- **Description**: Number of steps per rollout fragment.  
+- **Example**: `256`
+
+### `to_send_queue_size`
+- **Type**: Integer  
+- **Description**: Size of the queue for sending rollout data to the trainer.  
+- **Example**: `4`
+
+#### `worker_config`
+- **Description**: Configuration for individual rollout workers.
+  - `num_envs`: Number of environments per worker. **Example**: `16`
+  - `batch_size`: Batch size for each worker. **Example**: `2`
+  - `restart_interval`: Restart interval for workers (in seconds). **Example**: `3600`
+  - `video_fps`: Frames per second for video output. **Example**: `20`
+  - `video_output_dir`: Directory for video outputs. **Example**: `&quot;output/videos&quot;`
+
+#### `replay_buffer_config`
+- **Description**: Configuration for the replay buffer.
+  - `max_chunks`: Maximum number of chunks in the buffer. **Example**: `4800`
+  - `max_reuse`: Maximum reuse count for data chunks. **Example**: `2`
+  - `max_staleness`: Maximum staleness of data chunks. **Example**: `2`
+  - `fragments_per_report`: Fragments to report per iteration. **Example**: `40`
+  - `fragments_per_chunk`: Fragments stored per chunk. **Example**: `1`
+  - `database_config`: Configuration for the database.
+    - `path`: Path to database files. **Example**: `&quot;output/replay_buffer_cache&quot;`
+    - `num_shards`: Number of shards in the database. **Example**: `8`
+
+---
+
+## `train_config`
+Configuration related to training.
+
+### `num_workers`
+- **Type**: Integer  
+- **Description**: Number of training worker processes.  
+- **Example**: `2`
+
+### `num_gpus_per_worker`
+- **Type**: Float  
+- **Description**: Number of GPUs allocated per training worker.  
+- **Example**: `1.0`
+
+### `num_iterations`
+- **Type**: Integer  
+- **Description**: Number of training iterations.  
+- **Example**: `4000`
+
+### Other Parameters
+- `learning_rate`: Learning rate for the optimizer. **Example**: `0.00002`
+- `batch_size_per_gpu`: Batch size per GPU. **Example**: `1`
+- `ppo_clip`: PPO clip range. **Example**: `0.2`
+- `save_interval`: Interval for saving models. **Example**: `10`
+- `save_path`: Directory for saving models. The default saving path is in ray&#39;s default working path: **~/ray_results**, **Example**: `output` would save checkpoints in **~/ray_results/output**, you can also pass absolute path in it.
+
+---
+
+## `logger_config`
+Configuration for wandb logging.
+
+### `project`
+- **Type**: String  
+- **Description**: Name of the logging project.  
+- **Example**: `&quot;minestudio_online&quot;`
+
+### `name`
+- **Type**: String  
+- **Description**: Name of the logging instance.  
+- **Example**: `&quot;cow&quot;`
+</pre></div>
+</div>
 </section>
 </section>
 
@@ -861,47 +882,8 @@
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Config</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#important-config">Important Config</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#trainer-name"><code class="docutils literal notranslate"><span class="pre">trainer_name</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-config">Example Config</a></li>
 </ul>
-</li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#all-keys-descriptioin">All Keys’ Descriptioin</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#top-level-keys">Top-Level Keys</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><code class="docutils literal notranslate"><span class="pre">trainer_name</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#detach-rollout-manager"><code class="docutils literal notranslate"><span class="pre">detach_rollout_manager</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rollout-config"><code class="docutils literal notranslate"><span class="pre">rollout_config</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#num-rollout-workers"><code class="docutils literal notranslate"><span class="pre">num_rollout_workers</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#num-gpus-per-worker"><code class="docutils literal notranslate"><span class="pre">num_gpus_per_worker</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#num-cpus-per-worker"><code class="docutils literal notranslate"><span class="pre">num_cpus_per_worker</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fragment-length"><code class="docutils literal notranslate"><span class="pre">fragment_length</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#to-send-queue-size"><code class="docutils literal notranslate"><span class="pre">to_send_queue_size</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#worker-config"><code class="docutils literal notranslate"><span class="pre">worker_config</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#replay-buffer-config"><code class="docutils literal notranslate"><span class="pre">replay_buffer_config</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#train-config"><code class="docutils literal notranslate"><span class="pre">train_config</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#num-workers"><code class="docutils literal notranslate"><span class="pre">num_workers</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2"><code class="docutils literal notranslate"><span class="pre">num_gpus_per_worker</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#num-iterations"><code class="docutils literal notranslate"><span class="pre">num_iterations</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#other-parameters">Other Parameters</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logger-config"><code class="docutils literal notranslate"><span class="pre">logger_config</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#project"><code class="docutils literal notranslate"><span class="pre">project</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#name"><code class="docutils literal notranslate"><span class="pre">name</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
   </nav></div>
 
   <div class="sidebar-secondary-item">

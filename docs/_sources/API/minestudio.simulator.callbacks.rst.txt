@@ -64,6 +64,12 @@ Submodules
    :show-inheritance:
 
 
+.. automodule:: minestudio.simulator.callbacks.reward_gate
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
 .. automodule:: minestudio.simulator.callbacks.rewards
    :members:
    :undoc-members:
@@ -83,6 +89,12 @@ Submodules
 
 
 .. automodule:: minestudio.simulator.callbacks.task
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+.. automodule:: minestudio.simulator.callbacks.voxels
    :members:
    :undoc-members:
    :show-inheritance:

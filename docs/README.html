@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>&lt;no title&gt; &#8212; MineStudio 1.0.0</title>
+    <title>Overview &#8212; MineStudio 1.0.0</title>
   
   
   
@@ -284,7 +284,7 @@
           
           
           
-          <a href="https://github.com/phython96/MineStudio" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+          <a href="https://github.com/CraftJarvis/MineStudio" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
             <span class="sr-only">GitHub</span></a>
         </li>
         <li class="nav-item">
@@ -475,7 +475,7 @@
           
           
           
-          <a href="https://github.com/phython96/MineStudio" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+          <a href="https://github.com/CraftJarvis/MineStudio" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
             <span class="sr-only">GitHub</span></a>
         </li>
         <li class="nav-item">
@@ -543,7 +543,7 @@
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">&lt;no title&gt;</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Overview</span></li>
   </ul>
 </nav>
 </div>
@@ -562,13 +562,85 @@
                   
 <!--
  * @Date: 2024-11-30 13:20:04
- * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-11-30 13:29:20
+ * @LastEditors: muzhancun muzhancun@126.com
+ * @LastEditTime: 2024-12-20 15:16:08
  * @FilePath: /MineStudio/README.md
 -->
-<p><img alt="" src="docs/source/_static/banner.png" /></p>
-<p><a class="reference external" href="https://phython96.github.io/MineStudio/overview/getting-started.html">[Doc]</a></p>
-<p>A simple and efficient Minecraft development kit for AI research.</p>
+<div align="center">
+<img src="./docs/source/_static/banner.png" width="" alt="MineStudio" />
+</div>
+<h1 align="center">MineStudio: A Streamlined Framework for Minecraft AI Agent Development</h1>
+<div align="center">
+	<a href="https://github.com/CraftJarvis/MineStudio/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue"/></a>
+	<a href="https://craftjarvis.github.io/MineStudio/"><img src="https://img.shields.io/badge/Doc-yellow"/></a>
+    <a href="https://www.piwheels.org/project/minestudio/"><img src="https://img.shields.io/badge/PyPI-blue"/></a>
+	<a href="https://huggingface.co/CraftJarvis"><img src="https://img.shields.io/badge/Dataset-Released-orange"/></a>
+	<a href="https://github.com/CraftJarvis/MineStudio"><img src="https://visitor-badge.laobi.icu/badge?page_id=CraftJarvis.MineStudio"/></a>
+	<a href="https://github.com/CraftJarvis/MineStudio"><img src="https://img.shields.io/github/stars/CraftJarvis/MineStudio"/></a>
+</div>
+<section id="overview">
+<h1>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h1>
+<p>MineStudio is a simple and efficient Minecraft development kit for AI research.
+MineStudio contains a series of tools and APIs that can help you quickly develop Minecraft AI agents:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://craftjarvis.github.io/MineStudio/simulator/index.html">Simulator</a>: Easily customizable Minecraft simulator based on <a class="reference external" href="https://github.com/minerllabs/minerl">MineRL</a>.</p></li>
+<li><p><a class="reference external" href="https://craftjarvis.github.io/MineStudio/data/index.html">Data</a>: A trajectory data structure for efficiently storing and retrieving arbitray trajectory segment.</p></li>
+<li><p><a class="reference external" href="https://craftjarvis.github.io/MineStudio/models/index.html">Models</a>: A template for Minecraft policy model and a gallery of baseline models.</p></li>
+<li><p><a class="reference external" href="https://craftjarvis.github.io/MineStudio/offline/index.html">Offline Training</a>: A straightforward pipeline for pre-training Minecraft agents with offline data.</p></li>
+<li><p><a class="reference external" href="https://craftjarvis.github.io/MineStudio/online/index.html">Online Training</a>: Efficient RL implementation supporting memory-based policies and simulator crash recovery.</p></li>
+<li><p><a class="reference external" href="https://craftjarvis.github.io/MineStudio/inference/index.html">Inference</a>: Pallarelized and distributed inference framework based on <a class="reference external" href="https://docs.ray.io/en/latest/index.html">Ray</a>.</p></li>
+<li><p><a class="reference external" href="https://craftjarvis.github.io/MineStudio/benchmark/index.html">Benchmark</a>: Automating and batch-testing of diverse Minecraft tasks.</p></li>
+</ul>
+<p><strong>This repository is under development.</strong> We welcome any contributions and suggestions.</p>
+</section>
+<section id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Link to this heading">#</a></h1>
+<p>For a more detailed installation guide, please refer to the <a class="reference external" href="https://craftjarvis.github.io/MineStudio/overview/installation.html">documentation</a>.</p>
+<p>MineStudio requires Python 3.10 or later. We recommend using conda to maintain an environment on Linux systems. JDK 8 is also required for running the Minecraft simulator.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>minestudio<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.10<span class="w"> </span>-y
+conda<span class="w"> </span>activate<span class="w"> </span>minestudio
+conda<span class="w"> </span>install<span class="w"> </span>--channel<span class="o">=</span>conda-forge<span class="w"> </span><span class="nv">openjdk</span><span class="o">=</span><span class="m">8</span><span class="w"> </span>-y
+</pre></div>
+</div>
+<p>MineStudio is available on PyPI. You can install it via pip.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>MineStudio
+</pre></div>
+</div>
+<p>To install MineStudio from source, you can run the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/CraftJarvis/MineStudio.git
+</pre></div>
+</div>
+<p>Minecraft simulator requires rendering tools. For users with nvidia graphics cards, we recommend installing <strong>VirtualGL</strong>. For other users, we recommend using <strong>Xvfb</strong>, which supports CPU rendering but is relatively slower. Refer to the <a class="reference external" href="https://craftjarvis.github.io/MineStudio/overview/installation.html#install-the-rendering-tool">documentation</a> for installation commands.</p>
+<p>After the installation, you can run the following command to check if the installation is successful:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>minestudio.simulator.entry<span class="w"> </span><span class="c1"># using Xvfb</span>
+<span class="nv">MINESTUDIO_GPU_RENDER</span><span class="o">=</span><span class="m">1</span><span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>minestudio.simulator.entry<span class="w"> </span><span class="c1"># using VirtualGL</span>
+</pre></div>
+</div>
+</section>
+<section id="why-minestudio">
+<h1>Why MineStudio<a class="headerlink" href="#why-minestudio" title="Link to this heading">#</a></h1>
+</section>
+<section id="acknowledgement">
+<h1>Acknowledgement<a class="headerlink" href="#acknowledgement" title="Link to this heading">#</a></h1>
+<p>The simulation environment is built upon <a class="reference external" href="https://github.com/minerllabs/minerl">MineRL</a> and <a class="reference external" href="https://github.com/microsoft/malmo">Project Malmo</a>.
+We also refer to <a class="reference external" href="https://docs.ray.io/en/latest/index.html">Ray</a>, <a class="reference external" href="https://pytorch-lightning.readthedocs.io/en/latest/">PyTorch Lightning</a> for distributed training and inference.
+Thanks for their great work.</p>
+</section>
+<section id="citation">
+<h1>Citation<a class="headerlink" href="#citation" title="Link to this heading">#</a></h1>
+<div class="highlight-bibtex notranslate"><div class="highlight"><pre><span></span><span class="nc">@misc</span><span class="p">{</span><span class="nl">MineStudio</span><span class="p">,</span>
+<span class="w">  </span><span class="na">author</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{Shaofei Cai, Zhancun Mu, Kaichen He, Bowei Zhang, Xinyue Zheng, Anji Liu and Yitao Liang}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">title</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{MineStudio: A Streamlined Framework for Minecraft AI Agent Development}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">year</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{2024}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">publisher</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{GitHub}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">journal</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{GitHub repository}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">howpublished</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{\url{</span>
+<span class="s">    https://github.com/CraftJarvis/MineStudio</span>
+<span class="s">    }}</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
 
 <div class="section ablog__blog_comments">
   
@@ -602,7 +674,12 @@
     <i class="fa-solid fa-list"></i> On this page
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
-    <ul class="simple visible nav section-nav flex-column">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Overview</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#why-minestudio">Why MineStudio</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#acknowledgement">Acknowledgement</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#citation">Citation</a></li>
 </ul>
 
   </nav></div>
