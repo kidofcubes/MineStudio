@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-11-30 13:20:04
  * @LastEditors: muzhancun muzhancun@126.com
- * @LastEditTime: 2024-12-20 15:16:08
+ * @LastEditTime: 2024-12-23 20:03:44
  * @FilePath: /MineStudio/README.md
 -->
 
@@ -21,6 +21,10 @@
 </div>
 
 ## Overview
+
+<div align="center">
+<img src="./docs/source/_static/workflow.png" width="" alt="Workflow" />
+</div>
 
 MineStudio is a simple and efficient Minecraft development kit for AI research.
 MineStudio contains a series of tools and APIs that can help you quickly develop Minecraft AI agents:
