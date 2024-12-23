@@ -1,10 +1,10 @@
 [build-system]
-requires = ["setuptools", "wheel"]
+requires = ["setuptools>=42", "wheel", "setuptools-scm[toml]>=6.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "minestudio"
-version="1.0.0"
+version="1.0.2"
 description = "A simple and efficient Minecraft development kit for AI research."
 dependencies = [
     "av",
@@ -51,11 +51,15 @@ authors = [
 ]
 requires-python = ">=3.10"
 
-[options.packages.find]
-where = "minestudio"
+[tool.setuptools]
+packages = ["minestudio"]
+include-package-data = true
 
-[tool.setuptools.packages.find]
-include = ['minestudio*']
+[tool.setuptools-scm]
+version_scheme = "post-release"
+local_scheme = "node-and-timestamp"
+include = ".gitignore"
+
 
 [tool.setuptools.dynamic]
 readme = {file = "README.md"}
