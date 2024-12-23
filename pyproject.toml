@@ -42,7 +42,7 @@ dependencies = [
     "imgui",
     "pyopengl",
     "ray",
-    "absl-py"
+    "absl-py",
     "dm-tree",
     "x_transformers==0.27.1"
 ]
