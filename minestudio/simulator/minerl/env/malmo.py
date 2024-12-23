@@ -95,11 +95,19 @@ class InstanceManager:
     Note: In future versions of MineRL the instance manager will become its own daemon process which provides
     instance allocation capability using remote procedure calls.
     """
-    INSTANCE_DIR = str(Path(__file__).parent.parent / "tmp" / "stark_tech_instances")
-    MINECRAFT_DIR = os.path.join(os.path.dirname(__file__), '..', 'MCP-Reborn')
+    from minestudio.utils import get_mine_studio_dir
+    manager_dir = get_mine_studio_dir()
+    
+    # INSTANCE_DIR = str(Path(__file__).parent.parent / "tmp" / "stark_tech_instances")
+    # MINECRAFT_DIR = os.path.join(os.path.dirname(__file__), '..', 'MCP-Reborn')
+    # RUNTIME_DIR = os.path.join(os.path.dirname(__file__), 'runtime')
+    INSTANCE_DIR = os.path.join(manager_dir, "tmp", "stark_tech_instances")
+    MINECRAFT_DIR = os.path.join(manager_dir, 'engine')
+    RUNTIME_DIR = os.path.join(manager_dir, 'runtime')
+    os.makedirs(RUNTIME_DIR, exist_ok=True)
 
     SCHEMAS_DIR = os.path.join(os.path.dirname(__file__), '..', 'Malmo', 'Schemas')
-    RUNTIME_DIR = os.path.join(os.path.dirname(__file__), 'runtime')
+    
     KEEP_ALIVE_PYRO_FREQUENCY = 5
     REMOTE = False
 

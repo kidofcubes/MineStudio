@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-11 05:20:17
-LastEditors: muzhancun muzhancun@126.com
-LastEditTime: 2024-12-20 15:21:06
+LastEditors: caishaofei-mus1 1744260356@qq.com
+LastEditTime: 2024-12-23 19:44:25
 FilePath: /MineStudio/minestudio/simulator/entry.py
 '''
 
@@ -20,6 +20,7 @@ from minestudio.utils.vpt_lib.action_mapping import CameraHierarchicalMapping
 from minestudio.simulator.minerl.utils.inventory import map_slot_number_to_cmd_slot
 from minestudio.simulator.minerl.herobraine.env_specs.human_survival_specs import HumanSurvival
 from minestudio.simulator.callbacks import MinecraftCallback
+from minestudio.utils import get_mine_studio_dir
 
 ACTION_TRANSFORMER_KWARGS = dict(
     camera_binsize=2,
@@ -31,27 +32,26 @@ ACTION_TRANSFORMER_KWARGS = dict(
 action_mapper = CameraHierarchicalMapping(n_camera_bins=11)
 action_transformer = ActionTransformer(**ACTION_TRANSFORMER_KWARGS)
 
-def download_mcp_reborn():
+def download_engine():
     import huggingface_hub, zipfile
-    local_dir = os.path.join(os.path.dirname(__file__), "minerl")
-    print(f"Downloading MCP-Reborn to {local_dir}")
-    huggingface_hub.hf_hub_download(repo_id='CraftJarvis/ROCKET-MCP-Reborn', filename='MCP-Reborn.zip', local_dir=local_dir)
-    with zipfile.ZipFile(os.path.join(local_dir, 'MCP-Reborn.zip'), 'r') as zip_ref:
+    local_dir = get_mine_studio_dir()
+    print(f"Downloading simulator engine to {local_dir}")
+    huggingface_hub.hf_hub_download(repo_id='CraftJarvis/SimulatorEngine', filename='engine.zip', local_dir=local_dir)
+    with zipfile.ZipFile(os.path.join(local_dir, 'engine.zip'), 'r') as zip_ref:
         zip_ref.extractall(local_dir)
-    os.remove(os.path.join(local_dir, 'MCP-Reborn.zip'))
+    os.remove(os.path.join(local_dir, 'engine.zip'))
 
-if not os.path.exists(os.path.join(os.path.dirname(__file__), "minerl", "MCP-Reborn")):
-    response = input("Detecting missing MCP-Reborn, do you want to download it from huggingface (Y/N)?\n")
-    while True:
+def check_engine():
+    if not os.path.exists(os.path.join(get_mine_studio_dir(), "engine", "build", "libs", "mcprec-6.13.jar")):
+        response = input("Detecting missing simulator engine, do you want to download it from huggingface (Y/N)?\n")
         if response == 'Y' or response == 'y':
-            download_mcp_reborn()
-            break
-        elif response == 'N' or response == 'n':
-            break
+            download_engine()
         else:
-            response = input("Please input Y or N:\n")
+            exit(0)
 
 class MinecraftSim(gymnasium.Env):
+    
+    check_engine()
     
     def __init__(
         self,  
