@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-11-30 13:20:04
  * @LastEditors: muzhancun muzhancun@126.com
- * @LastEditTime: 2024-12-23 20:03:44
+ * @LastEditTime: 2024-12-23 20:12:40
  * @FilePath: /MineStudio/README.md
 -->
 
@@ -19,6 +19,8 @@
 	<a href="https://github.com/CraftJarvis/MineStudio"><img src="https://visitor-badge.laobi.icu/badge?page_id=CraftJarvis.MineStudio"/></a>
 	<a href="https://github.com/CraftJarvis/MineStudio"><img src="https://img.shields.io/github/stars/CraftJarvis/MineStudio"/></a>
 </div>
+
+MineStudio is a simple and efficient Minecraft development kit for AI research.
 
 ## Overview
 
