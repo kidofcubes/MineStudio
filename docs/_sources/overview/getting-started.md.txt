@@ -73,7 +73,7 @@ Learn more about MineStudio Simulator
 ````
 
 ````{dropdown} <img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Inference: Parallel Inference and Record Demonstrations
-```{include} quick-inference.md
+```{include} ../inference/quick-inference.md
 ```
 ````
 

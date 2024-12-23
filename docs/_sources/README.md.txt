@@ -5,7 +5,6 @@
  * @FilePath: /MineStudio/README.md
 -->
 
-
 <div align="center">
 <img src="./docs/source/_static/banner.png" width="" alt="MineStudio" />
 </div>
