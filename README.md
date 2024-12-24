@@ -9,7 +9,7 @@
 <img src="./docs/source/_static/banner.png" width="" alt="MineStudio" />
 </div>
 
-<h1 align="center">MineStudio: A Streamlined Framework for Minecraft AI Agent Development</h1>
+<h1 align="center">MineStudio: A Streamlined Package for Minecraft AI Agent Development</h1>
 
 <div align="center">
 	<a href="https://github.com/CraftJarvis/MineStudio/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue"/></a>
@@ -83,7 +83,7 @@ Thanks for their great work.
 ```bibtex
 @misc{MineStudio,
   author = {Shaofei Cai, Zhancun Mu, Kaichen He, Bowei Zhang, Xinyue Zheng, Anji Liu and Yitao Liang},
-  title = {MineStudio: A Streamlined Framework for Minecraft AI Agent Development},
+  title = {MineStudio: A Streamlined Package for Minecraft AI Agent Development},
   year = {2024},
   publisher = {GitHub},
   journal = {GitHub repository},
