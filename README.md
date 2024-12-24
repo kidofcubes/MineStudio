@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-11-30 13:20:04
  * @LastEditors: muzhancun muzhancun@126.com
- * @LastEditTime: 2024-12-20 15:16:08
+ * @LastEditTime: 2024-12-23 20:15:07
  * @FilePath: /MineStudio/README.md
 -->
 
@@ -20,9 +20,16 @@
 	<a href="https://github.com/CraftJarvis/MineStudio"><img src="https://img.shields.io/github/stars/CraftJarvis/MineStudio"/></a>
 </div>
 
+<div align="center">
+MineStudio is a simple and efficient Minecraft development kit for AI research.
+</div>
+
 ## Overview
 
-MineStudio is a simple and efficient Minecraft development kit for AI research.
+<div align="center">
+<img src="./docs/source/_static/workflow.png" width="" alt="Workflow" />
+</div>
+
 MineStudio contains a series of tools and APIs that can help you quickly develop Minecraft AI agents:
 - [Simulator](https://craftjarvis.github.io/MineStudio/simulator/index.html): Easily customizable Minecraft simulator based on [MineRL](https://github.com/minerllabs/minerl).
 - [Data](https://craftjarvis.github.io/MineStudio/data/index.html): A trajectory data structure for efficiently storing and retrieving arbitray trajectory segment.
