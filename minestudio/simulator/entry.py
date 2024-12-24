@@ -84,6 +84,8 @@ class MinecraftSim(gymnasium.Env):
             inventory = inventory,
             preferred_spawn_biome = preferred_spawn_biome, 
         ).make()
+
+        self.env.seed(seed)
         self.already_reset = False
 
     def agent_action_to_env_action(self, action: Dict[str, Any]):
