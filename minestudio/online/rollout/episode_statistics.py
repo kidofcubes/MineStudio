@@ -59,7 +59,6 @@ class EpisodeStatistics:
                 "steps": step,
                 "episode_count": self.acc_episode_count,
                 "mean_sum_reward": sum_train_reward / num_train_tasks if num_train_tasks > 0 else 0,
-                "mean_test_sum_reward": sum_test_reward / num_test_tasks if num_test_tasks > 0 else 0,
                 "mean_discounted_reward": sum_discounted_reward / num_train_tasks if num_train_tasks > 0 else 0,
                 "mean_episode_length": sum_episode_length / (num_train_tasks + num_test_tasks) if num_train_tasks + num_test_tasks > 0 else 0
             }
