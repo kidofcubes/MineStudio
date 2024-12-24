@@ -9,8 +9,13 @@ import ray
 import wandb
 import uuid
 import torch
+import json
+import random
 from minestudio.online.rollout.start_manager import start_rolloutmanager
 from minestudio.online.trainer.start_trainer import start_trainer
+from minestudio.online.run.config.config import policy_generator, online_dict, new_env_generator
+
+import os
 
 
 if __name__=='__main__':
@@ -25,11 +30,21 @@ if __name__=='__main__':
     online_dict = getattr(module, "online_dict")
     online_cfg = OmegaConf.create(online_dict)
 
-    with open("config/"+config_name+".py", "r") as f:
-        whole_config = f.read()
+    start_rolloutmanager(policy_generator, new_env_generator, online_cfg)
+    start_trainer(policy_generator, new_env_generator, online_cfg)
 
-    start_rolloutmanager(policy_generator, env_generator, online_cfg)
-    start_trainer(policy_generator, env_generator, online_cfg, whole_config)
+
+
+#test 是不是直接start一个新的rolloutmanager就行了，给新的random sample的generator
+
+
+# # =[
+#                 '/give @p minecraft:bow 1',
+#                 '/give @p minecraft:arrow 64',
+#                 '/give @p minecraft:arrow 64',
+#             ]
+
+
 
 # training_session = None
 # try:
