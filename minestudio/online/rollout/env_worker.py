@@ -19,7 +19,7 @@ import os
 #from minestudio.simulator.entry import MinecraftSim
 import copy
 from minestudio.simulator import MinecraftSim
-
+import subprocess
 
 class VideoWriter(Thread):
     def __init__(self, video_fps: int, queue_size: int = 200):
@@ -129,9 +129,12 @@ class EnvWorker(Process):
         video_writer = VideoWriter(video_fps=self.video_fps)
         video_writer.start()
         record = False
+        self.env = self.env_generator()
         timestamp = time.strftime("%Y-%m-%d_%H-%M-%S", time.localtime())
+        episode_info = None
         while True:
             time.sleep(random.randint(0,20))
+            self.env.close()
             self.env = self.env_generator()
             try:
                 start_time = time.time()
@@ -177,7 +180,10 @@ class EnvWorker(Process):
                         video_writer.close_video()
                     #_result = self.report_rewards(np.array(reward_list))
                     
-                    if (_result := self.report_rewards(np.array(reward_list))) is not None:
+                    _result, episode_info = self.report_rewards(np.array(reward_list))
+                    obs["online_info"] = episode_info
+                    
+                    if _result is not None:
                         record = True
                         video_step = _result
                         vidoe_uuid = str(uuid.uuid4())

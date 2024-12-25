@@ -11,7 +11,7 @@ logger = logging.getLogger("ray")
 class EpisodeStatistics:
     def __init__(self, discount: float):
         self.discount = discount
-        
+        self.episode_info = {}
         #Maintain separate metrics for each task
         self.sum_rewards_metrics = {}#torchmetrics.MeanMetric()
         self.discounted_rewards_metrics = {}#torchmetrics.MeanMetric()
@@ -55,6 +55,13 @@ class EpisodeStatistics:
                     num_test_tasks += 1
                 sum_episode_length += mean_episode_length
 
+            self.episode_info = {
+                "steps": step,
+                "episode_count": self.acc_episode_count,
+                "mean_sum_reward": sum_train_reward / num_train_tasks if num_train_tasks > 0 else 0,
+                "mean_discounted_reward": sum_discounted_reward / num_train_tasks if num_train_tasks > 0 else 0,
+                "mean_episode_length": sum_episode_length / (num_train_tasks + num_test_tasks) if num_train_tasks + num_test_tasks > 0 else 0
+            }
             wandb_logger.log({
                 "episode_statistics/steps": step,
                 "episode_statistics/episode_count": self.acc_episode_count,
@@ -63,6 +70,7 @@ class EpisodeStatistics:
                 "episode_statistics/mean_discounted_reward": sum_discounted_reward / num_train_tasks if num_train_tasks > 0 else 0,
                 "episode_statistics/mean_episode_length": sum_episode_length / (num_train_tasks + num_test_tasks) if num_train_tasks + num_test_tasks > 0 else 0
             })
+
             self.acc_episode_count = 0
             
         print("received_episode_statistics:"+str(step)+str(record_next_episode))
@@ -91,6 +99,6 @@ class EpisodeStatistics:
         if len(self.record_requests) > 0:
             print("episode, cord_requests>0:" + str(self.record_requests))
             step = self.record_requests.popleft()
-            return step
+            return step, self.episode_info
         else:
-            return None
+            return None, self.episode_info

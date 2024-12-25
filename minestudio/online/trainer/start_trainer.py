@@ -3,7 +3,7 @@ from minestudio.online.utils.rollout import get_rollout_manager
 import minestudio.online.trainer
 from minestudio.online.utils.train.training_session import TrainingSession
 
-def start_trainer(policy_generator, env_generator, online_cfg):
+def start_trainer(policy_generator, env_generator, online_cfg, whole_config):
     training_session = None
     try:
         training_session = ray.get_actor("training_session")
@@ -24,6 +24,7 @@ def start_trainer(policy_generator, env_generator, online_cfg):
         rollout_manager=rollout_manager,
         policy_generator=policy_generator,
         env_generator=env_generator,
-        **online_cfg.train_config
+        **online_cfg.train_config,
+        whole_config = whole_config
     )
     trainer.fit()

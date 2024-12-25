@@ -67,17 +67,17 @@ def env_generator():
 **Config** which provide the hyper-parameters for online training:
 ```python
 online_dict = {
-    "trainer_name": "PPOTrainer",
+ "trainer_name": "PPOTrainer",
     "detach_rollout_manager": True,
     "rollout_config": {
         "num_rollout_workers": 2,
         "num_gpus_per_worker": 1.0,
         "num_cpus_per_worker": 1,
         "fragment_length": 256,
-        "to_send_queue_size": 4,
+        "to_send_queue_size": 6,
         "worker_config": {
-            "num_envs": 16,
-            "batch_size": 2,
+            "num_envs": 12,
+            "batch_size": 6,
             "restart_interval": 3600,  # 1h
             "video_fps": 20,
             "video_output_dir": "output/videos",
@@ -101,18 +101,18 @@ online_dict = {
         "num_iterations": 4000,
         "vf_warmup": 0,
         "learning_rate": 0.00002,
-        "anneal_lr_linearly": False,
+        "anneal_lr_linearly": 
         "weight_decay": 0.04,
         "adam_eps": 1e-8,
         "batch_size_per_gpu": 1,
-        "batches_per_iteration": 50,
+        "batches_per_iteration": 200,
         "gradient_accumulation": 10, 
-        "epochs_per_iteration": 1,  
+        "epochs_per_iteration": 1, 
         "context_length": 64,
         "discount": 0.999,
         "gae_lambda": 0.95,
         "ppo_clip": 0.2,
-        "clip_vloss": False,
+        "clip_vloss": False, 
         "max_grad_norm": 5, 
         "zero_initial_vf": True,
         "ppo_policy_coef": 1.0,
@@ -127,12 +127,12 @@ online_dict = {
         "num_cpus_per_reader": 0.1,
         "prefetch_batches": 2,
         "save_interval": 10,
-        "save_path": None
         "keep_interval": 40,
         "record_video_interval": 2,
         "fix_decoder": False,
-        "resume": None,
+        "resume": None, 
         "resume_optimizer": True,
+        "save_path": "output"
     },
 
     "logger_config": {

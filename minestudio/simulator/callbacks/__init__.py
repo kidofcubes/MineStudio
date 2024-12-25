@@ -17,3 +17,5 @@ from minestudio.simulator.callbacks.play import PlayCallback
 from minestudio.simulator.callbacks.point import PointCallback, PlaySegmentCallback
 from minestudio.simulator.callbacks.demonstration import DemonstrationCallback
 from minestudio.simulator.callbacks.judgereset import JudgeResetCallback
+from minestudio.simulator.callbacks.reward_gate import GateRewardsCallback
+from minestudio.simulator.callbacks.voxels import VoxelsCallback

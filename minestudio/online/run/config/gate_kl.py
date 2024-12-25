@@ -1,15 +1,3 @@
-from numpy import roll
-from omegaconf import OmegaConf
-import hydra
-import logging
-from minestudio.online.rollout.rollout_manager import RolloutManager
-from minestudio.online.utils.rollout import get_rollout_manager
-from minestudio.online.utils.train.training_session import TrainingSession
-import ray
-import wandb
-import uuid
-import torch
-from minestudio.online.rollout.start_manager import start_rolloutmanager
 online_dict = {
     "trainer_name": "PPOTrainer",
     "detach_rollout_manager": True,
@@ -18,13 +6,13 @@ online_dict = {
         "num_gpus_per_worker": 1.0,
         "num_cpus_per_worker": 1,
         "fragment_length": 256,
-        "to_send_queue_size": 6,
+        "to_send_queue_size": 8,
         "worker_config": {
-            "num_envs": 12,
-            "batch_size": 6,
+            "num_envs": 16,
+            "batch_size": 8,
             "restart_interval": 3600,  # 1h
             "video_fps": 20,
-            "video_output_dir": "output/videos",
+            "video_output_dir": "output/videos/gate_kl",
         },
         "replay_buffer_config": {
             "max_chunks": 4800,
@@ -49,7 +37,7 @@ online_dict = {
         "weight_decay": 0.04,
         "adam_eps": 1e-8,
         "batch_size_per_gpu": 1,
-        "batches_per_iteration": 200,
+        "batches_per_iteration": 200, #200
         "gradient_accumulation": 10,  # TODO: check
         "epochs_per_iteration": 1,  # TODO: check
         "context_length": 64,
@@ -73,15 +61,15 @@ online_dict = {
         "save_interval": 10,
         "keep_interval": 40,
         "record_video_interval": 2,
-        "fix_decoder": False,
+        "enable_ref_update": False,
         "resume": None, #"/scratch/hekaichen/tmpdir/ray/session_2024-12-12_21-10-40_218613_2665801/artifacts/2024-12-12_21-10-58/TorchTrainer_2024-12-12_21-10-58/working_dirs/TorchTrainer_8758b_00000_0_2024-12-12_21-10-58/checkpoints/150",
         "resume_optimizer": True,
-        "save_path": "/scratch/hekaichen/workspace/MineStudio/minestudio/online/run/output"
+        "save_path": "/scratch/hekaichen/workspace/MineStudio/minestudio/online/run/output/gate_kl"
     },
 
     "logger_config": {
         "project": "minestudio_online",
-        "name": "bow_cow"
+        "name": "gate_kl"
     },
 }
 
@@ -93,33 +81,29 @@ def env_generator():
         RewardsCallback, 
         CommandsCallback, 
         JudgeResetCallback,
-        FastResetCallback
+        FastResetCallback,
+        GateRewardsCallback,
+        VoxelsCallback,
     )
     env = MinecraftSim(
         obs_size=(128, 128), 
-        preferred_spawn_biome="plains", 
+        preferred_spawn_biome="plains",
         callbacks=[
-            SummonMobsCallback([{'name': 'sheep', 'number': 50, 'range_x': [-15, 15], 'range_z': [-15, 15]}]),
-            MaskActionsCallback(inventory=0, attack = 0, forward = 0, back = 0, right = 0, left = 0), 
-            RewardsCallback([{
-                'event': 'kill_entity', 
-                'objects': ['sheep'], 
-                'reward': 5.0, 
-                'identity': 'shoot_sheep', 
-                'max_reward_times': 30, 
-            }]),
-            CommandsCallback(commands=[
-                '/give @p minecraft:bow 1',
-                '/give @p minecraft:arrow 64',
-                '/give @p minecraft:arrow 64',
-            ]),
+            MaskActionsCallback(inventory = 0), 
+            GateRewardsCallback(),
             FastResetCallback(
                 biomes=['plains'],
                 random_tp_range=1000,
             ),
-            JudgeResetCallback(600),
+            CommandsCallback(commands=[
+                '/give @p minecraft:diamond_pickaxe 1',
+                '/replaceitem entity @s weapon.offhand minecraft:obsidian 64',
+            ]),
+            JudgeResetCallback(2400),
+            VoxelsCallback()
         ]
     )
+
     return env
 
 def policy_generator():

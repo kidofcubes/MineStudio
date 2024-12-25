@@ -6,7 +6,6 @@ import wandb
 import uuid
 import torch
 
-ray.init(address="auto", ignore_reinit_error=True, namespace="online")
 @ray.remote
 class TrainingSession:
     def __init__(self, logger_config: DictConfig, hyperparams: DictConfig):
