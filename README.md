@@ -12,6 +12,7 @@
 <h1 align="center">MineStudio: A Streamlined Package for Minecraft AI Agent Development</h1>
 
 <div align="center">
+	<a href="https://arxiv.org/abs/2412.18293"><img src="https://img.shields.io/badge/arXiv-2412.18293-b31b1b.svg"></a>
 	<a href="https://github.com/CraftJarvis/MineStudio/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue"/></a>
 	<a href="https://craftjarvis.github.io/MineStudio/"><img src="https://img.shields.io/badge/Doc-yellow"/></a>
     	<a href="https://pypi.org/project/minestudio/"><img src="https://img.shields.io/pypi/v/minestudio.svg"/></a>
