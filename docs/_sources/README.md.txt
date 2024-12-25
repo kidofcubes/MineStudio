@@ -82,14 +82,10 @@ Thanks for their great work.
 ## Citation
 
 ```bibtex
-@misc{MineStudio,
-  author = {Shaofei Cai, Zhancun Mu, Kaichen He, Bowei Zhang, Xinyue Zheng, Anji Liu and Yitao Liang},
-  title = {MineStudio: A Streamlined Package for Minecraft AI Agent Development},
-  year = {2024},
-  publisher = {GitHub},
-  journal = {GitHub repository},
-  howpublished = {\url{
-    https://github.com/CraftJarvis/MineStudio
-    }},
+@inproceedings{MineStudio,
+  title={MineStudio: A Streamlined Package for Minecraft AI Agent Development},
+  author={Shaofei Cai and Zhancun Mu and Kaichen He and Bowei Zhang and Xinyue Zheng and Anji Liu and Yitao Liang},
+  year={2024},
+  url={https://api.semanticscholar.org/CorpusID:274992448}
 }
 ```
