@@ -2,12 +2,14 @@ import numpy as np
 from minestudio.simulator.callbacks.callback import MinecraftCallback
 
 class GateRewardsCallback(MinecraftCallback):
-    def __init__(self):
+    def __init__(self, x_o, y_o, z_o):
         super().__init__()
         self.prev_info = {}
         self.reward_memory = {}
         self.current_step = 0
-    
+        self.x_o = x_o
+        self.y_o = y_o
+        self.z_o = z_o
     def reward_as_smlest_pos(self, obsidian_position, obsidian_positions):
         x, y, z = obsidian_position
         positive_pos = [(x, y, z), (x, y, z+1), (x, y, z+2), (x, y, z+3), 
@@ -28,12 +30,18 @@ class GateRewardsCallback(MinecraftCallback):
         frame_num = len(set(positive_pos)&set(obsidian_positions))
         #extra_bonus = max(0, frame_num-8) + max(0, frame_num-10) + 2*max(0, frame_num-12) + 4*max(0, frame_num-14)
         extra_bonus = max(0, frame_num-12)
-        fix_z_reward = frame_num+extra_bonus - len(set(negtive_pos)&set(obsidian_positions)) - 0.1*len(set(obsidian_positions))
+        fix_z_reward = frame_num+extra_bonus - len(set(negtive_pos)&set(obsidian_positions)) + 0.01*len(set(obsidian_positions))
         
         larger_reward = max(fix_x_reward, fix_z_reward)
         return larger_reward
     
     def gate_reward(self, info, obs = {}):
+        xpos = info["location_stats"]["xpos"]
+        ypos = info["location_stats"]["ypos"]
+        zpos = info["location_stats"]["zpos"]
+        if abs(xpos-self.x_o) > 8 or abs(ypos-self.y_o) > 10 or abs(zpos-self.z_o) > 8:
+            return 0
+
         if "voxels" not in info:
             return 0
         voxels = info["voxels"]

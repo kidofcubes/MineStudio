@@ -14,7 +14,7 @@ from minestudio.online.trainer.start_trainer import start_trainer
 
 
 if __name__=='__main__':
-    config_name = "gate_kl"
+    config_name = "gate_nokl"
     print("\033[1;32m Starting training session WITH CONFIG: " + config_name + " \033[0m")
     module_name = "minestudio.online.run.config."+config_name
 
