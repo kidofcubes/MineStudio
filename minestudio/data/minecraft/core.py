@@ -1,8 +1,8 @@
 '''
 Date: 2024-11-08 04:17:36
-LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-12-05 13:04:13
-FilePath: /MineStudio/minestudio/data/minecraft/core.py
+LastEditors: caishaofei-mus1 1744260356@qq.com
+LastEditTime: 2024-12-30 11:29:18
+FilePath: /MineStudio/var/minestudio/data/minecraft/core.py
 '''
 import io
 import typing
@@ -165,7 +165,6 @@ def decode_video_chunk(
                     future = executor.submit(convert_and_resize, av_frame, width, height)
                     future_frames.append(future)
             frames = [future.result() for future in future_frames]
-            stream.close()
             container.close()
 
     frames = np.array(frames)

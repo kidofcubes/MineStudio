@@ -1,7 +1,7 @@
 '''
 Date: 2024-12-12 11:00:06
-LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-12-12 11:31:04
+LastEditors: caishaofei-mus1 1744260356@qq.com
+LastEditTime: 2024-12-30 11:41:18
 FilePath: /MineStudio/tests/test_visualization.py
 '''
 
@@ -43,7 +43,7 @@ data_module = MineDataModule(
     data_params=dict(
         mode='event',
         dataset_dirs=[
-            '/nfs-shared-2/data/contractors/dataset_10xx',
+            '/nfs-shared-2/data/contractors/dataset_6xx',
         ],
         frame_width=224,
         frame_height=224,

@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-10 12:27:01
-LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-11-10 12:28:58
+LastEditors: caishaofei-mus1 1744260356@qq.com
+LastEditTime: 2024-12-29 23:45:37
 FilePath: /MineStudio/minestudio/data/minecraft/tools/convert_lmdb.py
 '''
 
@@ -22,7 +22,6 @@ import io
 import av
 import cv2
 import lmdb
-import redis
 import argparse
 import torch
 import numpy as np
@@ -189,8 +188,8 @@ class ConvertWorker:
                         continue
                 frame = frame.to_ndarray(format="rgb24")
                 # #! reszie to 224, 224
-                # cv_width, cv_height = 224, 224
-                # cv2.resize(frame, (cv_width, cv_height), interpolation=cv2.INTER_LINEAR)
+                cv_width, cv_height = 224, 224
+                cv2.resize(frame, (cv_width, cv_height), interpolation=cv2.INTER_LINEAR)
                 # #! reszie to 224, 224
                 cache_frames.append(frame)
                 if len(cache_frames) == self.chunk_size * self.thread_pool:
