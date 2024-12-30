@@ -12,7 +12,6 @@ Subpackages
 .. toctree::
    :maxdepth: 4
 
-   minestudio.agents
    minestudio.benchmark
    minestudio.data
    minestudio.inference
