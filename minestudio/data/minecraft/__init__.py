@@ -6,3 +6,4 @@ FilePath: /MineStudio/minestudio/data/minecraft/__init__.py
 '''
 from .part_raw import RawDataset
 from .part_event import EventDataset
+from .dataset import load_dataset

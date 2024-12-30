@@ -115,3 +115,6 @@ class MinecraftDataset(Dataset):
             "buttons": gymnasium.spaces.MultiDiscrete([8641]),
             "camera": gymnasium.spaces.MultiDiscrete([121]), 
         })
+
+def load_dataset(**kwargs):
+    return MinecraftDataset(**kwargs)

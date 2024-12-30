@@ -1,11 +1,11 @@
 <!--
  * @Date: 2024-12-12 09:18:35
  * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-12-12 12:13:31
+ * @LastEditTime: 2024-12-30 14:27:43
  * @FilePath: /MineStudio/docs/source/data/visualization.md
 -->
 
-# Visualization Script
+# Visualization
 
 We provide a visual script that allows users to observe whether the configured Dataloader meets expectations. It is useful for debugging and verifying the correctness of the data. 
 
