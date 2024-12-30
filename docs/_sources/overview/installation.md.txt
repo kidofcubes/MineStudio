@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-11-28 22:13:52
- * @LastEditors: muzhancun muzhancun@126.com
- * @LastEditTime: 2024-12-20 15:20:25
+ * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
+ * @LastEditTime: 2024-12-30 15:19:15
  * @FilePath: /MineStudio/docs/source/overview/installation.md
 -->
 (gentle-intro)=
@@ -56,7 +56,7 @@ Not all graphics cards support virtualGL. If you do not have speed requirements,
 
 You need to download the following sources: 
 - [virtualgl_3.1_amd64.deb](https://sourceforge.net/projects/virtualgl/files/3.1/virtualgl_3.1_amd64.deb/download)
-- [vgl_entrypoint.sh]()
+- [vgl_entrypoint.sh](https://github.com/CraftJarvis/MineStudio/blob/master/assets/vgl_entrypoint.sh)
 
 ```console
 $ apt update 
