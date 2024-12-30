@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-08 04:17:36
 LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2024-12-30 11:29:18
+LastEditTime: 2024-12-30 21:13:36
 FilePath: /MineStudio/var/minestudio/data/minecraft/core.py
 '''
 import io
@@ -9,6 +9,7 @@ import typing
 import lmdb
 import random
 import pickle
+import requests
 import hashlib
 from collections import OrderedDict
 from concurrent.futures import ThreadPoolExecutor
@@ -22,12 +23,13 @@ import albumentations as A
 import numpy as np
 from rich import print
 from rich.console import Console
-from typing import Union, Tuple, List, Dict, Callable, Sequence, Mapping, Any, Optional
+from typing import Union, Tuple, List, Dict, Callable, Sequence, Mapping, Any, Optional, Literal
 from pathlib import Path
 from functools import partial
 
 from minestudio.utils.vpt_lib.actions import ActionTransformer
 from minestudio.utils.vpt_lib.action_mapping import CameraHierarchicalMapping
+from minestudio.data.minecraft.utils import pull_datasets_from_remote
 
 ACTION_TRANSFORMER_KWARGS = dict(
     camera_binsize=2,
@@ -410,6 +412,7 @@ class Kernel:
             frame_width (int, optional): width of output video frames. Defaults to 128.
             frame_height (int, optional): height of output video frames. Defaults to 128.
         """
+        dataset_dirs = pull_datasets_from_remote(dataset_dirs)
         self.dataset_dirs = [Path(dataset_dir) for dataset_dir in sorted(dataset_dirs)]
         
         enable_sources = {

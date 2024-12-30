@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-10 10:26:52
-LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-11-24 06:51:29
+LastEditors: caishaofei-mus1 1744260356@qq.com
+LastEditTime: 2024-12-30 20:55:41
 FilePath: /MineStudio/minestudio/data/minecraft/part_event.py
 '''
 import io
@@ -27,6 +27,12 @@ class EventLMDBDriver:
 
         with self.lmdb_stream.begin(write=False) as txn:
             __event_info__ = pickle.loads(txn.get(b'__event_info__'))
+            # check if codebook exists
+            __codebook_bytes__ = txn.get(b'__codebook__', None)
+            if __codebook_bytes__ is None:
+                self.__codebook__ = None
+            else:
+                self.__codebook__ = {v: k for k, v in pickle.loads(__codebook_bytes__).items()}
             self.event_info = {}
             for event, value in __event_info__.items():
                 if re.match(event_regex, event):
@@ -79,6 +85,8 @@ class EventLMDBDriver:
         with self.lmdb_stream.begin(write=False) as txn:
             item = pickle.loads(txn.get(key.encode()))
         episode, event_time, value = item
+        if self.__codebook__ is not None:
+            episode = self.__codebook__[episode]
         return episode, event_time, value
 
 class EventKernel:

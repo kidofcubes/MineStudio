@@ -1,19 +1,78 @@
 '''
 Date: 2024-11-10 10:06:28
-LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-12-12 11:25:52
-FilePath: /MineStudio/minestudio/data/minecraft/utils.py
+LastEditors: caishaofei-mus1 1744260356@qq.com
+LastEditTime: 2024-12-30 21:15:52
+FilePath: /MineStudio/var/minestudio/data/minecraft/utils.py
 '''
 import os
 import av
 import cv2
+import requests
 import numpy as np
 from datetime import datetime
 import torch
 import torch.distributed as dist
+import shutil
 from torch.utils.data import Sampler
 from tqdm import tqdm
-from typing import Union, Tuple, List, Dict, Callable, Sequence, Mapping, Any, Optional
+from rich import print
+from typing import Union, Tuple, List, Dict, Callable, Sequence, Mapping, Any, Optional, Literal
+from huggingface_hub import hf_api, snapshot_download
+
+def get_repo_total_size(repo_id, repo_type="dataset", branch="main"):
+
+    def fetch_file_list(path=""):
+        url = f"https://huggingface.co/api/{repo_type}s/{repo_id}/tree/{branch}/{path}"
+        response = requests.get(url)
+        response.raise_for_status()
+        return response.json()
+
+    def calculate_size(path=""):
+        files = fetch_file_list(path)
+        total_size = 0
+        for file in files:
+            if file["type"] == "file":
+                total_size += file["size"]
+            elif file["type"] == "directory":
+                total_size += calculate_size(file["path"])
+        return total_size
+    total_size_bytes = calculate_size()
+    total_size_gb = total_size_bytes / (1024 ** 3)
+    return total_size_bytes, total_size_gb
+
+def download_dataset_from_huggingface(name: Literal["6xx", "7xx", "8xx", "9xx", "10xx"], base_dir: Optional[str]=None):
+
+    if base_dir is None:
+        from minestudio.utils import get_mine_studio_dir
+        base_dir = get_mine_studio_dir()
+    
+    total, used, free = shutil.disk_usage(base_dir)
+    repo_id = f"CraftJarvis/minestudio-data-{name}"
+    total_size, _ = get_repo_total_size(repo_id)
+    print(
+        f"""
+        [bold]Download Dataset[/bold]
+        Dataset: {name}
+        Base Dir: {base_dir}
+        Total Size: {total_size / 1024 / 1024 / 1024:.2f} GB
+        Free Space: {free / 1024 / 1024 / 1024:.2f} GB
+        """
+    )
+    if total_size > free:
+        raise ValueError(f"Insufficient space for downloading {name}. ")
+    dataset_dir = os.path.join(get_mine_studio_dir(), 'contractors', f'dataset_{name}')
+    local_dataset_dir = snapshot_download(repo_id, repo_type="dataset", local_dir=dataset_dir)
+    return local_dataset_dir
+
+def pull_datasets_from_remote(dataset_dirs: List[str]) -> List[str]:
+    new_dataset_dirs = []
+    for path in dataset_dirs:
+        if path in ['6xx', '7xx', '8xx', '9xx', '10xx']:
+            return_path = download_dataset_from_huggingface(path)
+            new_dataset_dirs.append(return_path)
+        else:
+            new_dataset_dirs.append(path)
+    return new_dataset_dirs
 
 def write_video(
     file_name: str, 

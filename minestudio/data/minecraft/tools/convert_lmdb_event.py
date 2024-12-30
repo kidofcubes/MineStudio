@@ -1,15 +1,14 @@
 '''
 Date: 2024-11-10 12:26:39
-LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-11-10 12:29:04
-FilePath: /MineStudio/minestudio/data/minecraft/tools/convert_lmdb_event.py
+LastEditors: caishaofei-mus1 1744260356@qq.com
+LastEditTime: 2024-12-30 20:04:25
+FilePath: /MineStudio/var/minestudio/data/minecraft/tools/convert_lmdb_event.py
 '''
 
 import re
 import os
 import lmdb
 import time
-import redis
 import random
 import pickle
 import argparse
@@ -25,7 +24,6 @@ from multiprocessing import Pool
 from tqdm import tqdm
 from rich import print
 from rich.console import Console
-from yaml import load, CLoader
 from pathlib import Path
 from typing import Union, Tuple, List, Dict
 
@@ -34,6 +32,7 @@ from minestudio.data.minecraft.core import Kernel
 '''
     Desired data structure of lmdb files: 
     {
+        '__codebook__': {'eps1': '0', 'eps2': '1'}, (could be omitted) 
         '__num_events__': 600, 
         '__event_info__': {
             'pickup:mutton': {
@@ -78,7 +77,7 @@ def main(args):
     events = {}
     # monitor_fields = ['delta_craft_item', 'delta_mine_block', 'delta_pickup']
     monitor_fields = ['events']
-    for episode in tqdm(episodes):
+    for idx, episode in enumerate(tqdm(episodes)):
         length = episode_with_length[episode]
         frames, mask = kernel.read_frames(episode, start=0, win_len=length, skip_frame=1, source_type='contractor_info')
         assert mask.sum() == length, f"Mask sum: {mask.sum()}, length: {length}. "
@@ -101,7 +100,7 @@ def main(args):
         '__event_info__': {}, 
     }
     
-    print(lmdb_data['__num__events__'])
+    print("Total events:", lmdb_data['__num__events__'])
     
     for event, episode_items in events.items():
         lmdb_data['__event_info__'][event] = {
@@ -109,13 +108,20 @@ def main(args):
             '__num_items__': sum([len(x) for x in episode_items.values()]),
         }
     
+    codebook = {}
     for event, episode_items in events.items():
         event_item_id = 0
         for episode, items in episode_items.items():
+            # update codebook
+            if episode not in codebook:
+                    codebook[episode] = f"{len(codebook)}"
             for e_time, value in items:
                 key = str((event, event_item_id))
-                lmdb_data[key] = (episode, e_time, value)
+                # triple = (episode, e_time, value)
+                triple = (codebook[episode], e_time, value)
+                lmdb_data[key] = triple
                 event_item_id += 1
+    lmdb_data['__codebook__'] = codebook
     
     with lmdb.open(str(event_path), map_size=1<<40) as env:
         with env.begin(write=True) as txn:
@@ -123,8 +129,9 @@ def main(args):
                 key = key.encode()
                 value = pickle.dumps(value)
                 txn.put(key, value)
-    
+
     print(f"Write lmdb data into {event_path}. ")
+    print("The codebook: ", codebook)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

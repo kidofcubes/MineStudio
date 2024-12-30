@@ -1,7 +1,7 @@
 '''
 Date: 2024-12-12 11:00:06
 LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2024-12-30 11:41:18
+LastEditTime: 2024-12-30 20:57:43
 FilePath: /MineStudio/tests/test_visualization.py
 '''
 
@@ -14,7 +14,8 @@ from minestudio.data.minecraft.utils import visualize_dataloader
 #     data_params=dict(
 #         mode='raw',
 #         dataset_dirs=[
-#             '/nfs-shared-2/data/contractors/dataset_10xx',
+#             # '/nfs-shared-2/data/contractors/dataset_10xx',
+#             '10xx', 
 #         ],
 #         frame_width=224,
 #         frame_height=224,
@@ -22,7 +23,7 @@ from minestudio.data.minecraft.utils import visualize_dataloader
 #         split_ratio=0.8,
 #     ),
 #     batch_size=1, # set to 1 for visualizing continuous video frames
-#     num_workers=2,
+#     num_workers=1,
 #     prefetch_factor=4,
 #     shuffle_episodes=True,
 #     episode_continuous_batch=True,  # `True` for visualizing continuous video frames
@@ -43,7 +44,8 @@ data_module = MineDataModule(
     data_params=dict(
         mode='event',
         dataset_dirs=[
-            '/nfs-shared-2/data/contractors/dataset_6xx',
+            "10xx",
+            # '/nfs-shared-2/data/contractors/dataset_6xx',
         ],
         frame_width=224,
         frame_height=224,
