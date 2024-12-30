@@ -630,12 +630,12 @@
 <!--
  * @Date: 2024-12-12 09:18:35
  * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-12-30 15:03:31
+ * @LastEditTime: 2024-12-30 16:06:47
  * @FilePath: /MineStudio/docs/source/data/convertion.md
 -->
 <section id="convertion">
 <h1>Convertion<a class="headerlink" href="#convertion" title="Link to this heading">#</a></h1>
-<p>We provide a convertion script that allows users to convert the raw data to the desired lmdb format.</p>
+<p>We provide a convertion script that allows users to convert the raw data to the MineStudio format.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>It is essential to perform the conversion to ensure that our engineering efforts on the data can be effectively utilized.</p>
@@ -675,10 +675,10 @@
 </li>
 </ul>
 </section>
-<section id="convert-raw-trajectories-to-lmdb-format">
-<h2>Convert Raw Trajectories to LMDB format<a class="headerlink" href="#convert-raw-trajectories-to-lmdb-format" title="Link to this heading">#</a></h2>
+<section id="convert-raw-trajectories-to-minestudio-format">
+<h2>Convert Raw Trajectories to MineStudio format<a class="headerlink" href="#convert-raw-trajectories-to-minestudio-format" title="Link to this heading">#</a></h2>
 <ul>
-<li><p>convert <code class="docutils literal notranslate"><span class="pre">action</span></code> to LMDB format:</p>
+<li><p>convert <code class="docutils literal notranslate"><span class="pre">action</span></code> to MineStudio format:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">python -m minestudio.data.minecraft.tools.convert_lmdb \</span>
 <span class="go">       --num-workers 4 \</span>
 <span class="go">       --input-dir &#39;/path/to/raw_episodes/actions&#39; \</span>
@@ -688,7 +688,7 @@
 </pre></div>
 </div>
 </li>
-<li><p>convert <code class="docutils literal notranslate"><span class="pre">video</span></code> to LMDB format:</p>
+<li><p>convert <code class="docutils literal notranslate"><span class="pre">video</span></code> to MineStudio format:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">python -m minestudio.data.minecraft.tools.convert_lmdb \</span>
 <span class="go">       --num-workers 4 \</span>
 <span class="go">       --input-dir &#39;/path/to/raw_episodes/videos&#39; \</span>
@@ -701,9 +701,9 @@
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><code class="docutils literal notranslate"><span class="pre">num-workers</span></code> arguments specify the number of convertion workers. <strong>It also determines the number of the resulting LMDB files.</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">num-workers</span></code> arguments specify the number of convertion workers. <strong>It also determines the number of the resulting MineStudio dataset files.</strong></p>
 </div>
-<p>The resulting LMDB files will be stored in the <code class="docutils literal notranslate"><span class="pre">/path/to/output/dataset</span></code> directory.</p>
+<p>The resulting MineStudio dataset files will be stored in the <code class="docutils literal notranslate"><span class="pre">/path/to/output/dataset</span></code> directory.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">tree /path/to/output/dataset</span>
 <span class="go">├── action</span>
 <span class="go">│   ├── action-1000 </span>
@@ -734,9 +734,9 @@
 </pre></div>
 </div>
 </section>
-<section id="check-the-lmdb-files">
-<h2>Check the LMDB files<a class="headerlink" href="#check-the-lmdb-files" title="Link to this heading">#</a></h2>
-<p>You can check the generated LMDB files using the following command:</p>
+<section id="check-the-minestudio-format-dataset">
+<h2>Check the MineStudio-Format Dataset<a class="headerlink" href="#check-the-minestudio-format-dataset" title="Link to this heading">#</a></h2>
+<p>You can check the generated MineStudio dataset files using the following command:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">minestudio.data</span> <span class="kn">import</span> <span class="n">load_dataset</span>
 
 <span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span>
@@ -808,8 +808,8 @@
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-raw-trajectories">Prepare Raw Trajectories</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#convert-raw-trajectories-to-lmdb-format">Convert Raw Trajectories to LMDB format</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#check-the-lmdb-files">Check the LMDB files</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#convert-raw-trajectories-to-minestudio-format">Convert Raw Trajectories to MineStudio format</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#check-the-minestudio-format-dataset">Check the MineStudio-Format Dataset</a></li>
 </ul>
   </nav></div>
 
