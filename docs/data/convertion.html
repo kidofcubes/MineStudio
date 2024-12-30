@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Data &#8212; MineStudio 1.0.0</title>
+    <title>Convertion &#8212; MineStudio 1.0.0</title>
   
   
   
@@ -61,11 +61,11 @@
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'data/index';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'data/convertion';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Raw Dataset" href="dataset-raw.html" />
-    <link rel="prev" title="Graphical User Interfaces" href="../simulator/play.html" />
+    <link rel="next" title="Models" href="../models/index.html" />
+    <link rel="prev" title="Visualization" href="visualization.html" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -198,7 +198,7 @@
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="#">
+  <a class="nav-link nav-internal" href="index.html">
     Data
   </a>
 </li>
@@ -406,7 +406,7 @@
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="#">
+  <a class="nav-link nav-internal" href="index.html">
     Data
   </a>
 </li>
@@ -525,11 +525,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../simulator/play.html">Graphical User Interfaces</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Data</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Data</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="dataset-raw.html">Raw Dataset</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dataset-event.html">Event Dataset</a></li>
 <li class="toctree-l2"><a class="reference internal" href="visualization.html">Visualization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="convertion.html">Convertion</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Convertion</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../models/index.html">Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -615,7 +615,10 @@
     
     <li class="breadcrumb-item"><a href="../overview/index.html" class="nav-link">Overview</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Data</span></li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Data</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Convertion</span></li>
   </ul>
 </nav>
 </div>
@@ -633,227 +636,131 @@
                 <article class="bd-article">
                   
 <!--
- * @Date: 2024-11-29 08:08:34
+ * @Date: 2024-12-12 09:18:35
  * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-12-30 14:25:04
- * @FilePath: /MineStudio/docs/source/data/index.md
+ * @LastEditTime: 2024-12-30 15:03:31
+ * @FilePath: /MineStudio/docs/source/data/convertion.md
 -->
-<section id="data">
-<h1>Data<a class="headerlink" href="#data" title="Link to this heading">#</a></h1>
-<p>We design a trajectory structure for storing Minecraft data. Based on this data structure, users are able to store and retrieve arbitray trajectory segment in an efficient way.</p>
-<div class="toctree-wrapper compound">
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">MineStudio Data</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="dataset-raw.html">Raw Dataset</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="dataset-raw.html#basic-information">Basic Information</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dataset-raw.html#loading-segment-level-data">Loading Segment-level Data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dataset-raw.html#loading-episode-level-data">Loading Episode-level Data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dataset-raw.html#using-lightning-to-simplify-the-data-loading-process">Using Lightning to Simplify the Data Loading Process</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="dataset-event.html">Event Dataset</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="dataset-event.html#basic-information">Basic Information</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dataset-event.html#loading-all-the-kill-entity-events">Loading All the Kill Entity Events</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dataset-event.html#using-lightning-to-simplify-data-loading-process">Using Lightning to Simplify Data Loading Process</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dataset-event.html#additional-design-details-about-eventdataset">Additional Design Details About EventDataset</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="visualization.html">Visualization</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="visualization.html#visualize-dataloader">Visualize Dataloader</a></li>
-<li class="toctree-l2"><a class="reference internal" href="visualization.html#visualize-continuous-batches">Visualize Continuous Batches</a></li>
-<li class="toctree-l2"><a class="reference internal" href="visualization.html#visualize-batches-with-special-events">Visualize Batches with Special Events</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="convertion.html">Convertion</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="convertion.html#prepare-raw-trajectories">Prepare Raw Trajectories</a></li>
-<li class="toctree-l2"><a class="reference internal" href="convertion.html#convert-raw-trajectories-to-lmdb-format">Convert Raw Trajectories to LMDB format</a></li>
-<li class="toctree-l2"><a class="reference internal" href="convertion.html#check-the-lmdb-files">Check the LMDB files</a></li>
-</ul>
-</li>
-</ul>
+<section id="convertion">
+<h1>Convertion<a class="headerlink" href="#convertion" title="Link to this heading">#</a></h1>
+<p>We provide a convertion script that allows users to convert the raw data to the desired lmdb format.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>It is essential to perform the conversion to ensure that our engineering efforts on the data can be effectively utilized.</p>
 </div>
-<section id="quick-start">
-<h2>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading">#</a></h2>
-<!--
- * @Date: 2024-12-01 08:30:33
- * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-12-30 14:20:20
- * @FilePath: /MineStudio/docs/source/data/quick-data.md
--->
-<p>Here is a minimal example to show how we load a trajectory from the dataset.</p>
+<section id="prepare-raw-trajectories">
+<h2>Prepare Raw Trajectories<a class="headerlink" href="#prepare-raw-trajectories" title="Link to this heading">#</a></h2>
+<p>The raw data should contain <code class="docutils literal notranslate"><span class="pre">video</span></code> and <code class="docutils literal notranslate"><span class="pre">action</span></code> directories. The <code class="docutils literal notranslate"><span class="pre">video</span></code> contains a list of <code class="docutils literal notranslate"><span class="pre">mp4-format</span></code> video files, and the <code class="docutils literal notranslate"><span class="pre">action</span></code> contains a list of <code class="docutils literal notranslate"><span class="pre">dict-format</span></code> action files. The <code class="docutils literal notranslate"><span class="pre">video</span></code> and <code class="docutils literal notranslate"><span class="pre">action</span></code> files should have the same length and the same name.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">/path/to/raw_episodes/videos</span></code> directory:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">video</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;episode_0001.mp4&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;episode_0002.mp4&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;episode_0003.mp4&#39;</span><span class="p">,</span>
+    <span class="o">...</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/path/to/raw_episodes/actions</span></code> directory:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">action</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;episode_0001.pkl&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;episode_0002.pkl&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;episode_0003.pkl&#39;</span><span class="p">,</span>
+    <span class="o">...</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Each action file is a <code class="docutils literal notranslate"><span class="pre">dict</span></code> object that contains the following keys:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dict_keys</span><span class="p">([</span><span class="s1">&#39;back&#39;</span><span class="p">,</span> <span class="s1">&#39;drop&#39;</span><span class="p">,</span> <span class="s1">&#39;forward&#39;</span><span class="p">,</span> <span class="s1">&#39;hotbar.1&#39;</span><span class="p">,</span> <span class="s1">&#39;hotbar.2&#39;</span><span class="p">,</span> <span class="s1">&#39;hotbar.3&#39;</span><span class="p">,</span> <span class="s1">&#39;hotbar.4&#39;</span><span class="p">,</span> <span class="s1">&#39;hotbar.5&#39;</span><span class="p">,</span> <span class="s1">&#39;hotbar.6&#39;</span><span class="p">,</span> <span class="s1">&#39;hotbar.7&#39;</span><span class="p">,</span> <span class="s1">&#39;hotbar.8&#39;</span><span class="p">,</span> <span class="s1">&#39;hotbar.9&#39;</span><span class="p">,</span> <span class="s1">&#39;inventory&#39;</span><span class="p">,</span> <span class="s1">&#39;jump&#39;</span><span class="p">,</span> <span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="s1">&#39;sneak&#39;</span><span class="p">,</span> <span class="s1">&#39;sprint&#39;</span><span class="p">,</span> <span class="s1">&#39;camera&#39;</span><span class="p">,</span> <span class="s1">&#39;attack&#39;</span><span class="p">,</span> <span class="s1">&#39;use&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>The shape of <code class="docutils literal notranslate"><span class="pre">attack</span></code>: <code class="docutils literal notranslate"><span class="pre">(4376,)</span></code></p>
+<p>The shape of <code class="docutils literal notranslate"><span class="pre">camera</span></code>: <code class="docutils literal notranslate"><span class="pre">(4376,</span> <span class="pre">2)</span></code></p>
+</div>
+</li>
+</ul>
+</section>
+<section id="convert-raw-trajectories-to-lmdb-format">
+<h2>Convert Raw Trajectories to LMDB format<a class="headerlink" href="#convert-raw-trajectories-to-lmdb-format" title="Link to this heading">#</a></h2>
+<ul>
+<li><p>convert <code class="docutils literal notranslate"><span class="pre">action</span></code> to LMDB format:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">python -m minestudio.data.minecraft.tools.convert_lmdb \</span>
+<span class="go">       --num-workers 4 \</span>
+<span class="go">       --input-dir &#39;/path/to/raw_episodes/actions&#39; \</span>
+<span class="go">       --action-dir &#39;/path/to/raw_episodes/actions&#39; \</span>
+<span class="go">       --output-dir &#39;/path/to/output/dataset&#39; \</span>
+<span class="go">       --source-type &#39;action&#39;</span>
+</pre></div>
+</div>
+</li>
+<li><p>convert <code class="docutils literal notranslate"><span class="pre">video</span></code> to LMDB format:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">python -m minestudio.data.minecraft.tools.convert_lmdb \</span>
+<span class="go">       --num-workers 4 \</span>
+<span class="go">       --input-dir &#39;/path/to/raw_episodes/videos&#39; \</span>
+<span class="go">       --action-dir &#39;/path/to/raw_episodes/actions&#39; \</span>
+<span class="go">       --output-dir &#39;/path/to/output/dataset&#39; \</span>
+<span class="go">       --source-type &#39;video&#39;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">num-workers</span></code> arguments specify the number of convertion workers. <strong>It also determines the number of the resulting LMDB files.</strong></p>
+</div>
+<p>The resulting LMDB files will be stored in the <code class="docutils literal notranslate"><span class="pre">/path/to/output/dataset</span></code> directory.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">tree /path/to/output/dataset</span>
+<span class="go">├── action</span>
+<span class="go">│   ├── action-1000 </span>
+<span class="go">│   │   ├── data.mdb</span>
+<span class="go">│   │   └── lock.mdb</span>
+<span class="go">│   ├── action-1500</span>
+<span class="go">│   │   ├── data.mdb</span>
+<span class="go">│   │   └── lock.mdb</span>
+<span class="go">│   ├── action-1904</span>
+<span class="go">│   │   ├── data.mdb</span>
+<span class="go">│   │   └── lock.mdb</span>
+<span class="go">│   └── action-500</span>
+<span class="go">│       ├── data.mdb</span>
+<span class="go">│       └── lock.mdb</span>
+<span class="go">└── video</span>
+<span class="go">    ├── video-1428  </span>
+<span class="go">    │   ├── data.mdb</span>
+<span class="go">    │   └── lock.mdb</span>
+<span class="go">    ├── video-1903</span>
+<span class="go">    │   ├── data.mdb</span>
+<span class="go">    │   └── lock.mdb</span>
+<span class="go">    ├── video-476</span>
+<span class="go">    │   ├── data.mdb</span>
+<span class="go">    │   └── lock.mdb</span>
+<span class="go">    └── video-952</span>
+<span class="go">        ├── data.mdb</span>
+<span class="go">        └── lock.mdb</span>
+</pre></div>
+</div>
+</section>
+<section id="check-the-lmdb-files">
+<h2>Check the LMDB files<a class="headerlink" href="#check-the-lmdb-files" title="Link to this heading">#</a></h2>
+<p>You can check the generated LMDB files using the following command:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">minestudio.data</span> <span class="kn">import</span> <span class="n">load_dataset</span>
 
 <span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span>
     <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;raw&#39;</span><span class="p">,</span> 
-    <span class="n">dataset_dirs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;6xx&#39;</span><span class="p">,</span> <span class="s1">&#39;7xx&#39;</span><span class="p">,</span> <span class="s1">&#39;8xx&#39;</span><span class="p">,</span> <span class="s1">&#39;9xx&#39;</span><span class="p">,</span> <span class="s1">&#39;10xx&#39;</span><span class="p">],</span> 
-    <span class="n">enable_video</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">enable_action</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">frame_width</span><span class="o">=</span><span class="mi">224</span><span class="p">,</span> 
-    <span class="n">frame_height</span><span class="o">=</span><span class="mi">224</span><span class="p">,</span>
-    <span class="n">win_len</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> 
-    <span class="n">split</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> 
-    <span class="n">split_ratio</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> 
-    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span>
-<span class="p">)</span>
-<span class="n">item</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-</pre></div>
-</div>
-<p>You may see the output like this:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">08</span><span class="p">:</span><span class="mi">14</span><span class="p">:</span><span class="mi">15</span><span class="p">]</span> <span class="p">[</span><span class="n">Kernel</span><span class="p">]</span> <span class="n">Driver</span> <span class="n">video</span> <span class="n">load</span> <span class="mi">15738</span> <span class="n">episodes</span><span class="o">.</span>  
-<span class="p">[</span><span class="mi">08</span><span class="p">:</span><span class="mi">14</span><span class="p">:</span><span class="mi">15</span><span class="p">]</span> <span class="p">[</span><span class="n">Kernel</span><span class="p">]</span> <span class="n">Driver</span> <span class="n">action</span> <span class="n">load</span> <span class="mi">15823</span> <span class="n">episodes</span><span class="o">.</span> 
-<span class="p">[</span><span class="mi">08</span><span class="p">:</span><span class="mi">14</span><span class="p">:</span><span class="mi">15</span><span class="p">]</span> <span class="p">[</span><span class="n">Kernel</span><span class="p">]</span> <span class="n">episodes</span><span class="p">:</span> <span class="mi">15655</span><span class="p">,</span> <span class="n">frames</span><span class="p">:</span> <span class="mf">160495936.</span> 
-<span class="n">dict_keys</span><span class="p">([</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="s1">&#39;timestamp&#39;</span><span class="p">,</span> <span class="s1">&#39;episode&#39;</span><span class="p">,</span> <span class="s1">&#39;progress&#39;</span><span class="p">,</span> <span class="s1">&#39;env_action&#39;</span><span class="p">,</span> <span class="s1">&#39;agent_action&#39;</span><span class="p">,</span> <span class="s1">&#39;env_prev_action&#39;</span><span class="p">,</span> <span class="s1">&#39;agent_prev_action&#39;</span><span class="p">,</span> <span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="s1">&#39;mask&#39;</span><span class="p">])</span>
-</pre></div>
-</div>
-<div class="admonition hint">
-<p class="admonition-title">Hint</p>
-<p>Please note that the <code class="docutils literal notranslate"><span class="pre">dataset_dirs</span></code> parameter here is a list that can contain multiple dataset directories. In this example, we have loaded five dataset directories.</p>
-<p>If an element in the list is one of <code class="docutils literal notranslate"><span class="pre">6xx</span></code>, <code class="docutils literal notranslate"><span class="pre">7xx</span></code>, <code class="docutils literal notranslate"><span class="pre">8xx</span></code>, <code class="docutils literal notranslate"><span class="pre">9xx</span></code>, or <code class="docutils literal notranslate"><span class="pre">10xx</span></code>, the program will automatically download it from <a class="reference external" href="https://huggingface.co/CraftJarvis">Hugging Face</a>, so please ensure your network connection is stable and you have enough storage space.</p>
-<p>If an element in the list is a directory like <code class="docutils literal notranslate"><span class="pre">/nfs-shared/data/contractors/dataset_6xx</span></code>, the program will load data directly from that directory.</p>
-<p><strong>You can also mix the two types of elements in the list.</strong></p>
-</div>
-<p><span class="sd-d-grid"><a class="sd-sphinx-override sd-btn sd-text-wrap sd-btn-outline-primary reference internal" href="dataset-raw.html"><span class="doc">Learn more about Raw Dataset</span></a></span></p>
-<p>Alternatively, you can also load trajectories that have specific events, for example, loading all trajectories that contain the <code class="docutils literal notranslate"><span class="pre">kill</span> <span class="pre">entity</span></code> event.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">minestudio.data</span> <span class="kn">import</span> <span class="n">load_dataset</span>
-
-<span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span>
-    <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;event&#39;</span><span class="p">,</span> 
-    <span class="n">dataset_dirs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;7xx&#39;</span><span class="p">],</span> 
-    <span class="n">enable_video</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">enable_action</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">dataset_dirs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;/path/to/output/dataset&#39;</span><span class="p">],</span> 
     <span class="n">frame_width</span><span class="o">=</span><span class="mi">224</span><span class="p">,</span> 
     <span class="n">frame_height</span><span class="o">=</span><span class="mi">224</span><span class="p">,</span>
     <span class="n">win_len</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> 
     <span class="n">split</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> 
     <span class="n">split_ratio</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> 
     <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">event_regex</span><span class="o">=</span><span class="s1">&#39;minecraft.kill_entity:.*&#39;</span>
 <span class="p">)</span>
 <span class="n">item</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 </pre></div>
 </div>
-<p>You may see the output like this:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">08</span><span class="p">:</span><span class="mi">19</span><span class="p">:</span><span class="mi">14</span><span class="p">]</span> <span class="p">[</span><span class="n">Kernel</span><span class="p">]</span> <span class="n">Driver</span> <span class="n">video</span> <span class="n">load</span> <span class="mi">4617</span> <span class="n">episodes</span><span class="o">.</span>
-<span class="p">[</span><span class="mi">08</span><span class="p">:</span><span class="mi">19</span><span class="p">:</span><span class="mi">14</span><span class="p">]</span> <span class="p">[</span><span class="n">Kernel</span><span class="p">]</span> <span class="n">Driver</span> <span class="n">action</span> <span class="n">load</span> <span class="mi">4681</span> <span class="n">episodes</span><span class="o">.</span> 
-<span class="p">[</span><span class="mi">08</span><span class="p">:</span><span class="mi">19</span><span class="p">:</span><span class="mi">14</span><span class="p">]</span> <span class="p">[</span><span class="n">Kernel</span><span class="p">]</span> <span class="n">episodes</span><span class="p">:</span> <span class="mi">4568</span><span class="p">,</span> <span class="n">frames</span><span class="p">:</span> <span class="mf">65291168.</span> 
-<span class="p">[</span><span class="mi">08</span><span class="p">:</span><span class="mi">19</span><span class="p">:</span><span class="mi">14</span><span class="p">]</span> <span class="p">[</span><span class="n">Event</span> <span class="n">Kernel</span><span class="p">]</span> <span class="n">Number</span> <span class="n">of</span> <span class="n">loaded</span> <span class="n">events</span><span class="p">:</span> <span class="mf">58.</span> 
-<span class="p">[</span><span class="mi">08</span><span class="p">:</span><span class="mi">19</span><span class="p">:</span><span class="mi">14</span><span class="p">]</span> <span class="p">[</span><span class="n">Event</span> <span class="n">Dataset</span><span class="p">]</span> <span class="n">Regex</span><span class="p">:</span> <span class="n">minecraft</span><span class="o">.</span><span class="n">kill_entity</span><span class="p">:</span><span class="o">.*</span><span class="p">,</span> <span class="n">Number</span> <span class="n">of</span> <span class="n">events</span><span class="p">:</span> <span class="mi">58</span><span class="p">,</span> <span class="n">number</span> <span class="n">of</span> <span class="n">items</span><span class="p">:</span> <span class="mi">19652</span>
-<span class="n">dict_keys</span><span class="p">([</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="s1">&#39;env_action&#39;</span><span class="p">,</span> <span class="s1">&#39;agent_action&#39;</span><span class="p">,</span> <span class="s1">&#39;env_prev_action&#39;</span><span class="p">,</span> <span class="s1">&#39;agent_prev_action&#39;</span><span class="p">,</span> <span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="s1">&#39;mask&#39;</span><span class="p">])</span>
-</pre></div>
-</div>
-<p><span class="sd-d-grid"><a class="sd-sphinx-override sd-btn sd-text-wrap sd-btn-outline-primary reference internal" href="dataset-event.html"><span class="doc">Learn more about Event Dataset</span></a></span></p>
-</section>
-<section id="data-structure">
-<h2>Data Structure<a class="headerlink" href="#data-structure" title="Link to this heading">#</a></h2>
-<p>We classify and save the data according to its corresponding modality, with each modality’s data being a sequence over time. Sequences from different modalities can be aligned in chronological order. For example, the “action” modality data stores the mouse and keyboard actions taken at each time step of the trajectory; the “video” modality data stores the observations returned by the environment at each time step of the trajectory.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The data of different modalities is stored independently. The benefits are: (1) Users can selectively read data from different modalities according to their requirements; (2) Users are easily able to add new modalities to the dataset without affecting the existing data.</p>
-</div>
-<p>For the sequence data of each modality, we store it in segments, with each segment having a fixed length (e.g., 32), which facilitates the reading and storage of the data.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>For video data, the efficiency of random access is usually low because decoding is required during the reading process. An extreme case would be to save it as individual images, which would allow for high read efficiency but take up a large amount of storage space.</p>
-<p>We adopt a compromise solution by saving the video data in video segments, which allows for relatively high read efficiency while not occupying too much storage space. When user wants to read a sequence of continuous frames, we only need to retrieve the corresponding segments and decode them.</p>
-</div>
-<a class="reference internal image-reference" href="../_images/read_video_fig.png"><img alt="../_images/read_video_fig.png" src="../_images/read_video_fig.png" style="width: 80%;" />
-</a>
-<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
-<summary class="sd-summary-title sd-card-header">
-<span class="sd-summary-text"><i class="fa-solid fa-lightbulb" height="35px" width="20px"></i> Learn more about the details</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
-<p class="sd-card-text">Segmented sequence data is stored in individual <a class="reference external" href="https://lmdb.readthedocs.io/en/release/">lmdb</a> files, each of which contains the following metadata:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="s2">&quot;__num_episodes__&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>     <span class="c1"># the total number of episodes in this lmdb file</span>
-    <span class="s2">&quot;__num_total_frames__&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="c1"># the total number of frames in this lmdb file</span>
-    <span class="s2">&quot;__chunk_size__&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>       <span class="c1"># the length of each segment (e.g. 32)</span>
-    <span class="s2">&quot;__chunk_infos__&quot;</span><span class="p">:</span> <span class="nb">dict</span>      <span class="c1"># save the information of the episode part in this lmdb file, e.g. the start and end index, episode name. </span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p class="sd-card-text">Once you know the episode name and which segment you want to read, you can identify the corresponding segment bytes in the lmdb file and decode it to get the data.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">lmdb_handler</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span> <span class="k">as</span> <span class="n">txn</span><span class="p">:</span>
-    <span class="n">key</span> <span class="o">=</span> <span class="nb">str</span><span class="p">((</span><span class="n">episode_idx</span><span class="p">,</span> <span class="n">chunk_id</span><span class="p">))</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
-    <span class="n">chunk_bytes</span> <span class="o">=</span> <span class="n">txn</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="admonition hint">
-<p class="admonition-title">Hint</p>
-<p class="sd-card-text">In fact, you don’t need to worry about these at all, as we have packaged these operations for you. You just need to call corresponding API. The class that is responsible for managing these details is <code class="docutils literal notranslate"><span class="pre">minestudio.data.minecraft.core.LMDBDriver</span></code>.</p>
-</div>
-<p class="sd-card-text">With <code class="docutils literal notranslate"><span class="pre">LMDBDriver</span></code>, you can do these operations to a lmdb file:</p>
-<ul>
-<li><p class="sd-card-text">Get the trajectory list:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">trajectory_list</span> <span class="o">=</span> <span class="n">lmdb_driver</span><span class="o">.</span><span class="n">get_trajectory_list</span><span class="p">()</span>
-</pre></div>
-</div>
-</li>
-<li><p class="sd-card-text">Get the total frames of several trajectories:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">lmdb_driver</span><span class="o">.</span><span class="n">get_total_frames</span><span class="p">([</span>
-    <span class="s2">&quot;trajectory_1&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;trajectory_2&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;trajectory_3&quot;</span>
-<span class="p">])</span>
-</pre></div>
-</div>
-</li>
-<li><p class="sd-card-text">Read a sequence of frames from a trajectory:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">frames</span><span class="p">,</span> <span class="n">mask</span> <span class="o">=</span> <span class="n">lmdb_driver</span><span class="o">.</span><span class="n">read_frames</span><span class="p">(</span>
-    <span class="n">eps</span><span class="o">=</span><span class="s2">&quot;trajectory_1&quot;</span><span class="p">,</span>
-    <span class="n">start_frame</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span>
-    <span class="n">win_len</span><span class="o">=</span><span class="mi">33</span><span class="p">,</span> 
-    <span class="n">merge_fn</span><span class="o">=</span><span class="n">merge_fn</span><span class="p">,</span> 
-    <span class="n">extract_fn</span><span class="o">=</span><span class="n">extract_fn</span><span class="p">,</span> 
-    <span class="n">padding_fn</span><span class="o">=</span><span class="n">padding_fn</span><span class="p">,</span> 
-<span class="p">)</span>
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">merge_fn</span></code>, <code class="docutils literal notranslate"><span class="pre">extract_fn</span></code>, and <code class="docutils literal notranslate"><span class="pre">padding_fn</span></code> are functions that are used to process the data and are specific to the data modality.</p>
-</div>
-</li>
-</ul>
-</div>
-</details><section id="built-in-modalities">
-<h3>Built-in Modalities<a class="headerlink" href="#built-in-modalities" title="Link to this heading">#</a></h3>
-<p>We provide the following built-in modalities for users to store data:</p>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Modality</p></th>
-<th class="head"><p>Description</p></th>
-<th class="head"><p>Data Format</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>video</p></td>
-<td><p>Observations returned by the environment</p></td>
-<td><p>np.ndarry</p></td>
-</tr>
-<tr class="row-odd"><td><p>action</p></td>
-<td><p>Mouse and keyboard actions</p></td>
-<td><p>Dict</p></td>
-</tr>
-<tr class="row-even"><td><p>contractor info</p></td>
-<td><p>Information of the contractor</p></td>
-<td><p>Dict</p></td>
-</tr>
-<tr class="row-odd"><td><p>segment info</p></td>
-<td><p>Information of the segment</p></td>
-<td><p>Dict</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="dropdown admonition-youtube admonition">
-<p class="admonition-title">Video and Segmentation Visualization</p>
-<!-- 
-An video example generated by our tool to show video and the corresponding segmentation sequences.  -->
-<div class="video_wrapper" style="">
-<iframe allowfullscreen="true" src="https://www.youtube.com/embed/QYBUxus3esI" style="border: 0; height: 345px; width: 560px">
-</iframe></div></div>
-</section>
 </section>
 </section>
 
@@ -872,20 +779,20 @@ An video example generated by our tool to show video and the corresponding segme
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../simulator/play.html"
+       href="visualization.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Graphical User Interfaces</p>
+        <p class="prev-next-title">Visualization</p>
       </div>
     </a>
     <a class="right-next"
-       href="dataset-raw.html"
+       href="../models/index.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Raw Dataset</p>
+        <p class="prev-next-title">Models</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -908,11 +815,9 @@ An video example generated by our tool to show video and the corresponding segme
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-start">Quick Start</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-structure">Data Structure</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#built-in-modalities">Built-in Modalities</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-raw-trajectories">Prepare Raw Trajectories</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#convert-raw-trajectories-to-lmdb-format">Convert Raw Trajectories to LMDB format</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#check-the-lmdb-files">Check the LMDB files</a></li>
 </ul>
   </nav></div>
 
@@ -920,7 +825,7 @@ An video example generated by our tool to show video and the corresponding segme
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../_sources/data/index.md.txt"
+      <li><a href="../_sources/data/convertion.md.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div></div>

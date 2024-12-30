@@ -563,14 +563,15 @@
 <!--
  * @Date: 2024-12-01 08:30:33
  * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-12-01 08:41:00
+ * @LastEditTime: 2024-12-30 14:20:20
  * @FilePath: /MineStudio/docs/source/data/quick-data.md
 -->
 <p>Here is a minimal example to show how we load a trajectory from the dataset.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">minestudio.data</span> <span class="kn">import</span> <span class="n">RawDataset</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">minestudio.data</span> <span class="kn">import</span> <span class="n">load_dataset</span>
 
-<span class="n">dataset</span> <span class="o">=</span> <span class="n">RawDataset</span><span class="p">(</span>
-    <span class="n">dataset_dirs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;/nfs/data/contractors/dataset_7xx&#39;</span><span class="p">],</span> 
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span>
+    <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;raw&#39;</span><span class="p">,</span> 
+    <span class="n">dataset_dirs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;6xx&#39;</span><span class="p">,</span> <span class="s1">&#39;7xx&#39;</span><span class="p">,</span> <span class="s1">&#39;8xx&#39;</span><span class="p">,</span> <span class="s1">&#39;9xx&#39;</span><span class="p">,</span> <span class="s1">&#39;10xx&#39;</span><span class="p">],</span> 
     <span class="n">enable_video</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">enable_action</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">frame_width</span><span class="o">=</span><span class="mi">224</span><span class="p">,</span> 
@@ -585,18 +586,26 @@
 </pre></div>
 </div>
 <p>You may see the output like this:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">08</span><span class="p">:</span><span class="mi">14</span><span class="p">:</span><span class="mi">15</span><span class="p">]</span> <span class="p">[</span><span class="n">Kernel</span><span class="p">]</span> <span class="n">Driver</span> <span class="n">video</span> <span class="n">load</span> <span class="mi">4617</span> <span class="n">episodes</span><span class="o">.</span>  
-<span class="p">[</span><span class="mi">08</span><span class="p">:</span><span class="mi">14</span><span class="p">:</span><span class="mi">15</span><span class="p">]</span> <span class="p">[</span><span class="n">Kernel</span><span class="p">]</span> <span class="n">Driver</span> <span class="n">action</span> <span class="n">load</span> <span class="mi">4681</span> <span class="n">episodes</span><span class="o">.</span> 
-<span class="p">[</span><span class="mi">08</span><span class="p">:</span><span class="mi">14</span><span class="p">:</span><span class="mi">15</span><span class="p">]</span> <span class="p">[</span><span class="n">Kernel</span><span class="p">]</span> <span class="n">episodes</span><span class="p">:</span> <span class="mi">4568</span><span class="p">,</span> <span class="n">frames</span><span class="p">:</span> <span class="mf">65291168.</span> 
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">08</span><span class="p">:</span><span class="mi">14</span><span class="p">:</span><span class="mi">15</span><span class="p">]</span> <span class="p">[</span><span class="n">Kernel</span><span class="p">]</span> <span class="n">Driver</span> <span class="n">video</span> <span class="n">load</span> <span class="mi">15738</span> <span class="n">episodes</span><span class="o">.</span>  
+<span class="p">[</span><span class="mi">08</span><span class="p">:</span><span class="mi">14</span><span class="p">:</span><span class="mi">15</span><span class="p">]</span> <span class="p">[</span><span class="n">Kernel</span><span class="p">]</span> <span class="n">Driver</span> <span class="n">action</span> <span class="n">load</span> <span class="mi">15823</span> <span class="n">episodes</span><span class="o">.</span> 
+<span class="p">[</span><span class="mi">08</span><span class="p">:</span><span class="mi">14</span><span class="p">:</span><span class="mi">15</span><span class="p">]</span> <span class="p">[</span><span class="n">Kernel</span><span class="p">]</span> <span class="n">episodes</span><span class="p">:</span> <span class="mi">15655</span><span class="p">,</span> <span class="n">frames</span><span class="p">:</span> <span class="mf">160495936.</span> 
 <span class="n">dict_keys</span><span class="p">([</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="s1">&#39;timestamp&#39;</span><span class="p">,</span> <span class="s1">&#39;episode&#39;</span><span class="p">,</span> <span class="s1">&#39;progress&#39;</span><span class="p">,</span> <span class="s1">&#39;env_action&#39;</span><span class="p">,</span> <span class="s1">&#39;agent_action&#39;</span><span class="p">,</span> <span class="s1">&#39;env_prev_action&#39;</span><span class="p">,</span> <span class="s1">&#39;agent_prev_action&#39;</span><span class="p">,</span> <span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="s1">&#39;mask&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>Please note that the <code class="docutils literal notranslate"><span class="pre">dataset_dirs</span></code> parameter here is a list that can contain multiple dataset directories. In this example, we have loaded five dataset directories.</p>
+<p>If an element in the list is one of <code class="docutils literal notranslate"><span class="pre">6xx</span></code>, <code class="docutils literal notranslate"><span class="pre">7xx</span></code>, <code class="docutils literal notranslate"><span class="pre">8xx</span></code>, <code class="docutils literal notranslate"><span class="pre">9xx</span></code>, or <code class="docutils literal notranslate"><span class="pre">10xx</span></code>, the program will automatically download it from <a class="reference external" href="https://huggingface.co/CraftJarvis">Hugging Face</a>, so please ensure your network connection is stable and you have enough storage space.</p>
+<p>If an element in the list is a directory like <code class="docutils literal notranslate"><span class="pre">/nfs-shared/data/contractors/dataset_6xx</span></code>, the program will load data directly from that directory.</p>
+<p><strong>You can also mix the two types of elements in the list.</strong></p>
+</div>
 <p><span class="sd-d-grid"><a class="sd-sphinx-override sd-btn sd-text-wrap sd-btn-outline-primary reference internal" href="dataset-raw.html"><span class="doc">Learn more about Raw Dataset</span></a></span></p>
 <p>Alternatively, you can also load trajectories that have specific events, for example, loading all trajectories that contain the <code class="docutils literal notranslate"><span class="pre">kill</span> <span class="pre">entity</span></code> event.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">minestudio.data</span> <span class="kn">import</span> <span class="n">EventDataset</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">minestudio.data</span> <span class="kn">import</span> <span class="n">load_dataset</span>
 
-<span class="n">dataset</span> <span class="o">=</span> <span class="n">EventDataset</span><span class="p">(</span>
-    <span class="n">dataset_dirs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;/nfs/data/contractors/dataset_7xx&#39;</span><span class="p">],</span> 
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span>
+    <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;event&#39;</span><span class="p">,</span> 
+    <span class="n">dataset_dirs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;7xx&#39;</span><span class="p">],</span> 
     <span class="n">enable_video</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">enable_action</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">frame_width</span><span class="o">=</span><span class="mi">224</span><span class="p">,</span> 
