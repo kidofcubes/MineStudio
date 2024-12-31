@@ -1,13 +1,13 @@
 <!--
  * @Date: 2024-12-12 09:18:35
  * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-12-30 15:03:31
+ * @LastEditTime: 2024-12-30 16:06:47
  * @FilePath: /MineStudio/docs/source/data/convertion.md
 -->
 
 # Convertion
 
-We provide a convertion script that allows users to convert the raw data to the desired lmdb format. 
+We provide a convertion script that allows users to convert the raw data to the MineStudio format. 
 
 ```{warning}
 It is essential to perform the conversion to ensure that our engineering efforts on the data can be effectively utilized. 
@@ -47,9 +47,9 @@ The raw data should contain `video` and `action` directories. The `video` contai
     The shape of `camera`: ```(4376, 2)```
     ````
 
-## Convert Raw Trajectories to LMDB format
+## Convert Raw Trajectories to MineStudio format
 
-- convert `action` to LMDB format:
+- convert `action` to MineStudio format:
     ```console
     python -m minestudio.data.minecraft.tools.convert_lmdb \
            --num-workers 4 \
@@ -59,7 +59,7 @@ The raw data should contain `video` and `action` directories. The `video` contai
            --source-type 'action'
     ```
 
-- convert `video` to LMDB format:
+- convert `video` to MineStudio format:
     ```console
     python -m minestudio.data.minecraft.tools.convert_lmdb \
            --num-workers 4 \
@@ -70,9 +70,9 @@ The raw data should contain `video` and `action` directories. The `video` contai
     ```
 
 ```{note}
-`num-workers` arguments specify the number of convertion workers. **It also determines the number of the resulting LMDB files.** 
+`num-workers` arguments specify the number of convertion workers. **It also determines the number of the resulting MineStudio dataset files.** 
 ```
-The resulting LMDB files will be stored in the `/path/to/output/dataset` directory.
+The resulting MineStudio dataset files will be stored in the `/path/to/output/dataset` directory.
 ```console
 tree /path/to/output/dataset
 ├── action
@@ -103,9 +103,9 @@ tree /path/to/output/dataset
         └── lock.mdb
 ```
 
-## Check the LMDB files
+## Check the MineStudio-Format Dataset
 
-You can check the generated LMDB files using the following command:
+You can check the generated MineStudio dataset files using the following command:
 ```python
 from minestudio.data import load_dataset
 
