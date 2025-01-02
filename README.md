@@ -1,10 +1,10 @@
 <!--
  * @Date: 2024-11-30 13:20:04
  * @LastEditors: muzhancun muzhancun@126.com
- * @LastEditTime: 2025-01-02 19:47:14
+ * @LastEditTime: 2025-01-02 19:51:10
  * @FilePath: /MineStudio/README.md
 -->
-<head>
+<!-- <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GIFs in a Line</title>
@@ -25,7 +25,7 @@
             margin-top: 10px;
         }
     </style>
-</head>
+</head> -->
 
 <div align="center">
 <img src="./docs/source/_static/banner.png" width="" alt="MineStudio" />
@@ -47,7 +47,7 @@
 MineStudio is a simple and efficient Minecraft development kit for AI research.
 </div>
 
-<div class="gif-container">
+<!-- <div class="gif-container">
     <img src="https://github.com/phython96/Images/blob/master/build_endergate_1.gif" alt="GIF 1">
     <img src="https://github.com/phython96/Images/blob/master/build_endergate_2.gif" alt="GIF 2">
     <img src="https://github.com/phython96/Images/blob/master/kill_sheep_1.gif" alt="GIF 3">
@@ -56,7 +56,7 @@ MineStudio is a simple and efficient Minecraft development kit for AI research.
 
 <div class="title">
 Demos of agents trained by reinforcement learning in MineStudio: building an nether portal and killing sheeps with arrow.
-</div>
+</div> -->
 
 ## Overview
 
