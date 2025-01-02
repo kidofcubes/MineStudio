@@ -7,7 +7,6 @@ on:
       - "minestudio/**"
       - "docs/**"
       - ".github/workflows/deploy_docs_to_rtd.yml"
-      - "README.md"
 
 env:
   REPO_SSH: git@github.com:CraftJarvis/MineStudio.git
