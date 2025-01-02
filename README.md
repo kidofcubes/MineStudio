@@ -26,14 +26,14 @@ MineStudio is a simple and efficient Minecraft development kit for AI research.
 </div>
 
 <p align="center">
-  <img src="https://github.com/phython96/Images/blob/master/build_endergate_1.gif" width="50" />
-  <img src="https://github.com/phython96/Images/blob/master/build_endergate_2.gif" width="50" />
-  <img src="https://github.com/phython96/Images/blob/master/kill_sheep_1.gif" width="50" />
-  <img src="https://github.com/phython96/Images/blob/master/kill_sheep_1.gif2" width="50" />
+  <img src="https://github.com/phython96/Images/blob/master/build_endergate_1.gif" width=500px />
+  <img src="https://github.com/phython96/Images/blob/master/build_endergate_2.gif" width=500px />
+  <img src="https://github.com/phython96/Images/blob/master/kill_sheep_1.gif" width=500px />
+  <img src="https://github.com/phython96/Images/blob/master/kill_sheep_2.gif" width=500px />
 </p>
 
 <div align="center" style="color: grey; font-size: 12px;">
-  Demos of agents trained by reinforcement learning in MineStudio: building a nether portal and killing sheep with arrows.
+  Demos of agents trained by reinforcement learning in MineStudio: building a nether portal and killing sheeps with arrows.
 </div>
 
 ## Overview
