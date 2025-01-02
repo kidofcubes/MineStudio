@@ -83,7 +83,7 @@ class MinecraftSim(gymnasium.Env):
         preferred_spawn_biome: Optional[str] = None,    # the preferred spawn biome when call reset 
         num_empty_frames: int = 20,                     # the number of empty frames to skip when calling reset
         callbacks: List[MinecraftCallback] = [],        # the callbacks to be called before and after each basic calling
-        camera_config:CameraConfig=CameraConfig(),      # the configuration for camera quantization and binning settings
+        camera_config:CameraConfig=None,      # the configuration for camera quantization and binning settings
         **kwargs
     ) -> Any:
         super().__init__()
@@ -108,6 +108,9 @@ class MinecraftSim(gymnasium.Env):
 
         self.env.seed(seed)
         self.already_reset = False
+        
+        if camera_config is None:
+            camera_config = CameraConfig()
         
         self.action_mapper = CameraHierarchicalMapping(n_camera_bins = camera_config.n_camera_bins),
         self.action_transformer = ActionTransformer(**camera_config.action_transformer_kwargs)
