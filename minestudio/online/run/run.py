@@ -13,13 +13,13 @@ import json
 import random
 from minestudio.online.rollout.start_manager import start_rolloutmanager
 from minestudio.online.trainer.start_trainer import start_trainer
-from minestudio.online.run.config.config import policy_generator, online_dict, new_env_generator
+from minestudio.online.run.config.config_kill import policy_generator, online_dict, new_env_generator
 
 import os
 
 
 if __name__=='__main__':
-    config_name = "gate"
+    config_name = "config_kill"
     print("\033[1;32m Starting training session WITH CONFIG: " + config_name + " \033[0m")
     module_name = "minestudio.online.run.config."+config_name
 
@@ -28,10 +28,13 @@ if __name__=='__main__':
     env_generator = getattr(module, "env_generator")
     policy_generator = getattr(module, "policy_generator")
     online_dict = getattr(module, "online_dict")
+
     online_cfg = OmegaConf.create(online_dict)
+    with open("config/"+config_name+".py", "r") as f:
+        whole_config = f.read()
 
     start_rolloutmanager(policy_generator, new_env_generator, online_cfg)
-    start_trainer(policy_generator, new_env_generator, online_cfg)
+    start_trainer(policy_generator, new_env_generator, online_cfg, whole_config)
 
 
 

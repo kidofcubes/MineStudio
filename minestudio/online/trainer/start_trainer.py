@@ -28,3 +28,5 @@ def start_trainer(policy_generator, env_generator, online_cfg, whole_config):
         whole_config = whole_config
     )
     trainer.fit()
+
+

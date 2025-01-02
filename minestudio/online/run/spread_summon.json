@@ -1,12 +1,16 @@
-/spreadplayers ~ ~ 1 5 false @e[type=minecraft:sheep,limit=1]
-/spreadplayers ~ ~ 1 5 false @e[type=minecraft:sheep,limit=2]
+/spreadplayers ~ ~ 1 5 false @e[type=minecraft:sheep,limit=50]
 /spreadplayers ~ ~ 1 5 false @e[type=minecraft:sheep,limit=3]
 /spreadplayers ~ ~ 1 5 false @e[type=minecraft:sheep,limit=4]
 /spreadplayers ~ ~ 1 5 false @e[type=minecraft:sheep,limit=5]
 /spreadplayers ~ ~ 1 5 false @e[type=minecraft:sheep,limit=6]
 /spreadplayers ~ ~ 1 5 false @e[type=minecraft:sheep,limit=7]
 /spreadplayers ~ ~ 1 5 false @e[type=minecraft:sheep,limit=8]
-/spreadplayers ~ ~ 1 5 false @e[type=minecraft:sheep,limit=9]
+/spreadplayers ~ ~ 1 10 false @e[type=minecraft:sheep,limit=4]
+/spreadplayers ~ ~ 1 10 false @e[type=minecraft:sheep,limit=5]
+/spreadplayers ~ ~ 1 10 false @e[type=minecraft:sheep,limit=6]
+/spreadplayers ~ ~ 1 10 false @e[type=minecraft:sheep,limit=7]
+/spreadplayers ~ ~ 1 10 false @e[type=minecraft:sheep,limit=8]
+/spreadplayers ~ ~ 1 10 false @e[type=minecraft:sheep,limit=9]
 /spreadplayers ~ ~ 1 20 false @e[type=minecraft:sheep,limit=1]
 /spreadplayers ~ ~ 1 20 false @e[type=minecraft:sheep,limit=2]
 /spreadplayers ~ ~ 1 20 false @e[type=minecraft:sheep,limit=3]
@@ -22,6 +26,8 @@
 /spreadplayers ~ ~ 1 30 false @e[type=minecraft:sheep,limit=4]
 /spreadplayers ~ ~ 1 30 false @e[type=minecraft:sheep,limit=5]
 /spreadplayers ~ ~ 1 30 false @e[type=minecraft:sheep,limit=6]
+/spreadplayers ~ ~ 1 5 false @e[type=minecraft:sheep,limit=1]
+/spreadplayers ~ ~ 1 5 false @e[type=minecraft:sheep,limit=2]
 /spreadplayers ~ ~ 1 30 false @e[type=minecraft:sheep,limit=7]
 /spreadplayers ~ ~ 1 30 false @e[type=minecraft:sheep,limit=8]
 /spreadplayers ~ ~ 1 30 false @e[type=minecraft:sheep,limit=9]
@@ -85,7 +91,6 @@
 /spreadplayers ~ ~ 1 5 false @e[type=minecraft:sheep,limit=48]
 /spreadplayers ~ ~ 1 5 false @e[type=minecraft:sheep,limit=49]
 /spreadplayers ~ ~ 1 5 false @e[type=minecraft:sheep,limit=50]
-
 
 /spreadplayers ~ ~ 1 20 false @e[type=minecraft:sheep,limit=10]
 /spreadplayers ~ ~ 1 20 false @e[type=minecraft:sheep,limit=11]
@@ -396,3 +401,8 @@
 /spreadplayers ~ ~ 1 50 false @e[type=minecraft:sheep,limit=44]
 /spreadplayers ~ ~ 1 50 false @e[type=minecraft:sheep,limit=45]
 /spreadplayers ~ ~ 1 50 false @e[type=minecraft:sheep,limit=46]
+
+
+
+
+

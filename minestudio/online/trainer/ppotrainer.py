@@ -166,6 +166,10 @@ class PPOTrainer(BaseTrainer):
             current_lr = self.learning_rate
         if self.learning_rate >0.000000001:
             self.num_updates =int((1.0 - current_lr / self.learning_rate)*self.num_iterations+0.00001)
+            ## curr-lr不是从大到小吗 zheng
+            ## 一次iteration是从一次rollout中收集所有数据进行训练
+            ## epochs_per_iteration 怎么是1？相当于一次收集到的所有rollout数据只做一次梯度更新？
+            ## 一次rollout会产生多少数据？20s * ？？
         else:
             self.num_updates = 0
         self.kl_divergence_coef_rho = self.kl_divergence_coef_rho * (self.coef_rho_decay ** self.num_updates)
@@ -441,6 +445,7 @@ class PPOTrainer(BaseTrainer):
         }
 
         self.num_updates += 1
+        # self.num_updates 指的是经过了几个iteration, 因为epochs_per_iteration是1，所以也是更新了n步 zheng
 
         if self.rank == 0:
             if self.num_updates % self.save_interval == 0:
@@ -448,7 +453,11 @@ class PPOTrainer(BaseTrainer):
                 logging.getLogger("ray").info(f"Saving checkpoint at update count {self.num_updates}...")
                 
                 if self.save_path:
-                    checkpoint_dir = Path(self.save_path) / 'checkpoints' / self.time_stamp /str(self.num_updates)
+                    # checkpoint_dir = Path(self.save_path) / 'checkpoints' / self.time_stamp /str(self.num_updates)
+                    checkpoint_dir = Path(self.save_path) / 'checkpoints' / self.time_stamp /str(self.trained_steps_all_workers)
+                    # 把self.num_updates换成self.trained_steps_all_workers
+                    ## zheng 对应的reward怎么知道
+                    ## 我要把wnb上的横坐标换成trained_steps_all_workers
                 else:
                     checkpoint_dir = Path("checkpoints") / self.time_stamp /str(self.num_updates)
 
@@ -457,19 +466,20 @@ class PPOTrainer(BaseTrainer):
                     checkpoint_dir.mkdir(parents=True)
 
                 #save model
-                torch.save(self.inner_model.state_dict(), str(checkpoint_dir / "model.ckpt"))
+                torch.save(self.inner_model.state_dict(), str(checkpoint_dir / "model.ckpt")) 
+                ##zheng .model .weights 是不是得自己写加载的程序 应该有写过？
                 torch.save(self.optimizer.state_dict(), str(checkpoint_dir / "optimizer.ckpt"))
                 with open(checkpoint_dir / "whole_config.py", "w") as f:
-                    f.write(self.whole_config)
+                    f.write(self.whole_config)  ##why
 
-                if (
-                    self.last_checkpoint_dir
-                    and (self.num_updates + self.save_interval) % self.keep_interval != 0
-                ):
-                    shutil.rmtree(self.last_checkpoint_dir)
+                # if (
+                #     self.last_checkpoint_dir
+                #     and (self.num_updates + self.save_interval) % self.keep_interval != 0
+                # ):
+                #     shutil.rmtree(self.last_checkpoint_dir) 
                 self.last_checkpoint_dir = checkpoint_dir
 
-            #send signal to record video
+            #send signal to record video zheng??? 
             SPS_all_workers = self.fragments_per_iteration * self.fragment_length / (time.time() - self.last_log_time)
             self.trained_steps_all_workers += self.fragments_per_iteration * self.fragment_length
             self.last_log_time = time.time()

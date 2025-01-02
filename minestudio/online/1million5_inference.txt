@@ -1,0 +1,9 @@
+Timestep: 230400, Mean Reward: 1.0, Variance: 4.0
+Timestep: 1459200, Mean Reward: 4.0, Variance: 9.0
+Timestep: 1766400, Mean Reward: 2.0, Variance: 6.0
+Timestep: 2073600, Mean Reward: 2.0, Variance: 6.0
+Timestep: 2380800, Mean Reward: 2.0, Variance: 11.0
+Timestep: 2688000, Mean Reward: 3.0, Variance: 11.0
+Timestep: 3609600, Mean Reward: 2.0, Variance: 6.0
+Timestep: 3916800, Mean Reward: 4.5, Variance: 22.25
+Timestep: 4531200, Mean Reward: 2.5, Variance: 11.25

@@ -18,10 +18,10 @@ online_dict = {
         "num_gpus_per_worker": 1, #1
         "num_cpus_per_worker": 1,
         "fragment_length": 256,
-        "to_send_queue_size": 6, #6
+        "to_send_queue_size": 5, #6!!!
         "worker_config": {
-            "num_envs": 12, #12
-            "batch_size": 6, #6
+            "num_envs": 10, #12!!!
+            "batch_size": 5, #6!!!
             "restart_interval": 3600,  # 1h
             "video_fps": 20,
             "video_output_dir": "output/videos",
@@ -42,14 +42,14 @@ online_dict = {
     "train_config": {
         "num_workers": 2, #2
         "num_gpus_per_worker": 1.0,
-        "num_iterations": 4000,
+        "num_iterations": 10000,  # 4000
         "vf_warmup": 0,
         "learning_rate": 0.00002,
         "anneal_lr_linearly": False,
         "weight_decay": 0.04,
         "adam_eps": 1e-8,
         "batch_size_per_gpu": 1,
-        "batches_per_iteration": 200, #可10
+        "batches_per_iteration": 100, #可10 200!!! batches_per_iteration/gradient_accumulation = 每个iter更新网络步数
         "gradient_accumulation": 10,  # TODO: check
         "epochs_per_iteration": 1,  # TODO: check
         "context_length": 64,
@@ -61,27 +61,28 @@ online_dict = {
         "zero_initial_vf": True,
         "ppo_policy_coef": 1.0,
         "ppo_vf_coef": 0.5,  # TODO: check
-        "kl_divergence_coef_rho": 0.2,
+        "kl_divergence_coef_rho": 0.3, #### 0.2
         "entropy_bonus_coef": 0.0,
-        "coef_rho_decay": 0.9995,
+        "coef_rho_decay": 1, #0.9995,
         "log_ratio_range": 50,  # for numerical stability
         "normalize_advantage_full_batch": True,  # TODO: check!!!
         "use_normalized_vf": True,
         "num_readers": 4,
         "num_cpus_per_reader": 0.1,
         "prefetch_batches": 2,
-        "save_interval": 2, # 1-2
-        "keep_interval": 40,
+        "save_interval": 4, # 1-2
+        "keep_interval": 1, #1 40
         "record_video_interval": 2,
+        "enable_ref_update": False,
         "fix_decoder": False,
-        "resume": None, #"/scratch/hekaichen/tmpdir/ray/session_2024-12-12_21-10-40_218613_2665801/artifacts/2024-12-12_21-10-58/TorchTrainer_2024-12-12_21-10-58/working_dirs/TorchTrainer_8758b_00000_0_2024-12-12_21-10-58/checkpoints/150",
+        "resume": "/scratch2/zhengxinyue/mcu_online/10k_seed_1/checkpoints/2025-01-01_14-48-54/1587200",
         "resume_optimizer": True,
-        "save_path": "/scratch/zhengxinyue/MineStudio/minestudio/online/run/output"
+        "save_path": "/scratch2/zhengxinyue/mcu_online/10k_seed_2"
     },
 
     "logger_config": {
         "project": "minestudio_online",
-        "name": "bow_cow"
+        "name": "10k_seed_2"
     },
 }
 
@@ -93,8 +94,8 @@ file_paths = [
     os.path.join(parent_dir, "equip_off.json"),
     os.path.join(parent_dir, "give.json")
 ]
-summon_path = [os.path.join(parent_dir, "summon.json")]
-
+summon_path = [os.path.join(parent_dir, "sheep_summon.json")]
+other_summon_path = [os.path.join(parent_dir, "other_summon.json")]
 def load_commands(file_paths):
     commands = []
     for file_path in file_paths:
@@ -107,13 +108,12 @@ def load_commands(file_paths):
     return commands
 
 equip_commands = load_commands(file_paths)
-# print('equip_commands', equip_commands)
 summon_commands = load_commands(summon_path)
-# print('summon_commands', summon_commands)
+other_summon_commands = load_commands(other_summon_path)
 
 
 
-def env_generator(equip_commands, summon_commands):
+def env_generator(equip_commands, summon_commands, other_summon_commands):
     from minestudio.simulator import MinecraftSim
     from minestudio.simulator.callbacks import (
         SummonMobsCallback, 
@@ -134,7 +134,7 @@ def env_generator(equip_commands, summon_commands):
                 'identity': 'shoot_sheep', 
                 'max_reward_times': 30, 
             }]),
-            CommandsCallback(summon_commands, equip_commands),
+            CommandsCallback(equip_commands, summon_commands, other_summon_commands),
             FastResetCallback( 
                 biomes=['plains'],
                 random_tp_range=1000,
@@ -154,4 +154,4 @@ def policy_generator():
     return policy
 
 def new_env_generator():
-    return  env_generator(equip_commands[:10], summon_commands[:10])
+    return  env_generator(equip_commands[:100], summon_commands[:10], other_summon_commands[:10])
