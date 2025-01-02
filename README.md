@@ -21,15 +21,8 @@
 	<a href="https://github.com/CraftJarvis/MineStudio"><img src="https://img.shields.io/github/stars/CraftJarvis/MineStudio"/></a>
 </div>
 
-<div align="center">
-MineStudio is a simple and efficient Minecraft development kit for AI research.
-</div>
-
 <p align="center">
-  <img src="https://github.com/phython96/Images/blob/master/build_endergate_1.gif" width=500px />
-  <img src="https://github.com/phython96/Images/blob/master/build_endergate_2.gif" width=500px />
-  <img src="https://github.com/phython96/Images/blob/master/kill_sheep_1.gif" width=500px />
-  <img src="https://github.com/phython96/Images/blob/master/kill_sheep_2.gif" width=500px />
+  <img src="https://github.com/phython96/Images/blob/master/minestudio_gallary.gif" />
 </p>
 
 <div align="center" style="color: grey; font-size: 12px;">
