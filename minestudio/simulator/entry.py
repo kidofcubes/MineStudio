@@ -14,7 +14,6 @@ import gymnasium
 from gymnasium import spaces
 from copy import deepcopy
 from typing import Dict, List, Tuple, Union, Sequence, Mapping, Any, Optional, Literal
-from dataclasses import asdict, dataclass, field, fields
 
 from minestudio.utils.vpt_lib.actions import ActionTransformer
 from minestudio.utils.vpt_lib.action_mapping import CameraHierarchicalMapping
@@ -23,34 +22,15 @@ from minestudio.simulator.minerl.herobraine.env_specs.human_survival_specs impor
 from minestudio.simulator.callbacks import MinecraftCallback
 from minestudio.utils import get_mine_studio_dir
 
+ACTION_TRANSFORMER_KWARGS = dict(
+    camera_binsize=2,
+    camera_maxval=10,
+    camera_mu=10,
+    camera_quantization_scheme="mu_law",
+)
 
-@dataclass
-class CameraConfig:
-    camera_binsize: int = 2
-    camera_maxval: int = 10
-    camera_mu: float = 10.0
-    camera_quantization_scheme: str = "mu_law"
-
-    def __post_init__(self):
-        if self.camera_quantization_scheme not in ["mu_law", "linear"]:
-            raise ValueError("camera_quantization_scheme must be 'mu_law' or 'linear'")
-        
-    @property
-    def n_camera_bins(self):
-        """The bin number of the setting."""
-        return 2 * self.camera_maxval // self.camera_binsize + 1
-    
-    @property
-    def action_transformer_kwargs(self):
-        """Dictionary of camera settings used by an action transformer."""
-        return {
-            'camera_binsize': self.camera_binsize,
-            'camera_maxval': self.camera_maxval,
-            'camera_mu': self.camera_mu,
-            'camera_quantization_scheme': self.camera_quantization_scheme,
-        }
-    
-    
+action_mapper = CameraHierarchicalMapping(n_camera_bins=11)
+action_transformer = ActionTransformer(**ACTION_TRANSFORMER_KWARGS)
 
 def download_engine():
     import huggingface_hub, zipfile
@@ -83,7 +63,6 @@ class MinecraftSim(gymnasium.Env):
         preferred_spawn_biome: Optional[str] = None,    # the preferred spawn biome when call reset 
         num_empty_frames: int = 20,                     # the number of empty frames to skip when calling reset
         callbacks: List[MinecraftCallback] = [],        # the callbacks to be called before and after each basic calling
-        camera_config:CameraConfig=None,      # the configuration for camera quantization and binning settings
         **kwargs
     ) -> Any:
         super().__init__()
@@ -108,12 +87,6 @@ class MinecraftSim(gymnasium.Env):
 
         self.env.seed(seed)
         self.already_reset = False
-        
-        if camera_config is None:
-            camera_config = CameraConfig()
-        
-        self.action_mapper = CameraHierarchicalMapping(n_camera_bins = camera_config.n_camera_bins),
-        self.action_transformer = ActionTransformer(**camera_config.action_transformer_kwargs)
 
     def agent_action_to_env_action(self, action: Dict[str, Any]):
         #! This is quite important step (for some reason).
@@ -130,13 +103,13 @@ class MinecraftSim(gymnasium.Env):
                 "buttons": action["buttons"].cpu().numpy(),
                 "camera": action["camera"].cpu().numpy()
         }
-        action = self.action_mapper.to_factored(action)
-        action = self.action_transformer.policy2env(action)
+        action = action_mapper.to_factored(action)
+        action = action_transformer.policy2env(action)
         return action
 
     def énv_action_to_agent_action(self, action: Dict[str, Any]):
-        action = self.action_transformer.env2policy(action)
-        action = self.action_mapper.from_factored(action)
+        action = action_transformer.env2policy(action)
+        action = action_mapper.from_factored(action)
         return action
     
     def step(self, action: Dict[str, Any]) -> Tuple[np.ndarray, float, bool, bool, Dict[str, Any]]:
