@@ -51,7 +51,6 @@ if __name__ == '__main__':
     print(sim.action_space)
     for i in range(100):
         action = sim.action_space.sample()
-        print(action)
         # action = sim.noop_action()
         obs, reward, terminated, truncated, info = sim.step(action)
         # if (i+1) % 150 == 0:
