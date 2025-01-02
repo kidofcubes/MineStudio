@@ -1,9 +1,31 @@
 <!--
  * @Date: 2024-11-30 13:20:04
  * @LastEditors: muzhancun muzhancun@126.com
- * @LastEditTime: 2024-12-23 20:15:07
+ * @LastEditTime: 2025-01-02 19:47:14
  * @FilePath: /MineStudio/README.md
 -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GIFs in a Line</title>
+    <style>
+        .gif-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px; /* Adjust gap between GIFs */
+        }
+        .gif-container img {
+            width: 100px; /* Set the size of the GIFs */
+            height: auto;
+        }
+        .title {
+            text-align: center;
+            font-size: 14px; /* Make the title text smaller */
+            color: grey; /* Change the title text color to grey */
+            margin-top: 10px;
+        }
+    </style>
+</head>
 
 <div align="center">
 <img src="./docs/source/_static/banner.png" width="" alt="MineStudio" />
@@ -23,6 +45,17 @@
 
 <div align="center">
 MineStudio is a simple and efficient Minecraft development kit for AI research.
+</div>
+
+<div class="gif-container">
+    <img src="https://github.com/phython96/Images/blob/master/build_endergate_1.gif" alt="GIF 1">
+    <img src="https://github.com/phython96/Images/blob/master/build_endergate_2.gif" alt="GIF 2">
+    <img src="https://github.com/phython96/Images/blob/master/kill_sheep_1.gif" alt="GIF 3">
+    <img src="https://github.com/phython96/Images/blob/master/kill_sheep_1.gif2" alt="GIF 4">
+</div>
+
+<div class="title">
+Demos of agents trained by reinforcement learning in MineStudio: building an nether portal and killing sheeps with arrow.
 </div>
 
 ## Overview
