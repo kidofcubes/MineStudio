@@ -225,7 +225,6 @@ class CategoricalActionHead(ActionHead):
         probs = torch.exp(logits)
         sorted_probs, indices = torch.sort(probs, dim=-1, descending=True)
         cum_sum_probs = torch.cumsum(sorted_probs, dim=-1) 
-        print(f"{p = }, {cum_sum_probs = }")
         nucleus = cum_sum_probs < p 
         nucleus = torch.cat([nucleus.new_ones(nucleus.shape[:-1] + (1,)), nucleus[..., :-1]], dim=-1)
         sorted_log_probs = torch.log(sorted_probs)
@@ -236,7 +235,7 @@ class CategoricalActionHead(ActionHead):
 
     def sample(self, logits: torch.Tensor, deterministic: bool = False, **kwargs) -> Any:
         if self.nucleus_prob is None:
-            return vanilla_sample(logits, deterministic, **kwargs)
+            return self.vanilla_sample(logits, deterministic, **kwargs)
         else:
             return self.nucleus_sample(logits, deterministic, p=self.nucleus_prob, **kwargs)
 
@@ -356,20 +355,16 @@ class DictActionHead(nn.ModuleDict, ActionHead):
 def make_action_head(ac_space: ValType, pi_out_size: int, temperature: float = 1.0, **kwargs):
     """Helper function to create an action head corresponding to the environment action space"""
     if isinstance(ac_space, gymnasium.spaces.MultiDiscrete):
-        head_type = kwargs.get('type', 'independent').lower()
-        if head_type == 'independent' or head_type == 'mse': #! mse is debug only
-            return CategoricalActionHead(pi_out_size, ac_space.shape, ac_space.nvec[0].item(), temperature=temperature, **kwargs)
-        else:
-            raise NotImplementedError(f"Action head type {head_type} is not supported")
+        return CategoricalActionHead(pi_out_size, ac_space.shape, ac_space.nvec[0].item(), temperature=temperature, **kwargs)
     elif isinstance(ac_space, gymnasium.spaces.Dict):
-        return DictActionHead({k: make_action_head(v, pi_out_size, temperature) for k, v in ac_space.items()})
+        return DictActionHead({k: make_action_head(v, pi_out_size, temperature, **kwargs) for k, v in ac_space.items()})
     elif isinstance(ac_space, gymnasium.spaces.Tuple):
-        return TupleActionHead([make_action_head(v, pi_out_size, temperature) for v in ac_space])
+        return TupleActionHead([make_action_head(v, pi_out_size, temperature, **kwargs) for v in ac_space])
     elif isinstance(ac_space, gym.spaces.Discrete):
         return CategoricalActionHead(pi_out_size, ac_space.shape, ac_space.n, temperature=temperature, **kwargs)
     elif isinstance(ac_space, gym.spaces.Box) or isinstance(ac_space, gymnasium.spaces.Box):
         assert len(ac_space.shape) == 1, "Nontrivial shapes not yet implemented."
-        return MSEActionHead(pi_out_size, ac_space.shape[0])
+        return MSEActionHead(pi_out_size, ac_space.shape[0], **kwargs)
     raise NotImplementedError(f"Action space of type {type(ac_space)} is not supported")
 
 # def make_action_head(ac_space: ValType, pi_out_size: int, temperature: float = 1.0):
