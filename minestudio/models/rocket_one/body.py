@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-10 15:52:16
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-12-17 10:18:52
+LastEditTime: 2025-01-03 09:53:36
 FilePath: /MineStudio/minestudio/models/rocket_one/body.py
 '''
 import torch
@@ -27,8 +27,9 @@ class RocketPolicy(MinePolicy):
         timesteps: int = 128,
         mem_len: int = 128,
         action_space = None,
+        nucleus_prob: float = 0.85,
     ):
-        super().__init__(hiddim=hiddim, action_space=action_space)
+        super().__init__(hiddim=hiddim, action_space=action_space, nucleus_prob=nucleus_prob)
         self.backbone = timm.create_model(backbone, pretrained=True, features_only=True, in_chans=4)
         data_config = timm.data.resolve_model_data_config(self.backbone)
         self.transforms = torchvision.transforms.Compose([
