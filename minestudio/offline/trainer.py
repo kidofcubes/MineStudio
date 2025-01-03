@@ -1,8 +1,8 @@
 '''
 Date: 2024-11-10 13:44:13
-LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-12-17 06:15:06
-FilePath: /MineStudio/minestudio/offline/trainer.py
+LastEditors: caishaofei-mus1 1744260356@qq.com
+LastEditTime: 2025-01-02 00:41:28
+FilePath: /MineStudio/var/minestudio/offline/trainer.py
 '''
 import os
 import torch

@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-24 08:23:02
-LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-12-17 06:14:53
+LastEditors: caishaofei-mus1 1744260356@qq.com
+LastEditTime: 2025-01-02 00:53:07
 FilePath: /MineStudio/minestudio/tutorials/offline/2_pretrain_rockets/main.py
 '''
 import hydra
