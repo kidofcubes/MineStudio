@@ -1,15 +1,15 @@
 '''
 Date: 2024-12-13 14:31:12
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-12-13 15:23:35
-FilePath: /MineStudio/minestudio/tutorials/inference/evaluate_hunt_vpt.py
+LastEditTime: 2025-01-04 11:05:24
+FilePath: /MineStudio/minestudio/tutorials/inference/evaluate_vpts/hunt_animals.py
 '''
 import ray
 from rich import print
 from minestudio.inference import EpisodePipeline, MineGenerator, InfoBaseFilter
 
 from functools import partial
-from minestudio.models import load_vpt_policy
+from minestudio.models import load_vpt_policy, VPTPolicy
 from minestudio.simulator import MinecraftSim
 from minestudio.simulator.callbacks import (
     SpeedTestCallback, 
@@ -36,12 +36,13 @@ if __name__ == '__main__':
             ]), 
         ]
     )
-    agent_generator = partial(
-        load_vpt_policy,
-        model_path="/nfs-shared/jarvisbase/pretrained/foundation-model-2x.model",
-        # weights_path="/nfs-shared/jarvisbase/pretrained/foundation-model-1x.weights"
-        weights_path="/nfs-shared-2/shaofei/minestudio/save/2024-12-13/23-01-45/weights/weight-epoch=2-step=1000.ckpt", 
-    )
+    # agent_generator = partial(
+    #     load_vpt_policy,
+    #     model_path="/nfs-shared/jarvisbase/pretrained/foundation-model-2x.model",
+    #     # weights_path="/nfs-shared/jarvisbase/pretrained/foundation-model-1x.weights"
+    #     weights_path="/nfs-shared-2/shaofei/minestudio/save/2024-12-13/23-01-45/weights/weight-epoch=2-step=1000.ckpt", 
+    # )
+    agent_generator = lambda: VPTPolicy.from_pretrained("CraftJarvis/MineStudio_VPT.rl_from_early_game_2x")
     worker_kwargs = dict(
         env_generator=env_generator, 
         agent_generator=agent_generator,

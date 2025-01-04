@@ -10,12 +10,17 @@ Here is an example that shows how to load the OpenAI's VPT policy in the Minecra
 ```python
 from minestudio.simulator import MinecraftSim
 from minestudio.simulator.callbacks import RecordCallback
-from minestudio.models import load_vpt_policy
+from minestudio.models import load_vpt_policy, VPTPolicy
 
+# load the policy from the local model files
 policy = load_vpt_policy(
     model_path="/path/to/foundation-model-2x.model", 
     weights_path="/path/to/foundation-model-2x.weights"
 ).to("cuda")
+
+# or load the policy from the Hugging Face model hub
+policy = VPTPolicy.from_pretrained("CraftJarvis/MineStudio_VPT.rl_from_early_game_2x").to("cuda")
+
 policy.eval()
 
 env = MinecraftSim(

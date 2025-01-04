@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-12-02 21:23:42
- * @LastEditors: muzhancun muzhancun@126.com
- * @LastEditTime: 2024-12-14 01:10:23
+ * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
+ * @LastEditTime: 2025-01-04 11:44:39
  * @FilePath: /MineStudio/docs/source/inference/quick-inference.md
 -->
 
@@ -22,11 +22,7 @@ if __name__ == '__main__':
         obs_size = (128, 128), 
         preferred_spawn_biome = "forest", 
     ) # generate the environment
-    agent_generator = partial(
-        load_vpt_policy,
-        model_path = # provide the path to the model
-        weights_path = # provide the path to the weights
-    ) # generate the agent
+    agent_generator = lambda: VPTPolicy.from_pretrained("CraftJarvis/MineStudio_VPT.rl_from_early_game_2x") # generate the agent
     worker_kwargs = dict(
         env_generator = env_generator, 
         agent_generator = agent_generator,
