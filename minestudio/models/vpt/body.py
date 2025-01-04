@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-11 20:54:15
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2025-01-04 11:04:08
+LastEditTime: 2025-01-04 13:32:36
 FilePath: /MineStudio/minestudio/models/vpt/body.py
 '''
 import os
@@ -310,10 +310,10 @@ def load_vpt_policy(model_path: str, weights_path: Optional[str] = None):
 if __name__ == '__main__':
     # model = load_vpt_policy(
     #     model_path="/nfs-shared/jarvisbase/pretrained/foundation-model-2x.model",
-    #     weights_path="/nfs-shared/jarvisbase/pretrained/rl-from-early-game-2x.weights"
+    #     weights_path="/nfs-shared-2/hekaichen/minestudio_checkpoint/gate.ckpt"
     # ).to("cuda")
-    # model.push_to_hub("CraftJarvis/MineStudio_VPT.rl_from_early_game_2x")
-    model = VPTPolicy.from_pretrained("CraftJarvis/MineStudio_VPT.rl_from_early_game_2x").to("cuda")
+    # model.push_to_hub("CraftJarvis/MineStudio_VPT.rl_for_build_portal_2x")
+    model = VPTPolicy.from_pretrained("CraftJarvis/MineStudio_VPT.rl_for_shoot_animals_2x").to("cuda")
     model.eval()
     dummy_input = {
         "image": torch.zeros(1, 1, 128, 128, 3).to("cuda"),
