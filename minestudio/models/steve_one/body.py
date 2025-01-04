@@ -454,7 +454,7 @@ def load_steve_one_policy(ckpt_path: str) -> SteveOnePolicy:
     return SteveOnePolicy.from_pretrained(ckpt_path)
 
 if __name__ == '__main__':
-    model = SteveOnePolicy.from_pretrained("zbww/Steve-1").to("cuda")
+    model = SteveOnePolicy.from_pretrained("CraftJarvis/MineStudio_STEVE-1.official").to("cuda")
     model.eval()
     condition = model.prepare_condition(
         {

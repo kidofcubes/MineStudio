@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-10 15:52:16
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2025-01-03 10:16:13
+LastEditTime: 2025-01-04 09:34:49
 FilePath: /MineStudio/minestudio/models/rocket_one/body.py
 '''
 import torch
@@ -12,12 +12,13 @@ from einops import rearrange
 from typing import List, Dict, Any, Tuple, Optional
 
 import timm
+from huggingface_hub import PyTorchModelHubMixin
 from minestudio.models.base_policy import MinePolicy
 from minestudio.utils.vpt_lib.util import FanInInitReLULayer, ResidualRecurrentBlocks
 from minestudio.utils.register import Registers
 
 @Registers.model.register
-class RocketPolicy(MinePolicy):
+class RocketPolicy(MinePolicy, PyTorchModelHubMixin):
     
     def __init__(self, 
         backbone: str = 'efficientnet_b0.ra_in1k', 
@@ -118,13 +119,10 @@ def load_rocket_policy(ckpt_path: str):
     return model
 
 if __name__ == '__main__':
-    # ckpt_path = "/nfs-shared-2/shaofei/minestudio/save/2024-11-25/14-39-15/checkpoints/step-step=120000.ckpt"
-    # model = load_rocket_policy(ckpt_path).to("cuda")
-    model = RocketPolicy(
-        backbone='efficientnet_b0.ra_in1k', 
-        hiddim=1024, 
-        num_layers=4,
-    ).to("cuda")
+    # model = load_rocket_policy("/nfs-shared-2/shaofei/minestudio/save/2025-01-02/00-54-08/weights/weight-epoch=5-step=120000-EMA.ckpt")
+    # model.push_to_hub("CraftJarvis/MineStudio_ROCKET-1.12w_EMA")
+    model = RocketPolicy.from_pretrained("CraftJarvis/MineStudio_ROCKET-1.12w_EMA").to("cuda")
+    
     num_params = sum(p.numel() for p in model.parameters())
     print(f"Params (MB): {num_params / 1e6 :.2f}")
     

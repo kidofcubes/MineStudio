@@ -13,14 +13,14 @@ The following code snippet shows how to finetune a VPT policy to hunt animals in
     # below are MineStudio dependencies
     from minestudio.data import MineDataModule
     from minestudio.offline import MineLightning
-    from minestudio.models import load_vpt_policy
+    from minestudio.models import load_vpt_policy, VPTPolicy
     from minestudio.offline.mine_callbacks import BehaviorCloneCallback
     from minestudio.offline.lightning_callbacks import SmartCheckpointCallback, SpeedMonitorCallback
     ```
 
 2. Configure the policy model and the training process:
     ```python
-    policy = load_vpt_policy(model_path="/path/to/1x.model", weights_path="/path/to/1x.weights")
+    policy = VPTPolicy.from_pretrained("CraftJarvis/MineStudio_VPT.foundation_model_2x")
     mine_lightning = MineLightning(
         mine_policy=policy,
         learning_rate=0.00004,
@@ -36,7 +36,7 @@ The following code snippet shows how to finetune a VPT policy to hunt animals in
     mine_data = MineDataModule(
         data_params=dict(
             mode='event', 
-            dataset_dirs=['/nfs-shared-2/data/contractors/dataset_6xx'],
+            dataset_dirs=['10xx'],
             win_len=128,
             frame_width=128,
             frame_height=128,

@@ -29,12 +29,7 @@ Next, we create the ``env_generator`` and ``agent_generator`` separately to enab
         obs_size=(128, 128), 
         preferred_spawn_biome="forest", 
     )
-    agent_generator = partial(
-        load_vpt_policy,
-        model_path="/path/to/foundation-model-2x.model",
-        weights_path="/path/to/rl-from-early-game-2x.weights"
-    )
-
+    agent_generator = lambda: VPTPolicy.from_pretrained("CraftJarvis/MineStudio_VPT.rl_from_early_game_2x")
 
 Next, we configure the worker parameters, including:  
     - A maximum of 12,000 steps per episode,  

@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-11 20:54:15
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-12-15 11:30:55
+LastEditTime: 2025-01-04 11:04:08
 FilePath: /MineStudio/minestudio/models/vpt/body.py
 '''
 import os
@@ -16,6 +16,7 @@ from pathlib import Path
 from copy import deepcopy
 from typing import List, Dict, Optional, Callable, Union, Tuple, Any
 
+from huggingface_hub import PyTorchModelHubMixin
 from minestudio.utils.vpt_lib.impala_cnn import ImpalaCNN
 from minestudio.utils.vpt_lib.util import FanInInitReLULayer, ResidualRecurrentBlocks
 from minestudio.models.base_policy import MinePolicy
@@ -224,7 +225,7 @@ class MinecraftPolicy(nn.Module):
             return None
 
 @Registers.model.register
-class VPTPolicy(MinePolicy):
+class VPTPolicy(MinePolicy, PyTorchModelHubMixin):
 
     def __init__(self, policy_kwargs, action_space=None, **kwargs):
         super().__init__(hiddim=policy_kwargs["hidsize"], action_space=action_space, **kwargs)
@@ -307,10 +308,15 @@ def load_vpt_policy(model_path: str, weights_path: Optional[str] = None):
     return vpt_policy
 
 if __name__ == '__main__':
-    model_path = '/nfs-shared/jarvisbase/pretrained/foundation-model-2x.model'
-    weights_path = '/nfs-shared/jarvisbase/pretrained/rl-from-early-game-2x.weights'
-    policy = load_vpt_policy(model_path, weights_path)
+    # model = load_vpt_policy(
+    #     model_path="/nfs-shared/jarvisbase/pretrained/foundation-model-2x.model",
+    #     weights_path="/nfs-shared/jarvisbase/pretrained/rl-from-early-game-2x.weights"
+    # ).to("cuda")
+    # model.push_to_hub("CraftJarvis/MineStudio_VPT.rl_from_early_game_2x")
+    model = VPTPolicy.from_pretrained("CraftJarvis/MineStudio_VPT.rl_from_early_game_2x").to("cuda")
+    model.eval()
     dummy_input = {
-        "image": torch.zeros(1, 1, 128, 128, 3), 
+        "image": torch.zeros(1, 1, 128, 128, 3).to("cuda"),
     }
-    output, memory = policy(dummy_input, None)
+    output, memory = model(dummy_input, None)
+    print(output)

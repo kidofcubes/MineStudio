@@ -27,7 +27,7 @@ shuffle_episodes: True
 episode_continuous_batch: True
 
 model:
-  backbone: 'efficientnet_b0.ra_in1k'
+  backbone: 'timm/vit_base_patch16_224.dino'
   hiddim: 1024
   num_heads: 8
   num_layers: 4

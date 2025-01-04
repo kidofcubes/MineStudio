@@ -69,9 +69,11 @@ Evaluating the trained ROCKET-1 in your own scripts is easy:
 .. code-block:: python
 
     import torch
-    from minestudio.models import load_rocket_policy
+    from minestudio.models import load_rocket_policy, RocketPolicy
 
     model = load_rocket_policy('/path/to/rocket.ckpt').to('cuda')
+    # or 
+    model = RocketPolicy.from_pretrained("CraftJarvis/MineStudio_ROCKET-1.12w_EMA").to("cuda")
     model.eval()
     input = {
         'image': torch.zeros(224, 224, 3).to("cuda"), 
