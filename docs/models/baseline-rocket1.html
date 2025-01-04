@@ -680,9 +680,11 @@
 <h2>Evaluate ROCKET-1<a class="headerlink" href="#evaluate-rocket-1" title="Link to this heading">#</a></h2>
 <p>Evaluating the trained ROCKET-1 in your own scripts is easy:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">from</span> <span class="nn">minestudio.models</span> <span class="kn">import</span> <span class="n">load_rocket_policy</span>
+<span class="kn">from</span> <span class="nn">minestudio.models</span> <span class="kn">import</span> <span class="n">load_rocket_policy</span><span class="p">,</span> <span class="n">RocketPolicy</span>
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">load_rocket_policy</span><span class="p">(</span><span class="s1">&#39;/path/to/rocket.ckpt&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;cuda&#39;</span><span class="p">)</span>
+<span class="c1"># or</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">RocketPolicy</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;CraftJarvis/MineStudio_ROCKET-1.12w_EMA&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span><span class="p">)</span>
 <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
 <span class="nb">input</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;image&#39;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span><span class="p">),</span>

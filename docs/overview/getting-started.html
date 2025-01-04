@@ -928,12 +928,17 @@ VirtualGL</label><div class="sd-tab-content docutils">
 <p class="sd-card-text">Here is an example that shows how to load the OpenAI’s VPT policy in the Minecraft environment.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">minestudio.simulator</span> <span class="kn">import</span> <span class="n">MinecraftSim</span>
 <span class="kn">from</span> <span class="nn">minestudio.simulator.callbacks</span> <span class="kn">import</span> <span class="n">RecordCallback</span>
-<span class="kn">from</span> <span class="nn">minestudio.models</span> <span class="kn">import</span> <span class="n">load_vpt_policy</span>
+<span class="kn">from</span> <span class="nn">minestudio.models</span> <span class="kn">import</span> <span class="n">load_vpt_policy</span><span class="p">,</span> <span class="n">VPTPolicy</span>
 
+<span class="c1"># load the policy from the local model files</span>
 <span class="n">policy</span> <span class="o">=</span> <span class="n">load_vpt_policy</span><span class="p">(</span>
     <span class="n">model_path</span><span class="o">=</span><span class="s2">&quot;/path/to/foundation-model-2x.model&quot;</span><span class="p">,</span> 
     <span class="n">weights_path</span><span class="o">=</span><span class="s2">&quot;/path/to/foundation-model-2x.weights&quot;</span>
 <span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span><span class="p">)</span>
+
+<span class="c1"># or load the policy from the Hugging Face model hub</span>
+<span class="n">policy</span> <span class="o">=</span> <span class="n">VPTPolicy</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;CraftJarvis/MineStudio_VPT.rl_from_early_game_2x&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span><span class="p">)</span>
+
 <span class="n">policy</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
 
 <span class="n">env</span> <span class="o">=</span> <span class="n">MinecraftSim</span><span class="p">(</span>
@@ -967,14 +972,14 @@ VirtualGL</label><div class="sd-tab-content docutils">
 <span class="c1"># below are MineStudio dependencies</span>
 <span class="kn">from</span> <span class="nn">minestudio.data</span> <span class="kn">import</span> <span class="n">MineDataModule</span>
 <span class="kn">from</span> <span class="nn">minestudio.offline</span> <span class="kn">import</span> <span class="n">MineLightning</span>
-<span class="kn">from</span> <span class="nn">minestudio.models</span> <span class="kn">import</span> <span class="n">load_vpt_policy</span>
+<span class="kn">from</span> <span class="nn">minestudio.models</span> <span class="kn">import</span> <span class="n">load_vpt_policy</span><span class="p">,</span> <span class="n">VPTPolicy</span>
 <span class="kn">from</span> <span class="nn">minestudio.offline.mine_callbacks</span> <span class="kn">import</span> <span class="n">BehaviorCloneCallback</span>
 <span class="kn">from</span> <span class="nn">minestudio.offline.lightning_callbacks</span> <span class="kn">import</span> <span class="n">SmartCheckpointCallback</span><span class="p">,</span> <span class="n">SpeedMonitorCallback</span>
 </pre></div>
 </div>
 </li>
 <li><p class="sd-card-text">Configure the policy model and the training process:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">policy</span> <span class="o">=</span> <span class="n">load_vpt_policy</span><span class="p">(</span><span class="n">model_path</span><span class="o">=</span><span class="s2">&quot;/path/to/1x.model&quot;</span><span class="p">,</span> <span class="n">weights_path</span><span class="o">=</span><span class="s2">&quot;/path/to/1x.weights&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">policy</span> <span class="o">=</span> <span class="n">VPTPolicy</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;CraftJarvis/MineStudio_VPT.foundation_model_2x&quot;</span><span class="p">)</span>
 <span class="n">mine_lightning</span> <span class="o">=</span> <span class="n">MineLightning</span><span class="p">(</span>
     <span class="n">mine_policy</span><span class="o">=</span><span class="n">policy</span><span class="p">,</span>
     <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.00004</span><span class="p">,</span>
@@ -990,7 +995,7 @@ VirtualGL</label><div class="sd-tab-content docutils">
 <span class="n">mine_data</span> <span class="o">=</span> <span class="n">MineDataModule</span><span class="p">(</span>
     <span class="n">data_params</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
         <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;event&#39;</span><span class="p">,</span> 
-        <span class="n">dataset_dirs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;/nfs-shared-2/data/contractors/dataset_6xx&#39;</span><span class="p">],</span>
+        <span class="n">dataset_dirs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;10xx&#39;</span><span class="p">],</span>
         <span class="n">win_len</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span>
         <span class="n">frame_width</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span>
         <span class="n">frame_height</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span>
@@ -1193,8 +1198,8 @@ bash<span class="w"> </span>run.sh
 <span class="sd-summary-text"><img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Inference: Parallel Inference and Record Demonstrations</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
 <!--
  * @Date: 2024-12-02 21:23:42
- * @LastEditors: muzhancun muzhancun@126.com
- * @LastEditTime: 2024-12-14 01:10:23
+ * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
+ * @LastEditTime: 2025-01-04 11:44:39
  * @FilePath: /MineStudio/docs/source/inference/quick-inference.md
 -->
 <p class="sd-card-text">Here is a minimal example of how to use the inference framework:</p>
@@ -1212,11 +1217,7 @@ bash<span class="w"> </span>run.sh
         <span class="n">obs_size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span> 
         <span class="n">preferred_spawn_biome</span> <span class="o">=</span> <span class="s2">&quot;forest&quot;</span><span class="p">,</span> 
     <span class="p">)</span> <span class="c1"># generate the environment</span>
-    <span class="n">agent_generator</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span>
-        <span class="n">load_vpt_policy</span><span class="p">,</span>
-        <span class="n">model_path</span> <span class="o">=</span> <span class="c1"># provide the path to the model</span>
-        <span class="n">weights_path</span> <span class="o">=</span> <span class="c1"># provide the path to the weights</span>
-    <span class="p">)</span> <span class="c1"># generate the agent</span>
+    <span class="n">agent_generator</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">VPTPolicy</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;CraftJarvis/MineStudio_VPT.rl_from_early_game_2x&quot;</span><span class="p">)</span> <span class="c1"># generate the agent</span>
     <span class="n">worker_kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
         <span class="n">env_generator</span> <span class="o">=</span> <span class="n">env_generator</span><span class="p">,</span> 
         <span class="n">agent_generator</span> <span class="o">=</span> <span class="n">agent_generator</span><span class="p">,</span>
