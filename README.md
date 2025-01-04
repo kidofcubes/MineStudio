@@ -9,10 +9,6 @@
 <img src="./docs/source/_static/banner.png" width="65%" alt="MineStudio" />
 </div>
 
-<hr>
-
-<h1 align="center">MineStudio: A Streamlined Package for Minecraft AI Agent Development</h1>
-
 <div align="center">
 	<a href="https://craftjarvis.github.io/"><img alt="Homepage" src="https://img.shields.io/badge/%20CraftJarvis-HomePage-ffc107?color=blue&logoColor=white" style="display: inline-block; vertical-align: middle;"/></a>
 	<a href="https://huggingface.co/CraftJarvis""><img alt="Hugging Face" src="https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-CraftJarvis-ffc107?color=3b65ab&logoColor=white" style="display: inline-block; vertical-align: middle;"/></a>
@@ -26,6 +22,8 @@
 	<a href="https://github.com/CraftJarvis/MineStudio"><img src="https://visitor-badge.laobi.icu/badge?page_id=CraftJarvis.MineStudio"/></a>
 	<a href="https://github.com/CraftJarvis/MineStudio"><img src="https://img.shields.io/github/stars/CraftJarvis/MineStudio"/></a>
 </div>
+
+<hr>
 
 <p align="center">
   <img src="https://github.com/phython96/Images/blob/master/minestudio_gallary.gif" />
