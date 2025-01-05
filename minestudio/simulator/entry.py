@@ -112,7 +112,7 @@ class MinecraftSim(gymnasium.Env):
         if camera_config is None:
             camera_config = CameraConfig()
         
-        self.action_mapper = CameraHierarchicalMapping(n_camera_bins = camera_config.n_camera_bins),
+        self.action_mapper = CameraHierarchicalMapping(n_camera_bins = camera_config.n_camera_bins)
         self.action_transformer = ActionTransformer(**camera_config.action_transformer_kwargs)
 
     def agent_action_to_env_action(self, action: Dict[str, Any]):
