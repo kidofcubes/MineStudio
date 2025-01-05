@@ -6,6 +6,7 @@ FilePath: /Minestudio/minestudio/simulator/callbacks/rewards.py
 '''
 
 import numpy as np
+from rich import print
 from minestudio.simulator.callbacks.callback import MinecraftCallback
 
 class RewardsCallback(MinecraftCallback):
@@ -39,9 +40,11 @@ class RewardsCallback(MinecraftCallback):
             event_type = reward_info['event']
             delta = 0
             for obj in reward_info['objects']:
-                delta += self._get_obj_num(info, event_type, obj) - self._get_obj_num(self.prev_info, event_type, obj)
+                obj_delta = self._get_obj_num(info, event_type, obj) - self._get_obj_num(self.prev_info, event_type, obj)
+                delta += obj_delta
                 if delta <= 0:
                     continue
+                print(f"[green]{obj} : {obj_delta}[/green]")
                 already_reward_times = self.reward_memory.get(reward_info['identity'], 0)
                 if already_reward_times < reward_info['max_reward_times']:
                     override_reward += reward_info['reward']

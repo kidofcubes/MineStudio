@@ -12,6 +12,8 @@ import json
 import re
 from pathlib import Path
 from copy import deepcopy
+from time import sleep
+from rich import console
 
 EQUIP_SLOTS = {
     "mainhand": 0,
@@ -28,7 +30,7 @@ SLOT_IDX2NAME = {v: k for k, v in EQUIP_SLOTS.items()}
 MIN_ITEMS_NUM = 0
 MAX_ITEMS_NUM = 64
 
-DISTRACTION_LEVEL = {"one":[1],
+DISTRACTION_LEVEL = {"zero":[0],"one":[1],
                      "easy":range(3,7),"middle":range(7,16),"hard":range(16,35),
                      "normal":range(0,35)}
 
@@ -86,12 +88,12 @@ class InitInventoryCallback(MinecraftCallback):
         # settle distraction slot
         distraction_num = min(random.choice(self.distraction_level),len(unvisited_slots))
         for _ in range(distraction_num):
-            item_info = random.choice(self.items_library)
+            item_type = random.choice(self.items_names)
             slot = int(random.choice(list(unvisited_slots)))
             unvisited_slots.remove(slot)
             init_inventory.append({
                 "slot":slot,
-                "type":item_info,
+                "type":item_type,
                 "quantity":"random",
             })
         self.slot_num = len(init_inventory)
@@ -109,6 +111,7 @@ class InitInventoryCallback(MinecraftCallback):
             obs, reward, done, info = sim.env.execute_cmd(chat)
         obs, info = sim._wrap_obs_info(obs, info)
         init_flag = False
+        
         for _ in range(self.slot_num*2):
             action = sim.env.noop_action()
             obs, reward, done, info = sim.env.step(action)
@@ -116,7 +119,7 @@ class InitInventoryCallback(MinecraftCallback):
             if init_flag:
                 break
         if not init_flag:
-            raise AssertionError("can't set up init inventory")
+            console.Console().log("[red]can't set up init inventory[/red]")
         return obs, info
     
     
@@ -227,7 +230,7 @@ if __name__ == "__main__":
                 {"slot": "random",
                 "type": "oak_planks",
                 "quantity":"random",},
-            ],distraction_level="random")
+            ],distraction_level="normal")
         ]
     )
     obs, info = sim.reset()

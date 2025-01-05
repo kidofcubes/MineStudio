@@ -14,16 +14,18 @@ import numpy as np
 from gymnasium import spaces
 from collections import defaultdict
 import json
+import cv2
 
 class RecordCallback(MinecraftCallback):
     def __init__(self, record_path: str, fps: int = 20, frame_type: Literal['pov', 'obs'] = 'pov', recording: bool = True,
-                    record_actions=False,record_infos=False,record_origin_observation=False,
+                    show_actions=False,record_actions=False,record_infos=False,record_origin_observation=False,
                  **kwargs):
         super().__init__(**kwargs)
         self.record_path = Path(record_path)
         self.record_path.mkdir(parents=True, exist_ok=True)
         self.recording = recording
         self.record_actions = record_actions
+        self.show_actions = show_actions
         self.record_infos = record_infos
         self.record_origin_observation = record_origin_observation
         if recording:
@@ -57,7 +59,7 @@ class RecordCallback(MinecraftCallback):
                 self.frames.append(info['pov'])
             else:
                 raise ValueError(f'Invalid frame_type: {self.frame_type}')
-            if self.record_actions:
+            if self.record_actions or self.show_actions:
                 self.actions.append({}) #empty for reset
             if self.record_infos:
                 self.infos.append(info)
@@ -65,7 +67,7 @@ class RecordCallback(MinecraftCallback):
         return obs, info
     
     def before_step(self, sim, action):
-        if self.recording and self.record_actions:
+        if self.recording and (self.record_actions  or self.show_actions):
             self.actions.append(action)
         return action
     
@@ -105,7 +107,20 @@ class RecordCallback(MinecraftCallback):
             stream = container.add_stream("h264", rate=self.fps)
             stream.width = self.frames[0].shape[1]
             stream.height = self.frames[0].shape[0]
-            for frame in self.frames:
+            for idx,frame in enumerate(self.frames):
+                # print actions on the frames
+                if self.show_actions:
+                    for row, (k, v) in enumerate(self.actions[idx].items()):
+                        if k in {"chat","mobs","voxels"}:
+                            continue
+                        if k in {"camera"}:
+                            color = (234, 53, 70) if (v != 0).any() else (249, 200, 14) 
+                        else:
+                            color = (234, 53, 70) if v != 0 else (249, 200, 14)
+                        if k == 'camera':
+                            v = "[{:.2f}, {:.2f}]".format(v[0], v[1])
+                        frame = frame.copy()
+                        cv2.putText(frame, f"{k}: {v}", (10, 25 + row*15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
                 frame = av.VideoFrame.from_ndarray(frame, format="rgb24")
                 for packet in stream.encode(frame):
                     container.mux(packet)
