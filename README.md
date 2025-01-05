@@ -6,12 +6,10 @@
 -->
 
 <div align="center">
-<img src="./docs/source/_static/banner.png" width="65%" alt="MineStudio" />
+<img src="./docs/source/_static/banner.png" width="50%" alt="MineStudio" />
 </div>
 
 <hr>
-
-<h1 align="center">MineStudio: A Streamlined Package for Minecraft AI Agent Development</h1>
 
 <div align="center">
 	<a href="https://craftjarvis.github.io/"><img alt="Homepage" src="https://img.shields.io/badge/%20CraftJarvis-HomePage-ffc107?color=blue&logoColor=white" style="display: inline-block; vertical-align: middle;"/></a>
