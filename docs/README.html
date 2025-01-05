@@ -630,6 +630,73 @@ conda<span class="w"> </span>install<span class="w"> </span>--channel<span class
 </pre></div>
 </div>
 </section>
+<section id="datasets-on-hugging-face">
+<h1>Datasets on 🤗 Hugging Face<a class="headerlink" href="#datasets-on-hugging-face" title="Link to this heading">#</a></h1>
+<p>We converted the <a class="reference external" href="https://github.com/openai/Video-Pre-Training?tab=readme-ov-file#contractor-demonstrations">Contractor Data</a> the OpenAI VPT project provided to our trajectory structure and released them to the Hugging Face.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://huggingface.co/datasets/CraftJarvis/minestudio-data-6xx">CraftJarvis/minestudio-data-6xx</a></p></li>
+<li><p><a class="reference external" href="https://huggingface.co/datasets/CraftJarvis/minestudio-data-7xx">CraftJarvis/minestudio-data-7xx</a></p></li>
+<li><p><a class="reference external" href="https://huggingface.co/datasets/CraftJarvis/minestudio-data-8xx">CraftJarvis/minestudio-data-8xx</a></p></li>
+<li><p><a class="reference external" href="https://huggingface.co/datasets/CraftJarvis/minestudio-data-9xx">CraftJarvis/minestudio-data-9xx</a></p></li>
+<li><p><a class="reference external" href="https://huggingface.co/datasets/CraftJarvis/minestudio-data-10xx">CraftJarvis/minestudio-data-10xx</a></p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dataset</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span>
+    <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;raw&#39;</span><span class="p">,</span> 
+    <span class="n">dataset_dirs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;6xx&#39;</span><span class="p">,</span> <span class="s1">&#39;7xx&#39;</span><span class="p">,</span> <span class="s1">&#39;8xx&#39;</span><span class="p">,</span> <span class="s1">&#39;9xx&#39;</span><span class="p">,</span> <span class="s1">&#39;10xx&#39;</span><span class="p">],</span> 
+    <span class="n">enable_video</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">enable_action</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">frame_width</span><span class="o">=</span><span class="mi">224</span><span class="p">,</span> 
+    <span class="n">frame_height</span><span class="o">=</span><span class="mi">224</span><span class="p">,</span>
+    <span class="n">win_len</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> 
+    <span class="n">split</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> 
+    <span class="n">split_ratio</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> 
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+<span class="n">item</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+</pre></div>
+</div>
+</section>
+<section id="models-on-hugging-face">
+<h1>Models on 🤗 Hugging Face<a class="headerlink" href="#models-on-hugging-face" title="Link to this heading">#</a></h1>
+<p>We have pushed all the checkpoints to 🤗 Hugging Face, it is convenient to load the policy model.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinecraftSim</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator.callbacks</span><span class="w"> </span><span class="kn">import</span> <span class="n">RecordCallback</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">VPTPolicy</span>
+
+<span class="n">policy</span> <span class="o">=</span> <span class="n">VPTPolicy</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;CraftJarvis/MineStudio_VPT.rl_from_early_game_2x&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span><span class="p">)</span>
+<span class="n">policy</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+
+<span class="n">env</span> <span class="o">=</span> <span class="n">MinecraftSim</span><span class="p">(</span>
+    <span class="n">obs_size</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span> 
+    <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">RecordCallback</span><span class="p">(</span><span class="n">record_path</span><span class="o">=</span><span class="s2">&quot;./output&quot;</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">frame_type</span><span class="o">=</span><span class="s2">&quot;pov&quot;</span><span class="p">)]</span>
+<span class="p">)</span>
+<span class="n">memory</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">obs</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1200</span><span class="p">):</span>
+    <span class="n">action</span><span class="p">,</span> <span class="n">memory</span> <span class="o">=</span> <span class="n">policy</span><span class="o">.</span><span class="n">get_action</span><span class="p">(</span><span class="n">obs</span><span class="p">,</span> <span class="n">memory</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="s1">&#39;*&#39;</span><span class="p">)</span>
+    <span class="n">obs</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">terminated</span><span class="p">,</span> <span class="n">truncated</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+<span class="n">env</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Here is the checkpoint list:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://huggingface.co/CraftJarvis/MineStudio_VPT.foundation_model_1x">CraftJarvis/MineStudio_VPT.foundation_model_1x</a>, trained by <a class="reference external" href="https://github.com/openai/Video-Pre-Training">OpenAI</a></p></li>
+<li><p><a class="reference external" href="https://huggingface.co/CraftJarvis/MineStudio_VPT.foundation_model_2x">CraftJarvis/MineStudio_VPT.foundation_model_2x</a>, trained by <a class="reference external" href="https://github.com/openai/Video-Pre-Training">OpenAI</a></p></li>
+<li><p><a class="reference external" href="https://huggingface.co/CraftJarvis/MineStudio_VPT.foundation_model_3x">CraftJarvis/MineStudio_VPT.foundation_model_3x</a>, trained by <a class="reference external" href="https://github.com/openai/Video-Pre-Training">OpenAI</a></p></li>
+<li><p><a class="reference external" href="https://huggingface.co/CraftJarvis/MineStudio_VPT.bc_early_game_2x">CraftJarvis/MineStudio_VPT.bc_early_game_2x</a>, trained by <a class="reference external" href="https://github.com/openai/Video-Pre-Training">OpenAI</a></p></li>
+<li><p><a class="reference external" href="https://huggingface.co/CraftJarvis/MineStudio_VPT.rl_from_house_2x">CraftJarvis/MineStudio_VPT.rl_from_house_2x</a>, trained by <a class="reference external" href="https://github.com/openai/Video-Pre-Training">OpenAI</a></p></li>
+<li><p><a class="reference external" href="https://huggingface.co/CraftJarvis/MineStudio_VPT.rl_from_early_game_2x">CraftJarvis/MineStudio_VPT.rl_from_early_game_2x</a>, trained by <a class="reference external" href="https://github.com/openai/Video-Pre-Training">OpenAI</a></p></li>
+<li><p><a class="reference external" href="https://huggingface.co/CraftJarvis/MineStudio_VPT.bc_house_3x">CraftJarvis/MineStudio_VPT.bc_house_3x</a>, trained by <a class="reference external" href="https://github.com/openai/Video-Pre-Training">OpenAI</a></p></li>
+<li><p><a class="reference external" href="https://huggingface.co/CraftJarvis/MineStudio_VPT.bc_early_game_3x">CraftJarvis/MineStudio_VPT.bc_early_game_3x</a>, trained by <a class="reference external" href="https://github.com/openai/Video-Pre-Training">OpenAI</a></p></li>
+<li><p><a class="reference external" href="https://huggingface.co/CraftJarvis/MineStudio_VPT.rl_for_shoot_animals_2x">CraftJarvis/MineStudio_VPT.rl_for_shoot_animals_2x</a>, trained by <a class="reference external" href="https://craftjarvis.github.io/">CraftJarvis</a></p></li>
+<li><p><a class="reference external" href="https://huggingface.co/CraftJarvis/MineStudio_VPT.rl_for_build_portal_2x">CraftJarvis/MineStudio_VPT.rl_for_build_portal_2x</a>, trained by <a class="reference external" href="https://craftjarvis.github.io/">CraftJarvis</a></p></li>
+<li><p><a class="reference external" href="https://huggingface.co/CraftJarvis/MineStudio_STEVE-1.official">CraftJarvis/MineStudio_STEVE-1.official</a>, trained by <a class="reference external" href="https://github.com/Shalev-Lifshitz/STEVE-1">STEVE-1</a></p></li>
+<li><p><a class="reference external" href="https://huggingface.co/CraftJarvis/MineStudio_ROCKET-1.12w_EMA">CraftJarvis/MineStudio_ROCKET-1.12w_EMA</a>, trained by <a class="reference external" href="https://craftjarvis.github.io/">CraftJarvis</a></p></li>
+</ul>
+</section>
 <section id="why-minestudio">
 <h1>Why MineStudio<a class="headerlink" href="#why-minestudio" title="Link to this heading">#</a></h1>
 </section>
@@ -686,6 +753,8 @@ Thanks for their great work.</p>
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Overview</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#datasets-on-hugging-face">Datasets on 🤗 Hugging Face</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#models-on-hugging-face">Models on 🤗 Hugging Face</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#why-minestudio">Why MineStudio</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#acknowledgement">Acknowledgement</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#citation">Citation</a></li>

@@ -80,6 +80,74 @@ python -m minestudio.simulator.entry # using Xvfb
 MINESTUDIO_GPU_RENDER=1 python -m minestudio.simulator.entry # using VirtualGL
 ```
 
+## Datasets on 🤗 Hugging Face
+
+We converted the [Contractor Data](https://github.com/openai/Video-Pre-Training?tab=readme-ov-file#contractor-demonstrations) the OpenAI VPT project provided to our trajectory structure and released them to the Hugging Face. 
+
+- [CraftJarvis/minestudio-data-6xx](https://huggingface.co/datasets/CraftJarvis/minestudio-data-6xx)
+- [CraftJarvis/minestudio-data-7xx](https://huggingface.co/datasets/CraftJarvis/minestudio-data-7xx)
+- [CraftJarvis/minestudio-data-8xx](https://huggingface.co/datasets/CraftJarvis/minestudio-data-8xx)
+- [CraftJarvis/minestudio-data-9xx](https://huggingface.co/datasets/CraftJarvis/minestudio-data-9xx)
+- [CraftJarvis/minestudio-data-10xx](https://huggingface.co/datasets/CraftJarvis/minestudio-data-10xx)
+
+```python
+from minestudio.data import load_dataset
+
+dataset = load_dataset(
+    mode='raw', 
+    dataset_dirs=['6xx', '7xx', '8xx', '9xx', '10xx'], 
+    enable_video=True,
+    enable_action=True,
+    frame_width=224, 
+    frame_height=224,
+    win_len=128, 
+    split='train', 
+    split_ratio=0.9, 
+    verbose=True
+)
+item = dataset[0]
+print(item.keys())
+```
+
+
+## Models on 🤗 Hugging Face
+
+We have pushed all the checkpoints to 🤗 Hugging Face, it is convenient to load the policy model. 
+
+```python
+from minestudio.simulator import MinecraftSim
+from minestudio.simulator.callbacks import RecordCallback
+from minestudio.models import VPTPolicy
+
+policy = VPTPolicy.from_pretrained("CraftJarvis/MineStudio_VPT.rl_from_early_game_2x").to("cuda")
+policy.eval()
+
+env = MinecraftSim(
+    obs_size=(128, 128), 
+    callbacks=[RecordCallback(record_path="./output", fps=30, frame_type="pov")]
+)
+memory = None
+obs, info = env.reset()
+for i in range(1200):
+    action, memory = policy.get_action(obs, memory, input_shape='*')
+    obs, reward, terminated, truncated, info = env.step(action)
+env.close()
+```
+
+Here is the checkpoint list:
+- [CraftJarvis/MineStudio_VPT.foundation_model_1x](https://huggingface.co/CraftJarvis/MineStudio_VPT.foundation_model_1x), trained by [OpenAI](https://github.com/openai/Video-Pre-Training)
+- [CraftJarvis/MineStudio_VPT.foundation_model_2x](https://huggingface.co/CraftJarvis/MineStudio_VPT.foundation_model_2x), trained by [OpenAI](https://github.com/openai/Video-Pre-Training)
+- [CraftJarvis/MineStudio_VPT.foundation_model_3x](https://huggingface.co/CraftJarvis/MineStudio_VPT.foundation_model_3x), trained by [OpenAI](https://github.com/openai/Video-Pre-Training)
+- [CraftJarvis/MineStudio_VPT.bc_early_game_2x](https://huggingface.co/CraftJarvis/MineStudio_VPT.bc_early_game_2x), trained by [OpenAI](https://github.com/openai/Video-Pre-Training)
+- [CraftJarvis/MineStudio_VPT.rl_from_house_2x](https://huggingface.co/CraftJarvis/MineStudio_VPT.rl_from_house_2x), trained by [OpenAI](https://github.com/openai/Video-Pre-Training)
+- [CraftJarvis/MineStudio_VPT.rl_from_early_game_2x](https://huggingface.co/CraftJarvis/MineStudio_VPT.rl_from_early_game_2x), trained by [OpenAI](https://github.com/openai/Video-Pre-Training)
+- [CraftJarvis/MineStudio_VPT.bc_house_3x](https://huggingface.co/CraftJarvis/MineStudio_VPT.bc_house_3x), trained by [OpenAI](https://github.com/openai/Video-Pre-Training)
+- [CraftJarvis/MineStudio_VPT.bc_early_game_3x](https://huggingface.co/CraftJarvis/MineStudio_VPT.bc_early_game_3x), trained by [OpenAI](https://github.com/openai/Video-Pre-Training)
+- [CraftJarvis/MineStudio_VPT.rl_for_shoot_animals_2x](https://huggingface.co/CraftJarvis/MineStudio_VPT.rl_for_shoot_animals_2x), trained by [CraftJarvis](https://craftjarvis.github.io/)
+- [CraftJarvis/MineStudio_VPT.rl_for_build_portal_2x](https://huggingface.co/CraftJarvis/MineStudio_VPT.rl_for_build_portal_2x), trained by [CraftJarvis](https://craftjarvis.github.io/)
+- [CraftJarvis/MineStudio_STEVE-1.official](https://huggingface.co/CraftJarvis/MineStudio_STEVE-1.official), trained by [STEVE-1](https://github.com/Shalev-Lifshitz/STEVE-1)
+- [CraftJarvis/MineStudio_ROCKET-1.12w_EMA](https://huggingface.co/CraftJarvis/MineStudio_ROCKET-1.12w_EMA), trained by [CraftJarvis](https://craftjarvis.github.io/)
+
 ## Why MineStudio
 
 ## Acknowledgement
