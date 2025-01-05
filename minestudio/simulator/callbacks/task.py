@@ -25,4 +25,5 @@ class TaskCallback(MinecraftCallback):
         task = random.choice(self.task_cfg)
         print(f"Switching to task: {task['name']}.")
         obs["task"] = task
+        info["task"] = task
         return obs, info
