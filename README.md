@@ -9,29 +9,32 @@
 <img src="./docs/source/_static/banner.png" width="65%" alt="MineStudio" />
 </div>
 
+<hr>
+
+<h1 align="center">MineStudio: A Streamlined Package for Minecraft AI Agent Development</h1>
+
 <div align="center">
 	<a href="https://craftjarvis.github.io/"><img alt="Homepage" src="https://img.shields.io/badge/%20CraftJarvis-HomePage-ffc107?color=blue&logoColor=white" style="display: inline-block; vertical-align: middle;"/></a>
 	<a href="https://huggingface.co/CraftJarvis""><img alt="Hugging Face" src="https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-CraftJarvis-ffc107?color=3b65ab&logoColor=white" style="display: inline-block; vertical-align: middle;"/></a>
+	<a href="https://github.com/CraftJarvis/MineStudio/blob/master/LICENSE"><img src="https://img.shields.io/badge/Code License-MIT-blue"/></a>
 </div>
 <div align="center">	
 	<a href="https://arxiv.org/abs/2412.18293"><img src="https://img.shields.io/badge/arXiv-2412.18293-b31b1b.svg"></a>
-	<a href="https://github.com/CraftJarvis/MineStudio/blob/master/LICENSE"><img src="https://img.shields.io/badge/Code License-MIT-blue"/></a>
-	<a href="https://craftjarvis.github.io/MineStudio/"><img src="https://img.shields.io/badge/Doc-yellow"/></a>
+	<a href="https://craftjarvis.github.io/MineStudio/"><img src="https://img.shields.io/badge/Doc-Sphinx-yellow"/></a>
     	<a href="https://pypi.org/project/minestudio/"><img src="https://img.shields.io/pypi/v/minestudio.svg"/></a>
 	<a href="https://huggingface.co/CraftJarvis"><img src="https://img.shields.io/badge/Dataset-Released-orange"/></a>
 	<a href="https://github.com/CraftJarvis/MineStudio"><img src="https://visitor-badge.laobi.icu/badge?page_id=CraftJarvis.MineStudio"/></a>
 	<a href="https://github.com/CraftJarvis/MineStudio"><img src="https://img.shields.io/github/stars/CraftJarvis/MineStudio"/></a>
 </div>
 
-<hr>
-
 <p align="center">
   <img src="https://github.com/phython96/Images/blob/master/minestudio_gallary.gif" />
+  <div align="center" style="color: grey; font-size: 12px;">
+    Demos of agents trained with MineStudio <b>online</b> module: building a nether portal and shooting animals.
+  </div>
 </p>
 
-<div align="center" style="color: grey; font-size: 12px;">
-  Demos of agents trained by reinforcement learning in MineStudio: building a nether portal and killing sheeps with arrows.
-</div>
+
 
 ## Overview
 
