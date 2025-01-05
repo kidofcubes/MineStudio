@@ -30,7 +30,7 @@
   <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 <link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/jupyter-sphinx.css" />
@@ -641,7 +641,7 @@
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">reset</span></code>: This method is called when the environment is initialized. It returns the initial observation and information.
 Our simulator wrapper’s <code class="docutils literal notranslate"><span class="pre">reset</span></code> method code looks like this:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="n">reset_flag</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="k">for</span> <span class="n">callback</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="p">:</span>
         <span class="n">reset_flag</span> <span class="o">=</span> <span class="n">callback</span><span class="o">.</span><span class="n">before_reset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reset_flag</span><span class="p">)</span>
@@ -664,7 +664,7 @@ Our simulator wrapper’s <code class="docutils literal notranslate"><span class
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">step</span></code>: This method is called when the agent takes an action. It returns the observation, reward, termination status, and information.
 The <code class="docutils literal notranslate"><span class="pre">step</span></code> method code looks like this:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">callback</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="p">:</span>
         <span class="n">action</span> <span class="o">=</span> <span class="n">callback</span><span class="o">.</span><span class="n">before_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span>
     <span class="n">obs</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">terminated</span><span class="p">,</span> <span class="n">truncated</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span> 
@@ -685,7 +685,7 @@ The <code class="docutils literal notranslate"><span class="pre">step</span></co
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">close</span></code>: This method is called when the environment is closed.
 The <code class="docutils literal notranslate"><span class="pre">close</span></code> method code looks like this:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">callback</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="p">:</span>
         <span class="n">callback</span><span class="o">.</span><span class="n">before_close</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
     <span class="n">close_status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
@@ -705,30 +705,30 @@ The <code class="docutils literal notranslate"><span class="pre">close</span></c
 <h2>Callbacks<a class="headerlink" href="#callbacks" title="Link to this heading">#</a></h2>
 <p>Callbacks are used to customize the environment. All the callbacks are optional, and you can use them in any combination.</p>
 <p>The structure of a callback is as follows:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MinecraftCallback</span><span class="p">:</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MinecraftCallback</span><span class="p">:</span>
     
-    <span class="k">def</span> <span class="nf">before_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sim</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">before_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sim</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">action</span>
     
-    <span class="k">def</span> <span class="nf">after_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sim</span><span class="p">,</span> <span class="n">obs</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">terminated</span><span class="p">,</span> <span class="n">truncated</span><span class="p">,</span> <span class="n">info</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">after_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sim</span><span class="p">,</span> <span class="n">obs</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">terminated</span><span class="p">,</span> <span class="n">truncated</span><span class="p">,</span> <span class="n">info</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">obs</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">terminated</span><span class="p">,</span> <span class="n">truncated</span><span class="p">,</span> <span class="n">info</span>
     
-    <span class="k">def</span> <span class="nf">before_reset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sim</span><span class="p">,</span> <span class="n">reset_flag</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span> <span class="c1"># whether need to call env reset</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">before_reset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sim</span><span class="p">,</span> <span class="n">reset_flag</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span> <span class="c1"># whether need to call env reset</span>
         <span class="k">return</span> <span class="n">reset_flag</span>
     
-    <span class="k">def</span> <span class="nf">after_reset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sim</span><span class="p">,</span> <span class="n">obs</span><span class="p">,</span> <span class="n">info</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">after_reset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sim</span><span class="p">,</span> <span class="n">obs</span><span class="p">,</span> <span class="n">info</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">obs</span><span class="p">,</span> <span class="n">info</span>
     
-    <span class="k">def</span> <span class="nf">before_close</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sim</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">before_close</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sim</span><span class="p">):</span>
         <span class="k">return</span>
     
-    <span class="k">def</span> <span class="nf">after_close</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sim</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">after_close</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sim</span><span class="p">):</span>
         <span class="k">return</span>
     
-    <span class="k">def</span> <span class="nf">before_render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sim</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">before_render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sim</span><span class="p">):</span>
         <span class="k">return</span>
     
-    <span class="k">def</span> <span class="nf">after_render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sim</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">after_render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sim</span><span class="p">):</span>
         <span class="k">return</span>
 </pre></div>
 </div>

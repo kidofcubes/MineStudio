@@ -30,7 +30,7 @@
   <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 <link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/jupyter-sphinx.css" />
@@ -631,21 +631,21 @@
 <h1>Tutorial: Pre-Training ROCKET-1 from Scratch<a class="headerlink" href="#tutorial-pre-training-rocket-1-from-scratch" title="Link to this heading">#</a></h1>
 <p>Let’s break down the parameters required to train ROCKET-1 step by step.</p>
 <p>We begin with the introduction of dependencies:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">hydra</span>
-<span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
-<span class="kn">import</span> <span class="nn">lightning</span> <span class="k">as</span> <span class="nn">L</span>
-<span class="kn">from</span> <span class="nn">lightning.pytorch.loggers</span> <span class="kn">import</span> <span class="n">WandbLogger</span>
-<span class="kn">from</span> <span class="nn">lightning.pytorch.callbacks</span> <span class="kn">import</span> <span class="n">LearningRateMonitor</span>
-<span class="kn">from</span> <span class="nn">einops</span> <span class="kn">import</span> <span class="n">rearrange</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Tuple</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">hydra</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">lightning</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">L</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">lightning.pytorch.loggers</span><span class="w"> </span><span class="kn">import</span> <span class="n">WandbLogger</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">lightning.pytorch.callbacks</span><span class="w"> </span><span class="kn">import</span> <span class="n">LearningRateMonitor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">einops</span><span class="w"> </span><span class="kn">import</span> <span class="n">rearrange</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Tuple</span>
 
-<span class="kn">from</span> <span class="nn">minestudio.data</span> <span class="kn">import</span> <span class="n">MineDataModule</span>
-<span class="kn">from</span> <span class="nn">minestudio.models</span> <span class="kn">import</span> <span class="n">RocketPolicy</span>
-<span class="kn">from</span> <span class="nn">minestudio.offline</span> <span class="kn">import</span> <span class="n">MineLightning</span>
-<span class="kn">from</span> <span class="nn">minestudio.offline.utils</span> <span class="kn">import</span> <span class="n">convert_to_normal</span>
-<span class="kn">from</span> <span class="nn">minestudio.offline.mine_callbacks</span> <span class="kn">import</span> <span class="n">BehaviorCloneCallback</span>
-<span class="kn">from</span> <span class="nn">minestudio.offline.lightning_callbacks</span> <span class="kn">import</span> <span class="n">SmartCheckpointCallback</span><span class="p">,</span> <span class="n">SpeedMonitorCallback</span><span class="p">,</span> <span class="n">EMA</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">MineDataModule</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">RocketPolicy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.offline</span><span class="w"> </span><span class="kn">import</span> <span class="n">MineLightning</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.offline.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">convert_to_normal</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.offline.mine_callbacks</span><span class="w"> </span><span class="kn">import</span> <span class="n">BehaviorCloneCallback</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.offline.lightning_callbacks</span><span class="w"> </span><span class="kn">import</span> <span class="n">SmartCheckpointCallback</span><span class="p">,</span> <span class="n">SpeedMonitorCallback</span><span class="p">,</span> <span class="n">EMA</span>
 </pre></div>
 </div>
 <div class="admonition note">

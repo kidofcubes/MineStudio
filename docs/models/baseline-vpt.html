@@ -30,7 +30,7 @@
   <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 <link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/jupyter-sphinx.css" />
@@ -654,14 +654,14 @@
 <h2>Our Implementation<a class="headerlink" href="#our-implementation" title="Link to this heading">#</a></h2>
 <p>We mostly used the code provided by the <a class="reference external" href="https://github.com/openai/Video-Pre-Training">original repo</a> and encapsulated it using the Policy Template <code class="docutils literal notranslate"><span class="pre">MinePolicy</span></code> designed in MineStudio.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@Registers</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">register</span>
-<span class="k">class</span> <span class="nc">VPTPolicy</span><span class="p">(</span><span class="n">MinePolicy</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">VPTPolicy</span><span class="p">(</span><span class="n">MinePolicy</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">policy_kwargs</span><span class="p">,</span> <span class="n">action_space</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">policy_kwargs</span><span class="p">,</span> <span class="n">action_space</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">hiddim</span><span class="o">=</span><span class="n">policy_kwargs</span><span class="p">[</span><span class="s2">&quot;hidsize&quot;</span><span class="p">],</span> <span class="n">action_space</span><span class="o">=</span><span class="n">action_space</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">net</span> <span class="o">=</span> <span class="n">MinecraftPolicy</span><span class="p">(</span><span class="o">**</span><span class="n">policy_kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cached_init_states</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">initial_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">initial_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">batch_size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="o">.</span><span class="n">initial_state</span><span class="p">(</span><span class="mi">1</span><span class="p">)]</span>
         <span class="k">else</span><span class="p">:</span>
@@ -669,7 +669,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">cached_init_states</span><span class="p">[</span><span class="n">batch_size</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="o">.</span><span class="n">initial_state</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)]</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cached_init_states</span><span class="p">[</span><span class="n">batch_size</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">state_in</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">state_in</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">B</span><span class="p">,</span> <span class="n">T</span> <span class="o">=</span> <span class="nb">input</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
         <span class="n">first</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="kc">False</span><span class="p">]],</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
         <span class="n">state_in</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial_state</span><span class="p">(</span><span class="n">B</span><span class="p">)</span> <span class="k">if</span> <span class="n">state_in</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">state_in</span>
@@ -696,9 +696,9 @@
 <section id="evaluate-vpt">
 <h2>Evaluate VPT<a class="headerlink" href="#evaluate-vpt" title="Link to this heading">#</a></h2>
 <p>Here is an example of how to evaluate the trained VPT model. Provide a model path and weights path and let it run!</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">minestudio.simulator</span> <span class="kn">import</span> <span class="n">MinecraftSim</span>
-<span class="kn">from</span> <span class="nn">minestudio.simulator.callbacks</span> <span class="kn">import</span> <span class="n">RecordCallback</span>
-<span class="kn">from</span> <span class="nn">minestudio.models</span> <span class="kn">import</span> <span class="n">load_vpt_policy</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinecraftSim</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator.callbacks</span><span class="w"> </span><span class="kn">import</span> <span class="n">RecordCallback</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_vpt_policy</span>
 
 <span class="n">policy</span> <span class="o">=</span> <span class="n">load_vpt_policy</span><span class="p">(</span>
     <span class="n">model_path</span><span class="o">=</span><span class="s2">&quot;/path/to/foundation-model-2x.model&quot;</span><span class="p">,</span>

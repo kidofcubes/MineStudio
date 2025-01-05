@@ -30,7 +30,7 @@
   <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 <link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/jupyter-sphinx.css" />
@@ -635,13 +635,13 @@
 <p>To customize the trainer, you need to imply an class inherit from <code class="docutils literal notranslate"><span class="pre">minestudio.online.trainer.base_trainer.BaseTrainer</span></code> with and implement the abstract methods <code class="docutils literal notranslate"><span class="pre">setup_model_and_optimizer</span></code> and <code class="docutils literal notranslate"><span class="pre">train</span></code>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">setup_model_and_optimizer</span></code> return a pair <code class="docutils literal notranslate"><span class="pre">(model,</span> <span class="pre">optimizer)</span></code>.</p>
 <p>In the <code class="docutils literal notranslate"><span class="pre">train</span></code> function, you need to define the training loop. You can use the <code class="docutils literal notranslate"><span class="pre">fetch_fragments_and_estimate_advantages</span></code> method to obtain data from the replay buffer.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">minestudio.online.trainer.base_trainer</span> <span class="kn">import</span> <span class="n">BaseTrainer</span>
-<span class="k">class</span> <span class="nc">PPOTrainer</span><span class="p">(</span><span class="n">BaseTrainer</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">setup_model_and_optimizer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.online.trainer.base_trainer</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseTrainer</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">PPOTrainer</span><span class="p">(</span><span class="n">BaseTrainer</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">setup_model_and_optimizer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># Define model and optimizer</span>
         <span class="k">pass</span>
 
-    <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># Custom training logic</span>
         <span class="k">pass</span>
 </pre></div>

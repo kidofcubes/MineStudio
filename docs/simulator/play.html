@@ -30,7 +30,7 @@
   <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 <link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/jupyter-sphinx.css" />
@@ -638,8 +638,8 @@
 <section id="hello-world">
 <h2>Hello World<a class="headerlink" href="#hello-world" title="Link to this heading">#</a></h2>
 <p>Here is a minimal example of launching a playable Minecraft GUI. The code can only be run with a display, so make sure you have a display available.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">minestudio.simulator</span> <span class="kn">import</span> <span class="n">MinecraftSim</span>
-<span class="kn">from</span> <span class="nn">minestudio.simulator.callbacks</span> <span class="kn">import</span> <span class="n">PlayCallback</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinecraftSim</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator.callbacks</span><span class="w"> </span><span class="kn">import</span> <span class="n">PlayCallback</span>
 
 <span class="n">sim</span> <span class="o">=</span> <span class="n">MinecraftSim</span><span class="p">(</span>
     <span class="n">action_type</span><span class="o">=</span><span class="s2">&quot;env&quot;</span><span class="p">,</span>
@@ -735,13 +735,13 @@ When you press a key, the associated callback function will be enabled or disabl
 Below is an image of Command Mode:
 <img src="../_static/image/command_mode.png" alt="Alt text" height="500" style="display: block; margin: auto;" /></p>
 <p>We have implemented some built-in functions or callbacks for you to use. You can find an example below:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">minestudio.simulator</span> <span class="kn">import</span> <span class="n">MinecraftSim</span>
-<span class="kn">from</span> <span class="nn">minestudio.simulator.callbacks</span> <span class="kn">import</span> <span class="p">(</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinecraftSim</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator.callbacks</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">PlayCallback</span><span class="p">,</span> <span class="n">RecordCallback</span><span class="p">,</span> <span class="n">PointCallback</span><span class="p">,</span> <span class="n">PlaySegmentCallback</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">minestudio.simulator.utils.gui</span> <span class="kn">import</span> <span class="n">RecordDrawCall</span><span class="p">,</span> <span class="n">CommandModeDrawCall</span><span class="p">,</span> <span class="n">SegmentDrawCall</span>
-<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
-<span class="kn">from</span> <span class="nn">minestudio.models</span> <span class="kn">import</span> <span class="n">load_rocket_policy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator.utils.gui</span><span class="w"> </span><span class="kn">import</span> <span class="n">RecordDrawCall</span><span class="p">,</span> <span class="n">CommandModeDrawCall</span><span class="p">,</span> <span class="n">SegmentDrawCall</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_rocket_policy</span>
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">agent_generator</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span>
         <span class="n">load_rocket_policy</span><span class="p">,</span>

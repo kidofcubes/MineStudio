@@ -30,7 +30,7 @@
   <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 <link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/jupyter-sphinx.css" />
@@ -671,10 +671,10 @@
 <section id="visualize-continuous-batches">
 <h2>Visualize Continuous Batches<a class="headerlink" href="#visualize-continuous-batches" title="Link to this heading">#</a></h2>
 <p>When visualizing continuous video frames, set <code class="docutils literal notranslate"><span class="pre">episode_continuous_batch=True</span></code>, <code class="docutils literal notranslate"><span class="pre">batch_size=1</span></code> in the <code class="docutils literal notranslate"><span class="pre">MineDataModule</span></code> configuration.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">lightning</span> <span class="k">as</span> <span class="nn">L</span>
-<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
-<span class="kn">from</span> <span class="nn">minestudio.data</span> <span class="kn">import</span> <span class="n">MineDataModule</span>
-<span class="kn">from</span> <span class="nn">minestudio.data.minecraft.utils</span> <span class="kn">import</span> <span class="n">visualize_dataloader</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">lightning</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">L</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">MineDataModule</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.data.minecraft.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">visualize_dataloader</span>
 
 <span class="n">data_module</span> <span class="o">=</span> <span class="n">MineDataModule</span><span class="p">(</span>
     <span class="n">data_params</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
@@ -713,10 +713,10 @@
 <section id="visualize-batches-with-special-events">
 <h2>Visualize Batches with Special Events<a class="headerlink" href="#visualize-batches-with-special-events" title="Link to this heading">#</a></h2>
 <p>When visualizing video frames with special events, set <code class="docutils literal notranslate"><span class="pre">event_regex</span></code> in the <code class="docutils literal notranslate"><span class="pre">MineDataModule</span></code> configuration.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">lightning</span> <span class="k">as</span> <span class="nn">L</span>
-<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
-<span class="kn">from</span> <span class="nn">minestudio.data</span> <span class="kn">import</span> <span class="n">MineDataModule</span>
-<span class="kn">from</span> <span class="nn">minestudio.data.minecraft.utils</span> <span class="kn">import</span> <span class="n">visualize_dataloader</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">lightning</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">L</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">MineDataModule</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.data.minecraft.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">visualize_dataloader</span>
 
 <span class="n">data_module</span> <span class="o">=</span> <span class="n">MineDataModule</span><span class="p">(</span>
     <span class="n">data_params</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>

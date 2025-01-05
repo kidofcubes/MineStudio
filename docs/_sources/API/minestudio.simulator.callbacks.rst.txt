@@ -34,6 +34,12 @@ Submodules
    :show-inheritance:
 
 
+.. automodule:: minestudio.simulator.callbacks.init_inventory
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
 .. automodule:: minestudio.simulator.callbacks.judgereset
    :members:
    :undoc-members:

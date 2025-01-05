@@ -30,7 +30,7 @@
   <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 <link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/jupyter-sphinx.css" />
@@ -785,7 +785,7 @@ VirtualGL</label><div class="sd-tab-content docutils">
  * @FilePath: /MineStudio/docs/source/simulator/quick-simulator.md
 -->
 <p class="sd-card-text">Here is a minimal example of how to use the simulator:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">minestudio.simulator</span> <span class="kn">import</span> <span class="n">MinecraftSim</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinecraftSim</span>
 
 <span class="n">sim</span> <span class="o">=</span> <span class="n">MinecraftSim</span><span class="p">(</span><span class="n">action_type</span><span class="o">=</span><span class="s2">&quot;env&quot;</span><span class="p">)</span>
 <span class="n">obs</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
@@ -796,9 +796,9 @@ VirtualGL</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 <p class="sd-card-text">Also, you can customize the environment by chaining multiple callbacks. Here is an example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">minestudio.simulator</span> <span class="kn">import</span> <span class="n">MinecraftSim</span>
-<span class="kn">from</span> <span class="nn">minestudio.simulator.callbacks</span> <span class="kn">import</span> <span class="p">(</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinecraftSim</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator.callbacks</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">SpeedTestCallback</span><span class="p">,</span> 
     <span class="n">RecordCallback</span><span class="p">,</span> 
     <span class="n">SummonMobsCallback</span><span class="p">,</span> 
@@ -852,7 +852,7 @@ VirtualGL</label><div class="sd-tab-content docutils">
  * @FilePath: /MineStudio/docs/source/data/quick-data.md
 -->
 <p class="sd-card-text">Here is a minimal example to show how we load a trajectory from the dataset.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">minestudio.data</span> <span class="kn">import</span> <span class="n">load_dataset</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dataset</span>
 
 <span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span>
     <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;raw&#39;</span><span class="p">,</span> 
@@ -886,7 +886,7 @@ VirtualGL</label><div class="sd-tab-content docutils">
 </div>
 <p class="sd-card-text"><span class="sd-d-grid"><span class="sd-sphinx-override sd-btn sd-text-wrap sd-btn-outline-primary">Learn more about Raw Dataset</span></span></p>
 <p class="sd-card-text">Alternatively, you can also load trajectories that have specific events, for example, loading all trajectories that contain the <code class="docutils literal notranslate"><span class="pre">kill</span> <span class="pre">entity</span></code> event.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">minestudio.data</span> <span class="kn">import</span> <span class="n">load_dataset</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dataset</span>
 
 <span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span>
     <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;event&#39;</span><span class="p">,</span> 
@@ -926,9 +926,9 @@ VirtualGL</label><div class="sd-tab-content docutils">
  * @FilePath: /MineStudio/docs/source/models/quick-models.md
 -->
 <p class="sd-card-text">Here is an example that shows how to load the OpenAI’s VPT policy in the Minecraft environment.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">minestudio.simulator</span> <span class="kn">import</span> <span class="n">MinecraftSim</span>
-<span class="kn">from</span> <span class="nn">minestudio.simulator.callbacks</span> <span class="kn">import</span> <span class="n">RecordCallback</span>
-<span class="kn">from</span> <span class="nn">minestudio.models</span> <span class="kn">import</span> <span class="n">load_vpt_policy</span><span class="p">,</span> <span class="n">VPTPolicy</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinecraftSim</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator.callbacks</span><span class="w"> </span><span class="kn">import</span> <span class="n">RecordCallback</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_vpt_policy</span><span class="p">,</span> <span class="n">VPTPolicy</span>
 
 <span class="c1"># load the policy from the local model files</span>
 <span class="n">policy</span> <span class="o">=</span> <span class="n">load_vpt_policy</span><span class="p">(</span>
@@ -966,15 +966,15 @@ VirtualGL</label><div class="sd-tab-content docutils">
 <p class="sd-card-text">The following code snippet shows how to finetune a VPT policy to hunt animals in Minecraft using offline data.</p>
 <ol class="arabic">
 <li><p class="sd-card-text">Import some dependencies:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">lightning</span> <span class="k">as</span> <span class="nn">L</span>
-<span class="kn">from</span> <span class="nn">lightning.pytorch.loggers</span> <span class="kn">import</span> <span class="n">WandbLogger</span>
-<span class="kn">from</span> <span class="nn">lightning.pytorch.callbacks</span> <span class="kn">import</span> <span class="n">LearningRateMonitor</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">lightning</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">L</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">lightning.pytorch.loggers</span><span class="w"> </span><span class="kn">import</span> <span class="n">WandbLogger</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">lightning.pytorch.callbacks</span><span class="w"> </span><span class="kn">import</span> <span class="n">LearningRateMonitor</span>
 <span class="c1"># below are MineStudio dependencies</span>
-<span class="kn">from</span> <span class="nn">minestudio.data</span> <span class="kn">import</span> <span class="n">MineDataModule</span>
-<span class="kn">from</span> <span class="nn">minestudio.offline</span> <span class="kn">import</span> <span class="n">MineLightning</span>
-<span class="kn">from</span> <span class="nn">minestudio.models</span> <span class="kn">import</span> <span class="n">load_vpt_policy</span><span class="p">,</span> <span class="n">VPTPolicy</span>
-<span class="kn">from</span> <span class="nn">minestudio.offline.mine_callbacks</span> <span class="kn">import</span> <span class="n">BehaviorCloneCallback</span>
-<span class="kn">from</span> <span class="nn">minestudio.offline.lightning_callbacks</span> <span class="kn">import</span> <span class="n">SmartCheckpointCallback</span><span class="p">,</span> <span class="n">SpeedMonitorCallback</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">MineDataModule</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.offline</span><span class="w"> </span><span class="kn">import</span> <span class="n">MineLightning</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_vpt_policy</span><span class="p">,</span> <span class="n">VPTPolicy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.offline.mine_callbacks</span><span class="w"> </span><span class="kn">import</span> <span class="n">BehaviorCloneCallback</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.offline.lightning_callbacks</span><span class="w"> </span><span class="kn">import</span> <span class="n">SmartCheckpointCallback</span><span class="p">,</span> <span class="n">SpeedMonitorCallback</span>
 </pre></div>
 </div>
 </li>
@@ -1054,8 +1054,8 @@ bash<span class="w"> </span>run.sh
 <p class="sd-card-text">Specifically, this process includes several important configurations:</p>
 <p class="sd-card-text"><strong>Policy Generator</strong></p>
 <p class="sd-card-text">which does not accept parameters and directly returns <code class="docutils literal notranslate"><span class="pre">MinePolicy</span></code>.As an example：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">policy_generator</span><span class="p">():</span>
-    <span class="kn">from</span> <span class="nn">minestudio.models.openai_vpt.body</span> <span class="kn">import</span> <span class="n">load_openai_policy</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">policy_generator</span><span class="p">():</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.models.openai_vpt.body</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_openai_policy</span>
     <span class="n">model_path</span> <span class="o">=</span> <span class="s1">&#39;pretrained/foundation-model-2x.model&#39;</span>
     <span class="n">weights_path</span> <span class="o">=</span> <span class="s1">&#39;pretrained/bc-from-early-game-2x.weights&#39;</span>
     <span class="n">policy</span> <span class="o">=</span> <span class="n">load_openai_policy</span><span class="p">(</span><span class="n">model_path</span><span class="p">,</span> <span class="n">weights_path</span><span class="p">)</span>
@@ -1064,9 +1064,9 @@ bash<span class="w"> </span>run.sh
 </div>
 <p class="sd-card-text"><strong>Environment Generator</strong></p>
 <p class="sd-card-text">which does not accept parameters and directly returns <code class="docutils literal notranslate"><span class="pre">MinePolicy</span></code>. As an example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">env_generator</span><span class="p">():</span>
-    <span class="kn">from</span> <span class="nn">minestudio.simulator</span> <span class="kn">import</span> <span class="n">MinecraftSim</span>
-    <span class="kn">from</span> <span class="nn">minestudio.simulator.callbacks</span> <span class="kn">import</span> <span class="p">(</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">env_generator</span><span class="p">():</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinecraftSim</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator.callbacks</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
         <span class="n">SummonMobsCallback</span><span class="p">,</span> 
         <span class="n">MaskActionsCallback</span><span class="p">,</span> 
         <span class="n">RewardsCallback</span><span class="p">,</span> 
@@ -1184,8 +1184,8 @@ bash<span class="w"> </span>run.sh
 </pre></div>
 </div>
 <p class="sd-card-text">After preparing all the above content, run:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">minestudio.online.rollout.start_manager</span> <span class="kn">import</span> <span class="n">start_rolloutmanager</span>
-<span class="kn">from</span> <span class="nn">minestudio.online.trainer.start_trainer</span> <span class="kn">import</span> <span class="n">start_trainer</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.online.rollout.start_manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">start_rolloutmanager</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.online.trainer.start_trainer</span><span class="w"> </span><span class="kn">import</span> <span class="n">start_trainer</span>
 <span class="n">start_rolloutmanager</span><span class="p">(</span><span class="n">policy_generator</span><span class="p">,</span> <span class="n">env_generator</span><span class="p">,</span> <span class="n">online_cfg</span><span class="p">)</span>
 <span class="n">start_trainer</span><span class="p">(</span><span class="n">policy_generator</span><span class="p">,</span> <span class="n">env_generator</span><span class="p">,</span> <span class="n">online_cfg</span><span class="p">)</span>
 </pre></div>
@@ -1203,12 +1203,12 @@ bash<span class="w"> </span>run.sh
  * @FilePath: /MineStudio/docs/source/inference/quick-inference.md
 -->
 <p class="sd-card-text">Here is a minimal example of how to use the inference framework:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ray</span>
-<span class="kn">from</span> <span class="nn">minestudio.inference</span> <span class="kn">import</span> <span class="n">EpisodePipeline</span><span class="p">,</span> <span class="n">MineGenerator</span><span class="p">,</span> <span class="n">InfoBaseFilter</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">ray</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.inference</span><span class="w"> </span><span class="kn">import</span> <span class="n">EpisodePipeline</span><span class="p">,</span> <span class="n">MineGenerator</span><span class="p">,</span> <span class="n">InfoBaseFilter</span>
 
-<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
-<span class="kn">from</span> <span class="nn">minestudio.models</span> <span class="kn">import</span> <span class="n">load_vpt_policy</span>
-<span class="kn">from</span> <span class="nn">minestudio.simulator</span> <span class="kn">import</span> <span class="n">MinecraftSim</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_vpt_policy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinecraftSim</span>
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">ray</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>

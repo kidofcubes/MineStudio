@@ -30,7 +30,7 @@
   <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 <link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/jupyter-sphinx.css" />
@@ -697,9 +697,9 @@
 <h2>Loading Segment-level Data<a class="headerlink" href="#loading-segment-level-data" title="Link to this heading">#</a></h2>
 <p>When the user does not have a need to process long trajectories, segments from the same trajectory are independent and can be read randomly. This reading method is suitable for some simple tasks, such as training a policy that can perform short-range tasks, like GROOT-1. At this point, the user only needs to wrap <code class="docutils literal notranslate"><span class="pre">RawDataset</span></code> with PyTorch’s built-in dataloader to achieve data reading.</p>
 <p>Here is an example of how to load the segment-level data:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
-<span class="kn">from</span> <span class="nn">minestudio.data</span> <span class="kn">import</span> <span class="n">RawDataset</span>
-<span class="kn">from</span> <span class="nn">minestudio.data.minecraft.utils</span> <span class="kn">import</span> <span class="n">batchify</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">torch.utils.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataLoader</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">RawDataset</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.data.minecraft.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">batchify</span>
 
 <span class="n">kernel_kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
     <span class="n">dataset_dirs</span><span class="o">=</span><span class="p">[</span>
@@ -761,8 +761,8 @@
 <p>Here is an example:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">...</span>
 
-<span class="kn">from</span> <span class="nn">minestudio.data.minecraft.utils</span> <span class="kn">import</span> <span class="n">MineDistributedBatchSampler</span>
-<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.data.minecraft.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">MineDistributedBatchSampler</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch.utils.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataLoader</span>
 
 <span class="n">sampler</span> <span class="o">=</span> <span class="n">MineDistributedBatchSampler</span><span class="p">(</span>
     <span class="n">dataset</span><span class="p">,</span> 
@@ -840,8 +840,8 @@
 <section id="using-lightning-to-simplify-the-data-loading-process">
 <h2>Using Lightning to Simplify the Data Loading Process<a class="headerlink" href="#using-lightning-to-simplify-the-data-loading-process" title="Link to this heading">#</a></h2>
 <p>We can use lightning fabric to simplify the distributed data loading (using built-in distributed data parallel strategy, ddp). Here is an example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">lightning</span> <span class="k">as</span> <span class="nn">L</span>
-<span class="kn">from</span> <span class="nn">minestudio.data</span> <span class="kn">import</span> <span class="n">MineDataModule</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">lightning</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">L</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">MineDataModule</span>
 
 
 <span class="n">fabric</span> <span class="o">=</span> <span class="n">L</span><span class="o">.</span><span class="n">Fabric</span><span class="p">(</span><span class="n">accelerator</span><span class="o">=</span><span class="s2">&quot;cuda&quot;</span><span class="p">,</span> <span class="n">devices</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;ddp&quot;</span><span class="p">)</span>

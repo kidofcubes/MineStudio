@@ -30,7 +30,7 @@
   <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 <link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/jupyter-sphinx.css" />
@@ -712,9 +712,9 @@
 <section id="loading-all-the-kill-entity-events">
 <h2>Loading All the Kill Entity Events<a class="headerlink" href="#loading-all-the-kill-entity-events" title="Link to this heading">#</a></h2>
 <p>Here is a minimal example of how to use the EventDataset:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
-<span class="kn">from</span> <span class="nn">minestudio.data</span> <span class="kn">import</span> <span class="n">EventDataset</span>
-<span class="kn">from</span> <span class="nn">minestudio.data.minecraft.utils</span> <span class="kn">import</span> <span class="n">batchify</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">torch.utils.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataLoader</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">EventDataset</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.data.minecraft.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">batchify</span>
 
 <span class="n">kernel_kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
     <span class="n">dataset_dirs</span><span class="o">=</span><span class="p">[</span>
@@ -782,8 +782,8 @@
 <section id="using-lightning-to-simplify-data-loading-process">
 <h2>Using Lightning to Simplify Data Loading Process<a class="headerlink" href="#using-lightning-to-simplify-data-loading-process" title="Link to this heading">#</a></h2>
 <p>Using Lightning to simplify the data loading process (especially for distributed training situation) is a good choice. Here is an example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">lightning</span> <span class="k">as</span> <span class="nn">L</span>
-<span class="kn">from</span> <span class="nn">minestudio.data</span> <span class="kn">import</span> <span class="n">MineDataModule</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">lightning</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">L</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">MineDataModule</span>
 
 <span class="n">fabric</span> <span class="o">=</span> <span class="n">L</span><span class="o">.</span><span class="n">Fabric</span><span class="p">(</span><span class="n">accelerator</span><span class="o">=</span><span class="s2">&quot;cuda&quot;</span><span class="p">,</span> <span class="n">devices</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;ddp&quot;</span><span class="p">)</span>
 <span class="n">fabric</span><span class="o">.</span><span class="n">launch</span><span class="p">()</span>

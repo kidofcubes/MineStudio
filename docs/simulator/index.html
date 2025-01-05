@@ -30,7 +30,7 @@
   <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 <link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/jupyter-sphinx.css" />
@@ -665,7 +665,7 @@
  * @FilePath: /MineStudio/docs/source/simulator/quick-simulator.md
 -->
 <p>Here is a minimal example of how to use the simulator:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">minestudio.simulator</span> <span class="kn">import</span> <span class="n">MinecraftSim</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinecraftSim</span>
 
 <span class="n">sim</span> <span class="o">=</span> <span class="n">MinecraftSim</span><span class="p">(</span><span class="n">action_type</span><span class="o">=</span><span class="s2">&quot;env&quot;</span><span class="p">)</span>
 <span class="n">obs</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
@@ -676,9 +676,9 @@
 </pre></div>
 </div>
 <p>Also, you can customize the environment by chaining multiple callbacks. Here is an example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">minestudio.simulator</span> <span class="kn">import</span> <span class="n">MinecraftSim</span>
-<span class="kn">from</span> <span class="nn">minestudio.simulator.callbacks</span> <span class="kn">import</span> <span class="p">(</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinecraftSim</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator.callbacks</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">SpeedTestCallback</span><span class="p">,</span> 
     <span class="n">RecordCallback</span><span class="p">,</span> 
     <span class="n">SummonMobsCallback</span><span class="p">,</span> 
@@ -779,7 +779,7 @@
 <section id="test-speed">
 <h3>Test Speed<a class="headerlink" href="#test-speed" title="Link to this heading">#</a></h3>
 <p>We provide a callback to test the speed of the simulator by hooking into the <code class="docutils literal notranslate"><span class="pre">before_step</span></code> and <code class="docutils literal notranslate"><span class="pre">after_step</span></code> methods.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">minestudio.simulator.callbacks</span> <span class="kn">import</span> <span class="n">SpeedTestCallback</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator.callbacks</span><span class="w"> </span><span class="kn">import</span> <span class="n">SpeedTestCallback</span>
 
 <span class="n">sim</span> <span class="o">=</span> <span class="n">MinecraftSim</span><span class="p">(</span><span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">SpeedTestCallback</span><span class="p">(</span><span class="n">interval</span><span class="o">=</span><span class="mi">50</span><span class="p">)])</span>
 </pre></div>
@@ -800,7 +800,7 @@
 <section id="send-chat-commands">
 <h3>Send Chat Commands<a class="headerlink" href="#send-chat-commands" title="Link to this heading">#</a></h3>
 <p>We provide a callback to send chat commands to the Minecraft server <strong>when the environment is reset</strong>. This enable users to customize the environment initialization.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">minestudio.simulator.callbacks</span> <span class="kn">import</span> <span class="n">CommandsCallback</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator.callbacks</span><span class="w"> </span><span class="kn">import</span> <span class="n">CommandsCallback</span>
 
 <span class="n">sim</span> <span class="o">=</span> <span class="n">MinecraftSim</span><span class="p">(</span><span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">CommandsCallback</span><span class="p">(</span><span class="n">commands</span><span class="o">=</span><span class="p">[</span>
     <span class="s2">&quot;/time set day&quot;</span><span class="p">,</span> 
@@ -818,7 +818,7 @@
 <section id="custom-reward-function">
 <h3>Custom Reward Function<a class="headerlink" href="#custom-reward-function" title="Link to this heading">#</a></h3>
 <p>We provide a simple callback to customize the reward function. This callback will be called after each step, and detect the event in <code class="docutils literal notranslate"><span class="pre">info</span></code> to calculate the reward.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">minestudio.simulator.callbacks</span> <span class="kn">import</span> <span class="n">RewardsCallback</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator.callbacks</span><span class="w"> </span><span class="kn">import</span> <span class="n">RewardsCallback</span>
 
 <span class="n">sim</span> <span class="o">=</span> <span class="n">MinecraftSim</span><span class="p">(</span><span class="n">callbacks</span><span class="o">=</span><span class="p">[</span>
     <span class="n">RewardsCallback</span><span class="p">([{</span>
@@ -839,7 +839,7 @@
 <section id="fast-reset">
 <h3>Fast Reset<a class="headerlink" href="#fast-reset" title="Link to this heading">#</a></h3>
 <p>Generally, the environment reset is slow because it needs to restart the Minecraft server. We provide a callback to speed up the reset process by hooking into the <code class="docutils literal notranslate"><span class="pre">before_reset</span></code> method. This would be pretty useful when you want to reset the environment frequently, like in RL training.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">minestudio.simulator.callbacks</span> <span class="kn">import</span> <span class="n">FastResetCallback</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator.callbacks</span><span class="w"> </span><span class="kn">import</span> <span class="n">FastResetCallback</span>
 
 <span class="n">sim</span> <span class="o">=</span> <span class="n">MinecraftSim</span><span class="p">(</span><span class="n">callbacks</span><span class="o">=</span><span class="p">[</span>
     <span class="n">FastResetCallback</span><span class="p">(</span>
@@ -857,7 +857,7 @@
 <section id="record-trajectories">
 <h3>Record Trajectories<a class="headerlink" href="#record-trajectories" title="Link to this heading">#</a></h3>
 <p>We provide a callback to record trajectories. It will records the observation, action, info at each step, and save them to a specified path.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">minestudio.simulator.callbacks</span> <span class="kn">import</span> <span class="n">RecordCallback</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator.callbacks</span><span class="w"> </span><span class="kn">import</span> <span class="n">RecordCallback</span>
 
 <span class="n">sim</span> <span class="o">=</span> <span class="n">MinecraftSim</span><span class="p">(</span><span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">RecordCallback</span><span class="p">(</span><span class="n">record_path</span><span class="o">=</span><span class="s2">&quot;./output&quot;</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="mi">30</span><span class="p">)])</span>
 </pre></div>
