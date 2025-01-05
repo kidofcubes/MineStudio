@@ -6,7 +6,7 @@
 -->
 
 <div align="center">
-<img src="./docs/source/_static/banner.png" width="50%" alt="MineStudio" />
+<img src="./docs/source/_static/banner.png" width="60%" alt="MineStudio" />
 </div>
 
 <hr>
