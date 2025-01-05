@@ -1,10 +1,11 @@
 '''
-Date: 2024-11-11 17:26:22
-LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2024-11-12 00:12:08
-FilePath: /MineStudio/minestudio/simulator/callbacks/summon_mobs.py
+Date: 2025-01-05 22:26:22
+LastEditors: limuyao 2200017405@stu.pku.edu.cn
+LastEditTime: 2025-01-05 22:26:22
+FilePath: /MineStudio/minestudio/simulator/callbacks/init_inventory.py
 '''
 
+import minecraft_data # https://github.com/SpockBotMC/python-minecraft-data  Provide easy access to minecraft-data in python
 from minestudio.simulator.callbacks.callback import MinecraftCallback
 from typing import Union
 import random
@@ -49,20 +50,10 @@ class InitInventoryCallback(MinecraftCallback):
         """
         self.init_inventory = init_inventory
         self.distraction_level = DISTRACTION_LEVEL.get(distraction_level,[0]) if isinstance(distraction_level,str) else distraction_level
-        try:
-            json_path = Path(__file__).parents[3] / "assets" / "mc_constants.1.16.json"
-            with json_path.open('r', encoding='utf-8') as file:
-                data = json.load(file)
-            self.items_library = data.get("items", [None])[1:] 
-        except Exception as e:
-            print(f"Failed to load or parse the JSON file: {e}")
-            self.items_library = [] 
-        with open(str(Path(__file__).parent.parent.parent.parent/"assets"/"mc_constants.1.16.json"), 'r', encoding='utf-8') as file:
-            data = json.load(file)
-        self.items_library = data.get("items")[1:]
-        self.items_names = [item.get("type") for item in self.items_library]
-        self.items_name2idx = {item.get("type"):idx for idx,item in enumerate(self.items_library)}
-
+        
+        mcd = minecraft_data("1.16")
+        self.items_library = mcd.items_name
+        self.items_names = list(mcd.items_name.keys())
         
     def after_reset(self, sim, obs, info):
         chats = []
@@ -102,7 +93,7 @@ class InitInventoryCallback(MinecraftCallback):
             mc_slot =self._map_slot_number_to_cmd_slot(slot)
             item_type = item_dict["type"]
             assert item_type in self.items_names
-            item_quantity = self._item_quantity_parser(item_dict["quantity"],int(self.items_library[self.items_name2idx[item_type]]["stackSize"]))
+            item_quantity = self._item_quantity_parser(item_dict["quantity"],int(self.items_library[item_type]["stackSize"]))
             chat = f"/replaceitem entity @p {mc_slot} minecraft:{item_type} {item_quantity}"
             if "metadata" in item_dict:
                 chat += f" {item_dict['metadata']}"
