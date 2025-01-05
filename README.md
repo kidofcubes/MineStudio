@@ -90,6 +90,26 @@ We converted the [Contractor Data](https://github.com/openai/Video-Pre-Training?
 - [CraftJarvis/minestudio-data-9xx](https://huggingface.co/datasets/CraftJarvis/minestudio-data-9xx)
 - [CraftJarvis/minestudio-data-10xx](https://huggingface.co/datasets/CraftJarvis/minestudio-data-10xx)
 
+```python
+from minestudio.data import load_dataset
+
+dataset = load_dataset(
+    mode='raw', 
+    dataset_dirs=['6xx', '7xx', '8xx', '9xx', '10xx'], 
+    enable_video=True,
+    enable_action=True,
+    frame_width=224, 
+    frame_height=224,
+    win_len=128, 
+    split='train', 
+    split_ratio=0.9, 
+    verbose=True
+)
+item = dataset[0]
+print(item.keys())
+```
+
+
 ## Models on 🤗 Hugging Face
 
 We have pushed all the checkpoints to 🤗 Hugging Face, it is convenient to load the policy model. 
