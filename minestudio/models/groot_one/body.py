@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-25 07:03:41
-LastEditors: muzhancun muzhancun@126.com
-LastEditTime: 2024-12-14 01:54:42
+LastEditors: caishaofei caishaofei@stu.pku.edu.cn
+LastEditTime: 2025-01-04 17:05:47
 FilePath: /MineStudio/minestudio/models/groot_one/body.py
 '''
 import torch
@@ -157,9 +157,10 @@ class Decoder(nn.Module):
         return x, memory
 
     def initial_state(self, batch_size: int = None) -> List[torch.Tensor]:
+        device = next(self.parameters()).device
         if batch_size is None:
-            return [t.squeeze(0).to(self.device) for t in self.recurrent.initial_state(1)]
-        return [t.to(self.device) for t in self.recurrent.initial_state(batch_size)]
+            return [t.squeeze(0).to(device) for t in self.recurrent.initial_state(1)]
+        return [t.to(device) for t in self.recurrent.initial_state(batch_size)]
 
 @Registers.model.register
 class GrootPolicy(MinePolicy):
@@ -281,8 +282,8 @@ class GrootPolicy(MinePolicy):
         }
         return latents, memory
 
-    def initial_state(self, **kwargs) -> Any:
-        return self.decoder.initial_state(**kwargs)
+    def initial_state(self, *args, **kwargs) -> Any:
+        return self.decoder.initial_state(*args, **kwargs)
 
 @Registers.model_loader.register
 def load_groot_policy(ckpt_path: str = None):
@@ -300,11 +301,10 @@ def load_groot_policy(ckpt_path: str = None):
     return model
 
 if __name__ == '__main__':
-    load_groot_policy()
     model = GrootPolicy(
-        backbone='vit_base_patch32_clip_224.openai', 
+        backbone='timm/vit_base_patch16_224.dino', 
         hiddim=1024,
-        freeze_backbone=True,
+        freeze_backbone=False,
         video_encoder_kwargs=dict(
             num_spatial_layers=2,
             num_temporal_layers=4,

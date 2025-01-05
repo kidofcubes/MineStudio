@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-10 15:52:16
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2025-01-04 09:34:49
+LastEditTime: 2025-01-04 17:09:54
 FilePath: /MineStudio/minestudio/models/rocket_one/body.py
 '''
 import torch
@@ -21,7 +21,7 @@ from minestudio.utils.register import Registers
 class RocketPolicy(MinePolicy, PyTorchModelHubMixin):
     
     def __init__(self, 
-        backbone: str = 'efficientnet_b0.ra_in1k', 
+        backbone: str = 'timm/vit_base_patch16_224.dino', 
         hiddim: int = 1024,
         num_heads: int = 8,
         num_layers: int = 4,
