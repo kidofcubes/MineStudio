@@ -80,6 +80,16 @@ python -m minestudio.simulator.entry # using Xvfb
 MINESTUDIO_GPU_RENDER=1 python -m minestudio.simulator.entry # using VirtualGL
 ```
 
+## Datasets on 🤗 Hugging Face
+
+We converted the [Contractor Data](https://github.com/openai/Video-Pre-Training?tab=readme-ov-file#contractor-demonstrations) the OpenAI VPT project provided to our trajectory structure and released them to the Hugging Face. 
+
+- [CraftJarvis/minestudio-data-6xx](https://huggingface.co/datasets/CraftJarvis/minestudio-data-6xx)
+- [CraftJarvis/minestudio-data-7xx](https://huggingface.co/datasets/CraftJarvis/minestudio-data-7xx)
+- [CraftJarvis/minestudio-data-8xx](https://huggingface.co/datasets/CraftJarvis/minestudio-data-8xx)
+- [CraftJarvis/minestudio-data-9xx](https://huggingface.co/datasets/CraftJarvis/minestudio-data-9xx)
+- [CraftJarvis/minestudio-data-10xx](https://huggingface.co/datasets/CraftJarvis/minestudio-data-10xx)
+
 ## Why MineStudio
 
 ## Acknowledgement
