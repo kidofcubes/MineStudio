@@ -180,6 +180,7 @@ class InitInventoryCallback(MinecraftCallback):
         return False
     
 if __name__ == "__main__":
+
     import numpy as np
     from minestudio.simulator import MinecraftSim
     from minestudio.simulator.callbacks import (
