@@ -563,7 +563,7 @@
 <!--
  * @Date: 2024-11-30 13:20:04
  * @LastEditors: muzhancun muzhancun@126.com
- * @LastEditTime: 2025-01-02 19:55:34
+ * @LastEditTime: 2025-01-06 15:59:32
  * @FilePath: /MineStudio/README.md
 -->
 <div align="center">
@@ -583,12 +583,6 @@
 	<a href="https://github.com/CraftJarvis/MineStudio"><img src="https://visitor-badge.laobi.icu/badge?page_id=CraftJarvis.MineStudio"/></a>
 	<a href="https://github.com/CraftJarvis/MineStudio"><img src="https://img.shields.io/github/stars/CraftJarvis/MineStudio"/></a>
 </div>
-<p align="center">
-  <img src="https://github.com/phython96/Images/blob/master/minestudio_gallary.gif" />
-  <div align="center" style="color: grey; font-size: 12px;">
-    Demos of agents trained with MineStudio <b>online</b> module: building a nether portal and shooting animals.
-  </div>
-</p>
 <section id="overview">
 <h1>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h1>
 <div align="center">
@@ -629,6 +623,15 @@ conda<span class="w"> </span>install<span class="w"> </span>--channel<span class
 <span class="nv">MINESTUDIO_GPU_RENDER</span><span class="o">=</span><span class="m">1</span><span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>minestudio.simulator.entry<span class="w"> </span><span class="c1"># using VirtualGL</span>
 </pre></div>
 </div>
+<section id="docker">
+<h2>Docker<a class="headerlink" href="#docker" title="Link to this heading">#</a></h2>
+<p>We provide a Docker image for users who want to run MineStudio in a container. The Dockerfile is available in the <code class="docutils literal notranslate"><span class="pre">assets</span></code> directory. You can build and run the image by running the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>assets
+docker<span class="w"> </span>build<span class="w"> </span>--platform<span class="o">=</span>linux/amd64<span class="w"> </span>-t<span class="w"> </span>minestudio<span class="w"> </span>.
+docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>minestudio
+</pre></div>
+</div>
+</section>
 </section>
 <section id="datasets-on-hugging-face">
 <h1>Datasets on 🤗 Hugging Face<a class="headerlink" href="#datasets-on-hugging-face" title="Link to this heading">#</a></h1>
@@ -752,7 +755,10 @@ Thanks for their great work.</p>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Overview</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#docker">Docker</a></li>
+</ul>
+</li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#datasets-on-hugging-face">Datasets on 🤗 Hugging Face</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#models-on-hugging-face">Models on 🤗 Hugging Face</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#why-minestudio">Why MineStudio</a></li>

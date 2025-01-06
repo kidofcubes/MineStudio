@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-11-30 13:20:04
  * @LastEditors: muzhancun muzhancun@126.com
- * @LastEditTime: 2025-01-02 19:55:34
+ * @LastEditTime: 2025-01-06 15:59:32
  * @FilePath: /MineStudio/README.md
 -->
 
@@ -24,15 +24,6 @@
 	<a href="https://github.com/CraftJarvis/MineStudio"><img src="https://visitor-badge.laobi.icu/badge?page_id=CraftJarvis.MineStudio"/></a>
 	<a href="https://github.com/CraftJarvis/MineStudio"><img src="https://img.shields.io/github/stars/CraftJarvis/MineStudio"/></a>
 </div>
-
-<p align="center">
-  <img src="https://github.com/phython96/Images/blob/master/minestudio_gallary.gif" />
-  <div align="center" style="color: grey; font-size: 12px;">
-    Demos of agents trained with MineStudio <b>online</b> module: building a nether portal and shooting animals.
-  </div>
-</p>
-
-
 
 ## Overview
 
@@ -78,6 +69,15 @@ After the installation, you can run the following command to check if the instal
 ```bash
 python -m minestudio.simulator.entry # using Xvfb
 MINESTUDIO_GPU_RENDER=1 python -m minestudio.simulator.entry # using VirtualGL
+```
+
+### Docker
+
+We provide a Docker image for users who want to run MineStudio in a container. The Dockerfile is available in the `assets` directory. You can build and run the image by running the following command:
+```bash
+cd assets
+docker build --platform=linux/amd64 -t minestudio .
+docker run -it minestudio
 ```
 
 ## Datasets on 🤗 Hugging Face
