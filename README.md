@@ -25,15 +25,6 @@
 	<a href="https://github.com/CraftJarvis/MineStudio"><img src="https://img.shields.io/github/stars/CraftJarvis/MineStudio"/></a>
 </div>
 
-<p align="center">
-  <img src="https://github.com/phython96/Images/blob/master/minestudio_gallary.gif" />
-  <div align="center" style="color: grey; font-size: 12px;">
-    Demos of agents trained with MineStudio <b>online</b> module: building a nether portal and shooting animals.
-  </div>
-</p>
-
-
-
 ## Overview
 
 <div align="center">
