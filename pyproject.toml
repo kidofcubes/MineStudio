@@ -42,6 +42,7 @@ dependencies = [
     "imgui",
     "pyopengl",
     "ray",
+    "minecraft_data==3.20.0",
     "absl-py",
     "dm-tree",
     "x_transformers==0.27.1"
