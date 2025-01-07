@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-25 07:03:41
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2025-01-07 10:25:24
+LastEditTime: 2025-01-07 14:21:06
 FilePath: /MineStudio/minestudio/models/groot_one/body.py
 '''
 import torch
@@ -10,7 +10,7 @@ import torchvision
 from torch import nn
 import numpy as np
 from einops import rearrange, repeat
-from typing import List, Dict, Any, Tuple, Optional
+from typing import List, Dict, Any, Tuple, Optional, Union
 import av
 
 import timm
@@ -20,6 +20,10 @@ from minestudio.models.base_policy import MinePolicy
 from minestudio.utils.vpt_lib.util import FanInInitReLULayer, ResidualRecurrentBlocks
 from minestudio.utils.register import Registers
 
+def peel_off(item: Union[List, str]) -> str:
+    if isinstance(item, List):
+        return peel_off(item[0])
+    return item
 
 class LatentSpace(nn.Module):
 
@@ -205,11 +209,11 @@ class GrootPolicy(MinePolicy, PyTorchModelHubMixin):
             for param in self.backbone.parameters():
                 param.requires_grad = False
 
-        self.condition = None
+        self.condition_cache = {} # for infernce mode, to memory the generated conditions
 
     def encode_video(self, ref_video_path: str, resolution: Tuple[int, int] = (224, 224)) -> Dict:
         frames = []
-        ref_video_path = ref_video_path[0][0] # unbatchify
+        # ref_video_path = ref_video_path[0][0] # unbatchify
 
         with av.open(ref_video_path, "r") as container:
             for fid, frame in enumerate(container.decode(video=0)):
@@ -237,12 +241,12 @@ class GrootPolicy(MinePolicy, PyTorchModelHubMixin):
 
         print(f"[📚] latent shape: {posterior_dist['z'].shape} | mean: {posterior_dist['z'].mean().item(): .3f} | std: {posterior_dist['z'].std(): .3f}")
 
-        self.condition = {
+        condition = {
             "posterior_dist": posterior_dist,
             "prior_dist": prior_dist
         }
 
-        return self.condition
+        return condition
 
     def forward(self, input: Dict, memory: Optional[List[torch.Tensor]] = None) -> Dict:
         b, t = input['image'].shape[:2]
@@ -254,9 +258,11 @@ class GrootPolicy(MinePolicy, PyTorchModelHubMixin):
         image = rearrange(image, '(b t) c h w -> b t c h w', b=b)
 
         if 'ref_video_path' in input:
-            if self.condition is None:
-                self.encode_video(input['ref_video_path'])
-            condition = self.condition
+            # input has `ref_video_path`, means inference mode
+            ref_video_path = peel_off(input['ref_video_path'])
+            if ref_video_path not in self.condition_cache:
+                self.condition_cache[ref_video_path] = self.encode_video(ref_video_path)
+            condition = self.condition_cache[ref_video_path]
             posterior_dist = condition['posterior_dist']
             prior_dist = condition['prior_dist']
             z = posterior_dist['z']
