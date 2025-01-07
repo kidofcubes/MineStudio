@@ -57,6 +57,7 @@ class Registers():  # pylint: disable=invalid-name, too-few-public-methods
     # 可以初始化多个注册器
     model = Register('model')
     model_loader = Register('model_loader')
+    simulator_callback = Register('simulator_callback')
 
 
 def sub_modules(root):

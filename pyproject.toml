@@ -44,7 +44,8 @@ dependencies = [
     "ray",
     "absl-py",
     "dm-tree",
-    "x_transformers==0.27.1"
+    "x_transformers==0.27.1", 
+    "minecraft_data"
 ]
 authors = [
     {name="CraftJarvis", email="craftjarvis@outlook.com"}

@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-11 07:53:19
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-11-25 09:45:32
+LastEditTime: 2025-01-07 03:18:54
 FilePath: /MineStudio/minestudio/simulator/callbacks/__init__.py
 '''
 from minestudio.simulator.callbacks.callback import MinecraftCallback
@@ -20,3 +20,14 @@ from minestudio.simulator.callbacks.judgereset import JudgeResetCallback
 from minestudio.simulator.callbacks.reward_gate import GateRewardsCallback
 from minestudio.simulator.callbacks.voxels import VoxelsCallback
 from minestudio.simulator.callbacks.init_inventory import InitInventoryCallback
+
+from typing import Dict, List, Tuple, Union, Sequence, Mapping, Any, Optional, Literal
+
+def load_callbacks_from_config(config: Union[str, Dict]):
+    from minestudio.utils.register import Registers
+    callbacks = []
+    for key in Registers.simulator_callback.keys():
+        callback = Registers.simulator_callback[key].create_from_conf(config)
+        if callback is not None:
+            callbacks.append(callback)
+    return callbacks
