@@ -635,10 +635,10 @@ The example code is provided in <code class="docutils literal notranslate"><span
 <summary class="sd-summary-title sd-card-header">
 <span class="sd-summary-text">Evaluating GROOT</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinecraftSim</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator.callbacks</span><span class="w"> </span><span class="kn">import</span> <span class="n">RecordCallback</span><span class="p">,</span> <span class="n">SpeedTestCallback</span><span class="p">,</span> <span class="n">CommandsCallback</span><span class="p">,</span> <span class="n">DemonstrationCallback</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator.callbacks</span><span class="w"> </span><span class="kn">import</span> <span class="n">SpeedTestCallback</span><span class="p">,</span> <span class="n">load_callbacks_from_config</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">GrootPolicy</span><span class="p">,</span> <span class="n">load_groot_policy</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.benchmark.utility.read_conf</span><span class="w"> </span><span class="kn">import</span> <span class="n">convert_yaml_to_callbacks</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.inference</span><span class="w"> </span><span class="kn">import</span> <span class="n">EpisodePipeline</span><span class="p">,</span> <span class="n">MineGenerator</span><span class="p">,</span> <span class="n">InfoBaseFilter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.benchmark</span><span class="w"> </span><span class="kn">import</span> <span class="n">prepare_task_configs</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">ray</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -649,35 +649,26 @@ The example code is provided in <code class="docutils literal notranslate"><span
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">ray</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
-
-    <span class="n">resolution</span> <span class="o">=</span> <span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">)</span>
-
-    <span class="n">file_path</span> <span class="o">=</span> <span class="s2">&quot;../../../benchmark/task_configs/simple/collect_wood.yaml&quot;</span>
-    <span class="n">commands</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span> <span class="n">convert_yaml_to_callbacks</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Task: </span><span class="si">{</span><span class="n">task</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Init commands: </span><span class="si">{</span><span class="n">commands</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">task_configs</span> <span class="o">=</span> <span class="n">prepare_task_configs</span><span class="p">(</span><span class="s2">&quot;simple&quot;</span><span class="p">)</span>
+    <span class="n">config_file</span> <span class="o">=</span> <span class="n">task_configs</span><span class="p">[</span><span class="s2">&quot;collect_wood&quot;</span><span class="p">]</span>
+    <span class="c1"># you can try: survive_plant, collect_wood, build_pillar, ... ; make sure the config file contains `reference_video` field</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">config_file</span><span class="p">)</span>
 
     <span class="n">env_generator</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span>
         <span class="n">MinecraftSim</span><span class="p">,</span>
-        <span class="n">obs_size</span> <span class="o">=</span> <span class="n">resolution</span><span class="p">,</span>
-        <span class="n">preferred_spawn_biome</span> <span class="o">=</span> <span class="s2">&quot;forest&quot;</span><span class="p">,</span>
+        <span class="n">obs_size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">),</span>
+        <span class="n">preferred_spawn_biome</span> <span class="o">=</span> <span class="s2">&quot;plains&quot;</span><span class="p">,</span>
         <span class="n">callbacks</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">RecordCallback</span><span class="p">(</span><span class="n">record_path</span> <span class="o">=</span> <span class="s2">&quot;./output&quot;</span><span class="p">,</span> <span class="n">fps</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="n">frame_type</span><span class="o">=</span><span class="s2">&quot;pov&quot;</span><span class="p">),</span>
             <span class="n">SpeedTestCallback</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span>
-            <span class="n">CommandsCallback</span><span class="p">(</span><span class="n">commands</span><span class="p">),</span>
-            <span class="n">DemonstrationCallback</span><span class="p">(</span><span class="s2">&quot;collect_wood&quot;</span><span class="p">)</span>
-        <span class="p">]</span>
+        <span class="p">]</span> <span class="o">+</span> <span class="n">load_callbacks_from_config</span><span class="p">(</span><span class="n">config_file</span><span class="p">)</span>
     <span class="p">)</span>
 
-    <span class="n">agent_generator</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span>
-        <span class="n">load_groot_policy</span><span class="p">,</span>
-        <span class="n">ckpt_path</span> <span class="o">=</span> <span class="s2">&quot;/home/zhwang/Desktop/zhancun/jarvisbase/pretrained/groot.ckpt&quot;</span>
-    <span class="p">)</span>
+    <span class="n">agent_generator</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">GrootPolicy</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;CraftJarvis/MineStudio_GROOT.18w_EMA&quot;</span><span class="p">)</span>
 
     <span class="n">worker_kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
         <span class="n">env_generator</span><span class="o">=</span><span class="n">env_generator</span><span class="p">,</span>
         <span class="n">agent_generator</span><span class="o">=</span><span class="n">agent_generator</span><span class="p">,</span>
-        <span class="n">num_max_steps</span><span class="o">=</span><span class="mi">1200</span><span class="p">,</span>
+        <span class="n">num_max_steps</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span>
         <span class="n">num_episodes</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
         <span class="n">tmpdir</span><span class="o">=</span><span class="s2">&quot;./output&quot;</span><span class="p">,</span>
         <span class="n">image_media</span><span class="o">=</span><span class="s2">&quot;h264&quot;</span><span class="p">,</span>
@@ -692,7 +683,7 @@ The example code is provided in <code class="docutils literal notranslate"><span
         <span class="p">),</span>
         <span class="n">episode_filter</span><span class="o">=</span><span class="n">InfoBaseFilter</span><span class="p">(</span>
             <span class="n">key</span><span class="o">=</span><span class="s2">&quot;mine_block&quot;</span><span class="p">,</span>
-            <span class="n">val</span><span class="o">=</span><span class="s2">&quot;oak_log&quot;</span><span class="p">,</span>
+            <span class="n">regex</span><span class="o">=</span><span class="s2">&quot;.*log.*&quot;</span><span class="p">,</span>
             <span class="n">num</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
         <span class="p">),</span>
     <span class="p">)</span>
