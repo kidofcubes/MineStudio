@@ -29,8 +29,8 @@ shuffle_episodes: True
 episode_continuous_batch: False
 
 model:
-  backbone: 'timm/vit_large_patch14_clip_224.openai'
-  # backbone: 'vit_base_patch32_clip_224.openai'
+  # backbone: 'timm/vit_large_patch14_clip_224.openai'
+  backbone: 'timm/vit_base_patch32_clip_224.openai'
   hiddim: 1024
   freeze_backbone: True
   video_encoder_kwargs:

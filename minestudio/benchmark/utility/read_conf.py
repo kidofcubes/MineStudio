@@ -1,7 +1,7 @@
 '''
 Date: 2024-12-06 16:42:49
-LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2025-01-07 10:40:24
+LastEditors: caishaofei caishaofei@stu.pku.edu.cn
+LastEditTime: 2025-01-07 11:08:39
 FilePath: /MineStudio/minestudio/benchmark/utility/read_conf.py
 '''
 import os
@@ -27,13 +27,16 @@ def convert_yaml_to_callbacks(yaml_file):
 
     return commands, task_dict
 
-def prepare_task_configs(group_name: str, path: Optional[str] = None):
+def prepare_task_configs(group_name: str, path: Optional[str] = None, refresh: bool = False) -> Dict:
     """
     group_name: str - used to specify the group name
     path: str - can be a local directory or a huggingface repo_id
     """
     root_dir = get_mine_studio_dir()
     local_dir = os.path.join(root_dir, "task_configs", group_name)
+    if refresh and os.path.exists(local_dir):
+        print(f"Refreshing the cache: removing existing task configs from: {local_dir}")
+        shutil.rmtree(local_dir)
     if not os.path.exists(local_dir):
         if os.path.isdir(path):
             shutil.copytree(path, local_dir)
@@ -48,5 +51,5 @@ def prepare_task_configs(group_name: str, path: Optional[str] = None):
                     local_dir=local_dir, 
                     repo_type='dataset'
                 )
-    yaml_files = [ (file_path.stem, str(file_path)) for file_path in Path(local_dir).rglob("*.yaml") ]
+    yaml_files = { file_path.stem: str(file_path) for file_path in Path(local_dir).rglob("*.yaml") }
     return yaml_files

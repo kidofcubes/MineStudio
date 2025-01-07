@@ -6,3 +6,4 @@ defaults:
 - base
 - _self_
 text: Create obsidian blocks by pouring water over lava source blocks.
+reference_video: build_obsidian

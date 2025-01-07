@@ -7,3 +7,4 @@ defaults:
 - base
 - _self_
 text: Shear sheep to collect wool.
+reference_video: collect_wool

@@ -182,7 +182,6 @@ def draw_gradio_components(args):
         env_list = [name for name, file in file_list]
         
         rocket_session = gr.State(Session(
-            model_loader=args.model_loader,
             model_path=args.model_path,
             sam_path=args.sam_path,
             name_file_mapping=name_file_mapping, 
@@ -285,8 +284,7 @@ def main():
     parser.add_argument("--port", type=int, default=7862)
     parser.add_argument("--task-group", type=str, default="simple")
     parser.add_argument("--task-group-path", type=str, default="CraftJarvis/MineStudio_task_group.simple")
-    parser.add_argument("--model-loader", type=str, default="load_rocket_policy")
-    parser.add_argument("--model-path", type=str, required=True)
+    parser.add_argument("--model-path", type=str, default="CraftJarvis/MineStudio_ROCKET-1.12w_EMA")
     parser.add_argument("--sam-path", type=str, required=True)
     parser.add_argument("--molmo-id", type=str, default="molmo-72b-0924")
     parser.add_argument("--molmo-url", type=str, default="http://127.0.0.1:8000/v1")

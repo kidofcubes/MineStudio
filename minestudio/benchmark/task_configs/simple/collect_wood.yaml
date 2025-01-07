@@ -5,3 +5,4 @@ defaults:
 - base
 - _self_
 text: 'Collect wood from trees in your surroundings.  '
+reference_video: collect_wood

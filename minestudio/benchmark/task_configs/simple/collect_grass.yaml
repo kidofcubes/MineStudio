@@ -6,3 +6,4 @@ defaults:
 - base
 - _self_
 text: Collect grass blocks using the appropriate tool.
+reference_video: collect_grass

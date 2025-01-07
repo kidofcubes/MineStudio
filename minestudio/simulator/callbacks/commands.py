@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-11 19:31:53
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2025-01-07 03:19:46
+LastEditTime: 2025-01-07 11:58:44
 FilePath: /MineStudio/minestudio/simulator/callbacks/commands.py
 '''
 import os
@@ -28,13 +28,11 @@ class CommandsCallback(MinecraftCallback):
     
     def after_reset(self, sim, obs, info):
         for command in self.commands:
-            obs, reward, done, info = sim.env.execute_cmd(command)
+            _obs, reward, done, info = sim.env.execute_cmd(command)
+            obs.update(_obs)
+            info.update(info)
         obs, info = sim._wrap_obs_info(obs, info)
         return obs, info
 
-if __name__ == '__main__':
-    yaml_file = '/home/caishaofei/tmpdir/MineStudio/task_configs/debug_task/build_gate.yaml'
-    commands_callback = CommandsCallback.create_from_conf(yaml_file)
-    print(commands_callback)
-    
-    
+    def __repr__(self):
+        return f"CommandsCallback(commands={self.commands})"

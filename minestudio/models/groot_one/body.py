@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-25 07:03:41
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2025-01-04 17:05:47
+LastEditTime: 2025-01-07 10:25:24
 FilePath: /MineStudio/minestudio/models/groot_one/body.py
 '''
 import torch
@@ -14,6 +14,8 @@ from typing import List, Dict, Any, Tuple, Optional
 import av
 
 import timm
+from huggingface_hub import PyTorchModelHubMixin
+
 from minestudio.models.base_policy import MinePolicy
 from minestudio.utils.vpt_lib.util import FanInInitReLULayer, ResidualRecurrentBlocks
 from minestudio.utils.register import Registers
@@ -163,7 +165,7 @@ class Decoder(nn.Module):
         return [t.to(device) for t in self.recurrent.initial_state(batch_size)]
 
 @Registers.model.register
-class GrootPolicy(MinePolicy):
+class GrootPolicy(MinePolicy, PyTorchModelHubMixin):
     
     def __init__(
         self, 
@@ -251,7 +253,7 @@ class GrootPolicy(MinePolicy):
         image = self.updim(image)
         image = rearrange(image, '(b t) c h w -> b t c h w', b=b)
 
-        if 'ref_video_path' in input or self.condition is not None:
+        if 'ref_video_path' in input:
             if self.condition is None:
                 self.encode_video(input['ref_video_path'])
             condition = self.condition
@@ -288,11 +290,8 @@ class GrootPolicy(MinePolicy):
 @Registers.model_loader.register
 def load_groot_policy(ckpt_path: str = None):
     if ckpt_path is None:
-        from minestudio.models.utils.download import download_model
-        local_dir = download_model("GROOT")
-        if local_dir is None:
-            assert False, "Please specify the ckpt_path or download the model first."
-        ckpt_path = os.path.join(local_dir, "groot.ckpt")
+        repo_id = "CraftJarvis/MineStudio_GROOT.18w_EMA"
+        return GrootPolicy.from_pretrained("CraftJarvis/MineStudio_GROOT.18w_EMA")
 
     ckpt = torch.load(ckpt_path)
     model = GrootPolicy(**ckpt['hyper_parameters']['model'])
@@ -301,8 +300,9 @@ def load_groot_policy(ckpt_path: str = None):
     return model
 
 if __name__ == '__main__':
+    model = load_groot_policy()
     model = GrootPolicy(
-        backbone='timm/vit_base_patch16_224.dino', 
+        backbone='timm/vit_base_patch32_clip_224.openai', 
         hiddim=1024,
         freeze_backbone=False,
         video_encoder_kwargs=dict(
