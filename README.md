@@ -145,6 +145,7 @@ Here is the checkpoint list:
 - [CraftJarvis/MineStudio_VPT.bc_early_game_3x](https://huggingface.co/CraftJarvis/MineStudio_VPT.bc_early_game_3x), trained by [OpenAI](https://github.com/openai/Video-Pre-Training)
 - [CraftJarvis/MineStudio_VPT.rl_for_shoot_animals_2x](https://huggingface.co/CraftJarvis/MineStudio_VPT.rl_for_shoot_animals_2x), trained by [CraftJarvis](https://craftjarvis.github.io/)
 - [CraftJarvis/MineStudio_VPT.rl_for_build_portal_2x](https://huggingface.co/CraftJarvis/MineStudio_VPT.rl_for_build_portal_2x), trained by [CraftJarvis](https://craftjarvis.github.io/)
+- [CraftJarvis/MineStudio_GROOT.18w_EMA](https://huggingface.co/CraftJarvis/MineStudio_GROOT.18w_EMA), trained by [CraftJarvis](https://craftjarvis.github.io/)
 - [CraftJarvis/MineStudio_STEVE-1.official](https://huggingface.co/CraftJarvis/MineStudio_STEVE-1.official), trained by [STEVE-1](https://github.com/Shalev-Lifshitz/STEVE-1)
 - [CraftJarvis/MineStudio_ROCKET-1.12w_EMA](https://huggingface.co/CraftJarvis/MineStudio_ROCKET-1.12w_EMA), trained by [CraftJarvis](https://craftjarvis.github.io/)
 
