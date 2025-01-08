@@ -6,8 +6,8 @@ FilePath: /MineStudio/minestudio/simulator/callbacks/init_inventory.py
 '''
 
 import minecraft_data # https://github.com/SpockBotMC/python-minecraft-data  Provide easy access to minecraft-data in python
-from minestudio.simulator.callbacks.callback import MinecraftCallback
-from typing import Union
+from minestudio.simulator.callbacks import MinecraftCallback,InitInventoryCallback
+from typing import Union,Literal
 import random
 import json
 import re
@@ -36,10 +36,9 @@ DISTRACTION_LEVEL = {"zero":[0],"one":[1],
                      "normal":range(0,35)}
 
 
-
-class InitInventoryCallback(MinecraftCallback):
+class SetInventoryCallback(InitInventoryCallback):
     
-    def __init__(self, init_inventory:dict,distraction_level:Union[list,str]=[0]) -> None:
+    def __init__(self, init_inventory:dict,distraction_level:Union[list,str]=[0],change_frequency:Literal["reset","step"]="reset") -> None:
         """
         Examples:
             init_inventory = [{
@@ -48,14 +47,20 @@ class InitInventoryCallback(MinecraftCallback):
                     quantity: 64  # supporting ">...",">=...","<...","<=...","==...","...",1
                 }]
         """
-        self.init_inventory = init_inventory
-        self.distraction_level = DISTRACTION_LEVEL.get(distraction_level,[0]) if isinstance(distraction_level,str) else distraction_level
+        super().__init__(init_inventory,distraction_level)
+        assert change_frequency in {"reset","step"}
+        self.change_frequency = change_frequency
         
-        mcd = minecraft_data("1.16")
-        self.items_library = mcd.items_name
-        self.items_names = list(mcd.items_name.keys())
+    def after_step(self, sim, obs, reward, terminated, truncated, info):
+        if self.change_frequency == "step":
+            obs, info = self._set_inventory(sim)
+        return obs, reward, terminated, truncated, info
         
     def after_reset(self, sim, obs, info):
+        obs, info = self._set_inventory(sim)
+        return obs, info
+    
+    def _set_inventory(self,sim):
         chats = []
         visited_slots = set()
         uncertain_slots = [] 
@@ -77,9 +82,16 @@ class InitInventoryCallback(MinecraftCallback):
             init_inventory.append(uncertain_slot)
         
         # settle distraction slot
+        
         distraction_num = min(random.choice(self.distraction_level),len(unvisited_slots))
-        for _ in range(distraction_num):
-            item_type = random.choice(self.items_names)
+        
+        past_item_type = ""
+        for idx in range(distraction_num):
+            if idx>0 and random.choices([True,False],[0.35,0.65],k=1)[0]:
+                item_type = past_item_type
+            else:
+                item_type = random.choice(self.items_names)
+            past_item_type = item_type
             slot = int(random.choice(list(unvisited_slots)))
             unvisited_slots.remove(slot)
             init_inventory.append({
@@ -102,20 +114,33 @@ class InitInventoryCallback(MinecraftCallback):
             obs, reward, done, info = sim.env.execute_cmd(chat)
         obs, info = sim._wrap_obs_info(obs, info)
         init_flag = False
-        sleep(1)
-        for _ in range(self.slot_num*5):
+        
+        kdx = 0
+        inventory_infos = []
+        for kdx in range(300):
             action = sim.env.noop_action()
             obs, reward, done, info = sim.env.step(action)
-            init_flag = self._check(obs)
+            inventory_infos.append({
+                "init_inventory":init_inventory,
+                "current_inventory":obs["inventory"]})
+            init_flag,current_slot_num = self._check(obs)
             if init_flag:
                 break
+            if kdx%40==0:
+                sleep(1)
+        
         if not init_flag:
-            console.Console().log("[red]can't set up init inventory[/red]")
+            import uuid
+            uuidx = str(uuid.uuid4())
+            Path("logs").mkdir(parents=True,exist_ok=True)
+            with open(f"logs/file_inventory_init_{uuidx}.json",mode="w") as file:
+                json.dump(inventory_infos,file)
+            console.Console().log(f"[red]can't set up init inventory[/red], need {self.slot_num}, has {self._check(obs)} only, and has sample {kdx} steps. log at file_inventory_init_{uuidx}.json")
             message = info.get('message', {})
-            message['InitInventoryCallback'] = "can't set up init inventory"
+            message['InitInventoryCallback'] = f"can't set up init inventory, need {self.slot_num}, has {self._check(obs)} only"
             info["message"] = message
-        return obs, info
-    
+        inventory_infos = []
+        return obs,info
     
     def _map_slot_number_to_cmd_slot(self,slot_number: Union[int,str]) -> str:
         slot_number = int(slot_number)
@@ -129,7 +154,7 @@ class InitInventoryCallback(MinecraftCallback):
         else:
             return f"inventory.{slot_number - 9}"
 
-    def _item_quantity_parser(self,item_quantity: Union[int,str],max_items_num,one_p:float=0.7) -> int:
+    def _item_quantity_parser(self,item_quantity: Union[int,str],max_items_num,one_p:float=0.8) -> int:
         """Function to parse item quantity from either an integer or a string command
         """
         
@@ -179,8 +204,8 @@ class InitInventoryCallback(MinecraftCallback):
             if slot_dict["type"] != "none":
                 current_slot_num+=1
         if current_slot_num >= self.slot_num:
-            return True
-        return False
+            return True,current_slot_num
+        return False,current_slot_num
     
 if __name__ == "__main__":
 
@@ -213,19 +238,77 @@ if __name__ == "__main__":
                 random_tp_range=1000,
             ), 
             InitInventoryCallback([
-                {"slot": 0,
-                "type": "oak_planks",
-                "quantity":1,},
-                {"slot": 1,
-                "type": "oak_planks",
-                "quantity":">2",},
-                {"slot": 2,
-                "type": "oak_planks",
-                "quantity":"<12,>10",},
-                {"slot": "random",
-                "type": "oak_planks",
-                "quantity":"random",},
-            ],distraction_level="normal")
+    {
+      "slot": 8,
+      "type": "dark_oak_button",
+      "quantity": "random"
+    },
+    {
+      "slot": 31,
+      "type": "glass",
+      "quantity": "random"
+    },
+    {
+      "slot": 0,
+      "type": "glass",
+      "quantity": "random"
+    },
+    {
+      "slot": 20,
+      "type": "golden_boots",
+      "quantity": "random"
+    },
+    {
+      "slot": 22,
+      "type": "charcoal",
+      "quantity": "random"
+    },
+    {
+      "slot": 23,
+      "type": "jungle_trapdoor",
+      "quantity": "random"
+    },
+    {
+      "slot": 9,
+      "type": "jungle_trapdoor",
+      "quantity": "random"
+    },
+    {
+      "slot": 12,
+      "type": "yellow_concrete",
+      "quantity": "random"
+    },
+    {
+      "slot": 25,
+      "type": "quartz_block",
+      "quantity": "random"
+    },
+    {
+      "slot": 35,
+      "type": "dark_prismarine_stairs",
+      "quantity": "random"
+    },
+    {
+      "slot": 4,
+      "type": "bee_nest",
+      "quantity": "random"
+    },
+    {
+      "slot": 17,
+      "type": "lapis_lazuli",
+      "quantity": "random"
+    },
+    {
+      "slot": 11,
+      "type": "music_disc_stal",
+      "quantity": "random"
+    },
+    {
+      "slot": 1,
+      "type": "prismarine_crystals",
+      "quantity": "random"
+    }
+  ],distraction_level="zero")
         ]
     )
     obs, info = sim.reset()
