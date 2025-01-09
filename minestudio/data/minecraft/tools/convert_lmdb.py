@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-10 12:27:01
-LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2024-12-29 23:45:37
+LastEditors: caishaofei caishaofei@stu.pku.edu.cn
+LastEditTime: 2025-01-08 13:10:32
 FilePath: /MineStudio/minestudio/data/minecraft/tools/convert_lmdb.py
 '''
 
@@ -287,17 +287,19 @@ class ConvertWorker:
     def process_segment(self, eps: str, segments: List[Tuple[int, Path, Path]]) -> Tuple[List, List, float]:
         time_start = time.time()
         cache, keys, vals = [], [], []
-
+        
         for ord, segment_path, action_path in segments:
             indicators = self._generate_frame_indicator(action_path)
             with segment_path.open('rb') as f:
-                segment_pkl = pickle.load(f)
+                data = pickle.load(f)
                 for frame_idx, flag in enumerate(indicators):
                     if not flag:
                         continue
-                    frame_segments = segment_pkl.get(frame_idx, {})
+                    frame_segments = {
+                        (k[0], k[1]): data['rle_mask_mapping'][k] for k in data['video_annos'].get(frame_idx, [])
+                    }
                     cache.append(frame_segments)
-
+        
         for chunk_start in range(0, len(cache), self.chunk_size):
             chunk_end = chunk_start + self.chunk_size
             if chunk_end > len(cache):
@@ -310,6 +312,33 @@ class ConvertWorker:
         print(f"episode: {eps}, chunks: {len(keys)}, frames: {len(keys) * self.chunk_size},"
                 f"size: {sum(len(x) for x in vals) / (1024*1024):.2f} MB, cost: {cost:.2f} sec")
         return keys, vals, cost
+
+    # def process_segment(self, eps: str, segments: List[Tuple[int, Path, Path]]) -> Tuple[List, List, float]:
+    #     time_start = time.time()
+    #     cache, keys, vals = [], [], []
+
+    #     for ord, segment_path, action_path in segments:
+    #         indicators = self._generate_frame_indicator(action_path)
+    #         with segment_path.open('rb') as f:
+    #             segment_pkl = pickle.load(f)
+    #             for frame_idx, flag in enumerate(indicators):
+    #                 if not flag:
+    #                     continue
+    #                 frame_segments = segment_pkl.get(frame_idx, {})
+    #                 cache.append(frame_segments)
+
+    #     for chunk_start in range(0, len(cache), self.chunk_size):
+    #         chunk_end = chunk_start + self.chunk_size
+    #         if chunk_end > len(cache):
+    #             break
+    #         val = cache[chunk_start:chunk_end]
+    #         keys.append(chunk_start)
+    #         vals.append(pickle.dumps(val))
+
+    #     cost = time.time() - time_start
+    #     print(f"episode: {eps}, chunks: {len(keys)}, frames: {len(keys) * self.chunk_size},"
+    #             f"size: {sum(len(x) for x in vals) / (1024*1024):.2f} MB, cost: {cost:.2f} sec")
+    #     return keys, vals, cost
 
     def _generate_frame_indicator(self, action_path: Path) -> Sequence[bool]:
         

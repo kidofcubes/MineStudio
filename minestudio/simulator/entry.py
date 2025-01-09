@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-11 05:20:17
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2025-01-05 09:28:33
+LastEditTime: 2025-01-09 11:26:18
 FilePath: /MineStudio/minestudio/simulator/entry.py
 '''
 
@@ -84,7 +84,7 @@ class MinecraftSim(gymnasium.Env):
         preferred_spawn_biome: Optional[str] = None,    # the preferred spawn biome when call reset 
         num_empty_frames: int = 20,                     # the number of empty frames to skip when calling reset
         callbacks: List[MinecraftCallback] = [],        # the callbacks to be called before and after each basic calling
-        camera_config:CameraConfig=None,      # the configuration for camera quantization and binning settings
+        camera_config:CameraConfig=None,                # the configuration for camera quantization and binning settings
         **kwargs
     ) -> Any:
         super().__init__()

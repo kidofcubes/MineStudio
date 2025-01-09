@@ -1,8 +1,8 @@
 '''
 Date: 2024-11-10 10:26:52
-LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2024-12-30 20:55:41
-FilePath: /MineStudio/minestudio/data/minecraft/part_event.py
+LastEditors: caishaofei caishaofei@stu.pku.edu.cn
+LastEditTime: 2025-01-09 16:57:08
+FilePath: /MineStudio/minestudio/data/minecraft/dataset_event.py
 '''
 import io
 import re
@@ -10,14 +10,21 @@ import os
 import lmdb
 import pickle
 import random
-
+import numpy as np
 import torch
+from torch.utils.data import Dataset, DataLoader
+import lightning.pytorch as L
+
 from rich.console import Console
 from pathlib import Path
 from typing import Union, Tuple, List, Dict, Callable, Sequence, Mapping, Any, Optional, Literal
-from minestudio.data.minecraft.core import BaseDataset
 
-class EventLMDBDriver:
+from minestudio.data.minecraft.utils import batchify
+from minestudio.data.minecraft.core import KernelManager
+from minestudio.data.minecraft.callbacks import ModalKernelCallback
+from minestudio.utils.register import Registers
+
+class EventKernel:
     
     def __init__(self, event_path: Union[str, Path], event_regex: str, min_nearby: Optional[int] = None, max_within: Optional[int] = None) -> None:
         if isinstance(event_path, str):
@@ -89,17 +96,17 @@ class EventLMDBDriver:
             episode = self.__codebook__[episode]
         return episode, event_time, value
 
-class EventKernel:
+class EventKernelManager:
     
     def __init__(self, event_path: List[Union[str, Path]], event_regex: str, verbose: bool = True, **kwargs) -> None:
         self.verbose = verbose
-        self.event_drivers = [EventLMDBDriver(event, event_regex, **kwargs) for event in event_path]
+        self.event_kernels = [EventKernel(event, event_regex, **kwargs) for event in event_path]
         event_set = set()
-        for driver in self.event_drivers:
-            event_set.update(driver.get_event_list())
+        for kernel in self.event_kernels:
+            event_set.update(kernel.get_event_list())
         self.event_list = sorted(list(event_set))
         if verbose:
-            Console().log(f"[Event Kernel] Number of loaded events: {len(self.event_list)}")
+            Console().log(f"[Event Kernel Manager] Number of loaded events: {len(self.event_list)}")
     
     def get_event_list(self) -> List[str]:
         return self.event_list
@@ -107,32 +114,36 @@ class EventKernel:
     def get_event_size(self, event: str) -> int:
         if event not in self.event_list:
             return 0
-        return sum([driver.get_event_size(event) for driver in self.event_drivers])
+        return sum([kernel.get_event_size(event) for kernel in self.event_kernels])
     
     def get_event_item(self, event: str, item_idx: int) -> Tuple[str, int, int]:
-        for driver in self.event_drivers:
-            size = driver.get_event_size(event)
+        for kernel in self.event_kernels:
+            size = kernel.get_event_size(event)
             if item_idx < size:
-                return driver.get_event_item(event, item_idx)
+                return kernel.get_event_item(event, item_idx)
             item_idx -= size
         raise ValueError(f"Item index {item_idx} out of range. ")
 
-class EventDataset(BaseDataset):
+class EventDataset(Dataset):
     
     def __init__(self, 
-        win_len: int = 1, 
-        skip_frame: int = 1,
-        split: Literal['train', 'val'] = 'train',
-        split_ratio: float = 0.8, 
-        verbose: bool = True,
+        dataset_dirs: List[str], 
+        modal_kernel_callbacks: List[Union[str, ModalKernelCallback]], 
+        modal_kernel_config: Optional[Dict]=None,
+        # below are parameters for spliting dataset and building items
+        win_len: int=1, 
+        skip_frame: int=1,
+        split: Literal['train', 'val']='train',
+        split_ratio: float=0.8, 
+        verbose: bool=True,
         # below are event dataset specific parameters
-        bias: int = 0,
-        event_regex: str = '', 
-        min_nearby: Optional[int] = None, # minimal avaliable distance between two selected events
-        max_within: Optional[int] = None, # maximum number of samples within each event
-        **kernel_kwargs, 
+        event_paths: Optional[List[str]]=None,
+        bias: int=0,
+        event_regex: str='', 
+        min_nearby: Optional[int]=None, # minimal avaliable distance between two selected events
+        max_within: Optional[int]=None, # maximum number of samples within each event
     ) -> Any:
-        super(EventDataset, self).__init__(verbose=verbose, **kernel_kwargs)
+        super().__init__()
         self.win_len = win_len
         self.skip_frame = skip_frame
         self.split = split
@@ -140,12 +151,31 @@ class EventDataset(BaseDataset):
         self.verbose = verbose
         self.bias = bias
         self.event_regex = event_regex
-        self.event_kernel = EventKernel(
-            event_path=[Path(x) / "event" for x in kernel_kwargs['dataset_dirs']],
+
+        if event_paths is None:
+            event_paths = [Path(x) / "event" for x in dataset_dirs]
+        else:
+            event_paths = [Path(x) for x in event_paths]
+
+        self.event_kernel = EventKernelManager(
+            event_path=event_paths,
             event_regex=event_regex,
             verbose=verbose,
             min_nearby=min_nearby, 
             max_within=max_within,
+        )
+        
+        assert len(modal_kernel_callbacks) > 0, "At least one modal kernel callback is required. "
+        if isinstance(modal_kernel_callbacks[0], str):
+            assert modal_kernel_config is not None, "Modal kernel config is required. "
+            modal_kernel_callbacks = [
+                Registers.modal_kernel_callback[name].create_from_config(modal_kernel_config) 
+                    for name in modal_kernel_callbacks
+            ]
+        
+        self.kernel_manager = KernelManager(
+            dataset_dirs=dataset_dirs, 
+            modal_kernel_callbacks=modal_kernel_callbacks,
         )
         
         self.build_items()
@@ -197,34 +227,112 @@ class EventDataset(BaseDataset):
         event, relative_idx = self.locate_item(idx)
         episode, event_time, value = self.event_kernel.get_event_item(event, relative_idx)
         start = max(event_time - self.win_len + self.bias, 0)
-        item = self.kernel.read(episode, start=start, win_len=self.win_len, skip_frame=self.skip_frame)
+        item = self.kernel_manager.read(episode, start=start, win_len=self.win_len, skip_frame=self.skip_frame)
+
+        for key in list(item.keys()):
+            if key.endswith('mask'):
+                mask = item.pop(key)
+        item["mask"] = mask
+
         item['text'] = event.replace('minecraft.', '')
-        return self.postprocess(item)
-        
+        item['episode'] = episode
+        item['timestamp'] = np.arange(start, start+self.win_len, self.skip_frame)
+        item = self.to_tensor(item)
+        return item
+
+    def to_tensor(self, item: Union[np.ndarray, List, Dict]) -> Union[np.ndarray, List, Dict]:
+        """Convert numpy array to torch tensor."""
+        if isinstance(item, np.ndarray):
+            return torch.from_numpy(item)
+        elif isinstance(item, List):
+            return [self.to_tensor(val) for val in item]
+        elif isinstance(item, Dict):
+            return {key: self.to_tensor(val) for key, val in item.items()}
+        else:
+            return item
+
+
+class EventDataModule(L.LightningDataModule):
+    
+    def __init__(self, 
+                 data_params: Dict, 
+                 batch_size: int=1, 
+                 num_workers: int=0, 
+                 prefetch_factor: Optional[int] = None):
+        super().__init__()
+        self.data_params = data_params
+        self.batch_size = batch_size
+        self.num_workers = num_workers
+        self.prefetch_factor = prefetch_factor
+    
+    def setup(self, stage: Optional[str]=None):
+        self.train_dataset = EventDataset(split='train', **self.data_params)
+        self.val_dataset = EventDataset(split='val', **self.data_params)
+
+    def train_dataloader(self):
+        train_loader = DataLoader(
+            dataset=self.train_dataset, 
+            batch_size=self.batch_size, 
+            num_workers=self.num_workers, 
+            shuffle=True, 
+            collate_fn=batchify,
+            prefetch_factor=self.prefetch_factor,
+            pin_memory=True,
+            drop_last=True,
+        )
+        return train_loader
+
+    def val_dataloader(self):
+        val_loader = DataLoader(
+            dataset=self.val_dataset, 
+            batch_size=self.batch_size, 
+            num_workers=self.num_workers, 
+            shuffle=False, 
+            collate_fn=batchify,
+            prefetch_factor=self.prefetch_factor,
+            pin_memory=True,
+            drop_last=True,
+        )
+        return val_loader
+
+
 if __name__ == '__main__':
-    
-    kernel_kwargs = dict(
-        dataset_dirs=[
-            '/nfs-shared-2/data/contractors/dataset_6xx', 
-            '/nfs-shared-2/data/contractors/dataset_7xx', 
-            '/nfs-shared-2/data/contractors/dataset_8xx', 
-            '/nfs-shared-2/data/contractors/dataset_9xx', 
-            '/nfs-shared-2/data/contractors/dataset_10xx', 
-        ], 
-        enable_contractor_info=False, 
-        enable_segment=True, 
+
+    from tqdm import tqdm
+    from torch.utils.data import DataLoader
+    from minestudio.data.minecraft.callbacks import (
+        ImageKernelCallback, ActionKernelCallback, MetaInfoKernelCallback, SegmentationKernelCallback
     )
-    
-    event_dataset = EventDataset(
-        win_len=128, 
-        skip_frame=1, 
-        split='train', 
-        split_ratio=0.8, 
-        verbose=True, 
-        event_regex='minecraft.kill_entity:.*', 
-        **kernel_kwargs, 
+
+
+    data_module = EventDataModule(
+        data_params=dict(
+            dataset_dirs=[
+                '/nfs-shared-2/data/contractors/dataset_10xx', 
+            ], 
+            modal_kernel_callbacks=[
+                ImageKernelCallback(frame_width=224, frame_height=224, enable_video_aug=False), 
+                ActionKernelCallback(),
+                MetaInfoKernelCallback(),
+                SegmentationKernelCallback(frame_width=224, frame_height=224), 
+            ],
+            win_len=128, 
+            split_ratio=0.9, 
+            event_regex='minecraft.kill_entity:.*', 
+            min_nearby=64,
+            max_within=1000,
+        ), 
+        batch_size=4, 
+        num_workers=4, 
+        prefetch_factor=None
     )
-    
-    item = event_dataset[0]
-    
-    import ipdb; ipdb.set_trace()
+    data_module.setup()
+    loader = data_module.train_dataloader()
+    for idx, batch in enumerate(loader):
+        print(
+            "\t".join(
+                [f"{a} {b}" for a, b in zip(batch['episode'], batch['text'])]
+            )
+        )
+        if idx > 50:
+            break
