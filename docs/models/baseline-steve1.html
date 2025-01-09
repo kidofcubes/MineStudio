@@ -61,6 +61,8 @@
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'models/baseline-steve1';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -630,6 +632,70 @@
 <section id="built-in-models-steve-1">
 <h1>Built-in Models: STEVE-1<a class="headerlink" href="#built-in-models-steve-1" title="Link to this heading">#</a></h1>
 <p><a class="reference external" href="https://arxiv.org/abs/2306.00937">STEVE-1: A Generative Model for Text-to-Behavior in Minecraft</a></p>
+<div class="admonition-quick-facts admonition">
+<p class="admonition-title">Quick Facts</p>
+<p>STEVE-1 <a class="footnote-reference brackets" href="#id7" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> finetunes VPT to follow short-horizon open-ended text and visual instructions without the need of costly human annotations.</p>
+</div>
+<section id="insights">
+<h2>Insights<a class="headerlink" href="#insights" title="Link to this heading">#</a></h2>
+<p>Pre-trained foundation models demonstrates suprising ability to be efficiently fine-tuned for becoming instruction-following.
+In sequential decision-making domains, two foundation models in Minecraft are released: VPT <a class="footnote-reference brackets" href="#id8" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> and MineCLIP <a class="footnote-reference brackets" href="#id9" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>, opening intriguing possibilities for exploring the finetuning of instruction-awared decision-making agents.</p>
+<p>The authors draw insights from unCLIP <a class="footnote-reference brackets" href="#id10" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a> to propose a two-stage learning framework for training STEVE-1, eliminating laborious human annotations.</p>
+</section>
+<section id="method">
+<h2>Method<a class="headerlink" href="#method" title="Link to this heading">#</a></h2>
+<figure class="align-center" id="id11">
+<a class="reference internal image-reference" href="../_images/steve.png"><img alt="../_images/steve.png" src="../_images/steve.png" style="width: 800px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">STEVE-1 architecture. Image credit: <a class="footnote-reference brackets" href="#id7" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a></span><a class="headerlink" href="#id11" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>To create a policy in Minecraft conditioned text instructions <span class="math notranslate nohighlight">\(y\)</span>, they ultilize a dataset of (partially) annotated trajectories <span class="math notranslate nohighlight">\([(\tau_1, y_1), (\tau_2, y_2), \dots, (\tau_n, \emptyset)]\)</span>
+They employ MineCLIP which is capable of generating aligned latents <span class="math notranslate nohighlight">\(z_{\tau_{t:t+16}}\)</span> and <span class="math notranslate nohighlight">\(z_y\)</span>, where <span class="math notranslate nohighlight">\(z_{\tau_{\text{goal}}} = z_{\tau_{t:t+16}}\)</span> is an embedding of 16 consecutive frames.</p>
+<p>The instruction-following model is composed of a <code class="docutils literal notranslate"><span class="pre">policy</span></code> and a <code class="docutils literal notranslate"><span class="pre">prior</span></code>:</p>
+<div class="math notranslate nohighlight">
+\[p(\tau | y) = p(\tau, z_{\tau_{\text{goal}}} | y) = p(\tau | z_{\tau_{\text{goal}}} ) p(z_{\tau_{\text{goal}}} | y),\]</div>
+<p>where the policy generates a trajectory <span class="math notranslate nohighlight">\(\tau\)</span> conditioned on the aligned latents <span class="math notranslate nohighlight">\(z_{\tau_{\text{goal}}}\)</span> and the prior generates <span class="math notranslate nohighlight">\(z_{\tau_{\text{goal}}}\)</span> conditioned on the instruction <span class="math notranslate nohighlight">\(y\)</span>.</p>
+<p>To train the policy, they use a modification of hindsight relabeling to generate goals for each trajectory:</p>
+<figure class="align-center" id="id12">
+<a class="reference internal image-reference" href="../_images/steve_hindsight.png"><img alt="../_images/steve_hindsight.png" src="../_images/steve_hindsight.png" style="width: 800px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">They randomly select timesteps from episodes and use hindsight relabeling to set the intermediate goals for the trajectory segments to those visual
+MineCLIP embeddings. Image credit: <a class="footnote-reference brackets" href="#id7" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a></span><a class="headerlink" href="#id12" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>By finetuning VPT on this dataset, the policy learns to reach given goal states (visual goals).</p>
+<p>To also learn to follow text instructions, they train a conditioned variational autoencoder (CVAE) with Gaussian prior and posterior to translate from a text embedding <span class="math notranslate nohighlight">\(z_y\)</span> to a visual embedding <span class="math notranslate nohighlight">\(z_{\tau_{\text{goal}}}\)</span>.
+The training objective is a standard ELBO loss:</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{L}_{\text{prior}}(\phi) = \mathbb{E}_{(z_{\tau_{\text{goal}}}, z_y) \sim \mathcal{D}_{\text{labels}}} \left[ \text{KL}(q_{\phi}(z_{\tau_{\text{goal}}}|z_y)||p(z_{\tau_{\text{goal}}})) - \mathbb{E}_{c \sim q_\phi(z_{\tau_{\text{goal}}}|z_y)}[\log p_\phi(z_{\tau_{\text{goal}}}|c,z_y)] \right].\]</div>
+<p>They ultilize classifier-free guidance to train the policy, where the goal embedding is occasionally droped out during training.
+During inference, they compute a combination of logits with and without combination to generate the final trajectory.</p>
+<section id="citations">
+<h3>Citations<a class="headerlink" href="#citations" title="Link to this heading">#</a></h3>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id7" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id1">1</a>,<a role="doc-backlink" href="#id5">2</a>,<a role="doc-backlink" href="#id6">3</a>)</span>
+<p>Lifshitz S, Paster K, Chan H, et al. Steve-1: A generative model for text-to-behavior in minecraft[J]. Advances in Neural Information Processing Systems, 2024, 36.</p>
+</aside>
+<aside class="footnote brackets" id="id8" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>Baker B, Akkaya I, Zhokov P, et al. Video pretraining (vpt): Learning to act by watching unlabeled online videos[J]. Advances in Neural Information Processing Systems, 2022, 35: 24639-24654.</p>
+</aside>
+<aside class="footnote brackets" id="id9" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
+<p>Fan L, Wang G, Jiang Y, et al. Minedojo: Building open-ended embodied agents with internet-scale knowledge[J]. Advances in Neural Information Processing Systems, 2022, 35: 18343-18362.</p>
+</aside>
+<aside class="footnote brackets" id="id10" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">4</a><span class="fn-bracket">]</span></span>
+<p>Ramesh A, Dhariwal P, Nichol A, et al. Hierarchical text-conditional image generation with clip latents[J]. arXiv preprint arXiv:2204.06125, 2022, 1(2): 3.</p>
+</aside>
+</aside>
+</section>
+</section>
 </section>
 
 <div class="section ablog__blog_comments">
@@ -674,6 +740,22 @@
                 <dialog id="pst-secondary-sidebar-modal"></dialog>
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#insights">Insights</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#method">Method</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#citations">Citations</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
 
   <div class="sidebar-secondary-item">
   <div role="note" aria-label="source link">
