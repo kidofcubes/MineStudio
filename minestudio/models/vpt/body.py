@@ -286,7 +286,7 @@ class VPTPolicy(MinePolicy, PyTorchModelHubMixin):
 def load_vpt_policy(model_path: str, weights_path: Optional[str] = None):
     if model_path is None:
         if ckpt_path is None:
-        repo_id = "CraftJarvis/MineStudio_VPT.rl_for_shoot_animals_2x"
+            repo_id = "CraftJarvis/MineStudio_VPT.rl_for_shoot_animals_2x"
         return VPTPolicy.from_pretrained(f"{repo_id}")
 
     model = pickle.load(Path(model_path).open("rb"))
