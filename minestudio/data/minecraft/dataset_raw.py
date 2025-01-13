@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-10 10:26:32
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2025-01-09 17:00:38
+LastEditTime: 2025-01-10 05:36:09
 FilePath: /MineStudio/minestudio/data/minecraft/dataset_raw.py
 '''
 import io
@@ -29,17 +29,16 @@ from minestudio.utils.register import Registers
 class RawDataset(Dataset):
     """Raw dataset for training and testing. """
     def __init__(self, 
-        dataset_dirs: List[str], 
-        modal_kernel_callbacks: List[Union[str, ModalKernelCallback]], 
-        modal_kernel_config: Optional[Dict]=None,
-        # below are parameters for spliting dataset and building items
-        win_len: int=1, 
-        skip_frame: int=1, 
-        split: Literal['train', 'val']='train',
-        split_ratio: float=0.8,
-        verbose: bool=True,
-        shuffle_episodes: bool=False, 
-    ) -> Any:
+                 dataset_dirs: List[str], 
+                 modal_kernel_callbacks: List[Union[str, ModalKernelCallback]], 
+                 modal_kernel_config: Optional[Dict]=None,
+                 # below are parameters for spliting dataset and building items
+                 win_len: int=1, 
+                 skip_frame: int=1, 
+                 split: Literal['train', 'val']='train',
+                 split_ratio: float=0.8,
+                 verbose: bool=True,
+                 shuffle_episodes: bool=False):
         super().__init__()
         self.win_len = win_len
         self.skip_frame = skip_frame

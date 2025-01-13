@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-10 12:27:01
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2025-01-08 13:10:32
+LastEditTime: 2025-01-10 14:24:40
 FilePath: /MineStudio/minestudio/data/minecraft/tools/convert_lmdb.py
 '''
 
@@ -33,45 +33,16 @@ from pathlib import Path
 from typing import Sequence, Union, Tuple, List, Dict, Any
 from collections import OrderedDict
 
+from minestudio.data.minecraft.callbacks import (
+    ModalConvertionCallback, 
+    ImageConvertionCallback,
+    ActionConvertionCallback,
+    MetaInfoConvertionCallback,
+    SegmentationConvertionCallback,
+)
+
 CONTRACTOR_PATTERN = r"^(.*?)-(\d+)$"
 NUM_CPUS_PER_ACTOR = 1
-
-def _read_video(
-    stream: Union[str, io.BytesIO], 
-    indicators: List = None, 
-    max_frame: int = 0
-) -> Sequence[np.ndarray]:
-    '''Read video file and decode it to frame sequence.'''
-    container = av.open(stream, "r")
-    result = []
-    for fid, frame in enumerate(container.decode(video=0)):
-        if indicators and not indicators[fid]:
-            continue
-        frame = frame.to_ndarray(format="rgb24")
-        result.append(frame)
-        if max_frame > 0 and max_frame == len(result):
-            break
-    container.close()
-    return result
-
-def _write_video_chunk(args: Tuple) -> Tuple[bool, int, bytes]:
-    '''Convert frame sequence into bytes sequence. '''
-    frames, chunk_start, fps, width, height = args
-    outStream = io.BytesIO()
-    container = av.open(outStream, mode="w", format='mp4')
-    stream = container.add_stream("h264", rate=fps)
-    stream.width = width
-    stream.height = height
-    for frame in frames:
-        frame = av.VideoFrame.from_ndarray(frame, format="rgb24")
-        for packet in stream.encode(frame):
-            container.mux(packet)
-    for packet in stream.encode():
-        container.mux(packet)
-    container.close()
-    bytes = outStream.getvalue()
-    outStream.close()
-    return chunk_start, bytes
 
 @ray.remote(num_cpus=NUM_CPUS_PER_ACTOR)
 class ConvertWorker:
@@ -134,8 +105,6 @@ class ConvertWorker:
             "__num_total_frames__": num_total_frames,
         }
         
-        # print(meta_info)
-        
         with self.lmdb_handler.begin(write=True) as txn:
             for key, val in meta_info.items():
                 txn.put(key.encode(), pickle.dumps(val))
@@ -143,7 +112,7 @@ class ConvertWorker:
         print(f"Worker finish: {self.write_path}. ")
         
         return meta_info
-        
+
 
     def dispatch(self, **kwargs):
         if self.source_type == 'video':
@@ -157,188 +126,19 @@ class ConvertWorker:
         elif self.source_type == 'segment':
             return self.process_segment(**kwargs)
 
-    def process_video(self, eps: str, segments: List[Tuple[int, Path, Path]]) -> Tuple[List, List, float]:
-        
-        time_start = time.time()
-        
-        cache_frames = []
-        chunk_start = 0
-        keys, vals = [], []
-        
-        for ord, source_path, action_path in segments:
-            
-            # Get video meta-information
-            cap = cv2.VideoCapture(str(source_path.absolute()))
-            cv_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-            cv_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-            cv_fps = int(cap.get(cv2.CAP_PROP_FPS))
-            total_frames = 0
-        
-            if cv_width != 640 or cv_height != 360:
-                return [], [], 0.
-
-            indicators = self._generate_frame_indicator(action_path)
-            
-            # Decode and encode frames
-            container = av.open(str(source_path.absolute()), "r")
-            for fid, frame in enumerate(container.decode(video=0)):
-                total_frames += 1
-                if indicators:
-                    if fid >= len(indicators) or (not indicators[fid]):
-                        continue
-                frame = frame.to_ndarray(format="rgb24")
-                # #! reszie to 224, 224
-                cv_width, cv_height = 224, 224
-                cv2.resize(frame, (cv_width, cv_height), interpolation=cv2.INTER_LINEAR)
-                # #! reszie to 224, 224
-                cache_frames.append(frame)
-                if len(cache_frames) == self.chunk_size * self.thread_pool:
-                    with ThreadPool(self.thread_pool) as pool:
-                        args_list = []
-                        while len(cache_frames) >= self.chunk_size:
-                            chunk_end = chunk_start + self.chunk_size
-                            args_list.append((cache_frames[:self.chunk_size], chunk_start, cv_fps, cv_width, cv_height))
-                            
-                            chunk_start += self.chunk_size
-                            cache_frames = cache_frames[self.chunk_size:]
-                        
-                        for idx, bytes in pool.map(_write_video_chunk, args_list):
-                            keys.append(idx)
-                            vals.append(bytes)
-
-            if len(indicators) <= total_frames <= len(indicators) + 1:  
-                pass
-            else:
-                print(f"Warning: Expected frame numbers: {len(indicators)}, actual frame numbers: {total_frames}. Source: {source_path}")
-            
-            print(f"episode: {eps}, segment: {ord}, frames: {total_frames}, actions: {len(indicators)}, non-static actions: {sum(indicators)}")
-            
-            # Close segment container
-            container.close()
-        
-        # Encode remaining frames
-        while len(cache_frames) >= self.chunk_size:
-            idx, bytes = _write_video_chunk((cache_frames[:self.chunk_size], chunk_start, cv_fps, cv_width, cv_height))
-            keys.append(idx)
-            vals.append(bytes)
-            chunk_start += self.chunk_size
-            cache_frames = cache_frames[self.chunk_size:]
-        
-        time_end = time.time()
-        cost = time_end - time_start
-        print(f"episode: {eps}, chunks: {len(keys)}, frames: {len(keys) * self.chunk_size},"
-              f"size: {sum(len(x) for x in vals) >> 20} MB, cost: {cost:.2f} sec")
-        return keys, vals, cost
-
-    def process_action(self, eps: str, segments: List[Tuple[int, Path, Path]]) -> Tuple[List, List, float]:
-
-        time_start = time.time()
-        cache, keys, vals = {}, [], []
-        
-        for ord, source_path, action_path in segments:
-        
-            indicators = self._generate_frame_indicator(action_path)
-            with action_path.open("rb") as f:
-                action_pkl = pickle.load(f)
-                if len(cache) == 0:
-                    cache = {k: v[indicators] for k, v in action_pkl.items()}
-                else:
-                    for k, v in action_pkl.items():
-                        cache[k] = np.concatenate((cache[k], v[indicators]), axis=0)
-                # cache = {k: v[indicators] for k, v in action_pkl.items()}
-        
-        for chunk_start in range(0, len(cache['attack']), self.chunk_size):
-            chunk_end = chunk_start + self.chunk_size
-            if chunk_end > len(cache['attack']):
-                break
-
-            val = {k: v[chunk_start:chunk_end] for k, v in cache.items()}
-            keys.append(chunk_start)
-            vals.append(pickle.dumps(val))
-        
-        cost = time.time() - time_start
-        print(f"episode: {eps}, chunks: {len(keys)}, frames: {len(keys) * self.chunk_size},"
-              f"size: {sum(len(x) for x in vals) / (1024*1024):.2f} MB, cost: {cost:.2f} sec")
-        return keys, vals, cost
-
-    def process_contractor_info(self, eps: str, segments: List[Tuple[int, Path, Path]]) -> Tuple[List, List, float]:
-        time_start = time.time()
-        
-        cache, keys, vals = [], [], []
-        for ord, contractor_info_path, action_path in segments:
-            indicators = self._generate_frame_indicator(action_path)
-            with contractor_info_path.open('rb') as f:
-                contractor_info_pkl = pickle.load(f)
-                cache += [ info for info, flag in zip(contractor_info_pkl, indicators) if flag ]
-        
-        for chunk_start in range(0, len(cache), self.chunk_size):
-            chunk_end = chunk_start + self.chunk_size
-            if chunk_end > len(cache):
-                break
-            val = cache[chunk_start:chunk_end]
-            keys.append(chunk_start)
-            vals.append(pickle.dumps(val)) 
-        
-        cost = time.time() - time_start
-        print(f"episode: {eps}, chunks: {len(keys)}, frames: {len(keys) * self.chunk_size},"
-              f"size: {sum(len(x) for x in vals) / (1024*1024):.2f} MB, cost: {cost:.2f} sec")
-        return keys, vals, cost
-
     def process_segment(self, eps: str, segments: List[Tuple[int, Path, Path]]) -> Tuple[List, List, float]:
         time_start = time.time()
-        cache, keys, vals = [], [], []
-        
-        for ord, segment_path, action_path in segments:
-            indicators = self._generate_frame_indicator(action_path)
-            with segment_path.open('rb') as f:
-                data = pickle.load(f)
-                for frame_idx, flag in enumerate(indicators):
-                    if not flag:
-                        continue
-                    frame_segments = {
-                        (k[0], k[1]): data['rle_mask_mapping'][k] for k in data['video_annos'].get(frame_idx, [])
-                    }
-                    cache.append(frame_segments)
-        
-        for chunk_start in range(0, len(cache), self.chunk_size):
-            chunk_end = chunk_start + self.chunk_size
-            if chunk_end > len(cache):
-                break
-            val = cache[chunk_start:chunk_end]
-            keys.append(chunk_start)
-            vals.append(pickle.dumps(val))
-
+        segmentation_convertion = SegmentationConvertionCallback(chunk_size=self.chunk_size)
+        skip_frames = []
+        modal_file_path = []
+        for i in range(len(segments)):
+            modal_file_path.append(segments[i][1])
+            skip_frames.append(self._generate_frame_indicator(segments[i][2]))
+        keys, vals = segmentation_convertion.do_convert(eps, skip_frames, modal_file_path)
         cost = time.time() - time_start
         print(f"episode: {eps}, chunks: {len(keys)}, frames: {len(keys) * self.chunk_size},"
                 f"size: {sum(len(x) for x in vals) / (1024*1024):.2f} MB, cost: {cost:.2f} sec")
         return keys, vals, cost
-
-    # def process_segment(self, eps: str, segments: List[Tuple[int, Path, Path]]) -> Tuple[List, List, float]:
-    #     time_start = time.time()
-    #     cache, keys, vals = [], [], []
-
-    #     for ord, segment_path, action_path in segments:
-    #         indicators = self._generate_frame_indicator(action_path)
-    #         with segment_path.open('rb') as f:
-    #             segment_pkl = pickle.load(f)
-    #             for frame_idx, flag in enumerate(indicators):
-    #                 if not flag:
-    #                     continue
-    #                 frame_segments = segment_pkl.get(frame_idx, {})
-    #                 cache.append(frame_segments)
-
-    #     for chunk_start in range(0, len(cache), self.chunk_size):
-    #         chunk_end = chunk_start + self.chunk_size
-    #         if chunk_end > len(cache):
-    #             break
-    #         val = cache[chunk_start:chunk_end]
-    #         keys.append(chunk_start)
-    #         vals.append(pickle.dumps(val))
-
-    #     cost = time.time() - time_start
-    #     print(f"episode: {eps}, chunks: {len(keys)}, frames: {len(keys) * self.chunk_size},"
-    #             f"size: {sum(len(x) for x in vals) / (1024*1024):.2f} MB, cost: {cost:.2f} sec")
-    #     return keys, vals, cost
 
     def _generate_frame_indicator(self, action_path: Path) -> Sequence[bool]:
         
@@ -364,17 +164,15 @@ class TaskManager:
     def __init__(
         self, 
         input_dir: List[str], 
-        action_dir: List[str],
+        action_dir: List[str], # used to skip no-action frames
         output_dir: str,
-        source_type: str,
-        lmdb_chunk_size: int = 32,
-        num_workers: int = 16,
+        modal_convertion_kernel: ModalConvertionCallback,
+        num_workers: int=16,
     ) -> None:
         self.input_dir  = input_dir
-        self.output_dir = output_dir
         self.action_dir = action_dir
-        self.source_type = source_type
-        self.lmdb_chunk_size = lmdb_chunk_size
+        self.output_dir = output_dir
+        self.modal_convertion_kernel = modal_convertion_kernel
         self.num_workers = num_workers
         
     def prepare_tasks(self):
@@ -405,11 +203,11 @@ class TaskManager:
         self.episode_with_action = episode_with_action
         print(f"num of removed segments: {num_removed_segs}")
 
-    def load_source_files(self, source_dir: str, source_type: str, suffix: str):
+    def load_source_files(self, source_dir: str, modal_name: str, suffix: str):
         episodes = OrderedDict()
         num_segments = 0
         for sub_dir in source_dir:
-            print(f'input {source_type} directory: {sub_dir}')
+            print(f'input {modal_name} directory: {sub_dir}')
             for source_file in tqdm(Path(sub_dir).rglob(f"*.{suffix}"), desc="Looking for source files"):
                 file_name = str(source_file.with_suffix('').relative_to(sub_dir))
                 match = re.match(CONTRACTOR_PATTERN, file_name)
@@ -438,7 +236,7 @@ class TaskManager:
                 start_time = int(ord)
                 new_episodes[f"{eps}-{working_ord}"].append( (ord, file_path) )
         episodes = new_episodes
-        print(f'source: {source_type}, num of episodes: {len(episodes)}, num of segments: {num_segments}') 
+        print(f'source: {modal_name}, num of episodes: {len(episodes)}, num of segments: {num_segments}') 
         return episodes
     
     def dispatch(self):
@@ -463,9 +261,6 @@ class TaskManager:
         
         ray.kill(remote_tqdm)
         print(f"Total frames: {num_frames}, Total episodes: {num_episodes}")
-        
-        # for result in results:
-        #     print(result)
 
 def main(args):
     
@@ -475,13 +270,12 @@ def main(args):
         input_dir=args.input_dir, 
         action_dir=args.action_dir,
         output_dir=args.output_dir,
-        source_type=args.source_type,
+        convertion_callback=args.source_type,
         lmdb_chunk_size=args.lmdb_chunk_size,
         num_workers=args.num_workers,
     )
     
     task_manager.prepare_tasks()
-
     task_manager.dispatch()
 
 if __name__ == '__main__':
@@ -494,8 +288,8 @@ if __name__ == '__main__':
                         help="directory containing IDM action files")
     parser.add_argument("--output-dir", type=str, required=True, default="datasets",
                         help="directory saving lmdb files")
-    parser.add_argument("--source-type", type=str, required=True,
-                        help="type of source file [video, clip, action, accomplishment, info, contractor_info, segment]")
+    parser.add_argument("--convertion-callback", type=str, required=True,
+                        help="name of the modal convertion callback")
     parser.add_argument("--num-workers", default=16, type=int,  
                         help="the number of workers")
     

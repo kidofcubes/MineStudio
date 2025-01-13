@@ -1,7 +1,7 @@
 '''
 Date: 2025-01-09 05:07:59
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2025-01-09 08:04:53
+LastEditTime: 2025-01-10 14:46:18
 FilePath: /MineStudio/minestudio/data/minecraft/callbacks/image.py
 '''
 import io
@@ -11,10 +11,11 @@ import numpy as np
 import albumentations as A
 from pathlib import Path
 from functools import partial
+from multiprocessing.pool import ThreadPool, Pool
 from concurrent.futures import ThreadPoolExecutor
 from typing import Union, Tuple, List, Dict, Callable, Any, Optional, Literal
 
-from minestudio.data.minecraft.callbacks.callback import ModalKernelCallback
+from minestudio.data.minecraft.callbacks.callback import ModalKernelCallback, ModalConvertionCallback
 from minestudio.utils.register import Registers
 
 class VideoAugmentation:
@@ -117,3 +118,93 @@ class ImageKernelCallback(ModalKernelCallback):
         if self.enable_video_aug:
             data["image"] = self.video_augmentor(data["image"])
         return data
+
+class ImageConvertionCallback(ModalConvertionCallback):
+
+    def __init__(self, *args, thread_pool: int=8, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.thread_pool = thread_pool
+
+    def _write_video_chunk(self, args: Tuple) -> Tuple[bool, int, bytes]:
+        '''Convert frame sequence into bytes sequence. '''
+        frames, chunk_start, fps, width, height = args
+        outStream = io.BytesIO()
+        container = av.open(outStream, mode="w", format='mp4')
+        stream = container.add_stream("h264", rate=fps)
+        stream.width = width
+        stream.height = height
+        for frame in frames:
+            frame = av.VideoFrame.from_ndarray(frame, format="rgb24")
+            for packet in stream.encode(frame):
+                container.mux(packet)
+        for packet in stream.encode():
+            container.mux(packet)
+        container.close()
+        bytes = outStream.getvalue()
+        outStream.close()
+        return chunk_start, bytes
+
+    def do_convert(self, 
+                   eps_id: str, 
+                   skip_frames: List[List[bool]], 
+                   modal_file_path: List[Union[str, Path]]) -> Tuple[List, List]:
+        cache_frames, keys, vals = [], [], []
+        if isinstance(modal_file_path, str):
+            modal_file_path = Path(modal_file_path)
+        
+        for _skip_frames, _modal_file_path in zip(skip_frames, modal_file_path):
+            # Get video meta-information
+            cap = cv2.VideoCapture(str(_modal_file_path.absolute()))
+            cv_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+            cv_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+            cv_fps = int(cap.get(cv2.CAP_PROP_FPS))
+            total_frames = 0
+
+            if cv_width != 640 or cv_height != 360:
+                return [], []
+
+            # Decode and encode frames
+            container = av.open(str(_modal_file_path.absolute()), "r")
+            for fid, frame in enumerate(container.decode(video=0)):
+                total_frames += 1
+                if _skip_frames:
+                    if fid >= len(_skip_frames) or (not _skip_frames[fid]):
+                        continue
+                frame = frame.to_ndarray(format="rgb24")
+                # #! reszie to 224, 224
+                cv_width, cv_height = 224, 224
+                cv2.resize(frame, (cv_width, cv_height), interpolation=cv2.INTER_LINEAR)
+                # #! reszie to 224, 224
+                cache_frames.append(frame)
+                if len(cache_frames) == self.chunk_size * self.thread_pool:
+                    with ThreadPool(self.thread_pool) as pool:
+                        args_list = []
+                        while len(cache_frames) >= self.chunk_size:
+                            chunk_end = chunk_start + self.chunk_size
+                            args_list.append((cache_frames[:self.chunk_size], chunk_start, cv_fps, cv_width, cv_height))
+                            
+                            chunk_start += self.chunk_size
+                            cache_frames = cache_frames[self.chunk_size:]
+                        
+                        for idx, bytes in pool.map(self._write_video_chunk, args_list):
+                            keys.append(idx)
+                            vals.append(bytes)
+
+            if len(_skip_frames) <= total_frames <= len(_skip_frames) + 1:  
+                pass
+            else:
+                print(f"Warning: Expected frame numbers: {len(_skip_frames)}, actual frame numbers: {total_frames}. Source: {source_path}")
+            
+            print(f"episode: {eps}, segment: {ord}, frames: {total_frames}, actions: {len(indicators)}, non-static actions: {sum(indicators)}")
+            
+            # Close segment container
+            container.close()
+
+        # Encode remaining frames
+        while len(cache_frames) >= self.chunk_size:
+            idx, bytes = self._write_video_chunk((cache_frames[:self.chunk_size], chunk_start, cv_fps, cv_width, cv_height))
+            keys.append(idx)
+            vals.append(bytes)
+            chunk_start += self.chunk_size
+            cache_frames = cache_frames[self.chunk_size:]
+        return keys, vals

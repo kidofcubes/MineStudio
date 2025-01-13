@@ -1,7 +1,7 @@
 '''
 Date: 2025-01-09 05:27:25
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2025-01-09 10:19:29
+LastEditTime: 2025-01-10 08:56:33
 FilePath: /MineStudio/minestudio/data/minecraft/callbacks/action.py
 '''
 import cv2
@@ -12,7 +12,7 @@ from typing import Union, Tuple, List, Dict, Callable, Any, Optional, Literal
 
 from minestudio.utils.vpt_lib.actions import ActionTransformer
 from minestudio.utils.vpt_lib.action_mapping import CameraHierarchicalMapping
-from minestudio.data.minecraft.callbacks.callback import ModalKernelCallback, DrawFrameCallback
+from minestudio.data.minecraft.callbacks.callback import ModalKernelCallback, DrawFrameCallback, ModalConvertionCallback
 from minestudio.utils.register import Registers
 
 @Registers.modal_kernel_callback.register
@@ -110,3 +110,28 @@ class ActionDrawFrameCallback(DrawFrameCallback):
                 current_row += 1
             cache_frames.append(frame)
         return cache_frames
+
+class ActionConvertionCallback(ModalConvertionCallback):
+
+    def do_convert(self, 
+                   eps_id: str, 
+                   skip_frames: List[List[bool]], 
+                   modal_file_path: List[Union[str, Path]]) -> Tuple[List, List]:
+        cache, keys, vals = [], [], []
+        for _skip_frames, _modal_file_path in zip(skip_frames, modal_file_path):
+            data = pickle.load(open(str(_modal_file_path), 'rb'))
+            if len(cache) == 0:
+                cache = {k: v[_skip_frames] for k, v in data.items()}
+            else:
+                for k, v in data.items():
+                    cache[k] = np.concatenate((cache[k], v[_skip_frames]), axis=0)
+
+        for chunk_start in range(0, len(cache['attack']), self.chunk_size):
+            chunk_end = chunk_start + self.chunk_size
+            if chunk_end > len(cache['attack']):
+                break
+            val = {k: v[chunk_start:chunk_end] for k, v in cache.items()}
+            keys.append(chunk_start)
+            vals.append(pickle.dumps(val))
+        
+        return keys, vals

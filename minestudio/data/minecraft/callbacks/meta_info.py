@@ -1,7 +1,7 @@
 '''
 Date: 2025-01-09 05:36:19
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2025-01-09 15:33:35
+LastEditTime: 2025-01-10 09:09:16
 FilePath: /MineStudio/minestudio/data/minecraft/callbacks/meta_info.py
 '''
 import cv2
@@ -10,7 +10,7 @@ import numpy as np
 from pathlib import Path
 from typing import Union, Tuple, List, Dict, Callable, Any, Optional, Literal
 
-from minestudio.data.minecraft.callbacks.callback import ModalKernelCallback, DrawFrameCallback
+from minestudio.data.minecraft.callbacks.callback import ModalKernelCallback, DrawFrameCallback, ModalConvertionCallback
 from minestudio.utils.register import Registers
 
 @Registers.modal_kernel_callback.register
@@ -87,3 +87,24 @@ class MetaInfoDrawFrameCallback(DrawFrameCallback):
                 pass
             cache_frames.append(frame)
         return cache_frames
+
+class MetaInfoConvertionCallback(ModalConvertionCallback):
+
+    def do_convert(self, 
+                   eps_id: str, 
+                   skip_frames: List[List[bool]], 
+                   modal_file_path: List[Union[str, Path]]) -> Tuple[List, List]:
+        cache, keys, vals = [], [], []
+        for _skip_frames, _modal_file_path in zip(skip_frames, modal_file_path):
+            data = pickle.load(open(str(_modal_file_path), 'rb'))
+            cache += [ info for info, flag in zip(data, _skip_frames) if flag ]
+
+        for chunk_start in range(0, len(cache), self.chunk_size):
+            chunk_end = chunk_start + self.chunk_size
+            if chunk_end > len(cache):
+                break
+            val = cache[chunk_start:chunk_end]
+            keys.append(chunk_start)
+            vals.append(pickle.dumps(val)) 
+
+        return keys, vals

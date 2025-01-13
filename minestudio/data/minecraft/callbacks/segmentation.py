@@ -1,7 +1,7 @@
 '''
 Date: 2025-01-09 05:42:00
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2025-01-09 15:45:06
+LastEditTime: 2025-01-12 16:02:45
 FilePath: /MineStudio/minestudio/data/minecraft/callbacks/segmentation.py
 '''
 import cv2
@@ -12,7 +12,7 @@ import numpy as np
 from pathlib import Path
 from typing import Union, Tuple, List, Dict, Callable, Any, Optional, Literal
 
-from minestudio.data.minecraft.callbacks.callback import ModalKernelCallback, DrawFrameCallback
+from minestudio.data.minecraft.callbacks.callback import ModalKernelCallback, DrawFrameCallback, ModalConvertionCallback
 from minestudio.utils.register import Registers
 
 SEG_RE_MAP = {
@@ -82,41 +82,26 @@ class SegmentationKernelCallback(ModalKernelCallback):
             "point": [np.array((-1, -1)) for _ in range(nb_frames)],
             "frame_id": [-1 for _ in range(nb_frames)],
             "frame_range": [np.array((-1, -1)) for _ in range(nb_frames)],
-            "third_view_frame_id": [-1 for _ in range(nb_frames)],
         }
-        
+
         last_key = None
-        candidate_third_view_frame_ids = []
-        for frame_idx in range(len(raw_content)-1, -2, -1):
-
-            if frame_idx == -1 or last_key is None or last_key not in raw_content[frame_idx]:
-
-                if len(candidate_third_view_frame_ids) > 0:
-                    # the end of an interaction, do backward search
-                    third_view_frame_id = random.choice(candidate_third_view_frame_ids)
-                    for backward_frame_id in candidate_third_view_frame_ids:
-                        res_content["third_view_frame_id"][backward_frame_id] = third_view_frame_id
-                    candidate_third_view_frame_ids = []
-
-                if frame_idx >= 0 and len(raw_content[frame_idx]) > 0:
-                    # the start of a new interaction
-                    last_key = random.choice(list(raw_content[frame_idx].keys()))
-                    last_event = raw_content[frame_idx][last_key]["event"]
-            
-            if frame_idx == -1 or len(raw_content[frame_idx]) == 0:
+        for wid in range(len(raw_content)-1, -1, -1):
+            if len(raw_content[wid]) == 0:
                 continue
-            
+            if last_key is None or last_key not in raw_content[wid]:
+                # the start of a new interaction
+                last_key = random.choice(list(raw_content[wid].keys()))
+                last_event = raw_content[wid][last_key]["event"]
             # during an interaction, `last_key` denotes the selected interaction
-            frame_content = raw_content[frame_idx][last_key]
-            res_content["obj_id"][frame_idx] = SEG_RE_MAP[ frame_content["obj_id"] ]
+            frame_content = raw_content[wid][last_key]
+            res_content["obj_id"][wid] = SEG_RE_MAP[ frame_content["obj_id"] ]
             obj_mask = self.rle_decode(frame_content["rle_mask"], (360, 640))
-            res_content["obj_mask"][frame_idx] = cv2.resize(obj_mask, (self.width, self.height), interpolation=cv2.INTER_NEAREST)
-            res_content["event"][frame_idx] = frame_content["event"]
+            res_content["obj_mask"][wid] = cv2.resize(obj_mask, (self.width, self.height), interpolation=cv2.INTER_NEAREST)
+            res_content["event"][wid] = frame_content["event"]
             if frame_content["point"] is not None:
-                res_content["point"][frame_idx] = np.array(frame_content["point"])
-            res_content["frame_id"][frame_idx] = frame_content["frame_id"]
-            res_content["frame_range"][frame_idx] = np.array(frame_content["frame_range"])
-            candidate_third_view_frame_ids.append(frame_idx)
+                res_content["point"][wid] = np.array(frame_content["point"])
+            res_content["frame_id"][wid] = frame_content["frame_id"]
+            res_content["frame_range"][wid] = np.array(frame_content["frame_range"])
 
         for key in res_content:
             if key == 'event':
@@ -138,7 +123,6 @@ class SegmentationKernelCallback(ModalKernelCallback):
         pad_data['point'] = np.concatenate([data['point'], np.zeros((win_len-traj_len, 2), dtype=np.int32)-1], axis=0)
         pad_data['frame_id'] = np.concatenate([data['frame_id'], np.zeros(win_len-traj_len, dtype=np.int32)-1], axis=0)
         pad_data['frame_range'] = np.concatenate([data['frame_range'], np.zeros((win_len-traj_len, 2), dtype=np.int32)-1], axis=0)
-        pad_data['third_view_frame_id'] = np.concatenate([data['third_view_frame_id'], np.zeros(win_len-traj_len, dtype=np.int32)-1], axis=0)
         pad_mask = np.concatenate([np.ones(traj_len, dtype=np.uint8), np.zeros(win_len-traj_len, dtype=np.uint8)], axis=0)
         return pad_data, pad_mask
 
@@ -152,9 +136,46 @@ COLORS = [
 
 class SegmentationDrawFrameCallback(DrawFrameCallback):
 
-    def __init__(self, start_point: Tuple[int, int]=(300, 10)):
+    def __init__(self, 
+                 start_point: Tuple[int, int]=(300, 10), 
+                 draw_point: bool=True,
+                 draw_mask: bool=True,
+                 draw_event: bool=True,
+                 draw_frame_id: bool=True,
+                 draw_frame_range: bool=True):
         super().__init__()
         self.x, self.y = start_point
+        self.draw_point = draw_point
+        self.draw_mask = draw_mask
+        self.draw_event = draw_event
+        self.draw_frame_id = draw_frame_id
+        self.draw_frame_range = draw_frame_range
+
+    def draw_frame(self, 
+                   frame: np.ndarray, 
+                   point: Optional[Tuple[int, int]]=None, 
+                   obj_mask: Optional[np.ndarray]=None, 
+                   obj_id: Optional[int]=None, 
+                   event: Optional[str]=None,
+                   frame_id: Optional[int]=None,
+                   frame_range: Optional[Tuple[int, int]]=None) -> np.ndarray:
+        frame = frame.copy()
+        if self.draw_point and point is not None and point[0] != -1:
+            x, y = point
+            cv2.circle(frame, (x, y), 5, (255, 0, 0), -1)
+        if self.draw_mask and obj_id is not None and obj_id != -1 and obj_mask is not None:
+            colors = np.array(COLORS[obj_id]).reshape(1, 1, 3)
+            obj_mask = (obj_mask[..., None] * colors).astype(np.uint8)
+            obj_mask = obj_mask[:, :, ::-1] # bgr -> rgb
+            frame = cv2.addWeighted(frame, 1.0, obj_mask, 0.5, 0.0)
+            cv2.putText(frame, f"Mask Area: {obj_mask.sum()}", (self.x+10, self.y+15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
+        if self.draw_event and event is not None:
+            cv2.putText(frame, f"Event: {event}", (self.x+10, self.y+35), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
+        if self.draw_frame_id and frame_id is not None:
+            cv2.putText(frame, f"Frame ID: {frame_id}", (self.x+10, self.y+55), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
+        if self.draw_frame_range and frame_range is not None:
+            cv2.putText(frame, f"Frame Range: {frame_range}", (self.x+10, self.y+75), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
+        return frame
 
     def draw_frames(self, frames: Union[np.ndarray, List], infos: Dict, sample_idx: int) -> np.ndarray:
         cache_frames = []
@@ -162,19 +183,76 @@ class SegmentationDrawFrameCallback(DrawFrameCallback):
             frame = frame.copy()
             frame_info = infos['segmentation']
             obj_id = frame_info['obj_id'][sample_idx][frame_idx].item()
-            if obj_id != -1:
-                obj_mask = frame_info['obj_mask'][sample_idx][frame_idx]
-                if isinstance(obj_mask, torch.Tensor):
-                    obj_mask = obj_mask.numpy()
-                colors = np.array(COLORS[obj_id]).reshape(1, 1, 3)
-                obj_mask = (obj_mask[..., None] * colors).astype(np.uint8)
-                obj_mask = obj_mask[:, :, ::-1] # bgr -> rgb
-                if frame_info['point'][sample_idx][frame_idx][0] != -1:
-                    y, x = frame_info['point'][sample_idx][frame_idx]
-                    x, y = x.item(), y.item()
-                    cv2.circle(frame, (x, y), 5, (255, 0, 0), -1)
-                frame = cv2.addWeighted(frame, 1.0, obj_mask, 0.5, 0.0)
-            cv2.putText(frame, f"Event: {frame_info['event'][sample_idx][frame_idx]}", (self.x+10, self.y+35), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
+            obj_mask = frame_info['obj_mask'][sample_idx][frame_idx]
+            point = (frame_info['point'][sample_idx][frame_idx][1].item(), frame_info['point'][sample_idx][frame_idx][0].item())
+            if isinstance(obj_mask, torch.Tensor):
+                obj_mask = obj_mask.numpy()
+            event = frame_info['event'][sample_idx][frame_idx]
+            frame_id = frame_info['frame_id'][sample_idx][frame_idx].item()
+            frame_range = frame_info['frame_range'][sample_idx][frame_idx].numpy()
+            frame = self.draw_frame(frame, point, obj_mask, obj_id, event, frame_id, frame_range)
             cache_frames.append(frame)
         return cache_frames
 
+class SegmentationConvertionCallback(ModalConvertionCallback):
+
+    def do_convert(self, 
+                   eps_id: str, 
+                   skip_frames: List[List[bool]], 
+                   modal_file_path: List[Union[str, Path]]) -> Tuple[List, List]:
+        """
+        The input video is connected end to end to form a complete trajectory, named eps_id. 
+        However, the input data is processed independently, so its frame id is also independent. 
+        When integrating it into a complete trajectory, the frame id needs to be remapped.
+        That's why ``frame_id_re_mapping`` is used here, where ``ord`` indicates the part of the whole trajectory,
+        """
+        cache, keys, vals = [], [], []
+        frame_id_re_mapping = dict()
+        new_frame_counter = 0
+        for ord, (_skip_frames, _modal_file_path) in enumerate(zip(skip_frames, modal_file_path)):
+            data = pickle.load(open(str(_modal_file_path), 'rb'))
+            for ori_frame_id, skip_flag in enumerate(_skip_frames):
+                if not skip_flag:
+                    continue
+                frame_id_re_mapping[(ord, ori_frame_id)] = new_frame_counter
+                new_frame_counter += 1
+
+            for ori_frame_id, skip_flag in enumerate(_skip_frames):
+                if not skip_flag:
+                    continue
+
+                frame_content = {}
+                for k in data['video_annos'].get(ori_frame_id, []):
+                    inter_key = (k[0], k[1])
+                    ori_frame_range = data['rle_mask_mapping'][k]["frame_range"]
+                    remaining_event_frames = [
+                        frame_id_re_mapping[(ord, ori_frame_id)] 
+                            for ori_frame_id in range(ori_frame_range[0], ori_frame_range[1]+1) 
+                                if (ord, ori_frame_id) in frame_id_re_mapping
+                    ]
+                    if len(remaining_event_frames) == 0:
+                        new_frame_range = (-1, -1)
+                    else:
+                        new_frame_range = (min(remaining_event_frames), max(remaining_event_frames))
+                    inter_val = {
+                        "obj_id": data["rle_mask_mapping"][k]["obj_id"],        # type of the interaction
+                        "rle_mask": data["rle_mask_mapping"][k]["rle_mask"],    # run-length encoding of the object mask
+                        "event": data["rle_mask_mapping"][k]["event"],          # event description of an interaction
+                        "point": data["rle_mask_mapping"][k]["point"],          # centroid of the object mask
+                        "ori_frame_id": ori_frame_id,                           # generally not used
+                        "ori_frame_range": ori_frame_range,                     # generally not used
+                        "frame_id": frame_id_re_mapping[(ord, ori_frame_id)],   # use the order w.r.t. the whole trajectory
+                        "frame_range": new_frame_range,                         # use the order w.r.t. the whole trajectory
+                    }
+                    frame_content[inter_key] = inter_val
+                cache.append(frame_content)
+
+        for chunk_start in range(0, len(cache), self.chunk_size):
+            chunk_end = chunk_start + self.chunk_size
+            if chunk_end > len(cache):
+                break
+            val = cache[chunk_start:chunk_end]
+            keys.append(chunk_start)
+            vals.append(pickle.dumps(val))
+
+        return keys, vals

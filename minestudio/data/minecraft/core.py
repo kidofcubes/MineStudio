@@ -1,8 +1,8 @@
 '''
 Date: 2025-01-09 05:45:49
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2025-01-09 08:03:41
-FilePath: /MineStudio/minestudio/data/minecraft/new_core.py
+LastEditTime: 2025-01-10 14:52:41
+FilePath: /MineStudio/minestudio/data/minecraft/core.py
 '''
 import lmdb
 import pickle
