@@ -6,6 +6,7 @@ FilePath: /MineStudio/minestudio/simulator/callbacks/task.py
 '''
 import random
 from minestudio.simulator.callbacks.callback import MinecraftCallback
+from rich import print,console
 
 class TaskCallback(MinecraftCallback):
     
@@ -23,7 +24,7 @@ class TaskCallback(MinecraftCallback):
     
     def after_reset(self, sim, obs, info):
         task = random.choice(self.task_cfg)
-        print(f"Switching to task: {task['name']}.")
+        console.Console().log(f"Switching to task: {task['name']}.")
         obs["task"] = task
         info["task"] = task
         return obs, info

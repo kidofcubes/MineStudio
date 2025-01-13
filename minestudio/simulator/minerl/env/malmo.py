@@ -609,7 +609,7 @@ class MinecraftInstance(object):
         rich.print(f"[bold yellow]INFO: Starting Minecraft process with device: {device}[/bold yellow]")
 
         self._logger.info("Starting Minecraft process: " + str(cmd_to_print))
-        
+       
         minecraft_process = psutil.Popen(cmd,
                                          cwd=working_dir,
                                          stdin=subprocess.DEVNULL,

@@ -1,7 +1,7 @@
 '''
 Date: 2025-01-05 22:26:22
 LastEditors: limuyao 2200017405@stu.pku.edu.cn
-LastEditTime: 2025-01-05 22:26:22
+LastEditTime: 2025-01-13 18:26:22
 FilePath: /MineStudio/minestudio/simulator/callbacks/init_inventory.py
 '''
 
@@ -14,7 +14,8 @@ import re
 from pathlib import Path
 from copy import deepcopy
 from time import sleep
-from rich import console
+from rich import console,print
+import uuid
 
 EQUIP_SLOTS = {
     "mainhand": 0,
@@ -24,6 +25,9 @@ EQUIP_SLOTS = {
     "legs": 37,
     "feet": 36,
 }
+REVERSE_EQUIP_SLOTS_MAP = {
+    0:"mainhand",40:"offhand",39:"head",38:"chest",37:"legs",36:"feet"
+}
 MIN_SLOT_IDX = 0
 MAX_INVENTORY_IDX = 35
 MAX_SLOT_IDX = 40
@@ -31,15 +35,17 @@ SLOT_IDX2NAME = {v: k for k, v in EQUIP_SLOTS.items()}
 MIN_ITEMS_NUM = 0
 MAX_ITEMS_NUM = 64
 
-DISTRACTION_LEVEL = {"zero":[0],"one":[1],
-                     "easy":range(3,7),"middle":range(7,16),"hard":range(16,35),
-                     "normal":range(0,35)}
-
-
+INVENTORY_DISTRACTION_LEVEL = {"zero":[0],"one":[1],
+                     "easy":range(3,7),"middle":range(7,16),"hard":range(16,36),
+                     "normal":range(0,36)}
+EQUIP_DISTRACTION_LEVEL = {
+    "zero":[0],
+    "normal":range(0,6),
+}
 
 class InitInventoryCallback(MinecraftCallback):
     
-    def __init__(self, init_inventory:dict,distraction_level:Union[list,str]=[0]) -> None:
+    def __init__(self, init_inventory:dict,inventory_distraction_level:Union[list,str]=[0],equip_distraction_level:Union[list,str]=[0]) -> None:
         """
         Examples:
             init_inventory = [{
@@ -49,17 +55,23 @@ class InitInventoryCallback(MinecraftCallback):
                 }]
         """
         self.init_inventory = init_inventory
-        self.distraction_level = DISTRACTION_LEVEL.get(distraction_level,[0]) if isinstance(distraction_level,str) else distraction_level
+        self.inventory_distraction_level = INVENTORY_DISTRACTION_LEVEL.get(inventory_distraction_level,[0]) if isinstance(inventory_distraction_level,str) else inventory_distraction_level
+        self.equip_distraction_level = EQUIP_DISTRACTION_LEVEL.get(equip_distraction_level,[0]) if isinstance(equip_distraction_level,str) else equip_distraction_level
         
         mcd = minecraft_data("1.16")
         self.items_library = mcd.items_name
         self.items_names = list(mcd.items_name.keys())
+        self.equipments_library = self._get_equipments_library()
         
     def after_reset(self, sim, obs, info):
+        return self._set_inventory(sim)
+    
+    def _set_inventory(self, sim):
         chats = []
         visited_slots = set()
         uncertain_slots = [] 
         init_inventory = []
+        
         for slot_info in self.init_inventory:
             slot = slot_info["slot"]
             if slot == "random":
@@ -73,49 +85,118 @@ class InitInventoryCallback(MinecraftCallback):
         for uncertain_slot in uncertain_slots:
             slot = int(random.choice(list(unvisited_slots)))
             unvisited_slots.remove(slot)
+            visited_slots.add(slot)
             uncertain_slot["slot"] = slot
             init_inventory.append(uncertain_slot)
         
-        # settle distraction slot
-        distraction_num = min(random.choice(self.distraction_level),len(unvisited_slots))
+        # settle distraction at inventory slots
+        init_inventory,visited_slots,unvisited_slots = self._sample_inventory(init_inventory,visited_slots,unvisited_slots)
+        
+        # settle distraction at equipments slots
+        init_inventory,visited_slots = self._sample_equipments(init_inventory,visited_slots)
+        
+        # create init inventory
+        self.slot_num = len(init_inventory)
+
+        for item_dict in init_inventory:
+            slot = item_dict["slot"]
+            
+            mc_slot =self._map_slot_number_to_cmd_slot(slot)
+            item_type = item_dict["type"]
+            
+            assert item_type in self.items_names
+            
+            item_quantity = self._item_quantity_parser(item_dict["quantity"],int(self.items_library[item_type]["stackSize"]))
+            
+            chat = f"/replaceitem entity @p {mc_slot} minecraft:{item_type} {item_quantity}"
+            if "metadata" in item_dict:
+                chat += f" {item_dict['metadata']}"
+                
+            chats.append(chat)
+            
+        for chat in chats:
+            obs, reward, done, info = sim.env.execute_cmd(chat)
+        obs, info = sim._wrap_obs_info(obs, info)
+        
+        # check whether set up
+        init_flag = False
+        
+        kdx = 0
+        inventory_infos = []
+        for kdx in range(300):
+            action = sim.env.noop_action()
+            obs, reward, done, info = sim.env.step(action)
+            inventory_infos.append({
+                "init_inventory":init_inventory,
+                "current_inventory":obs["inventory"]})
+            init_flag,current_slot_num = self._check(obs)
+            if init_flag or current_slot_num > self.slot_num:
+                break
+            if kdx%40==0:
+                sleep(1)
+            
+        if not init_flag:
+            uuidx = str(uuid.uuid4())
+            Path("logs").mkdir(parents=True,exist_ok=True)
+            with open(f"logs/file_inventory_init_{uuidx}.json",mode="w") as file:
+                json.dump(inventory_infos,file)
+            messages = f"[red]can't set up init inventory[/red], need {self.slot_num}, has {current_slot_num} only, and has sample {kdx} steps. log at file_inventory_init_{uuidx}.json"
+            console.Console().log(messages)
+            message = info.get('message', {})
+            message['InitInventoryCallback'] = messages
+            info["message"] = message
+            
+        inventory_infos = []
+            
+        return obs, info
+    
+    def _get_equipments_library(self):
+        mc_equipments_file_path = Path(__file__).resolve().parents[3] / "assets" / "mc_equipments.1.16.json"
+        if not mc_equipments_file_path.exists():
+            try:
+                from huggingface_hub import hf_hub_download
+                hf_hub_download(repo_id="CraftJarvis/MinecraftResources", repo_type="dataset",filename="mc_equipments.1.16.json", local_dir=mc_equipments_file_path.parent)
+                assert mc_equipments_file_path.exists(), f"File {mc_equipments_file_path} not found after download."
+            except Exception as e:
+                raise FileNotFoundError(f"Failed to download the file: {e}")
+
+        with mc_equipments_file_path.open("r") as file:
+            mc_equipments = json.load(file)
+        
+        return mc_equipments
+    
+    def _sample_inventory(self,init_inventory,visited_slots,unvisited_slots):
+        distraction_num = min(random.choice(self.inventory_distraction_level),len(unvisited_slots))
         for _ in range(distraction_num):
             item_type = random.choice(self.items_names)
             slot = int(random.choice(list(unvisited_slots)))
             unvisited_slots.remove(slot)
+            visited_slots.add(slot)
             init_inventory.append({
                 "slot":slot,
                 "type":item_type,
                 "quantity":"random",
             })
-        self.slot_num = len(init_inventory)
-        for item_dict in init_inventory:
-            slot = item_dict["slot"]
-            mc_slot =self._map_slot_number_to_cmd_slot(slot)
-            item_type = item_dict["type"]
-            assert item_type in self.items_names
-            item_quantity = self._item_quantity_parser(item_dict["quantity"],int(self.items_library[item_type]["stackSize"]))
-            chat = f"/replaceitem entity @p {mc_slot} minecraft:{item_type} {item_quantity}"
-            if "metadata" in item_dict:
-                chat += f" {item_dict['metadata']}"
-            chats.append(chat)
-        for chat in chats:
-            obs, reward, done, info = sim.env.execute_cmd(chat)
-        obs, info = sim._wrap_obs_info(obs, info)
-        init_flag = False
-        sleep(1)
-        for _ in range(self.slot_num*5):
-            action = sim.env.noop_action()
-            obs, reward, done, info = sim.env.step(action)
-            init_flag = self._check(obs)
-            if init_flag:
-                break
-        if not init_flag:
-            console.Console().log("[red]can't set up init inventory[/red]")
-            message = info.get('message', {})
-            message['InitInventoryCallback'] = "can't set up init inventory"
-            info["message"] = message
-        return obs, info
+        return init_inventory,visited_slots,unvisited_slots
     
+    def _sample_equipments(self,init_inventory, visited_slots):
+        unvisited_equipments = set(range(MAX_INVENTORY_IDX, MAX_SLOT_IDX+1)) - visited_slots
+        sample_num = min(random.choice(self.equip_distraction_level),len(unvisited_equipments))
+        for _ in range(sample_num):
+            slot = random.choice(list(unvisited_equipments))
+            equipment_name = REVERSE_EQUIP_SLOTS_MAP[slot]
+            unvisited_equipments.remove(slot)
+            visited_slots.add(slot)
+            item_type = random.choice(self.equipments_library[equipment_name])
+            if slot==40 and random.uniform(0, 1) > 0.25:
+                item_type = random.choice(self.items_names)
+            init_inventory.append({
+                "slot":slot,
+                "type":item_type,
+                "quantity":1,
+            })
+        return init_inventory,visited_slots
+        
     
     def _map_slot_number_to_cmd_slot(self,slot_number: Union[int,str]) -> str:
         slot_number = int(slot_number)
@@ -139,11 +220,8 @@ class InitInventoryCallback(MinecraftCallback):
             
             if item_quantity == "random":
                 one_flag = random.choices([True, False], weights=[one_p, 1 - one_p], k=1)[0]
-                if one_flag:
-                    return 1
-                else:
-                    return random.choice(list(candidate_nums))
-            
+                item_quantity = 1 if one_flag else random.choice(list(candidate_nums))
+                return item_quantity
             
             item_quantity_commands = item_quantity.split(",")
         
@@ -173,14 +251,17 @@ class InitInventoryCallback(MinecraftCallback):
         return item_quantity
     
     def _check(self,obs):
-        "check whether it set up the init inventory"
+        # check whether it set up the init inventory
         current_slot_num = 0
         for slot_dict in obs["inventory"].values():
             if slot_dict["type"] != "none":
                 current_slot_num+=1
-        if current_slot_num >= self.slot_num:
-            return True
-        return False
+        for slot_name,slot_dict in obs["equipped_items"].items():
+            if slot_name != "mainhand" and slot_dict["type"] != "air":
+                current_slot_num += 1
+        if current_slot_num == self.slot_num:
+            return True,current_slot_num
+        return False,current_slot_num
     
 if __name__ == "__main__":
 
@@ -225,7 +306,8 @@ if __name__ == "__main__":
                 {"slot": "random",
                 "type": "oak_planks",
                 "quantity":"random",},
-            ],distraction_level="normal")
+            ],inventory_distraction_level="normal",
+            equip_distraction_level="normal")
         ]
     )
     obs, info = sim.reset()
