@@ -1,5 +1,5 @@
 from minestudio.simulator import MinecraftSim
-from minestudio.simulator.callbacks import RecordCallback, SpeedTestCallback
+from minestudio.simulator.callbacks import RecordCallback, SpeedTestCallback, RewardsCallback
 from minestudio.models import VPTPolicy, load_vpt_policy
 import argparse
 
@@ -89,43 +89,62 @@ def post_action(action:dict) -> dict:
 
 @ray.remote(num_gpus=0.2)
 def rollout(args):
-    policy = load_vpt_policy(
-        model_path=args.model_path,
-        weights_path=args.weights_path
-    ).to("cuda")
+    try:
+        policy = load_vpt_policy(
+            model_path=args.model_path,
+            weights_path=args.weights_path
+        ).to("cuda")
 
-    rollout_path = os.path.join(
-        args.record_path, 
-        datetime.now().strftime('%Y-%m-%d'), 
-        datetime.now().strftime('%y-%m-%d-%H-%M-%S')+'-'+str(uuid.uuid4()).replace('-', '')[:8])
-    os.makedirs(rollout_path, exist_ok=True)
+        rollout_path = os.path.join(
+            args.record_path, 
+            datetime.now().strftime('%Y-%m-%d'), 
+            datetime.now().strftime('%y-%m-%d-%H-%M-%S')+'-'+str(uuid.uuid4()).replace('-', '')[:8])
+        os.makedirs(rollout_path, exist_ok=True)
 
-    env = MinecraftSim(
-        obs_size=(128, 128), 
-        preferred_spawn_biome=random.choice(["forest", "plains"]), 
-        callbacks=[
-            RecordCallback(record_path=rollout_path, fps=30, frame_type="pov"),
-            SpeedTestCallback(500),
-        ]
-    )
+        reward_cfg = [{
+                "event": "mine_block", 
+                "identity": "mine diamond ore", 
+                "objects": ["diamond_ore"], 
+                "reward": 1.0, 
+                "max_reward_times": 1, 
+            }]
 
-    info_file_path = os.path.join(rollout_path, "info.jsonl")
-    action_file_path = os.path.join(rollout_path, "action.jsonl")
+        env = MinecraftSim(
+            seed=random.randint(0, 1000000),
+            obs_size=(128, 128), 
+            preferred_spawn_biome=random.choice(["forest", "plains"]), 
+            callbacks=[
+                RecordCallback(record_path=rollout_path, fps=30, frame_type="pov"),
+                SpeedTestCallback(500),
+                RewardsCallback(reward_cfg)
 
-    memory = None
-    obs, info = env.reset()
-    for i in tqdm(range(args.num_steps)):
-        action, memory = policy.get_action(obs, memory, input_shape='*')
-        # import ipdb; ipdb.set_trace()
-        processed_info = post_info(info)
-        with open(info_file_path, 'a', encoding='utf-8') as f:
-            # 将字典对象序列化为 JSON 字符串，并写入文件
-            f.write(json.dumps(processed_info, ensure_ascii=False) + '\n')
-        processed_action = post_action(env.agent_action_to_env_action(action))
-        with open(action_file_path, 'a', encoding='utf-8') as f:
-            f.write(json.dumps(processed_action, ensure_ascii=False) + '\n')
-        obs, reward, terminated, truncated, info = env.step(action)
-    env.close()
+            ]
+        )
+
+        info_file_path = os.path.join(rollout_path, "info.jsonl")
+        action_file_path = os.path.join(rollout_path, "action.jsonl")
+
+        memory = None
+        reward = 0
+        obs, info = env.reset()
+        for i in tqdm(range(args.num_steps)):
+            action, memory = policy.get_action(obs, memory, input_shape='*')
+            # import ipdb; ipdb.set_trace()
+            processed_info = post_info(info)
+            with open(info_file_path, 'a', encoding='utf-8') as f:
+                # 将字典对象序列化为 JSON 字符串，并写入文件
+                f.write(json.dumps(processed_info, ensure_ascii=False) + '\n')
+            processed_action = post_action(env.agent_action_to_env_action(action))
+            with open(action_file_path, 'a', encoding='utf-8') as f:
+                f.write(json.dumps(processed_action, ensure_ascii=False) + '\n')
+            if reward > 0:
+                env.close()
+                return
+            obs, reward, terminated, truncated, info = env.step(action) # reward: 
+            # import ipdb; ipdb.set_trace()
+        env.close()
+    except Exception as e:
+        print(e)
 
 
 
