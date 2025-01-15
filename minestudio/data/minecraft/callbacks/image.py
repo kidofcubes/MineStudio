@@ -72,7 +72,7 @@ class ImageKernelCallback(ModalKernelCallback):
         return 'image'
 
     def filter_dataset_paths(self, dataset_paths: List[str]) -> List[str]:
-        action_paths = [path for path in dataset_paths if Path(path).stem == 'video']
+        action_paths = [path for path in dataset_paths if Path(path).stem in ['video', 'image']]
         return action_paths
 
     def do_decode(self, chunk: bytes) -> np.ndarray:

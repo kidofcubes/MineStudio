@@ -1,8 +1,8 @@
 '''
 Date: 2025-01-09 05:42:00
 LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2025-01-15 17:35:48
-FilePath: /MineStudio/var/minestudio/data/minecraft/callbacks/segmentation.py
+LastEditTime: 2025-01-15 18:26:24
+FilePath: /MineStudio/minestudio/data/minecraft/callbacks/segmentation.py
 '''
 import cv2
 import random
@@ -63,7 +63,7 @@ class SegmentationKernelCallback(ModalKernelCallback):
     def filter_dataset_paths(self, dataset_paths: List[Union[str, Path]]) -> List[Path]:
         if isinstance(dataset_paths[0], str):
             dataset_paths = [Path(path) for path in dataset_paths]
-        action_paths = [path for path in dataset_paths if Path(path).stem == 'segment']
+        action_paths = [path for path in dataset_paths if Path(path).stem in ['segment', 'segmentation']]
         return action_paths
 
     def do_decode(self, chunk: bytes) -> Dict:
@@ -119,7 +119,7 @@ class SegmentationKernelCallback(ModalKernelCallback):
         pad_data = dict()
         pad_data['event'] = data['event'] + [''] * (win_len - traj_len)
         pad_obj_id = np.zeros(win_len-traj_len, dtype=np.int32)
-        pad_obj_mask = np.zeros((win_len-traj_len, self.width, self.height), dtype=np.uint8)
+        pad_obj_mask = np.zeros((win_len-traj_len, self.height, self.width), dtype=np.uint8)
         pad_point = np.zeros((win_len-traj_len, 2), dtype=np.int32) - 1
         pad_frame_id = np.zeros(win_len-traj_len, dtype=np.int32) - 1
         pad_frame_range = np.zeros((win_len-traj_len, 2), dtype=np.int32) - 1

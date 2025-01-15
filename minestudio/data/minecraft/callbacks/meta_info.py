@@ -27,7 +27,7 @@ class MetaInfoKernelCallback(ModalKernelCallback):
         return 'meta_info'
 
     def filter_dataset_paths(self, dataset_paths: List[str]) -> List[str]:
-        action_paths = [path for path in dataset_paths if Path(path).stem == 'contractor_info']
+        action_paths = [path for path in dataset_paths if Path(path).stem in ['contractor_info', 'meta_info']]
         return action_paths
 
     def do_decode(self, chunk: bytes) -> Dict:
