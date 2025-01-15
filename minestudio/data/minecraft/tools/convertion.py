@@ -1,8 +1,8 @@
 '''
 Date: 2024-11-10 12:27:01
 LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2025-01-15 13:36:04
-FilePath: /MineStudio/var/minestudio/data/minecraft/tools/convertion.py
+LastEditTime: 2025-01-15 15:04:05
+FilePath: /MineStudio/minestudio/data/minecraft/tools/convertion.py
 '''
 
 import ray
@@ -107,7 +107,7 @@ class ConvertWorker:
                 skip_frames.append( None )
         keys, vals = self.convert_kernel.do_convert(eps, skip_frames, modal_file_path)
         cost = time.time() - time_start
-        print(f"episode: {eps}, chunks: {len(keys)}, frames: {len(keys) * self.chunk_size},"
+        print(f"episode: {eps}, chunks: {len(keys)}, frames: {len(keys) * self.chunk_size}, "
                 f"size: {sum(len(x) for x in vals) / (1024*1024):.2f} MB, cost: {cost:.2f} sec")
         return keys, vals, cost
 

@@ -1,7 +1,7 @@
 '''
 Date: 2025-01-09 05:27:25
 LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2025-01-15 13:38:43
+LastEditTime: 2025-01-15 15:12:45
 FilePath: /MineStudio/var/minestudio/data/minecraft/callbacks/action.py
 '''
 import re
@@ -129,12 +129,12 @@ class ActionConvertCallback(ModalConvertCallback):
                 file_name = file_path.stem
                 match = re.match(CONTRACTOR_PATTERN, file_name)
                 if match:
-                    eps, ord = match.groups()
+                    eps, part_id = match.groups()
                 else:
-                    eps, ord = file_name, "0"
+                    eps, part_id = file_name, "0"
                 if eps not in episodes:
                     episodes[eps] = []
-                episodes[eps].append( (ord, file_path) )
+                episodes[eps].append( (part_id, file_path) )
                 num_segments += 1
         # rank the segments in an accending order
         for key, value in episodes.items():
@@ -145,12 +145,12 @@ class ActionConvertCallback(ModalConvertCallback):
         for eps, segs in episodes.items():
             start_time = -MAX_TIME
             working_ord = -1
-            for ord, file_path in segs:
-                if int(ord) - start_time >= MAX_TIME:
-                    working_ord = ord
+            for part_id, file_path in segs:
+                if int(part_id) - start_time >= MAX_TIME:
+                    working_ord = part_id
                     new_episodes[f"{eps}-{working_ord}"] = []
-                start_time = int(ord)
-                new_episodes[f"{eps}-{working_ord}"].append( (ord, file_path) )
+                start_time = int(part_id)
+                new_episodes[f"{eps}-{working_ord}"].append( (part_id, file_path) )
         episodes = new_episodes
         print(f'[Action] - num of episodes: {len(episodes)}, num of segments: {num_segments}') 
         return episodes
@@ -215,7 +215,7 @@ if __name__ == '__main__':
     for debugging purpose
     """
     action_convert = ActionConvertCallback(
-        input_dir=[
+        input_dirs=[
             "/nfs-shared/data/contractors/all_9xx_Jun_29/actions"
         ], 
         chunk_size=32
@@ -227,7 +227,7 @@ if __name__ == '__main__':
             break
     
     # test gen_frame_skip_flags
-    action_path = val[-1][-1]
+    action_path = val[-1][-1].stem
     skip_flags = action_convert.gen_frame_skip_flags(action_path)
     import ipdb; ipdb.set_trace()
     
