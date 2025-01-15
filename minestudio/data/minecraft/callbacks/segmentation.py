@@ -1,8 +1,8 @@
 '''
 Date: 2025-01-09 05:42:00
 LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2025-01-15 15:08:47
-FilePath: /MineStudio/minestudio/data/minecraft/callbacks/segmentation.py
+LastEditTime: 2025-01-15 17:35:48
+FilePath: /MineStudio/var/minestudio/data/minecraft/callbacks/segmentation.py
 '''
 import cv2
 import random
@@ -117,12 +117,24 @@ class SegmentationKernelCallback(ModalKernelCallback):
     def do_pad(self, data: Dict, win_len: int) -> Tuple[Dict, np.ndarray]:
         traj_len = len(data['obj_id'])
         pad_data = dict()
-        pad_data['obj_id'] = np.concatenate([data['obj_id'], np.zeros(win_len-traj_len, dtype=np.int32)], axis=0)
-        pad_data['obj_mask'] = np.concatenate([data['obj_mask'], np.zeros((win_len-traj_len, *data['obj_mask'].shape[1:]), dtype=np.uint8)], axis=0)
         pad_data['event'] = data['event'] + [''] * (win_len - traj_len)
-        pad_data['point'] = np.concatenate([data['point'], np.zeros((win_len-traj_len, 2), dtype=np.int32)-1], axis=0)
-        pad_data['frame_id'] = np.concatenate([data['frame_id'], np.zeros(win_len-traj_len, dtype=np.int32)-1], axis=0)
-        pad_data['frame_range'] = np.concatenate([data['frame_range'], np.zeros((win_len-traj_len, 2), dtype=np.int32)-1], axis=0)
+        pad_obj_id = np.zeros(win_len-traj_len, dtype=np.int32)
+        pad_obj_mask = np.zeros((win_len-traj_len, self.width, self.height), dtype=np.uint8)
+        pad_point = np.zeros((win_len-traj_len, 2), dtype=np.int32) - 1
+        pad_frame_id = np.zeros(win_len-traj_len, dtype=np.int32) - 1
+        pad_frame_range = np.zeros((win_len-traj_len, 2), dtype=np.int32) - 1
+        if traj_len == 0:
+            pad_data['obj_id'] = pad_obj_id
+            pad_data['obj_mask'] = pad_obj_mask
+            pad_data['point'] = pad_point
+            pad_data['frame_id'] = pad_frame_id
+            pad_data['frame_range'] = pad_frame_range
+        else:
+            pad_data['obj_id'] = np.concatenate([data['obj_id'], pad_obj_id], axis=0)
+            pad_data['obj_mask'] = np.concatenate([data['obj_mask'], pad_obj_mask], axis=0)
+            pad_data['point'] = np.concatenate([data['point'], pad_point], axis=0)
+            pad_data['frame_id'] = np.concatenate([data['frame_id'], pad_frame_id], axis=0)
+            pad_data['frame_range'] = np.concatenate([data['frame_range'], pad_frame_range], axis=0)
         pad_mask = np.concatenate([np.ones(traj_len, dtype=np.uint8), np.zeros(win_len-traj_len, dtype=np.uint8)], axis=0)
         return pad_data, pad_mask
 

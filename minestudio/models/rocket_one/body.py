@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-10 15:52:16
-LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2025-01-04 17:09:54
+LastEditors: caishaofei-mus1 1744260356@qq.com
+LastEditTime: 2025-01-15 17:08:36
 FilePath: /MineStudio/minestudio/models/rocket_one/body.py
 '''
 import torch
@@ -69,11 +69,14 @@ class RocketPolicy(MinePolicy, PyTorchModelHubMixin):
         self.final_ln = nn.LayerNorm(hiddim)
 
     def forward(self, input: Dict, memory: Optional[List[torch.Tensor]] = None) -> Dict:
+        # import ipdb; ipdb.set_trace()
+        ckey = 'segment' if 'segment' in input else 'segmentation'
+        
         b, t = input['image'].shape[:2]
         rgb = rearrange(input['image'], 'b t h w c -> (b t) c h w')
         rgb = self.transforms(rgb)
 
-        obj_mask = input['segment']['obj_mask']
+        obj_mask = input[ckey]['obj_mask']
         obj_mask = rearrange(obj_mask, 'b t h w -> (b t) 1 h w')
         x = torch.cat([rgb, obj_mask], dim=1)
         feats = self.backbone(x)
@@ -82,7 +85,7 @@ class RocketPolicy(MinePolicy, PyTorchModelHubMixin):
         x = self.pooling(x).mean(dim=1) 
         x = rearrange(x, "(b t) c -> b t c", b=b)
 
-        y = self.interaction(input['segment']['obj_id'] + 1) # b t c
+        y = self.interaction(input[ckey]['obj_id'] + 1) # b t c
         if not hasattr(self, 'first'):
             self.first = torch.tensor([[False]], device=x.device).repeat(b, t)
         if memory is None:
