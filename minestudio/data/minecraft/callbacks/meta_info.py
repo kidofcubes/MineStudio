@@ -1,7 +1,7 @@
 '''
 Date: 2025-01-09 05:36:19
-LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2025-01-10 09:09:16
+LastEditors: caishaofei-mus1 1744260356@qq.com
+LastEditTime: 2025-01-15 13:44:09
 FilePath: /MineStudio/minestudio/data/minecraft/callbacks/meta_info.py
 '''
 import cv2
@@ -10,7 +10,7 @@ import numpy as np
 from pathlib import Path
 from typing import Union, Tuple, List, Dict, Callable, Any, Optional, Literal
 
-from minestudio.data.minecraft.callbacks.callback import ModalKernelCallback, DrawFrameCallback, ModalConvertionCallback
+from minestudio.data.minecraft.callbacks.callback import ModalKernelCallback, DrawFrameCallback, ModalConvertCallback
 from minestudio.utils.register import Registers
 
 @Registers.modal_kernel_callback.register
@@ -88,7 +88,50 @@ class MetaInfoDrawFrameCallback(DrawFrameCallback):
             cache_frames.append(frame)
         return cache_frames
 
-class MetaInfoConvertionCallback(ModalConvertionCallback):
+import re
+from rich import print
+from tqdm import tqdm
+from collections import OrderedDict
+
+class MetaInfoConvertCallback(ModalConvertCallback):
+
+    def load_episodes(self):
+        
+        CONTRACTOR_PATTERN = r"^(.*?)-(\d+)$"
+        
+        episodes = OrderedDict()
+        num_segments = 0
+        for source_dir in self.input_dirs:
+            print("Current input directory: ", source_dir) # action file ends with `.pkl`
+            for file_path in tqdm(Path(source_dir).rglob("*.pkl"), desc="Looking for source files"):
+                file_name = file_path.stem
+                match = re.match(CONTRACTOR_PATTERN, file_name)
+                if match:
+                    eps, ord = match.groups()
+                else:
+                    eps, ord = file_name, "0"
+                if eps not in episodes:
+                    episodes[eps] = []
+                episodes[eps].append( (ord, file_path) )
+                num_segments += 1
+        # rank the segments in an accending order
+        for key, value in episodes.items():
+            episodes[key] = sorted(value, key=lambda x: int(x[0]))
+        # re-split episodes according to time
+        new_episodes = OrderedDict()
+        MAX_TIME = 1000
+        for eps, segs in episodes.items():
+            start_time = -MAX_TIME
+            working_ord = -1
+            for ord, file_path in segs:
+                if int(ord) - start_time >= MAX_TIME:
+                    working_ord = ord
+                    new_episodes[f"{eps}-{working_ord}"] = []
+                start_time = int(ord)
+                new_episodes[f"{eps}-{working_ord}"].append( (ord, file_path) )
+        episodes = new_episodes
+        print(f'[Meta Info] - num of episodes: {len(episodes)}, num of segments: {num_segments}') 
+        return episodes
 
     def do_convert(self, 
                    eps_id: str, 
@@ -97,7 +140,10 @@ class MetaInfoConvertionCallback(ModalConvertionCallback):
         cache, keys, vals = [], [], []
         for _skip_frames, _modal_file_path in zip(skip_frames, modal_file_path):
             data = pickle.load(open(str(_modal_file_path), 'rb'))
-            cache += [ info for info, flag in zip(data, _skip_frames) if flag ]
+            if _skip_frames is not None:
+                cache += [ info for info, flag in zip(data, _skip_frames) if flag ]
+            else:
+                cache += data
 
         for chunk_start in range(0, len(cache), self.chunk_size):
             chunk_end = chunk_start + self.chunk_size
@@ -108,3 +154,21 @@ class MetaInfoConvertionCallback(ModalConvertionCallback):
             vals.append(pickle.dumps(val)) 
 
         return keys, vals
+
+if __name__ == '__main__':
+    """
+    for debugging purpose
+    """
+    meta_info_convert = MetaInfoConvertCallback(
+        input_dir=[
+            "/nfs-shared/data/contractors/all_9xx_Jun_29/privileged_infos"
+        ], 
+        chunk_size=32
+    )
+    episodes = meta_info_convert.load_episodes()
+    for idx, (key, val) in enumerate(episodes.items()):
+        print(key, val)
+        if idx > 5:
+            break
+    import ipdb; ipdb.set_trace()
+    

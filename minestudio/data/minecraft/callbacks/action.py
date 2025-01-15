@@ -1,18 +1,22 @@
 '''
 Date: 2025-01-09 05:27:25
-LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2025-01-10 08:56:33
-FilePath: /MineStudio/minestudio/data/minecraft/callbacks/action.py
+LastEditors: caishaofei-mus1 1744260356@qq.com
+LastEditTime: 2025-01-15 13:38:43
+FilePath: /MineStudio/var/minestudio/data/minecraft/callbacks/action.py
 '''
+import re
 import cv2
 import pickle
 import numpy as np
 from pathlib import Path
-from typing import Union, Tuple, List, Dict, Callable, Any, Optional, Literal
+from rich import print
+from tqdm import tqdm
+from typing import Union, Tuple, List, Dict, Callable, Any
+from collections import OrderedDict
 
 from minestudio.utils.vpt_lib.actions import ActionTransformer
 from minestudio.utils.vpt_lib.action_mapping import CameraHierarchicalMapping
-from minestudio.data.minecraft.callbacks.callback import ModalKernelCallback, DrawFrameCallback, ModalConvertionCallback
+from minestudio.data.minecraft.callbacks.callback import ModalKernelCallback, DrawFrameCallback, ModalConvertCallback
 from minestudio.utils.register import Registers
 
 @Registers.modal_kernel_callback.register
@@ -111,15 +115,57 @@ class ActionDrawFrameCallback(DrawFrameCallback):
             cache_frames.append(frame)
         return cache_frames
 
-class ActionConvertionCallback(ModalConvertionCallback):
+
+class ActionConvertCallback(ModalConvertCallback):
+
+
+    def load_episodes(self):
+        CONTRACTOR_PATTERN = r"^(.*?)-(\d+)$"
+        episodes = OrderedDict()
+        num_segments = 0
+        for source_dir in self.input_dirs:
+            print("Current input directory: ", source_dir) # action file ends with `.pkl`
+            for file_path in tqdm(Path(source_dir).rglob("*.pkl"), desc="Looking for source files"):
+                file_name = file_path.stem
+                match = re.match(CONTRACTOR_PATTERN, file_name)
+                if match:
+                    eps, ord = match.groups()
+                else:
+                    eps, ord = file_name, "0"
+                if eps not in episodes:
+                    episodes[eps] = []
+                episodes[eps].append( (ord, file_path) )
+                num_segments += 1
+        # rank the segments in an accending order
+        for key, value in episodes.items():
+            episodes[key] = sorted(value, key=lambda x: int(x[0]))
+        # re-split episodes according to time
+        new_episodes = OrderedDict()
+        MAX_TIME = 1000
+        for eps, segs in episodes.items():
+            start_time = -MAX_TIME
+            working_ord = -1
+            for ord, file_path in segs:
+                if int(ord) - start_time >= MAX_TIME:
+                    working_ord = ord
+                    new_episodes[f"{eps}-{working_ord}"] = []
+                start_time = int(ord)
+                new_episodes[f"{eps}-{working_ord}"].append( (ord, file_path) )
+        episodes = new_episodes
+        print(f'[Action] - num of episodes: {len(episodes)}, num of segments: {num_segments}') 
+        return episodes
+
 
     def do_convert(self, 
                    eps_id: str, 
                    skip_frames: List[List[bool]], 
                    modal_file_path: List[Union[str, Path]]) -> Tuple[List, List]:
+
         cache, keys, vals = [], [], []
         for _skip_frames, _modal_file_path in zip(skip_frames, modal_file_path):
             data = pickle.load(open(str(_modal_file_path), 'rb'))
+            if _skip_frames is None:
+                _skip_frames = ...
             if len(cache) == 0:
                 cache = {k: v[_skip_frames] for k, v in data.items()}
             else:
@@ -135,3 +181,54 @@ class ActionConvertionCallback(ModalConvertionCallback):
             vals.append(pickle.dumps(val))
         
         return keys, vals
+
+
+    def gen_frame_skip_flags(self, file_name: str) -> List[bool]:
+        
+        for dir in self.input_dirs:
+            path = Path(dir) / f"{file_name}.pkl"
+            if path.exists():
+                break
+        
+        def _check_no_op(action: Dict):
+            if np.any(action.pop('camera') != 0.):
+                return True
+            _sum = 0
+            for key, val in action.items():
+                _sum += val.sum()
+            return _sum != np.array(0.)
+        
+        skip_flags = []
+        with open(str(path), "rb") as f:
+            action_pkl = pickle.load(f)
+            traj_len = len(action_pkl['attack'])
+            for fid in range(traj_len):
+                f_action = {key: val[fid:fid+1] for key, val in action_pkl.items()}
+                no_op_flag = _check_no_op(f_action)
+                skip_flags.append(no_op_flag)
+        
+        return skip_flags
+
+
+if __name__ == '__main__':
+    """
+    for debugging purpose
+    """
+    action_convert = ActionConvertCallback(
+        input_dir=[
+            "/nfs-shared/data/contractors/all_9xx_Jun_29/actions"
+        ], 
+        chunk_size=32
+    )
+    episodes = action_convert.load_episodes()
+    for idx, (eps, val) in enumerate(episodes.items()):
+        print(eps, val)
+        if idx > 5:
+            break
+    
+    # test gen_frame_skip_flags
+    action_path = val[-1][-1]
+    skip_flags = action_convert.gen_frame_skip_flags(action_path)
+    import ipdb; ipdb.set_trace()
+    
+    
