@@ -6,9 +6,18 @@ FilePath: /MineStudio/minestudio/simulator/callbacks/summon_mobs.py
 '''
 
 from minestudio.simulator.callbacks.callback import MinecraftCallback
+from minestudio.utils.register import Registers
 
+@Registers.simulator_callback.register
 class SummonMobsCallback(MinecraftCallback):
-    
+
+    def create_from_conf(source):
+        data = MinecraftCallback.load_data_from_conf(source)
+        if 'summon_mobs' in data:
+            return SummonMobsCallback(data['summon_mobs'])
+        else:
+            return None
+
     def __init__(self, mobs) -> None:
         self.mobs = mobs
         """
@@ -25,7 +34,7 @@ class SummonMobsCallback(MinecraftCallback):
         chats = []
         for mob in self.mobs:
             for _ in range(mob['number']):
-                name = mob['name']
+                name = mob.get('name', mob.get('mob_name'))
                 x = sim.np_random.uniform(*mob['range_x'])
                 z = sim.np_random.uniform(*mob['range_z'])
                 chat = f'/execute as @p at @p run summon minecraft:{name} ~{x} ~ ~{z} {{Age:0}}'

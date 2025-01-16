@@ -1,12 +1,11 @@
 '''
 Date: 2025-01-05 22:26:22
-LastEditors: limuyao 2200017405@stu.pku.edu.cn
-LastEditTime: 2025-01-05 22:26:22
+LastEditors: caishaofei-mus1 1744260356@qq.com
+LastEditTime: 2025-01-16 23:43:49
 FilePath: /MineStudio/minestudio/simulator/callbacks/init_inventory.py
 '''
 
 import minecraft_data # https://github.com/SpockBotMC/python-minecraft-data  Provide easy access to minecraft-data in python
-from minestudio.simulator.callbacks.callback import MinecraftCallback
 from typing import Union
 import random
 import json
@@ -15,6 +14,8 @@ from pathlib import Path
 from copy import deepcopy
 from time import sleep
 from rich import console
+from minestudio.utils.register import Registers
+from minestudio.simulator.callbacks.callback import MinecraftCallback
 
 EQUIP_SLOTS = {
     "mainhand": 0,
@@ -37,9 +38,16 @@ DISTRACTION_LEVEL = {"zero":[0],"one":[1],
 
 
 
+@Registers.simulator_callback.register
 class InitInventoryCallback(MinecraftCallback):
     
-    def __init__(self, init_inventory:dict,distraction_level:Union[list,str]=[0]) -> None:
+    def create_from_conf(source):
+        data = MinecraftCallback.load_data_from_conf(source)
+        if 'init_inventory' in data:
+            return InitInventoryCallback(data['init_inventory'])
+        return None
+    
+    def __init__(self, init_inventory:dict, distraction_level:Union[list,str]=[0]) -> None:
         """
         Examples:
             init_inventory = [{
@@ -60,6 +68,7 @@ class InitInventoryCallback(MinecraftCallback):
         visited_slots = set()
         uncertain_slots = [] 
         init_inventory = []
+        print(self.init_inventory)
         for slot_info in self.init_inventory:
             slot = slot_info["slot"]
             if slot == "random":
@@ -111,6 +120,7 @@ class InitInventoryCallback(MinecraftCallback):
                 break
         if not init_flag:
             console.Console().log("[red]can't set up init inventory[/red]")
+        obs, info = sim._wrap_obs_info(obs, info)
         return obs, info
     
     
