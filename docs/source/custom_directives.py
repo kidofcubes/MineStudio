@@ -1,7 +1,7 @@
 '''
 Date: 2025-01-16 14:07:48
 LastEditors: muzhancun muzhancun@126.com
-LastEditTime: 2025-01-16 14:44:08
+LastEditTime: 2025-01-16 14:55:39
 FilePath: /MineStudio/docs/source/custom_directives.py
 '''
 import re
@@ -29,7 +29,7 @@ def generate_versions_json():
     version_json_data.append({
         "name": "latest",
         "version": "master", 
-        "url": generate_version_url("master")
+        "url": "https://craftjarvis.github.io/MineStudio"
     })
 
     git_versions = []
