@@ -68,6 +68,7 @@ jobs:
 
           rm -rf *
           mkdir -p ./docs
+          mv ../build/html/master/* ./docs/
           mv ../build/html/* ./docs/
           touch ./docs/.nojekyll
 
