@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-28 17:46:44
 LastEditors: muzhancun muzhancun@126.com
-LastEditTime: 2025-01-16 14:55:11
+LastEditTime: 2025-01-16 15:01:47
 FilePath: /MineStudio/docs/source/conf.py
 '''
 import os
@@ -92,11 +92,11 @@ html_theme_options = {
   "navbar_align": "left",
   "show_toc_level": 1,
   "navbar_center": ["version-switcher", "navbar-nav"],  
-    "logo": {
-      "text": "MineStudio",
-      "image_light": "_static/logo-no-text-light.svg", 
-      "image_dark": "_static/logo-no-text-light.svg",
-    },
+  "logo": {
+    "text": "MineStudio",
+    "image_light": "_static/logo-no-text-light.svg", 
+    "image_dark": "_static/logo-no-text-light.svg",
+  },
   "navbar_start": ["navbar-logo"],  # 在导航栏显示 Logo
   "switcher": {
         "json_url": "https://craftjarvis.github.io/MineStudio/_static/switcher.json",
@@ -105,7 +105,7 @@ html_theme_options = {
 }
 
 html_title = f"MineStudio {release}"
-
+html_favicon = "_static/logo-no-text-light.svg"
 
 # -- application setup -------------------------------------------------------
 
