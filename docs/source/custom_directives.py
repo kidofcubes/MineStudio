@@ -1,7 +1,7 @@
 '''
 Date: 2025-01-16 14:07:48
 LastEditors: muzhancun muzhancun@126.com
-LastEditTime: 2025-01-16 14:15:35
+LastEditTime: 2025-01-16 14:44:08
 FilePath: /MineStudio/docs/source/custom_directives.py
 '''
 import re
@@ -11,7 +11,7 @@ import os
 import json
 
 def generate_version_url(version):
-    return f"https://craftjarvis.github.io/minestudio/{version}/"
+    return f"https://craftjarvis.github.io/MineStudio/{version}/"
 
 def generate_versions_json():
     """Gets the releases from the remote repo, sorts them in semver order,
