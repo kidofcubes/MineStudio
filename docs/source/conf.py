@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-28 17:46:44
 LastEditors: muzhancun muzhancun@126.com
-LastEditTime: 2024-12-20 15:17:52
+LastEditTime: 2025-01-16 14:28:47
 FilePath: /MineStudio/docs/source/conf.py
 '''
 import os
@@ -14,6 +14,8 @@ from sphinx.application import Sphinx
 from sphinx.locale import _
 import pydata_sphinx_theme
 sys.path.append(str(Path(".").resolve()))
+
+from custom_directives import generate_versions_json
 
 project = 'MineStudio'
 copyright = str(datetime.now().year) + ", The CraftJarvis Team"
@@ -45,6 +47,7 @@ extensions = [
     "sphinx_togglebutton",
     # "jupyterlite_sphinx",
     "sphinx_favicon",
+    "sphinx_multiversion",
 ]
 
 templates_path = ['_templates']
@@ -95,6 +98,10 @@ html_theme_options = {
       "image_dark": "_static/logo-no-text-light.svg",
     },
   "navbar_start": ["navbar-logo"],  # 在导航栏显示 Logo
+  "switcher": {
+        "json_url": "https://craftjarvis.github.io/minestudio/latest/_static/switcher.json",
+        "version_match": "master",
+   }
 }
 
 html_title = f"MineStudio {release}"
@@ -137,9 +144,15 @@ def setup(app: Sphinx) -> Dict[str, Any]:
     Returns:
         the 2 parallel parameters set to ``True``.
     """
+
+    generate_versions_json()
+
     app.connect("html-page-context", setup_to_main)
 
     return {
         "parallel_read_safe": True,
         "parallel_write_safe": True,
     }
+
+# setup multiversion
+smv_branch_whitelist = r'^(master|releases/.*)$' # only include master and releases/* branches

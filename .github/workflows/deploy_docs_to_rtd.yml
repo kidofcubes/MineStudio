@@ -61,8 +61,7 @@ jobs:
           sed -i '1d' source/API/modules.rst
           sed -i '1i\API' source/API/modules.rst
 
-          make clean
-          make html
+          sphinx-multiversion source build/html 
 
           git clone -b ${SUBMIT_BRANCH} $CLONE_URL ${SUBMIT_BRANCH}
           cd ${SUBMIT_BRANCH}

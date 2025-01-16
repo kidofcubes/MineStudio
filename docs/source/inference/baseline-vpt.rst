@@ -2,7 +2,7 @@
 .. _inferece-vpt:
 
 Tutorial: Inference with VPT
---------------------
+----------------------------
 
 We can easily perform batch evaluations on a VPT model. A simple example is evaluating the success rate of a policy model fine-tuned by OpenAI using reinforcement learning for the diamond-mining task: 
 

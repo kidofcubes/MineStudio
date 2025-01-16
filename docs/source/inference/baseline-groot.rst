@@ -1,7 +1,7 @@
 .. _inferece-groot:
 
 Tutorial: Inference with GROOT
---------------------
+------------------------------
 
 To inferece with GROOT, you first need to download `reference videos <https://huggingface.co/datasets/CraftJarvis/MinecraftReferenceVideos>`_ and pretrained checkpoints.
 The example code is provided in ``minestudio/tutorials/inference/evaluate_groot/main.py``.
