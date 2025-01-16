@@ -67,7 +67,6 @@ jobs:
           cd ${SUBMIT_BRANCH}
 
           rm -rf *
-          mv ../build/doctrees ./
           mkdir -p ./docs
           mv ../build/html/* ./docs/
           touch ./docs/.nojekyll
