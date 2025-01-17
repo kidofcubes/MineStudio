@@ -1,6 +1,6 @@
 '''
 Date: 2024-11-11 16:40:57
-LastEditors: muzhancun muzhancun@stu.pku.edu.cn
+LastEditors: zihao Wang zhwang@stu.pku.edu.cn
 LastEditTime: 2024-11-20 00:30:51
 FilePath: /MineStudio/minestudio/simulator/callbacks/record.py
 '''
@@ -16,14 +16,18 @@ from collections import defaultdict
 import json
 import cv2
 
+MAXIMUM_VIDEO_TIME = 2 # min
+MAXIMUM_VIDEO_FRAMES = MAXIMUM_VIDEO_TIME * 60 * 20
+
 class RecordCallback(MinecraftCallback):
-    def __init__(self, record_path: str, fps: int = 20, frame_type: Literal['pov', 'obs'] = 'pov', recording: bool = True,
+    def __init__(self, record_path: str, fps: int = 20, frame_type: Literal['pov', 'obs'] = 'pov', maximum_length: int = MAXIMUM_VIDEO_FRAMES, recording: bool = True, 
                     show_actions=False,record_actions=False,record_infos=False,record_origin_observation=False,
                  **kwargs):
         super().__init__(**kwargs)
         self.record_path = Path(record_path)
         self.record_path.mkdir(parents=True, exist_ok=True)
         self.recording = recording
+        self.maximum_length = maximum_length
         self.record_actions = record_actions
         self.show_actions = show_actions
         self.record_infos = record_infos
@@ -77,6 +81,11 @@ class RecordCallback(MinecraftCallback):
             print(f'[red]Recording stopped[/red]')
             self._save_episode()
             self.episode_id += 1
+        if self.recording:
+            if len(self.frames) == self.maximum_length:
+                print("Reach the maximum frame length, save video ...")
+                self._save_episode()
+                self.episode_id += 1
 
         if not self.recording and info.get('R', False):
             self.recording = True

@@ -1,0 +1,1 @@
+from minestudio.agents.deps.agent import DEPSAgent

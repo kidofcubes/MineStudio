@@ -1,0 +1,1 @@
+from minestudio.agents.jarvis_one.agent import JarvisOneAgent

@@ -24,11 +24,12 @@ class SpeedTestCallback(MinecraftCallback):
         self.num_steps += 1
         self.total_times += end_time - self.start_time
         if self.num_steps % self.interval == 0:
-            print(
-                f'Speed Test Status: \n'
-                f'Average Time: {self.total_times / self.num_steps :.2f} \n'
-                f'Average FPS: {self.num_steps / self.total_times :.2f} \n'
-                f'Total Steps: {self.num_steps} \n'
-            )
+            # print(
+            #     f'Speed Test Status: \n'
+            #     f'Average Time: {self.total_times / self.num_steps :.2f} \n'
+            #     f'Average FPS: {self.num_steps / self.total_times :.2f} \n'
+            #     f'Total Steps: {self.num_steps} \n'
+            # )
+            print(f'[Speed Test Status] Average Time: {self.total_times / self.num_steps :.2f} | Average FPS: {self.num_steps / self.total_times :.2f} | Total Steps: {self.num_steps}')
         return obs, reward, terminated, truncated, info
     

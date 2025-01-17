@@ -106,13 +106,17 @@ class RocketPolicy(MinePolicy, PyTorchModelHubMixin):
 
 @Registers.model_loader.register
 def load_rocket_policy(ckpt_path: Optional[str] = None):
+    # if ckpt_path is None:
+    #     model = RocketPolicy.from_pretrained("CraftJarvis/MineStudio_ROCKET-1.12w_EMA")
+    #     return model
+    # ckpt = torch.load(ckpt_path)
+    # model = RocketPolicy(**ckpt['hyper_parameters']['model'])
+    # state_dict = {k.replace('mine_policy.', ''): v for k, v in ckpt['state_dict'].items()}
+    # model.load_state_dict(state_dict, strict=True)
+    # return model
     if ckpt_path is None:
-        model = RocketPolicy.from_pretrained("CraftJarvis/MineStudio_ROCKET-1.12w_EMA")
-        return model
-    ckpt = torch.load(ckpt_path)
-    model = RocketPolicy(**ckpt['hyper_parameters']['model'])
-    state_dict = {k.replace('mine_policy.', ''): v for k, v in ckpt['state_dict'].items()}
-    model.load_state_dict(state_dict, strict=True)
+        ckpt_path = "CraftJarvis/MineStudio_ROCKET-1.12w_EMA"
+    model = RocketPolicy.from_pretrained(ckpt_path)
     return model
 
 if __name__ == '__main__':
