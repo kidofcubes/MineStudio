@@ -30,10 +30,10 @@ class MetaInfoKernelCallback(ModalKernelCallback):
         action_paths = [path for path in dataset_paths if Path(path).stem in ['contractor_info', 'meta_info']]
         return action_paths
 
-    def do_decode(self, chunk: bytes) -> Dict:
+    def do_decode(self, chunk: bytes, **kwargs) -> Dict:
         return pickle.loads(chunk)
 
-    def do_merge(self, chunk_list: List[bytes]) -> Dict:
+    def do_merge(self, chunk_list: List[bytes], **kwargs) -> Dict:
         chunks = [self.do_decode(chunk) for chunk in chunk_list]
         cache_chunks = {}
         for chunk in chunks:
@@ -44,11 +44,11 @@ class MetaInfoKernelCallback(ModalKernelCallback):
                     cache_chunks[key].append(value)
         return cache_chunks
 
-    def do_slice(self, data: Dict, start: int, end: int, skip_frame: int) -> Dict:
+    def do_slice(self, data: Dict, start: int, end: int, skip_frame: int, **kwargs) -> Dict:
         sliced_data = {key: value[start:end:skip_frame] for key, value in data.items()}
         return sliced_data
 
-    def do_pad(self, data: Dict, win_len: int) -> Tuple[Dict, np.array]:
+    def do_pad(self, data: Dict, win_len: int, **kwargs) -> Tuple[Dict, np.array]:
         pad_data = dict()
         for key, value in data.items():
             traj_len = len(value)

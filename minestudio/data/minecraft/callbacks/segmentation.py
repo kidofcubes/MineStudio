@@ -1,7 +1,7 @@
 '''
 Date: 2025-01-09 05:42:00
 LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2025-01-15 18:26:24
+LastEditTime: 2025-01-17 15:26:38
 FilePath: /MineStudio/minestudio/data/minecraft/callbacks/segmentation.py
 '''
 import cv2
@@ -66,10 +66,10 @@ class SegmentationKernelCallback(ModalKernelCallback):
         action_paths = [path for path in dataset_paths if Path(path).stem in ['segment', 'segmentation']]
         return action_paths
 
-    def do_decode(self, chunk: bytes) -> Dict:
+    def do_decode(self, chunk: bytes, **kwargs) -> Dict:
         return pickle.loads(chunk)
 
-    def do_merge(self, chunk_list: List[bytes]) -> Dict:
+    def do_merge(self, chunk_list: List[bytes], **kwargs) -> Dict:
         raw_content = []
         for chunk_bytes in chunk_list:
             raw_content += self.do_decode(chunk_bytes)
@@ -90,7 +90,18 @@ class SegmentationKernelCallback(ModalKernelCallback):
                 continue
             if last_key is None or last_key not in raw_content[wid]:
                 # the start of a new interaction
-                last_key = random.choice(list(raw_content[wid].keys()))
+                # import ipdb; ipdb.set_trace()
+                if kwargs.get('event_constrain', None) is None:
+                    last_key = random.choice(list(raw_content[wid].keys())) #! random pick one
+                else:
+                    last_key = None
+                    for lookup_key in raw_content[wid]:
+                        if lookup_key[-1].replace("minecraft.", "") == kwargs['event_constrain']:
+                            last_key = lookup_key
+                            break
+                    if last_key is None:
+                        continue
+                    # print(f"look up: {last_key = }")
                 last_event = raw_content[wid][last_key]["event"]
             # during an interaction, `last_key` denotes the selected interaction
             frame_content = raw_content[wid][last_key]
@@ -99,7 +110,7 @@ class SegmentationKernelCallback(ModalKernelCallback):
             res_content["obj_mask"][wid] = cv2.resize(obj_mask, (self.width, self.height), interpolation=cv2.INTER_NEAREST)
             res_content["event"][wid] = frame_content["event"]
             if frame_content["point"] is not None:
-                res_content["point"][wid] = np.array(frame_content["point"])
+                res_content["point"][wid] = np.array(frame_content["point"]) / np.array([360., 640.]) # normalize to [0, 1]
             res_content["frame_id"][wid] = frame_content["frame_id"]
             res_content["frame_range"][wid] = np.array(frame_content["frame_range"])
 
@@ -110,11 +121,11 @@ class SegmentationKernelCallback(ModalKernelCallback):
 
         return res_content
 
-    def do_slice(self, data: Dict, start: int, end: int, skip_frame: int) -> Dict:
+    def do_slice(self, data: Dict, start: int, end: int, skip_frame: int, **kwargs) -> Dict:
         sliced_data = {key: value[start:end:skip_frame] for key, value in data.items()}
         return sliced_data
 
-    def do_pad(self, data: Dict, win_len: int) -> Tuple[Dict, np.ndarray]:
+    def do_pad(self, data: Dict, win_len: int, **kwargs) -> Tuple[Dict, np.ndarray]:
         traj_len = len(data['obj_id'])
         pad_data = dict()
         pad_data['event'] = data['event'] + [''] * (win_len - traj_len)
@@ -174,6 +185,8 @@ class SegmentationDrawFrameCallback(DrawFrameCallback):
         frame = frame.copy()
         if self.draw_point and point is not None and point[0] != -1:
             x, y = point
+            x = int(x * frame.shape[1])
+            y = int(y * frame.shape[0])
             cv2.circle(frame, (x, y), 5, (255, 0, 0), -1)
         if self.draw_mask and obj_id is not None and obj_id != -1 and obj_mask is not None:
             colors = np.array(COLORS[obj_id]).reshape(1, 1, 3)

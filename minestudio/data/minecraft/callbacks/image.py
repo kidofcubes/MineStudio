@@ -1,8 +1,8 @@
 '''
 Date: 2025-01-09 05:07:59
 LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2025-01-15 14:10:43
-FilePath: /MineStudio/var/minestudio/data/minecraft/callbacks/image.py
+LastEditTime: 2025-01-17 14:17:50
+FilePath: /MineStudio/minestudio/data/minecraft/callbacks/image.py
 '''
 import re
 import io
@@ -75,7 +75,7 @@ class ImageKernelCallback(ModalKernelCallback):
         action_paths = [path for path in dataset_paths if Path(path).stem in ['video', 'image']]
         return action_paths
 
-    def do_decode(self, chunk: bytes) -> np.ndarray:
+    def do_decode(self, chunk: bytes, **kwargs) -> np.ndarray:
         """Decode bytes to video frames."""
 
         def convert_and_resize(frame, width, height):
@@ -102,16 +102,16 @@ class ImageKernelCallback(ModalKernelCallback):
         frames = np.array(frames)
         return frames
     
-    def do_merge(self, chunk_list: List[bytes]) -> np.ndarray:
+    def do_merge(self, chunk_list: List[bytes], **kwargs) -> np.ndarray:
         with ThreadPoolExecutor(max_workers=self.num_workers) as executor:
             frames = list(executor.map(self.do_decode, chunk_list))
         merged_chunks = np.concatenate(frames, axis=0)
         return merged_chunks
     
-    def do_slice(self, data: np.ndarray, start: int, end: int, skip_frame: int) -> np.ndarray:
+    def do_slice(self, data: np.ndarray, start: int, end: int, skip_frame: int, **kwargs) -> np.ndarray:
         return data[start:end:skip_frame]
     
-    def do_pad(self, data: np.ndarray, win_len: int) -> Tuple[np.ndarray, np.ndarray]:
+    def do_pad(self, data: np.ndarray, win_len: int, **kwargs) -> Tuple[np.ndarray, np.ndarray]:
         pad_len = win_len - data.shape[0] 
         dims = data.shape[1:]
         pad_data = np.concatenate([data, np.zeros((pad_len, *dims), dtype=np.uint8)], axis=0)

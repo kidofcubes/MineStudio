@@ -1,8 +1,8 @@
 '''
 Date: 2025-01-09 05:45:49
 LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2025-01-15 17:53:15
-FilePath: /MineStudio/var/minestudio/data/minecraft/core.py
+LastEditTime: 2025-01-17 14:31:38
+FilePath: /MineStudio/minestudio/data/minecraft/core.py
 '''
 import lmdb
 import pickle
@@ -71,7 +71,7 @@ class ModalKernel(object):
 
         return read_chunks
     
-    def read_frames(self, eps: str, start: int, win_len: int, skip_frame: int) -> Dict:
+    def read_frames(self, eps: str, start: int, win_len: int, skip_frame: int, **kwargs) -> Dict:
         """
         Given episode name and required interval, return the corresponding frames.
         [start, end] refer to a frame-level index, 0 <= start <= end < num_frames
@@ -80,15 +80,15 @@ class ModalKernel(object):
         end = min(start + win_len * skip_frame - 1, meta_info['num_frames'] - 1) # include
         chunk_bytes = self.read_chunks(eps, 
             start // self.chunk_size * self.chunk_size, 
-            end // self.chunk_size * self.chunk_size
+            end // self.chunk_size * self.chunk_size, 
         )
         # 1. merge chunks into continuous frames
-        frames = self.modal_kernel_callback.do_merge(chunk_bytes)
+        frames = self.modal_kernel_callback.do_merge(chunk_bytes, **kwargs)
         # 2. extract frames according to skip_frame
         bias = (start // self.chunk_size) * self.chunk_size
-        frames = self.modal_kernel_callback.do_slice(frames, start - bias, end - bias + 1, skip_frame)
+        frames = self.modal_kernel_callback.do_slice(frames, start - bias, end - bias + 1, skip_frame, **kwargs)
         # 3. padding frames and get masks
-        frames, mask = self.modal_kernel_callback.do_pad(frames, win_len)
+        frames, mask = self.modal_kernel_callback.do_pad(frames, win_len, **kwargs)
         result = { f"{self.name}": frames, f"{self.name}_mask": mask }
         # 4. do postprocess
         result = self.modal_kernel_callback.do_postprocess(result)
@@ -152,11 +152,11 @@ class KernelManager(object):
         if self.verbose:
             Console().log(f"[Kernel] episodes: {len(self.episodes_with_length)}, frames: {self.num_frames}. ")
 
-    def read(self, eps: str, start: int, win_len: int, skip_frame: int) -> Dict:
+    def read(self, eps: str, start: int, win_len: int, skip_frame: int, **kwargs) -> Dict:
         """Read all avaliable modals from lmdb files."""
         result = {}
         for modal, kernel in self.kernels.items():
-            modal_result = kernel.read_frames(eps, start, win_len, skip_frame)
+            modal_result = kernel.read_frames(eps, start, win_len, skip_frame, **kwargs)
             result.update(modal_result)
             # if modal == 'action':
             #     prev_frames, prev_mask = self.read_frames(eps, start-1, win_len, skip_frame, modal) # start must > 0
