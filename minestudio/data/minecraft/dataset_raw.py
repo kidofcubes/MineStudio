@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-10 10:26:32
-LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2025-01-10 05:36:09
+LastEditors: caishaofei-mus1 1744260356@qq.com
+LastEditTime: 2025-01-17 19:20:52
 FilePath: /MineStudio/minestudio/data/minecraft/dataset_raw.py
 '''
 import io
@@ -214,7 +214,10 @@ if __name__ == '__main__':
 
     from tqdm import tqdm
     from minestudio.data.minecraft.callbacks import (
-        ImageKernelCallback, ActionKernelCallback, MetaInfoKernelCallback, SegmentationKernelCallback
+        ImageKernelCallback, 
+        ActionKernelCallback, VectorActionKernelCallback, 
+        MetaInfoKernelCallback, 
+        SegmentationKernelCallback
     )
 
     data_module = RawDataModule(
@@ -224,7 +227,8 @@ if __name__ == '__main__':
             ],
             modal_kernel_callbacks=[
                 ImageKernelCallback(frame_width=224, frame_height=224, enable_video_aug=False), 
-                ActionKernelCallback(),
+                # ActionKernelCallback(),
+                VectorActionKernelCallback(action_chunk_size=32), 
                 MetaInfoKernelCallback(),
                 SegmentationKernelCallback(frame_width=224, frame_height=224), 
             ],
@@ -233,7 +237,7 @@ if __name__ == '__main__':
             shuffle_episodes=True,
         ),
         batch_size=3,
-        num_workers=4,
+        num_workers=0,
         prefetch_factor=None,
         episode_continuous_batch=True,
     )

@@ -1,7 +1,7 @@
 '''
 Date: 2025-01-09 05:08:19
 LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2025-01-15 13:21:07
+LastEditTime: 2025-01-17 17:55:25
 FilePath: /MineStudio/minestudio/data/minecraft/callbacks/callback.py
 '''
 import numpy as np
@@ -52,6 +52,10 @@ class ModalKernelCallback:
 
     def create_from_config(config: Dict) -> 'ModalKernelCallback':
         raise NotImplementedError
+
+    def __init__(self, read_bias: int=0, win_bias: int=0):
+        self.read_bias = read_bias
+        self.win_bias = win_bias
 
     @property
     def name(self) -> str:

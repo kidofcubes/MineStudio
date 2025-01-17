@@ -1,7 +1,7 @@
 '''
 Date: 2025-01-09 05:45:49
 LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2025-01-17 14:31:38
+LastEditTime: 2025-01-17 17:56:17
 FilePath: /MineStudio/minestudio/data/minecraft/core.py
 '''
 import lmdb
@@ -77,6 +77,8 @@ class ModalKernel(object):
         [start, end] refer to a frame-level index, 0 <= start <= end < num_frames
         """
         meta_info = self.episode_infos[self.eps_idx_mapping[eps]]
+        start += self.modal_kernel_callback.read_bias #! adding read_bias to the original range
+        win_len += self.modal_kernel_callback.win_bias #! adding win_bias to the original range
         end = min(start + win_len * skip_frame - 1, meta_info['num_frames'] - 1) # include
         chunk_bytes = self.read_chunks(eps, 
             start // self.chunk_size * self.chunk_size, 

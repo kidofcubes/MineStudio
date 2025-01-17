@@ -1,8 +1,8 @@
 '''
 Date: 2025-01-09 05:27:25
 LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2025-01-17 14:17:36
-FilePath: /MineStudio/minestudio/data/minecraft/callbacks/action.py
+LastEditTime: 2025-01-17 19:10:28
+FilePath: /MineStudio/var/minestudio/data/minecraft/callbacks/action.py
 '''
 import re
 import cv2
@@ -84,6 +84,74 @@ class ActionKernelCallback(ModalKernelCallback):
         data['agent_action'] = self.action_mapper.from_factored(
             self.action_transformer.env2policy(action)
         )
+        return data
+
+class VectorActionKernelCallback(ActionKernelCallback):
+
+    ACTION_KEYS = OrderedDict({
+        'camera': 2, 'attack': 1, 'forward': 1, 'back': 1, 'left': 1, 'right': 1, 'jump': 1, 'sneak': 1, 'sprint': 1, 'use': 1, 'drop': 1, 'inventory': 1, 
+        'hotbar.1': 1, 'hotbar.2': 1, 'hotbar.3': 1, 'hotbar.4': 1, 'hotbar.5': 1, 'hotbar.6': 1, 'hotbar.7': 1, 'hotbar.8': 1, 'hotbar.9': 1,
+    })
+
+    def __init__(self, action_chunk_size: int=32):
+        super().__init__()
+        self.action_chunk_size = action_chunk_size
+        self.win_bias = action_chunk_size - 1
+
+    @property
+    def vector_dim(self) -> int:
+        return sum(self.ACTION_KEYS.values()) * self.action_chunk_size
+
+    def vector_to_action(self, vector: np.ndarray) -> Union[List[Dict], Dict]:
+        if len(vector.shape) == 1:
+            vector = vector[np.newaxis, ...]
+        actions = []
+        for i in range(vector.shape[0]):
+            action = {key: [] for key in self.ACTION_KEYS}
+            offset = 0
+            for t in range(self.action_chunk_size):
+                for idx, (key, dim) in enumerate(self.ACTION_KEYS.items()):
+                    action[key].append(vector[i, offset: offset+dim])
+                    offset += dim
+            for key in action.keys():
+                if key == 'camera':
+                    action[key] = np.stack(action[key], axis=0) * 180.
+                else:
+                    action[key] = (np.concatenate(action[key], axis=0) >= 0).astype(np.uint8)
+            actions.append(action)
+        if len(vector.shape) == 1:
+            return actions[0]
+        return actions
+
+    def action_to_vector(self, action: Dict) -> np.ndarray:
+        vectors = []
+        win_len = len(action['attack'])
+        for i in range(win_len - self.action_chunk_size + 1):
+            vector = np.zeros(self.vector_dim, dtype=np.float32)
+            offset = 0
+            for t in range(self.action_chunk_size):
+                for idx, (key, dim) in enumerate(self.ACTION_KEYS.items()):
+                    if key == 'camera':
+                        val = action[key][i+t] / 180
+                    else:
+                        val = action[key][i+t] * 2 - 1
+                    vector[offset: offset+dim] = val
+                    offset += dim
+            vectors.append(vector)
+        return np.stack(vectors, axis=0)
+
+    def do_postprocess(self, data: Dict) -> Dict:
+        action = data.pop('action')
+        vector = self.action_to_vector(action)
+        # restored_action = self.vector_to_action(vector)
+        # data['action_mask']: shape (128 + 32 -1, )
+        # vector mask: shape (128, 32)
+        action_chunk_mask = []
+        for i in range(len(data['action_mask']) - self.action_chunk_size + 1):
+            action_chunk_mask.append(data['action_mask'][i: i+self.action_chunk_size])
+        action_chunk_mask = np.stack(action_chunk_mask, axis=0)
+        data['action'] = vector
+        data['action_chunk_mask'] = action_chunk_mask
         return data
 
 class ActionDrawFrameCallback(DrawFrameCallback):
