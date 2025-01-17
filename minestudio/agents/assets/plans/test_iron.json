@@ -1,0 +1,16 @@
+[
+  {
+    "goal": {
+      "stones": 20
+    },
+    "type": "mine",
+    "text": "stones"
+  },
+  {
+    "goal": {
+      "iron_ore": 2
+    },
+    "type": "mine",
+    "text": "iron_ore"
+  }
+]

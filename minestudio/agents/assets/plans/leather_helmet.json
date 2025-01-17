@@ -1,0 +1,37 @@
+[
+  {
+    "goal": {
+      "leather": 5
+    },
+    "type": "mine",
+    "text": "leather"
+  },
+  {
+    "goal": {
+      "logs": 1
+    },
+    "type": "mine",
+    "text": "logs"
+  },
+  {
+    "goal": {
+      "planks": 4
+    },
+    "type": "craft",
+    "text": "planks"
+  },
+  {
+    "goal": {
+      "crafting_table": 1
+    },
+    "type": "craft",
+    "text": "crafting_table"
+  },
+  {
+    "goal": {
+      "leather_helmet": 1
+    },
+    "type": "craft",
+    "text": "leather_helmet"
+  }
+]

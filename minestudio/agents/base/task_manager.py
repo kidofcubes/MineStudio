@@ -1,4 +1,5 @@
-task_set = [
+'''
+[
     {
         "name": "diamond_pickaxe",
         "description": "craft a diamond pickaxe",
@@ -30,3 +31,8 @@ task_set = [
         "max_steps": 25000
     }
 ]
+'''
+
+
+
+

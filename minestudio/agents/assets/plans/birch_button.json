@@ -1,0 +1,23 @@
+[
+  {
+    "goal": {
+      "birch_log": 1
+    },
+    "type": "mine",
+    "text": "birch_log"
+  },
+  {
+    "goal": {
+      "birch_planks": 4
+    },
+    "type": "craft",
+    "text": "birch_planks"
+  },
+  {
+    "goal": {
+      "birch_button": 1
+    },
+    "type": "craft",
+    "text": "birch_button"
+  }
+]

@@ -1,0 +1,16 @@
+[
+  {
+    "goal": {
+      "birch_log": 4
+    },
+    "type": "mine",
+    "text": "birch_log"
+  },
+  {
+    "goal": {
+      "birch_wood": 1
+    },
+    "type": "craft",
+    "text": "birch_wood"
+  }
+]

@@ -1,0 +1,44 @@
+[
+  {
+    "goal": {
+      "white_wool": 6
+    },
+    "type": "mine",
+    "text": "white_wool"
+  },
+  {
+    "goal": {
+      "logs": 2
+    },
+    "type": "mine",
+    "text": "logs"
+  },
+  {
+    "goal": {
+      "planks": 8
+    },
+    "type": "craft",
+    "text": "planks"
+  },
+  {
+    "goal": {
+      "crafting_table": 1
+    },
+    "type": "craft",
+    "text": "crafting_table"
+  },
+  {
+    "goal": {
+      "stick": 4
+    },
+    "type": "craft",
+    "text": "stick"
+  },
+  {
+    "goal": {
+      "white_banner": 1
+    },
+    "type": "craft",
+    "text": "white_banner"
+  }
+]

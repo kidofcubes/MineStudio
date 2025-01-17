@@ -1,0 +1,16 @@
+[
+  {
+    "goal": {
+      "white_wool": 2
+    },
+    "type": "mine",
+    "text": "white_wool"
+  },
+  {
+    "goal": {
+      "white_carpet": 1
+    },
+    "type": "craft",
+    "text": "white_carpet"
+  }
+]

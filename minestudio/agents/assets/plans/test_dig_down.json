@@ -1,0 +1,9 @@
+[
+  {
+    "goal": {
+      "stones": 128
+    },
+    "type": "mine",
+    "text": "stones"
+  }
+]

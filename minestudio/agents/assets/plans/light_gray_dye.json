@@ -1,0 +1,16 @@
+[
+  {
+    "goal": {
+      "light_gray_flower": 1
+    },
+    "type": "mine",
+    "text": "light_gray_flower"
+  },
+  {
+    "goal": {
+      "light_gray_dye": 1
+    },
+    "type": "craft",
+    "text": "light_gray_dye"
+  }
+]

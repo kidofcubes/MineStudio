@@ -166,7 +166,6 @@ class EquipScript(CraftScript):
 
     ''' equip item such as wooden_pickaxe '''
     def equip_item(self, target_item):
-
         try:
             # check target_item is equippable before equip_item()
             # check is gui open and open gui
@@ -216,4 +215,31 @@ if __name__ == '__main__':
     # write_video('equip_full_bottom_bar.mp4', worker.outframes)
 
     # # write_video('crafting.mp4', worker.outframes)
-    ...
+    # worker = Worker('test')
+    # done, info = worker.crafting('wooden_pickaxe', 1)
+    from minestudio.simulator import MinecraftSim
+    from minestudio.simulator.callbacks import RecordCallback, SpeedTestCallback, RewardsCallback, SummonMobsCallback, InitInventoryCallback
+    env = MinecraftSim(
+        action_type='env',
+        obs_size=(128, 128), 
+        preferred_spawn_biome=random.choice(["forest", "plains"]), 
+        callbacks=[
+            RecordCallback(record_path='output', fps=30, frame_type="pov"),
+            SpeedTestCallback(50),
+            InitInventoryCallback(init_inventory=[
+                {'slot': 0, 'type': 'iron_axe', 'quantity': 1},
+                {'slot': 1, 'type': 'diamond_pickaxe', 'quantity': 1},
+                {'slot': 2, 'type': 'furnace', 'quantity': 1}
+                ]),
+            SummonMobsCallback([{'name': 'cow', 'number': 10, 'range_x': [-5, 5], 'range_z': [-5, 5]}]),
+        ]
+    )
+    obs, info = env.reset()
+    script = EquipScript(env)
+    done, info = script.equip_item('furnace')
+    print(done, info)
+    done, info = script.equip_item('iron_axe')
+    print(done, info)
+    done, info = script.equip_item('diamond_pickaxe')
+    print(done, info)
+    env.close()

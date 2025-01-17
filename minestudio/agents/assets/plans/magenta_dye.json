@@ -1,0 +1,16 @@
+[
+  {
+    "goal": {
+      "magenta_flower": 1
+    },
+    "type": "mine",
+    "text": "magenta_flower"
+  },
+  {
+    "goal": {
+      "magenta_dye": 1
+    },
+    "type": "craft",
+    "text": "magenta_dye"
+  }
+]

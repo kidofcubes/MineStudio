@@ -1,0 +1,30 @@
+[
+  {
+    "goal": {
+      "acacia_log": 2
+    },
+    "type": "mine",
+    "text": "acacia_log"
+  },
+  {
+    "goal": {
+      "acacia_planks": 8
+    },
+    "type": "craft",
+    "text": "acacia_planks"
+  },
+  {
+    "goal": {
+      "crafting_table": 1
+    },
+    "type": "craft",
+    "text": "crafting_table"
+  },
+  {
+    "goal": {
+      "acacia_slab": 1
+    },
+    "type": "craft",
+    "text": "acacia_slab"
+  }
+]

@@ -1,0 +1,51 @@
+[
+  {
+    "goal": {
+      "logs": 3
+    },
+    "type": "mine",
+    "text": "logs"
+  },
+  {
+    "goal": {
+      "planks": 12
+    },
+    "type": "craft",
+    "text": "planks"
+  },
+  {
+    "goal": {
+      "crafting_table": 1
+    },
+    "type": "craft",
+    "text": "crafting_table"
+  },
+  {
+    "goal": {
+      "stick": 4
+    },
+    "type": "craft",
+    "text": "stick"
+  },
+  {
+    "goal": {
+      "wooden_pickaxe": 1
+    },
+    "type": "craft",
+    "text": "wooden_pickaxe"
+  },
+  {
+    "goal": {
+      "cobblestone": 3
+    },
+    "type": "mine",
+    "text": "cobblestone"
+  },
+  {
+    "goal": {
+      "stone_axe": 1
+    },
+    "type": "craft",
+    "text": "stone_axe"
+  }
+]

@@ -1,0 +1,23 @@
+[
+  {
+    "goal": {
+      "logs": 1
+    },
+    "type": "mine",
+    "text": "logs"
+  },
+  {
+    "goal": {
+      "planks": 4
+    },
+    "type": "craft",
+    "text": "planks"
+  },
+  {
+    "goal": {
+      "stick": 1
+    },
+    "type": "craft",
+    "text": "stick"
+  }
+]

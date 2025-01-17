@@ -1,0 +1,86 @@
+[
+  {
+    "goal": {
+      "white_wool": 6
+    },
+    "type": "mine",
+    "text": "white_wool"
+  },
+  {
+    "goal": {
+      "blue_flower": 1
+    },
+    "type": "mine",
+    "text": "blue_flower"
+  },
+  {
+    "goal": {
+      "blue_dye": 1
+    },
+    "type": "craft",
+    "text": "blue_dye"
+  },
+  {
+    "goal": {
+      "white_flower": 1
+    },
+    "type": "mine",
+    "text": "white_flower"
+  },
+  {
+    "goal": {
+      "white_dye": 1
+    },
+    "type": "craft",
+    "text": "white_dye"
+  },
+  {
+    "goal": {
+      "light_blue_dye": 1
+    },
+    "type": "craft",
+    "text": "light_blue_dye"
+  },
+  {
+    "goal": {
+      "logs": 2
+    },
+    "type": "mine",
+    "text": "logs"
+  },
+  {
+    "goal": {
+      "planks": 8
+    },
+    "type": "craft",
+    "text": "planks"
+  },
+  {
+    "goal": {
+      "crafting_table": 1
+    },
+    "type": "craft",
+    "text": "crafting_table"
+  },
+  {
+    "goal": {
+      "stick": 4
+    },
+    "type": "craft",
+    "text": "stick"
+  },
+  {
+    "goal": {
+      "white_banner": 1
+    },
+    "type": "craft",
+    "text": "white_banner"
+  },
+  {
+    "goal": {
+      "light_blue_banner": 1
+    },
+    "type": "craft",
+    "text": "light_blue_banner"
+  }
+]

@@ -1,0 +1,16 @@
+[
+  {
+    "goal": {
+      "jungle_log": 1
+    },
+    "type": "mine",
+    "text": "jungle_log"
+  },
+  {
+    "goal": {
+      "jungle_planks": 1
+    },
+    "type": "craft",
+    "text": "jungle_planks"
+  }
+]

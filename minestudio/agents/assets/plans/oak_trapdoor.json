@@ -1,0 +1,30 @@
+[
+  {
+    "goal": {
+      "oak_log": 3
+    },
+    "type": "mine",
+    "text": "oak_log"
+  },
+  {
+    "goal": {
+      "oak_planks": 12
+    },
+    "type": "craft",
+    "text": "oak_planks"
+  },
+  {
+    "goal": {
+      "crafting_table": 1
+    },
+    "type": "craft",
+    "text": "crafting_table"
+  },
+  {
+    "goal": {
+      "oak_trapdoor": 1
+    },
+    "type": "craft",
+    "text": "oak_trapdoor"
+  }
+]

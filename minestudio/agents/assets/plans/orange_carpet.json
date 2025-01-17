@@ -1,0 +1,37 @@
+[
+  {
+    "goal": {
+      "white_wool": 2
+    },
+    "type": "mine",
+    "text": "white_wool"
+  },
+  {
+    "goal": {
+      "white_carpet": 1
+    },
+    "type": "craft",
+    "text": "white_carpet"
+  },
+  {
+    "goal": {
+      "orange_flower": 1
+    },
+    "type": "mine",
+    "text": "orange_flower"
+  },
+  {
+    "goal": {
+      "orange_dye": 1
+    },
+    "type": "craft",
+    "text": "orange_dye"
+  },
+  {
+    "goal": {
+      "orange_carpet": 1
+    },
+    "type": "craft",
+    "text": "orange_carpet"
+  }
+]

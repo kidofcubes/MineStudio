@@ -1,0 +1,23 @@
+[
+  {
+    "goal": {
+      "acacia_log": 1
+    },
+    "type": "mine",
+    "text": "acacia_log"
+  },
+  {
+    "goal": {
+      "acacia_planks": 4
+    },
+    "type": "craft",
+    "text": "acacia_planks"
+  },
+  {
+    "goal": {
+      "acacia_button": 1
+    },
+    "type": "craft",
+    "text": "acacia_button"
+  }
+]

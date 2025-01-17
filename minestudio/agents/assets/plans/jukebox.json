@@ -1,0 +1,93 @@
+[
+  {
+    "goal": {
+      "logs": 7
+    },
+    "type": "mine",
+    "text": "logs"
+  },
+  {
+    "goal": {
+      "planks": 24
+    },
+    "type": "craft",
+    "text": "planks"
+  },
+  {
+    "goal": {
+      "crafting_table": 1
+    },
+    "type": "craft",
+    "text": "crafting_table"
+  },
+  {
+    "goal": {
+      "stick": 8
+    },
+    "type": "craft",
+    "text": "stick"
+  },
+  {
+    "goal": {
+      "wooden_pickaxe": 1
+    },
+    "type": "craft",
+    "text": "wooden_pickaxe"
+  },
+  {
+    "goal": {
+      "cobblestone": 11
+    },
+    "type": "mine",
+    "text": "cobblestone"
+  },
+  {
+    "goal": {
+      "furnace": 1
+    },
+    "type": "craft",
+    "text": "furnace"
+  },
+  {
+    "goal": {
+      "stone_pickaxe": 1
+    },
+    "type": "craft",
+    "text": "stone_pickaxe"
+  },
+  {
+    "goal": {
+      "iron_ore": 3
+    },
+    "type": "mine",
+    "text": "iron_ore"
+  },
+  {
+    "goal": {
+      "iron_ingot": 3
+    },
+    "type": "smelt",
+    "text": "iron_ingot"
+  },
+  {
+    "goal": {
+      "iron_pickaxe": 1
+    },
+    "type": "craft",
+    "text": "iron_pickaxe"
+  },
+  {
+    "goal": {
+      "diamond": 1
+    },
+    "type": "mine",
+    "text": "diamond"
+  },
+  {
+    "goal": {
+      "jukebox": 1
+    },
+    "type": "craft",
+    "text": "jukebox"
+  }
+]

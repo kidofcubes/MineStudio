@@ -1,0 +1,51 @@
+[
+  {
+    "goal": {
+      "leather": 1
+    },
+    "type": "mine",
+    "text": "leather"
+  },
+  {
+    "goal": {
+      "logs": 2
+    },
+    "type": "mine",
+    "text": "logs"
+  },
+  {
+    "goal": {
+      "planks": 8
+    },
+    "type": "craft",
+    "text": "planks"
+  },
+  {
+    "goal": {
+      "crafting_table": 1
+    },
+    "type": "craft",
+    "text": "crafting_table"
+  },
+  {
+    "goal": {
+      "sugar_cane": 3
+    },
+    "type": "mine",
+    "text": "sugar_cane"
+  },
+  {
+    "goal": {
+      "paper": 3
+    },
+    "type": "craft",
+    "text": "paper"
+  },
+  {
+    "goal": {
+      "book": 1
+    },
+    "type": "craft",
+    "text": "book"
+  }
+]

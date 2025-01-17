@@ -1,0 +1,30 @@
+[
+  {
+    "goal": {
+      "birch_log": 3
+    },
+    "type": "mine",
+    "text": "birch_log"
+  },
+  {
+    "goal": {
+      "birch_planks": 12
+    },
+    "type": "craft",
+    "text": "birch_planks"
+  },
+  {
+    "goal": {
+      "crafting_table": 1
+    },
+    "type": "craft",
+    "text": "crafting_table"
+  },
+  {
+    "goal": {
+      "birch_trapdoor": 1
+    },
+    "type": "craft",
+    "text": "birch_trapdoor"
+  }
+]

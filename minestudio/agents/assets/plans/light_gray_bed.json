@@ -1,0 +1,58 @@
+[
+  {
+    "goal": {
+      "white_wool": 3
+    },
+    "type": "mine",
+    "text": "white_wool"
+  },
+  {
+    "goal": {
+      "light_gray_flower": 1
+    },
+    "type": "mine",
+    "text": "light_gray_flower"
+  },
+  {
+    "goal": {
+      "light_gray_dye": 1
+    },
+    "type": "craft",
+    "text": "light_gray_dye"
+  },
+  {
+    "goal": {
+      "logs": 2
+    },
+    "type": "mine",
+    "text": "logs"
+  },
+  {
+    "goal": {
+      "planks": 8
+    },
+    "type": "craft",
+    "text": "planks"
+  },
+  {
+    "goal": {
+      "crafting_table": 1
+    },
+    "type": "craft",
+    "text": "crafting_table"
+  },
+  {
+    "goal": {
+      "white_bed": 1
+    },
+    "type": "craft",
+    "text": "white_bed"
+  },
+  {
+    "goal": {
+      "light_gray_bed": 1
+    },
+    "type": "craft",
+    "text": "light_gray_bed"
+  }
+]

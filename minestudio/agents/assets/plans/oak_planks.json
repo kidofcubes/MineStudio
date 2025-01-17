@@ -1,0 +1,16 @@
+[
+  {
+    "goal": {
+      "oak_log": 1
+    },
+    "type": "mine",
+    "text": "oak_log"
+  },
+  {
+    "goal": {
+      "oak_planks": 1
+    },
+    "type": "craft",
+    "text": "oak_planks"
+  }
+]

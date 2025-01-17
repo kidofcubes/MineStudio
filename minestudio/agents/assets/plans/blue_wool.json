@@ -1,0 +1,30 @@
+[
+  {
+    "goal": {
+      "white_wool": 1
+    },
+    "type": "mine",
+    "text": "white_wool"
+  },
+  {
+    "goal": {
+      "blue_flower": 1
+    },
+    "type": "mine",
+    "text": "blue_flower"
+  },
+  {
+    "goal": {
+      "blue_dye": 1
+    },
+    "type": "craft",
+    "text": "blue_dye"
+  },
+  {
+    "goal": {
+      "blue_wool": 1
+    },
+    "type": "craft",
+    "text": "blue_wool"
+  }
+]

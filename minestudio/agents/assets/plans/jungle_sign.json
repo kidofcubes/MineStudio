@@ -1,0 +1,37 @@
+[
+  {
+    "goal": {
+      "jungle_log": 3
+    },
+    "type": "mine",
+    "text": "jungle_log"
+  },
+  {
+    "goal": {
+      "jungle_planks": 12
+    },
+    "type": "craft",
+    "text": "jungle_planks"
+  },
+  {
+    "goal": {
+      "crafting_table": 1
+    },
+    "type": "craft",
+    "text": "crafting_table"
+  },
+  {
+    "goal": {
+      "stick": 4
+    },
+    "type": "craft",
+    "text": "stick"
+  },
+  {
+    "goal": {
+      "jungle_sign": 1
+    },
+    "type": "craft",
+    "text": "jungle_sign"
+  }
+]

@@ -1,0 +1,9 @@
+[
+  {
+    "goal": {
+      "gold_ore": 2
+    },
+    "type": "mine",
+    "text": "gold_ore"
+  }
+]
