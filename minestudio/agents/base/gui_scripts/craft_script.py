@@ -807,7 +807,7 @@ if __name__ == '__main__':
             RecordCallback(record_path='output', fps=30, frame_type="pov"),
             SpeedTestCallback(50),
             InitInventoryCallback(init_inventory=[{'slot': 0, 'type': 'oak_planks', 'quantity': 64}]),
-            SummonMobsCallback([{'name': 'cow', 'number': 10, 'range_x': [-5, 5], 'range_z': [-5, 5]}]),
+            # SummonMobsCallback([{'name': 'cow', 'number': 10, 'range_x': [-5, 5], 'range_z': [-5, 5]}]),
         ]
     )
     obs, info = env.reset()
@@ -816,7 +816,7 @@ if __name__ == '__main__':
     print(done, info)
     done, info = script.crafting('crafting_table', 1)
     print(done, info)
-    done, info = script.crafting('wooden_pickaxe', 1)
+    done, info = script.crafting('oak_door', 1)
     print(done, info)
     # write_video('crafting.mp4', worker.outframes)
     env.close()

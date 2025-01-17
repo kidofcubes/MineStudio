@@ -170,7 +170,20 @@ class SmeltScript(CraftScript):
             # close inventory
             labels = self.get_labels()
             inventory_id = self.find_in_inventory(labels, 'wooden_pickaxe')
-            self._assert(inventory_id, f"no wooden_pickaxe to return furnace")
+            inventory_id_diamond = self.find_in_inventory(labels, 'diamond_pickaxe', 'item')
+            inventory_id_iron = self.find_in_inventory(labels, 'iron_pickaxe', 'item')
+            inventory_id_stone = self.find_in_inventory(labels, 'stone_pickaxe', 'item')
+            # inventory_id_wooden = self.find_in_inventory(labels, 'wooden_pickaxe', 'item')
+
+            # if inventory_id_wooden:
+            #     inventory_id = inventory_id_wooden
+            if inventory_id_stone:
+                inventory_id = inventory_id_stone
+            if inventory_id_iron:
+                inventory_id = inventory_id_iron
+            if inventory_id_diamond:
+                inventory_id = inventory_id_diamond
+            self._assert(inventory_id, f"no pickaxe to return furnace")
             if inventory_id != 'inventory_0':
                 if labels['inventory_0']['type'] != 'none':
                     for i in range(2):
