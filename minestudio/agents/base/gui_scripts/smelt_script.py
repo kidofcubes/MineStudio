@@ -5,6 +5,7 @@ from typing import Sequence, List, Mapping, Dict, Callable, Any, Tuple, Optional
 # from jarvis.assembly.scripts.craft_agent import *
 
 from minestudio.agents.base.gui_scripts.craft_script import CraftScript, COMPUTE_SLOT_POS
+from minestudio.agents.assets import RECIPES_DIR, TAG_ITEMS_FILE
 
 CAMERA_SCALER = 360.0 / 2400.0
 WIDTH, HEIGHT = 640, 360
@@ -128,15 +129,10 @@ class SmeltScript(CraftScript):
             self._null_action(1)
             if self.info['isGuiOpen']:
                 self._call_func('inventory')   
-            
-            cur_path = os.path.abspath(os.path.dirname(__file__))
-            root_path = cur_path[:cur_path.find('minestudio')]
-            relative_path = os.path.join("minestudio/agents/assets/recipes", target + '.json')
-            recipe_json_path = os.path.join(root_path, relative_path)
+
+            recipe_json_path = RECIPES_DIR / (target + '.json')
             with open(recipe_json_path) as file:
                 recipe_info = json.load(file)
-            
-            
             self.open_furnace_wo_recipe()
 
             # find coals
@@ -162,9 +158,7 @@ class SmeltScript(CraftScript):
                 self._assert(inventory_id, f"not enough fuels")
             
             if fuels_type == 'coalstodo':
-
-                relative_path_fuels = os.path.join("minestudio/agents/assets/recipes", 'charcoal' + '.json')
-                recipe_json_path_fuels = os.path.join(root_path, relative_path_fuels)
+                recipe_json_path_fuels = RECIPES_DIR / ('charcoal' + '.json')
                 with open(recipe_json_path_fuels) as file:
                     recipe_info_fuels = json.load(file)
 

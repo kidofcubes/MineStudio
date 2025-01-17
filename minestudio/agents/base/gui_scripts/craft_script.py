@@ -11,6 +11,7 @@ from typing import (
 # from jarvis.stark_tech.env_interface import MinecraftWrapper
 # from jarvis.utils import write_video
 from minestudio.simulator import MinecraftSim
+from minestudio.agents.assets import RECIPES_DIR, TAG_ITEMS_FILE
 
 def random_dic(dicts):
     dict_key_ls = list(dicts.keys())
@@ -476,14 +477,10 @@ class CraftScript:
         try:
             # is item/tag
             is_tag = False
-            cur_path = os.path.abspath(os.path.dirname(__file__))
-            root_path = cur_path[:cur_path.find('minestudio')]
-            relative_path = os.path.join("minestudio/agents/assets/tag_items.json")
-            tag_json_path = os.path.join(root_path, relative_path)
-            with open(tag_json_path) as file:
+            with open(TAG_ITEMS_FILE) as file:
                 tag_info = json.load(file)
             for key in tag_info:
-                if key[10:] == target:
+                if key[len('minecraft:'):] == target:
                     is_tag = True
 
             # open recipe one by one: only shapeless crafting like oak_planks        
@@ -493,10 +490,8 @@ class CraftScript:
                 item_list = tag_info['minecraft:'+target]
 
                 for item in item_list:
-                    subtarget = item[10:]
-                
-                    relative_path = os.path.join("minestudio/agents/assets/recipes", subtarget + '.json')
-                    recipe_json_path = os.path.join(root_path, relative_path)
+                    subtarget = item[len('minecraft:'):]
+                    recipe_json_path = RECIPES_DIR / (subtarget + '.json')
                     with open(recipe_json_path) as file:
                         recipe_info = json.load(file)
                     need_table = self.crafting_type(recipe_info)
@@ -510,10 +505,10 @@ class CraftScript:
                     # clculate the amount needed and store <item, quantity> in items
                     for i in range(len(ingredients)):
                         if ingredients[i].get('item'):
-                            item = ingredients[i].get('item')[10:]
+                            item = ingredients[i].get('item')[len('minecraft:'):]
                             item_type = 'item'
                         else:
-                            item = ingredients[i].get('tag')[10:]
+                            item = ingredients[i].get('tag')[len('minecraft:'):]
                             item_type = 'tag'
                         items_type[item] = item_type
                         if items.get(item):
@@ -550,10 +545,7 @@ class CraftScript:
             self._null_action(1)
             if self.info['isGuiOpen']:
                 self._call_func('inventory')           
-            cur_path = os.path.abspath(os.path.dirname(__file__))
-            root_path = cur_path[:cur_path.find('minestudio')]
-            relative_path = os.path.join("minestudio/agents/assets/recipes", target + '.json')
-            recipe_json_path = os.path.join(root_path, relative_path)
+            recipe_json_path = RECIPES_DIR / (target + '.json')
             with open(recipe_json_path) as file:
                 recipe_info = json.load(file)
             need_table = self.crafting_type(recipe_info)
@@ -646,16 +638,12 @@ class CraftScript:
                         return result[0]
             elif item_type == "tag":
                 # tag info
-                cur_path = os.path.abspath(os.path.dirname(__file__))
-                root_path = cur_path[:cur_path.find('minestudio')]
-                relative_path = os.path.join("minestudio/agents/assets/tag_items.json")
-                tag_json_path = os.path.join(root_path, relative_path)
-                with open(tag_json_path) as file:
+                with open(TAG_ITEMS_FILE) as file:
                     tag_info = json.load(file)
 
                 item_list = tag_info['minecraft:'+item]
                 for i in range(len(item_list)):
-                    if re.match(item_list[i][10:], str(value)):
+                    if re.match(item_list[i][len('minecraft:'):], str(value)):
                         return current_path
                     elif isinstance(value, dict):
                         result = self.find_in_inventory(value, item, item_type, current_path)
@@ -718,10 +706,10 @@ class CraftScript:
         for k, v in items.items():
             signal = k
             if v.get('item'):
-                item = v.get('item')[10:]
+                item = v.get('item')[len('minecraft:'):]
                 item_type= 'item'
             else:
-                item = v.get('tag')[10:]
+                item = v.get('tag')[len('minecraft:'):]
                 item_type= 'tag'
             labels = self.get_labels()
             inventory_id = self.find_in_inventory(labels, item, item_type)
@@ -771,10 +759,10 @@ class CraftScript:
         # clculate the amount needed and store <item, quantity> in items
         for i in range(len(ingredients)):
             if ingredients[i].get('item'):
-                item = ingredients[i].get('item')[10:]
+                item = ingredients[i].get('item')[len('minecraft:'):]
                 item_type = 'item'
             else:
-                item = ingredients[i].get('tag')[10:]
+                item = ingredients[i].get('tag')[len('minecraft:'):]
                 item_type = 'tag'
             items_type[item] = item_type
             if items.get(item):
