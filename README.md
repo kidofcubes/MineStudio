@@ -21,6 +21,7 @@
 	<a href="https://craftjarvis.github.io/MineStudio/"><img src="https://img.shields.io/badge/Doc-Sphinx-yellow"/></a>
     	<a href="https://pypi.org/project/minestudio/"><img src="https://img.shields.io/pypi/v/minestudio.svg"/></a>
 	<a href="https://huggingface.co/CraftJarvis"><img src="https://img.shields.io/badge/Dataset-Released-orange"/></a>
+	<a href="https://github.com/CraftJarvis/MineStudio/tree/master/minestudio/tutorials"><img alt="Static Badge" src="https://img.shields.io/badge/Tutorials-easy-brightgreen"></a>
 	<a href="https://github.com/CraftJarvis/MineStudio"><img src="https://visitor-badge.laobi.icu/badge?page_id=CraftJarvis.MineStudio"/></a>
 	<a href="https://github.com/CraftJarvis/MineStudio"><img src="https://img.shields.io/github/stars/CraftJarvis/MineStudio"/></a>
 </div>
@@ -145,6 +146,7 @@ Here is the checkpoint list:
 - [CraftJarvis/MineStudio_VPT.bc_early_game_3x](https://huggingface.co/CraftJarvis/MineStudio_VPT.bc_early_game_3x), trained by [OpenAI](https://github.com/openai/Video-Pre-Training)
 - [CraftJarvis/MineStudio_VPT.rl_for_shoot_animals_2x](https://huggingface.co/CraftJarvis/MineStudio_VPT.rl_for_shoot_animals_2x), trained by [CraftJarvis](https://craftjarvis.github.io/)
 - [CraftJarvis/MineStudio_VPT.rl_for_build_portal_2x](https://huggingface.co/CraftJarvis/MineStudio_VPT.rl_for_build_portal_2x), trained by [CraftJarvis](https://craftjarvis.github.io/)
+- [CraftJarvis/MineStudio_GROOT.18w_EMA](https://huggingface.co/CraftJarvis/MineStudio_GROOT.18w_EMA), trained by [CraftJarvis](https://craftjarvis.github.io/)
 - [CraftJarvis/MineStudio_STEVE-1.official](https://huggingface.co/CraftJarvis/MineStudio_STEVE-1.official), trained by [STEVE-1](https://github.com/Shalev-Lifshitz/STEVE-1)
 - [CraftJarvis/MineStudio_ROCKET-1.12w_EMA](https://huggingface.co/CraftJarvis/MineStudio_ROCKET-1.12w_EMA), trained by [CraftJarvis](https://craftjarvis.github.io/)
 
