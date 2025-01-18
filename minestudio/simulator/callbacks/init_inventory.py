@@ -180,7 +180,7 @@ class InitInventoryCallback(MinecraftCallback):
         return init_inventory,visited_slots,unvisited_slots
     
     def _sample_equipments(self,init_inventory, visited_slots):
-        unvisited_equipments = set(range(MAX_INVENTORY_IDX, MAX_SLOT_IDX+1)) - visited_slots
+        unvisited_equipments = set(range(MAX_INVENTORY_IDX+1, MAX_SLOT_IDX+1)) - visited_slots
         sample_num = min(random.choice(self.equip_distraction_level),len(unvisited_equipments))
         for _ in range(sample_num):
             slot = random.choice(list(unvisited_equipments))
