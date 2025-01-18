@@ -1,8 +1,8 @@
 '''
 Date: 2024-11-10 13:44:13
-LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2025-01-02 00:41:28
-FilePath: /MineStudio/var/minestudio/offline/trainer.py
+LastEditors: muzhancun muzhancun@126.com
+LastEditTime: 2025-01-18 13:52:32
+FilePath: /MineStudio/minestudio/offline/trainer.py
 '''
 import os
 import torch
@@ -81,6 +81,8 @@ class MineLightning(L.LightningModule):
     def _batch_step(self, batch, batch_idx, step_name):
         result = {'loss': 0}
         memory_in = self._make_memory(batch)
+        for callback in self.callbacks:
+            batch = callback.before_step(batch, batch_idx, step_name)
         # memory_in = None
         latents, memory_out = self.mine_policy(batch, memory_in)
         self.memory_dict["memory"] = tree_detach(memory_out)

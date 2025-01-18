@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-11 15:59:37
-LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2025-01-18 10:57:55
+LastEditors: muzhancun muzhancun@126.com
+LastEditTime: 2025-01-18 12:04:34
 FilePath: /MineStudio/minestudio/models/base_policy.py
 '''
 from abc import ABC, abstractmethod
@@ -133,5 +133,65 @@ class MinePolicy(torch.nn.Module, ABC):
             return result_actions
         elif isinstance(action, list):
             return action
+        else:
+            raise NotImplementedError
+
+class MineGenerativePolicy(torch.nn.Module, ABC):
+    def __init__(self) -> None:
+        torch.nn.Module.__init__(self)
+
+    @abstractmethod
+    def forward(self, 
+                input: Dict[str, Any], 
+                state_in: Optional[List[torch.Tensor]] = None,
+                **kwargs
+    ) -> Tuple[Dict[str, torch.Tensor], List[torch.Tensor]]:
+        """
+        Returns:
+            latents: latent tensors.
+            state_out: containing the updated state tensors.
+        """
+        pass
+
+    @abstractmethod
+    def sample(self, input: Dict[str, Any], state_in: Optional[List[torch.Tensor]] = None, **kwargs) -> Dict[str, torch.Tensor]:
+        pass
+
+    @torch.inference_mode()
+    def get_action(self,
+                   FM, # flow matching
+                   input: Dict[str, Any],
+                   state_in: Optional[List[torch.Tensor]],
+                   deterministic: bool = False,
+                   input_shape: str = "BT*",
+                   **kwargs, 
+    ) -> Tuple[Dict[str, torch.Tensor], List[torch.Tensor]]:
+        if input_shape == "*":
+            input = dict_map(self._batchify, input)
+            if state_in is not None:
+                state_in = recursive_tensor_op(lambda x: x.unsqueeze(0), state_in)
+        elif input_shape != "BT*":
+            raise NotImplementedError
+        action, state_out = self.sample(input, state_in, **kwargs)
+        if input_shape == "BT*":
+            return action, state_out
+        elif input_shape == "*":
+            return dict_map(lambda tensor: tensor[0][0], action), recursive_tensor_op(lambda x: x[0], state_out)
+        else:
+            raise NotImplementedError
+
+    @property
+    def device(self) -> torch.device:
+        return next(self.parameters()).device
+    
+    def _batchify(self, elem):
+        if isinstance(elem, (int, float)):
+            elem = torch.tensor(elem, device=self.device)
+        if isinstance(elem, np.ndarray):
+            return torch.from_numpy(elem).unsqueeze(0).unsqueeze(0).to(self.device)
+        elif isinstance(elem, torch.Tensor):
+            return elem.unsqueeze(0).unsqueeze(0).to(self.device)
+        elif isinstance(elem, str):
+            return [[elem]]
         else:
             raise NotImplementedError
