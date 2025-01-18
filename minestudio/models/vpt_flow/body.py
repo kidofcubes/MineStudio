@@ -64,15 +64,17 @@ class VPTFlowPolicy(MineGenerativePolicy, PyTorchModelHubMixin):
     
     def sample(self, input, state_in = None, **kwargs):
         (pi_latent, vf_latent), state_out = self.net(input, state_in)
+        sampling_timestep = kwargs.get("sampling_timestep", 10)
+        times = torch.linspace(0., 1., sampling_timestep, device=self.device)
         traj = torchdiffeq.odeint(
             lambda t, x: self.action_head(x, times=t, cond=pi_latent),
             input["noise"],
-            torch.linspace(0, 1, 2, device=self.device),
+            times,
             atol=1e-4,
             rtol=1e-4,
             method="dopri5",
         )
-        return traj[-1], state_out
+        return traj[-1].clip(-1, 1), state_out
 
 def load_vpt_flow_policy(ckpt_path: str) -> VPTFlowPolicy:
     ckpt = torch.load(ckpt_path, map_location="cpu")
