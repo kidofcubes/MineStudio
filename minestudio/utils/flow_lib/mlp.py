@@ -62,7 +62,7 @@ class MLP(nn.Module):
         dim_cond,
         dim_input,
         depth = 3,
-        width = 1024,
+        width = 512,
         dropout = 0.
     ):
         super().__init__()
@@ -104,6 +104,10 @@ class MLP(nn.Module):
         times,
         cond
     ):
+        b, t, _ = noised.shape
+        noised = rearrange(noised, 'b t ... -> (b t) ...')
+        cond = rearrange(cond, 'b t ... -> (b t) ...')
+        times = rearrange(times, 'b t -> (b t)')
         assert noised.ndim == 2
 
         time_emb = self.to_time_emb(times)
@@ -118,4 +122,5 @@ class MLP(nn.Module):
             block_out = block(denoised) * (block_out_gamma(cond) + 1.)
             denoised = block_out + residual
 
+        denoised = rearrange(denoised, '(b t) ... -> b t ...', b = b, t = t)
         return denoised

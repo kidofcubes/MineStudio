@@ -176,6 +176,7 @@ node_modules/
 record/
 reference_videos/
 downloads/
+custom/
 
 minestudio/models/realtime_sam/notebooks/*.jpg
 minestudio/models/realtime_sam/checkpoints/*.pt

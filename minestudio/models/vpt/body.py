@@ -99,7 +99,7 @@ class MinecraftPolicy(nn.Module):
 
     def __init__(
         self,
-        recurrence_type="lstm",
+        recurrence_type="transformer",
         impala_width=1,
         impala_chans=(16, 32, 32),
         obs_processing_width=256,

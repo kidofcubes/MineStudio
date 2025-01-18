@@ -73,21 +73,95 @@ class VPTFlowPolicy(MineGenerativePolicy, PyTorchModelHubMixin):
             method="dopri5",
         )
         return traj[-1], state_out
-    
+
+def load_vpt_flow_policy(ckpt_path: str) -> VPTFlowPolicy:
+    ckpt = torch.load(ckpt_path, map_location="cpu")
+    model = VPTFlowPolicy.load_from_checkpoint(ckpt_path)
+    model.load_state_dict(ckpt["state_dict"])
+    return model
+
 if __name__ == "__main__":
     """
     for debugging purpose
     """
-    from minestudio.data.minecraft.callbacks import ActionConvertCallback
-    action_convert = ActionConvertCallback(
-        input_dirs=[
-            "/nfs-shared/data/contractors/all_9xx_Jun_29/actions"
-        ], 
-        chunk_size=32
+    from tqdm import tqdm
+    from minestudio.data.minecraft.callbacks import (
+        ImageKernelCallback, 
+        ActionKernelCallback, VectorActionKernelCallback, 
+        MetaInfoKernelCallback, 
+        SegmentationKernelCallback
     )
-    episodes = action_convert.load_episodes()
-    for idx, (eps, val) in enumerate(episodes.items()):
-        print(eps, val)
-        if idx > 5:
-            break
-    # policy = VPTFlowPolicy(policy_kwargs={}, action_kwargs={"dim_cond": 512, "dim_input": 512, "depth": 3, "width": 512})
+    from minestudio.data import RawDataModule
+    from torchcfm.conditional_flow_matching import ConditionalFlowMatcher
+
+    data_module = RawDataModule(
+        data_params=dict(
+            dataset_dirs=[
+                '/nfs-shared-2/data/contractors-new/dataset_10xx', 
+            ],
+            modal_kernel_callbacks=[
+                ImageKernelCallback(frame_width=128, frame_height=128, enable_video_aug=False), 
+                # ActionKernelCallback(),
+                VectorActionKernelCallback(action_chunk_size=32), 
+                # MetaInfoKernelCallback(),
+            ],
+            win_len=128, 
+            split_ratio=0.9,
+            shuffle_episodes=True,
+        ),
+        batch_size=3,
+        num_workers=0,
+        prefetch_factor=None,
+        episode_continuous_batch=True,
+    )
+    data_module.setup()
+    loader = data_module.train_dataloader()
+    batch = next(iter(loader))
+
+    model = VPTFlowPolicy(policy_kwargs={
+        "attention_heads": 16,
+        "attention_mask_style": "clipped_causal",
+        "attention_memory_size": 256,
+        "diff_mlp_embedding": True,
+        "hidsize": 2048,
+        "img_shape": [
+        128,
+        128,
+        3
+        ],
+        "impala_chans": [
+        16,
+        32,
+        32
+        ],
+        "impala_kwargs": {
+        "post_pool_groups": 1
+        },
+        "impala_width": 8,
+        "init_norm_kwargs": {
+        "batch_norm": False,
+        "group_norm_groups": 1
+        },
+        "n_recurrence_layers": 4,
+        "only_img_input": True,
+        "pointwise_ratio": 4,
+        "pointwise_use_activation": False,
+        "recurrence_is_residual": True,
+        "recurrence_type": "transformer",
+        "timesteps": 128,
+        "use_pointwise_layer": True,
+        "use_pre_lstm_ln": False
+    },
+    action_kwargs={"dim_cond": 2048, "dim_input": 32*22})
+    b, t, d = batch['action'].shape
+    action = batch['action'].reshape(b*t, d)
+    noise = torch.rand_like(action)
+    fm = ConditionalFlowMatcher(sigma=0.0)
+    time, xt, ut = fm.sample_location_and_conditional_flow(noise, action)
+    print(t, xt.shape, ut.shape)
+    print(xt.device, ut.device)
+    batch['sampling_timestep'], batch['xt'], batch['ut'] = time.reshape(b, t), xt.reshape(b, t, d), ut.reshape(b, t, d)
+    batch['noise'] = noise.reshape(b, t, d)
+
+    result, _ = model(batch, state_in=None)
+    print(result["vt"].shape)

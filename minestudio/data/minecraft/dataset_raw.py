@@ -111,10 +111,10 @@ class RawDataset(Dataset):
         start = max(0, relative_idx * self.win_len) # if start > 0 is the prequest for previous action
         item = self.kernel_manager.read(episode, start, self.win_len, self.skip_frame)
 
-        for key in list(item.keys()):
-            if key.endswith('mask'):
-                mask = item.pop(key)
-        item["mask"] = mask
+        # for key in list(item.keys()):
+            # if key.endswith('mask'):
+                # mask = item.pop(key)
+        item["mask"] = item['action_mask']
 
         item['text'] = 'raw'
         item['timestamp'] = np.arange(start, start+self.win_len, self.skip_frame)
