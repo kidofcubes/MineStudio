@@ -32,7 +32,7 @@ def main(args):
         warmup_steps=args.warmup_steps,
         weight_decay=args.weight_decay,
         callbacks=[
-            FlowMatchingCallback(sigma=args.action.sigma),
+            FlowMatchingCallback(sigma=args.fm.sigma),
         ], 
         hyperparameters=convert_to_normal(args),
     )
@@ -49,8 +49,8 @@ def main(args):
                 VectorActionKernelCallback(action_chunk_size=args.data.action_chunk_size),
             ],
             win_len=args.data.win_len, 
-            split_ratio=args.data.split_ratio, 
-            shuffle_episodes=args.data.shuffle_episodes,
+            split_ratio=args.split_ratio, 
+            shuffle_episodes=args.shuffle_episodes,
         ), 
         batch_size=args.batch_size,
         num_workers=args.num_workers,
