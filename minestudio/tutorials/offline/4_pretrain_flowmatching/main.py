@@ -17,13 +17,14 @@ from minestudio.offline import MineLightning
 from minestudio.offline.utils import convert_to_normal
 from minestudio.offline.mine_callbacks import FlowMatchingCallback
 from minestudio.offline.lightning_callbacks import SmartCheckpointCallback, SpeedMonitorCallback
+from minestudio.offline.utils import convert_to_normal
 
-logger = WandbLogger(project="minestudio")
-# logger = None
-@hydra.main(config_path='.', config_name='vpt_raw_config')
+#logger = WandbLogger(project="minestudio")
+logger = None
+@hydra.main(config_path='.', config_name='vpt_flow_config')
 def main(args):
     
-    mine_policy = VPTFlowPolicy(policy_kwargs=args.policy, action_kwargs=args.action)
+    mine_policy = VPTFlowPolicy(policy_kwargs=convert_to_normal(args.policy), action_kwargs=convert_to_normal(args.action))
     mine_lightning = MineLightning(
         mine_policy=mine_policy,
         log_freq=20,
@@ -31,7 +32,7 @@ def main(args):
         warmup_steps=args.warmup_steps,
         weight_decay=args.weight_decay,
         callbacks=[
-            FlowMatchingCallback(sigma=args.sigma),
+            FlowMatchingCallback(sigma=args.action.sigma),
         ], 
         hyperparameters=convert_to_normal(args),
     )
