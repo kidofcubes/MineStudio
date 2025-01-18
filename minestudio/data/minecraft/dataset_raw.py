@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-10 10:26:32
 LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2025-01-17 19:20:52
+LastEditTime: 2025-01-18 14:52:22
 FilePath: /MineStudio/minestudio/data/minecraft/dataset_raw.py
 '''
 import io
@@ -111,10 +111,10 @@ class RawDataset(Dataset):
         start = max(0, relative_idx * self.win_len) # if start > 0 is the prequest for previous action
         item = self.kernel_manager.read(episode, start, self.win_len, self.skip_frame)
 
-        for key in list(item.keys()):
-            if key.endswith('mask'):
-                mask = item.pop(key)
-        item["mask"] = mask
+        # for key in list(item.keys()):
+        #     if key.endswith('mask'):
+        #         mask = item.pop(key)
+        item["mask"] = item['action_mask']
 
         item['text'] = 'raw'
         item['timestamp'] = np.arange(start, start+self.win_len, self.skip_frame)
