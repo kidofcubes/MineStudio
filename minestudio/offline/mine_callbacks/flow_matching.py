@@ -1,7 +1,7 @@
 '''
 Date: 2025-01-18 13:49:25
 LastEditors: muzhancun muzhancun@126.com
-LastEditTime: 2025-01-18 14:02:03
+LastEditTime: 2025-01-18 14:11:21
 FilePath: /MineStudio/minestudio/offline/mine_callbacks/flow_matching.py
 '''
 import torch
@@ -38,7 +38,7 @@ class FlowMatchingCallback(ObjectiveCallback):
         mask = batch.get('action_chunk_mask', torch.ones_like(ut))
         mask_ut = ut * mask
         mask_vt = vt * mask
-        loss = ((mask_ut - mask_vt) ** 2).sum(-1).mean()
+        loss = ((mask_vt - mask_ut) ** 2).sum(-1).mean()
         result = {
             "loss": loss,
         }
