@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-11 15:59:37
-LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2025-01-03 10:17:20
+LastEditors: caishaofei-mus1 1744260356@qq.com
+LastEditTime: 2025-01-18 10:57:55
 FilePath: /MineStudio/minestudio/models/base_policy.py
 '''
 from abc import ABC, abstractmethod
@@ -87,8 +87,10 @@ class MinePolicy(torch.nn.Module, ABC):
         action = self.pi_head.sample(latents['pi_logits'], deterministic)
         self.vpred = latents['vpred']
         if input_shape == "BT*":
+            self.cache_latents = latents
             return action, state_out
         elif input_shape == "*":
+            self.cache_latents = dict_map(lambda tensor: tensor[0][0], latents)
             return dict_map(lambda tensor: tensor[0][0], action), recursive_tensor_op(lambda x: x[0], state_out)
         else:
             raise NotImplementedError

@@ -139,7 +139,7 @@ class KernelManager(object):
             self.kernels[kernel.name] = kernel
             part_episodes = set(kernel.get_episode_list())
             if self.verbose:
-                Console().log(f"[Kernel] Modal [pink]{kernel.name}[/pink] load {len(part_episodes)} episodes. ")         
+                Console().log(f"[Kernel] Modal [pink]{kernel.name}[/pink] load {len(part_episodes)} episodes. ")
             episodes = episodes.intersection(part_episodes) if episodes is not None else part_episodes
 
         self.num_frames = 0

@@ -184,3 +184,5 @@ outputs
 output
 
 logs
+
+*.mp4

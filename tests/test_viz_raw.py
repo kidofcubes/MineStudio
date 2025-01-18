@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-10 11:01:51
-LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2025-01-09 16:51:41
+LastEditors: caishaofei-mus1 1744260356@qq.com
+LastEditTime: 2025-01-18 10:02:11
 FilePath: /MineStudio/tests/test_viz_raw.py
 '''
 import argparse
