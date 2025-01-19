@@ -63,7 +63,10 @@ class VPTFlowPolicy(MineGenerativePolicy, PyTorchModelHubMixin):
         return {"vt": vt, "pi_logits": pi_latent, "vpred": vf_latent}, state_out
     
     def sample(self, input, state_in = None, **kwargs):
-        (pi_latent, vf_latent), state_out = self.net(input, state_in)
+        B, T = input["image"].shape[:2]
+        state_in = self.initial_state(B) if state_in is None else state_in
+        first = torch.tensor([[False]], device=self.device).repeat(B, T)
+        (pi_latent, vf_latent), state_out = self.net(input, state_in, context={"first": first})
         sampling_timestep = kwargs.get("sampling_timestep", 10)
         times = torch.linspace(0., 1., sampling_timestep, device=self.device)
         traj = torchdiffeq.odeint(
@@ -74,12 +77,19 @@ class VPTFlowPolicy(MineGenerativePolicy, PyTorchModelHubMixin):
             rtol=1e-4,
             method="dopri5",
         )
+        # print(traj[-1].clip(-1, 1))
         return traj[-1].clip(-1, 1), state_out
 
+@Registers.model_loader.register
 def load_vpt_flow_policy(ckpt_path: str) -> VPTFlowPolicy:
     ckpt = torch.load(ckpt_path, map_location="cpu")
-    model = VPTFlowPolicy.load_from_checkpoint(ckpt_path)
-    model.load_state_dict(ckpt["state_dict"])
+    policy_kwargs = ckpt["hyper_parameters"]["policy"]
+    action_kwargs = ckpt["hyper_parameters"]["action"]
+    model = VPTFlowPolicy(policy_kwargs, action_kwargs)
+    print(f"Policy kwargs: {policy_kwargs}")
+    print(f"Action kwargs: {action_kwargs}")
+    state_dict = {k.replace('mine_policy.', ''): v for k, v in ckpt['state_dict'].items()}
+    model.load_state_dict(state_dict)
     return model
 
 if __name__ == "__main__":

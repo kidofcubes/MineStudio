@@ -107,7 +107,10 @@ class MLP(nn.Module):
         b, t, _ = noised.shape
         noised = rearrange(noised, 'b t ... -> (b t) ...')
         cond = rearrange(cond, 'b t ... -> (b t) ...')
-        times = rearrange(times, 'b t -> (b t)')
+        if times.ndim == 0:
+            times = times.unsqueeze(0)
+        else:
+            times = rearrange(times, 'b t -> (b t)')
         assert noised.ndim == 2
 
         time_emb = self.to_time_emb(times)
