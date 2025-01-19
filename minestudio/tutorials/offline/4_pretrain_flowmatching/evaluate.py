@@ -20,7 +20,7 @@ class NoiseCallback(MinecraftCallback):
         return obs, reward, terminated, truncated, info
 
 if __name__ == '__main__':
-    agent = load_vpt_flow_policy("/nfs-shared-2/zhancun/models/flow.ckpt")
+    agent = load_vpt_flow_policy("flow.ckpt")
     agent.to('cuda:0')
 
     sim = MinecraftSim(

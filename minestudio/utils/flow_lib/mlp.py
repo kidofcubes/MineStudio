@@ -104,9 +104,11 @@ class MLP(nn.Module):
         times,
         cond
     ):
-        b, t, _ = noised.shape
-        noised = rearrange(noised, 'b t ... -> (b t) ...')
-        cond = rearrange(cond, 'b t ... -> (b t) ...')
+        ndim = noised.ndim
+        if ndim > 2:
+            b, t, _ = noised.shape
+            noised = rearrange(noised, 'b t ... -> (b t) ...')
+            cond = rearrange(cond, 'b t ... -> (b t) ...')
         if times.ndim == 0:
             times = times.unsqueeze(0)
         else:
@@ -124,6 +126,6 @@ class MLP(nn.Module):
 
             block_out = block(denoised) * (block_out_gamma(cond) + 1.)
             denoised = block_out + residual
-
-        denoised = rearrange(denoised, '(b t) ... -> b t ...', b = b, t = t)
+        if ndim > 2:
+            denoised = rearrange(denoised, '(b t) ... -> b t ...', b = b, t = t)
         return denoised

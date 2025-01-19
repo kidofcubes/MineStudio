@@ -68,16 +68,17 @@ class VPTFlowPolicy(MineGenerativePolicy, PyTorchModelHubMixin):
         first = torch.tensor([[False]], device=self.device).repeat(B, T)
         (pi_latent, vf_latent), state_out = self.net(input, state_in, context={"first": first})
         sampling_timestep = kwargs.get("sampling_timestep", 10)
-        times = torch.linspace(0., 1., sampling_timestep, device=self.device)
+        sampling_times = torch.linspace(0, 1, sampling_timestep, device=self.device)
+        noise = input["noise"].reshape(B*T, -1)
+        pi_latent = pi_latent.reshape(B*T, -1)
         traj = torchdiffeq.odeint(
             lambda t, x: self.action_head(x, times=t, cond=pi_latent),
-            input["noise"],
-            times,
+            noise,
+            sampling_times,
             atol=1e-4,
             rtol=1e-4,
             method="dopri5",
         )
-        # print(traj[-1].clip(-1, 1))
         return traj[-1].clip(-1, 1), state_out
 
 @Registers.model_loader.register
@@ -105,6 +106,7 @@ if __name__ == "__main__":
     )
     from minestudio.data import RawDataModule
     from torchcfm.conditional_flow_matching import ConditionalFlowMatcher
+    import os
 
     data_module = RawDataModule(
         data_params=dict(
@@ -130,50 +132,32 @@ if __name__ == "__main__":
     loader = data_module.train_dataloader()
     batch = next(iter(loader))
 
-    model = VPTFlowPolicy(policy_kwargs={
-        "attention_heads": 16,
-        "attention_mask_style": "clipped_causal",
-        "attention_memory_size": 256,
-        "diff_mlp_embedding": True,
-        "hidsize": 2048,
-        "img_shape": [
-        128,
-        128,
-        3
-        ],
-        "impala_chans": [
-        16,
-        32,
-        32
-        ],
-        "impala_kwargs": {
-        "post_pool_groups": 1
-        },
-        "impala_width": 8,
-        "init_norm_kwargs": {
-        "batch_norm": False,
-        "group_norm_groups": 1
-        },
-        "n_recurrence_layers": 4,
-        "only_img_input": True,
-        "pointwise_ratio": 4,
-        "pointwise_use_activation": False,
-        "recurrence_is_residual": True,
-        "recurrence_type": "transformer",
-        "timesteps": 128,
-        "use_pointwise_layer": True,
-        "use_pre_lstm_ln": False
-    },
-    action_kwargs={"dim_cond": 2048, "dim_input": 32*22})
+    dir = "./checkpoints/"
+    # find the latest checkpoint
+    checkpoints = os.listdir(dir)
+    checkpoints = [os.path.join(dir, c) for c in checkpoints if c.endswith("ckpt")]
+    checkpoints.sort(key=os.path.getmtime)
+    print(checkpoints)
+
+    model = load_vpt_flow_policy(checkpoints[-1])
     b, t, d = batch['action'].shape
     action = batch['action'].reshape(b*t, d)
     noise = torch.rand_like(action)
     fm = ConditionalFlowMatcher(sigma=0.0)
     time, xt, ut = fm.sample_location_and_conditional_flow(noise, action)
-    print(t, xt.shape, ut.shape)
+    print(time.shape, xt.shape, ut.shape)
     print(xt.device, ut.device)
+    print(time[0])
     batch['sampling_timestep'], batch['xt'], batch['ut'] = time.reshape(b, t), xt.reshape(b, t, d), ut.reshape(b, t, d)
     batch['noise'] = noise.reshape(b, t, d)
 
     result, _ = model(batch, state_in=None)
-    print(result["vt"].shape)
+    result["vt"] = result["vt"].reshape(b*t, d)
+    # calculate the loss
+    loss = nn.functional.mse_loss(result["vt"], ut)
+    print(loss)
+
+    pred, _ = model.sample(batch, state_in=None, sampling_timestep=10)
+    print(pred.shape, action.shape)
+    print(action[0].reshape(32, 22))
+    print(pred[0].reshape(32, 22))
