@@ -62,8 +62,8 @@ online_dict = {
         "keep_interval": 40,
         "record_video_interval": 2,
         "enable_ref_update": False,
-        "resume": "/scratch/hekaichen/workspace/MineStudio/minestudio/online/run/output/gate_kl/checkpoints/2024-12-25_02-36-50/210", #"/scratch/hekaichen/tmpdir/ray/session_2024-12-12_21-10-40_218613_2665801/artifacts/2024-12-12_21-10-58/TorchTrainer_2024-12-12_21-10-58/working_dirs/TorchTrainer_8758b_00000_0_2024-12-12_21-10-58/checkpoints/150",
-        "resume_optimizer": True,
+        "resume": None, #"/scratch/hekaichen/workspace/MineStudio/minestudio/online/run/output/gate_kl/checkpoints/2024-12-25_02-36-50/210", #"/scratch/hekaichen/tmpdir/ray/session_2024-12-12_21-10-40_218613_2665801/artifacts/2024-12-12_21-10-58/TorchTrainer_2024-12-12_21-10-58/working_dirs/TorchTrainer_8758b_00000_0_2024-12-12_21-10-58/checkpoints/150",
+        "resume_optimizer": False, 
         "save_path": "/scratch/hekaichen/workspace/MineStudio/minestudio/online/run/output/gate_kl"
     },
 
