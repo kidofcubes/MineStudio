@@ -58,11 +58,11 @@ class SetInventoryCallback(InitInventoryCallback):
         
     def after_step(self, sim, obs, reward, terminated, truncated, info):
         if self.change_frequency == "step":
-            obs, info = self._set_inventory(sim)
+            obs, info = self._set_inventory(sim,obs,info)
         return obs, reward, terminated, truncated, info
         
     def after_reset(self, sim, obs, info):
-        obs, info = self._set_inventory(sim)
+        obs, info = self._set_inventory(sim,obs,info)
         return obs, info
     
     def _sample_inventory(self, init_inventory, visited_slots, unvisited_slots):
@@ -84,6 +84,12 @@ class SetInventoryCallback(InitInventoryCallback):
         })
         return init_inventory, visited_slots, unvisited_slots
 
+    def _clean_screen(self, sim, obs, info):
+        for _ in range(50):
+            action = sim.env.noop_action()
+            obs, reward, done, info = sim.env.step(action)
+        obs, info = sim._wrap_obs_info(obs, info)
+        return obs,info
     
 if __name__ == "__main__":
 

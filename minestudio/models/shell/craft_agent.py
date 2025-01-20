@@ -11,7 +11,7 @@ from typing import (
     Callable, Any, Tuple, Optional, Union
 )
 from minestudio.simulator.entry import MinecraftSim
-from minestudio.models.shell.gui_agent import GUIWorker,WIDTH,HEIGHT,SLOT_POS_INVENTORY_WO_RECIPE,SLOT_POS_TABLE_WO_RECIPE
+from minestudio.models.shell.gui_agent import GUIWorker
 
 def random_dic(dicts):
     dict_key_ls = list(dicts.keys())
@@ -20,7 +20,6 @@ def random_dic(dicts):
     for key in dict_key_ls:
         new_dic[key] = dicts.get(key)
     return new_dic
-
 
 class CraftWorker(GUIWorker):
     
@@ -38,6 +37,7 @@ class CraftWorker(GUIWorker):
         # print("Initializing worker...")
         self.inventory_slot_range = inventory_slot_range
         self.recycle_craft_table = recycle_craft_table
+        self.crafting_slotpos = 'none'  
 
     # crafting
     def crafting(self, target: str, target_num: int=1, recipe_name:str=None):
@@ -155,16 +155,14 @@ class CraftWorker(GUIWorker):
         
         return True, None
 
-
     # open inventory    
     def open_inventory_wo_recipe(self):
         self._press_inventory_button()
         # update slot pos
         self.current_gui_type = 'inventory_wo_recipe'
-        self.crafting_slotpos = SLOT_POS_INVENTORY_WO_RECIPE
+        self.crafting_slotpos = self.slot_pos_inventory_wo_recipe
         self.roam_camera()
         
-
     # before opening crafting_table
     def pre_open_tabel(self, attack_num=20):
         action = self.env.noop_action()
@@ -277,11 +275,10 @@ class CraftWorker(GUIWorker):
         self._null_action(2)
 
         forget_frames,forget_infos,forget_actions = self.forget(num=0)
-        self.cursor = [WIDTH // 2, HEIGHT // 2] #鼠标位置
+        self._reset_cursor() #鼠标位置
         self.current_gui_type = 'crating_table_wo_recipe'
-        self.crafting_slotpos = SLOT_POS_TABLE_WO_RECIPE
+        self.crafting_slotpos = self.slot_pos_table_wo_recipe
         return forget_frames,forget_infos,forget_actions        
-
 
     def random_move_or_stay(self,random_p=[0.5,0.25]):
         if np.random.uniform(0, 1) > random_p[0]:
@@ -301,6 +298,7 @@ class CraftWorker(GUIWorker):
         self._assert(slot in SLOT_POS, f'Error: slot: {slot}')
         x, y = SLOT_POS[slot]
         self.move_to_pos(x, y)
+    
     # pull
     # select item_from, select item_to
     def pull_item_all(self, 
@@ -330,6 +328,7 @@ class CraftWorker(GUIWorker):
         item: str,
         target_number: int
     ) -> None:
+        raw_item_name = copy.deepcopy(item)
         if 'resource' in item_to:
             item = self.info['inventory'][int(item_from.split('_')[-1])]
             self.resource_record[item_to] = item
@@ -346,17 +345,16 @@ class CraftWorker(GUIWorker):
             self._null_action(1)
         
         self._select_item()
-        self.gui["cursor"] = item
+        self.gui["cursor"] = raw_item_name
         self.move_to_slot(SLOT_POS, item_to)
         if self.slow_act:
             self._null_action(1)
         del self.gui["cursor"]
-        self.gui[slot_id] = item
+        self.gui[slot_id] = raw_item_name
         for i in range(target_number):
             self._use_item()
             if self.slow_act:
                 self._null_action(1)
-            
         
     # use n item_to 
     def pull_item_continue(self, 
@@ -444,7 +442,6 @@ class CraftWorker(GUIWorker):
             result[f'inventory_{slot}'] = item
         
         return result
-    
     
     # return crafting table
     def return_crafting_table(self):
@@ -721,7 +718,6 @@ if __name__ == '__main__':
     #     tag_info = json.load(file)
     # for key in tag_info:
     #     print(key[10:])
-  
   
     import numpy as np
     from minestudio.simulator import MinecraftSim

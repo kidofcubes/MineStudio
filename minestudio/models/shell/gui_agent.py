@@ -13,8 +13,8 @@ import time
 from minestudio.simulator.entry import MinecraftSim
 
 CAMERA_SCALER = 360.0 / 2400.0
-WIDTH, HEIGHT = 640, 360
 MU20_BIN21_CURSOR = [7.24403611,5.21143765,3.7123409,2.60671619,1.79128785,1.18988722,0.74633787,0.41920814,0.17794105,0]
+BASE_WIDTH, BASE_HEIGHT = 640, 360
 
 # compute slot position
 KEY_POS_INVENTORY_WO_RECIPE = {
@@ -101,11 +101,13 @@ KEY_POS_TABLE_WO_RECIPE = {
         'start_id': 0,
     }
 }
-def COMPUTE_SLOT_POS(KEY_POS):
+def COMPUTE_SLOT_POS(KEY_POS,WEIGHT_RATIO:int=1,HEIGHT_RADIO:int=1):
     result = {}
     for k, v in KEY_POS.items():
-        left_top = v['left-top']
-        right_bottom = v['right-bottom']
+        left_top = [0,0]
+        right_bottom = [0,0]
+        left_top = [v['left-top'][0]*WEIGHT_RATIO, v['left-top'][1]*HEIGHT_RADIO]
+        right_bottom = [v['right-bottom'][0]*WEIGHT_RATIO, v['right-bottom'][1]*HEIGHT_RADIO]
         row = v['row']
         col = v['col']
         prefix = v['prefix']
@@ -124,9 +126,6 @@ def COMPUTE_SLOT_POS(KEY_POS):
                 slot_id += 1
     return result
 
-SLOT_POS_INVENTORY_WO_RECIPE = COMPUTE_SLOT_POS(KEY_POS_INVENTORY_WO_RECIPE)
-SLOT_POS_TABLE_WO_RECIPE = COMPUTE_SLOT_POS(KEY_POS_TABLE_WO_RECIPE)
-
 
 class GUIWorker(object):
     
@@ -139,25 +138,34 @@ class GUIWorker(object):
         **kwargs, 
     )-> None:
         # print("Initializing worker...")
+        
+        self.env = env
+        self.width,self.height = env.render_size
+        self.width_ratio,self.height_ratio = self.width/BASE_WIDTH, self.height/BASE_HEIGHT
+        self.slot_pos_inventory_wo_recipe = COMPUTE_SLOT_POS(KEY_POS_INVENTORY_WO_RECIPE,self.width_ratio,self.height_ratio)
+        self.slot_pos_table_wo_recipe = COMPUTE_SLOT_POS(KEY_POS_TABLE_WO_RECIPE,self.width_ratio,self.height_ratio)
+        self.camera_scaler = CAMERA_SCALER / self.width_ratio
+        
         self.if_discrete = if_discrete
         self.slow_act = slow_act
         self.sample_ratio = sample_ratio
+        
         self.outframes, self.outactions, self.outinfos = [], [], []
-        self.env = env
-        self.cursor = [WIDTH // 2, HEIGHT // 2]
+        self.cursor = [self.width // 2, self.height // 2]
         self.current_gui_type = None
         self.gui = {}
-        self.reset(fake_reset=False)
+        
+        self.reset(fake_reset=True)
     
     def reset(self, fake_reset=True,):
         if not fake_reset:
-            self.crafting_slotpos = 'none'
-            self.resource_record = {f'resource_{x}': {'type': 'none', 'quantity': 0} for x in range(9)}
             self._null_action(1)
             self.env.reset()
-            
+           
+        self.resource_record = {f'resource_{x}': {'type': 'none', 'quantity': 0} for x in range(9)} 
+        self.crafting_slotpos = 'none'
         self.current_gui_type = None
-        self.cursor = [WIDTH // 2, HEIGHT // 2]
+        self._reset_cursor()
         self.gui = {}
         self.outframes, self.outactions, self.outinfos = [], [], []
         self._get_state()
@@ -172,6 +180,11 @@ class GUIWorker(object):
             self.resource_record = {f'resource_{x}': {'type': 'none', 'quantity': 0} for x in range(9)}      
                  
             raise AssertionError(message)
+    
+    def _reset_cursor(self):
+        """reset the cursor to middle of the screen """
+        self.cursor = [self.width // 2, self.height // 2]
+        return self.cursor
     
     # continue attack (retuen crafting table)
     def _attack_continue(self, times=1):
@@ -209,18 +222,17 @@ class GUIWorker(object):
             
             d1 = camera_x*choose_distance / distance
             d2 = camera_y*choose_distance / distance
-            temp_d = np.array([d1 * CAMERA_SCALER, d2 * CAMERA_SCALER])
+            temp_d = np.array([d1 * self.camera_scaler, d2 * self.camera_scaler])
             temp_d = self.env.action_transformer.quantizer.discretize(temp_d)
             temp_d = self.env.action_transformer.quantizer.undiscretize(temp_d)
-            d1,d2 = temp_d/CAMERA_SCALER
+            d1,d2 = temp_d / self.camera_scaler
             self.move_once(float(d1), float(d2)) #在这里改变了self.cursor[0]
             #print(distance,choose_distance,"||",d1,d2,"||")
-        #print(x , self.cursor[0],y , self.cursor[1])
-        
+        #print(x , self.cursor[0],y , self.cursor[1])  
     
     def move_once(self, x: float, y: float):
         action = self.env.noop_action() 
-        action['camera'] = np.array([y * CAMERA_SCALER, x * CAMERA_SCALER])
+        action['camera'] = np.array([y * self.camera_scaler, x * self.camera_scaler])
         self.cursor[0] += x
         self.cursor[1] += y
         self.obs, _, _, _, self.info = self._step(action) 
@@ -232,7 +244,7 @@ class GUIWorker(object):
         d1 =  random.uniform(-50, 50)
         d2 =  random.uniform(-50, 50)
         for _ in range(num_random):
-            if self.cursor[0] + d1 < side_pixels or self.cursor[0] + d1 > WIDTH-side_pixels  or self.cursor[1] + d2 < side_pixels or self.cursor[1] + d2 > HEIGHT-side_pixels:
+            if self.cursor[0] + d1 < side_pixels or self.cursor[0] + d1 > self.width - side_pixels  or self.cursor[1] + d2 < side_pixels or self.cursor[1] + d2 > self.height-side_pixels:
                 break
             self.move_once(d1, d2)
         self.forget(num=num_random)
@@ -277,7 +289,7 @@ class GUIWorker(object):
     
     def _press_inventory_button(self,fast=False):
         self._call_func("inventory",no_op=fast)
-        self.cursor = [WIDTH // 2, HEIGHT // 2]
+        self._reset_cursor()
     
     def _look_down(self):
         action = self.env.noop_action()

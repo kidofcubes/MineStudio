@@ -1,7 +1,7 @@
 '''
 Date: 2025-01-05 22:26:22
 LastEditors: limuyao 2200017405@stu.pku.edu.cn
-LastEditTime: 2025-01-13 18:26:22
+LastEditTime: 2025-01-19 06:14:00
 FilePath: /MineStudio/minestudio/simulator/callbacks/init_inventory.py
 '''
 
@@ -64,9 +64,9 @@ class InitInventoryCallback(MinecraftCallback):
         self.equipments_library = self._get_equipments_library()
         
     def after_reset(self, sim, obs, info):
-        return self._set_inventory(sim)
+        return self._set_inventory(sim, obs, info)
     
-    def _set_inventory(self, sim):
+    def _set_inventory(self, sim, obs, info):
         chats = []
         visited_slots = set()
         uncertain_slots = [] 
@@ -113,10 +113,13 @@ class InitInventoryCallback(MinecraftCallback):
                 chat += f" {item_dict['metadata']}"
                 
             chats.append(chat)
-            
+        
+        obs, reward, done, info = sim.env.execute_cmd("/gamerule sendCommandFeedback false")
+        obs, reward, done, info = sim.env.execute_cmd("/gamerule commandblockoutput false")
         for chat in chats:
             obs, reward, done, info = sim.env.execute_cmd(chat)
         obs, info = sim._wrap_obs_info(obs, info)
+        
         
         # check whether set up
         init_flag = False
@@ -135,6 +138,8 @@ class InitInventoryCallback(MinecraftCallback):
             if kdx%40==0:
                 sleep(1)
             
+        obs, info = self._clean_screen(sim,obs,info)
+            
         if not init_flag:
             uuidx = str(uuid.uuid4())
             Path("logs").mkdir(parents=True,exist_ok=True)
@@ -149,6 +154,10 @@ class InitInventoryCallback(MinecraftCallback):
         inventory_infos = []
             
         return obs, info
+    
+    def _clean_screen(self, sim, obs, info):
+        obs, info = sim._wrap_obs_info(obs, info)
+        return obs,info
     
     def _get_equipments_library(self):
         mc_equipments_file_path = Path(__file__).resolve().parents[3] / "assets" / "mc_equipments.1.16.json"

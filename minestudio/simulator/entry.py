@@ -23,6 +23,7 @@ from minestudio.simulator.minerl.herobraine.env_specs.human_survival_specs impor
 from minestudio.simulator.callbacks import MinecraftCallback
 from minestudio.utils import get_mine_studio_dir
 
+BASIC_RESOLUTION = (640,360)
 
 @dataclass
 class CameraConfig:
@@ -49,8 +50,6 @@ class CameraConfig:
             'camera_mu': self.camera_mu,
             'camera_quantization_scheme': self.camera_quantization_scheme,
         }
-    
-    
 
 def download_engine():
     import huggingface_hub, zipfile
@@ -90,6 +89,7 @@ class MinecraftSim(gymnasium.Env):
         self.obs_size = obs_size
         self.action_type = action_type
         self.render_size = render_size
+        assert np.abs(render_size[0] / render_size[1] - 640 / 360) < 0.001
         self.seed = seed
         self.num_empty_frames = num_empty_frames
         self.callbacks = callbacks
@@ -98,7 +98,7 @@ class MinecraftSim(gymnasium.Env):
         self.env = HumanSurvival(
             fov_range = [70, 70],
             gamma_range = [2, 2],
-            guiscale_range = [1, 1],
+            guiscale_range = [render_size[0] / BASIC_RESOLUTION[0], render_size[0] / BASIC_RESOLUTION[0]],
             cursor_size_range = [16.0, 16.0],
             frameskip = 1,
             resolution = render_size, 
