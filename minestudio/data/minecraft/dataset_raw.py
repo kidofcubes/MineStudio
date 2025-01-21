@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-10 10:26:32
 LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2025-01-18 14:52:22
+LastEditTime: 2025-01-19 12:22:51
 FilePath: /MineStudio/minestudio/data/minecraft/dataset_raw.py
 '''
 import io
@@ -32,6 +32,7 @@ class RawDataset(Dataset):
                  dataset_dirs: List[str], 
                  modal_kernel_callbacks: List[Union[str, ModalKernelCallback]], 
                  modal_kernel_config: Optional[Dict]=None,
+                 seed: int=0, 
                  # below are parameters for spliting dataset and building items
                  win_len: int=1, 
                  skip_frame: int=1, 
@@ -46,6 +47,7 @@ class RawDataset(Dataset):
         self.split_ratio = split_ratio
         self.verbose = verbose
         self.shuffle_episodes = shuffle_episodes
+        self.seed = seed
         
         assert len(modal_kernel_callbacks) > 0, "At least one modal kernel callback is required. "
         if isinstance(modal_kernel_callbacks[0], str):
@@ -66,9 +68,8 @@ class RawDataset(Dataset):
         _episodes_with_length = list(self.episodes_with_length.items())
 
         if self.shuffle_episodes:
-            seed = 0
-            print(f"[Raw Dataset] Shuffling episodes with seed {seed}. ")
-            random.seed(seed) # ensure the same shuffle order for all workers
+            print(f"[Raw Dataset] Shuffling episodes with seed {self.seed}. ")
+            random.seed(self.seed) # ensure the same shuffle order for all workers
             random.shuffle(_episodes_with_length)
 
         divider = int(len(_episodes_with_length) * self.split_ratio)
@@ -110,12 +111,7 @@ class RawDataset(Dataset):
         episode, relative_idx = self.locate_item(idx)
         start = max(0, relative_idx * self.win_len) # if start > 0 is the prequest for previous action
         item = self.kernel_manager.read(episode, start, self.win_len, self.skip_frame)
-
-        # for key in list(item.keys()):
-        #     if key.endswith('mask'):
-        #         mask = item.pop(key)
         item["mask"] = item['action_mask']
-
         item['text'] = 'raw'
         item['timestamp'] = np.arange(start, start+self.win_len, self.skip_frame)
         item['episode'] = episode
