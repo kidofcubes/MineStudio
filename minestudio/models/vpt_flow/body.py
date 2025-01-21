@@ -63,31 +63,101 @@ class VPTFlowPolicy(MineGenerativePolicy, PyTorchModelHubMixin):
         return {"vt": vt, "pi_logits": pi_latent, "vpred": vf_latent}, state_out
     
     def sample(self, input, state_in = None, **kwargs):
-        (pi_latent, vf_latent), state_out = self.net(input, state_in)
+        B, T = input["image"].shape[:2]
+        state_in = self.initial_state(B) if state_in is None else state_in
+        first = torch.tensor([[False]], device=self.device).repeat(B, T)
+        (pi_latent, vf_latent), state_out = self.net(input, state_in, context={"first": first})
+        sampling_timestep = kwargs.get("sampling_timestep", 10)
+        sampling_times = torch.linspace(0, 1, sampling_timestep, device=self.device)
+        noise = input["noise"].reshape(B*T, -1)
+        pi_latent = pi_latent.reshape(B*T, -1)
         traj = torchdiffeq.odeint(
             lambda t, x: self.action_head(x, times=t, cond=pi_latent),
-            input["noise"],
-            torch.linspace(0, 1, 2, device=self.device),
+            noise,
+            sampling_times,
             atol=1e-4,
             rtol=1e-4,
             method="dopri5",
         )
-        return traj[-1], state_out
-    
+        return traj[-1].clip(-1, 1), state_out
+
+@Registers.model_loader.register
+def load_vpt_flow_policy(ckpt_path: str) -> VPTFlowPolicy:
+    ckpt = torch.load(ckpt_path, map_location="cpu")
+    policy_kwargs = ckpt["hyper_parameters"]["policy"]
+    action_kwargs = ckpt["hyper_parameters"]["action"]
+    model = VPTFlowPolicy(policy_kwargs, action_kwargs)
+    print(f"Policy kwargs: {policy_kwargs}")
+    print(f"Action kwargs: {action_kwargs}")
+    state_dict = {k.replace('mine_policy.', ''): v for k, v in ckpt['state_dict'].items()}
+    model.load_state_dict(state_dict)
+    return model
+
 if __name__ == "__main__":
     """
     for debugging purpose
     """
-    from minestudio.data.minecraft.callbacks import ActionConvertCallback
-    action_convert = ActionConvertCallback(
-        input_dirs=[
-            "/nfs-shared/data/contractors/all_9xx_Jun_29/actions"
-        ], 
-        chunk_size=32
+    from tqdm import tqdm
+    from minestudio.data.minecraft.callbacks import (
+        ImageKernelCallback, 
+        ActionKernelCallback, VectorActionKernelCallback, 
+        MetaInfoKernelCallback, 
+        SegmentationKernelCallback
     )
-    episodes = action_convert.load_episodes()
-    for idx, (eps, val) in enumerate(episodes.items()):
-        print(eps, val)
-        if idx > 5:
-            break
-    # policy = VPTFlowPolicy(policy_kwargs={}, action_kwargs={"dim_cond": 512, "dim_input": 512, "depth": 3, "width": 512})
+    from minestudio.data import RawDataModule
+    from torchcfm.conditional_flow_matching import ConditionalFlowMatcher
+    import os
+
+    data_module = RawDataModule(
+        data_params=dict(
+            dataset_dirs=[
+                '/nfs-shared-2/data/contractors-new/dataset_10xx', 
+            ],
+            modal_kernel_callbacks=[
+                ImageKernelCallback(frame_width=128, frame_height=128, enable_video_aug=False), 
+                # ActionKernelCallback(),
+                VectorActionKernelCallback(action_chunk_size=32), 
+                # MetaInfoKernelCallback(),
+            ],
+            win_len=128, 
+            split_ratio=0.9,
+            shuffle_episodes=True,
+        ),
+        batch_size=3,
+        num_workers=0,
+        prefetch_factor=None,
+        episode_continuous_batch=True,
+    )
+    data_module.setup()
+    loader = data_module.train_dataloader()
+    batch = next(iter(loader))
+
+    dir = "./checkpoints/"
+    # find the latest checkpoint
+    checkpoints = os.listdir(dir)
+    checkpoints = [os.path.join(dir, c) for c in checkpoints if c.endswith("ckpt")]
+    checkpoints.sort(key=os.path.getmtime)
+    print(checkpoints)
+
+    model = load_vpt_flow_policy(checkpoints[-1])
+    b, t, d = batch['action'].shape
+    action = batch['action'].reshape(b*t, d)
+    noise = torch.rand_like(action)
+    fm = ConditionalFlowMatcher(sigma=0.0)
+    time, xt, ut = fm.sample_location_and_conditional_flow(noise, action)
+    print(time.shape, xt.shape, ut.shape)
+    print(xt.device, ut.device)
+    print(time[0])
+    batch['sampling_timestep'], batch['xt'], batch['ut'] = time.reshape(b, t), xt.reshape(b, t, d), ut.reshape(b, t, d)
+    batch['noise'] = noise.reshape(b, t, d)
+
+    result, _ = model(batch, state_in=None)
+    result["vt"] = result["vt"].reshape(b*t, d)
+    # calculate the loss
+    loss = nn.functional.mse_loss(result["vt"], ut)
+    print(loss)
+
+    pred, _ = model.sample(batch, state_in=None, sampling_timestep=10)
+    print(pred.shape, action.shape)
+    print(action[0].reshape(32, 22))
+    print(pred[0].reshape(32, 22))

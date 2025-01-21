@@ -99,7 +99,7 @@ class MinecraftPolicy(nn.Module):
 
     def __init__(
         self,
-        recurrence_type="lstm",
+        recurrence_type="transformer",
         impala_width=1,
         impala_chans=(16, 32, 32),
         obs_processing_width=256,
@@ -285,12 +285,9 @@ class VPTPolicy(MinePolicy, PyTorchModelHubMixin):
 @Registers.model_loader.register
 def load_vpt_policy(model_path: str, weights_path: Optional[str] = None):
     if model_path is None:
-        from minestudio.models.utils.download import download_model
-        local_dir = download_model("GROOT")
-        if local_dir is None:
-            assert False, "Please specify the ckpt_path or download the model first."
-        model_path = os.path.join(local_dir, "vpt.model")
-        weights_path = os.path.join(local_dir, "vpt.weights")
+        if ckpt_path is None:
+            repo_id = "CraftJarvis/MineStudio_VPT.rl_for_shoot_animals_2x"
+        return VPTPolicy.from_pretrained(f"{repo_id}")
 
     model = pickle.load(Path(model_path).open("rb"))
     policy_kwargs = model['model']['args']['net']['args']

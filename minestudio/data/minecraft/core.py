@@ -6,6 +6,7 @@ FilePath: /MineStudio/minestudio/data/minecraft/core.py
 '''
 import lmdb
 import pickle
+import hashlib
 import numpy as np
 from rich import print
 from rich.console import Console

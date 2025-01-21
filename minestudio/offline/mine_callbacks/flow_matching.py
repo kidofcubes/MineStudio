@@ -18,10 +18,13 @@ class FlowMatchingCallback(ObjectiveCallback):
         self.fm = ConditionalFlowMatcher(sigma=sigma)
 
     def before_step(self, batch, batch_idx, step_name):
+        b, t, d = batch['action'].shape
         noise = torch.rand_like(batch['action'])
-        batch['noise'] = noise
-        t, xt, ut = self.fm.sample(noise, batch['action'])
-        batch['sampling_timestep'], batch['xt'], batch['ut'] = t, xt, ut
+        # batch['noise'] = noise
+        action = batch['action'].reshape(b*t, d)
+        noise = noise.reshape(b*t, d)
+        time, xt, ut = self.fm.sample_location_and_conditional_flow(noise, action)
+        batch['sampling_timestep'], batch['noise'], batch['ut'] = time.reshape(b, t), xt.reshape(b, t, d), ut.reshape(b, t, d)
         return batch
     
     def __call__(
@@ -34,8 +37,11 @@ class FlowMatchingCallback(ObjectiveCallback):
     ) -> Dict[str, torch.Tensor]:
         ut = batch['ut']
         vt = latents['vt']
-        b, t, d = ut.shape
-        mask = batch.get('action_chunk_mask', torch.ones_like(ut))
+        b, t, d = ut.shape # b, 128, 32*22
+        mask = batch.get('action_chunk_mask', torch.ones_like(ut)) # b, 128, 32
+        action_dim = d // mask.shape[-1]
+        # expand mask to the same shape as ut
+        mask = mask.unsqueeze(-1).expand(-1, -1, -1, action_dim).reshape(b, t, d)
         mask_ut = ut * mask
         mask_vt = vt * mask
         loss = ((mask_vt - mask_ut) ** 2).sum(-1).mean()

@@ -5,18 +5,17 @@ from minestudio.simulator.callbacks import (
 )
 from minestudio.simulator.utils.gui import RecordDrawCall, CommandModeDrawCall, SegmentDrawCall
 from functools import partial
-from minestudio.models import load_openai_policy, load_rocket_policy
 if __name__ == '__main__':
-    agent_generator = partial(
-        load_rocket_policy,
-        ckpt_path = 'YOUR CKPT PATH',
-    )
+    # agent_generator = partial(
+    #     load_rocket_policy,
+    #     ckpt_path = 'YOUR CKPT PATH',
+    # )
     sim = MinecraftSim(
         obs_size=(224, 224),
         action_type="env",
         callbacks=[
-            PlaySegmentCallback(sam_path='YOUR SAM PATH', sam_choice='small'),
-            PlayCallback(agent_generator=agent_generator, extra_draw_call=[RecordDrawCall, CommandModeDrawCall, SegmentDrawCall]),
+            # PlaySegmentCallback(sam_path='YOUR SAM PATH', sam_choice='small'),
+            PlayCallback(agent_generator=None, extra_draw_call=[RecordDrawCall, CommandModeDrawCall]),
             RecordCallback(record_path='./output', recording=False),
         ]
     )
