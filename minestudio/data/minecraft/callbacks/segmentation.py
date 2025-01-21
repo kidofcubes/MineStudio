@@ -1,7 +1,7 @@
 '''
 Date: 2025-01-09 05:42:00
 LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2025-01-17 15:26:38
+LastEditTime: 2025-01-21 22:31:03
 FilePath: /MineStudio/minestudio/data/minecraft/callbacks/segmentation.py
 '''
 import cv2
@@ -125,15 +125,14 @@ class SegmentationKernelCallback(ModalKernelCallback):
         sliced_data = {key: value[start:end:skip_frame] for key, value in data.items()}
         return sliced_data
 
-    def do_pad(self, data: Dict, win_len: int, **kwargs) -> Tuple[Dict, np.ndarray]:
+    def do_pad(self, data: Dict, pad_len: int, pad_pos: Literal["left", "right"], **kwargs) -> Tuple[Dict, np.ndarray]:
         traj_len = len(data['obj_id'])
         pad_data = dict()
-        pad_data['event'] = data['event'] + [''] * (win_len - traj_len)
-        pad_obj_id = np.zeros(win_len-traj_len, dtype=np.int32)
-        pad_obj_mask = np.zeros((win_len-traj_len, self.height, self.width), dtype=np.uint8)
-        pad_point = np.zeros((win_len-traj_len, 2), dtype=np.int32) - 1
-        pad_frame_id = np.zeros(win_len-traj_len, dtype=np.int32) - 1
-        pad_frame_range = np.zeros((win_len-traj_len, 2), dtype=np.int32) - 1
+        pad_obj_id = np.zeros(pad_len, dtype=np.int32)
+        pad_obj_mask = np.zeros((pad_len, self.height, self.width), dtype=np.uint8)
+        pad_point = np.zeros((pad_len, 2), dtype=np.int32) - 1
+        pad_frame_id = np.zeros(pad_len, dtype=np.int32) - 1
+        pad_frame_range = np.zeros((pad_len, 2), dtype=np.int32) - 1
         if traj_len == 0:
             pad_data['obj_id'] = pad_obj_id
             pad_data['obj_mask'] = pad_obj_mask
@@ -141,12 +140,22 @@ class SegmentationKernelCallback(ModalKernelCallback):
             pad_data['frame_id'] = pad_frame_id
             pad_data['frame_range'] = pad_frame_range
         else:
-            pad_data['obj_id'] = np.concatenate([data['obj_id'], pad_obj_id], axis=0)
-            pad_data['obj_mask'] = np.concatenate([data['obj_mask'], pad_obj_mask], axis=0)
-            pad_data['point'] = np.concatenate([data['point'], pad_point], axis=0)
-            pad_data['frame_id'] = np.concatenate([data['frame_id'], pad_frame_id], axis=0)
-            pad_data['frame_range'] = np.concatenate([data['frame_range'], pad_frame_range], axis=0)
-        pad_mask = np.concatenate([np.ones(traj_len, dtype=np.uint8), np.zeros(win_len-traj_len, dtype=np.uint8)], axis=0)
+            if pad_pos == "left":
+                pad_data['event'] = [''] * pad_len + data['event']
+                pad_data['obj_id'] = np.concatenate([pad_obj_id, data['obj_id']], axis=0)
+                pad_data['obj_mask'] = np.concatenate([pad_obj_mask, data['obj_mask']], axis=0)
+                pad_data['point'] = np.concatenate([pad_point, data['point']], axis=0)
+                pad_data['frame_id'] = np.concatenate([pad_frame_id, data['frame_id']], axis=0)
+                pad_data['frame_range'] = np.concatenate([pad_frame_range, data['frame_range']], axis=0)
+                pad_mask = np.concatenate([np.zeros(pad_len, dtype=np.uint8), np.ones(traj_len, dtype=np.uint8)], axis=0)
+            elif pad_pos == "right":
+                pad_data['event'] = data['event'] + [''] * pad_len
+                pad_data['obj_id'] = np.concatenate([data['obj_id'], pad_obj_id], axis=0)
+                pad_data['obj_mask'] = np.concatenate([data['obj_mask'], pad_obj_mask], axis=0)
+                pad_data['point'] = np.concatenate([data['point'], pad_point], axis=0)
+                pad_data['frame_id'] = np.concatenate([data['frame_id'], pad_frame_id], axis=0)
+                pad_data['frame_range'] = np.concatenate([data['frame_range'], pad_frame_range], axis=0)
+                pad_mask = np.concatenate([np.ones(traj_len, dtype=np.uint8), np.zeros(pad_len, dtype=np.uint8)], axis=0)
         return pad_data, pad_mask
 
 COLORS = [

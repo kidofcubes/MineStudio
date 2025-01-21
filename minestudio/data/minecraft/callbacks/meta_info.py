@@ -1,7 +1,7 @@
 '''
 Date: 2025-01-09 05:36:19
 LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2025-01-15 15:10:21
+LastEditTime: 2025-01-21 22:28:43
 FilePath: /MineStudio/minestudio/data/minecraft/callbacks/meta_info.py
 '''
 import cv2
@@ -48,15 +48,24 @@ class MetaInfoKernelCallback(ModalKernelCallback):
         sliced_data = {key: value[start:end:skip_frame] for key, value in data.items()}
         return sliced_data
 
-    def do_pad(self, data: Dict, win_len: int, **kwargs) -> Tuple[Dict, np.array]:
+    def do_pad(self, data: Dict, pad_len: int, pad_pos: Literal["left", "right"], **kwargs) -> Tuple[Dict, np.array]:
         pad_data = dict()
         for key, value in data.items():
             traj_len = len(value)
             if isinstance(value, np.ndarray):
-                pad_data[key] = np.concatenate([np.array(value), np.zeros(win_len-traj_len, dtype=value.dtype)], axis=0)
+                if pad_pos == "left":
+                    pad_data[key] = np.concatenate([np.zeros(pad_len, dtype=value.dtype), value], axis=0)
+                elif pad_pos == "right":
+                    pad_data[key] = np.concatenate([value, np.zeros(pad_len, dtype=value.dtype)], axis=0)
             else:
-                pad_data[key] = value + [None] * (win_len - len(value))
-        pad_mask = np.concatenate([np.ones(traj_len, dtype=np.uint8), np.zeros(win_len-traj_len, dtype=np.uint8)], axis=0)
+                if pad_pos == "left":
+                    pad_data[key] = [None] * pad_len + value
+                elif pad_pos == "right":
+                    pad_data[key] = value + [None] * pad_len
+        if pad_pos == "left":
+            pad_mask = np.concatenate([np.zeros(pad_len, dtype=np.uint8), np.ones(traj_len, dtype=np.uint8)], axis=0)
+        elif pad_pos == "right":
+            pad_mask = np.concatenate([np.ones(traj_len, dtype=np.uint8), np.zeros(pad_len, dtype=np.uint8)], axis=0)
         return pad_data, pad_mask
 
 class MetaInfoDrawFrameCallback(DrawFrameCallback):

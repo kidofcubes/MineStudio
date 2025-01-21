@@ -1,8 +1,8 @@
 '''
 Date: 2024-11-10 10:26:32
 LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2025-01-21 20:49:06
-FilePath: /MineStudio/var/minestudio/data/minecraft/dataset_raw.py
+LastEditTime: 2025-01-21 23:03:15
+FilePath: /MineStudio/minestudio/data/minecraft/dataset_raw.py
 '''
 import io
 import re
@@ -223,7 +223,7 @@ if __name__ == '__main__':
             ],
             modal_kernel_callbacks=[
                 ImageKernelCallback(frame_width=224, frame_height=224, enable_video_aug=False), 
-                # ActionKernelCallback(),
+                ActionKernelCallback(enable_prev_action=True, win_bias=1, read_bias=-1),
                 VectorActionKernelCallback(action_chunk_size=32), 
                 MetaInfoKernelCallback(),
                 SegmentationKernelCallback(frame_width=224, frame_height=224), 
@@ -233,7 +233,7 @@ if __name__ == '__main__':
             shuffle_episodes=True,
         ),
         batch_size=3,
-        num_workers=0,
+        num_workers=8,
         prefetch_factor=None,
         episode_continuous_batch=True,
     )
@@ -245,5 +245,5 @@ if __name__ == '__main__':
                 [f"{a} {b}" for a, b in zip(batch['episode'], batch['progress'])]
             )
         )
-        if idx > 50:
-            break
+        # if idx > 50:
+        #     break
