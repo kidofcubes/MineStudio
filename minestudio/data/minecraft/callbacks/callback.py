@@ -1,7 +1,7 @@
 '''
 Date: 2025-01-09 05:08:19
 LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2025-01-17 17:55:25
+LastEditTime: 2025-01-21 22:28:09
 FilePath: /MineStudio/minestudio/data/minecraft/callbacks/callback.py
 '''
 import numpy as np
@@ -93,7 +93,7 @@ class ModalKernelCallback:
         """
         raise NotImplementedError
 
-    def do_pad(self, data: Union[List, Dict], win_len: int, **kwargs) -> Tuple[Union[List, Dict], np.ndarray]:
+    def do_pad(self, data: Union[List, Dict], pad_len: int, pad_pos: Literal["left", "right"], **kwargs) -> Tuple[Union[List, Dict], np.ndarray]:
         """
         Users need to implement padding operations to handle cases where the data length is insufficient.
         """

@@ -1,8 +1,8 @@
 '''
 Date: 2024-11-10 11:01:51
 LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2025-01-18 10:02:11
-FilePath: /MineStudio/tests/test_viz_raw.py
+LastEditTime: 2025-01-21 22:51:41
+FilePath: /MineStudio/var/tests/test_viz_raw.py
 '''
 import argparse
 from torch.utils.data import DataLoader
@@ -15,8 +15,13 @@ from minestudio.data.minecraft.utils import (
     MineDistributedBatchSampler, write_video, batchify, visualize_dataloader
 )
 from minestudio.data.minecraft.callbacks import (
-    ImageKernelCallback, ActionKernelCallback, MetaInfoKernelCallback, SegmentationKernelCallback, 
-    ActionDrawFrameCallback, MetaInfoDrawFrameCallback, SegmentationDrawFrameCallback
+    ImageKernelCallback, 
+    ActionKernelCallback, 
+    MetaInfoKernelCallback, 
+    SegmentationKernelCallback, 
+    ActionDrawFrameCallback, 
+    MetaInfoDrawFrameCallback, 
+    SegmentationDrawFrameCallback
 )
 
 def visualize_raw_dataset(args):
@@ -28,7 +33,7 @@ def visualize_raw_dataset(args):
                 frame_height=args.frame_height, 
                 enable_video_aug=args.enable_video_aug,
             ), 
-            ActionKernelCallback(),
+            ActionKernelCallback(enable_prev_action=True, win_bias=1, read_bias=-1),
             MetaInfoKernelCallback(),
             SegmentationKernelCallback(
                 frame_width=args.frame_width, 

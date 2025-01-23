@@ -1,7 +1,7 @@
 '''
 Date: 2025-01-09 05:27:25
-LastEditors: muzhancun muzhancun@126.com
-LastEditTime: 2025-01-18 20:09:07
+LastEditors: caishaofei-mus1 1744260356@qq.com
+LastEditTime: 2025-01-21 22:48:23
 FilePath: /MineStudio/minestudio/data/minecraft/callbacks/action.py
 '''
 import re
@@ -11,7 +11,7 @@ import numpy as np
 from pathlib import Path
 from rich import print
 from tqdm import tqdm
-from typing import Union, Tuple, List, Dict, Callable, Any
+from typing import Union, Tuple, List, Dict, Callable, Any, Literal
 from collections import OrderedDict
 
 from minestudio.utils.vpt_lib.actions import ActionTransformer
@@ -30,8 +30,10 @@ class ActionKernelCallback(ModalKernelCallback):
                  camera_binsize: int=2,
                  camera_maxval: int=10,
                  camera_mu: int=10,
-                 camera_quantization_scheme="mu_law"):
-        super().__init__()
+                 camera_quantization_scheme="mu_law", 
+                 enable_prev_action: bool=False,
+                 **kwargs):
+        super().__init__(**kwargs)
         self.action_mapper = CameraHierarchicalMapping(n_camera_bins=n_camera_bins)
         self.action_transformer = ActionTransformer(
             camera_binsize=camera_binsize,
@@ -39,6 +41,7 @@ class ActionKernelCallback(ModalKernelCallback):
             camera_mu=camera_mu,
             camera_quantization_scheme=camera_quantization_scheme
         )
+        self.enable_prev_action = enable_prev_action
 
     @property
     def name(self) -> str:
@@ -68,22 +71,41 @@ class ActionKernelCallback(ModalKernelCallback):
         sliced_data = {key: value[start:end:skip_frame] for key, value in data.items()}
         return sliced_data
 
-    def do_pad(self, data: Dict, win_len: int, **kwargs) -> Tuple[Dict, np.ndarray]:
+    def do_pad(self, data: Dict, pad_len: int, pad_pos: Literal["left", "right"], **kwargs) -> Tuple[Dict, np.ndarray]:
         pad_data = dict()
         for key, value in data.items():
             traj_len = value.shape[0]
             dims = value.shape[1:]
-            pad_value = np.concatenate([value, np.zeros((win_len-traj_len, *dims), dtype=np.uint8)], axis=0)
+            if pad_pos == "right":
+                pad_value = np.concatenate([value, np.zeros((pad_len, *dims), dtype=np.uint8)], axis=0)
+            elif pad_pos == "left":
+                pad_value = np.concatenate([np.zeros((pad_len, *dims), dtype=np.uint8), value], axis=0)
             pad_data[key] = pad_value
-        pad_mask = np.concatenate([np.ones(traj_len, dtype=np.uint8), np.zeros(win_len-traj_len, dtype=np.uint8)], axis=0)
+        if pad_pos == "right":
+            pad_mask = np.concatenate([np.ones(traj_len, dtype=np.uint8), np.zeros(pad_len, dtype=np.uint8)], axis=0)
+        else:
+            pad_mask = np.concatenate([np.zeros(pad_len, dtype=np.uint8), np.ones(traj_len, dtype=np.uint8)], axis=0)
         return pad_data, pad_mask
 
     def do_postprocess(self, data: Dict) -> Dict:
-        action = data.pop('action')
-        data['env_action'] = action
-        data['agent_action'] = self.action_mapper.from_factored(
-            self.action_transformer.env2policy(action)
-        )
+        pop_action = data.pop(self.name)
+        if not self.enable_prev_action:
+            data[f'env_{self.name}'] = pop_action
+            data[f'agent_{self.name}'] = self.action_mapper.from_factored(
+                self.action_transformer.env2policy(pop_action)
+            )
+        else:
+            action = { key: val[1:] for key, val in pop_action.items() }
+            prev_action = { key: val[:-1] for key, val in pop_action.items() }
+            data[f'env_{self.name}'] = action
+            data[f'env_prev_{self.name}'] = prev_action
+            data[f'agent_{self.name}'] = self.action_mapper.from_factored(
+                self.action_transformer.env2policy(action)
+            )
+            data[f'agent_prev_{self.name}'] = self.action_mapper.from_factored(
+                self.action_transformer.env2policy(prev_action)
+            )
+            data[f'{self.name}_mask'] = np.ones(len(action['attack']), dtype=np.uint8)
         return data
 
 class VectorActionKernelCallback(ActionKernelCallback):
@@ -163,11 +185,11 @@ class ActionDrawFrameCallback(DrawFrameCallback):
     def draw_frames(self, frames: Union[np.ndarray, List], infos: Dict, sample_idx: int) -> np.ndarray:
         cache_frames = []
         env_action = infos['env_action']
-        prev_env_action = infos.get('prev_env_action', env_action)
+        env_prev_action = infos.get('env_prev_action', env_action)
         for frame_idx, frame in enumerate(frames):
             frame = frame.copy()
             act = {k: v[sample_idx][frame_idx].numpy() for k, v in env_action.items()}
-            prev_act = {k: v[sample_idx][frame_idx].numpy() for k, v in prev_env_action.items()}
+            prev_act = {k: v[sample_idx][frame_idx].numpy() for k, v in env_prev_action.items()}
             current_row = 0
             for (k, v), (_, pv) in zip(act.items(), prev_act.items()):
                 if 'hotbar' in k:

@@ -1,7 +1,7 @@
 '''
 Date: 2025-01-09 05:45:49
 LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2025-01-17 17:56:17
+LastEditTime: 2025-01-21 23:03:10
 FilePath: /MineStudio/minestudio/data/minecraft/core.py
 '''
 import lmdb
@@ -81,6 +81,13 @@ class ModalKernel(object):
         start += self.modal_kernel_callback.read_bias #! adding read_bias to the original range
         win_len += self.modal_kernel_callback.win_bias #! adding win_bias to the original range
         end = min(start + win_len * skip_frame - 1, meta_info['num_frames'] - 1) # include
+        
+        if start >= 0:
+            pad_left = 0
+        else:
+            pad_left = -start
+            start = 0
+        
         chunk_bytes = self.read_chunks(eps, 
             start // self.chunk_size * self.chunk_size, 
             end // self.chunk_size * self.chunk_size, 
@@ -90,8 +97,15 @@ class ModalKernel(object):
         # 2. extract frames according to skip_frame
         bias = (start // self.chunk_size) * self.chunk_size
         frames = self.modal_kernel_callback.do_slice(frames, start - bias, end - bias + 1, skip_frame, **kwargs)
+        mask = np.ones(end-start+1, dtype=np.uint8)
         # 3. padding frames and get masks
-        frames, mask = self.modal_kernel_callback.do_pad(frames, win_len, **kwargs)
+        # -> 3.1 padding left
+        if pad_left > 0:
+            frames, mask = self.modal_kernel_callback.do_pad(frames, pad_left, "left", **kwargs)
+        # -> 3.2 padding right
+        if win_len - len(mask) > 0:
+            frames, right_mask = self.modal_kernel_callback.do_pad(frames, win_len - len(mask), "right", **kwargs)
+            mask = np.concatenate([mask, right_mask[len(mask):]], axis=0)
         result = { f"{self.name}": frames, f"{self.name}_mask": mask }
         # 4. do postprocess
         result = self.modal_kernel_callback.do_postprocess(result)
@@ -161,10 +175,6 @@ class KernelManager(object):
         for modal, kernel in self.kernels.items():
             modal_result = kernel.read_frames(eps, start, win_len, skip_frame, **kwargs)
             result.update(modal_result)
-            # if modal == 'action':
-            #     prev_frames, prev_mask = self.read_frames(eps, start-1, win_len, skip_frame, modal) # start must > 0
-            #     result[f'prev_action'] = prev_frames
-            #     result[f'prev_action_mask'] = prev_mask
         return result
 
     def get_num_frames(self):
