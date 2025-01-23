@@ -19,8 +19,7 @@ from minestudio.offline.mine_callbacks import FlowMatchingCallback
 from minestudio.offline.lightning_callbacks import SmartCheckpointCallback, SpeedMonitorCallback
 from minestudio.offline.utils import convert_to_normal
 
-#logger = WandbLogger(project="minestudio")
-logger = None
+logger = WandbLogger(project="minestudio")
 @hydra.main(config_path='.', config_name='vpt_flow_config')
 def main(args):
     

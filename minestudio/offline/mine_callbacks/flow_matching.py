@@ -32,8 +32,8 @@ class FlowMatchingCallback(ObjectiveCallback):
         noise = noise.reshape(b*t, d)
         if self.sampling == "beta":
             z = self.flow_beta_dist.sample((noise.shape[0],))
-            t = self.flow_t_max * (1 - z)
-            time, xt, ut = self.fm.sample_location_and_conditional_flow(noise, action, t)
+            time = self.flow_t_max * (1 - z).type_as(noise)
+            time, xt, ut = self.fm.sample_location_and_conditional_flow(noise, action, time)
         else:
             time, xt, ut = self.fm.sample_location_and_conditional_flow(noise, action)
         batch['sampling_timestep'], batch['xt'], batch['ut'] = time.reshape(b, t), xt.reshape(b, t, d), ut.reshape(b, t, d)
