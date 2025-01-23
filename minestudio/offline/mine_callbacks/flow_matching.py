@@ -12,19 +12,31 @@ from minestudio.offline.mine_callbacks.callback import ObjectiveCallback
 from torchcfm.conditional_flow_matching import ConditionalFlowMatcher
 
 class FlowMatchingCallback(ObjectiveCallback):
-    def __init__(self, sigma: float=0.0):
+    def __init__(self, sigma: float=0.0, sampling="beta", alpha=1.5, beta=1, sigmin=0.001):
         super().__init__()
         self.sigma = sigma
         self.fm = ConditionalFlowMatcher(sigma=sigma)
+        assert sampling in ["beta", "normal"], "Sampling method must be 'beta' or 'normal'."
+        self.sampling = sampling
+        if sampling == "beta":
+            self.alpha = alpha
+            self.beta = beta
+            self.sigmin = sigmin
+            self.flow_t_max = 1 - sigmin
+            self.flow_beta_dist = torch.distributions.Beta(alpha, beta)
 
     def before_step(self, batch, batch_idx, step_name):
         b, t, d = batch['action'].shape
-        noise = torch.rand_like(batch['action'])
-        # batch['noise'] = noise
+        noise = torch.randn_like(batch['action'])
         action = batch['action'].reshape(b*t, d)
         noise = noise.reshape(b*t, d)
-        time, xt, ut = self.fm.sample_location_and_conditional_flow(noise, action)
-        batch['sampling_timestep'], batch['noise'], batch['ut'] = time.reshape(b, t), xt.reshape(b, t, d), ut.reshape(b, t, d)
+        if self.sampling == "beta":
+            z = self.flow_beta_dist.sample((noise.shape[0],))
+            t = self.flow_t_max * (1 - z)
+            time, xt, ut = self.fm.sample_location_and_conditional_flow(noise, action, t)
+        else:
+            time, xt, ut = self.fm.sample_location_and_conditional_flow(noise, action)
+        batch['sampling_timestep'], batch['xt'], batch['ut'] = time.reshape(b, t), xt.reshape(b, t, d), ut.reshape(b, t, d)
         return batch
     
     def __call__(

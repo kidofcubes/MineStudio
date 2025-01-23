@@ -58,7 +58,7 @@ class VPTFlowPolicy(MineGenerativePolicy, PyTorchModelHubMixin):
             import ray
             ray.util.pdb.set_trace()
         t = input["sampling_timestep"]
-        noise = input["noise"]
+        noise = input["xt"]
         vt = self.action_head(noise, times=t, cond=pi_latent)
         return {"vt": vt, "pi_logits": pi_latent, "vpred": vf_latent}, state_out
     
@@ -69,7 +69,7 @@ class VPTFlowPolicy(MineGenerativePolicy, PyTorchModelHubMixin):
         (pi_latent, vf_latent), state_out = self.net(input, state_in, context={"first": first})
         sampling_timestep = kwargs.get("sampling_timestep", 10)
         sampling_times = torch.linspace(0, 1, sampling_timestep, device=self.device)
-        noise = input["noise"].reshape(B*T, -1)
+        noise = input["xt"].reshape(B*T, -1)
         pi_latent = pi_latent.reshape(B*T, -1)
         traj = torchdiffeq.odeint(
             lambda t, x: self.action_head(x, times=t, cond=pi_latent),
@@ -79,7 +79,14 @@ class VPTFlowPolicy(MineGenerativePolicy, PyTorchModelHubMixin):
             rtol=1e-4,
             method="dopri5",
         )
-        return traj[-1].clip(-1, 1), state_out
+        return traj[-1].clip(-1, 1).reshape(B, T, -1), state_out
+
+    def get_state_out(self, input, state_in = None, **kwargs):
+        B, T = input["image"].shape[:2]
+        state_in = self.initial_state(B) if state_in is None else state_in
+        first = torch.tensor([[False]], device=self.device).repeat(B, T)
+        (pi_latent, vf_latent), state_out = self.net(input, state_in, context={"first": first})
+        return state_out
 
 @Registers.model_loader.register
 def load_vpt_flow_policy(ckpt_path: str) -> VPTFlowPolicy:
@@ -108,6 +115,8 @@ if __name__ == "__main__":
     from torchcfm.conditional_flow_matching import ConditionalFlowMatcher
     import os
 
+    chunk_size = 10
+
     data_module = RawDataModule(
         data_params=dict(
             dataset_dirs=[
@@ -116,7 +125,7 @@ if __name__ == "__main__":
             modal_kernel_callbacks=[
                 ImageKernelCallback(frame_width=128, frame_height=128, enable_video_aug=False), 
                 # ActionKernelCallback(),
-                VectorActionKernelCallback(action_chunk_size=32), 
+                VectorActionKernelCallback(action_chunk_size=chunk_size), 
                 # MetaInfoKernelCallback(),
             ],
             win_len=128, 
@@ -132,7 +141,7 @@ if __name__ == "__main__":
     loader = data_module.train_dataloader()
     batch = next(iter(loader))
 
-    dir = "./checkpoints/"
+    dir = ""
     # find the latest checkpoint
     checkpoints = os.listdir(dir)
     checkpoints = [os.path.join(dir, c) for c in checkpoints if c.endswith("ckpt")]
@@ -148,8 +157,8 @@ if __name__ == "__main__":
     print(time.shape, xt.shape, ut.shape)
     print(xt.device, ut.device)
     print(time[0])
-    batch['sampling_timestep'], batch['xt'], batch['ut'] = time.reshape(b, t), xt.reshape(b, t, d), ut.reshape(b, t, d)
-    batch['noise'] = noise.reshape(b, t, d)
+    batch['sampling_timestep'], batch['noise'], batch['ut'] = time.reshape(b, t), xt.reshape(b, t, d), ut.reshape(b, t, d)
+    # batch['noise'] = noise.reshape(b, t, d)
 
     result, _ = model(batch, state_in=None)
     result["vt"] = result["vt"].reshape(b*t, d)
@@ -157,7 +166,20 @@ if __name__ == "__main__":
     loss = nn.functional.mse_loss(result["vt"], ut)
     print(loss)
 
-    pred, _ = model.sample(batch, state_in=None, sampling_timestep=10)
+
+    batch["noise"] = noise
+    pred, _ = model.sample(batch, state_in=None, sampling_timestep=20)
     print(pred.shape, action.shape)
-    print(action[0].reshape(32, 22))
-    print(pred[0].reshape(32, 22))
+    print(action[0].reshape(chunk_size, 22)[0])
+    print(pred[0][0].reshape(chunk_size, 22)[0])
+
+    batch["image"] = batch["image"][0][0]
+    batch["action"] = batch["action"][0][0]
+    batch["noise"] = batch["noise"][0]
+
+    # set batch["image"] to a black image
+    batch["image"] = torch.zeros_like(batch["image"])
+
+    print(batch["image"].shape, batch["action"].shape, batch["noise"].shape)
+    pred, _ = model.get_action(batch, None, input_shape='*')
+    print(pred)
