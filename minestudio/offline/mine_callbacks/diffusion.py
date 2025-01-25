@@ -12,21 +12,22 @@ from minestudio.offline.mine_callbacks.callback import ObjectiveCallback
 from diffusers import DDPMScheduler
 
 class DiffusionCallback(ObjectiveCallback):
-    def __init__(self, num_train_timesteps=1000, beta_schedule="squaredcos_cap_v2"):
+    def __init__(self, scheduler_kwargs):
         super().__init__()
-        self.num_train_timesteps = num_train_timesteps
-        self.beta_schedule = beta_schedule
-        self.scheduler = DDPMScheduler(num_train_timesteps=num_train_timesteps, beta_schedule=beta_schedule)
+        self.num_train_timesteps = scheduler_kwargs.get("num_train_timesteps", 1000)
+        self.beta_schedule = scheduler_kwargs.get("beta_schedule", "squaredcos_cap_v2")
+        self.scheduler = DDPMScheduler(num_train_timesteps=self.num_train_timesteps, beta_schedule=self.beta_schedule)
 
     def before_step(self, batch, batch_idx, step_name):
         b, t, d = batch['action'].shape
-        noise = torch.randn_like(batch['action'])
-        timesteps = torch.randint(0, self.num_train_timesteps - 1, (b,)).long().to(noise.device)
+        noise = torch.randn_like(batch['action']).reshape(b*t, d)
+        action = batch["action"].reshape(b*t, d)
+        timesteps = torch.randint(0, self.num_train_timesteps - 1, (b*t,)).long().to(noise.device)
         #! TODO: implement beta sampling in pi-0.
-        noisy_x = self.scheduler.add_noise(batch["action"], noise, timesteps)
-        batch['sampling_timestep'] = timesteps
-        batch['noisy_x'] = noisy_x
-        batch['noise'] = noise
+        noisy_x = self.scheduler.add_noise(action, noise, timesteps)
+        batch['sampling_timestep'] = timesteps.reshape(b, t)
+        batch['noisy_x'] = noisy_x.reshape(b, t, d)
+        batch['noise'] = noise.reshape(b, t, d)
         return batch
     
     def __call__(

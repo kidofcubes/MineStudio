@@ -8,3 +8,4 @@ from minestudio.offline.mine_callbacks.callback import ObjectiveCallback
 from minestudio.offline.mine_callbacks.behavior_clone import BehaviorCloneCallback
 from minestudio.offline.mine_callbacks.kl_divergence import KLDivergenceCallback
 from minestudio.offline.mine_callbacks.flow_matching import FlowMatchingCallback
+from minestudio.offline.mine_callbacks.diffusion import DiffusionCallback

@@ -12,7 +12,7 @@ from lightning.pytorch.callbacks import LearningRateMonitor
 
 from minestudio.data import RawDataModule
 from minestudio.data.minecraft.callbacks import ImageKernelCallback, VectorActionKernelCallback
-from minestudio.models import VPTFlowPolicy
+from minestudio.models import VPTDiffusionPolicy
 from minestudio.offline import MineLightning
 from minestudio.offline.utils import convert_to_normal
 from minestudio.offline.mine_callbacks import DiffusionCallback
@@ -20,6 +20,7 @@ from minestudio.offline.lightning_callbacks import SmartCheckpointCallback, Spee
 from minestudio.offline.utils import convert_to_normal
 
 logger = WandbLogger(project="minestudio")
+# logger = None
 @hydra.main(config_path='.', config_name='vpt_diffusion_config')
 def main(args):
     

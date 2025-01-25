@@ -15,8 +15,8 @@ from torch.nn import functional as F
 from pathlib import Path
 from copy import deepcopy
 from typing import List, Dict, Optional, Callable, Union, Tuple, Any
-import torchdiffeq
 
+from diffusers import DDPMScheduler
 from huggingface_hub import PyTorchModelHubMixin
 from minestudio.utils.vpt_lib.impala_cnn import ImpalaCNN
 from minestudio.utils.vpt_lib.util import FanInInitReLULayer, ResidualRecurrentBlocks
@@ -60,7 +60,7 @@ class VPTDiffusionPolicy(MineGenerativePolicy, PyTorchModelHubMixin):
             ray.util.pdb.set_trace()
         t = input["sampling_timestep"]
         noisy_x = input["noisy_x"]
-        pred = self.action_head(noise, times=t, cond=pi_latent)
+        pred = self.action_head(noisy_x, times=t, cond=pi_latent)
         return {"pred": pred, "pi_logits": pi_latent, "vpred": vf_latent}, state_out
     
     def sample(self, input, state_in = None, **kwargs):
