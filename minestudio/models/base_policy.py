@@ -144,7 +144,7 @@ class MineGenerativePolicy(torch.nn.Module, ABC):
         'hotbar.1': 1, 'hotbar.2': 1, 'hotbar.3': 1, 'hotbar.4': 1, 'hotbar.5': 1, 'hotbar.6': 1, 'hotbar.7': 1, 'hotbar.8': 1, 'hotbar.9': 1,
     })
 
-    def __init__(self, horizon = 5, action_chunk_size = 10) -> None:
+    def __init__(self, horizon = 1, action_chunk_size = 10) -> None:
         torch.nn.Module.__init__(self)
         self.horizon = horizon # horizon for sampling actions
         self.current_timestep = 0
