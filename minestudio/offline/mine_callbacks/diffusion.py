@@ -1,8 +1,8 @@
 '''
 Date: 2025-01-18 13:49:25
-LastEditors: muzhancun muzhancun@126.com
-LastEditTime: 2025-01-18 14:11:21
-FilePath: /MineStudio/minestudio/offline/mine_callbacks/flow_matching.py
+LastEditors: muzhancun 2100017790@stu.pku.edu.cn
+LastEditTime: 2025-01-27 13:53:26
+FilePath: /MineStudio/minestudio/offline/mine_callbacks/diffusion.py
 '''
 import torch
 from typing import Dict, Any
@@ -52,3 +52,61 @@ class DiffusionCallback(ObjectiveCallback):
             "loss": loss,
         }
         return result
+
+class DictDiffusionCallback(ObjectiveCallback):
+    def __init__(self, scheduler_kwargs):
+        super().__init__()
+        self.num_train_timesteps = scheduler_kwargs.get("num_train_timesteps", 1000)
+        self.beta_schedule = scheduler_kwargs.get("beta_schedule", "squaredcos_cap_v2")
+        self.scheduler = DDPMScheduler(num_train_timesteps=self.num_train_timesteps, beta_schedule=self.beta_schedule)
+
+    def add_noise(self, batch, type):
+        action = batch['action'][type]
+        b, t, d = action.shape
+        action = action.reshape(b*t, d)
+        noise = torch.randn_like(action)
+        timesteps = torch.randint(0, self.num_train_timesteps - 1, (b*t,)).long().to(noise.device)
+        noisy_x = self.scheduler.add_noise(action, noise, timesteps)
+        batch[f"noisy_{type}"] = noisy_x.reshape(b, t, d)
+        batch[f"{type}_noise"] = noise.reshape(b, t, d)
+        batch[f"{type}_timesteps"] = timesteps.reshape(b, t)
+        return batch
+
+    def before_step(self, batch, batch_idx, step_name):
+        batch = self.add_noise(batch, 'camera')
+        batch = self.add_noise(batch, 'button')
+        return batch
+
+    def __call__(
+        self, 
+        batch: Dict[str, Any], 
+        batch_idx: int, 
+        step_name: str,
+        latents: Dict[str, torch.Tensor], 
+        mine_policy: MineGenerativePolicy
+    ) -> Dict[str, torch.Tensor]:
+        camera_noise = batch['camera_noise']
+        button_noise = batch['button_noise']
+        camera_pred = latents['camera']
+        button_pred = latents['button']
+        b, t, d1 = camera_pred.shape
+        b, t, d2 = button_pred.shape
+        mask = batch.get('action_chunk_mask', torch.ones_like(camera_pred))
+        camera_mask = mask.unsqueeze(-1).expand(-1, -1, -1, d1).reshape(b, t, d1)
+        button_mask = mask.unsqueeze(-1).expand(-1, -1, -1, d2).reshape(b, t, d2)
+        camera_mask_noise = camera_noise * camera_mask
+        button_mask_noise = button_noise * button_mask
+        camera_mask_pred = camera_pred * camera_mask
+        button_mask_pred = button_pred * button_mask
+        camera_loss = ((camera_mask_noise - camera_mask_pred) ** 2).sum(-1).mean()
+        button_loss = ((button_mask_noise - button_mask_pred) ** 2).sum(-1).mean()
+        result = {
+            "loss": camera_loss + button_loss,
+            "camera_loss": camera_loss,
+            "button_loss": button_loss,
+        }
+        return result
+
+
+
+    

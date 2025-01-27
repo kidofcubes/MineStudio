@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-11 15:59:37
-LastEditors: muzhancun muzhancun@126.com
-LastEditTime: 2025-01-18 20:13:19
+LastEditors: muzhancun 2100017790@stu.pku.edu.cn
+LastEditTime: 2025-01-27 12:01:37
 FilePath: /MineStudio/minestudio/models/base_policy.py
 '''
 from abc import ABC, abstractmethod
@@ -144,7 +144,7 @@ class MineGenerativePolicy(torch.nn.Module, ABC):
         'hotbar.1': 1, 'hotbar.2': 1, 'hotbar.3': 1, 'hotbar.4': 1, 'hotbar.5': 1, 'hotbar.6': 1, 'hotbar.7': 1, 'hotbar.8': 1, 'hotbar.9': 1,
     })
 
-    def __init__(self, horizon = 1, action_chunk_size = 10) -> None:
+    def __init__(self, horizon = 5, action_chunk_size = 10) -> None:
         torch.nn.Module.__init__(self)
         self.horizon = horizon # horizon for sampling actions
         self.current_timestep = 0
