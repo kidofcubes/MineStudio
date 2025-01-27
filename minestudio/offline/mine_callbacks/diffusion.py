@@ -92,8 +92,11 @@ class DictDiffusionCallback(ObjectiveCallback):
         b, t, d1 = camera_pred.shape
         b, t, d2 = button_pred.shape
         mask = batch.get('action_chunk_mask', torch.ones_like(camera_pred))
-        camera_mask = mask.unsqueeze(-1).expand(-1, -1, -1, d1).reshape(b, t, d1)
-        button_mask = mask.unsqueeze(-1).expand(-1, -1, -1, d2).reshape(b, t, d2)
+        action_chunk_size = mask.shape[-1]
+        camera_dim = d1 // action_chunk_size
+        button_dim = d2 // action_chunk_size
+        camera_mask = mask.unsqueeze(-1).expand(-1, -1, -1, camera_dim).reshape(b, t, d1)
+        button_mask = mask.unsqueeze(-1).expand(-1, -1, -1, button_dim).reshape(b, t, d2)
         camera_mask_noise = camera_noise * camera_mask
         button_mask_noise = button_noise * button_mask
         camera_mask_pred = camera_pred * camera_mask

@@ -172,13 +172,14 @@ class VectorActionKernelCallback(ActionKernelCallback):
             for t in range(self.action_chunk_size):
                 for key, dim in self.ACTION_KEYS.items():
                     if key == 'camera':
-                        camera.append(action[key][i+t] / 180)
+                        camera.extend(action[key][i+t] / 180)
                     else:
                         button.append(action[key][i+t] * 2 - 1)
             ret["camera"].append(camera)
             ret["button"].append(button)
-        ret["camera"] = np.stack(ret["camera"], axis=0)
-        ret["button"] = np.stack(ret["button"], axis=0)
+
+        ret["camera"] = np.array(ret["camera"], dtype=np.float32)
+        ret["button"] = np.array(ret["button"], dtype=np.float32)
         return ret
 
     def do_postprocess(self, data: Dict) -> Dict:

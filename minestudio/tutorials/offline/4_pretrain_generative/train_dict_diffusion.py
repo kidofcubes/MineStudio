@@ -15,12 +15,11 @@ from minestudio.data.minecraft.callbacks import ImageKernelCallback, VectorActio
 from minestudio.models import VPTDictDiffusionPolicy
 from minestudio.offline import MineLightning
 from minestudio.offline.utils import convert_to_normal
-from minestudio.offline.mine_callbacks import DiffusionDictCallback
+from minestudio.offline.mine_callbacks import DictDiffusionCallback
 from minestudio.offline.lightning_callbacks import SmartCheckpointCallback, SpeedMonitorCallback
 from minestudio.offline.utils import convert_to_normal
 
 logger = WandbLogger(project="minestudio")
-# logger = None
 @hydra.main(config_path='.', config_name='vpt_dict_diffusion_config')
 def main(args):
     
