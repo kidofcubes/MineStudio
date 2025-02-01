@@ -661,7 +661,7 @@
 
 <span class="k">while</span> <span class="ow">not</span> <span class="n">terminated</span><span class="p">:</span>
     <span class="n">action</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">obs</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">terminated</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+    <span class="n">obs</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">terminated</span><span class="p">,</span> <span class="n">truncated</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
 
 <span class="n">sim</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
