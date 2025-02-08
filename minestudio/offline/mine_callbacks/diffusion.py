@@ -58,7 +58,7 @@ class DictDiffusionCallback(ObjectiveCallback):
         super().__init__()
         self.num_train_timesteps = scheduler_kwargs.get("num_train_timesteps", 1000)
         self.beta_schedule = scheduler_kwargs.get("beta_schedule", "squaredcos_cap_v2")
-        self.scheduler = DDPMScheduler(num_train_timesteps=self.num_train_timesteps, beta_schedule=self.beta_schedule)
+        self.scheduler = DDPMScheduler(**scheduler_kwargs)
 
     def add_noise(self, batch, type):
         action = batch['action'][type]
@@ -104,7 +104,7 @@ class DictDiffusionCallback(ObjectiveCallback):
         camera_loss = ((camera_mask_noise - camera_mask_pred) ** 2).sum(-1).mean()
         button_loss = ((button_mask_noise - button_mask_pred) ** 2).sum(-1).mean()
         result = {
-            "loss": camera_loss + button_loss,
+            "loss": 10 * camera_loss + button_loss,
             "camera_loss": camera_loss,
             "button_loss": button_loss,
         }
