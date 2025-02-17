@@ -21,6 +21,7 @@ from minestudio.simulator.callbacks.judgereset import JudgeResetCallback
 from minestudio.simulator.callbacks.reward_gate import GateRewardsCallback
 from minestudio.simulator.callbacks.voxels import VoxelsCallback
 from minestudio.simulator.callbacks.init_inventory import InitInventoryCallback
+from minestudio.simulator.callbacks.prev_action import PrevActionCallback
 
 from typing import Dict, List, Tuple, Union, Sequence, Mapping, Any, Optional, Literal
 

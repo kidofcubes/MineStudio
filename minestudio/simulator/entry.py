@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-11 05:20:17
-LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2025-01-09 11:26:18
+LastEditors: caishaofei-mus1 1744260356@qq.com
+LastEditTime: 2025-01-22 23:14:35
 FilePath: /MineStudio/minestudio/simulator/entry.py
 '''
 
@@ -136,7 +136,7 @@ class MinecraftSim(gymnasium.Env):
         action = self.action_transformer.policy2env(action)
         return action
 
-    def énv_action_to_agent_action(self, action: Dict[str, Any]):
+    def env_action_to_agent_action(self, action: Dict[str, Any]):
         action = self.action_transformer.env2policy(action)
         action = self.action_mapper.from_factored(action)
         return action

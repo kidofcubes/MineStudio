@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-12 11:53:55
 LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2025-01-16 18:02:12
+LastEditTime: 2025-01-22 23:38:09
 FilePath: /MineStudio/minestudio/tutorials/simulator/test_sim.py
 '''
 import numpy as np
@@ -15,7 +15,8 @@ from minestudio.simulator.callbacks import (
     CommandsCallback, 
     TaskCallback,
     FastResetCallback, 
-    HardResetCallback
+    HardResetCallback,
+    PrevActionCallback
 )
 
 if __name__ == '__main__':
@@ -48,6 +49,7 @@ if __name__ == '__main__':
                 {'name': 'chop', 'text': 'mine the oak logs'}, 
                 {'name': 'diamond', 'text': 'mine the diamond ore'},
             ]), 
+            PrevActionCallback(), 
         ]
     )
     obs, info = sim.reset()

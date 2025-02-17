@@ -1,7 +1,7 @@
 '''
 Date: 2024-12-13 22:39:49
-LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2025-01-07 14:32:36
+LastEditors: caishaofei-mus1 1744260356@qq.com
+LastEditTime: 2025-02-13 20:00:03
 FilePath: /MineStudio/minestudio/tutorials/inference/evaluate_groot/main.py
 '''
 from minestudio.simulator import MinecraftSim
@@ -39,14 +39,14 @@ if __name__ == '__main__':
         env_generator=env_generator, 
         agent_generator=agent_generator,
         num_max_steps=600,
-        num_episodes=2,
+        num_episodes=1,
         tmpdir="./output",
         image_media="h264",
     )
 
     pipeline = EpisodePipeline(
         episode_generator=MineGenerator(
-            num_workers=4, 
+            num_workers=1, 
             num_gpus=0.25,
             max_restarts=3,
             **worker_kwargs, 

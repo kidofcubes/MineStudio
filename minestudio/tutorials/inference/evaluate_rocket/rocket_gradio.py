@@ -178,8 +178,9 @@ def draw_gradio_components(args):
         )
         
         file_list = prepare_task_configs(args.task_group, path=args.task_group_path)
-        name_file_mapping = {name: file for name, file in file_list}
-        env_list = [name for name, file in file_list]
+        # print(file_list)
+        name_file_mapping = {name: file for name, file in file_list.items()}
+        env_list = [name for name, file in file_list.items()]
         
         rocket_session = gr.State(Session(
             model_path=args.model_path,

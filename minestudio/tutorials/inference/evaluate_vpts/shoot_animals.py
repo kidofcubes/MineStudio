@@ -42,20 +42,20 @@ if __name__ == '__main__':
         env_generator=env_generator, 
         agent_generator=agent_generator,
         num_max_steps=600,
-        num_episodes=2,
+        num_episodes=1,
         tmpdir="./output",
         image_media="h264",
     )
     pipeline = EpisodePipeline(
         episode_generator=MineGenerator(
-            num_workers=2,
+            num_workers=1,
             num_gpus=0.25,
             max_restarts=3,
             **worker_kwargs, 
         ), 
         episode_filter=InfoBaseFilter(
             key="kill_entity",
-            val="cow",
+            regex=".*cow.*",
             num=1,
         ),
     )
