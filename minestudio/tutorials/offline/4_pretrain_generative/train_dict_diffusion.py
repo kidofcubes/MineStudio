@@ -1,8 +1,8 @@
 '''
-Date: 2024-11-12 14:00:50
-LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2025-01-15 17:02:32
-FilePath: /MineStudio/minestudio/tutorials/offline/1_finetune_vpts/train_raw.py
+Date: 2025-01-25 15:54:33
+LastEditors: muzhancun 2100017790@stu.pku.edu.cn
+LastEditTime: 2025-01-27 13:55:09
+FilePath: /MineStudio/minestudio/tutorials/offline/4_pretrain_generative/train_dict_diffusion.py
 '''
 import hydra
 import lightning as L
@@ -12,19 +12,24 @@ from lightning.pytorch.callbacks import LearningRateMonitor
 
 from minestudio.data import RawDataModule
 from minestudio.data.minecraft.callbacks import ImageKernelCallback, VectorActionKernelCallback
-from minestudio.models import VPTFlowPolicy
+from minestudio.models import VPTDictDiffusionPolicy
 from minestudio.offline import MineLightning
 from minestudio.offline.utils import convert_to_normal
-from minestudio.offline.mine_callbacks import FlowMatchingCallback
+from minestudio.offline.mine_callbacks import DictDiffusionCallback
 from minestudio.offline.lightning_callbacks import SmartCheckpointCallback, SpeedMonitorCallback
 from minestudio.offline.utils import convert_to_normal
 
-#logger = WandbLogger(project="minestudio")
-logger = None
-@hydra.main(config_path='.', config_name='vpt_flow_config')
+logger = WandbLogger(project="minestudio")
+@hydra.main(config_path='.', config_name='vpt_dict_diffusion_config')
 def main(args):
     
-    mine_policy = VPTFlowPolicy(policy_kwargs=convert_to_normal(args.policy), action_kwargs=convert_to_normal(args.action))
+    mine_policy = VPTDictDiffusionPolicy(
+        policy_kwargs=convert_to_normal(args.policy), 
+        camera_kwargs=convert_to_normal(args.camera),
+        button_kwargs=convert_to_normal(args.button),
+        scheduler_kwargs=convert_to_normal(args.scheduler)
+    )
+
     mine_lightning = MineLightning(
         mine_policy=mine_policy,
         log_freq=20,
@@ -32,7 +37,7 @@ def main(args):
         warmup_steps=args.warmup_steps,
         weight_decay=args.weight_decay,
         callbacks=[
-            FlowMatchingCallback(sigma=args.fm.sigma),
+            DictDiffusionCallback(convert_to_normal(args.scheduler)),
         ], 
         hyperparameters=convert_to_normal(args),
     )
@@ -46,7 +51,7 @@ def main(args):
                     frame_height=args.data.frame_height, 
                     enable_video_aug=False
                 ),
-                VectorActionKernelCallback(action_chunk_size=args.data.action_chunk_size),
+                VectorActionKernelCallback(action_chunk_size=args.data.action_chunk_size, return_type="dict"),
             ],
             win_len=args.data.win_len, 
             split_ratio=args.split_ratio, 

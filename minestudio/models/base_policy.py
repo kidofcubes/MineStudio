@@ -1,8 +1,8 @@
 '''
 Date: 2024-11-11 15:59:37
 LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2025-01-22 00:16:50
-FilePath: /MineStudio/minestudio/models/base_policy.py
+LastEditTime: 2025-02-17 20:39:52
+FilePath: /MineStudio/var/minestudio/models/base_policy.py
 '''
 from abc import ABC, abstractmethod
 import numpy as np
@@ -144,7 +144,7 @@ class MineGenerativePolicy(torch.nn.Module, ABC):
         'hotbar.1': 1, 'hotbar.2': 1, 'hotbar.3': 1, 'hotbar.4': 1, 'hotbar.5': 1, 'hotbar.6': 1, 'hotbar.7': 1, 'hotbar.8': 1, 'hotbar.9': 1,
     })
 
-    def __init__(self, horizon = 1, action_chunk_size = 32) -> None:
+    def __init__(self, horizon = 5, action_chunk_size = 10) -> None:
         torch.nn.Module.__init__(self)
         self.horizon = horizon # horizon for sampling actions
         self.current_timestep = 0
@@ -168,40 +168,42 @@ class MineGenerativePolicy(torch.nn.Module, ABC):
     def sample(self, input: Dict[str, Any], state_in: Optional[List[torch.Tensor]] = None, **kwargs) -> Dict[str, torch.Tensor]:
         pass
 
+    @abstractmethod
+    def get_state_out(self, input: Dict[str, Any], state_in: Optional[List[torch.Tensor]] = None, **kwargs) -> torch.Tensor:
+        pass
+
     @torch.inference_mode()
     def get_action(self,
                    input: Dict[str, Any],
                    state_in: Optional[List[torch.Tensor]],
-                   deterministic: bool = False,
                    input_shape: str = "BT*",
                    **kwargs, 
     ) -> Tuple[Dict[str, torch.Tensor], List[torch.Tensor]]:
-        
-        if  self.actions is not None and self.current_timestep < self.horizon:
+        if input_shape == "*":
+            input = dict_map(self._batchify, input)
+            if state_in is not None:
+                state_in = recursive_tensor_op(lambda x: x.unsqueeze(0), state_in)
+        elif input_shape != "BT*":
+            raise NotImplementedError
+
+        if self.actions is not None and self.current_timestep < self.horizon:
             action = self.actions[self.current_timestep]
             self.current_timestep += 1
-            return action, state_in # !FIXME: state_in should be updated
-        else:
+            state_out = self.get_state_out(input, state_in, **kwargs)
             if input_shape == "*":
-                input = dict_map(self._batchify, input)
-                if state_in is not None:
-                    state_in = recursive_tensor_op(lambda x: x.unsqueeze(0), state_in)
-            elif input_shape != "BT*":
-                raise NotImplementedError
+                state_out = recursive_tensor_op(lambda x: x[0], state_out)
+            return action, state_out
+        else:
             actions, state_out = self.sample(input, state_in, **kwargs) # actions is a b, t, d tensor
             b, t, d = actions.shape
             assert d % self.action_chunk_size == 0, "Action dimension must be divisible by action_chunk_size"
-            # if input_shape == "BT*":
-                # actions = rearrange(action, 'b t (d1 d2) -> d1 b t d2', d1=self.action_chunk_size, d2=d//self.action_chunk_size)
             if input_shape == "*":
                 actions = actions[0][0]
-                # actions = rearrange(actions, '(d1 d2) -> d1 d2', d1=self.action_chunk_size, d2=d//self.action_chunk_size) 
                 state_out = recursive_tensor_op(lambda x: x[0], state_out)
             else:
                 raise NotImplementedError
             self.actions = self.convert_action(actions)
-            # print(self.actions)
-            # import ipdb; ipdb.set_trace()
+
             self.current_timestep = 1
             return self.actions[0], state_out
             
@@ -222,12 +224,6 @@ class MineGenerativePolicy(torch.nn.Module, ABC):
                     else:
                         action[t][key] = (action[t][key] >= 0).astype(np.uint8)
                     offset += dim
-            # import ipdb; ipdb.set_trace()
-            # for key in action.keys():
-            #     if key == 'camera':
-            #         action[key] = np.stack(action[key], axis=0) * 180.
-            #     else:
-            #         action[key] = (np.concatenate(action[key], axis=0) >= 0).astype(np.uint8)
             actions.append(action)
         if length == 1:
             return actions[0]
@@ -247,4 +243,5 @@ class MineGenerativePolicy(torch.nn.Module, ABC):
         elif isinstance(elem, str):
             return [[elem]]
         else:
-            raise NotImplementedError
+            return elem
+            # raise NotImplementedError

@@ -16,48 +16,59 @@ data:
   frame_width: 128
   frame_height: 128
   win_len: 128
-  action_chunk_size: 32
+  action_chunk_size: 10
 
 policy:
-  attention_heads: 8
+  attention_heads: 16
   attention_mask_style: "clipped_causal"
   attention_memory_size: 256
-  diff_mlp_embedding: False
-  hidsize: 1024
-  img_shape: [128, 128, 3]
-  impala_chans: [16, 32, 32]
-  impala_kwargs:
-    post_pool_groups: 1
-  impala_width: 4
-  init_norm_kwargs:
-    batch_norm: False
-    group_norm_groups: 1
+  diff_mlp_embedding: false
+  hidsize: 2048
+  img_shape: [
+      128,
+      128,
+      3
+  ]
+  impala_chans: [
+      16,
+      32,
+      32
+  ]
+  impala_kwargs: {
+    "post_pool_groups": 1
+  }
+  impala_width: 8
+  init_norm_kwargs: {
+    "batch_norm": false,
+    "group_norm_groups": 1
+  }
   n_recurrence_layers: 4
-  only_img_input: True
+  only_img_input: true
   pointwise_ratio: 4
-  pointwise_use_activation: False
-  recurrence_is_residual: True
+  pointwise_use_activation: false
+  recurrence_is_residual: true
   recurrence_type: "transformer"
-  timesteps: 10
-  use_pointwise_layer: True
-  use_pre_lstm_ln: False
+  timesteps: 128
+  use_pointwise_layer: true
+  use_pre_lstm_ln: false
 
 action:
-  dim_cond: 1024
-  dim_input: 704
+  dim_cond: 2048
+  dim_input: 220
   depth: 3
-  width: 512
+  width: 1024
 
-fm:
-  sigma: 0.0
+scheduler:
+  num_train_timesteps: 1000
+  beta_schedule: "squaredcos_cap_v2"
 
-batch_size: 8
-num_workers: 4
+batch_size: 2
+num_workers: 8
 precision: "bf16"
 prefetch_factor: 4
 split_ratio: 0.9
-devices: 4
-learning_rate: 0.00004
+devices: 8
+learning_rate: 5e-4
 warmup_steps: 2000
 weight_decay: 0.000181
 save_freq: 2000

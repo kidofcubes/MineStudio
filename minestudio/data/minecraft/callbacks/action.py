@@ -1,7 +1,7 @@
 '''
 Date: 2025-01-09 05:27:25
-LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2025-01-21 22:48:23
+LastEditors: muzhancun 2100017790@stu.pku.edu.cn
+LastEditTime: 2025-01-27 13:38:47
 FilePath: /MineStudio/minestudio/data/minecraft/callbacks/action.py
 '''
 import re
@@ -115,10 +115,12 @@ class VectorActionKernelCallback(ActionKernelCallback):
         'hotbar.1': 1, 'hotbar.2': 1, 'hotbar.3': 1, 'hotbar.4': 1, 'hotbar.5': 1, 'hotbar.6': 1, 'hotbar.7': 1, 'hotbar.8': 1, 'hotbar.9': 1,
     })
 
-    def __init__(self, action_chunk_size: int=32):
+    def __init__(self, action_chunk_size: int=32, return_type: str="vector"):
         super().__init__()
         self.action_chunk_size = action_chunk_size
         self.win_bias = action_chunk_size - 1
+        assert return_type in ["vector", "dict"], f"Invalid return type: {return_type}"
+        self.return_type = return_type
 
     @property
     def vector_dim(self) -> int:
@@ -162,9 +164,30 @@ class VectorActionKernelCallback(ActionKernelCallback):
             vectors.append(vector)
         return np.stack(vectors, axis=0)
 
+    def action_to_dict(self, action: Dict) -> Dict:
+        ret = {"camera": [], "button": []}
+        win_len = len(action['attack'])
+        for i in range(win_len - self.action_chunk_size + 1):
+            camera, button = [], []
+            for t in range(self.action_chunk_size):
+                for key, dim in self.ACTION_KEYS.items():
+                    if key == 'camera':
+                        camera.extend(action[key][i+t] / 180)
+                    else:
+                        button.append(action[key][i+t] * 2 - 1)
+            ret["camera"].append(camera)
+            ret["button"].append(button)
+
+        ret["camera"] = np.array(ret["camera"], dtype=np.float32)
+        ret["button"] = np.array(ret["button"], dtype=np.float32)
+        return ret
+
     def do_postprocess(self, data: Dict) -> Dict:
         action = data.pop('action')
-        vector = self.action_to_vector(action)
+        if self.return_type == "vector":
+            ret = self.action_to_vector(action)
+        elif self.return_type == "dict":
+            ret = self.action_to_dict(action)
         # restored_action = self.vector_to_action(vector)
         # data['action_mask']: shape (128 + 32 -1, )
         # vector mask: shape (128, 32)
@@ -172,7 +195,7 @@ class VectorActionKernelCallback(ActionKernelCallback):
         for i in range(len(data['action_mask']) - self.action_chunk_size + 1):
             action_chunk_mask.append(data['action_mask'][i: i+self.action_chunk_size])
         action_chunk_mask = np.stack(action_chunk_mask, axis=0)
-        data['action'] = vector
+        data['action'] = ret
         data['action_chunk_mask'] = action_chunk_mask
         return data
 
