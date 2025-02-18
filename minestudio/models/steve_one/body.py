@@ -358,6 +358,8 @@ class SteveOnePolicy(MinePolicy, PyTorchModelHubMixin):
             assert 'text' in instruction, "instruction must have either text or video."
 
             texts = instruction['text']
+            if isinstance(texts, list):
+                texts = texts[0]
             if isinstance(texts, str):
                 texts = [texts]
             assert isinstance(texts, list) and isinstance(texts[0], str), "text must be a string or a list of strings."
