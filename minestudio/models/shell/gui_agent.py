@@ -101,6 +101,49 @@ KEY_POS_TABLE_WO_RECIPE = {
         'start_id': 0,
     }
 }
+KEY_POS_FURNACE_WO_RECIPE = {
+    'resource_slot': {
+        'left-top': (287, 113), 
+        'right-bottom': (303, 164), 
+        'row': 2, 
+        'col': 1,
+        'prefix': 'resource', 
+        'start_id': 0, 
+    },
+    'result_slot': {
+        'left-top': (345, 127), 
+        'right-bottom': (368, 152),
+        'row': 1, 
+        'col': 1,
+        'prefix': 'result', 
+        'start_id': 0, 
+    },
+    'hotbar_slot': {
+        'left-top': (242, 236), 
+        'right-bottom': (401, 256),
+        'row': 1, 
+        'col': 9, 
+        'prefix': 'inventory', 
+        'start_id': 0, 
+    }, 
+    'inventory_slot': {
+        'left-top': (242, 178), 
+        'right-bottom': (401, 234), 
+        'row': 3, 
+        'col': 9,
+        'prefix': 'inventory',
+        'start_id': 9,
+    }, 
+    'recipe_slot': {
+        'left-top': (254, 132),
+        'right-bottom': (272, 147),
+        'row': 1, 
+        'col': 1,
+        'prefix': 'recipe', 
+        'start_id': 0,
+    }
+}
+
 def COMPUTE_SLOT_POS(KEY_POS,WEIGHT_RATIO:int=1,HEIGHT_RADIO:int=1):
     result = {}
     for k, v in KEY_POS.items():
@@ -144,6 +187,7 @@ class GUIWorker(object):
         self.width_ratio,self.height_ratio = self.width/BASE_WIDTH, self.height/BASE_HEIGHT
         self.slot_pos_inventory_wo_recipe = COMPUTE_SLOT_POS(KEY_POS_INVENTORY_WO_RECIPE,self.width_ratio,self.height_ratio)
         self.slot_pos_table_wo_recipe = COMPUTE_SLOT_POS(KEY_POS_TABLE_WO_RECIPE,self.width_ratio,self.height_ratio)
+        self.slot_furnace_wo_recipe = COMPUTE_SLOT_POS(KEY_POS_FURNACE_WO_RECIPE,self.width_ratio,self.height_ratio)
         self.camera_scaler = CAMERA_SCALER / self.width_ratio
         
         self.if_discrete = if_discrete
@@ -194,6 +238,15 @@ class GUIWorker(object):
             self.obs, _, _, _, self.info = self._step(action)
     
      # move 
+    
+    # judge crafting_table / inventory
+    @staticmethod
+    def get_manipulate_type(target_data: Dict):
+        manipulate_type = target_data.get("type")
+        if manipulate_type == "minecraft:smelting":
+            return "smelt"
+        else:
+            return "craft"
     
     def move_to_pos(self, x: float, y: float, speed: float = 10): #20
         
@@ -249,30 +302,34 @@ class GUIWorker(object):
             self.move_once(d1, d2)
         self.forget(num=num_random)
     
-    def _step(self, action,record_obs_only=False):
+    def _step(self, action,record_obs_only=False,forgeting=False,reserve=False):
         self.obs, reward, terminated, truncated, self.info = self.env.step(action)
-        
-        # record
-        self.outframes.append(self.info['pov'].astype(np.uint8))
-        
+        self.info['resource'] = self.resource_record
         record_info = self.info
         record_info["cursor"] = copy.deepcopy(self.cursor)
         record_info["gui"] = copy.deepcopy(self.gui)
         record_info["place"] = copy.deepcopy(self.current_gui_type)
+        record_info["reserve"] = reserve
+        
+        if forgeting:
+            return self.obs, reward, terminated, truncated, self.info
+        
+        # record
+        self.outframes.append(self.info['pov'].astype(np.uint8))
         
         self.outinfos.append(record_info)
         if not record_obs_only: 
             self.outactions.append(copy.copy(action))
-        self.info['resource'] = self.resource_record
+        
         return self.obs, reward, terminated, truncated, self.info
     
-    def _null_action(self, times=1):
+    def _null_action(self, times=1,forget=False,reserve=False):
         #if len(self.outactions):
             #print(f"{self.outactions[-1]['use']}",end= "  ")
         action = self.env.noop_action()
 
         for _ in range(times):
-            self.obs, _, _, _, self.info = self._step(action)
+            self.obs, _, _, _, self.info = self._step(action,forgeting=forget,reserve=reserve)
         #if len(self.outactions)>1:
             # print(self.outactions[-2]["use"])
     
@@ -335,7 +392,7 @@ class GUIWorker(object):
         self.outinfos = self.outinfos[:-num]
         return forget_frames,forget_infos,forget_actions
     
-    def _take_a_screen_shot(self,store_path="screen_shot.png"):
+    def _take_a_screen_shot(self,store_path="output/screen_shot.png"):
         """check what happened now """
         import cv2
         self._null_action()

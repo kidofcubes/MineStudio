@@ -253,6 +253,9 @@ class InitInventoryCallback(MinecraftCallback):
                     candidate_nums &= apply_command(operator,number)
             if candidate_nums:
                 item_quantity = random.choice(list(candidate_nums))
+            else:
+                item_quantity = 1
+                
             
         elif not isinstance(item_quantity, int):
             raise TypeError("Input must be an integer or a string representing conditions")

@@ -10,3 +10,5 @@ from minestudio.models.vpt import VPTPolicy, load_vpt_policy
 from minestudio.models.groot_one import GrootPolicy, load_groot_policy
 from minestudio.models.steve_one import SteveOnePolicy, load_steve_one_policy
 from minestudio.models.shell.craft_agent import CraftWorker
+from minestudio.models.shell.gui_agent import GUIWorker
+from minestudio.models.shell.smelt_agent import SmeltWorker
