@@ -39,4 +39,4 @@ export DISPLAY=:4
 # export DISPLAY=":1"
 # Xvfb "${DISPLAY}" -ac -screen "0" "1920x1200x24" -dpi "72" +extension "RANDR" +extension "GLX" +iglx +extension "MIT-SHM" +render -nolisten "tcp" -noreset -shmem -maxclients 2048 &
 bash start_headnode.sh
-python run.py
+python run.py --config_name="craft"

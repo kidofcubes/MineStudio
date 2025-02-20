@@ -11,10 +11,16 @@ import uuid
 import torch
 from minestudio.online.rollout.start_manager import start_rolloutmanager
 from minestudio.online.trainer.start_trainer import start_trainer
-
+import argparse
 
 if __name__=='__main__':
-    config_name = "gate_kl"
+
+    
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--config_name", type=str, default="craft")
+    args = parser.parse_args()
+    config_name = args.config_name
+    
     print("\033[1;32m Starting training session WITH CONFIG: " + config_name + " \033[0m")
     module_name = "minestudio.online.run.config."+config_name
 
