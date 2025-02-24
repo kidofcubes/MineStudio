@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-10 11:01:51
-LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-12-12 10:55:34
+LastEditors: Muyao 2350076251@qq.com
+LastEditTime: 2025-02-24 19:40:56
 FilePath: /MineStudio/minestudio/data/minecraft/demo.py
 '''
 import os
@@ -25,7 +25,7 @@ from minestudio.data.minecraft.part_event import EventDataset
 from minestudio.data.minecraft.part_raw import RawDataset
 from minestudio.data.minecraft.dataset import MinecraftDataset
 from minestudio.data.minecraft.utils import (
-    MineDistributedBatchSampler, write_video, batchify, visualize_dataloader
+    MineDistributedBatchSampler, write_video, batchify, visualize_dataloader, store_data
 )
 
 def visualize_raw_dataset(args):
@@ -79,7 +79,7 @@ def visualize_event_dataset(args):
         enable_resize=args.enable_resize,
         enable_augmentation=args.enable_augmentation,
         event_regex=args.event_regex, 
-        min_nearby=args.min_nearby,
+        min_nearby=args.min_nearby, #两个事件之间最近相隔多少
         max_within=args.max_within,
         bias=args.bias, 
     )
@@ -92,16 +92,24 @@ def visualize_event_dataset(args):
         collate_fn=batchify,
     )
     
-    # dump_trajectories(
-    visualize_dataloader(
-        dataloader, 
-        num_samples=args.num_samples, 
-        resolution=(args.frame_width, args.frame_height), 
-        legend=args.legend,
-        save_fps=args.save_fps,
+    store_data(
+        dataloader,
+        num_samples = args.num_samples,
+        resolution = (args.frame_width, args.frame_height),
+        save_fps = 20,
+        save_dir = getattr(args,"save_dir","./"),
     )
+    
+    # dump_trajectories(
+    # visualize_dataloader(
+    #     dataloader, 
+    #     num_samples=args.num_samples, 
+    #     resolution=(args.frame_width, args.frame_height), 
+    #     legend=args.legend,
+    #     save_fps=args.save_fps,
+    # )
 
-@hydra.main(config_path="demo_configs", config_name="type-raw")
+@hydra.main(config_path="demo_configs", config_name="type-event")
 def main(args):
     if args.dataset_type == 'event':
         visualize_event_dataset(args)

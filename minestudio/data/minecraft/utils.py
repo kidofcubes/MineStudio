@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-10 10:06:28
-LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2024-12-30 21:15:52
+LastEditors: Muyao 2350076251@qq.com
+LastEditTime: 2025-02-24 19:38:48
 FilePath: /MineStudio/var/minestudio/data/minecraft/utils.py
 '''
 import os
@@ -18,6 +18,8 @@ from tqdm import tqdm
 from rich import print
 from typing import Union, Tuple, List, Dict, Callable, Sequence, Mapping, Any, Optional, Literal
 from huggingface_hub import hf_api, snapshot_download
+from pathlib import Path
+from ultron.utils import file_utils
 
 def get_repo_total_size(repo_id, repo_type="dataset", branch="main"):
 
@@ -201,6 +203,57 @@ class MineDistributedBatchSampler(Sampler):
     def __len__(self):
         return self.num_samples_per_replica // self.batch_size
 
+def trans_dict_to_list(messages:dict,max_len:int):
+    new_messages = []
+    for i in range(max_len):
+        new_messages.append({})
+    for key,values in messages.items():
+        if isinstance(values, torch.Tensor):
+            values = values
+        for idx,value in enumerate(values):
+            if idx < len(new_messages):
+                if isinstance(value, torch.Tensor):
+                    value = value.tolist()
+                new_messages[idx][key] = value
+                
+    return new_messages
+
+def store_data(
+    dataloader, 
+    num_samples: int = 1, 
+    resolution: Tuple[int, int] = (320, 180), 
+    save_fps: int = 20, 
+    save_dir:Path=None, #结尾要包含是否为train/val
+    **kwargs,
+) -> None:
+    save_dir.mkdir(parents=True,exist_ok=True)
+    jp = file_utils.JsonlProcessor(save_dir/"tra.jsonl")
+    for idx, data in enumerate(tqdm(dataloader)): # worker_id 组
+        if idx > num_samples:  # 超出num_samples，则停止
+            break
+        text = data['text']
+        actionss = trans_dict_to_list(data['minecraft_envaction'],len(text))
+        infoss = trans_dict_to_list(data["contractor_info"],len(text))
+        imagess = data['img']
+        frames = []
+        num = 0
+        uuid = file_utils.generate_uuid()
+        file_name = save_dir / f"{uuid}.mp4"
+        for bidx, (tframes, actions, infos, txt) in enumerate(zip(imagess, actionss,infoss,text)):  #序号，image，text,这是一段视频的全部内容
+
+            frames.extend(tframes)
+            messages = {
+                "actions":actions,
+                "infos":infos,
+                "text":txt,
+                "begin_num":num,
+                "id":uuid,
+            }
+            jp.dump_line(messages)
+            num+=len(tframes)
+        write_video(file_name, frames, fps=save_fps, width=resolution[0], height=resolution[1])
+
+
 
 def visualize_dataloader(
     dataloader, 
@@ -214,7 +267,7 @@ def visualize_dataloader(
     frames = []
     for idx, data in enumerate(tqdm(dataloader)):
         # continue
-        if idx > num_samples:
+        if idx > num_samples: # 超出num_samples，则停止
             break
         action = data['env_action']
         prev_action = data.get("env_prev_action", None)
