@@ -1,8 +1,8 @@
 '''
 Date: 2024-11-11 15:59:37
-LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2025-02-17 20:39:52
-FilePath: /MineStudio/var/minestudio/models/base_policy.py
+LastEditors: muzhancun muzhancun@stu.pku.edu.cn
+LastEditTime: 2025-02-24 20:02:22
+FilePath: /HierarchicalAgent/scratch/muzhancun/MineStudio/minestudio/models/base_policy.py
 '''
 from abc import ABC, abstractmethod
 import numpy as np
@@ -110,7 +110,7 @@ class MinePolicy(torch.nn.Module, ABC):
         elif isinstance(elem, str):
             return [[elem]]
         else:
-            raise NotImplementedError
+            return elem
 
     # For online
     def merge_input(self, inputs) -> torch.tensor:
