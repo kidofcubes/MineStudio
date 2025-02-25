@@ -1,8 +1,8 @@
 '''
 Date: 2024-11-11 05:20:17
-LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2025-01-05 09:28:33
-FilePath: /MineStudio/minestudio/simulator/entry.py
+LastEditors: muzhancun muzhancun@stu.pku.edu.cn
+LastEditTime: 2025-02-25 16:04:19
+FilePath: /HierarchicalAgent/scratch/muzhancun/MineStudio/minestudio/simulator/entry.py
 '''
 
 import os

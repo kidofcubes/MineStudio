@@ -1,8 +1,8 @@
 '''
 Date: 2025-01-07 05:58:26
-LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2025-01-07 11:27:24
-FilePath: /MineStudio/minestudio/simulator/callbacks/demonstration.py
+LastEditors: muzhancun muzhancun@stu.pku.edu.cn
+LastEditTime: 2025-02-25 15:16:36
+FilePath: /HierarchicalAgent/scratch/muzhancun/MineStudio/minestudio/simulator/callbacks/demonstration.py
 '''
 import random
 import numpy as np
@@ -26,9 +26,12 @@ class DemonstrationCallback(MinecraftCallback):
     """
     
     def create_from_conf(source):
-        data = MinecraftCallback.load_data_from_conf(source)
-        reference_video = data['reference_video']
-        return DemonstrationCallback(reference_video)
+        try:
+            data = MinecraftCallback.load_data_from_conf(source)
+            reference_video = data['reference_video']
+            return DemonstrationCallback(reference_video)
+        except:
+            return None
     
     def __init__(self, task):
         root_dir = get_mine_studio_dir()
