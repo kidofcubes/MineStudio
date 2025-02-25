@@ -136,7 +136,7 @@ class MinecraftSim(gymnasium.Env):
         action = self.action_transformer.policy2env(action)
         return action
 
-    def énv_action_to_agent_action(self, action: Dict[str, Any]):
+    def env_action_to_agent_action(self, action: Dict[str, Any]):
         action = self.action_transformer.env2policy(action)
         action = self.action_mapper.from_factored(action)
         return action
