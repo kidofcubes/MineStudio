@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-28 17:46:44
-LastEditors: muzhancun muzhancun@126.com
-LastEditTime: 2025-01-16 15:01:47
+LastEditors: muzhancun muzhancun@stu.pku.edu.cn
+LastEditTime: 2025-03-17 21:49:38
 FilePath: /MineStudio/docs/source/conf.py
 '''
 import os
@@ -156,5 +156,5 @@ def setup(app: Sphinx) -> Dict[str, Any]:
 
 # setup multiversion
 # smv_branch_whitelist = r'^(master|releases/.*)$' # only include master and releases/* branches
-smv_tag_whitelist = r'^v\d+\.\d+$'
+smv_tag_whitelist = r'^.*$' 
 smv_released_pattern = r'^refs/tags/.*$'
