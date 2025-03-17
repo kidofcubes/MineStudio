@@ -155,4 +155,5 @@ def setup(app: Sphinx) -> Dict[str, Any]:
     }
 
 # setup multiversion
-smv_branch_whitelist = r'^(master|releases/.*)$' # only include master and releases/* branches
+# smv_branch_whitelist = r'^(master|releases/.*)$' # only include master and releases/* branches
+smv_tag_whitelist = r'^v\d+\.\d+$'
