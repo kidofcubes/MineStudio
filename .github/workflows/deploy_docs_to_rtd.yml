@@ -45,6 +45,7 @@ jobs:
           ls
 
           cd docs
+          git tag
 
           echo "Update requirements and add packages needed by sphinx"
 
