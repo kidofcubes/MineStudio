@@ -5,9 +5,9 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "minestudio"
 version="1.1.0"
-description = "A simple and efficient Minecraft development kit for AI research."
+description = "A simple and efficient Minecraft Agent development kit for AI research."
 dependencies = [
-    "av",
+    "av==13.1.0",
     "opencv-python",
     "setuptools",
     "tqdm",
@@ -45,9 +45,7 @@ dependencies = [
     "minecraft_data==3.20.0",
     "absl-py",
     "dm-tree",
-    "x_transformers==0.27.1", 
-    "torchdiffeq",
-    "torchcfm"
+    "x_transformers==0.27.1"
 ]
 authors = [
     {name="CraftJarvis", email="craftjarvis@outlook.com"}

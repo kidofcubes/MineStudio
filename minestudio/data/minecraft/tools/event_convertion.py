@@ -1,8 +1,8 @@
 '''
 Date: 2024-11-10 12:26:39
 LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2024-12-30 20:04:25
-FilePath: /MineStudio/var/minestudio/data/minecraft/tools/convert_lmdb_event.py
+LastEditTime: 2025-03-17 21:40:14
+FilePath: /MineStudio/var/minestudio/data/minecraft/tools/event_convertion.py
 '''
 
 import re
@@ -27,7 +27,8 @@ from rich.console import Console
 from pathlib import Path
 from typing import Union, Tuple, List, Dict
 
-from minestudio.data.minecraft.core import Kernel
+from minestudio.data.minecraft.core import KernelManager
+from minestudio.data.minecraft.callbacks import MetaInfoKernelCallback, ImageKernelCallback, ActionKernelCallback
 
 '''
     Desired data structure of lmdb files: 
@@ -61,14 +62,19 @@ def main(args):
         shutil.rmtree(event_path)
     event_path.mkdir(parents=True)
     
-    contractor_info_path = Path(args.input_dir) / 'contractor_info'
-    assert contractor_info_path.is_dir(), f"Directory {contractor_info_path} does not exist. "
+    meta_info_path = Path(args.input_dir) / 'meta_info'
+    assert meta_info_path.is_dir(), f"Directory {meta_info_path} does not exist. "
     
-    kernel = Kernel(
+    kernel = KernelManager(
         dataset_dirs=[args.input_dir], 
-        enable_video=True, 
-        enable_action=True,
-        enable_contractor_info=True,
+        modal_kernel_callbacks=[
+            ImageKernelCallback(
+                frame_width=224, 
+                frame_height=224, 
+            ), 
+            ActionKernelCallback(),
+            MetaInfoKernelCallback(),
+        ],
     )
     
     episode_with_length = kernel.get_episodes_with_length()
@@ -77,9 +83,11 @@ def main(args):
     events = {}
     # monitor_fields = ['delta_craft_item', 'delta_mine_block', 'delta_pickup']
     monitor_fields = ['events']
+    import ipdb;
     for idx, episode in enumerate(tqdm(episodes)):
         length = episode_with_length[episode]
-        frames, mask = kernel.read_frames(episode, start=0, win_len=length, skip_frame=1, source_type='contractor_info')
+        result = kernel.read(episode, start=0, win_len=length, skip_frame=1)
+        frames, mask = result['meta_info'], result['meta_info_mask']
         assert mask.sum() == length, f"Mask sum: {mask.sum()}, length: {length}. "
         # enumerate all fields of interest and generate all the events
         for field in monitor_fields:

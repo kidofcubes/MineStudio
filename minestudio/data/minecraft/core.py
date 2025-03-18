@@ -1,7 +1,7 @@
 '''
 Date: 2025-01-09 05:45:49
 LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2025-01-21 23:03:10
+LastEditTime: 2025-03-17 21:54:30
 FilePath: /MineStudio/minestudio/data/minecraft/core.py
 '''
 import lmdb
@@ -173,6 +173,7 @@ class KernelManager(object):
         """Read all avaliable modals from lmdb files."""
         result = {}
         for modal, kernel in self.kernels.items():
+            # if modal != 'meta_info': continue
             modal_result = kernel.read_frames(eps, start, win_len, skip_frame, **kwargs)
             result.update(modal_result)
         return result
