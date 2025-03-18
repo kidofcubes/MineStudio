@@ -42,10 +42,11 @@ jobs:
 
       - name: Summit repo to gh-pages branch.
         run: |
+          git clone -b master $CLONE_URL
+          cd MineStudio
           ls
-
-          cd docs
           git tag
+          cd docs
 
           echo "Update requirements and add packages needed by sphinx"
 
