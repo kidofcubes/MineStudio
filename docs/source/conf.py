@@ -101,7 +101,8 @@ html_theme_options = {
   "switcher": {
         "json_url": "https://craftjarvis.github.io/MineStudio/_static/switcher.json",
         "version_match": "v1.0.6",
-   }
+   },
+   "check_switcher": True
 }
 
 html_title = f"MineStudio {release}"

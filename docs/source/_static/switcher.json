@@ -1,12 +1,7 @@
 [
-  {
-    "name": "v1.0.6 (stable)",
-    "version": "v1.0.6",
-    "url": "https://craftjarvis.github.io/MineStudio/v1.0.6/"
-  },
-  {
-    "name": "latest",
-    "version": "latest",
-    "url": "https://craftjarvis.github.io/MineStudio/"
-  }
+    {
+        "name": "latest",
+        "version": "master",
+        "url": "https://craftjarvis.github.io/MineStudio"
+    }
 ]
