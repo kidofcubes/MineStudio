@@ -71,8 +71,11 @@ jobs:
 
           rm -rf *
           mkdir -p ./docs
+          ls ../source/_static
           mv ../build/html/master/* ./docs/
           mv ../build/html/* ./docs/
+          # cp ../source/_static/switcher.json ./docs/_static/switcher.json
+          # cp ../source/_static/switcher.json ./docs/v1.0.6/_static/switcher.json
           touch ./docs/.nojekyll
 
           git add .

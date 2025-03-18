@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-28 17:46:44
 LastEditors: muzhancun muzhancun@stu.pku.edu.cn
-LastEditTime: 2025-03-18 14:51:51
+LastEditTime: 2025-03-18 15:10:55
 FilePath: /MineStudio/docs/source/conf.py
 '''
 import os
@@ -99,8 +99,8 @@ html_theme_options = {
   },
   "navbar_start": ["navbar-logo"],  # 在导航栏显示 Logo
   "switcher": {
-        "json_url": "https://craftjarvis.github.io/MineStudio/_static/switcher.json",
-        "version_match": "v1.0.6",
+        "json_url": "https://craftjarvis.github.io/MineStudio/_static/version.json",
+        "version_match": "1.0.6",
    },
    "check_switcher": True
 }
