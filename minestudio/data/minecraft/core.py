@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-08 04:17:36
-LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2024-12-31 23:46:58
+LastEditors: Muyao 2350076251@qq.com
+LastEditTime: 2025-03-06 20:15:08
 FilePath: /MineStudio/minestudio/data/minecraft/core.py
 '''
 import io
@@ -156,6 +156,7 @@ def decode_video_chunk(
         return frame
     
     future_frames = []
+    
     with io.BytesIO(chunk) as input:
         with ThreadPoolExecutor(max_workers=5) as executor:
             container = av.open(input, "r")
@@ -167,7 +168,7 @@ def decode_video_chunk(
                     future = executor.submit(convert_and_resize, av_frame, width, height)
                     future_frames.append(future)
             frames = [future.result() for future in future_frames]
-            stream.close()
+            #stream.close()
             container.close()
 
     frames = np.array(frames)
@@ -324,16 +325,21 @@ class LMDBDriver(object):
                     __num_episodes__ = pickle.loads(txn.get("__num_episodes__".encode()))
                     __num_total_frames__ = pickle.loads(txn.get("__num_total_frames__".encode()))
                     # merge meta infos to a single view
+                    #print(__chunk_size__)
+                    #print(len(__chunk_infos__))
                     for chunk_info in __chunk_infos__:
                         chunk_info['lmdb_stream'] = stream
-                        if short_name:
-                            chunk_info['episode'] = hashlib.md5(chunk_info['episode'].encode()).hexdigest()[:SHORT_NAME_LENGTH]
+                        #if short_name:
+                            #chunk_info['episode'] = hashlib.md5(chunk_info['episode'].encode()).hexdigest()[:SHORT_NAME_LENGTH]
                     self.episode_infos += __chunk_infos__
                     self.num_episodes += __num_episodes__
                     self.num_total_frames += __num_total_frames__
                     self.chunk_size = __chunk_size__
+        
         # create a episode to index mapping 
         self.eps_idx_mapping = { info['episode']: idx for idx, info in enumerate(self.episode_infos) }
+        #print(self.eps_idx_mapping)
+        
     
     def read_chunks(self, eps: str, start: int, end: int) -> List[bytes]:
         """
@@ -420,7 +426,7 @@ class Kernel:
             'video': enable_video,
             'action': enable_action,
             'contractor_info': enable_contractor_info, 
-            'segment': enable_segment,
+            'segment':enable_segment
         }
         self.enable_sources = [k for k, v in enable_sources.items() if v]
         
@@ -440,7 +446,6 @@ class Kernel:
             if self.verbose:
                 Console().log(f"[Kernel] Driver {source_type} load {len(part_episodes)} episodes. ")         
             episodes = episodes.intersection(part_episodes) if episodes is not None else part_episodes
-        
         self.num_frames = 0
         self.episodes_with_length = OrderedDict()
         for episode in sorted(list(episodes)):
@@ -459,7 +464,10 @@ class Kernel:
         merge_fn = MERGE_FUNCTIONS[source_type]
         extract_fn = EXTRACT_FUNCTIONS[source_type]
         padding_fn = PADDING_FUNCTIONS[source_type]
-        return driver.read_frames(eps, start, win_len, skip_frame, merge_fn, extract_fn, padding_fn)
+        try:
+            return driver.read_frames(eps, start, win_len, skip_frame, merge_fn, extract_fn, padding_fn)
+        except Exception as e:
+            raise e
 
     def read(self, eps: str, start: int, win_len: int ,skip_frame: int):
         """Read all avaliable source data from lmdb files."""
@@ -567,6 +575,7 @@ class BaseDataset(Dataset):
 
     def postprocess(self, item: Dict) -> Dict:
         # rename the keys
+
         if 'action' in item:
             action = item.pop('action')
             item['env_action'] = action

@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-10 10:06:28
 LastEditors: Muyao 2350076251@qq.com
-LastEditTime: 2025-02-24 19:38:48
+LastEditTime: 2025-03-04 00:29:58
 FilePath: /MineStudio/var/minestudio/data/minecraft/utils.py
 '''
 import os
@@ -16,10 +16,19 @@ import shutil
 from torch.utils.data import Sampler
 from tqdm import tqdm
 from rich import print
+import rich
+import string
+import random
 from typing import Union, Tuple, List, Dict, Callable, Sequence, Mapping, Any, Optional, Literal
 from huggingface_hub import hf_api, snapshot_download
 from pathlib import Path
-from ultron.utils import file_utils
+import pathlib
+import uuid
+from datetime import datetime
+import pickle
+import json
+
+
 
 def get_repo_total_size(repo_id, repo_type="dataset", branch="main"):
 
@@ -75,6 +84,35 @@ def pull_datasets_from_remote(dataset_dirs: List[str]) -> List[str]:
         else:
             new_dataset_dirs.append(path)
     return new_dataset_dirs
+
+import cv2
+
+def read_video(file_path: str, start_idx: int = 0, width: int = None):
+    # 打开视频文件
+    cap = cv2.VideoCapture(file_path)
+    
+    if not cap.isOpened():
+        raise ValueError("Error: Could not open video.")
+
+    # 跳转到开始帧
+    cap.set(cv2.CAP_PROP_POS_FRAMES, start_idx)
+
+    frames = []
+    count = 0
+
+    # 读取视频帧，直到达到指定的宽度或视频结束
+    while True:
+        ret, frame = cap.read()
+        if not ret or (width is not None and count >= width):
+            break
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        frames.append(frame)  # 将每一帧添加到 frames 列表中
+        count += 1
+    
+    # 释放视频文件
+    cap.release()
+
+    return frames
 
 def write_video(
     file_name: str, 
@@ -223,23 +261,40 @@ def store_data(
     num_samples: int = 1, 
     resolution: Tuple[int, int] = (320, 180), 
     save_fps: int = 20, 
-    save_dir:Path=None, #结尾要包含是否为train/val
+    save_dir:str=None, #结尾要包含是否为train/val
+    source_video_dir:Path=None,
     **kwargs,
 ) -> None:
+    input("注意，source_video_dir 有问题，如果已经知晓，输入yes: ")
+    save_dir = Path(save_dir)
     save_dir.mkdir(parents=True,exist_ok=True)
-    jp = file_utils.JsonlProcessor(save_dir/"tra.jsonl")
+    
     for idx, data in enumerate(tqdm(dataloader)): # worker_id 组
+        fid = str(uuid.uuid4())[:12]
+        
         if idx > num_samples:  # 超出num_samples，则停止
             break
+
         text = data['text']
-        actionss = trans_dict_to_list(data['minecraft_envaction'],len(text))
+        tframess = data["image"]
+        actionss = trans_dict_to_list(data['env_action'],len(text))
         infoss = trans_dict_to_list(data["contractor_info"],len(text))
-        imagess = data['img']
+        
+        
         frames = []
         num = 0
-        uuid = file_utils.generate_uuid()
-        file_name = save_dir / f"{uuid}.mp4"
-        for bidx, (tframes, actions, infos, txt) in enumerate(zip(imagess, actionss,infoss,text)):  #序号，image，text,这是一段视频的全部内容
+        event_text = text[0] if len(text) else ""
+        file_name = save_dir / f"{event_text}+{fid}.mp4"
+        jp = JsonlProcessor(save_dir/f"{event_text}+{fid}.jsonl",if_backup=False)
+        for bidx, (tframes, actions, infos, txt) in enumerate(zip(tframess,actionss,infoss,text)):  #序号，image，text,这是一段视频的全部内容
+
+            #raw_video_start_idx = data['raw_start_frame_idx'][bidx]
+            raw_video_name = data["raw_video_name"][bidx]
+            win_len = data['win_len'][bidx]
+            #raw_video_path = source_video_dir / f"{raw_video_name}.mp4"
+            #tframes = read_video(raw_video_path,raw_video_start_idx,win_len)
+            #if len(tframes)!=win_len:
+            #    print(raw_video_name,"need frames",win_len,"actual",len(tframes))
 
             frames.extend(tframes)
             messages = {
@@ -247,12 +302,13 @@ def store_data(
                 "infos":infos,
                 "text":txt,
                 "begin_num":num,
-                "id":uuid,
+                "id":fid,
             }
             jp.dump_line(messages)
             num+=len(tframes)
+        frames = [frame.numpy() for frame in frames]
         write_video(file_name, frames, fps=save_fps, width=resolution[0], height=resolution[1])
-
+        jp.close()
 
 
 def visualize_dataloader(
@@ -377,3 +433,336 @@ def dump_trajectories(
             )
             with open(action_dir / f"{vid}.pkl", 'wb') as f:
                 pickle.dump(action[i], f)
+                
+                
+
+
+def generate_uuid():
+    return str(uuid.uuid4())
+
+def generate_timestamp():
+    return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+def load_json_file(file_path:Union[str , pathlib.Path], data_type="dict"):
+    if isinstance(file_path,pathlib.Path):
+        file_path = str(file_path)
+    if data_type == "dict":
+        json_file = dict()
+    elif data_type == "list":
+        json_file = list()
+    else:
+        raise ValueError("数据类型不对")
+    if os.path.exists(file_path):
+        try:
+            with open(file_path, 'r') as f:
+                json_file = json.load(f)
+        except IOError as e:
+            rich.print(f"[red]无法打开文件{file_path}：{e}")
+        except json.JSONDecodeError as e:
+            rich.print(f"[red]解析 JSON 文件时出错{file_path}：{e}")
+    else:
+        rich.print(f"[yellow]{file_path}文件不存在，正在传入空文件...[/yellow]")
+    return json_file
+
+def dump_json_file(json_file, file_path:Union[str , pathlib.Path],indent=4,if_print = True,if_backup = True,if_backup_delete=False):
+    if isinstance(file_path,pathlib.Path):
+        file_path = str(file_path)
+    backup_path = file_path + ".bak"  # 定义备份文件的路径
+    if os.path.exists(file_path) and if_backup:
+        shutil.copy(file_path, backup_path)
+    before_exist = os.path.exists(file_path)
+    try:
+        with open(file_path, 'w',encoding="utf-8") as f:
+            json.dump(json_file, f, indent=indent,ensure_ascii=False)
+        if before_exist and if_print:
+            rich.print(f"[yellow]更新{file_path}[/yellow]")
+        elif if_print:
+            rich.print(f"[green]创建{file_path}[/green]")
+    except IOError as e:
+        if os.path.exists(backup_path) and if_backup:
+            shutil.copy(backup_path, file_path)
+            if if_print:
+                rich.print(f"[red]文件{file_path}写入失败，已从备份恢复原文件: {e}[/red]")
+        else:
+            if if_print:
+                rich.print(f"[red]文件{file_path}写入失败，且无备份可用：{e}[/red]")
+    finally:
+        # 清理，删除备份文件
+        if if_backup:
+            if os.path.exists(backup_path) and if_backup_delete:
+                os.remove(backup_path)
+            if not os.path.exists(backup_path) and not if_backup_delete : #如果一开始是空的
+                shutil.copy(file_path, backup_path)
+
+def dump_jsonl(jsonl_file:list,file_path:Union[str , pathlib.Path],if_print=True):
+    if isinstance(file_path,pathlib.Path):
+        file_path = str(file_path)
+    before_exist = os.path.exists(file_path)
+    try:
+        with open(file_path, 'w',encoding="utf-8") as f:
+            for entry in jsonl_file:
+                json_str = json.dumps(entry,ensure_ascii=False)
+                f.write(json_str + '\n') 
+        if before_exist and if_print:
+            rich.print(f"[yellow]更新{file_path}[/yellow]")
+        elif if_print:
+            rich.print(f"[green]创建{file_path}[/green]")
+    except IOError as e:
+        print(f"[red]文件{file_path}写入失败，{e}[/red]") 
+
+def split_dump_jsonl(jsonl_file:list,file_path:Union[str , pathlib.Path],split_num = 1, if_print=True):
+    # 确保 file_path 是字符串类型
+    if isinstance(file_path, pathlib.Path):
+        file_path = str(file_path)
+    
+    # 检查原文件是否存在
+    before_exist = os.path.exists(file_path)
+    
+    # 计算每份数据的大小
+    chunk_size = len(jsonl_file) // split_num
+    remainder = len(jsonl_file) % split_num  # 计算余数，用来均衡每份的大小
+
+    # 将数据切分成 5 份
+    chunks = []
+    start_idx = 0
+    for i in range(split_num):
+        end_idx = start_idx + chunk_size + (1 if i < remainder else 0)  # 如果有余数，前几个切片多分一个
+        chunks.append(jsonl_file[start_idx:end_idx])
+        start_idx = end_idx
+    
+    # 写入每份数据到文件
+    for i, chunk in enumerate(chunks):
+        try:
+            # 构造文件路径
+            chunk_file_path = file_path[:-6] + f"{i}.jsonl"
+            with open(chunk_file_path, 'w', encoding="utf-8") as f:
+                for entry in chunk:
+                    json_str = json.dumps(entry, ensure_ascii=False)
+                    f.write(json_str + '\n')
+
+            # 打印文件创建或更新信息
+            if before_exist and if_print:
+                rich.print(f"[yellow]更新{chunk_file_path}[/yellow]")
+            elif if_print:
+                rich.print(f"[green]创建{chunk_file_path}[/green]")
+        except IOError as e:
+            print(f"[red]文件{chunk_file_path}写入失败，{e}[/red]")
+
+def load_jsonl(file_path:Union[str , pathlib.Path]):
+    if isinstance(file_path,pathlib.Path):
+        file_path = str(file_path)
+    jsonl_file = []
+    if os.path.exists(file_path):
+        try:
+            with open(file_path, 'r') as f:
+                for line in f:
+                    jsonl_file.append(json.loads(line))
+        except IOError as e:
+            rich.print(f"[red]无法打开文件：{e}")
+        except json.JSONDecodeError as e:
+            rich.print(f"[red]解析 JSON 文件时出错：{e}")
+    else:
+        rich.print(f"[yellow]{file_path}文件不存在，正在传入空文件...[/yellow]")
+    return jsonl_file 
+                
+class JsonlProcessor:
+    def __init__(self, file_path:Union[str , pathlib.Path],
+                 if_backup = True,
+                 if_print=True
+                 ):
+        
+        self.file_path = file_path if not isinstance(file_path,pathlib.Path) else str(file_path)
+        
+        self.if_print = if_print
+        self.if_backup = if_backup
+
+        self._mode = ""
+
+        self._read_file = None
+        self._write_file = None
+        self._read_position = 0
+        self.lines = 0
+
+    @property
+    def bak_file_path(self):
+        return str(self.file_path) + ".bak"
+    
+    def exists(self):
+        return os.path.exists(self.file_path)
+
+    def len(self):
+        file_length = 0
+        if not self.exists():
+            return file_length
+        if self.lines == 0:
+            with open(self.file_path, 'r', encoding='utf-8') as file:
+                while file.readline():
+                    file_length+=1
+            self.lines = file_length
+        return self.lines
+
+    def close(self,mode = "rw"):
+        # 关闭文件资源
+        if "r" in mode:
+            if self._write_file:
+                self._write_file.close()
+                self._write_file = None
+        if "w" in mode:
+            if self._read_file:
+                self._read_file.close()
+                self._read_file = None
+            self.lines = 0
+        
+
+    def reset(self, file_path:Union[str , pathlib.Path]):
+        self.close()
+        self.file_path = file_path if not isinstance(file_path,pathlib.Path) else str(file_path)
+
+
+    def load_line(self,fast:bool=False):
+        if not fast:
+            if not self.exists():
+                rich.print(f"[yellow]{self.file_path}文件不存在,返回{None}")
+                return None
+            if self._mode != "r":
+                self.close("r")
+                
+        if not self._read_file:
+            self._read_file = open(self.file_path, 'r', encoding='utf-8')
+            
+        if not fast:
+            self._read_file.seek(self._read_position)
+            self._mode = "r"
+       
+        try:
+            line = self._read_file.readline()
+            self._read_position = self._read_file.tell()
+            if not line:
+                self.close()
+                return None
+            return json.loads(line.strip())
+        except json.JSONDecodeError as e:
+            self.close()
+            rich.print(f"[red]文件{self.file_path}解析出现错误：{e}")
+            return None
+        except IOError as e:
+            self.close()
+            rich.print(f"[red]无法打开文件{self.file_path}：{e}")
+            return None
+    
+    def load_lines(self):
+        """获取jsonl中的line，直到结尾"""
+        lines = []
+        while True:
+            line = self.load_line()
+            if line ==None:
+                break
+            lines.append(line)
+        return lines
+        
+
+    def load_restart(self):
+        self.close(mode="r")
+        self._read_position = 0
+         
+    def dump_line(self, data,fast:bool=False):
+        if not isinstance(data,dict) and not isinstance(data,list):
+            raise ValueError("数据类型不对")
+        if not fast:
+            # 备份
+            if self.len() % 50 == 1 and self.if_backup:
+                shutil.copy(self.file_path, self.bak_file_path)
+            self._mode = "a"
+            # 如果模型尚未打开
+        if not self._write_file:
+            self._write_file = open(self.file_path, 'a', encoding='utf-8')
+        try:
+            json_line = json.dumps(data,ensure_ascii=False)
+            self._write_file.write(json_line + '\n')
+            self._write_file.flush()
+            self.lines += 1  
+            return True
+        except Exception as e:
+            
+            if os.path.exists(self.bak_file_path) and self.if_backup:
+                shutil.copy(self.bak_file_path, self.file_path)
+                if self.if_print:
+                    rich.print(f"[red]文件{self.file_path}写入失败，已从备份恢复原文件: {e}[/red]")
+            else:
+                if self.if_print:
+                    rich.print(f"[red]文件{self.file_path}写入失败，且无备份可用：{e}[/red]") 
+            return False
+
+    def dump_lines(self,datas):
+        if not isinstance(datas,list):
+            raise ValueError("数据类型不对")
+        if self.if_backup and os.path.exists(self.file_path):
+            shutil.copy(self.file_path, self.bak_file_path)
+        self._mode = "a"
+        if not self._write_file:
+            self._write_file = open(self.file_path, 'a', encoding='utf-8')
+        try:
+            self.len()
+            for data in datas:
+                json_line = json.dumps(data,ensure_ascii=False)
+                self._write_file.write(json_line + '\n')
+                self.lines += 1  
+            self._write_file.flush()
+            return True
+        except Exception as e:
+            if os.path.exists(self.bak_file_path) and self.if_backup:
+                shutil.copy(self.bak_file_path, self.file_path)
+                if self.if_print:
+                    rich.print(f"[red]文件{self.file_path}写入失败，已从备份恢复原文件: {e}[/red]")
+            else:
+                if self.if_print:
+                    rich.print(f"[red]文件{self.file_path}写入失败，且无备份可用：{e}[/red]") 
+                return False
+            
+    def dump_restart(self):
+        self.close()
+        self._mode= "w"
+        with open(self.file_path, 'w', encoding='utf-8') as file:
+            pass 
+          
+    def load(self):
+        jsonl_file = []
+        if self.exists():
+            try:
+                with open(self.file_path, 'r', encoding='utf-8') as f:
+                    for line in f:
+                        jsonl_file.append(json.loads(line))
+            except IOError as e:
+                rich.print(f"[red]无法打开文件：{e}")
+            except json.JSONDecodeError as e:
+                rich.print(f"[red]解析 JSON 文件时出错：{e}")
+        else:
+            rich.print(f"[yellow]{self.file_path}文件不存在，正在传入空文件...[/yellow]")
+        return jsonl_file
+
+    def dump(self,jsonl_file:list):
+        before_exist = self.exists()
+        if self.if_backup and before_exist:
+            shutil.copy(self.file_path, self.bak_file_path)
+        try:
+            self.close()
+            self._mode = "w"
+            with open(self.file_path, 'w', encoding='utf-8') as f:
+                for entry in jsonl_file:
+                    json_str = json.dumps(entry,ensure_ascii=False)
+                    f.write(json_str + '\n') 
+                    self.lines += 1
+            if before_exist and self.if_print:
+                rich.print(f"[yellow]更新{self.file_path}[/yellow]")
+            elif self.if_print:
+                rich.print(f"[green]创建{self.file_path}[/green]")
+            return True
+        except Exception as e:
+            if os.path.exists(self.bak_file_path) and self.if_backup:
+                shutil.copy(self.bak_file_path, self.file_path)
+                if self.if_print:
+                    rich.print(f"[red]文件{self.file_path}写入失败，已从备份恢复原文件: {e}[/red]")
+            else:
+                if self.if_print:
+                    rich.print(f"[red]文件{self.file_path}写入失败，且无备份可用：{e}[/red]") 
+            return False  

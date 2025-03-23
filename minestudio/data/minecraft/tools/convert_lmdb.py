@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-10 12:27:01
-LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2024-12-29 23:45:37
+LastEditors: Muyao 2350076251@qq.com
+LastEditTime: 2025-03-02 01:54:16
 FilePath: /MineStudio/minestudio/data/minecraft/tools/convert_lmdb.py
 '''
 
@@ -382,6 +382,8 @@ class TaskManager:
         for sub_dir in source_dir:
             print(f'input {source_type} directory: {sub_dir}')
             for source_file in tqdm(Path(sub_dir).rglob(f"*.{suffix}"), desc="Looking for source files"):
+                # woozy-ruby-ostrich-f153ac423f61-20220420-152230.mp4
+                # 
                 file_name = str(source_file.with_suffix('').relative_to(sub_dir))
                 match = re.match(CONTRACTOR_PATTERN, file_name)
                 if match:

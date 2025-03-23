@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-10 10:26:52
-LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2024-12-30 20:55:41
+LastEditors: Muyao 2350076251@qq.com
+LastEditTime: 2025-02-28 20:24:38
 FilePath: /MineStudio/minestudio/data/minecraft/part_event.py
 '''
 import io
@@ -26,6 +26,17 @@ class EventLMDBDriver:
         self.lmdb_stream = lmdb.open(str(event_path), max_readers=128, readonly=True, lock=False)
 
         with self.lmdb_stream.begin(write=False) as txn:
+            #ep = set()
+            #cursor = txn.cursor()  # 获取游标
+            #from tqdm import tqdm
+            #for key, value in tqdm(cursor):  # 遍历所有 key-value 对
+                #if key.startswith(b"('minecraft"):
+                    #ep.add(pickle.loads(txn.get(key))[0])
+                    #print(ep)
+                    
+            #print(ep)
+            #import pdb;pdb.set_trace()
+            #exit()
             __event_info__ = pickle.loads(txn.get(b'__event_info__'))
             # check if codebook exists
             __codebook_bytes__ = txn.get(b'__codebook__', None)
@@ -37,10 +48,11 @@ class EventLMDBDriver:
             for event, value in __event_info__.items():
                 if re.match(event_regex, event):
                     self.event_info[event] = value
-        
+                    
         self.event_list = sorted(list(self.event_info.keys()))
         # if min_nearby is not None or max_within is not None:
         self.filter_out(min_nearby, max_within)
+
     
     def filter_out(self, min_nearby: Optional[int] = None, max_within: Optional[int] = None):
         episode_event_last = {}
@@ -67,7 +79,9 @@ class EventLMDBDriver:
                 episode_event_last[episode_event_key] = event_time
                 remaining_events[event].append(i)
             self.event_info[event]['__num_items__'] = len(remaining_events[event])
+        print(f"[green]{self.event_info}")
         self.remaining_events = remaining_events
+        
     
     def get_event_list(self) -> List[str]:
         return self.event_list
@@ -123,7 +137,7 @@ class EventDataset(BaseDataset):
         win_len: int = 1, 
         skip_frame: int = 1,
         split: Literal['train', 'val'] = 'train',
-        split_ratio: float = 0.8, 
+        split_ratio: float = 0.99, 
         verbose: bool = True,
         # below are event dataset specific parameters
         bias: int = 0,
@@ -198,6 +212,9 @@ class EventDataset(BaseDataset):
         episode, event_time, value = self.event_kernel.get_event_item(event, relative_idx)
         start = max(event_time - self.win_len + self.bias, 0)
         item = self.kernel.read(episode, start=start, win_len=self.win_len, skip_frame=self.skip_frame)
+        item["raw_video_name"] = episode
+        item["raw_start_frame_idx"] = start
+        item["win_len"] = self.win_len
         item['text'] = event.replace('minecraft.', '')
         return self.postprocess(item)
         

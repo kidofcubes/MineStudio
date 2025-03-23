@@ -1,7 +1,7 @@
 '''
 Date: 2025-01-05 22:26:22
-LastEditors: limuyao 2200017405@stu.pku.edu.cn
-LastEditTime: 2025-01-19 06:14:00
+LastEditors: Muyao 2350076251@qq.com
+LastEditTime: 2025-03-18 22:28:32
 FilePath: /MineStudio/minestudio/simulator/callbacks/init_inventory.py
 '''
 
@@ -115,7 +115,7 @@ class InitInventoryCallback(MinecraftCallback):
             chats.append(chat)
         
         obs, reward, done, info = sim.env.execute_cmd("/gamerule sendCommandFeedback false")
-        obs, reward, done, info = sim.env.execute_cmd("/gamerule commandblockoutput false")
+        #obs, reward, done, info = sim.env.execute_cmd("/gamerule commandblockoutput false")
         for chat in chats:
             obs, reward, done, info = sim.env.execute_cmd(chat)
         obs, info = sim._wrap_obs_info(obs, info)
@@ -205,8 +205,7 @@ class InitInventoryCallback(MinecraftCallback):
                 "quantity":1,
             })
         return init_inventory,visited_slots
-        
-    
+         
     def _map_slot_number_to_cmd_slot(self,slot_number: Union[int,str]) -> str:
         slot_number = int(slot_number)
         assert MIN_SLOT_IDX <= slot_number <= MAX_SLOT_IDX, f"exceed slot index range:{slot_number}"

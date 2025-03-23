@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-11 16:40:57
-LastEditors: muzhancun muzhancun@stu.pku.edu.cn
-LastEditTime: 2024-11-20 00:30:51
+LastEditors: Muyao 2350076251@qq.com
+LastEditTime: 2025-03-22 22:46:36
 FilePath: /MineStudio/minestudio/simulator/callbacks/record.py
 '''
 import av
@@ -13,6 +13,7 @@ from copy import deepcopy
 import numpy as np
 from gymnasium import spaces
 from collections import defaultdict
+from omegaconf import DictConfig
 import json
 import cv2
 
@@ -36,6 +37,7 @@ class RecordCallback(MinecraftCallback):
         self.frames = []
         self.infos = []
         self.actions = []
+        self.texts = []
     
     def _get_message(self, info):
         message = info.get('message', {})
@@ -61,6 +63,7 @@ class RecordCallback(MinecraftCallback):
                 raise ValueError(f'Invalid frame_type: {self.frame_type}')
             if self.record_actions or self.show_actions:
                 self.actions.append({}) #empty for reset
+                self.texts.append(info["task"]["text"])
             if self.record_infos:
                 self.infos.append(info)
         
@@ -72,6 +75,9 @@ class RecordCallback(MinecraftCallback):
         return action
     
     def after_step(self, sim, obs, reward, terminated, truncated, info):
+        if self.record_actions or self.show_actions:
+            self.texts.append(info["task"]["text"])
+        
         if self.recording and not info.get('R', True):
             self.recording = False
             print(f'[red]Recording stopped[/red]')
@@ -90,9 +96,12 @@ class RecordCallback(MinecraftCallback):
             else:
                 raise ValueError(f'Invalid frame_type: {self.frame_type}')
             if self.record_infos:
+                new_info = deepcopy(info)
+                new_info.pop('pov')
                 self.infos.append(info)
             
         info['message'] = self._get_message(info)
+        
         return obs, reward, terminated, truncated, info
     
     def before_close(self, sim):
@@ -121,6 +130,9 @@ class RecordCallback(MinecraftCallback):
                             v = "[{:.2f}, {:.2f}]".format(v[0], v[1])
                         frame = frame.copy()
                         cv2.putText(frame, f"{k}: {v}", (10, 25 + row*15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
+                    if idx < len(self.texts):
+                        frame = frame.copy()
+                        cv2.putText(frame, self.texts[idx][:20], (500, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (249, 200, 14), 2)
                 frame = av.VideoFrame.from_ndarray(frame, format="rgb24")
                 for packet in stream.encode(frame):
                     container.mux(packet)
@@ -170,5 +182,8 @@ class RecordCallback(MinecraftCallback):
             return {key: self._convert_data(value) for key, value in data.spaces.items()}
         elif isinstance(data, np.ndarray):
             return data.tolist()
+        elif isinstance(data, DictConfig):
+            # DictConfig 转换为普通字典
+            return self._convert_data(dict(data))
         else:
             return data

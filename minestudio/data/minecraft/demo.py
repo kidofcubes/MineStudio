@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-10 11:01:51
 LastEditors: Muyao 2350076251@qq.com
-LastEditTime: 2025-02-24 19:40:56
+LastEditTime: 2025-02-28 21:07:36
 FilePath: /MineStudio/minestudio/data/minecraft/demo.py
 '''
 import os
@@ -83,6 +83,7 @@ def visualize_event_dataset(args):
         max_within=args.max_within,
         bias=args.bias, 
     )
+    Console().log(f"event number: {len(event_dataset)}")
     Console().log(f"num-workers: {args.num_workers}")
     dataloader = DataLoader(
         dataset=event_dataset,
@@ -91,13 +92,14 @@ def visualize_event_dataset(args):
         shuffle=args.shuffle,
         collate_fn=batchify,
     )
-    
+    #exit()
     store_data(
         dataloader,
         num_samples = args.num_samples,
         resolution = (args.frame_width, args.frame_height),
         save_fps = 20,
         save_dir = getattr(args,"save_dir","./"),
+        source_video_dir = Path(args.dataset_dirs[0])/"videos",
     )
     
     # dump_trajectories(
@@ -109,7 +111,7 @@ def visualize_event_dataset(args):
     #     save_fps=args.save_fps,
     # )
 
-@hydra.main(config_path="demo_configs", config_name="type-event")
+@hydra.main(config_path="demo_configs", config_name="muyao-event")
 def main(args):
     if args.dataset_type == 'event':
         visualize_event_dataset(args)

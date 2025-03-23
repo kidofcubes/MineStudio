@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-11 17:26:22
-LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2024-11-12 00:12:08
+LastEditors: Muyao 2350076251@qq.com
+LastEditTime: 2025-03-20 01:49:30
 FilePath: /MineStudio/minestudio/simulator/callbacks/summon_mobs.py
 '''
 
@@ -33,4 +33,5 @@ class SummonMobsCallback(MinecraftCallback):
         for chat in chats:
             obs, reward, done, info = sim.env.execute_cmd(chat)
         obs, info = sim._wrap_obs_info(obs, info)
+        
         return obs, info
