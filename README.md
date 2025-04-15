@@ -150,13 +150,15 @@ Here is the checkpoint list:
 - [CraftJarvis/MineStudio_STEVE-1.official](https://huggingface.co/CraftJarvis/MineStudio_STEVE-1.official), trained by [STEVE-1](https://github.com/Shalev-Lifshitz/STEVE-1)
 - [CraftJarvis/MineStudio_ROCKET-1.12w_EMA](https://huggingface.co/CraftJarvis/MineStudio_ROCKET-1.12w_EMA), trained by [CraftJarvis](https://craftjarvis.github.io/)
 
-## Why MineStudio
-
 ## Acknowledgement
 
 The simulation environment is built upon [MineRL](https://github.com/minerllabs/minerl) and [Project Malmo](https://github.com/microsoft/malmo).
 We also refer to [Ray](https://docs.ray.io/en/latest/index.html), [PyTorch Lightning](https://pytorch-lightning.readthedocs.io/en/latest/) for distributed training and inference.
 Thanks for their great work.
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=CraftJarvis/MineStudio&type=Date)](https://www.star-history.com/#CraftJarvis/MineStudio&Date)
 
 ## Citation
 
