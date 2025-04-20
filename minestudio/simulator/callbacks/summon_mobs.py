@@ -1,8 +1,8 @@
 '''
 Date: 2024-11-11 17:26:22
 LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2024-11-12 00:12:08
-FilePath: /MineStudio/minestudio/simulator/callbacks/summon_mobs.py
+LastEditTime: 2025-04-19 15:42:35
+FilePath: /MineStudio/var/minestudio/simulator/callbacks/summon_mobs.py
 '''
 
 from minestudio.simulator.callbacks.callback import MinecraftCallback
@@ -37,8 +37,9 @@ class SummonMobsCallback(MinecraftCallback):
                 name = mob.get('name', mob.get('mob_name'))
                 x = sim.np_random.uniform(*mob['range_x'])
                 z = sim.np_random.uniform(*mob['range_z'])
-                chat = f'/execute as @p at @p run summon minecraft:{name} ~{x} ~ ~{z} {{Age:0}}'
+                chat = f'/execute as @p at @p run summon minecraft:{name} ~{x} ~3 ~{z} {{Age:0}}'
                 chats.append(chat)
+        # chat.append('/effect give @e[type=#minecraft:is_animal] minecraft:slow_falling 99999 1 true')
         for chat in chats:
             obs, reward, done, info = sim.env.execute_cmd(chat)
         obs, info = sim._wrap_obs_info(obs, info)

@@ -22,7 +22,7 @@ do
     esac
     shift
 done
-  
+
 if ! [[ $port =~ ^-?[0-9]+$ ]]; then
     echo "Port value should be numeric"
     exit 1

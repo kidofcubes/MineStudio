@@ -15,6 +15,7 @@ from minestudio.models import MinePolicy
 from minestudio.simulator import MinecraftSim
 from ray.actor import ActorHandle
 from minestudio.online.utils.rollout.monitor import PipelineMonitor, MovingStat
+from minestudio.online.utils import auto_stack, auto_to_torch
 
 class ProgressHandler(Protocol):
     def __call__(self, *,
@@ -128,8 +129,8 @@ class RolloutWorker():
             idds.append(str(idx)+"_"+str(self.num_resets[idx]))
             in_states.append(self.agent_states[idx])
         
-        
-        batch = self.agent.merge_input(inputs) #auto_to_torch(auto_stack([auto_stack([input]) for input in inputs]), device=self.model_device)
+        # batch = self.agent.merge_input(inputs) #auto_to_torch(auto_stack([auto_stack([input]) for input in inputs]), device=self.model_device)
+        batch = auto_to_torch(auto_stack([auto_stack([input]) for input in inputs]), device=self.model_device)
         memory_in = self.agent.merge_state(in_states)
         action = None
 

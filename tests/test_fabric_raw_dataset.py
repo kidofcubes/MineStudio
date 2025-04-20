@@ -1,7 +1,7 @@
 '''
 Date: 2025-01-15 15:12:23
 LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2025-01-15 17:43:39
+LastEditTime: 2025-03-18 18:14:14
 FilePath: /MineStudio/tests/test_fabric_raw_dataset.py
 '''
 import lightning as L
@@ -19,11 +19,11 @@ fabric.launch()
 data_module = RawDataModule(
     data_params=dict(
         dataset_dirs=[
-            '/nfs-shared-2/data/contractors/dataset_6xx',
-            '/nfs-shared-2/data/contractors/dataset_7xx',
-            '/nfs-shared-2/data/contractors/dataset_8xx',
-            '/nfs-shared-2/data/contractors/dataset_9xx',
-            '/nfs-shared-2/data/contractors/dataset_10xx',
+            '/nfs-shared-2/data/contractors-new/dataset_6xx',
+            '/nfs-shared-2/data/contractors-new/dataset_7xx',
+            '/nfs-shared-2/data/contractors-new/dataset_8xx',
+            '/nfs-shared-2/data/contractors-new/dataset_9xx',
+            '/nfs-shared-2/data/contractors-new/dataset_10xx',
         ],
         modal_kernel_callbacks=[
             ImageKernelCallback(frame_width=224, frame_height=224, enable_video_aug=False),

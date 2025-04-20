@@ -1,8 +1,8 @@
 '''
 Date: 2024-11-11 05:20:17
 LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2025-01-22 23:14:35
-FilePath: /MineStudio/minestudio/simulator/entry.py
+LastEditTime: 2025-04-19 19:02:03
+FilePath: /ROCKET-3/var/nfs-shared/shaofei/nfs-workspace/MineStudio/minestudio/simulator/entry.py
 '''
 
 import os
@@ -131,7 +131,7 @@ class MinecraftSim(gymnasium.Env):
             action = {
                 "buttons": action["buttons"].cpu().numpy(),
                 "camera": action["camera"].cpu().numpy()
-        }
+            }
         action = self.action_mapper.to_factored(action)
         action = self.action_transformer.policy2env(action)
         return action
@@ -144,10 +144,14 @@ class MinecraftSim(gymnasium.Env):
     def step(self, action: Dict[str, Any]) -> Tuple[np.ndarray, float, bool, bool, Dict[str, Any]]:
 
         if self.action_type == 'agent':
-            action = self.agent_action_to_env_action(action)
+            env_action = self.agent_action_to_env_action(action)
+            action.pop('buttons')
+            action.pop('camera')
+            action.update(env_action)
+            
         for callback in self.callbacks:
             action = callback.before_step(self, action)
-            
+
         obs, reward, done, info = self.env.step(action.copy()) 
 
         terminated, truncated = done, done
@@ -169,6 +173,7 @@ class MinecraftSim(gymnasium.Env):
             obs, reward, done, info = self.env.step(action)
         obs, info = self._wrap_obs_info(obs, info)
         for callback in self.callbacks:
+            print(callback)
             obs, info = callback.after_reset(self, obs, info)
             self.obs, self.info = obs, info
         return obs, info

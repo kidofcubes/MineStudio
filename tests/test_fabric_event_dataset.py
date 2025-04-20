@@ -1,7 +1,7 @@
 '''
 Date: 2025-01-15 15:23:54
 LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2025-01-15 18:06:02
+LastEditTime: 2025-03-18 18:16:26
 FilePath: /MineStudio/tests/test_fabric_event_dataset.py
 '''
 import lightning as L
@@ -16,13 +16,13 @@ fabric.launch()
 data_module = EventDataModule(
     data_params=dict(
         dataset_dirs=[
-            '/nfs-shared-2/data/contractors/dataset_6xx',
-            '/nfs-shared-2/data/contractors/dataset_7xx',
+            '/nfs-shared-2/data/contractors-new/dataset_6xx',
+            '/nfs-shared-2/data/contractors-new/dataset_7xx',
         ],
         modal_kernel_callbacks=[
             ImageKernelCallback(frame_width=224, frame_height=224, enable_video_aug=False),
             ActionKernelCallback(),
-            # SegmentationKernelCallback(frame_width=224, frame_height=224),
+            SegmentationKernelCallback(frame_width=224, frame_height=224),
         ], 
         win_len=128,
         split_ratio=0.9,
