@@ -163,7 +163,19 @@ class EnvWorker(Process):
 
                         v_preds.append(vpred)
                         if record:
-                            obs_imgs.append(torch.from_numpy(obs["image"]).unsqueeze(0))
+                            if 'cross_view' not in obs:
+                                obs_imgs.append(torch.from_numpy(obs["image"]).unsqueeze(0))
+                            else:
+                                #! start - modified by caishaofei
+                                _image = obs["image"].copy()
+                                _x_image = obs["cross_view"]["cross_view_image"].copy()
+                                _x_obj_mask = obs["cross_view"]["cross_view_obj_mask"].copy()
+                                color = np.array((255, 0, 0)).reshape(1, 1, 3)
+                                _x_obj_mask = (_x_obj_mask[..., None] * color).astype(np.uint8)
+                                _x_image = cv2.addWeighted(_x_image, 1.0, _x_obj_mask, 1.0, 0)
+                                image = np.concatenate([_x_image, _image], axis=1)
+                                obs_imgs.append(torch.from_numpy(image).unsqueeze(0))
+                                #! end - modified by caishaofei
                         obs, reward, terminated, truncated, _ = self.env.step(action)
                 
                         reward_list.append(reward)

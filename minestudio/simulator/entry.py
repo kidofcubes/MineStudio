@@ -1,8 +1,8 @@
 '''
 Date: 2024-11-11 05:20:17
 LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2025-04-19 19:02:03
-FilePath: /ROCKET-3/var/nfs-shared/shaofei/nfs-workspace/MineStudio/minestudio/simulator/entry.py
+LastEditTime: 2025-04-29 14:57:22
+FilePath: /ROCKET2-OSS/var/nfs-shared/shaofei/nfs-workspace/MineStudio/minestudio/simulator/entry.py
 '''
 
 import os
@@ -108,7 +108,7 @@ class MinecraftSim(gymnasium.Env):
             preferred_spawn_biome = preferred_spawn_biome, 
         ).make()
 
-        self.env.seed(seed)
+        # self.env.seed(seed)
         self.already_reset = False
         
         if camera_config is None:

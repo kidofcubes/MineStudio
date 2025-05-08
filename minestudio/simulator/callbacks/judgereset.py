@@ -13,6 +13,11 @@ class JudgeResetCallback(MinecraftCallback):
         self.time_limit = time_limit
         self.time_step = 0
 
+    def after_reset(self, sim, obs, info):
+        self.time_step = 0
+        print("Environment reset:", self.time_step)
+        return obs, info
+
     def after_step(self, sim, obs, reward, terminated, truncated, info):
         self.time_step += 1
         if terminated or self.time_step > self.time_limit-1:
