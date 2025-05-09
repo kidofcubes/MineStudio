@@ -1,8 +1,8 @@
 '''
 Date: 2024-11-11 05:20:17
 LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2025-04-29 14:57:22
-FilePath: /ROCKET2-OSS/var/nfs-shared/shaofei/nfs-workspace/MineStudio/minestudio/simulator/entry.py
+LastEditTime: 2025-05-09 10:14:05
+FilePath: /MineStudio/minestudio/simulator/entry.py
 '''
 
 import os
@@ -207,11 +207,13 @@ class MinecraftSim(gymnasium.Env):
         return close_status
 
     def render(self) -> None:
+        image = self.obs['image']
         for callback in self.callbacks:
-            callback.before_render(self)
+            image = callback.before_render(self, image)
         #! core logic
         for callback in self.callbacks:
-            callback.after_render(self)
+            image = callback.after_render(self, image)
+        return image
 
     @property
     def action_space(self) -> spaces.Dict:

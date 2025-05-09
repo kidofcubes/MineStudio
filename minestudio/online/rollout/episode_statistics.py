@@ -79,7 +79,10 @@ class EpisodeStatistics:
                 print("There are still unprocessed record requests.")
                 logger.warning("There are still unprocessed record requests.")
             else:
-                self.record_requests.append(step)
+                #! shaofei modify
+                # self.record_requests.append(step)
+                for i in range(4):
+                    self.record_requests.append(step)
                 print("append_record_requests:"+str(self.record_requests))
     
     def report_episode(self, rewards: np.ndarray, its_specfg: str="", additional_des: str="4train") -> Optional[int]:

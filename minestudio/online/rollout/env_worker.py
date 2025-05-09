@@ -82,7 +82,7 @@ def draw_vpred(img: np.ndarray, vpred: float, additional_text: Optional[str] = "
     ref_text = "vpred: -1000.000"
     text = f"vpred: %0.3f" % vpred + additional_text
     ref_font_scale = 1
-    ref_thickness = 4
+    ref_thickness = 2
     (ref_text_width, ref_text_height), baseline = cv2.getTextSize(ref_text, cv2.FONT_HERSHEY_SIMPLEX, ref_font_scale, ref_thickness) # type: ignore
     desired_width = 0.4 * w
     desired_height = 0.2 * h
@@ -90,7 +90,7 @@ def draw_vpred(img: np.ndarray, vpred: float, additional_text: Optional[str] = "
     text_height = int(ref_text_height * scale)
     offset = int (min(w, h) * 0.05)
     text_org = (offset, text_height + offset)
-    img = cv2.putText(img, text, text_org, cv2.FONT_HERSHEY_SIMPLEX, scale * ref_font_scale, (0, 255, 0), int (ref_thickness * scale)) # type: ignore
+    img = cv2.putText(img, text, text_org, cv2.FONT_HERSHEY_SIMPLEX, scale * ref_font_scale, (255, 255, 255), int (ref_thickness * scale)) # type: ignore
     return img
 
 
@@ -144,7 +144,7 @@ class EnvWorker(Process):
                     if self.restart_interval is not None and time.time() - start_time >= self.restart_interval:
                         raise Exception("Restart interval reached")
                     self.reset_state()
-                    obs, _ = self.env.reset()
+                    obs, info = self.env.reset()
                     reward_list = []
                     step = 0
                     v_preds = []
@@ -163,20 +163,22 @@ class EnvWorker(Process):
 
                         v_preds.append(vpred)
                         if record:
-                            if 'cross_view' not in obs:
-                                obs_imgs.append(torch.from_numpy(obs["image"]).unsqueeze(0))
-                            else:
-                                #! start - modified by caishaofei
-                                _image = obs["image"].copy()
-                                _x_image = obs["cross_view"]["cross_view_image"].copy()
-                                _x_obj_mask = obs["cross_view"]["cross_view_obj_mask"].copy()
-                                color = np.array((255, 0, 0)).reshape(1, 1, 3)
-                                _x_obj_mask = (_x_obj_mask[..., None] * color).astype(np.uint8)
-                                _x_image = cv2.addWeighted(_x_image, 1.0, _x_obj_mask, 1.0, 0)
-                                image = np.concatenate([_x_image, _image], axis=1)
-                                obs_imgs.append(torch.from_numpy(image).unsqueeze(0))
-                                #! end - modified by caishaofei
-                        obs, reward, terminated, truncated, _ = self.env.step(action)
+                            render_image = self.env.render()
+                            obs_imgs.append(torch.from_numpy(render_image).unsqueeze(0))
+                            # if 'cross_view' not in obs:
+                            #     obs_imgs.append(torch.from_numpy(obs["image"]).unsqueeze(0))
+                            # else:
+                            #     #! start - modified by caishaofei
+                            #     _image = obs["image"].copy()
+                            #     _x_image = obs["cross_view"]["cross_view_image"].copy()
+                            #     _x_obj_mask = obs["cross_view"]["cross_view_obj_mask"].copy()
+                            #     color = np.array((255, 0, 0)).reshape(1, 1, 3)
+                            #     _x_obj_mask = (_x_obj_mask[..., None] * color).astype(np.uint8)
+                            #     _x_image = cv2.addWeighted(_x_image, 1.0, _x_obj_mask, 1.0, 0)
+                            #     image = np.concatenate([_x_image, _image], axis=1)
+                            #     obs_imgs.append(torch.from_numpy(image).unsqueeze(0))
+                            #     #! end - modified by caishaofei
+                        obs, reward, terminated, truncated, info = self.env.step(action)
                 
                         reward_list.append(reward)
                         if terminated or truncated:

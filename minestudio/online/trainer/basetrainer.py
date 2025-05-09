@@ -153,16 +153,15 @@ class BaseTrainer:
                     
                     _forward_results.append(forward_result)
                 forward_result = auto_cat(_forward_results, dim=1)
-                
+
                 with torch.no_grad():
                     logp = self.inner_model.pi_head.logprob(batch['action'], forward_result["pi_logits"])
-                    #pi_logits should be [1,128,1,8641]?
-                    #ray.util.pdb.set_trace()
-                    logging.getLogger("ray").info(f"logp's shape: {logp.shape}")
+                    # logging.getLogger("ray").info(f"logp's shape: {logp.shape}")
                 pi_logits: Union[Dict[str, torch.Tensor], torch.Tensor] = forward_result["pi_logits"]
                 vpred = forward_result["vpred"].reshape(B, T)
                 if torch.isnan(vpred).any():
                     ray.util.pdb.set_trace()
+
                 for i, index, fragment in zip(range(len(indexs)), indexs, fragments):
                     gae_infos[index]['reward'] = fragment.reward
                     gae_infos[index]['next_done'] = fragment.next_done

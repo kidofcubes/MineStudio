@@ -1,10 +1,10 @@
 '''
 Date: 2024-11-11 07:53:19
-LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2025-01-07 03:18:54
+LastEditors: caishaofei-mus1 1744260356@qq.com
+LastEditTime: 2025-05-09 14:27:14
 FilePath: /MineStudio/minestudio/simulator/callbacks/__init__.py
 '''
-from minestudio.simulator.callbacks.callback import MinecraftCallback
+from minestudio.simulator.callbacks.callback import MinecraftCallback, Compose
 from minestudio.simulator.callbacks.hard_reset import HardResetCallback # it must be the first callback
 from minestudio.simulator.callbacks.speed_test import SpeedTestCallback
 from minestudio.simulator.callbacks.record import RecordCallback

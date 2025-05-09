@@ -149,8 +149,9 @@ class PPOTrainer(BaseTrainer):
         return model, optimizer
     
     def train(self):
+        self.num_updates = 0
         self.max_reward = 0
-        self.ref_version = 0
+        # self.ref_version = 0
         self.time_stamp = time.strftime("%Y-%m-%d_%H-%M-%S", time.localtime())
         print("Begining training....")
 
@@ -160,7 +161,6 @@ class PPOTrainer(BaseTrainer):
             self.last_checkpoint_dir = None
 
         current_lr = self.optimizer.param_groups[0]["lr"]
-
         #patch of hkc
         if current_lr > self.learning_rate:
             current_lr = self.learning_rate
@@ -169,9 +169,9 @@ class PPOTrainer(BaseTrainer):
         else:
             self.num_updates = 0
         self.kl_divergence_coef_rho = self.kl_divergence_coef_rho * (self.coef_rho_decay ** self.num_updates)
-        for i in range(self.num_updates, self.num_iterations):
 
-            print("num_iters: ", i)
+        for i in range(self.num_updates, self.num_iterations):
+            print(f"[num_iters]: {i}")
             if self.anneal_lr_linearly:
                 frac = 1.0 - i / self.num_iterations
                 lrnow = frac * self.learning_rate
@@ -185,7 +185,6 @@ class PPOTrainer(BaseTrainer):
                 logging.getLogger("ray").info(f"Updated model in {end_time - start_time} seconds.")
 
     def train_iteration(self):
-
         gae_results = self.fetch_fragments_and_estimate_advantages(
             num_fragments=self.fragments_per_iteration,
         )
@@ -209,13 +208,7 @@ class PPOTrainer(BaseTrainer):
                   rewards: FragmentDataDict
                   ):
         
-        self.buffer_reward = sum(rewards.values())
-        if self.enable_ref_update:
-            if self.buffer_reward>self.max_reward:
-                self.max_reward = sum(rewards.values())
-                self.ref_model = copy.deepcopy(self.inner_model)
-                self.ref_model.eval()
-                self.ref_version = self.num_updates
+        self.buffer_reward = sum(rewards.values()) / len(rewards)
         mean_policy_loss = torchmetrics.MeanMetric().to(self.inner_model.device)
         mean_kl_divergence_loss = torchmetrics.MeanMetric().to(self.inner_model.device)
         mean_entropy_bonus = torchmetrics.MeanMetric().to(self.inner_model.device)
@@ -241,6 +234,7 @@ class PPOTrainer(BaseTrainer):
             _advantage_count += np.prod(advantages[index].shape)
         advantage_mean = _advantage_sum1 / _advantage_count
         advantage_std = (_advantage_sum2 / _advantage_count - advantage_mean ** 2) ** 0.5
+
         torch.cuda.empty_cache()
         for epoch in range(self.epochs_per_iteration):
 
@@ -256,7 +250,6 @@ class PPOTrainer(BaseTrainer):
                 it = tqdm_ray.tqdm(it, desc=f"PPO update {self.num_updates + 1} at epoch {epoch + 1} / {self.epochs_per_iteration}", total=len(records) // self.batch_size_per_gpu)
 
             self.optimizer.zero_grad()
-                
             for _batch in it:
                 batch_fragments: List[SampleFragment] = _batch["fragment"] # type: ignore
 
@@ -264,9 +257,7 @@ class PPOTrainer(BaseTrainer):
 
                 # Prepare data
                 batch = prepare_batch(self.inner_model, batch_fragments)
-                
                 B, T = batch["first"].shape #obs state action first
-                #print("obs shape: ", batch["obs"]["img"].shape)
                 batch_count += 1
 
                 _old_logp = old_logps.format_batch(batch_fragments, device=self.inner_model.device)
@@ -330,8 +321,7 @@ class PPOTrainer(BaseTrainer):
                             broken_num_kl += 1
                             print("too high kl")
                             break
-                            #ray.util.pdb.set_trace()
-                        #ray.util.pdb.set_trace()
+
                         _policy_loss1 = - advantage * ratio
                         _policy_loss2 = - advantage * torch.clamp(ratio, 1 - self.ppo_clip, 1 + self.ppo_clip)
                         policy_loss = torch.max(_policy_loss1, _policy_loss2).mean()
@@ -388,7 +378,6 @@ class PPOTrainer(BaseTrainer):
                             broken_num_lossnan += 1
                             print("loss nan")
                             break
-                            
 
                         total_loss.backward()
 
@@ -433,7 +422,7 @@ class PPOTrainer(BaseTrainer):
             "trainer/explained_var": explained_var_metric.compute().item(), # type: ignore
             "trainer/abs_advantage": mean_abs_advantage.compute().item(),
             "trainer/abs_td_target": mean_abs_td_target.compute().item(),
-            "trainer/ref_version": self.ref_version,
+            # "trainer/ref_version": self.ref_version,
             "trainer/broken_num_lossnan": broken_num_lossnan,
             "trainer/broken_num_kl": broken_num_kl,
             "trainer/buffer_reward": self.buffer_reward,
@@ -441,7 +430,6 @@ class PPOTrainer(BaseTrainer):
         }
 
         self.num_updates += 1
-
         if self.rank == 0:
             if self.num_updates % self.save_interval == 0:
                 # TODO: this may cause problem in distributed training
