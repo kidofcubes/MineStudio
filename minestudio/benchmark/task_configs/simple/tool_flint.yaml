@@ -5,3 +5,4 @@ defaults:
 - base
 - _self_
 text: 'Obtain flint by breaking gravel blocks.  '
+reference_video: tool_flint

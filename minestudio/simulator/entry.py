@@ -1,8 +1,8 @@
 '''
 Date: 2024-11-11 05:20:17
-LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2024-12-23 19:44:25
-FilePath: /MineStudio/minestudio/simulator/entry.py
+LastEditors: muzhancun muzhancun@stu.pku.edu.cn
+LastEditTime: 2025-02-25 16:04:19
+FilePath: /HierarchicalAgent/scratch/muzhancun/MineStudio/minestudio/simulator/entry.py
 '''
 
 import os
@@ -60,17 +60,18 @@ def download_engine():
         zip_ref.extractall(local_dir)
     os.remove(os.path.join(local_dir, 'engine.zip'))
 
-def check_engine():
+def check_engine(skip_confirmation=False):
     if not os.path.exists(os.path.join(get_mine_studio_dir(), "engine", "build", "libs", "mcprec-6.13.jar")):
-        response = input("Detecting missing simulator engine, do you want to download it from huggingface (Y/N)?\n")
-        if response == 'Y' or response == 'y':
+        if skip_confirmation:
             download_engine()
         else:
-            exit(0)
+            response = input("Detecting missing simulator engine, do you want to download it from huggingface (Y/N)?\n")
+            if response == 'Y' or response == 'y':
+                download_engine()
+            else:
+                exit(0)
 
 class MinecraftSim(gymnasium.Env):
-    
-    check_engine()
     
     def __init__(
         self,  
@@ -86,6 +87,7 @@ class MinecraftSim(gymnasium.Env):
         **kwargs
     ) -> Any:
         super().__init__()
+        check_engine()
         self.obs_size = obs_size
         self.action_type = action_type
         self.render_size = render_size
@@ -134,7 +136,7 @@ class MinecraftSim(gymnasium.Env):
         action = self.action_transformer.policy2env(action)
         return action
 
-    def énv_action_to_agent_action(self, action: Dict[str, Any]):
+    def env_action_to_agent_action(self, action: Dict[str, Any]):
         action = self.action_transformer.env2policy(action)
         action = self.action_mapper.from_factored(action)
         return action
@@ -248,6 +250,13 @@ class MinecraftSim(gymnasium.Env):
 
 if __name__ == '__main__':
     # test if the simulator works
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-y', '--yes', action='store_true', help='Skip confirmation', default=False)
+    args = parser.parse_args()
+    
+    if args.yes:
+        check_engine(skip_confirmation=True)
+    
     from minestudio.simulator.callbacks import SpeedTestCallback
     sim = MinecraftSim(
         action_type="env", 

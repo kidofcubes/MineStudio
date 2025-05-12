@@ -7,3 +7,4 @@ defaults:
 - base
 - _self_
 text: Build golems to protect your area from hostile mobs.
+reference_video: build_golems

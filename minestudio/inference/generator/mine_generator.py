@@ -1,8 +1,8 @@
 '''
 Date: 2024-11-25 08:35:59
-LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2024-12-02 11:59:51
-FilePath: /MineStudio/minestudio/inference/generator/mine_generator.py
+LastEditors: muzhancun muzhancun@stu.pku.edu.cn
+LastEditTime: 2025-02-25 16:12:36
+FilePath: /HierarchicalAgent/scratch/muzhancun/MineStudio/minestudio/inference/generator/mine_generator.py
 '''
 import os
 import ray
@@ -17,6 +17,7 @@ class Worker:
         agent_generator: Callable, 
         num_max_steps: int, 
         num_episodes: int, 
+        agent_type: str = "policy",
         tmpdir: Optional[str] = None, 
         image_media: Literal["h264", "jpeg"] = "h264",
         **unused_kwargs,
@@ -28,6 +29,7 @@ class Worker:
         self.agent.eval()
         self.image_media = image_media
         self.tmpdir = tmpdir
+        self.agent_type = agent_type
 
         self.generator = self._run()
         os.makedirs(self.tmpdir, exist_ok=True)
@@ -83,7 +85,10 @@ class Worker:
             obs, info = self.env.reset()
             self.append_image_and_info(info, images, infos)
             for step in range(self.num_max_steps):
-                action, memory = self.agent.get_action(obs, memory, input_shape='*')
+                if self.agent_type == "policy":
+                    action, memory = self.agent.get_action(obs, memory, input_shape='*')
+                elif self.agent_type == "agent":
+                    action = self.agent.get_action(obs, info)
                 actions.append(action)
                 obs, reward, terminated, truncated, info = self.env.step(action)
                 self.append_image_and_info(info, images, infos)

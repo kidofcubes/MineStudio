@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-11-30 13:20:04
  * @LastEditors: muzhancun muzhancun@126.com
- * @LastEditTime: 2025-01-02 19:55:34
+ * @LastEditTime: 2025-01-06 15:59:32
  * @FilePath: /MineStudio/README.md
 -->
 
@@ -21,18 +21,10 @@
 	<a href="https://craftjarvis.github.io/MineStudio/"><img src="https://img.shields.io/badge/Doc-Sphinx-yellow"/></a>
     	<a href="https://pypi.org/project/minestudio/"><img src="https://img.shields.io/pypi/v/minestudio.svg"/></a>
 	<a href="https://huggingface.co/CraftJarvis"><img src="https://img.shields.io/badge/Dataset-Released-orange"/></a>
+	<a href="https://github.com/CraftJarvis/MineStudio/tree/master/minestudio/tutorials"><img alt="Static Badge" src="https://img.shields.io/badge/Tutorials-easy-brightgreen"></a>
 	<a href="https://github.com/CraftJarvis/MineStudio"><img src="https://visitor-badge.laobi.icu/badge?page_id=CraftJarvis.MineStudio"/></a>
 	<a href="https://github.com/CraftJarvis/MineStudio"><img src="https://img.shields.io/github/stars/CraftJarvis/MineStudio"/></a>
 </div>
-
-<p align="center">
-  <img src="https://github.com/phython96/Images/blob/master/minestudio_gallary.gif" />
-  <div align="center" style="color: grey; font-size: 12px;">
-    Demos of agents trained with MineStudio <b>online</b> module: building a nether portal and shooting animals.
-  </div>
-</p>
-
-
 
 ## Overview
 
@@ -80,13 +72,93 @@ python -m minestudio.simulator.entry # using Xvfb
 MINESTUDIO_GPU_RENDER=1 python -m minestudio.simulator.entry # using VirtualGL
 ```
 
-## Why MineStudio
+### Docker
+
+We provide a Docker image for users who want to run MineStudio in a container. The Dockerfile is available in the `assets` directory. You can build and run the image by running the following command:
+```bash
+cd assets
+docker build --platform=linux/amd64 -t minestudio .
+docker run -it minestudio
+```
+
+## Datasets on 🤗 Hugging Face
+
+We converted the [Contractor Data](https://github.com/openai/Video-Pre-Training?tab=readme-ov-file#contractor-demonstrations) the OpenAI VPT project provided to our trajectory structure and released them to the Hugging Face. 
+
+- [CraftJarvis/minestudio-data-6xx](https://huggingface.co/datasets/CraftJarvis/minestudio-data-6xx)
+- [CraftJarvis/minestudio-data-7xx](https://huggingface.co/datasets/CraftJarvis/minestudio-data-7xx)
+- [CraftJarvis/minestudio-data-8xx](https://huggingface.co/datasets/CraftJarvis/minestudio-data-8xx)
+- [CraftJarvis/minestudio-data-9xx](https://huggingface.co/datasets/CraftJarvis/minestudio-data-9xx)
+- [CraftJarvis/minestudio-data-10xx](https://huggingface.co/datasets/CraftJarvis/minestudio-data-10xx)
+
+```python
+from minestudio.data import load_dataset
+
+dataset = load_dataset(
+    mode='raw', 
+    dataset_dirs=['6xx', '7xx', '8xx', '9xx', '10xx'], 
+    enable_video=True,
+    enable_action=True,
+    frame_width=224, 
+    frame_height=224,
+    win_len=128, 
+    split='train', 
+    split_ratio=0.9, 
+    verbose=True
+)
+item = dataset[0]
+print(item.keys())
+```
+
+
+## Models on 🤗 Hugging Face
+
+We have pushed all the checkpoints to 🤗 Hugging Face, it is convenient to load the policy model. 
+
+```python
+from minestudio.simulator import MinecraftSim
+from minestudio.simulator.callbacks import RecordCallback
+from minestudio.models import VPTPolicy
+
+policy = VPTPolicy.from_pretrained("CraftJarvis/MineStudio_VPT.rl_from_early_game_2x").to("cuda")
+policy.eval()
+
+env = MinecraftSim(
+    obs_size=(128, 128), 
+    callbacks=[RecordCallback(record_path="./output", fps=30, frame_type="pov")]
+)
+memory = None
+obs, info = env.reset()
+for i in range(1200):
+    action, memory = policy.get_action(obs, memory, input_shape='*')
+    obs, reward, terminated, truncated, info = env.step(action)
+env.close()
+```
+
+Here is the checkpoint list:
+- [CraftJarvis/MineStudio_VPT.foundation_model_1x](https://huggingface.co/CraftJarvis/MineStudio_VPT.foundation_model_1x), trained by [OpenAI](https://github.com/openai/Video-Pre-Training)
+- [CraftJarvis/MineStudio_VPT.foundation_model_2x](https://huggingface.co/CraftJarvis/MineStudio_VPT.foundation_model_2x), trained by [OpenAI](https://github.com/openai/Video-Pre-Training)
+- [CraftJarvis/MineStudio_VPT.foundation_model_3x](https://huggingface.co/CraftJarvis/MineStudio_VPT.foundation_model_3x), trained by [OpenAI](https://github.com/openai/Video-Pre-Training)
+- [CraftJarvis/MineStudio_VPT.bc_early_game_2x](https://huggingface.co/CraftJarvis/MineStudio_VPT.bc_early_game_2x), trained by [OpenAI](https://github.com/openai/Video-Pre-Training)
+- [CraftJarvis/MineStudio_VPT.rl_from_house_2x](https://huggingface.co/CraftJarvis/MineStudio_VPT.rl_from_house_2x), trained by [OpenAI](https://github.com/openai/Video-Pre-Training)
+- [CraftJarvis/MineStudio_VPT.rl_from_early_game_2x](https://huggingface.co/CraftJarvis/MineStudio_VPT.rl_from_early_game_2x), trained by [OpenAI](https://github.com/openai/Video-Pre-Training)
+- [CraftJarvis/MineStudio_VPT.bc_house_3x](https://huggingface.co/CraftJarvis/MineStudio_VPT.bc_house_3x), trained by [OpenAI](https://github.com/openai/Video-Pre-Training)
+- [CraftJarvis/MineStudio_VPT.bc_early_game_3x](https://huggingface.co/CraftJarvis/MineStudio_VPT.bc_early_game_3x), trained by [OpenAI](https://github.com/openai/Video-Pre-Training)
+- [CraftJarvis/MineStudio_VPT.rl_for_shoot_animals_2x](https://huggingface.co/CraftJarvis/MineStudio_VPT.rl_for_shoot_animals_2x), trained by [CraftJarvis](https://craftjarvis.github.io/)
+- [CraftJarvis/MineStudio_VPT.rl_for_build_portal_2x](https://huggingface.co/CraftJarvis/MineStudio_VPT.rl_for_build_portal_2x), trained by [CraftJarvis](https://craftjarvis.github.io/)
+- [CraftJarvis/MineStudio_GROOT.18w_EMA](https://huggingface.co/CraftJarvis/MineStudio_GROOT.18w_EMA), trained by [CraftJarvis](https://craftjarvis.github.io/)
+- [CraftJarvis/MineStudio_STEVE-1.official](https://huggingface.co/CraftJarvis/MineStudio_STEVE-1.official), trained by [STEVE-1](https://github.com/Shalev-Lifshitz/STEVE-1)
+- [CraftJarvis/MineStudio_ROCKET-1.12w_EMA](https://huggingface.co/CraftJarvis/MineStudio_ROCKET-1.12w_EMA), trained by [CraftJarvis](https://craftjarvis.github.io/)
 
 ## Acknowledgement
 
 The simulation environment is built upon [MineRL](https://github.com/minerllabs/minerl) and [Project Malmo](https://github.com/microsoft/malmo).
 We also refer to [Ray](https://docs.ray.io/en/latest/index.html), [PyTorch Lightning](https://pytorch-lightning.readthedocs.io/en/latest/) for distributed training and inference.
 Thanks for their great work.
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=CraftJarvis/MineStudio&type=Date)](https://www.star-history.com/#CraftJarvis/MineStudio&Date)
 
 ## Citation
 

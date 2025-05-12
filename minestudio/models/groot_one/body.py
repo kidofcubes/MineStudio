@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-25 07:03:41
-LastEditors: muzhancun muzhancun@126.com
-LastEditTime: 2024-12-14 01:54:42
+LastEditors: caishaofei caishaofei@stu.pku.edu.cn
+LastEditTime: 2025-01-07 14:21:06
 FilePath: /MineStudio/minestudio/models/groot_one/body.py
 '''
 import torch
@@ -10,14 +10,20 @@ import torchvision
 from torch import nn
 import numpy as np
 from einops import rearrange, repeat
-from typing import List, Dict, Any, Tuple, Optional
+from typing import List, Dict, Any, Tuple, Optional, Union
 import av
 
 import timm
+from huggingface_hub import PyTorchModelHubMixin
+
 from minestudio.models.base_policy import MinePolicy
 from minestudio.utils.vpt_lib.util import FanInInitReLULayer, ResidualRecurrentBlocks
 from minestudio.utils.register import Registers
 
+def peel_off(item: Union[List, str]) -> str:
+    if isinstance(item, List):
+        return peel_off(item[0])
+    return item
 
 class LatentSpace(nn.Module):
 
@@ -157,12 +163,13 @@ class Decoder(nn.Module):
         return x, memory
 
     def initial_state(self, batch_size: int = None) -> List[torch.Tensor]:
+        device = next(self.parameters()).device
         if batch_size is None:
-            return [t.squeeze(0).to(self.device) for t in self.recurrent.initial_state(1)]
-        return [t.to(self.device) for t in self.recurrent.initial_state(batch_size)]
+            return [t.squeeze(0).to(device) for t in self.recurrent.initial_state(1)]
+        return [t.to(device) for t in self.recurrent.initial_state(batch_size)]
 
 @Registers.model.register
-class GrootPolicy(MinePolicy):
+class GrootPolicy(MinePolicy, PyTorchModelHubMixin):
     
     def __init__(
         self, 
@@ -202,11 +209,11 @@ class GrootPolicy(MinePolicy):
             for param in self.backbone.parameters():
                 param.requires_grad = False
 
-        self.condition = None
+        self.condition_cache = {} # for infernce mode, to memory the generated conditions
 
     def encode_video(self, ref_video_path: str, resolution: Tuple[int, int] = (224, 224)) -> Dict:
         frames = []
-        ref_video_path = ref_video_path[0][0] # unbatchify
+        # ref_video_path = ref_video_path[0][0] # unbatchify
 
         with av.open(ref_video_path, "r") as container:
             for fid, frame in enumerate(container.decode(video=0)):
@@ -234,12 +241,12 @@ class GrootPolicy(MinePolicy):
 
         print(f"[📚] latent shape: {posterior_dist['z'].shape} | mean: {posterior_dist['z'].mean().item(): .3f} | std: {posterior_dist['z'].std(): .3f}")
 
-        self.condition = {
+        condition = {
             "posterior_dist": posterior_dist,
             "prior_dist": prior_dist
         }
 
-        return self.condition
+        return condition
 
     def forward(self, input: Dict, memory: Optional[List[torch.Tensor]] = None) -> Dict:
         b, t = input['image'].shape[:2]
@@ -250,10 +257,12 @@ class GrootPolicy(MinePolicy):
         image = self.updim(image)
         image = rearrange(image, '(b t) c h w -> b t c h w', b=b)
 
-        if 'ref_video_path' in input or self.condition is not None:
-            if self.condition is None:
-                self.encode_video(input['ref_video_path'])
-            condition = self.condition
+        if 'ref_video_path' in input:
+            # input has `ref_video_path`, means inference mode
+            ref_video_path = peel_off(input['ref_video_path'])
+            if ref_video_path not in self.condition_cache:
+                self.condition_cache[ref_video_path] = self.encode_video(ref_video_path)
+            condition = self.condition_cache[ref_video_path]
             posterior_dist = condition['posterior_dist']
             prior_dist = condition['prior_dist']
             z = posterior_dist['z']
@@ -281,17 +290,14 @@ class GrootPolicy(MinePolicy):
         }
         return latents, memory
 
-    def initial_state(self, **kwargs) -> Any:
-        return self.decoder.initial_state(**kwargs)
+    def initial_state(self, *args, **kwargs) -> Any:
+        return self.decoder.initial_state(*args, **kwargs)
 
 @Registers.model_loader.register
 def load_groot_policy(ckpt_path: str = None):
     if ckpt_path is None:
-        from minestudio.models.utils.download import download_model
-        local_dir = download_model("GROOT")
-        if local_dir is None:
-            assert False, "Please specify the ckpt_path or download the model first."
-        ckpt_path = os.path.join(local_dir, "groot.ckpt")
+        repo_id = "CraftJarvis/MineStudio_GROOT.18w_EMA"
+        return GrootPolicy.from_pretrained("CraftJarvis/MineStudio_GROOT.18w_EMA")
 
     ckpt = torch.load(ckpt_path)
     model = GrootPolicy(**ckpt['hyper_parameters']['model'])
@@ -300,11 +306,11 @@ def load_groot_policy(ckpt_path: str = None):
     return model
 
 if __name__ == '__main__':
-    load_groot_policy()
+    model = load_groot_policy()
     model = GrootPolicy(
-        backbone='vit_base_patch32_clip_224.openai', 
+        backbone='timm/vit_base_patch32_clip_224.openai', 
         hiddim=1024,
-        freeze_backbone=True,
+        freeze_backbone=False,
         video_encoder_kwargs=dict(
             num_spatial_layers=2,
             num_temporal_layers=4,

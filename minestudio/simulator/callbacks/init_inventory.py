@@ -1,7 +1,7 @@
 '''
 Date: 2025-01-05 22:26:22
-LastEditors: limuyao 2200017405@stu.pku.edu.cn
-LastEditTime: 2025-01-19 06:14:00
+LastEditors: Muyao 2350076251@qq.com
+LastEditTime: 2025-05-13 04:27:13
 FilePath: /MineStudio/minestudio/simulator/callbacks/init_inventory.py
 '''
 

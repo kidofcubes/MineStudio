@@ -5,3 +5,4 @@ defaults:
 - base
 - _self_
 text: Build a pillar using blocks of your choice.
+reference_video: build_pillar

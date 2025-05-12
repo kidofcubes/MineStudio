@@ -358,6 +358,8 @@ class SteveOnePolicy(MinePolicy, PyTorchModelHubMixin):
             assert 'text' in instruction, "instruction must have either text or video."
 
             texts = instruction['text']
+            if isinstance(texts, list):
+                texts = texts[0]
             if isinstance(texts, str):
                 texts = [texts]
             assert isinstance(texts, list) and isinstance(texts[0], str), "text must be a string or a list of strings."
@@ -372,7 +374,6 @@ class SteveOnePolicy(MinePolicy, PyTorchModelHubMixin):
 
     def forward(
         self, 
-        condition: Dict[str, Any],
         input: Dict[str, Any], 
         state_in: Optional[List[torch.Tensor]] = None,
         **kwargs
@@ -382,7 +383,12 @@ class SteveOnePolicy(MinePolicy, PyTorchModelHubMixin):
             latents: containing `pi_logits` and `vpred` latent tensors.
             state_out: containing the updated state tensors.
         """
-        input, condition, state_in = input.copy(), condition.copy(), state_in.copy()
+        condition = input['condition'].copy()
+        if 'mineclip_embeds' not in condition:
+            condition = self.prepare_condition(condition)
+        if state_in is None:
+            state_in = self.initial_state(condition, input['image'].shape[0])
+        input, state_in = input.copy(), state_in.copy()
         mineclip_embeds = condition['mineclip_embeds']
         if mineclip_embeds.shape[0] == 1 and input['image'].shape[0] > 1:
             mineclip_embeds = repeat(mineclip_embeds, '1 ... -> b ...', b=input['image'].shape[0])

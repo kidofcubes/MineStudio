@@ -5,3 +5,4 @@ defaults:
 - base
 - _self_
 text: Dig three blocks down and fill one block.
+reference_video: build_dig3fill1

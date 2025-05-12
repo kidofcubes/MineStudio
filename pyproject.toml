@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "minestudio"
-version="1.0.3"
+version="1.0.5"
 description = "A simple and efficient Minecraft development kit for AI research."
 dependencies = [
     "av",
@@ -37,14 +37,15 @@ dependencies = [
     "transformers", 
     "Pyro4",
     "xmltodict",
-    "pyrender==0.1.25",
-    "pyglet",
+    "pyrender==0.1.45",
+    "pyglet==1.5.27",
     "imgui",
     "pyopengl",
     "ray",
+    "minecraft_data==3.20.0",
     "absl-py",
     "dm-tree",
-    "x_transformers==0.27.1"
+    "x_transformers==0.27.1", 
 ]
 authors = [
     {name="CraftJarvis", email="craftjarvis@outlook.com"}

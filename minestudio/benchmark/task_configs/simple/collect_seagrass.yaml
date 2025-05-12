@@ -6,3 +6,4 @@ defaults:
 - base
 - _self_
 text: Collect seagrass from underwater areas.
+reference_video: collect_seagrass

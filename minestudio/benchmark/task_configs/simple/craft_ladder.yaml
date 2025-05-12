@@ -6,3 +6,4 @@ defaults:
 - base
 - _self_
 text: Open your inventory and craft a ladder using sticks.
+reference_video: craft_ladder

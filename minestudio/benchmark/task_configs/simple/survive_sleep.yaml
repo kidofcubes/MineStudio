@@ -6,3 +6,4 @@ defaults:
 - base
 - _self_
 text: Find a safe place and rest in a bed to skip the night.
+reference_video: survive_sleep

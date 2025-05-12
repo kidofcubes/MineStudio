@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-10 15:52:16
 LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2025-01-04 09:34:49
+LastEditTime: 2025-01-04 17:09:54
 FilePath: /MineStudio/minestudio/models/rocket_one/body.py
 '''
 import torch
@@ -21,7 +21,7 @@ from minestudio.utils.register import Registers
 class RocketPolicy(MinePolicy, PyTorchModelHubMixin):
     
     def __init__(self, 
-        backbone: str = 'efficientnet_b0.ra_in1k', 
+        backbone: str = 'timm/vit_base_patch16_224.dino', 
         hiddim: int = 1024,
         num_heads: int = 8,
         num_layers: int = 4,
@@ -105,13 +105,10 @@ class RocketPolicy(MinePolicy, PyTorchModelHubMixin):
         return [t.to(self.device) for t in self.recurrent.initial_state(batch_size)]
 
 @Registers.model_loader.register
-def load_rocket_policy(ckpt_path: str):
+def load_rocket_policy(ckpt_path: Optional[str] = None):
     if ckpt_path is None:
-        from minestudio.models.utils.download import download_model
-        local_dir = download_model("ROCKET-1")
-        if local_dir is None:
-            assert False, "Please specify the ckpt_path or download the model first."
-        ckpt_path = os.path.join(local_dir, "rocket.ckpt")
+        model = RocketPolicy.from_pretrained("CraftJarvis/MineStudio_ROCKET-1.12w_EMA")
+        return model
     ckpt = torch.load(ckpt_path)
     model = RocketPolicy(**ckpt['hyper_parameters']['model'])
     state_dict = {k.replace('mine_policy.', ''): v for k, v in ckpt['state_dict'].items()}
@@ -119,8 +116,7 @@ def load_rocket_policy(ckpt_path: str):
     return model
 
 if __name__ == '__main__':
-    # model = load_rocket_policy("/nfs-shared-2/shaofei/minestudio/save/2025-01-02/00-54-08/weights/weight-epoch=5-step=120000-EMA.ckpt")
-    # model.push_to_hub("CraftJarvis/MineStudio_ROCKET-1.12w_EMA")
+    # model = load_rocket_policy()
     model = RocketPolicy.from_pretrained("CraftJarvis/MineStudio_ROCKET-1.12w_EMA").to("cuda")
     
     num_params = sum(p.numel() for p in model.parameters())

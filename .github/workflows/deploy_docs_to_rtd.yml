@@ -42,8 +42,10 @@ jobs:
 
       - name: Summit repo to gh-pages branch.
         run: |
+          git clone -b master $CLONE_URL
+          cd MineStudio
           ls
-
+          git tag
           cd docs
 
           echo "Update requirements and add packages needed by sphinx"
@@ -61,16 +63,21 @@ jobs:
           sed -i '1d' source/API/modules.rst
           sed -i '1i\API' source/API/modules.rst
 
-          make clean
-          make html
+          sphinx-multiversion --dump-metadata source build/html
+          sphinx-multiversion source build/html 
 
           git clone -b ${SUBMIT_BRANCH} $CLONE_URL ${SUBMIT_BRANCH}
           cd ${SUBMIT_BRANCH}
 
           rm -rf *
-          mv ../build/doctrees ./
           mkdir -p ./docs
+          ls ../source/_static
+          mv ../build/html/master/* ./docs/
           mv ../build/html/* ./docs/
+          rm ./docs/_static/switcher.json
+          rm ./docs/v1.0.6/_static/switcher.json
+          cp ./docs/_static/version.json ./docs/_static/switcher.json
+          cp ./docs/v1.0.6/_static/version.json ./docs/v1.0.6/_static/switcher.json
           touch ./docs/.nojekyll
 
           git add .
