@@ -37,6 +37,7 @@ class HumanSurvival(HumanControlEnvSpec):
             # handlers.ObservationFromCurrentLocation(),
             handlers.ObserveFromFullStats("use_item"),
             # handlers.ObserveFromFullStats("drop"),
+            handlers.ObserveFromFullStats("custom"),
             handlers.ObserveFromFullStats("pickup"),
             handlers.ObserveFromFullStats("break_item"),
             handlers.ObserveFromFullStats("craft_item"),
