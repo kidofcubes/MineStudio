@@ -413,6 +413,9 @@ class SteveOnePolicy(MinePolicy, PyTorchModelHubMixin):
             images = images * 255.0
         else:
             raise ValueError("image must be either uint8 or float32.")
+        
+        b, t = images.shape[:2]
+        mineclip_embeds = mineclip_embeds.reshape(b, -1)
 
         (pi_latent, vf_latent), state_out = self.net(
             ob={"img": images, "mineclip_embed": repeat(mineclip_embeds, 'b c -> b t c', t=images.shape[1])}, 

@@ -1,8 +1,8 @@
 '''
 Date: 2024-11-11 15:59:37
-LastEditors: muzhancun muzhancun@stu.pku.edu.cn
-LastEditTime: 2025-02-24 20:04:17
-FilePath: /HierarchicalAgent/scratch/muzhancun/MineStudio/minestudio/models/base_policy.py
+LastEditors: muzhancun 2100017790@stu.pku.edu.cn
+LastEditTime: 2025-05-13 14:36:15
+FilePath: /HierarchicalAgent/nfs-shared-2/zhancun/workspace/MineStudio/minestudio/models/base_policy.py
 '''
 from abc import ABC, abstractmethod
 import numpy as np
