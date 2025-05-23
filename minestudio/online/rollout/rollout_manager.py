@@ -218,6 +218,7 @@ class _RolloutManager:
 
         self.rollout_workers = [
             RolloutWorkerWrapper.options( # type: ignore
+                resources={"rollout_workers": 1}, 
                 num_cpus=self.num_cpus_per_worker,
                 num_gpus=self.num_gpus_per_worker,
                 max_concurrency=WRAPPER_CONCURRENCY

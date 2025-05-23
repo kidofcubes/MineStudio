@@ -1,3 +1,9 @@
+'''
+Date: 2025-05-20 12:09:48
+LastEditors: caishaofei-mus1 1744260356@qq.com
+LastEditTime: 2025-05-23 11:39:33
+FilePath: /MineStudio/var/minestudio/online/rollout/replay_buffer/fragment_store.py
+'''
 import ray
 import logging
 from diskcache import FanoutCache
@@ -60,7 +66,10 @@ class FragmentStore:
         assert self.local is not None
                 
         if not self.local:
-            self.remote_impl = RemoteFragmentStoreImpl.remote(**kwargs)
+            self.remote_impl = RemoteFragmentStoreImpl.options(
+                placement_group=None,
+                resources={"database": 0.0001}
+            ).remote(**kwargs) # type: ignore
         else:
             self.local_impl = LocalFragmentStoreImpl(**kwargs)
     

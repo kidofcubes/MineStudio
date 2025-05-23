@@ -128,17 +128,6 @@ class PPOTrainer(BaseTrainer):
             ]
         )
         model.train()
-        # if self.fix_decoder: 
-        #     try:
-        #         #ray.util.pdb.set_trace()
-        #         for name, param in model.named_parameters():
-        #             if not any(part in name for part in ['policy.net.encoders', 'policy.value_head']):
-        #                 param.requires_grad = False
-        #         for name, param in model.named_parameters():
-        #             if param.requires_grad:
-        #                 print(f"{name}: requires_grad={param.requires_grad}")
-        #     except:
-        #         ray.util.pdb.set_trace()
 
         if self.kl_divergence_coef_rho != 0:
             self.ref_model = self.policy_generator()
@@ -151,7 +140,6 @@ class PPOTrainer(BaseTrainer):
     def train(self):
         self.num_updates = 0
         self.max_reward = 0
-        # self.ref_version = 0
         self.time_stamp = time.strftime("%Y-%m-%d_%H-%M-%S", time.localtime())
         print("Begining training....")
 
@@ -302,8 +290,8 @@ class PPOTrainer(BaseTrainer):
                                 ref_pi_logit = ref_forward_result["pi_logits"]
                             epsilon = 1e-8
                             #print("pi_logits_sum_1", torch.exp(pi_logits['buttons']).sum(dim = -1))
-                            kl_divergence_loss = self.inner_model.pi_head.kl_divergence({key: (ref_pi_logit[key]+epsilon) for key in ref_pi_logit}, {key:(pi_logits[key]+epsilon) for key in pi_logits}).mean()
-                                                                                              # , pi_logits+epsilon).mean() # TODO: kl(p, q) or kl(q, p) ?
+                            # kl_divergence_loss = self.inner_model.pi_head.kl_divergence({key: (ref_pi_logit[key]+epsilon) for key in ref_pi_logit}, {key:(pi_logits[key]+epsilon) for key in pi_logits}).mean() # TODO: kl(p, q) or kl(q, p) ?
+                            kl_divergence_loss = self.inner_model.pi_head.kl_divergence({key:(pi_logits[key]+epsilon) for key in pi_logits}, {key: (ref_pi_logit[key]+epsilon) for key in ref_pi_logit}).mean() # TODO: kl(p, q) or kl(q, p) ?
                             if kl_divergence_loss < -0.1:
                                 ray.util.pdb.set_trace()
                         else:
@@ -320,7 +308,7 @@ class PPOTrainer(BaseTrainer):
                         if approx_kl_tensor.item() > 10:
                             broken_num_kl += 1
                             print("too high kl")
-                            break
+                            # break
 
                         _policy_loss1 = - advantage * ratio
                         _policy_loss2 = - advantage * torch.clamp(ratio, 1 - self.ppo_clip, 1 + self.ppo_clip)

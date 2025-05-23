@@ -1,3 +1,9 @@
+'''
+Date: 2025-05-22 21:43:52
+LastEditors: caishaofei-mus1 1744260356@qq.com
+LastEditTime: 2025-05-23 11:39:21
+FilePath: /MineStudio/var/minestudio/online/rollout/start_manager.py
+'''
 from numpy import roll
 from omegaconf import OmegaConf
 import hydra
@@ -9,8 +15,8 @@ import wandb
 import uuid
 import torch
 
-def start_rolloutmanager(policy_generator, env_generator, online_cfg):
-    ray.init(address="localhost:9899", ignore_reinit_error=True, namespace="online")
+def start_rolloutmanager(policy_generator, env_generator, online_cfg, address="localhost:9899"):
+    ray.init(address=address, ignore_reinit_error=True, namespace="online")
     logger = logging.getLogger("Main")
     torch.backends.cudnn.benchmark = False # type: ignore
 
