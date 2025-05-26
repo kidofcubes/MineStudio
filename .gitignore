@@ -184,3 +184,6 @@ outputs
 output
 
 logs
+
+# mac OS
+.DS_Store
