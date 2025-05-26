@@ -19,6 +19,33 @@ from minestudio.utils.register import Registers
 
 @Registers.model.register
 class RocketPolicy(MinePolicy, PyTorchModelHubMixin):
+    """RocketPolicy model for Minecraft, using a Vision Transformer (ViT) backbone.
+
+    This policy processes an RGB image concatenated with an object mask. It uses a
+    pre-trained ViT backbone for feature extraction, followed by Transformer-based
+    pooling and recurrent blocks for temporal processing. It also incorporates an
+    embedding for interaction types.
+
+    :param backbone: Name of the timm model to use as a backbone (e.g., 'timm/vit_base_patch16_224.dino').
+                     Defaults to 'timm/vit_base_patch16_224.dino'.
+    :type backbone: str
+    :param hiddim: Hidden dimension for the policy network. Defaults to 1024.
+    :type hiddim: int
+    :param num_heads: Number of attention heads in Transformer layers. Defaults to 8.
+    :type num_heads: int
+    :param num_layers: Number of recurrent Transformer blocks. Defaults to 4.
+    :type num_layers: int
+    :param timesteps: The number of timesteps the recurrent model processes at once. Defaults to 128.
+    :type timesteps: int
+    :param mem_len: The length of the memory used by the causal attention mechanism in recurrent blocks.
+                    Defaults to 128.
+    :type mem_len: int
+    :param action_space: The action space definition. Passed to `MinePolicy`. Defaults to None.
+    :type action_space: Optional[Any]
+    :param nucleus_prob: Nucleus probability for sampling actions. Passed to `MinePolicy`.
+                         Defaults to 0.85.
+    :type nucleus_prob: float
+    """
     
     def __init__(self, 
         backbone: str = 'timm/vit_base_patch16_224.dino', 
@@ -30,6 +57,25 @@ class RocketPolicy(MinePolicy, PyTorchModelHubMixin):
         action_space = None,
         nucleus_prob = 0.85,
     ):
+        """Initialize the RocketPolicy.
+
+        :param backbone: Name of the timm backbone model. Defaults to 'timm/vit_base_patch16_224.dino'.
+        :type backbone: str
+        :param hiddim: Hidden dimension. Defaults to 1024.
+        :type hiddim: int
+        :param num_heads: Number of attention heads. Defaults to 8.
+        :type num_heads: int
+        :param num_layers: Number of recurrent layers. Defaults to 4.
+        :type num_layers: int
+        :param timesteps: Number of timesteps for recurrence. Defaults to 128.
+        :type timesteps: int
+        :param mem_len: Memory length for attention. Defaults to 128.
+        :type mem_len: int
+        :param action_space: Action space definition. Defaults to None.
+        :type action_space: Optional[Any]
+        :param nucleus_prob: Nucleus probability for sampling. Defaults to 0.85.
+        :type nucleus_prob: float
+        """
         super().__init__(hiddim=hiddim, action_space=action_space, nucleus_prob=nucleus_prob)
         self.backbone = timm.create_model(backbone, pretrained=True, features_only=True, in_chans=4)
         data_config = timm.data.resolve_model_data_config(self.backbone)
@@ -69,6 +115,26 @@ class RocketPolicy(MinePolicy, PyTorchModelHubMixin):
         self.final_ln = nn.LayerNorm(hiddim)
 
     def forward(self, input: Dict, memory: Optional[List[torch.Tensor]] = None) -> Dict:
+        """Forward pass of the RocketPolicy.
+
+        Processes the input image and segmentation mask, extracts features, and passes them
+        through recurrent layers to produce policy and value predictions.
+
+        Input dictionary is expected to contain:
+        - 'image': (b, t, h, w, c) tensor of RGB images.
+        - 'segment' or 'segmentation': Dictionary containing:
+            - 'obj_mask': (b, t, h, w) tensor of object masks.
+            - 'obj_id': (b, t) tensor of object interaction type IDs.
+
+        :param input: Dictionary of input tensors.
+        :type input: Dict
+        :param memory: Optional list of recurrent state tensors. If None, an initial state is used.
+        :type memory: Optional[List[torch.Tensor]]
+        :returns: A tuple containing:
+            - latents (Dict): Dictionary with 'pi_logits' and 'vpred'.
+            - memory (List[torch.Tensor]): Updated list of recurrent state tensors.
+        :rtype: Tuple[Dict[str, torch.Tensor], List[torch.Tensor]]
+        """
         # import ipdb; ipdb.set_trace()
         ckey = 'segment' if 'segment' in input else 'segmentation'
         
@@ -103,12 +169,30 @@ class RocketPolicy(MinePolicy, PyTorchModelHubMixin):
         return latents, memory
 
     def initial_state(self, batch_size: int = None) -> List[torch.Tensor]:
+        """Returns the initial recurrent state for the policy.
+
+        :param batch_size: The batch size for the initial state. If None, returns state for batch_size=1.
+                           Defaults to None.
+        :type batch_size: Optional[int]
+        :returns: A list of tensors representing the initial recurrent state, moved to the model's device.
+        :rtype: List[torch.Tensor]
+        """
         if batch_size is None:
             return [t.squeeze(0).to(self.device) for t in self.recurrent.initial_state(1)]
         return [t.to(self.device) for t in self.recurrent.initial_state(batch_size)]
 
 @Registers.model_loader.register
 def load_rocket_policy(ckpt_path: Optional[str] = None):
+    """Loads a RocketPolicy model.
+
+    If `ckpt_path` is provided, it loads the model from the checkpoint.
+    Otherwise, it loads a pre-trained model from Hugging Face Hub.
+
+    :param ckpt_path: Path to a .ckpt model checkpoint file. Defaults to None.
+    :type ckpt_path: Optional[str]
+    :returns: The loaded RocketPolicy model.
+    :rtype: RocketPolicy
+    """
     if ckpt_path is None:
         model = RocketPolicy.from_pretrained("CraftJarvis/MineStudio_ROCKET-1.12w_EMA")
         return model

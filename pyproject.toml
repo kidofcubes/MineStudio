@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "minestudio"
-version="1.1.3"
+version = "1.1.3"
 description = "A simple and efficient Minecraft Agent development kit for AI research."
 dependencies = [
     "av==13.1.0",
@@ -19,7 +19,7 @@ dependencies = [
     "gym",
     "gym3",
     "gymnasium",
-    "hydra_colorlog", 
+    "hydra_colorlog",
     "hydra-core>=1.3.2",
     "lmdb",
     "wandb",
@@ -28,14 +28,14 @@ dependencies = [
     "scipy",
     "rich",
     "coloredlogs",
-    "daemoniker", 
-    "lxml", 
+    "daemoniker",
+    "lxml",
     "cuda-python",
-    "diskcache", 
-    "albumentations", 
-    "einops", 
+    "diskcache",
+    "albumentations",
+    "einops",
     "timm",
-    "transformers", 
+    "transformers",
     "Pyro4",
     "xmltodict",
     "pyrender==0.1.25",
@@ -46,11 +46,9 @@ dependencies = [
     "minecraft_data==3.20.0",
     "absl-py",
     "dm-tree",
-    "x_transformers==0.27.1"
+    "x_transformers==0.27.1",
 ]
-authors = [
-    {name="CraftJarvis", email="craftjarvis@outlook.com"}
-]
+authors = [{ name = "CraftJarvis", email = "craftjarvis@outlook.com" }]
 requires-python = ">=3.10"
 
 [tool.setuptools]
@@ -64,9 +62,7 @@ include = ".gitignore"
 
 
 [tool.setuptools.dynamic]
-readme = {file = "README.md"}
+readme = { file = "README.md" }
 
 [tool.pytest.ini_options]
-addopts = [
-    "--import-mode=importlib",
-]
+addopts = ["--import-mode=importlib"]

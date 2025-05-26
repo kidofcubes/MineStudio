@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-28 17:46:44
 LastEditors: muzhancun muzhancun@stu.pku.edu.cn
-LastEditTime: 2025-05-26 17:54:28
+LastEditTime: 2025-05-26 22:03:05
 FilePath: /MineStudio/docs/source/conf.py
 '''
 import os
@@ -115,7 +115,7 @@ autoapi_add_toctree_entry = False
 autoapi_dirs = ['../../minestudio']
 autoapi_ignore = ['*minerl*', '*tests*', '*tutorials*', '*utils*']
 
-autodoc_mock_imports = ['torch', 'absl', 'cv2', 'huggingface_hub', 'lmdb', 'ray', 'gymnasium', 'lightning', 'omegaconf', 'tree', 'einops', 'gym', 'gym3', 'coloredlogs', 'daemoniker', 'av', 'minecraft_data']
+autodoc_mock_imports = ['torch', 'absl', 'cv2', 'huggingface_hub', 'lmdb', 'ray', 'gymnasium', 'lightning', 'omegaconf', 'tree', 'einops', 'gym', 'gym3', 'coloredlogs', 'daemoniker', 'av', 'minecraft_data', 'torchvision', 'timm', 'transformers', 'x_transformers']
 # -- application setup -------------------------------------------------------
 
 
