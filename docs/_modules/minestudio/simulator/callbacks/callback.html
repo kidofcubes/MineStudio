@@ -643,8 +643,11 @@
 <span class="sd">        This method can be used to modify the action before it is executed.</span>
 
 <span class="sd">        :param sim: The simulator instance.</span>
+<span class="sd">        :type sim: any</span>
 <span class="sd">        :param action: The action to be executed.</span>
+<span class="sd">        :type action: any</span>
 <span class="sd">        :returns: The (potentially modified) action.</span>
+<span class="sd">        :rtype: any</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">action</span></div>
 
@@ -657,6 +660,7 @@
 <span class="sd">        This method can be used to determine if the environment needs to be reset.</span>
 
 <span class="sd">        :param sim: The simulator instance.</span>
+<span class="sd">        :type sim: any</span>
 <span class="sd">        :param reset_flag: A boolean flag indicating whether a reset is currently planned.</span>
 <span class="sd">        :type reset_flag: bool</span>
 <span class="sd">        :returns: A boolean flag indicating whether the environment should be reset.</span>
@@ -673,8 +677,11 @@
 <span class="sd">        This method can be used to modify the initial observation and info.</span>
 
 <span class="sd">        :param sim: The simulator instance.</span>
+<span class="sd">        :type sim: any</span>
 <span class="sd">        :param obs: The initial observation after reset.</span>
+<span class="sd">        :type obs: any</span>
 <span class="sd">        :param info: The initial info dictionary after reset.</span>
+<span class="sd">        :type info: Dict</span>
 <span class="sd">        :returns: The (potentially modified) observation and info.</span>
 <span class="sd">        :rtype: Tuple[Any, Dict]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -689,11 +696,17 @@
 <span class="sd">        This method can be used to modify the observation, reward, done flags, and info.</span>
 
 <span class="sd">        :param sim: The simulator instance.</span>
+<span class="sd">        :type sim: any</span>
 <span class="sd">        :param obs: The observation after the step.</span>
+<span class="sd">        :type obs: any</span>
 <span class="sd">        :param reward: The reward received after the step.</span>
+<span class="sd">        :type reward: float</span>
 <span class="sd">        :param terminated: A boolean flag indicating if the episode has terminated.</span>
+<span class="sd">        :type terminated: bool</span>
 <span class="sd">        :param truncated: A boolean flag indicating if the episode has been truncated.</span>
+<span class="sd">        :type truncated: bool</span>
 <span class="sd">        :param info: The info dictionary after the step.</span>
+<span class="sd">        :type info: Dict</span>
 <span class="sd">        :returns: The (potentially modified) observation, reward, terminated flag, truncated flag, and info.</span>
 <span class="sd">        :rtype: Tuple[Any, float, bool, bool, Dict]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -705,11 +718,12 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">before_close</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sim</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Called before the simulator is closed.</span>
-<span class="sd">        This method can be used to perform cleanup operations.</span>
+<span class="sd">        This method can be used to perform any cleanup tasks.</span>
 
 <span class="sd">        :param sim: The simulator instance.</span>
+<span class="sd">        :type sim: any</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span></div>
+        <span class="k">pass</span></div>
 
 
 <div class="viewcode-block" id="MinecraftCallback.after_close">
@@ -720,6 +734,7 @@
 <span class="sd">        This method can be used to perform final cleanup operations.</span>
 
 <span class="sd">        :param sim: The simulator instance.</span>
+<span class="sd">        :type sim: any</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span></div>
 
