@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-11-30 13:20:04
- * @LastEditors: muzhancun muzhancun@126.com
- * @LastEditTime: 2025-01-06 15:59:32
+ * @LastEditors: muzhancun muzhancun@stu.pku.edu.cn
+ * @LastEditTime: 2025-05-26 14:54:46
  * @FilePath: /MineStudio/README.md
 -->
 
@@ -150,7 +150,9 @@ Here is the checkpoint list:
 - [CraftJarvis/MineStudio_STEVE-1.official](https://huggingface.co/CraftJarvis/MineStudio_STEVE-1.official), trained by [STEVE-1](https://github.com/Shalev-Lifshitz/STEVE-1)
 - [CraftJarvis/MineStudio_ROCKET-1.12w_EMA](https://huggingface.co/CraftJarvis/MineStudio_ROCKET-1.12w_EMA), trained by [CraftJarvis](https://craftjarvis.github.io/)
 
-## Why MineStudio
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=CraftJarvis/MineStudio&type=Date)](https://www.star-history.com/#CraftJarvis/MineStudio&Date)
 
 ## Acknowledgement
 

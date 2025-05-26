@@ -187,3 +187,6 @@ output
 logs
 
 *.mp4
+
+# macOS
+.DS_Store
