@@ -21,8 +21,22 @@ from minestudio.utils.register import Registers
 
 @Registers.modal_kernel_callback.register
 class ActionKernelCallback(ModalKernelCallback):
+    """
+    Callback for handling Minecraft actions.
+
+    This callback processes action data, including decoding, merging, slicing, padding, and postprocessing.
+    It can handle both regular actions and previous actions if enabled.
+    """
 
     def create_from_config(config: Dict) -> 'ActionKernelCallback':
+        """
+        Creates an ActionKernelCallback instance from a configuration dictionary.
+
+        :param config: Configuration dictionary.
+        :type config: Dict
+        :returns: An instance of ActionKernelCallback.
+        :rtype: ActionKernelCallback
+        """
         return ActionKernelCallback(**config.get('action', {}))
 
     def __init__(self, 
@@ -33,6 +47,23 @@ class ActionKernelCallback(ModalKernelCallback):
                  camera_quantization_scheme="mu_law", 
                  enable_prev_action: bool=False,
                  **kwargs):
+        """
+        Initializes the ActionKernelCallback.
+
+        :param n_camera_bins: Number of bins for camera quantization.
+        :type n_camera_bins: int
+        :param camera_binsize: Binsize for camera quantization.
+        :type camera_binsize: int
+        :param camera_maxval: Maximum value for camera quantization.
+        :type camera_maxval: int
+        :param camera_mu: Mu value for camera mu-law quantization.
+        :type camera_mu: int
+        :param camera_quantization_scheme: Scheme for camera quantization ("mu_law" or other).
+        :type camera_quantization_scheme: str
+        :param enable_prev_action: Whether to enable processing of previous actions.
+        :type enable_prev_action: bool
+        :param kwargs: Additional keyword arguments.
+        """
         super().__init__(**kwargs)
         self.action_mapper = CameraHierarchicalMapping(n_camera_bins=n_camera_bins)
         self.action_transformer = ActionTransformer(
@@ -45,18 +76,50 @@ class ActionKernelCallback(ModalKernelCallback):
 
     @property
     def name(self) -> str:
+        """
+        Returns the name of the callback.
+
+        :returns: The name 'action'.
+        :rtype: str
+        """
         return 'action'
 
     def filter_dataset_paths(self, dataset_paths: List[Union[str, Path]]) -> List[Path]:
+        """
+        Filters dataset paths to select only action-related paths.
+
+        :param dataset_paths: A list of dataset paths.
+        :type dataset_paths: List[Union[str, Path]]
+        :returns: A list of paths pointing to action data.
+        :rtype: List[Path]
+        """
         if isinstance(dataset_paths[0], str):
             dataset_paths = [Path(path) for path in dataset_paths]
         action_paths = [path for path in dataset_paths if Path(path).stem == 'action']
         return action_paths
 
     def do_decode(self, chunk: bytes, **kwargs) -> Dict:
+        """
+        Decodes a chunk of bytes into an action dictionary.
+
+        :param chunk: Bytes to decode.
+        :type chunk: bytes
+        :param kwargs: Additional keyword arguments.
+        :returns: Decoded action dictionary.
+        :rtype: Dict
+        """
         return pickle.loads(chunk)
 
     def do_merge(self, chunk_list: List[bytes], **kwargs) -> Dict:
+        """
+        Merges a list of decoded action chunks into a single dictionary.
+
+        :param chunk_list: List of byte chunks representing actions.
+        :type chunk_list: List[bytes]
+        :param kwargs: Additional keyword arguments.
+        :returns: A dictionary containing merged action data.
+        :rtype: Dict
+        """
         chunks = [self.do_decode(chunk) for chunk in chunk_list]
         cache_chunks = {}
         for chunk in chunks:
@@ -68,10 +131,38 @@ class ActionKernelCallback(ModalKernelCallback):
         return merged_chunks
 
     def do_slice(self, data: Dict, start: int, end: int, skip_frame: int, **kwargs) -> Dict:
+        """
+        Slices the action data.
+
+        :param data: Action data dictionary.
+        :type data: Dict
+        :param start: Start index for slicing.
+        :type start: int
+        :param end: End index for slicing.
+        :type end: int
+        :param skip_frame: Frame skipping interval.
+        :type skip_frame: int
+        :param kwargs: Additional keyword arguments.
+        :returns: Sliced action data.
+        :rtype: Dict
+        """
         sliced_data = {key: value[start:end:skip_frame] for key, value in data.items()}
         return sliced_data
 
     def do_pad(self, data: Dict, pad_len: int, pad_pos: Literal["left", "right"], **kwargs) -> Tuple[Dict, np.ndarray]:
+        """
+        Pads the action data.
+
+        :param data: Action data dictionary.
+        :type data: Dict
+        :param pad_len: Length of padding to add.
+        :type pad_len: int
+        :param pad_pos: Position to add padding ("left" or "right").
+        :type pad_pos: Literal["left", "right"]
+        :param kwargs: Additional keyword arguments.
+        :returns: A tuple containing the padded action data and the padding mask.
+        :rtype: Tuple[Dict, np.ndarray]
+        """
         pad_data = dict()
         for key, value in data.items():
             traj_len = value.shape[0]
@@ -88,6 +179,17 @@ class ActionKernelCallback(ModalKernelCallback):
         return pad_data, pad_mask
 
     def do_postprocess(self, data: Dict) -> Dict:
+        """
+        Postprocesses the action data.
+
+        This method handles the transformation of environment actions to agent actions
+        and optionally includes previous actions.
+
+        :param data: Data dictionary containing actions.
+        :type data: Dict
+        :returns: Postprocessed data dictionary.
+        :rtype: Dict
+        """
         pop_action = data.pop(self.name)
         if not self.enable_prev_action:
             data[f'env_{self.name}'] = pop_action
@@ -109,6 +211,11 @@ class ActionKernelCallback(ModalKernelCallback):
         return data
 
 class VectorActionKernelCallback(ActionKernelCallback):
+    """
+    Callback for handling actions represented as vectors.
+
+    This callback converts actions between dictionary and vector representations.
+    """
 
     ACTION_KEYS = OrderedDict({
         'camera': 2, 'attack': 1, 'forward': 1, 'back': 1, 'left': 1, 'right': 1, 'jump': 1, 'sneak': 1, 'sprint': 1, 'use': 1, 'drop': 1, 'inventory': 1, 
@@ -116,6 +223,15 @@ class VectorActionKernelCallback(ActionKernelCallback):
     })
 
     def __init__(self, action_chunk_size: int=32, return_type: str="vector"):
+        """
+        Initializes the VectorActionKernelCallback.
+
+        :param action_chunk_size: Size of the action chunks.
+        :type action_chunk_size: int
+        :param return_type: The return type for processed actions ("vector" or "dict").
+        :type return_type: str
+        :raises AssertionError: if return_type is not "vector" or "dict".
+        """
         super().__init__()
         self.action_chunk_size = action_chunk_size
         self.win_bias = action_chunk_size - 1
@@ -124,9 +240,23 @@ class VectorActionKernelCallback(ActionKernelCallback):
 
     @property
     def vector_dim(self) -> int:
+        """
+        Calculates the dimension of the action vector.
+
+        :returns: The dimension of the action vector.
+        :rtype: int
+        """
         return sum(self.ACTION_KEYS.values()) * self.action_chunk_size
 
     def vector_to_action(self, vector: np.ndarray) -> Union[List[Dict], Dict]:
+        """
+        Converts an action vector or a list of action vectors to action dictionaries.
+
+        :param vector: Action vector(s).
+        :type vector: np.ndarray
+        :returns: Action dictionary or list of action dictionaries.
+        :rtype: Union[List[Dict], Dict]
+        """
         if len(vector.shape) == 1:
             vector = vector[np.newaxis, ...]
         actions = []
@@ -148,6 +278,14 @@ class VectorActionKernelCallback(ActionKernelCallback):
         return actions
 
     def action_to_vector(self, action: Dict) -> np.ndarray:
+        """
+        Converts an action dictionary to an action vector.
+
+        :param action: Action dictionary.
+        :type action: Dict
+        :returns: Action vector.
+        :rtype: np.ndarray
+        """
         vectors = []
         win_len = len(action['attack'])
         for i in range(win_len - self.action_chunk_size + 1):
@@ -165,6 +303,14 @@ class VectorActionKernelCallback(ActionKernelCallback):
         return np.stack(vectors, axis=0)
 
     def action_to_dict(self, action: Dict) -> Dict:
+        """
+        Converts an action dictionary to a specific dictionary format with "camera" and "button" keys.
+
+        :param action: Action dictionary.
+        :type action: Dict
+        :returns: Dictionary with "camera" and "button" actions.
+        :rtype: Dict
+        """
         ret = {"camera": [], "button": []}
         win_len = len(action['attack'])
         for i in range(win_len - self.action_chunk_size + 1):
@@ -183,6 +329,14 @@ class VectorActionKernelCallback(ActionKernelCallback):
         return ret
 
     def do_postprocess(self, data: Dict) -> Dict:
+        """
+        Postprocesses the action data, converting it to the specified return type (vector or dict).
+
+        :param data: Data dictionary containing actions.
+        :type data: Dict
+        :returns: Postprocessed data dictionary with actions in the specified format.
+        :rtype: Dict
+        """
         action = data.pop('action')
         if self.return_type == "vector":
             ret = self.action_to_vector(action)
@@ -200,12 +354,33 @@ class VectorActionKernelCallback(ActionKernelCallback):
         return data
 
 class ActionDrawFrameCallback(DrawFrameCallback):
+    """
+    Callback for drawing action information onto video frames.
+    """
 
     def __init__(self, start_point: Tuple[int, int]=(10, 10)):
+        """
+        Initializes the ActionDrawFrameCallback.
+
+        :param start_point: The (x, y) coordinates for the top-left starting point of the text overlay.
+        :type start_point: Tuple[int, int]
+        """
         super().__init__()
         self.x, self.y = start_point
 
     def draw_frames(self, frames: Union[np.ndarray, List], infos: Dict, sample_idx: int) -> np.ndarray:
+        """
+        Draws action information onto each frame.
+
+        :param frames: A list of frames or a numpy array of frames.
+        :type frames: Union[np.ndarray, List]
+        :param infos: Dictionary containing action information.
+        :type infos: Dict
+        :param sample_idx: Index of the sample to process.
+        :type sample_idx: int
+        :returns: A list of frames with action information drawn on them.
+        :rtype: List[np.ndarray]
+        """
         cache_frames = []
         env_action = infos['env_action']
         env_prev_action = infos.get('env_prev_action', env_action)
@@ -230,9 +405,20 @@ class ActionDrawFrameCallback(DrawFrameCallback):
 
 
 class ActionConvertCallback(ModalConvertCallback):
-
+    """
+    Callback for converting raw action data into the MineStudio format.
+    """
 
     def load_episodes(self):
+        """
+        Loads and organizes action episode data from input directories.
+
+        It identifies action files (ending with .pkl), groups them by episode,
+        sorts segments within episodes, and re-splits episodes based on a maximum time interval.
+
+        :returns: An OrderedDict of episodes, where keys are episode IDs and values are lists of (part_id, file_path) tuples.
+        :rtype: OrderedDict
+        """
         CONTRACTOR_PATTERN = r"^(.*?)-(\d+)$"
         episodes = OrderedDict()
         num_segments = 0
@@ -273,7 +459,21 @@ class ActionConvertCallback(ModalConvertCallback):
                    eps_id: str, 
                    skip_frames: List[List[bool]], 
                    modal_file_path: List[Union[str, Path]]) -> Tuple[List, List]:
+        """
+        Converts action data for a given episode.
 
+        It loads action data from specified files, applies frame skipping,
+        and chunks the data.
+
+        :param eps_id: Episode ID.
+        :type eps_id: str
+        :param skip_frames: A list of lists of boolean flags indicating whether to skip each frame for each segment file.
+        :type skip_frames: List[List[bool]]
+        :param modal_file_path: A list of file paths for the action data segments.
+        :type modal_file_path: List[Union[str, Path]]
+        :returns: A tuple containing a list of chunk start indices and a list of serialized chunk values.
+        :rtype: Tuple[List, List]
+        """
         cache, keys, vals = [], [], []
         for _skip_frames, _modal_file_path in zip(skip_frames, modal_file_path):
             data = pickle.load(open(str(_modal_file_path), 'rb'))
@@ -297,7 +497,16 @@ class ActionConvertCallback(ModalConvertCallback):
 
 
     def gen_frame_skip_flags(self, file_name: str) -> List[bool]:
-        
+        """
+        Generates frame skip flags based on action data to identify no-operation frames.
+
+        A frame is considered a no-op if the camera is static and all other actions are zero.
+
+        :param file_name: The name of the action file (without extension).
+        :type file_name: str
+        :returns: A list of boolean flags, where True indicates the frame should be kept (not a no-op).
+        :rtype: List[bool]
+        """
         for dir in self.input_dirs:
             path = Path(dir) / f"{file_name}.pkl"
             if path.exists():
@@ -343,5 +552,5 @@ if __name__ == '__main__':
     action_path = val[-1][-1].stem
     skip_flags = action_convert.gen_frame_skip_flags(action_path)
     import ipdb; ipdb.set_trace()
-    
-    
+
+

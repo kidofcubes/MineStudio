@@ -15,25 +15,75 @@ from minestudio.utils.register import Registers
 
 @Registers.modal_kernel_callback.register
 class MetaInfoKernelCallback(ModalKernelCallback):
+    """
+    Callback for processing metadata information.
+
+    Handles decoding, merging, slicing, and padding of metadata.
+    """
 
     def create_from_config(config: Dict) -> 'MetaInfoKernelCallback':
+        """
+        Creates a MetaInfoKernelCallback instance from a configuration dictionary.
+
+        :param config: Configuration dictionary.
+        :type config: Dict
+        :returns: An instance of MetaInfoKernelCallback.
+        :rtype: MetaInfoKernelCallback
+        """
         return MetaInfoKernelCallback(**config.get('meta_info', {}))
 
     def __init__(self):
+        """
+        Initializes the MetaInfoKernelCallback.
+        """
         super().__init__()
 
     @property
     def name(self) -> str:
+        """
+        Returns the name of the callback.
+
+        :returns: The name 'meta_info'.
+        :rtype: str
+        """
         return 'meta_info'
 
     def filter_dataset_paths(self, dataset_paths: List[str]) -> List[str]:
+        """
+        Filters dataset paths to select only metadata-related paths.
+
+        :param dataset_paths: A list of dataset paths.
+        :type dataset_paths: List[str]
+        :returns: A list of paths pointing to metadata files.
+        :rtype: List[str]
+        """
         action_paths = [path for path in dataset_paths if Path(path).stem in ['contractor_info', 'meta_info']]
         return action_paths
 
     def do_decode(self, chunk: bytes, **kwargs) -> Dict:
+        """
+        Decodes a chunk of bytes into a metadata dictionary.
+
+        :param chunk: Bytes to decode.
+        :type chunk: bytes
+        :param kwargs: Additional keyword arguments.
+        :returns: Decoded metadata dictionary.
+        :rtype: Dict
+        """
         return pickle.loads(chunk)
 
     def do_merge(self, chunk_list: List[bytes], **kwargs) -> Dict:
+        """
+        Merges a list of decoded metadata chunks into a single dictionary.
+
+        Each chunk is expected to be a list of frame_info dictionaries.
+
+        :param chunk_list: List of byte chunks representing metadata.
+        :type chunk_list: List[bytes]
+        :param kwargs: Additional keyword arguments.
+        :returns: A dictionary containing merged metadata.
+        :rtype: Dict
+        """
         chunks = [self.do_decode(chunk) for chunk in chunk_list]
         cache_chunks = {}
         for chunk in chunks:
@@ -45,10 +95,41 @@ class MetaInfoKernelCallback(ModalKernelCallback):
         return cache_chunks
 
     def do_slice(self, data: Dict, start: int, end: int, skip_frame: int, **kwargs) -> Dict:
+        """
+        Slices the metadata.
+
+        :param data: Metadata dictionary.
+        :type data: Dict
+        :param start: Start index for slicing.
+        :type start: int
+        :param end: End index for slicing.
+        :type end: int
+        :param skip_frame: Frame skipping interval.
+        :type skip_frame: int
+        :param kwargs: Additional keyword arguments.
+        :returns: Sliced metadata dictionary.
+        :rtype: Dict
+        """
         sliced_data = {key: value[start:end:skip_frame] for key, value in data.items()}
         return sliced_data
 
-    def do_pad(self, data: Dict, pad_len: int, pad_pos: Literal["left", "right"], **kwargs) -> Tuple[Dict, np.array]:
+    def do_pad(self, data: Dict, pad_len: int, pad_pos: Literal["left", "right"], **kwargs) -> Tuple[Dict, np.ndarray]:
+        """
+        Pads the metadata.
+
+        Handles both numpy arrays and lists within the data dictionary.
+        For numpy arrays, it pads with zeros. For lists, it pads with None.
+
+        :param data: Metadata dictionary.
+        :type data: Dict
+        :param pad_len: Length of padding to add.
+        :type pad_len: int
+        :param pad_pos: Position to add padding ("left" or "right").
+        :type pad_pos: Literal["left", "right"]
+        :param kwargs: Additional keyword arguments.
+        :returns: A tuple containing the padded metadata and the padding mask.
+        :rtype: Tuple[Dict, np.ndarray]
+        """
         pad_data = dict()
         for key, value in data.items():
             traj_len = len(value)
@@ -69,12 +150,33 @@ class MetaInfoKernelCallback(ModalKernelCallback):
         return pad_data, pad_mask
 
 class MetaInfoDrawFrameCallback(DrawFrameCallback):
+    """
+    Callback for drawing metadata information onto video frames.
+    """
 
     def __init__(self, start_point: Tuple[int, int]=(150, 10)):
+        """
+        Initializes the MetaInfoDrawFrameCallback.
+
+        :param start_point: The (x, y) coordinates for the top-left starting point of the text overlay.
+        :type start_point: Tuple[int, int]
+        """
         super().__init__()
         self.x, self.y = start_point
 
     def draw_frames(self, frames: List, infos: Dict, sample_idx: int) -> np.ndarray:
+        """
+        Draws metadata (pitch, yaw, cursor position, GUI status) onto each frame.
+
+        :param frames: A list of frames.
+        :type frames: List
+        :param infos: Dictionary containing metadata information under the key 'meta_info'.
+        :type infos: Dict
+        :param sample_idx: Index of the sample to process.
+        :type sample_idx: int
+        :returns: A list of frames with metadata drawn on them.
+        :rtype: List[np.ndarray]
+        """
         cache_frames = []
         for frame_idx, frame in enumerate(frames):
             frame = frame.copy()
@@ -103,9 +205,20 @@ from tqdm import tqdm
 from collections import OrderedDict
 
 class MetaInfoConvertCallback(ModalConvertCallback):
+    """
+    Callback for converting raw metadata into the MineStudio format.
+    """
 
     def load_episodes(self):
-        
+        """
+        Loads and organizes metadata episode data from input directories.
+
+        It identifies metadata files (ending with .pkl), groups them by episode,
+        sorts segments within episodes, and re-splits episodes based on a maximum time interval.
+
+        :returns: An OrderedDict of episodes, where keys are episode IDs and values are lists of (part_id, file_path) tuples.
+        :rtype: OrderedDict
+        """
         CONTRACTOR_PATTERN = r"^(.*?)-(\d+)$"
         
         episodes = OrderedDict()
@@ -146,6 +259,21 @@ class MetaInfoConvertCallback(ModalConvertCallback):
                    eps_id: str, 
                    skip_frames: List[List[bool]], 
                    modal_file_path: List[Union[str, Path]]) -> Tuple[List, List]:
+        """
+        Converts metadata for a given episode.
+
+        It loads metadata from specified files, applies frame skipping,
+        and chunks the data.
+
+        :param eps_id: Episode ID.
+        :type eps_id: str
+        :param skip_frames: A list of lists of boolean flags indicating whether to skip each frame for each segment file.
+        :type skip_frames: List[List[bool]]
+        :param modal_file_path: A list of file paths for the metadata segments.
+        :type modal_file_path: List[Union[str, Path]]
+        :returns: A tuple containing a list of chunk start indices and a list of serialized chunk values.
+        :rtype: Tuple[List, List]
+        """
         cache, keys, vals = [], [], []
         for _skip_frames, _modal_file_path in zip(skip_frames, modal_file_path):
             data = pickle.load(open(str(_modal_file_path), 'rb'))
@@ -180,4 +308,3 @@ if __name__ == '__main__':
         if idx > 5:
             break
     import ipdb; ipdb.set_trace()
-    

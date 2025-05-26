@@ -23,20 +23,35 @@ from minestudio.data.minecraft.callbacks.callback import ModalKernelCallback, Mo
 from minestudio.utils.register import Registers
 
 class VideoAugmentation:
+    """
+    Applies a sequence of augmentations to video frames.
+    """
     
     def __init__(self, frame_width: int = 224, frame_height: int = 224):
+        """
+        Initializes the VideoAugmentation class.
+
+        :param frame_width: The width of the frames to augment.
+        :type frame_width: int
+        :param frame_height: The height of the frames to augment.
+        :type frame_height: int
+        """
         self.transform = A.ReplayCompose([
             A.Sequential([
                 A.ColorJitter(hue=(-0.1, 0.1), saturation=(0.8, 1.2), brightness=(0.8, 1.2), contrast=(0.8, 1.2), p=1.0), 
                 A.Affine(rotate=(-4, 2), scale=(0.98, 1.02), shear=2, p=1.0),
-                # A.OneOf([
-                #     A.CropAndPad(px=(0, 30), keep_size=True, p=1.0),
-                #     A.RandomResizedCrop(scale=(0.9, 0.9), ratio=(1.0, 1.0), width=frame_width, height=frame_height, p=1.0),
-                # ], p=1.0),  
             ], p=1.0), 
         ])
 
     def __call__(self, video: np.ndarray) -> np.ndarray:
+        """
+        Applies the defined augmentations to a video.
+
+        :param video: A numpy array representing the video (sequence of frames).
+        :type video: np.ndarray
+        :returns: The augmented video as a numpy array.
+        :rtype: np.ndarray
+        """
         data = self.transform(image=video[0])
         future_images = []
         with ThreadPoolExecutor() as executor:
@@ -48,8 +63,21 @@ class VideoAugmentation:
 
 @Registers.modal_kernel_callback.register
 class ImageKernelCallback(ModalKernelCallback):
+    """
+    Callback for processing image (video frame) data.
+
+    Handles decoding, merging, slicing, padding, and optional augmentation of video frames.
+    """
 
     def create_from_config(config: Dict) -> 'ImageKernelCallback':
+        """
+        Creates an ImageKernelCallback instance from a configuration dictionary.
+
+        :param config: Configuration dictionary.
+        :type config: Dict
+        :returns: An instance of ImageKernelCallback.
+        :rtype: ImageKernelCallback
+        """
         return ImageKernelCallback(**config.get('image', {}))
 
     def __init__(
@@ -59,6 +87,18 @@ class ImageKernelCallback(ModalKernelCallback):
         num_workers: int=4, 
         enable_video_aug: bool=False,
     ) -> None:
+        """
+        Initializes the ImageKernelCallback.
+
+        :param frame_width: Target width for frames.
+        :type frame_width: int
+        :param frame_height: Target height for frames.
+        :type frame_height: int
+        :param num_workers: Number of worker threads for decoding.
+        :type num_workers: int
+        :param enable_video_aug: Whether to enable video augmentation.
+        :type enable_video_aug: bool
+        """
         super().__init__()
         self.frame_width = frame_width
         self.frame_height = frame_height
@@ -69,15 +109,36 @@ class ImageKernelCallback(ModalKernelCallback):
 
     @property
     def name(self) -> str:
+        """
+        Returns the name of the callback.
+
+        :returns: The name 'image'.
+        :rtype: str
+        """
         return 'image'
 
     def filter_dataset_paths(self, dataset_paths: List[str]) -> List[str]:
+        """
+        Filters dataset paths to select only image/video related paths.
+
+        :param dataset_paths: A list of dataset paths.
+        :type dataset_paths: List[str]
+        :returns: A list of paths pointing to image/video data.
+        :rtype: List[str]
+        """
         action_paths = [path for path in dataset_paths if Path(path).stem in ['video', 'image']]
         return action_paths
 
     def do_decode(self, chunk: bytes, **kwargs) -> np.ndarray:
-        """Decode bytes to video frames."""
+        """
+        Decodes a chunk of bytes (video data) into a numpy array of frames.
 
+        :param chunk: Bytes representing video data.
+        :type chunk: bytes
+        :param kwargs: Additional keyword arguments.
+        :returns: A numpy array of decoded and resized video frames (T, H, W, C).
+        :rtype: np.ndarray
+        """
         def convert_and_resize(frame, width, height):
             frame = frame.to_ndarray(format="rgb24")
             if frame.shape[0] != height or frame.shape[1] != width:
@@ -103,15 +164,53 @@ class ImageKernelCallback(ModalKernelCallback):
         return frames
     
     def do_merge(self, chunk_list: List[bytes], **kwargs) -> np.ndarray:
+        """
+        Merges a list of decoded video chunks (byte strings) into a single numpy array of frames.
+
+        :param chunk_list: List of byte chunks representing video segments.
+        :type chunk_list: List[bytes]
+        :param kwargs: Additional keyword arguments.
+        :returns: A numpy array of merged video frames.
+        :rtype: np.ndarray
+        """
         with ThreadPoolExecutor(max_workers=self.num_workers) as executor:
             frames = list(executor.map(self.do_decode, chunk_list))
         merged_chunks = np.concatenate(frames, axis=0)
         return merged_chunks
     
     def do_slice(self, data: np.ndarray, start: int, end: int, skip_frame: int, **kwargs) -> np.ndarray:
+        """
+        Slices the video frame data.
+
+        :param data: Numpy array of video frames.
+        :type data: np.ndarray
+        :param start: Start index for slicing.
+        :type start: int
+        :param end: End index for slicing.
+        :type end: int
+        :param skip_frame: Frame skipping interval.
+        :type skip_frame: int
+        :param kwargs: Additional keyword arguments.
+        :returns: Sliced video frame data.
+        :rtype: np.ndarray
+        """
         return data[start:end:skip_frame]
     
     def do_pad(self, data: np.ndarray, pad_len: int, pad_pos: Literal["left", "right"], **kwargs) -> Tuple[np.ndarray, np.ndarray]:
+        """
+        Pads the video frame data.
+
+        :param data: Numpy array of video frames.
+        :type data: np.ndarray
+        :param pad_len: Length of padding to add.
+        :type pad_len: int
+        :param pad_pos: Position to add padding ("left" or "right").
+        :type pad_pos: Literal["left", "right"]
+        :param kwargs: Additional keyword arguments.
+        :returns: A tuple containing the padded video data and the padding mask.
+        :rtype: Tuple[np.ndarray, np.ndarray]
+        :raises ValueError: if pad_pos is not "left" or "right".
+        """
         dims = data.shape[1:]
         if pad_pos == "left":
             pad_data = np.concatenate([np.zeros((pad_len, *dims), dtype=np.uint8), data], axis=0)
@@ -124,17 +223,45 @@ class ImageKernelCallback(ModalKernelCallback):
         return pad_data, pad_mask
 
     def do_postprocess(self, data: Dict) -> Dict:
+        """
+        Postprocesses the image data, applying video augmentation if enabled.
+
+        :param data: Data dictionary containing image frames.
+        :type data: Dict
+        :returns: Postprocessed data dictionary.
+        :rtype: Dict
+        """
         if self.enable_video_aug:
             data["image"] = self.video_augmentor(data["image"])
         return data
 
 class ImageConvertCallback(ModalConvertCallback):
+    """
+    Callback for converting raw video data into the MineStudio format.
+    """
 
     def __init__(self, *args, thread_pool: int=8, **kwargs):
+        """
+        Initializes the ImageConvertCallback.
+
+        :param args: Positional arguments for the parent class.
+        :param thread_pool: Number of threads to use for video writing.
+        :type thread_pool: int
+        :param kwargs: Keyword arguments for the parent class.
+        """
         super().__init__(*args, **kwargs)
         self.thread_pool = thread_pool
 
     def load_episodes(self):
+        """
+        Loads and organizes video episode data from input directories.
+
+        It identifies video files (ending with .mp4), groups them by episode,
+        sorts segments within episodes, and re-splits episodes based on a maximum time interval.
+
+        :returns: An OrderedDict of episodes, where keys are episode IDs and values are lists of (part_id, file_path) tuples.
+        :rtype: OrderedDict
+        """
         CONTRACTOR_PATTERN = r"^(.*?)-(\d+)$"
         episodes = OrderedDict()
         num_segments = 0
@@ -170,8 +297,15 @@ class ImageConvertCallback(ModalConvertCallback):
         print(f'[Image] - num of episodes: {len(episodes)}, num of segments: {num_segments}') 
         return episodes
 
-    def _write_video_chunk(self, args: Tuple) -> Tuple[bool, int, bytes]:
-        '''Convert frame sequence into bytes sequence. '''
+    def _write_video_chunk(self, args: Tuple) -> Tuple[int, bytes]:
+        """
+        Converts a chunk of video frames into a byte sequence (mp4 format).
+
+        :param args: A tuple containing (frames, chunk_start, fps, width, height).
+        :type args: Tuple
+        :returns: A tuple containing (chunk_start_index, video_bytes).
+        :rtype: Tuple[int, bytes]
+        """
         frames, chunk_start, fps, width, height = args
         outStream = io.BytesIO()
         container = av.open(outStream, mode="w", format='mp4')
@@ -193,7 +327,21 @@ class ImageConvertCallback(ModalConvertCallback):
                    eps_id: str, 
                    skip_frames: List[List[bool]], 
                    modal_file_path: List[Union[str, Path]]) -> Tuple[List, List]:
-        
+        """
+        Converts video data for a given episode.
+
+        It reads video frames from specified files, applies frame skipping,
+        resizes frames, and encodes them into chunks.
+
+        :param eps_id: Episode ID.
+        :type eps_id: str
+        :param skip_frames: A list of lists of boolean flags indicating whether to skip each frame for each segment file.
+        :type skip_frames: List[List[bool]]
+        :param modal_file_path: A list of file paths for the video data segments.
+        :type modal_file_path: List[Union[str, Path]]
+        :returns: A tuple containing a list of chunk start indices and a list of serialized chunk values (video bytes).
+        :rtype: Tuple[List, List]
+        """
         chunk_start = 0
         cache_frames, keys, vals = [], [], []
         if isinstance(modal_file_path, str):
@@ -272,4 +420,3 @@ if __name__ == '__main__':
         if idx > 5:
             break
     import ipdb; ipdb.set_trace()
-    
