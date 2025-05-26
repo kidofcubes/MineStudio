@@ -2,7 +2,7 @@ MineStudio API Documentation
 ======================================================================
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 1
    :caption: Contents:
 
    Simulator <simulator/index>

@@ -10,8 +10,20 @@ from minestudio.utils.register import Registers
 
 @Registers.simulator_callback.register
 class SummonMobsCallback(MinecraftCallback):
+    """
+    A callback for summoning mobs in the Minecraft world.
+
+    This callback allows specifying the types, numbers, and spawn ranges of mobs
+    to be summoned after each reset.
+    """
 
     def create_from_conf(source):
+        """
+        Creates a SummonMobsCallback instance from a configuration source.
+
+        :param source: The configuration source (e.g., file path or dictionary).
+        :return: A SummonMobsCallback instance or None if 'summon_mobs' is not in the config.
+        """
         data = MinecraftCallback.load_data_from_conf(source)
         if 'summon_mobs' in data:
             return SummonMobsCallback(data['summon_mobs'])
@@ -19,6 +31,16 @@ class SummonMobsCallback(MinecraftCallback):
             return None
 
     def __init__(self, mobs) -> None:
+        """
+        Initializes the SummonMobsCallback.
+
+        :param mobs: A list of mob configurations.
+                     Each configuration is a dictionary with keys:
+                     'name' or 'mob_name': The name of the mob (e.g., 'cow').
+                     'number': The number of mobs to summon.
+                     'range_x': A list or tuple specifying the [min, max] x-coordinate range for spawning.
+                     'range_z': A list or tuple specifying the [min, max] z-coordinate range for spawning.
+        """
         self.mobs = mobs
         """
         Examples:
@@ -31,6 +53,14 @@ class SummonMobsCallback(MinecraftCallback):
         """
 
     def after_reset(self, sim, obs, info):
+        """
+        Summons the specified mobs after the environment is reset.
+
+        :param sim: The Minecraft simulator.
+        :param obs: The observation from the simulator.
+        :param info: Additional information from the simulator.
+        :return: The modified observation and info after summoning mobs.
+        """
         chats = []
         for mob in self.mobs:
             for _ in range(mob['number']):

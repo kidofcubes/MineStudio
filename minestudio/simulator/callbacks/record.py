@@ -17,9 +17,27 @@ import json
 import cv2
 
 class RecordCallback(MinecraftCallback):
+    """
+    A callback for recording episodes of Minecraft gameplay.
+
+    This callback can record video of the gameplay, as well as actions,
+    information, and original observations.
+    """
     def __init__(self, record_path: str, fps: int = 20, frame_type: Literal['pov', 'obs'] = 'pov', recording: bool = True,
                     show_actions=False,record_actions=False,record_infos=False,record_origin_observation=False,
                  **kwargs):
+        """
+        Initializes the RecordCallback.
+
+        :param record_path: The path to save recordings.
+        :param fps: The frames per second for the recording.
+        :param frame_type: The type of frame to record ('pov' or 'obs').
+        :param recording: Whether to start recording immediately.
+        :param show_actions: Whether to display actions on the recorded frames.
+        :param record_actions: Whether to save actions to a JSON file.
+        :param record_infos: Whether to save info to a JSON file.
+        :param record_origin_observation: Whether to save original observations to a NPY file.
+        """
         super().__init__(**kwargs)
         self.record_path = Path(record_path)
         self.record_path.mkdir(parents=True, exist_ok=True)
@@ -38,17 +56,40 @@ class RecordCallback(MinecraftCallback):
         self.actions = []
     
     def _get_message(self, info):
+        """
+        Gets a message to display in the GUI.
+
+        :param info: The info dictionary.
+        :return: The message dictionary.
+        """
         message = info.get('message', {})
         message['RecordCallback'] = f'Recording: {"On" if self.recording else "Off"}, Recording Time: {len(self.frames)}'
         return message
 
     def before_reset(self, sim, reset_flag: bool) -> bool:
+        """
+        Saves the current episode before resetting.
+
+        :param sim: The Minecraft simulator.
+        :param reset_flag: The reset flag.
+        :return: The reset flag.
+        """
         if self.recording:
             self._save_episode()
             self.episode_id += 1
         return reset_flag
 
     def after_reset(self, sim, obs, info):
+        """
+        Handles the after_reset event.
+
+        Adds a message to the GUI and starts recording if enabled.
+
+        :param sim: The Minecraft simulator.
+        :param obs: The observation from the simulator.
+        :param info: Additional information from the simulator.
+        :return: The observation and info.
+        """
         sim.callback_messages.add("Press 'R' to start/stop recording.")
         # this message would be displayed in the GUI when command mode is on
         info['message'] = self._get_message(info)
@@ -67,11 +108,31 @@ class RecordCallback(MinecraftCallback):
         return obs, info
     
     def before_step(self, sim, action):
+        """
+        Records the action before it is executed.
+
+        :param sim: The Minecraft simulator.
+        :param action: The action to be executed.
+        :return: The action.
+        """
         if self.recording and (self.record_actions  or self.show_actions):
             self.actions.append(action)
         return action
     
     def after_step(self, sim, obs, reward, terminated, truncated, info):
+        """
+        Handles the after_step event.
+
+        Toggles recording based on user input ('R' key). Records frames and info if enabled.
+
+        :param sim: The Minecraft simulator.
+        :param obs: The observation from the simulator.
+        :param reward: The reward from the simulator.
+        :param terminated: Whether the episode has terminated.
+        :param truncated: Whether the episode has been truncated.
+        :param info: Additional information from the simulator.
+        :return: The modified observation, reward, terminated, truncated, and info.
+        """
         if self.recording and not info.get('R', True):
             self.recording = False
             print(f'[red]Recording stopped[/red]')
@@ -96,10 +157,18 @@ class RecordCallback(MinecraftCallback):
         return obs, reward, terminated, truncated, info
     
     def before_close(self, sim):
+        """
+        Saves the current episode before closing the simulator.
+
+        :param sim: The Minecraft simulator.
+        """
         if self.recording:
             self._save_episode()
     
     def _save_episode(self):
+        """
+        Saves the recorded frames, actions, and info for the current episode.
+        """
         if len(self.frames) == 0:
             return 
         output_path = self.record_path / f'episode_{self.episode_id}.mp4'
@@ -149,6 +218,14 @@ class RecordCallback(MinecraftCallback):
             
         
     def _process_info(self,info:dict):
+        """
+        Processes the info dictionary for saving.
+
+        Removes the 'pov' key if frame_type is 'pov' and converts numpy arrays to lists.
+
+        :param info: The info dictionary.
+        :return: The processed info dictionary.
+        """
         record_info = deepcopy(info)
         if self.frame_type == 'pov':
             del record_info['pov']
@@ -156,11 +233,28 @@ class RecordCallback(MinecraftCallback):
         return record_info
     
     def _process_action(self,action:spaces.Dict):
+        """
+        Processes the action dictionary for saving.
+
+        Converts numpy arrays to lists.
+
+        :param action: The action dictionary.
+        :return: The processed action dictionary.
+        """
         record_action = dict(deepcopy(action))
         record_action = self._convert_data(record_action)
         return record_action
     
     def _convert_data(self,data):
+        """
+        Converts data to a saveable format.
+
+        Recursively converts dictionaries, defaultdicts, and gymnasium spaces.Dict to
+        standard dictionaries and numpy arrays to lists.
+
+        :param data: The data to convert.
+        :return: The converted data.
+        """
         if isinstance(data, dict):
             # Iterate over items and apply conversion recursively
             return {key: self._convert_data(value) for key, value in data.items()}

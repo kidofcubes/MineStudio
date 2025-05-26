@@ -26,6 +26,15 @@ from minestudio.simulator.callbacks.prev_action import PrevActionCallback
 from typing import Dict, List, Tuple, Union, Sequence, Mapping, Any, Optional, Literal
 
 def load_callbacks_from_config(config: Union[str, Dict]):
+    """
+    Loads simulator callbacks from a configuration.
+
+    This function iterates through registered simulator callbacks, creates instances
+    from the provided configuration, and returns a list of initialized callbacks.
+
+    :param config: The configuration source, which can be a file path (str) or a dictionary.
+    :return: A list of initialized MinecraftCallback instances.
+    """
     from minestudio.utils.register import Registers
     callbacks = []
     for key in Registers.simulator_callback.keys():
