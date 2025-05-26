@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-28 17:46:44
 LastEditors: muzhancun muzhancun@stu.pku.edu.cn
-LastEditTime: 2025-05-26 16:42:11
+LastEditTime: 2025-05-26 17:54:28
 FilePath: /MineStudio/docs/source/conf.py
 '''
 import os
@@ -93,7 +93,7 @@ html_theme_options = {
         }
   ], 
   "navbar_align": "left",
-  "show_toc_level": 1,
+  "show_toc_level": 2,
   "navbar_center": ["version-switcher", "navbar-nav"],  
   "logo": {
     "text": "MineStudio",

@@ -50,8 +50,11 @@ class MinecraftCallback:
         This method can be used to modify the action before it is executed.
 
         :param sim: The simulator instance.
+        :type sim: any
         :param action: The action to be executed.
+        :type action: any
         :returns: The (potentially modified) action.
+        :rtype: any
         """
         return action
 
@@ -61,6 +64,7 @@ class MinecraftCallback:
         This method can be used to determine if the environment needs to be reset.
 
         :param sim: The simulator instance.
+        :type sim: any
         :param reset_flag: A boolean flag indicating whether a reset is currently planned.
         :type reset_flag: bool
         :returns: A boolean flag indicating whether the environment should be reset.
@@ -74,8 +78,11 @@ class MinecraftCallback:
         This method can be used to modify the initial observation and info.
 
         :param sim: The simulator instance.
+        :type sim: any
         :param obs: The initial observation after reset.
+        :type obs: any
         :param info: The initial info dictionary after reset.
+        :type info: Dict
         :returns: The (potentially modified) observation and info.
         :rtype: Tuple[Any, Dict]
         """
@@ -87,11 +94,17 @@ class MinecraftCallback:
         This method can be used to modify the observation, reward, done flags, and info.
 
         :param sim: The simulator instance.
+        :type sim: any
         :param obs: The observation after the step.
+        :type obs: any
         :param reward: The reward received after the step.
+        :type reward: float
         :param terminated: A boolean flag indicating if the episode has terminated.
+        :type terminated: bool
         :param truncated: A boolean flag indicating if the episode has been truncated.
+        :type truncated: bool
         :param info: The info dictionary after the step.
+        :type info: Dict
         :returns: The (potentially modified) observation, reward, terminated flag, truncated flag, and info.
         :rtype: Tuple[Any, float, bool, bool, Dict]
         """
@@ -100,11 +113,12 @@ class MinecraftCallback:
     def before_close(self, sim):
         """
         Called before the simulator is closed.
-        This method can be used to perform cleanup operations.
+        This method can be used to perform any cleanup tasks.
 
         :param sim: The simulator instance.
+        :type sim: any
         """
-        return
+        pass
 
     def after_close(self, sim):
         """
@@ -112,6 +126,7 @@ class MinecraftCallback:
         This method can be used to perform final cleanup operations.
 
         :param sim: The simulator instance.
+        :type sim: any
         """
         return
 
