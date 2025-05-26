@@ -1,0 +1,1424 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Simulator API Documentation &#8212; MineStudio 1.0.0</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=fd3f3429" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/thebelab.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=f44ad8c8" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=8d563738"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/thebelab-helper.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/simulator/index';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://craftjarvis.github.io/MineStudio/_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'master';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <link rel="icon" href="../../_static/logo-no-text-light.svg"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Models API Documentation" href="../models/index.html" />
+    <link rel="prev" title="MineStudio API Documentation" href="../index.html" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+
+
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo-no-text-light.svg" class="logo__image only-light" alt=""/>
+    <img src="../../_static/logo-no-text-light.svg" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">MineStudio</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../overview/index.html">
+    Overview
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../overview/getting-started.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../simulator/index.html">
+    Simulator
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../data/index.html">
+    Data
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../models/index.html">
+    Models
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../offline/index.html">
+    Offline
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../online/index.html">
+    Online
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../inference/index.html">
+    Inference
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../benchmark/index.html">
+    Benchmark
+  </a>
+</li>
+
+
+<li class=" current active">
+  <a class="nav-link dropdown-item nav-internal" href="../index.html">
+    API
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/CraftJarvis/MineStudio" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/minestudio" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-custom fa-pypi fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://arxiv.org/pdf/2310.08235" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="ai ai-arxiv fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">ArXiv</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+          
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../overview/index.html">
+    Overview
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../overview/getting-started.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../simulator/index.html">
+    Simulator
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../data/index.html">
+    Data
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../models/index.html">
+    Models
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../offline/index.html">
+    Offline
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../online/index.html">
+    Online
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../inference/index.html">
+    Inference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../benchmark/index.html">
+    Benchmark
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/CraftJarvis/MineStudio" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/minestudio" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-custom fa-pypi fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://arxiv.org/pdf/2310.08235" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="ai ai-arxiv fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">ArXiv</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Simulator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/index.html">Models</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">MineStudio API Documentation</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Simulator API Documentation</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+<section id="simulator-api-documentation">
+<h1>Simulator API Documentation<a class="headerlink" href="#simulator-api-documentation" title="Link to this heading">#</a></h1>
+<section id="module-minestudio.simulator.entry">
+<span id="entry"></span><h2>Entry<a class="headerlink" href="#module-minestudio.simulator.entry" title="Link to this heading">#</a></h2>
+<p>Date: 2024-11-11 05:20:17
+LastEditors: muzhancun <a class="reference external" href="mailto:muzhancun&#37;&#52;&#48;stu&#46;pku&#46;edu&#46;cn">muzhancun<span>&#64;</span>stu<span>&#46;</span>pku<span>&#46;</span>edu<span>&#46;</span>cn</a>
+LastEditTime: 2025-05-26 17:19:06
+FilePath: /MineStudio/minestudio/simulator/entry.py</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="minestudio.simulator.entry.CameraConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">minestudio.simulator.entry.</span></span><span class="sig-name descname"><span class="pre">CameraConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">camera_binsize</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">camera_maxval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">camera_mu</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">camera_quantization_scheme</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'mu_law'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/simulator/entry.html#CameraConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.simulator.entry.CameraConfig" title="Link to this definition">#</a></dt>
+<dd><p>Configuration for camera quantization and binning settings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>camera_binsize</strong> – The size of each bin for camera quantization, default is 2.</p></li>
+<li><p><strong>camera_maxval</strong> – The maximum value for camera quantization, default is 10.</p></li>
+<li><p><strong>camera_mu</strong> – The mu parameter for mu-law quantization, default is 10.0.</p></li>
+<li><p><strong>camera_quantization_scheme</strong> – The quantization scheme to use, either “mu_law” or “linear”, default is “mu_law”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Attributes<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference internal" href="#minestudio.simulator.entry.CameraConfig.action_transformer_kwargs" title="minestudio.simulator.entry.CameraConfig.action_transformer_kwargs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">action_transformer_kwargs</span></code></a></dt><dd><p>Dictionary of camera settings used by an action transformer.</p>
+</dd>
+<dt><a class="reference internal" href="#minestudio.simulator.entry.CameraConfig.n_camera_bins" title="minestudio.simulator.entry.CameraConfig.n_camera_bins"><code class="xref py py-obj docutils literal notranslate"><span class="pre">n_camera_bins</span></code></a></dt><dd><p>The bin number of the setting.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="minestudio.simulator.entry.CameraConfig.action_transformer_kwargs">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">action_transformer_kwargs</span></span><a class="headerlink" href="#minestudio.simulator.entry.CameraConfig.action_transformer_kwargs" title="Link to this definition">#</a></dt>
+<dd><p>Dictionary of camera settings used by an action transformer.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="minestudio.simulator.entry.CameraConfig.n_camera_bins">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">n_camera_bins</span></span><a class="headerlink" href="#minestudio.simulator.entry.CameraConfig.n_camera_bins" title="Link to this definition">#</a></dt>
+<dd><p>The bin number of the setting.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The number of camera bins.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="minestudio.simulator.entry.MinecraftSim">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">minestudio.simulator.entry.</span></span><span class="sig-name descname"><span class="pre">MinecraftSim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/simulator/entry.html#MinecraftSim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.simulator.entry.MinecraftSim" title="Link to this definition">#</a></dt>
+<dd><p>MineStudio Minecraft Simulator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>action_type</strong> – The type of the action space, can be ‘env’ or ‘agent’.</p></li>
+<li><p><strong>obs_size</strong> – The resolution of the observation, default is (224, 224).</p></li>
+<li><p><strong>render_size</strong> – The original resolution of the game, default is (640, 360).</p></li>
+<li><p><strong>seed</strong> – The seed of the minecraft world, default is 0.</p></li>
+<li><p><strong>inventory</strong> – The initial inventory of the agent, default is an empty dict.</p></li>
+<li><p><strong>preferred_spawn_biome</strong> – The preferred spawn biome when calling reset, default is None.</p></li>
+<li><p><strong>num_empty_frames</strong> – The number of empty frames to skip when calling reset, default is 20.</p></li>
+<li><p><strong>callbacks</strong> – A list of callbacks to be called before and after each basic calling.</p></li>
+<li><p><strong>camera_config</strong> – The configuration for camera quantization and binning settings.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>kwargs</strong> – Additional keyword arguments.</p>
+</dd>
+<dt class="field-odd">Attributes<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><a class="reference internal" href="#minestudio.simulator.entry.MinecraftSim.action_space" title="minestudio.simulator.entry.MinecraftSim.action_space"><code class="xref py py-obj docutils literal notranslate"><span class="pre">action_space</span></code></a></dt><dd><p>The action space of the environment.</p>
+</dd>
+<dt><a class="reference internal" href="#minestudio.simulator.entry.MinecraftSim.observation_space" title="minestudio.simulator.entry.MinecraftSim.observation_space"><code class="xref py py-obj docutils literal notranslate"><span class="pre">observation_space</span></code></a></dt><dd><p>The observation space of the environment.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">__call__</span></code>(*args, **kwargs)</p></td>
+<td><p>Call self as a function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.simulator.entry.MinecraftSim.agent_action_to_env_action" title="minestudio.simulator.entry.MinecraftSim.agent_action_to_env_action"><code class="xref py py-obj docutils literal notranslate"><span class="pre">agent_action_to_env_action</span></code></a>(action)</p></td>
+<td><p>Converts an agent action to an environment action.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.simulator.entry.MinecraftSim.close" title="minestudio.simulator.entry.MinecraftSim.close"><code class="xref py py-obj docutils literal notranslate"><span class="pre">close</span></code></a>()</p></td>
+<td><p>Performs any necessary cleanup.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.simulator.entry.MinecraftSim.env_action_to_agent_action" title="minestudio.simulator.entry.MinecraftSim.env_action_to_agent_action"><code class="xref py py-obj docutils literal notranslate"><span class="pre">env_action_to_agent_action</span></code></a>(action)</p></td>
+<td><p>Converts an environment action to an agent action.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.simulator.entry.MinecraftSim.noop_action" title="minestudio.simulator.entry.MinecraftSim.noop_action"><code class="xref py py-obj docutils literal notranslate"><span class="pre">noop_action</span></code></a>()</p></td>
+<td><p>Returns a no-op action for the current action type.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.simulator.entry.MinecraftSim.render" title="minestudio.simulator.entry.MinecraftSim.render"><code class="xref py py-obj docutils literal notranslate"><span class="pre">render</span></code></a>()</p></td>
+<td><p>Renders the environment.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.simulator.entry.MinecraftSim.reset" title="minestudio.simulator.entry.MinecraftSim.reset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reset</span></code></a>()</p></td>
+<td><p>Resets the environment to an initial state and returns the initial observation and info.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.simulator.entry.MinecraftSim.step" title="minestudio.simulator.entry.MinecraftSim.step"><code class="xref py py-obj docutils literal notranslate"><span class="pre">step</span></code></a>(action)</p></td>
+<td><p>Runs one timestep of the environment's dynamics.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py property">
+<dt class="sig sig-object py" id="minestudio.simulator.entry.MinecraftSim.action_space">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">action_space</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">gymnasium.spaces.Dict</span></em><a class="headerlink" href="#minestudio.simulator.entry.MinecraftSim.action_space" title="Link to this definition">#</a></dt>
+<dd><p>The action space of the environment.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.simulator.entry.MinecraftSim.agent_action_to_env_action">
+<span class="sig-name descname"><span class="pre">agent_action_to_env_action</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/simulator/entry.html#MinecraftSim.agent_action_to_env_action"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.simulator.entry.MinecraftSim.agent_action_to_env_action" title="Link to this definition">#</a></dt>
+<dd><p>Converts an agent action to an environment action.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>action</strong> – The agent action.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The environment action.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.simulator.entry.MinecraftSim.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/minestudio/simulator/entry.html#MinecraftSim.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.simulator.entry.MinecraftSim.close" title="Link to this definition">#</a></dt>
+<dd><p>Performs any necessary cleanup.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The close status from the underlying environment.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.simulator.entry.MinecraftSim.env_action_to_agent_action">
+<span class="sig-name descname"><span class="pre">env_action_to_agent_action</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/simulator/entry.html#MinecraftSim.env_action_to_agent_action"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.simulator.entry.MinecraftSim.env_action_to_agent_action" title="Link to this definition">#</a></dt>
+<dd><p>Converts an environment action to an agent action.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>action</strong> – The environment action.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The agent action.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.simulator.entry.MinecraftSim.noop_action">
+<span class="sig-name descname"><span class="pre">noop_action</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/minestudio/simulator/entry.html#MinecraftSim.noop_action"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.simulator.entry.MinecraftSim.noop_action" title="Link to this definition">#</a></dt>
+<dd><p>Returns a no-op action for the current action type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A no-op action.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="minestudio.simulator.entry.MinecraftSim.observation_space">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">observation_space</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">gymnasium.spaces.Dict</span></em><a class="headerlink" href="#minestudio.simulator.entry.MinecraftSim.observation_space" title="Link to this definition">#</a></dt>
+<dd><p>The observation space of the environment.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.simulator.entry.MinecraftSim.render">
+<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/minestudio/simulator/entry.html#MinecraftSim.render"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.simulator.entry.MinecraftSim.render" title="Link to this definition">#</a></dt>
+<dd><p>Renders the environment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The rendered image.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.simulator.entry.MinecraftSim.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/minestudio/simulator/entry.html#MinecraftSim.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.simulator.entry.MinecraftSim.reset" title="Link to this definition">#</a></dt>
+<dd><p>Resets the environment to an initial state and returns the initial observation and info.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A tuple containing the initial observation and info dictionary.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.simulator.entry.MinecraftSim.step">
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/minestudio/simulator/entry.html#MinecraftSim.step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.simulator.entry.MinecraftSim.step" title="Link to this definition">#</a></dt>
+<dd><p>Runs one timestep of the environment’s dynamics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>action</strong> – The action to take.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing the observation, reward, terminated flag, truncated flag, and info dictionary.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="minestudio.simulator.entry.check_engine">
+<span class="sig-prename descclassname"><span class="pre">minestudio.simulator.entry.</span></span><span class="sig-name descname"><span class="pre">check_engine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skip_confirmation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/simulator/entry.html#check_engine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.simulator.entry.check_engine" title="Link to this definition">#</a></dt>
+<dd><p>Checks if the simulator engine exists and downloads it if not.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>skip_confirmation</strong> – If True, skips the confirmation prompt before downloading.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="minestudio.simulator.entry.download_engine">
+<span class="sig-prename descclassname"><span class="pre">minestudio.simulator.entry.</span></span><span class="sig-name descname"><span class="pre">download_engine</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/simulator/entry.html#download_engine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.simulator.entry.download_engine" title="Link to this definition">#</a></dt>
+<dd><p>Downloads the simulator engine from Hugging Face Hub and extracts it.</p>
+</dd></dl>
+
+</section>
+<section id="module-minestudio.simulator.callbacks.callback">
+<span id="callbacks"></span><h2>Callbacks<a class="headerlink" href="#module-minestudio.simulator.callbacks.callback" title="Link to this heading">#</a></h2>
+<p>Date: 2025-01-06 17:32:04
+LastEditors: caishaofei-mus1 <a class="reference external" href="mailto:1744260356&#37;&#52;&#48;qq&#46;com">1744260356<span>&#64;</span>qq<span>&#46;</span>com</a>
+LastEditTime: 2025-05-09 14:54:09
+FilePath: /MineStudio/minestudio/simulator/callbacks/callback.py</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="minestudio.simulator.callbacks.callback.Compose">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">minestudio.simulator.callbacks.callback.</span></span><span class="sig-name descname"><span class="pre">Compose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callbacks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/simulator/callbacks/callback.html#Compose"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.simulator.callbacks.callback.Compose" title="Link to this definition">#</a></dt>
+<dd><p>A callback that composes multiple callbacks into a single callback.
+It allows for applying a sequence of callbacks or a random subset of them.</p>
+<p class="rubric">Methods</p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.simulator.callbacks.callback.Compose.after_close" title="minestudio.simulator.callbacks.callback.Compose.after_close"><code class="xref py py-obj docutils literal notranslate"><span class="pre">after_close</span></code></a>(sim)</p></td>
+<td><p>Called after the simulator is closed.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.simulator.callbacks.callback.Compose.after_render" title="minestudio.simulator.callbacks.callback.Compose.after_render"><code class="xref py py-obj docutils literal notranslate"><span class="pre">after_render</span></code></a>(sim, image)</p></td>
+<td><p>Called after the simulator renders an image.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.simulator.callbacks.callback.Compose.after_reset" title="minestudio.simulator.callbacks.callback.Compose.after_reset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">after_reset</span></code></a>(sim, obs, info)</p></td>
+<td><p>Called after the simulator resets the environment.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.simulator.callbacks.callback.Compose.after_step" title="minestudio.simulator.callbacks.callback.Compose.after_step"><code class="xref py py-obj docutils literal notranslate"><span class="pre">after_step</span></code></a>(sim, obs, reward, terminated, ...)</p></td>
+<td><p>Called after the simulator takes a step.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.simulator.callbacks.callback.Compose.before_close" title="minestudio.simulator.callbacks.callback.Compose.before_close"><code class="xref py py-obj docutils literal notranslate"><span class="pre">before_close</span></code></a>(sim)</p></td>
+<td><p>Called before the simulator is closed.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.simulator.callbacks.callback.Compose.before_render" title="minestudio.simulator.callbacks.callback.Compose.before_render"><code class="xref py py-obj docutils literal notranslate"><span class="pre">before_render</span></code></a>(sim, image)</p></td>
+<td><p>Called before the simulator renders an image.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.simulator.callbacks.callback.Compose.before_reset" title="minestudio.simulator.callbacks.callback.Compose.before_reset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">before_reset</span></code></a>(sim, reset_flag)</p></td>
+<td><p>Called before the simulator resets the environment.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.simulator.callbacks.callback.Compose.before_step" title="minestudio.simulator.callbacks.callback.Compose.before_step"><code class="xref py py-obj docutils literal notranslate"><span class="pre">before_step</span></code></a>(sim, action)</p></td>
+<td><p>Called before the simulator takes a step.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_from_conf</span></code>()</p></td>
+<td><p>Creates a callback instance from a YAML file or a dictionary.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_data_from_conf</span></code>()</p></td>
+<td><p>Loads data from a YAML file or a dictionary.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.simulator.callbacks.callback.Compose.after_close">
+<span class="sig-name descname"><span class="pre">after_close</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/simulator/callbacks/callback.html#Compose.after_close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.simulator.callbacks.callback.Compose.after_close" title="Link to this definition">#</a></dt>
+<dd><p>Called after the simulator is closed.
+Calls the <cite>after_close</cite> method of all activated callbacks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>sim</strong> – The simulator instance.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.simulator.callbacks.callback.Compose.after_render">
+<span class="sig-name descname"><span class="pre">after_render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/simulator/callbacks/callback.html#Compose.after_render"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.simulator.callbacks.callback.Compose.after_render" title="Link to this definition">#</a></dt>
+<dd><p>Called after the simulator renders an image.
+Calls the <cite>after_render</cite> method of all activated callbacks.
+Note: This method currently calls <cite>before_render</cite> on the callbacks, which might be an error. It should likely call <cite>after_render</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sim</strong> – The simulator instance.</p></li>
+<li><p><strong>image</strong> – The rendered image.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The (potentially modified) image, after processing by active callbacks.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.simulator.callbacks.callback.Compose.after_reset">
+<span class="sig-name descname"><span class="pre">after_reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">info</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/simulator/callbacks/callback.html#Compose.after_reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.simulator.callbacks.callback.Compose.after_reset" title="Link to this definition">#</a></dt>
+<dd><p>Called after the simulator resets the environment.
+Calls the <cite>after_reset</cite> method of all activated callbacks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sim</strong> – The simulator instance.</p></li>
+<li><p><strong>obs</strong> – The initial observation after reset.</p></li>
+<li><p><strong>info</strong> – The initial info dictionary after reset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The (potentially modified) observation and info, after processing by active callbacks.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[Any, Dict]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.simulator.callbacks.callback.Compose.after_step">
+<span class="sig-name descname"><span class="pre">after_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reward</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">terminated</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">truncated</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">info</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/simulator/callbacks/callback.html#Compose.after_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.simulator.callbacks.callback.Compose.after_step" title="Link to this definition">#</a></dt>
+<dd><p>Called after the simulator takes a step.
+Calls the <cite>after_step</cite> method of all activated callbacks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sim</strong> – The simulator instance.</p></li>
+<li><p><strong>obs</strong> – The observation after the step.</p></li>
+<li><p><strong>reward</strong> – The reward received after the step.</p></li>
+<li><p><strong>terminated</strong> – A boolean flag indicating if the episode has terminated.</p></li>
+<li><p><strong>truncated</strong> – A boolean flag indicating if the episode has been truncated.</p></li>
+<li><p><strong>info</strong> – The info dictionary after the step.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The (potentially modified) observation, reward, terminated flag, truncated flag, and info, after processing by active callbacks.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[Any, float, bool, bool, Dict]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.simulator.callbacks.callback.Compose.before_close">
+<span class="sig-name descname"><span class="pre">before_close</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/simulator/callbacks/callback.html#Compose.before_close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.simulator.callbacks.callback.Compose.before_close" title="Link to this definition">#</a></dt>
+<dd><p>Called before the simulator is closed.
+Calls the <cite>before_close</cite> method of all activated callbacks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>sim</strong> – The simulator instance.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.simulator.callbacks.callback.Compose.before_render">
+<span class="sig-name descname"><span class="pre">before_render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/simulator/callbacks/callback.html#Compose.before_render"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.simulator.callbacks.callback.Compose.before_render" title="Link to this definition">#</a></dt>
+<dd><p>Called before the simulator renders an image.
+Calls the <cite>before_render</cite> method of all activated callbacks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sim</strong> – The simulator instance.</p></li>
+<li><p><strong>image</strong> – The image to be rendered.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The (potentially modified) image, after processing by active callbacks.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.simulator.callbacks.callback.Compose.before_reset">
+<span class="sig-name descname"><span class="pre">before_reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reset_flag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../../_modules/minestudio/simulator/callbacks/callback.html#Compose.before_reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.simulator.callbacks.callback.Compose.before_reset" title="Link to this definition">#</a></dt>
+<dd><p>Called before the simulator resets the environment.
+Activates a subset of callbacks based on the <cite>options</cite> attribute and calls their <cite>before_reset</cite> methods.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sim</strong> – The simulator instance.</p></li>
+<li><p><strong>reset_flag</strong> (<em>bool</em>) – A boolean flag indicating whether a reset is currently planned.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A boolean flag indicating whether the environment should be reset, after processing by active callbacks.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.simulator.callbacks.callback.Compose.before_step">
+<span class="sig-name descname"><span class="pre">before_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/simulator/callbacks/callback.html#Compose.before_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.simulator.callbacks.callback.Compose.before_step" title="Link to this definition">#</a></dt>
+<dd><p>Called before the simulator takes a step.
+Calls the <cite>before_step</cite> method of all activated callbacks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sim</strong> – The simulator instance.</p></li>
+<li><p><strong>action</strong> – The action to be executed.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The (potentially modified) action, after processing by active callbacks.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="minestudio.simulator.callbacks.callback.MinecraftCallback">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">minestudio.simulator.callbacks.callback.</span></span><span class="sig-name descname"><span class="pre">MinecraftCallback</span></span><a class="reference internal" href="../../_modules/minestudio/simulator/callbacks/callback.html#MinecraftCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.simulator.callbacks.callback.MinecraftCallback" title="Link to this definition">#</a></dt>
+<dd><p>Base class for creating callbacks that can be used to customize the behavior of the Minecraft simulator.
+Callbacks can be used to modify actions, observations, rewards, and other aspects of the simulation.</p>
+<p class="rubric">Methods</p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.simulator.callbacks.callback.MinecraftCallback.after_close" title="minestudio.simulator.callbacks.callback.MinecraftCallback.after_close"><code class="xref py py-obj docutils literal notranslate"><span class="pre">after_close</span></code></a>(sim)</p></td>
+<td><p>Called after the simulator is closed.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.simulator.callbacks.callback.MinecraftCallback.after_render" title="minestudio.simulator.callbacks.callback.MinecraftCallback.after_render"><code class="xref py py-obj docutils literal notranslate"><span class="pre">after_render</span></code></a>(sim, image)</p></td>
+<td><p>Called after the simulator renders an image.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.simulator.callbacks.callback.MinecraftCallback.after_reset" title="minestudio.simulator.callbacks.callback.MinecraftCallback.after_reset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">after_reset</span></code></a>(sim, obs, info)</p></td>
+<td><p>Called after the simulator resets the environment.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.simulator.callbacks.callback.MinecraftCallback.after_step" title="minestudio.simulator.callbacks.callback.MinecraftCallback.after_step"><code class="xref py py-obj docutils literal notranslate"><span class="pre">after_step</span></code></a>(sim, obs, reward, terminated, ...)</p></td>
+<td><p>Called after the simulator takes a step.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.simulator.callbacks.callback.MinecraftCallback.before_close" title="minestudio.simulator.callbacks.callback.MinecraftCallback.before_close"><code class="xref py py-obj docutils literal notranslate"><span class="pre">before_close</span></code></a>(sim)</p></td>
+<td><p>Called before the simulator is closed.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.simulator.callbacks.callback.MinecraftCallback.before_render" title="minestudio.simulator.callbacks.callback.MinecraftCallback.before_render"><code class="xref py py-obj docutils literal notranslate"><span class="pre">before_render</span></code></a>(sim, image)</p></td>
+<td><p>Called before the simulator renders an image.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.simulator.callbacks.callback.MinecraftCallback.before_reset" title="minestudio.simulator.callbacks.callback.MinecraftCallback.before_reset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">before_reset</span></code></a>(sim, reset_flag)</p></td>
+<td><p>Called before the simulator resets the environment.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.simulator.callbacks.callback.MinecraftCallback.before_step" title="minestudio.simulator.callbacks.callback.MinecraftCallback.before_step"><code class="xref py py-obj docutils literal notranslate"><span class="pre">before_step</span></code></a>(sim, action)</p></td>
+<td><p>Called before the simulator takes a step.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.simulator.callbacks.callback.MinecraftCallback.create_from_conf" title="minestudio.simulator.callbacks.callback.MinecraftCallback.create_from_conf"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_from_conf</span></code></a>()</p></td>
+<td><p>Creates a callback instance from a YAML file or a dictionary.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.simulator.callbacks.callback.MinecraftCallback.load_data_from_conf" title="minestudio.simulator.callbacks.callback.MinecraftCallback.load_data_from_conf"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_data_from_conf</span></code></a>()</p></td>
+<td><p>Loads data from a YAML file or a dictionary.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.simulator.callbacks.callback.MinecraftCallback.after_close">
+<span class="sig-name descname"><span class="pre">after_close</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/simulator/callbacks/callback.html#MinecraftCallback.after_close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.simulator.callbacks.callback.MinecraftCallback.after_close" title="Link to this definition">#</a></dt>
+<dd><p>Called after the simulator is closed.
+This method can be used to perform final cleanup operations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>sim</strong> – The simulator instance.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.simulator.callbacks.callback.MinecraftCallback.after_render">
+<span class="sig-name descname"><span class="pre">after_render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/simulator/callbacks/callback.html#MinecraftCallback.after_render"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.simulator.callbacks.callback.MinecraftCallback.after_render" title="Link to this definition">#</a></dt>
+<dd><p>Called after the simulator renders an image.
+This method can be used to modify the image after it is rendered.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sim</strong> – The simulator instance.</p></li>
+<li><p><strong>image</strong> – The rendered image.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The (potentially modified) image.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.simulator.callbacks.callback.MinecraftCallback.after_reset">
+<span class="sig-name descname"><span class="pre">after_reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">info</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/simulator/callbacks/callback.html#MinecraftCallback.after_reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.simulator.callbacks.callback.MinecraftCallback.after_reset" title="Link to this definition">#</a></dt>
+<dd><p>Called after the simulator resets the environment.
+This method can be used to modify the initial observation and info.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sim</strong> – The simulator instance.</p></li>
+<li><p><strong>obs</strong> – The initial observation after reset.</p></li>
+<li><p><strong>info</strong> – The initial info dictionary after reset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The (potentially modified) observation and info.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[Any, Dict]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.simulator.callbacks.callback.MinecraftCallback.after_step">
+<span class="sig-name descname"><span class="pre">after_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reward</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">terminated</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">truncated</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">info</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/simulator/callbacks/callback.html#MinecraftCallback.after_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.simulator.callbacks.callback.MinecraftCallback.after_step" title="Link to this definition">#</a></dt>
+<dd><p>Called after the simulator takes a step.
+This method can be used to modify the observation, reward, done flags, and info.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sim</strong> – The simulator instance.</p></li>
+<li><p><strong>obs</strong> – The observation after the step.</p></li>
+<li><p><strong>reward</strong> – The reward received after the step.</p></li>
+<li><p><strong>terminated</strong> – A boolean flag indicating if the episode has terminated.</p></li>
+<li><p><strong>truncated</strong> – A boolean flag indicating if the episode has been truncated.</p></li>
+<li><p><strong>info</strong> – The info dictionary after the step.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The (potentially modified) observation, reward, terminated flag, truncated flag, and info.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[Any, float, bool, bool, Dict]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.simulator.callbacks.callback.MinecraftCallback.before_close">
+<span class="sig-name descname"><span class="pre">before_close</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/simulator/callbacks/callback.html#MinecraftCallback.before_close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.simulator.callbacks.callback.MinecraftCallback.before_close" title="Link to this definition">#</a></dt>
+<dd><p>Called before the simulator is closed.
+This method can be used to perform cleanup operations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>sim</strong> – The simulator instance.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.simulator.callbacks.callback.MinecraftCallback.before_render">
+<span class="sig-name descname"><span class="pre">before_render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/simulator/callbacks/callback.html#MinecraftCallback.before_render"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.simulator.callbacks.callback.MinecraftCallback.before_render" title="Link to this definition">#</a></dt>
+<dd><p>Called before the simulator renders an image.
+This method can be used to modify the image before it is rendered.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sim</strong> – The simulator instance.</p></li>
+<li><p><strong>image</strong> – The image to be rendered.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The (potentially modified) image.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.simulator.callbacks.callback.MinecraftCallback.before_reset">
+<span class="sig-name descname"><span class="pre">before_reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reset_flag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../../_modules/minestudio/simulator/callbacks/callback.html#MinecraftCallback.before_reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.simulator.callbacks.callback.MinecraftCallback.before_reset" title="Link to this definition">#</a></dt>
+<dd><p>Called before the simulator resets the environment.
+This method can be used to determine if the environment needs to be reset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sim</strong> – The simulator instance.</p></li>
+<li><p><strong>reset_flag</strong> (<em>bool</em>) – A boolean flag indicating whether a reset is currently planned.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A boolean flag indicating whether the environment should be reset.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.simulator.callbacks.callback.MinecraftCallback.before_step">
+<span class="sig-name descname"><span class="pre">before_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/simulator/callbacks/callback.html#MinecraftCallback.before_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.simulator.callbacks.callback.MinecraftCallback.before_step" title="Link to this definition">#</a></dt>
+<dd><p>Called before the simulator takes a step.
+This method can be used to modify the action before it is executed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sim</strong> – The simulator instance.</p></li>
+<li><p><strong>action</strong> – The action to be executed.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The (potentially modified) action.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.simulator.callbacks.callback.MinecraftCallback.create_from_conf">
+<span class="sig-name descname"><span class="pre">create_from_conf</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/simulator/callbacks/callback.html#MinecraftCallback.create_from_conf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.simulator.callbacks.callback.MinecraftCallback.create_from_conf" title="Link to this definition">#</a></dt>
+<dd><p>Creates a callback instance from a YAML file or a dictionary.
+This method is intended to be overridden by subclasses.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>yaml_file</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>Dict</em><em>]</em>) – The path to the YAML file or a dictionary containing the configuration.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A callback instance, or None if not implemented.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[<a class="reference internal" href="#minestudio.simulator.callbacks.callback.MinecraftCallback" title="minestudio.simulator.callbacks.callback.MinecraftCallback">MinecraftCallback</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.simulator.callbacks.callback.MinecraftCallback.load_data_from_conf">
+<span class="sig-name descname"><span class="pre">load_data_from_conf</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="../../_modules/minestudio/simulator/callbacks/callback.html#MinecraftCallback.load_data_from_conf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.simulator.callbacks.callback.MinecraftCallback.load_data_from_conf" title="Link to this definition">#</a></dt>
+<dd><p>Loads data from a YAML file or a dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>source</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>Dict</em><em>]</em>) – The path to the YAML file or a dictionary containing the data.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>AssertionError</strong> – if the file specified by <cite>source</cite> does not exist.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary containing the loaded data.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+<div class="section ablog__blog_comments">
+  
+  
+</div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">MineStudio API Documentation</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../models/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Models API Documentation</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-minestudio.simulator.entry">Entry</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.entry.CameraConfig"><code class="docutils literal notranslate"><span class="pre">CameraConfig</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.entry.CameraConfig.action_transformer_kwargs"><code class="docutils literal notranslate"><span class="pre">CameraConfig.action_transformer_kwargs</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.entry.CameraConfig.n_camera_bins"><code class="docutils literal notranslate"><span class="pre">CameraConfig.n_camera_bins</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.entry.MinecraftSim"><code class="docutils literal notranslate"><span class="pre">MinecraftSim</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.entry.MinecraftSim.action_space"><code class="docutils literal notranslate"><span class="pre">MinecraftSim.action_space</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.entry.MinecraftSim.agent_action_to_env_action"><code class="docutils literal notranslate"><span class="pre">MinecraftSim.agent_action_to_env_action()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.entry.MinecraftSim.close"><code class="docutils literal notranslate"><span class="pre">MinecraftSim.close()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.entry.MinecraftSim.env_action_to_agent_action"><code class="docutils literal notranslate"><span class="pre">MinecraftSim.env_action_to_agent_action()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.entry.MinecraftSim.noop_action"><code class="docutils literal notranslate"><span class="pre">MinecraftSim.noop_action()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.entry.MinecraftSim.observation_space"><code class="docutils literal notranslate"><span class="pre">MinecraftSim.observation_space</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.entry.MinecraftSim.render"><code class="docutils literal notranslate"><span class="pre">MinecraftSim.render()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.entry.MinecraftSim.reset"><code class="docutils literal notranslate"><span class="pre">MinecraftSim.reset()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.entry.MinecraftSim.step"><code class="docutils literal notranslate"><span class="pre">MinecraftSim.step()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.entry.check_engine"><code class="docutils literal notranslate"><span class="pre">check_engine()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.entry.download_engine"><code class="docutils literal notranslate"><span class="pre">download_engine()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-minestudio.simulator.callbacks.callback">Callbacks</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.callbacks.callback.Compose"><code class="docutils literal notranslate"><span class="pre">Compose</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.callbacks.callback.Compose.after_close"><code class="docutils literal notranslate"><span class="pre">Compose.after_close()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.callbacks.callback.Compose.after_render"><code class="docutils literal notranslate"><span class="pre">Compose.after_render()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.callbacks.callback.Compose.after_reset"><code class="docutils literal notranslate"><span class="pre">Compose.after_reset()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.callbacks.callback.Compose.after_step"><code class="docutils literal notranslate"><span class="pre">Compose.after_step()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.callbacks.callback.Compose.before_close"><code class="docutils literal notranslate"><span class="pre">Compose.before_close()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.callbacks.callback.Compose.before_render"><code class="docutils literal notranslate"><span class="pre">Compose.before_render()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.callbacks.callback.Compose.before_reset"><code class="docutils literal notranslate"><span class="pre">Compose.before_reset()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.callbacks.callback.Compose.before_step"><code class="docutils literal notranslate"><span class="pre">Compose.before_step()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.callbacks.callback.MinecraftCallback"><code class="docutils literal notranslate"><span class="pre">MinecraftCallback</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.callbacks.callback.MinecraftCallback.after_close"><code class="docutils literal notranslate"><span class="pre">MinecraftCallback.after_close()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.callbacks.callback.MinecraftCallback.after_render"><code class="docutils literal notranslate"><span class="pre">MinecraftCallback.after_render()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.callbacks.callback.MinecraftCallback.after_reset"><code class="docutils literal notranslate"><span class="pre">MinecraftCallback.after_reset()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.callbacks.callback.MinecraftCallback.after_step"><code class="docutils literal notranslate"><span class="pre">MinecraftCallback.after_step()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.callbacks.callback.MinecraftCallback.before_close"><code class="docutils literal notranslate"><span class="pre">MinecraftCallback.before_close()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.callbacks.callback.MinecraftCallback.before_render"><code class="docutils literal notranslate"><span class="pre">MinecraftCallback.before_render()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.callbacks.callback.MinecraftCallback.before_reset"><code class="docutils literal notranslate"><span class="pre">MinecraftCallback.before_reset()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.callbacks.callback.MinecraftCallback.before_step"><code class="docutils literal notranslate"><span class="pre">MinecraftCallback.before_step()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.callbacks.callback.MinecraftCallback.create_from_conf"><code class="docutils literal notranslate"><span class="pre">MinecraftCallback.create_from_conf()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.callbacks.callback.MinecraftCallback.load_data_from_conf"><code class="docutils literal notranslate"><span class="pre">MinecraftCallback.load_data_from_conf()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/api/simulator/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, The CraftJarvis Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
