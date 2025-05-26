@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-28 17:46:44
-LastEditors: muzhancun muzhancun@126.com
-LastEditTime: 2025-01-16 15:01:47
+LastEditors: muzhancun muzhancun@stu.pku.edu.cn
+LastEditTime: 2025-05-26 16:42:11
 FilePath: /MineStudio/docs/source/conf.py
 '''
 import os
@@ -14,8 +14,11 @@ from sphinx.application import Sphinx
 from sphinx.locale import _
 import pydata_sphinx_theme
 sys.path.append(str(Path(".").resolve()))
+# sys.path.insert(0, str(Path('..', '../../minestudio').resolve()))
 
 from custom_directives import generate_versions_json
+
+sys.path.insert(0, os.path.abspath('../../'))
 
 project = 'MineStudio'
 copyright = str(datetime.now().year) + ", The CraftJarvis Team"
@@ -28,7 +31,7 @@ release = '1.0.0'
 extensions = [
     "sphinx.ext.napoleon",
     "sphinx.ext.autodoc",
-    "sphinx.ext.autosummary",
+    # "sphinx.ext.autosummary",
     "sphinx.ext.todo",
     "sphinx.ext.viewcode",
     "sphinx.ext.intersphinx",
@@ -107,6 +110,12 @@ html_theme_options = {
 html_title = f"MineStudio {release}"
 html_favicon = "_static/logo-no-text-light.svg"
 
+# -- auto api ----------------------------------------------------------------
+autoapi_add_toctree_entry = False
+autoapi_dirs = ['../../minestudio']
+autoapi_ignore = ['*minerl*', '*tests*', '*tutorials*', '*utils*']
+
+autodoc_mock_imports = ['torch', 'absl', 'cv2', 'huggingface_hub', 'lmdb', 'ray', 'gymnasium', 'lightning', 'omegaconf', 'tree', 'einops', 'gym', 'gym3', 'coloredlogs', 'daemoniker', 'av', 'minecraft_data']
 # -- application setup -------------------------------------------------------
 
 
