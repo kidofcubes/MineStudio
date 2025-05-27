@@ -64,7 +64,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'api/data/index';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
-        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://craftjarvis.github.io/MineStudio/master/_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://github.com/CraftJarvis/MineStudio/blob/master/docs/source/_static/switcher.json?raw=true';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'master';
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             false;
@@ -623,8 +623,387 @@
 <h3>Raw Dataset<a class="headerlink" href="#raw-dataset" title="Link to this heading">#</a></h3>
 </section>
 </section>
-<section id="callbacks">
-<h2>Callbacks<a class="headerlink" href="#callbacks" title="Link to this heading">#</a></h2>
+<section id="module-minestudio.data.minecraft.callbacks.callback">
+<span id="callbacks"></span><h2>Callbacks<a class="headerlink" href="#module-minestudio.data.minecraft.callbacks.callback" title="Link to this heading">#</a></h2>
+<p>Date: 2025-01-09 05:08:19
+LastEditors: caishaofei-mus1 <a class="reference external" href="mailto:1744260356&#37;&#52;&#48;qq&#46;com">1744260356<span>&#64;</span>qq<span>&#46;</span>com</a>
+LastEditTime: 2025-01-21 22:28:09
+FilePath: /MineStudio/minestudio/data/minecraft/callbacks/callback.py</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="minestudio.data.minecraft.callbacks.callback.DrawFrameCallback">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">minestudio.data.minecraft.callbacks.callback.</span></span><span class="sig-name descname"><span class="pre">DrawFrameCallback</span></span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/callbacks/callback.html#DrawFrameCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.callbacks.callback.DrawFrameCallback" title="Link to this definition">#</a></dt>
+<dd><p>Base class for callbacks that draw overlay information onto video frames for visualization purposes.</p>
+<p class="rubric">Methods</p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.callback.DrawFrameCallback.draw_frames" title="minestudio.data.minecraft.callbacks.callback.DrawFrameCallback.draw_frames"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_frames</span></code></a>(frames, infos, sample_idx, **kwargs)</p></td>
+<td><p>Draws specified information onto a set of video frames.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.data.minecraft.callbacks.callback.DrawFrameCallback.draw_frames">
+<span class="sig-name descname"><span class="pre">draw_frames</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frames</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">infos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/callbacks/callback.html#DrawFrameCallback.draw_frames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.callbacks.callback.DrawFrameCallback.draw_frames" title="Link to this definition">#</a></dt>
+<dd><p>Draws specified information onto a set of video frames.</p>
+<p>This method needs to be implemented by users who want to visualize datasets
+with custom overlays (e.g., drawing actions, metadata) on the video frames.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>frames</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>List</em><em>]</em>) – A list of frames (e.g., Pillow images) or a NumPy array of frames (T, H, W, C).</p></li>
+<li><p><strong>infos</strong> (<em>Dict</em>) – A dictionary containing the information to be drawn on the frames.
+The structure of this dictionary depends on what the user wants to display.</p></li>
+<li><p><strong>sample_idx</strong> (<em>int</em>) – The index of the current sample being processed/visualized.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments that might be needed for drawing.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A NumPy array of frames (T, H, W, C) with the information drawn on them.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>NotImplementedError</strong> – If this method is not implemented by a subclass.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="minestudio.data.minecraft.callbacks.callback.ModalConvertCallback">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">minestudio.data.minecraft.callbacks.callback.</span></span><span class="sig-name descname"><span class="pre">ModalConvertCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_dirs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/callbacks/callback.html#ModalConvertCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.callbacks.callback.ModalConvertCallback" title="Link to this definition">#</a></dt>
+<dd><p>Base class for callbacks that convert raw trajectory data into MineStudio’s built-in format.</p>
+<p>Users should implement the methods of this class to define how their specific
+data format is converted.</p>
+<p class="rubric">Methods</p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.callback.ModalConvertCallback.do_convert" title="minestudio.data.minecraft.callbacks.callback.ModalConvertCallback.do_convert"><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_convert</span></code></a>(eps_id, skip_frames, modal_file_path)</p></td>
+<td><p>Converts the raw modal data for a given episode into the desired format.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.callback.ModalConvertCallback.gen_frame_skip_flags" title="minestudio.data.minecraft.callbacks.callback.ModalConvertCallback.gen_frame_skip_flags"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gen_frame_skip_flags</span></code></a>(file_name)</p></td>
+<td><p>Generates a list of boolean flags indicating which frames to skip in a given file.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.callback.ModalConvertCallback.load_episodes" title="minestudio.data.minecraft.callbacks.callback.ModalConvertCallback.load_episodes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_episodes</span></code></a>()</p></td>
+<td><p>Identifies and loads raw data from the specified input directories.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.data.minecraft.callbacks.callback.ModalConvertCallback.do_convert">
+<span class="sig-name descname"><span class="pre">do_convert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eps_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_frames</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modal_file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/callbacks/callback.html#ModalConvertCallback.do_convert"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.callbacks.callback.ModalConvertCallback.do_convert" title="Link to this definition">#</a></dt>
+<dd><p>Converts the raw modal data for a given episode into the desired format.</p>
+<p><cite>skip_frames</cite> and <cite>modal_file_path</cite> are aligned lists, indicating which frames
+to skip in each corresponding file part.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>eps_id</strong> (<em>str</em>) – The identifier of the episode being converted.</p></li>
+<li><p><strong>skip_frames</strong> (<em>List</em><em>[</em><em>List</em><em>[</em><em>bool</em><em>]</em><em>]</em>) – A list of lists of boolean flags. Each inner list corresponds
+to a file part in <cite>modal_file_path</cite> and indicates which
+frames within that part should be skipped.</p></li>
+<li><p><strong>modal_file_path</strong> (<em>List</em><em>[</em><em>Union</em><em>[</em><em>str</em><em>, </em><em>Path</em><em>]</em><em>]</em>) – A list of file paths (or Path objects) for the modal data files
+or parts of files that constitute the episode.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing two lists: chunk keys and chunk values, representing
+the converted data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[List, List]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>NotImplementedError</strong> – If this method is not implemented by a subclass.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.data.minecraft.callbacks.callback.ModalConvertCallback.gen_frame_skip_flags">
+<span class="sig-name descname"><span class="pre">gen_frame_skip_flags</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/callbacks/callback.html#ModalConvertCallback.gen_frame_skip_flags"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.callbacks.callback.ModalConvertCallback.gen_frame_skip_flags" title="Link to this definition">#</a></dt>
+<dd><p>Generates a list of boolean flags indicating which frames to skip in a given file.</p>
+<p>This method should be implemented if users want to filter out specific frames
+based on the content or metadata of this modality.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_name</strong> (<em>str</em>) – The name of the file for which to generate skip flags.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of boolean flags. True indicates the frame should be skipped.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[bool]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>NotImplementedError</strong> – If this method is not implemented by a subclass.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.data.minecraft.callbacks.callback.ModalConvertCallback.load_episodes">
+<span class="sig-name descname"><span class="pre">load_episodes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/callbacks/callback.html#ModalConvertCallback.load_episodes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.callbacks.callback.ModalConvertCallback.load_episodes" title="Link to this definition">#</a></dt>
+<dd><p>Identifies and loads raw data from the specified input directories.</p>
+<p>This method should be implemented by the user to parse their data structure
+and return a dictionary mapping episode names to a list of file parts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary where keys are episode names and values are lists of
+tuples. Each tuple contains a part identifier and the corresponding
+file path for that part of the episode.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dict[str, List[Tuple[str, str]]]</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>NotImplementedError</strong> – If this method is not implemented by a subclass.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="minestudio.data.minecraft.callbacks.callback.ModalKernelCallback">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">minestudio.data.minecraft.callbacks.callback.</span></span><span class="sig-name descname"><span class="pre">ModalKernelCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">read_bias</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">win_bias</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/callbacks/callback.html#ModalKernelCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.callbacks.callback.ModalKernelCallback" title="Link to this definition">#</a></dt>
+<dd><p>Base class for callbacks that define how a specific modality of data is handled
+within the ModalKernel.</p>
+<p>Users must implement this callback for their custom modal data to manage operations
+like decoding, merging, slicing, and padding.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><a class="reference internal" href="#minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.name" title="minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></a></dt><dd><p>Returns the name of the modality this callback handles (e.g., “image”, “action”).</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.create_from_config" title="minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.create_from_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_from_config</span></code></a>(config)</p></td>
+<td><p>Factory method to create a ModalKernelCallback instance from a configuration dictionary.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.do_decode" title="minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.do_decode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_decode</span></code></a>(chunk, **kwargs)</p></td>
+<td><p>Decodes a raw byte chunk of modal data into its usable format.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.do_merge" title="minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.do_merge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_merge</span></code></a>(chunk_list, **kwargs)</p></td>
+<td><p>Merges a list of decoded data chunks into a continuous sequence or structure.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.do_pad" title="minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.do_pad"><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_pad</span></code></a>(data, pad_len, pad_pos, **kwargs)</p></td>
+<td><p>Pads the modal data to a specified length if it's shorter than required.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.do_postprocess" title="minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.do_postprocess"><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_postprocess</span></code></a>(data, **kwargs)</p></td>
+<td><p>Performs optional post-processing operations on the sampled modal data.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.do_slice" title="minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.do_slice"><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_slice</span></code></a>(data, start, end, skip_frame, **kwargs)</p></td>
+<td><p>Extracts a slice from the modal data based on start, end, and skip_frame parameters.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.filter_dataset_paths" title="minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.filter_dataset_paths"><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter_dataset_paths</span></code></a>(dataset_paths)</p></td>
+<td><p>Filters a list of potential dataset paths to select those relevant to this modality.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.create_from_config">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#minestudio.data.minecraft.callbacks.callback.ModalKernelCallback" title="minestudio.data.minecraft.callbacks.callback.ModalKernelCallback"><span class="pre">ModalKernelCallback</span></a></span></span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/callbacks/callback.html#ModalKernelCallback.create_from_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.create_from_config" title="Link to this definition">#</a></dt>
+<dd><p>Factory method to create a ModalKernelCallback instance from a configuration dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> (<em>Dict</em>) – A dictionary containing the configuration parameters for the callback.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An instance of a ModalKernelCallback subclass.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.callback.ModalKernelCallback" title="minestudio.data.minecraft.callbacks.callback.ModalKernelCallback">ModalKernelCallback</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>NotImplementedError</strong> – If this method is not implemented by a subclass.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.do_decode">
+<span class="sig-name descname"><span class="pre">do_decode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chunk</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/callbacks/callback.html#ModalKernelCallback.do_decode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.do_decode" title="Link to this definition">#</a></dt>
+<dd><p>Decodes a raw byte chunk of modal data into its usable format.</p>
+<p>Data is stored in LMDB files as byte chunks. Since decoding methods vary
+for different modalities, users must implement this method to specify how
+their data should be decoded.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>chunk</strong> (<em>bytes</em>) – The raw byte string (chunk) to be decoded.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments that might be needed for decoding.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The decoded data in its appropriate format (e.g., a NumPy array for images).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Any</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>NotImplementedError</strong> – If this method is not implemented by a subclass.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.do_merge">
+<span class="sig-name descname"><span class="pre">do_merge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chunk_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">bytes</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Dict</span></span></span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/callbacks/callback.html#ModalKernelCallback.do_merge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.do_merge" title="Link to this definition">#</a></dt>
+<dd><p>Merges a list of decoded data chunks into a continuous sequence or structure.</p>
+<p>When reading a long trajectory segment, the system automatically reads and decodes
+multiple chunks. This method defines how these decoded chunks for a specific
+modality are combined into a single, coherent data sequence (e.g., a list of frames
+or a dictionary of features).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>chunk_list</strong> (<em>List</em><em>[</em><em>bytes</em><em>]</em>) – A list of decoded data chunks.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments that might be needed for merging.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The merged data, typically a list or dictionary representing the continuous sequence.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[List, Dict]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>NotImplementedError</strong> – If this method is not implemented by a subclass.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.do_pad">
+<span class="sig-name descname"><span class="pre">do_pad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pad_len</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pad_pos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'left'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'right'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/callbacks/callback.html#ModalKernelCallback.do_pad"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.do_pad" title="Link to this definition">#</a></dt>
+<dd><p>Pads the modal data to a specified length if it’s shorter than required.</p>
+<p>Users need to implement this method to define how padding is applied
+(e.g., repeating the last frame, adding zero vectors) and to return a mask
+indicating the padded elements.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>Union</em><em>[</em><em>List</em><em>, </em><em>Dict</em><em>]</em>) – The modal data to be padded.</p></li>
+<li><p><strong>pad_len</strong> (<em>int</em>) – The number of elements to add as padding.</p></li>
+<li><p><strong>pad_pos</strong> (<em>Literal</em><em>[</em><em>&quot;left&quot;</em><em>, </em><em>&quot;right&quot;</em><em>]</em>) – The position where padding should be added, either “left” or “right”.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments that might be needed for padding.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing the padded data and a NumPy array representing the padding mask
+(1 for original data, 0 for padded data).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[Union[List, Dict], np.ndarray]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>NotImplementedError</strong> – If this method is not implemented by a subclass.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.do_postprocess">
+<span class="sig-name descname"><span class="pre">do_postprocess</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/callbacks/callback.html#ModalKernelCallback.do_postprocess"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.do_postprocess" title="Link to this definition">#</a></dt>
+<dd><p>Performs optional post-processing operations on the sampled modal data.</p>
+<p>This method can be used for tasks like data augmentation or further transformations
+after the data has been read, sliced, and padded.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>Dict</em>) – A dictionary containing the modal data (and potentially its mask) to be post-processed.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments that might be needed for post-processing.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The post-processed data dictionary.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.do_slice">
+<span class="sig-name descname"><span class="pre">do_slice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_frame</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Dict</span></span></span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/callbacks/callback.html#ModalKernelCallback.do_slice"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.do_slice" title="Link to this definition">#</a></dt>
+<dd><p>Extracts a slice from the modal data based on start, end, and skip_frame parameters.</p>
+<p>Since data formats can vary significantly between modalities, users need to
+implement this method to define how slicing operations are performed on their specific data type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>Union</em><em>[</em><em>List</em><em>, </em><em>Dict</em><em>]</em>) – The modal data (e.g., a list of frames, a dictionary of features) to be sliced.</p></li>
+<li><p><strong>start</strong> (<em>int</em>) – The starting index for the slice (inclusive).</p></li>
+<li><p><strong>end</strong> (<em>int</em>) – The ending index for the slice (inclusive).</p></li>
+<li><p><strong>skip_frame</strong> (<em>int</em>) – The interval at which to select frames/data points within the slice.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments that might be needed for slicing.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The sliced portion of the data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[List, Dict]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>NotImplementedError</strong> – If this method is not implemented by a subclass.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.filter_dataset_paths">
+<span class="sig-name descname"><span class="pre">filter_dataset_paths</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_paths</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/callbacks/callback.html#ModalKernelCallback.filter_dataset_paths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.filter_dataset_paths" title="Link to this definition">#</a></dt>
+<dd><p>Filters a list of potential dataset paths to select those relevant to this modality.</p>
+<p><cite>dataset_paths</cite> contains all possible paths pointing to different LMDB folders.
+This method should be implemented to identify and return only the paths
+that contain data for the modality handled by this callback.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dataset_paths</strong> (<em>List</em><em>[</em><em>Union</em><em>[</em><em>str</em><em>, </em><em>Path</em><em>]</em><em>]</em>) – A list of potential dataset directory paths (strings or Path objects).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A filtered list of Path objects pointing to the relevant LMDB datasets.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[Path]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>NotImplementedError</strong> – If this method is not implemented by a subclass.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.name" title="Link to this definition">#</a></dt>
+<dd><p>Returns the name of the modality this callback handles (e.g., “image”, “action”).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The name of the modality.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>NotImplementedError</strong> – If this property is not implemented by a subclass.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 <section id="modality-action">
 <h3>Modality:Action<a class="headerlink" href="#modality-action" title="Link to this heading">#</a></h3>
 </section>
@@ -701,7 +1080,28 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#raw-dataset">Raw Dataset</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#callbacks">Callbacks</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-minestudio.data.minecraft.callbacks.callback">Callbacks</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.data.minecraft.callbacks.callback.DrawFrameCallback"><code class="docutils literal notranslate"><span class="pre">DrawFrameCallback</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.data.minecraft.callbacks.callback.DrawFrameCallback.draw_frames"><code class="docutils literal notranslate"><span class="pre">DrawFrameCallback.draw_frames()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.data.minecraft.callbacks.callback.ModalConvertCallback"><code class="docutils literal notranslate"><span class="pre">ModalConvertCallback</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.data.minecraft.callbacks.callback.ModalConvertCallback.do_convert"><code class="docutils literal notranslate"><span class="pre">ModalConvertCallback.do_convert()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.data.minecraft.callbacks.callback.ModalConvertCallback.gen_frame_skip_flags"><code class="docutils literal notranslate"><span class="pre">ModalConvertCallback.gen_frame_skip_flags()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.data.minecraft.callbacks.callback.ModalConvertCallback.load_episodes"><code class="docutils literal notranslate"><span class="pre">ModalConvertCallback.load_episodes()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.data.minecraft.callbacks.callback.ModalKernelCallback"><code class="docutils literal notranslate"><span class="pre">ModalKernelCallback</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.create_from_config"><code class="docutils literal notranslate"><span class="pre">ModalKernelCallback.create_from_config()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.do_decode"><code class="docutils literal notranslate"><span class="pre">ModalKernelCallback.do_decode()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.do_merge"><code class="docutils literal notranslate"><span class="pre">ModalKernelCallback.do_merge()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.do_pad"><code class="docutils literal notranslate"><span class="pre">ModalKernelCallback.do_pad()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.do_postprocess"><code class="docutils literal notranslate"><span class="pre">ModalKernelCallback.do_postprocess()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.do_slice"><code class="docutils literal notranslate"><span class="pre">ModalKernelCallback.do_slice()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.filter_dataset_paths"><code class="docutils literal notranslate"><span class="pre">ModalKernelCallback.filter_dataset_paths()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.name"><code class="docutils literal notranslate"><span class="pre">ModalKernelCallback.name</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modality-action">Modality:Action</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modality-image">Modality:Image</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modality-info">Modality:Info</a></li>
