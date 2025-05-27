@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-28 17:46:44
 LastEditors: muzhancun muzhancun@stu.pku.edu.cn
-LastEditTime: 2025-05-27 19:03:15
+LastEditTime: 2025-05-27 19:14:11
 FilePath: /MineStudio/docs/source/conf.py
 '''
 import os
@@ -45,7 +45,7 @@ extensions = [
     "jupyter_sphinx",
     "sphinxcontrib.youtube",
     "nbsphinx",
-    "numpydoc",
+    # "numpydoc",
     "sphinx_togglebutton",
     # "jupyterlite_sphinx",
     "sphinx_favicon",
