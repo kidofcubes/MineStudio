@@ -646,8 +646,8 @@
                 <article class="bd-article">
                    <!--
  * @Date: 2024-11-29 08:09:07
- * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-12-12 05:46:38
+ * @LastEditors: caishaofei-mus1 1744260356@qq.com
+ * @LastEditTime: 2025-05-28 01:03:49
  * @FilePath: /MineStudio/docs/source/simulator/index.md
 -->
 <section id="simulator">
@@ -663,8 +663,8 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="design-principles.html">Design Principles</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="design-principles.html#simulator-lifecycle">Simulator Lifecycle</a></li>
-<li class="toctree-l2"><a class="reference internal" href="design-principles.html#callbacks">Callbacks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="design-principles.html#simulator-lifecycle-and-callback-integration">Simulator Lifecycle and Callback Integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="design-principles.html#callbacks-base-class">Callbacks Base Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="play.html">Graphical User Interfaces</a><ul>
@@ -752,35 +752,39 @@
 <tbody>
 <tr class="row-even"><td><p>action_type</p></td>
 <td><p>“agent”</p></td>
-<td><p>The style of the action space</p></td>
+<td><p>The style of the action space. Can be ‘env’ or ‘agent’.</p></td>
 </tr>
 <tr class="row-odd"><td><p>obs_size</p></td>
 <td><p>(224, 224)</p></td>
-<td><p>The resolution of the observation (cv2 resize)</p></td>
+<td><p>The resolution of the observation (cv2 resize).</p></td>
 </tr>
 <tr class="row-even"><td><p>render_size</p></td>
 <td><p>(640, 360)</p></td>
-<td><p>The original resolution of the game is 640x360</p></td>
+<td><p>The original resolution of the game.</p></td>
 </tr>
 <tr class="row-odd"><td><p>seed</p></td>
 <td><p>0</p></td>
-<td><p>The seed of the minecraft world</p></td>
+<td><p>The seed of the Minecraft world.</p></td>
 </tr>
 <tr class="row-even"><td><p>inventory</p></td>
 <td><p>{}</p></td>
-<td><p>The initial inventory of the agent</p></td>
+<td><p>The initial inventory of the agent.</p></td>
 </tr>
 <tr class="row-odd"><td><p>preferred_spawn_biome</p></td>
 <td><p>None</p></td>
-<td><p>The preferred spawn biome when call reset</p></td>
+<td><p>The preferred spawn biome when calling reset.</p></td>
 </tr>
 <tr class="row-even"><td><p>num_empty_frames</p></td>
 <td><p>20</p></td>
-<td><p>The number of empty frames to skip when calling reset</p></td>
+<td><p>The number of empty frames to skip when calling reset.</p></td>
 </tr>
 <tr class="row-odd"><td><p>callbacks</p></td>
 <td><p>[]</p></td>
-<td><p>The callbacks to customize the environment (<strong>advanced</strong>)</p></td>
+<td><p>A list of callbacks to customize the environment (<strong>advanced</strong>).</p></td>
+</tr>
+<tr class="row-even"><td><p>camera_config</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">CameraConfig()</span></code></p></td>
+<td><p>Configuration for camera quantization and binning settings. See <code class="docutils literal notranslate"><span class="pre">CameraConfig</span></code> class for details.</p></td>
 </tr>
 </tbody>
 </table>

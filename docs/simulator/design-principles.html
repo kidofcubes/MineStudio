@@ -648,125 +648,253 @@
                    <!--
  * @Date: 2024-11-29 15:45:12
  * @LastEditors: caishaofei-mus1 1744260356@qq.com
- * @LastEditTime: 2025-05-27 21:50:28
+ * @LastEditTime: 2025-05-28 01:08:35
  * @FilePath: /MineStudio/docs/source/simulator/design-principles.md
 -->
 <section id="design-principles">
 <h1>Design Principles<a class="headerlink" href="#design-principles" title="Link to this heading">#</a></h1>
-<section id="simulator-lifecycle">
-<h2>Simulator Lifecycle<a class="headerlink" href="#simulator-lifecycle" title="Link to this heading">#</a></h2>
-<p>The simulator lifecycle is divided into three stages: <code class="docutils literal notranslate"><span class="pre">reset</span></code>, <code class="docutils literal notranslate"><span class="pre">step</span></code>, and <code class="docutils literal notranslate"><span class="pre">close</span></code>.</p>
+<section id="simulator-lifecycle-and-callback-integration">
+<h2>Simulator Lifecycle and Callback Integration<a class="headerlink" href="#simulator-lifecycle-and-callback-integration" title="Link to this heading">#</a></h2>
+<p>The MineStudio simulator follows a standard reinforcement learning environment lifecycle, including <code class="docutils literal notranslate"><span class="pre">reset</span></code>, <code class="docutils literal notranslate"><span class="pre">step</span></code>, <code class="docutils literal notranslate"><span class="pre">render</span></code>, and <code class="docutils literal notranslate"><span class="pre">close</span></code> methods. A key design principle is the integration of a flexible callback system, allowing users to hook into these lifecycle methods to customize behavior without modifying the core simulator code.</p>
+<p>Callbacks are executed in the order they are provided in the <code class="docutils literal notranslate"><span class="pre">callbacks</span></code> list during <code class="docutils literal notranslate"><span class="pre">MinecraftSim</span></code> initialization.</p>
 <ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">reset</span></code>: This method is called when the environment is initialized. It returns the initial observation and information.
-Our simulator wrapper’s <code class="docutils literal notranslate"><span class="pre">reset</span></code> method code looks like this:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">reset()</span></code></strong>: Initializes or resets the environment to a starting state.</p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">before_reset(self,</span> <span class="pre">sim,</span> <span class="pre">reset_flag:</span> <span class="pre">bool)</span> <span class="pre">-&gt;</span> <span class="pre">bool</span></code></strong>: Executed for each callback before the main reset logic. It receives the simulator instance (<code class="docutils literal notranslate"><span class="pre">sim</span></code>) and a <code class="docutils literal notranslate"><span class="pre">reset_flag</span></code>. A callback can return <code class="docutils literal notranslate"><span class="pre">False</span></code> to potentially suppress the underlying <code class="docutils literal notranslate"><span class="pre">self.env.reset()</span></code> call (e.g., for a custom fast reset). The <code class="docutils literal notranslate"><span class="pre">reset_flag</span></code> passed to subsequent callbacks is the result of the previous one.</p></li>
+<li><p>The core environment reset (<code class="docutils literal notranslate"><span class="pre">self.env.reset()</span></code>) is called if <code class="docutils literal notranslate"><span class="pre">reset_flag</span></code> remains <code class="docutils literal notranslate"><span class="pre">True</span></code> after all <code class="docutils literal notranslate"><span class="pre">before_reset</span></code> calls.</p></li>
+<li><p>A fixed number of no-op actions (<code class="docutils literal notranslate"><span class="pre">self.num_empty_frames</span></code>) are then performed to skip initial loading frames.</p></li>
+<li><p>The observation and info are wrapped by <code class="docutils literal notranslate"><span class="pre">_wrap_obs_info</span></code>.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">after_reset(self,</span> <span class="pre">sim,</span> <span class="pre">obs,</span> <span class="pre">info)</span></code></strong>: Executed for each callback after the main reset logic and initial frame skipping. It receives the simulator instance, the initial observation (<code class="docutils literal notranslate"><span class="pre">obs</span></code>), and info dictionary (<code class="docutils literal notranslate"><span class="pre">info</span></code>). Callbacks can modify <code class="docutils literal notranslate"><span class="pre">obs</span></code> and <code class="docutils literal notranslate"><span class="pre">info</span></code> here. The modified <code class="docutils literal notranslate"><span class="pre">obs</span></code> and <code class="docutils literal notranslate"><span class="pre">info</span></code> are passed to subsequent callbacks.</p></li>
+<li><p>The final <code class="docutils literal notranslate"><span class="pre">obs</span></code> and <code class="docutils literal notranslate"><span class="pre">info</span></code> are returned.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Simplified structure of MinecraftSim.reset()</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Dict</span><span class="p">]:</span>
     <span class="n">reset_flag</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="k">for</span> <span class="n">callback</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="p">:</span>
-        <span class="n">reset_flag</span> <span class="o">=</span> <span class="n">callback</span><span class="o">.</span><span class="n">before_reset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reset_flag</span><span class="p">)</span>
-    <span class="o">...</span> <span class="c1"># some other code</span>
-    <span class="k">if</span> <span class="n">reset_flag</span><span class="p">:</span>
-        <span class="n">obs</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">obs</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="o">...</span>
+        <span class="n">reset_flag</span> <span class="o">=</span> <span class="n">callback</span><span class="o">.</span><span class="n">before_reset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reset_flag</span><span class="p">)</span> <span class="c1"># Hook before reset</span>
+    
+    <span class="k">if</span> <span class="n">reset_flag</span><span class="p">:</span> <span class="c1"># Main environment reset</span>
+       <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+       <span class="bp">self</span><span class="o">.</span><span class="n">already_reset</span> <span class="o">=</span> <span class="kc">True</span>
+    
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_empty_frames</span><span class="p">):</span> <span class="c1"># Skip initial frames</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">action_space</span><span class="o">.</span><span class="n">no_op</span><span class="p">()</span>
+        <span class="n">obs</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">done</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+    
+    <span class="n">obs</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wrap_obs_info</span><span class="p">(</span><span class="n">obs</span><span class="p">,</span> <span class="n">info</span><span class="p">)</span> <span class="c1"># Wrap observation and info</span>
+    
     <span class="k">for</span> <span class="n">callback</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="p">:</span>
-        <span class="n">obs</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">callback</span><span class="o">.</span><span class="n">after_reset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obs</span><span class="p">,</span> <span class="n">info</span><span class="p">)</span>
+        <span class="c1"># Hook after reset, can modify obs and info</span>
+        <span class="n">obs</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">callback</span><span class="o">.</span><span class="n">after_reset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obs</span><span class="p">,</span> <span class="n">info</span><span class="p">)</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">obs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span> <span class="o">=</span> <span class="n">obs</span><span class="p">,</span> <span class="n">info</span> <span class="c1"># Update internal state</span>
     <span class="k">return</span> <span class="n">obs</span><span class="p">,</span> <span class="n">info</span>
 </pre></div>
 </div>
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
-<p>We can use callbacks to preprocess the <code class="docutils literal notranslate"><span class="pre">obs</span></code> or <code class="docutils literal notranslate"><span class="pre">info</span></code> before it is returned to the agent.</p>
-<p>For example, we can add task information to the observation when the environment is reset, so that the agent knows what task it is going to perform.</p>
-<p>Besides, we can implement fast reset by suppressing the internal environment reset.</p>
+<p><strong>Use Cases for <code class="docutils literal notranslate"><span class="pre">reset</span></code> callbacks:</strong></p>
+<ul class="simple">
+<li><p><strong>Custom Initialization</strong>: Use <code class="docutils literal notranslate"><span class="pre">after_reset</span></code> to send commands (e.g., <code class="docutils literal notranslate"><span class="pre">/time</span> <span class="pre">set</span> <span class="pre">day</span></code>, <code class="docutils literal notranslate"><span class="pre">/give</span></code>), set player properties, or log initial state.</p></li>
+<li><p><strong>Fast Reset</strong>: Implement <code class="docutils literal notranslate"><span class="pre">before_reset</span></code> to return <code class="docutils literal notranslate"><span class="pre">False</span></code> and handle resetting the agent’s state (e.g., teleport, clear inventory) without a full environment reload. <code class="docutils literal notranslate"><span class="pre">after_reset</span></code> can then finalize this custom reset.</p></li>
+<li><p><strong>Observation/Info Augmentation</strong>: Add task-specific information or modify the initial observation in <code class="docutils literal notranslate"><span class="pre">after_reset</span></code>.</p></li>
+</ul>
 </div>
 </li>
-<li><p><code class="docutils literal notranslate"><span class="pre">step</span></code>: This method is called when the agent takes an action. It returns the observation, reward, termination status, and information.
-The <code class="docutils literal notranslate"><span class="pre">step</span></code> method code looks like this:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">step(action)</span></code></strong>: Executes one time-step in the environment.</p>
+<ul class="simple">
+<li><p>If <code class="docutils literal notranslate"><span class="pre">action_type</span></code> is <code class="docutils literal notranslate"><span class="pre">'agent'</span></code>, the input <code class="docutils literal notranslate"><span class="pre">action</span></code> is first converted to the environment’s action format using <code class="docutils literal notranslate"><span class="pre">agent_action_to_env_action</span></code>.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">before_step(self,</span> <span class="pre">sim,</span> <span class="pre">action)</span></code></strong>: Executed for each callback. It receives the simulator instance and the (potentially converted) <code class="docutils literal notranslate"><span class="pre">action</span></code>. Callbacks can modify the <code class="docutils literal notranslate"><span class="pre">action</span></code> before it’s passed to the environment. The modified <code class="docutils literal notranslate"><span class="pre">action</span></code> is passed to subsequent callbacks.</p></li>
+<li><p>The core environment step (<code class="docutils literal notranslate"><span class="pre">self.env.step(action.copy())</span></code>) is performed.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">terminated</span></code> and <code class="docutils literal notranslate"><span class="pre">truncated</span></code> flags are set (both to <code class="docutils literal notranslate"><span class="pre">done</span></code> in the current implementation).</p></li>
+<li><p>The observation and info are wrapped by <code class="docutils literal notranslate"><span class="pre">_wrap_obs_info</span></code>.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">after_step(self,</span> <span class="pre">sim,</span> <span class="pre">obs,</span> <span class="pre">reward,</span> <span class="pre">terminated,</span> <span class="pre">truncated,</span> <span class="pre">info)</span></code></strong>: Executed for each callback. It receives the simulator instance and the results from <code class="docutils literal notranslate"><span class="pre">self.env.step()</span></code>. Callbacks can modify these values. The modified values are passed to subsequent callbacks.</p></li>
+<li><p>The final <code class="docutils literal notranslate"><span class="pre">obs</span></code>, <code class="docutils literal notranslate"><span class="pre">reward</span></code>, <code class="docutils literal notranslate"><span class="pre">terminated</span></code>, <code class="docutils literal notranslate"><span class="pre">truncated</span></code>, and <code class="docutils literal notranslate"><span class="pre">info</span></code> are returned.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Simplified structure of MinecraftSim.step()</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">action_type</span> <span class="o">==</span> <span class="s1">&#39;agent&#39;</span><span class="p">:</span>
+        <span class="n">env_action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">agent_action_to_env_action</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+        <span class="c1"># ... action dictionary manipulation ...</span>
+        <span class="n">action</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">env_action</span><span class="p">)</span>
+        
     <span class="k">for</span> <span class="n">callback</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="p">:</span>
-        <span class="n">action</span> <span class="o">=</span> <span class="n">callback</span><span class="o">.</span><span class="n">before_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span>
-    <span class="n">obs</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">terminated</span><span class="p">,</span> <span class="n">truncated</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span> 
-    <span class="o">...</span> <span class="c1"># some other code</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="n">callback</span><span class="o">.</span><span class="n">before_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span> <span class="c1"># Hook before step</span>
+
+    <span class="n">obs</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">done</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span> <span class="c1"># Main environment step</span>
+
+    <span class="n">terminated</span><span class="p">,</span> <span class="n">truncated</span> <span class="o">=</span> <span class="n">done</span><span class="p">,</span> <span class="n">done</span> <span class="c1"># Determine termination</span>
+    <span class="n">obs</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wrap_obs_info</span><span class="p">(</span><span class="n">obs</span><span class="p">,</span> <span class="n">info</span><span class="p">)</span> <span class="c1"># Wrap observation and info</span>
+    
     <span class="k">for</span> <span class="n">callback</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="p">:</span>
-        <span class="n">obs</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">terminated</span><span class="p">,</span> <span class="n">truncated</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">callback</span><span class="o">.</span><span class="n">after_step</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span> <span class="n">obs</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">terminated</span><span class="p">,</span> <span class="n">truncated</span><span class="p">,</span> <span class="n">info</span>
-        <span class="p">)</span>
+        <span class="c1"># Hook after step, can modify results</span>
+        <span class="n">obs</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">terminated</span><span class="p">,</span> <span class="n">truncated</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">callback</span><span class="o">.</span><span class="n">after_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obs</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">terminated</span><span class="p">,</span> <span class="n">truncated</span><span class="p">,</span> <span class="n">info</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">obs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span> <span class="o">=</span> <span class="n">obs</span><span class="p">,</span> <span class="n">info</span> <span class="c1"># Update internal state</span>
     <span class="k">return</span> <span class="n">obs</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">terminated</span><span class="p">,</span> <span class="n">truncated</span><span class="p">,</span> <span class="n">info</span>
 </pre></div>
 </div>
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
-<p>We can use callbacks to preprocess the action before it is passed to the environment. For example, we can mask the action that we do not want to use.</p>
-<p>Or we can use callbacks to post-process the observation, reward, termination status, and information before the environment returns them.</p>
-<p>The callbacks can be sequentially executed in the order they are added to the simulator.</p>
+<p><strong>Use Cases for <code class="docutils literal notranslate"><span class="pre">step</span></code> callbacks:</strong></p>
+<ul class="simple">
+<li><p><strong>Action Masking/Modification</strong>: Change or restrict actions in <code class="docutils literal notranslate"><span class="pre">before_step</span></code>.</p></li>
+<li><p><strong>Custom Reward Shaping</strong>: Modify the <code class="docutils literal notranslate"><span class="pre">reward</span></code> in <code class="docutils literal notranslate"><span class="pre">after_step</span></code> based on <code class="docutils literal notranslate"><span class="pre">obs</span></code> or <code class="docutils literal notranslate"><span class="pre">info</span></code>.</p></li>
+<li><p><strong>Trajectory Recording</strong>: Log <code class="docutils literal notranslate"><span class="pre">obs</span></code>, <code class="docutils literal notranslate"><span class="pre">action</span></code>, <code class="docutils literal notranslate"><span class="pre">reward</span></code>, <code class="docutils literal notranslate"><span class="pre">info</span></code> in <code class="docutils literal notranslate"><span class="pre">after_step</span></code>.</p></li>
+<li><p><strong>Early Termination</strong>: Modify <code class="docutils literal notranslate"><span class="pre">terminated</span></code> or <code class="docutils literal notranslate"><span class="pre">truncated</span></code> flags in <code class="docutils literal notranslate"><span class="pre">after_step</span></code> based on custom conditions.</p></li>
+</ul>
 </div>
 </li>
-<li><p><code class="docutils literal notranslate"><span class="pre">close</span></code>: This method is called when the environment is closed.
-The <code class="docutils literal notranslate"><span class="pre">close</span></code> method code looks like this:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">callback</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="p">:</span>
-        <span class="n">callback</span><span class="o">.</span><span class="n">before_close</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-    <span class="n">close_status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">callback</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="p">:</span>
-        <span class="n">callback</span><span class="o">.</span><span class="n">after_close</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">close_status</span>
-</pre></div>
-</div>
-<div class="admonition hint">
-<p class="admonition-title">Hint</p>
-<p>We can use callbacks to do some cleanup work before the environment is closed. For example, we can save the trajectories or doing some logging.</p>
-</div>
-</li>
-<li><p><code class="docutils literal notranslate"><span class="pre">render</span></code>: This method is called when the environment is rendered. It returns the rendered image.
-The <code class="docutils literal notranslate"><span class="pre">render</span></code> method code looks like this:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">render()</span></code></strong>: Renders the current environment observation.</p>
+<ul class="simple">
+<li><p>Retrieves the current observation image (<code class="docutils literal notranslate"><span class="pre">self.obs['image']</span></code>).</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">before_render(self,</span> <span class="pre">sim,</span> <span class="pre">image)</span></code></strong>: Executed for each callback. Receives the simulator instance and the current <code class="docutils literal notranslate"><span class="pre">image</span></code>. Callbacks can modify the <code class="docutils literal notranslate"><span class="pre">image</span></code> (e.g., add overlays, annotations) before the main rendering logic (if any) or before it’s passed to subsequent callbacks.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">after_render(self,</span> <span class="pre">sim,</span> <span class="pre">image)</span></code></strong>: Executed for each callback. Receives the simulator instance and the (potentially modified by <code class="docutils literal notranslate"><span class="pre">before_render</span></code>) <code class="docutils literal notranslate"><span class="pre">image</span></code>. Callbacks can further process the <code class="docutils literal notranslate"><span class="pre">image</span></code>.</p></li>
+<li><p>The final <code class="docutils literal notranslate"><span class="pre">image</span></code> is returned.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Structure of MinecraftSim.render()</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="n">image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">]</span>
     <span class="k">for</span> <span class="n">callback</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="p">:</span>
-        <span class="n">image</span> <span class="o">=</span> <span class="n">callback</span><span class="o">.</span><span class="n">before_render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">)</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">callback</span><span class="o">.</span><span class="n">before_render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">)</span> <span class="c1"># Hook before rendering modifications</span>
+    
+    <span class="c1"># ! core logic (currently, core logic is minimal, focus is on callbacks)</span>
+    
     <span class="k">for</span> <span class="n">callback</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="p">:</span>
-        <span class="n">image</span> <span class="o">=</span> <span class="n">callback</span><span class="o">.</span><span class="n">after_render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">)</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">callback</span><span class="o">.</span><span class="n">after_render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">)</span> <span class="c1"># Hook after rendering modifications</span>
     <span class="k">return</span> <span class="n">image</span>
 </pre></div>
 </div>
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
-<p>We can use callbacks to preprocess the rendering before it is returned to the agent. For example, we can resize the image or add some overlays.
-The MineStudio online component will use this method to visualize the agent’s behavior during training.</p>
+<p><strong>Use Cases for <code class="docutils literal notranslate"><span class="pre">render</span></code> callbacks:</strong></p>
+<ul class="simple">
+<li><p><strong>Visualization Augmentation</strong>: Use <code class="docutils literal notranslate"><span class="pre">before_render</span></code> or <code class="docutils literal notranslate"><span class="pre">after_render</span></code> to draw debug information, agent stats, or highlight important elements on the frame.</p></li>
+<li><p><strong>Image Preprocessing for Display</strong>: Resize or format the image for specific display requirements.</p></li>
+</ul>
+</div>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">close()</span></code></strong>: Cleans up and closes the environment.</p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">before_close(self,</span> <span class="pre">sim)</span></code></strong>: Executed for each callback before the underlying environment is closed. Useful for saving final data or logs.</p></li>
+<li><p>The core environment close (<code class="docutils literal notranslate"><span class="pre">self.env.close()</span></code>) is called.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">after_close(self,</span> <span class="pre">sim)</span></code></strong>: Executed for each callback after the underlying environment has been closed. Useful for final cleanup tasks that depend on the environment being closed.</p></li>
+<li><p>The status from <code class="docutils literal notranslate"><span class="pre">self.env.close()</span></code> is returned.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Structure of MinecraftSim.close()</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">callback</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="p">:</span>
+        <span class="n">callback</span><span class="o">.</span><span class="n">before_close</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="c1"># Hook before closing</span>
+    <span class="n">close_status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">close</span><span class="p">()</span> <span class="c1"># Main environment close</span>
+    <span class="k">for</span> <span class="n">callback</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="p">:</span>
+        <span class="n">callback</span><span class="o">.</span><span class="n">after_close</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="c1"># Hook after closing</span>
+    <span class="k">return</span> <span class="n">close_status</span>
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p><strong>Use Cases for <code class="docutils literal notranslate"><span class="pre">close</span></code> callbacks:</strong></p>
+<ul class="simple">
+<li><p><strong>Final Data Saving</strong>: Save recorded trajectories, statistics, or model checkpoints in <code class="docutils literal notranslate"><span class="pre">before_close</span></code>.</p></li>
+<li><p><strong>Resource Release</strong>: Release any resources acquired by callbacks during the simulation.</p></li>
+</ul>
 </div>
 </li>
 </ul>
 </section>
-<section id="callbacks">
-<h2>Callbacks<a class="headerlink" href="#callbacks" title="Link to this heading">#</a></h2>
-<p>Callbacks are used to customize the environment. All the callbacks are optional, and you can use them in any combination.</p>
-<p>The structure of a callback is as follows:</p>
+<section id="callbacks-base-class">
+<h2>Callbacks Base Class<a class="headerlink" href="#callbacks-base-class" title="Link to this heading">#</a></h2>
+<p>Callbacks are classes that inherit from <code class="docutils literal notranslate"><span class="pre">MinecraftCallback</span></code> and can override any of its methods to inject custom logic at different points in the simulator’s lifecycle. All callback methods receive the simulator instance (<code class="docutils literal notranslate"><span class="pre">sim</span></code>) as their first argument, allowing them to access and potentially modify the simulator’s state or data.</p>
+<p>The base <code class="docutils literal notranslate"><span class="pre">MinecraftCallback</span></code> class defines the following methods, all of which simply pass through the data by default:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MinecraftCallback</span><span class="p">:</span>
     
     <span class="k">def</span><span class="w"> </span><span class="nf">before_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sim</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Called before `env.step()`.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            sim: The MinecraftSim instance.</span>
+<span class="sd">            action: The action to be taken.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            The potentially modified action.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">action</span>
     
     <span class="k">def</span><span class="w"> </span><span class="nf">after_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sim</span><span class="p">,</span> <span class="n">obs</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">terminated</span><span class="p">,</span> <span class="n">truncated</span><span class="p">,</span> <span class="n">info</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Called after `env.step()`.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            sim: The MinecraftSim instance.</span>
+<span class="sd">            obs: The observation from the environment.</span>
+<span class="sd">            reward: The reward from the environment.</span>
+<span class="sd">            terminated: The terminated flag from the environment.</span>
+<span class="sd">            truncated: The truncated flag from the environment.</span>
+<span class="sd">            info: The info dictionary from the environment.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            A tuple of (obs, reward, terminated, truncated, info), potentially modified.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">obs</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">terminated</span><span class="p">,</span> <span class="n">truncated</span><span class="p">,</span> <span class="n">info</span>
     
-    <span class="k">def</span><span class="w"> </span><span class="nf">before_reset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sim</span><span class="p">,</span> <span class="n">reset_flag</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span> <span class="c1"># whether need to call env reset</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">before_reset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sim</span><span class="p">,</span> <span class="n">reset_flag</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Called before `env.reset()`.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            sim: The MinecraftSim instance.</span>
+<span class="sd">            reset_flag: Boolean indicating if a hard reset should occur.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            Boolean indicating if the hard reset should still occur.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">reset_flag</span>
     
     <span class="k">def</span><span class="w"> </span><span class="nf">after_reset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sim</span><span class="p">,</span> <span class="n">obs</span><span class="p">,</span> <span class="n">info</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Called after `env.reset()` and initial frame skipping.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            sim: The MinecraftSim instance.</span>
+<span class="sd">            obs: The initial observation.</span>
+<span class="sd">            info: The initial info dictionary.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            A tuple of (obs, info), potentially modified.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">obs</span><span class="p">,</span> <span class="n">info</span>
     
     <span class="k">def</span><span class="w"> </span><span class="nf">before_close</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sim</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Called before `env.close()`.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            sim: The MinecraftSim instance.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span>
     
     <span class="k">def</span><span class="w"> </span><span class="nf">after_close</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sim</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Called after `env.close()`.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            sim: The MinecraftSim instance.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span>
     
     <span class="k">def</span><span class="w"> </span><span class="nf">before_render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sim</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Called before the main rendering logic in `sim.render()`.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            sim: The MinecraftSim instance.</span>
+<span class="sd">            image: The current image to be rendered.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            The potentially modified image.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">image</span>
     
     <span class="k">def</span><span class="w"> </span><span class="nf">after_render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sim</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Called after the main rendering logic in `sim.render()`.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            sim: The MinecraftSim instance.</span>
+<span class="sd">            image: The image after initial rendering/modifications.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            The potentially modified image.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">image</span>
 </pre></div>
 </div>
+<p>By implementing one or more of these methods in a custom callback class, users can precisely control and extend the behavior of the MineStudio simulator.</p>
 </section>
 </section>
 
@@ -820,8 +948,8 @@ The MineStudio online component will use this method to visualize the agent’s 
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simulator-lifecycle">Simulator Lifecycle</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#callbacks">Callbacks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simulator-lifecycle-and-callback-integration">Simulator Lifecycle and Callback Integration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#callbacks-base-class">Callbacks Base Class</a></li>
 </ul>
   </nav></div>
 

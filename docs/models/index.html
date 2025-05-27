@@ -646,13 +646,13 @@
                 <article class="bd-article">
                    <!--
  * @Date: 2024-12-03 04:47:37
- * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-12-13 08:48:33
+ * @LastEditors: caishaofei-mus1 1744260356@qq.com
+ * @LastEditTime: 2025-05-28 01:27:07
  * @FilePath: /MineStudio/docs/source/models/index.md
 -->
 <section id="models">
 <h1>Models<a class="headerlink" href="#models" title="Link to this heading">#</a></h1>
-<p>We provided a template for the Minecraft Policy and based on this template, we created various different baseline models, currently suppoerting VPT, STEVE-1, GROOT, ROCKET-1.</p>
+<p>We provided a template for the Minecraft Policy, <code class="docutils literal notranslate"><span class="pre">MinePolicy</span></code>, and based on this template, we created various different baseline models. Currently, MineStudio supports VPT, STEVE-1, GROOT, and ROCKET-1, among others. This page details the <code class="docutils literal notranslate"><span class="pre">MinePolicy</span></code> template and how to create your own policies.</p>
 <div class="toctree-wrapper compound">
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">MineStudio Models</span></p>
 <ul>
@@ -696,97 +696,158 @@
 <!--
  * @Date: 2024-12-03 04:54:21
  * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-12-03 06:02:49
+ * @LastEditTime: 2025-05-28 01:14:51
  * @FilePath: /MineStudio/docs/source/models/quick-models.md
 -->
-<p>Here is an example that shows how to load the OpenAI’s VPT policy in the Minecraft environment.</p>
+<p>Here is an example that shows how to load and use OpenAI’s VPT policy within the Minecraft environment provided by MineStudio.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinecraftSim</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator.callbacks</span><span class="w"> </span><span class="kn">import</span> <span class="n">RecordCallback</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_vpt_policy</span><span class="p">,</span> <span class="n">VPTPolicy</span>
 
-<span class="c1"># load the policy from the local model files</span>
+<span class="c1"># Option 1: Load the policy from local model files</span>
+<span class="c1"># Ensure you have the .model (architecture) and .weights (parameters) files.</span>
 <span class="n">policy</span> <span class="o">=</span> <span class="n">load_vpt_policy</span><span class="p">(</span>
     <span class="n">model_path</span><span class="o">=</span><span class="s2">&quot;/path/to/foundation-model-2x.model&quot;</span><span class="p">,</span> 
     <span class="n">weights_path</span><span class="o">=</span><span class="s2">&quot;/path/to/foundation-model-2x.weights&quot;</span>
-<span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span><span class="p">)</span> <span class="c1"># Move the policy to GPU if available</span>
 
-<span class="c1"># or load the policy from the Hugging Face model hub</span>
-<span class="n">policy</span> <span class="o">=</span> <span class="n">VPTPolicy</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;CraftJarvis/MineStudio_VPT.rl_from_early_game_2x&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span><span class="p">)</span>
+<span class="c1"># Option 2: Load the policy from the Hugging Face Model Hub</span>
+<span class="c1"># This is a convenient way to get pre-trained models.</span>
+<span class="c1"># policy = VPTPolicy.from_pretrained(&quot;CraftJarvis/MineStudio_VPT.rl_from_early_game_2x&quot;).to(&quot;cuda&quot;)</span>
 
+<span class="c1"># Set the policy to evaluation mode. This is important for consistent behavior during inference.</span>
 <span class="n">policy</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
 
+<span class="c1"># Initialize the Minecraft Simulator</span>
+<span class="c1"># obs_size specifies the resolution of the visual observations.</span>
+<span class="c1"># callbacks allow for custom actions during the simulation, e.g., recording.</span>
 <span class="n">env</span> <span class="o">=</span> <span class="n">MinecraftSim</span><span class="p">(</span>
     <span class="n">obs_size</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span> 
     <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">RecordCallback</span><span class="p">(</span><span class="n">record_path</span><span class="o">=</span><span class="s2">&quot;./output&quot;</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">frame_type</span><span class="o">=</span><span class="s2">&quot;pov&quot;</span><span class="p">)]</span>
 <span class="p">)</span>
-<span class="n">memory</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="n">obs</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1200</span><span class="p">):</span>
+
+<span class="c1"># `memory` stores the recurrent state of the policy (e.g., for RNNs).</span>
+<span class="c1"># For policies without memory (Markovian), it can be initialized to None.</span>
+<span class="n">memory</span> <span class="o">=</span> <span class="kc">None</span> 
+<span class="n">obs</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span> <span class="c1"># Reset the environment to get the initial observation.</span>
+
+<span class="c1"># Simulation loop</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1200</span><span class="p">):</span> <span class="c1"># Run for 1200 steps</span>
+    <span class="c1"># Get an action from the policy.</span>
+    <span class="c1"># `obs`: The current observation from the environment.</span>
+    <span class="c1"># `memory`: The current recurrent state of the policy.</span>
+    <span class="c1"># `input_shape=&#39;*&#39;`: Indicates that `obs` is a single sample (not a batch or time sequence).</span>
+    <span class="c1"># The policy handles internal batching/unbatching for its forward pass.</span>
     <span class="n">action</span><span class="p">,</span> <span class="n">memory</span> <span class="o">=</span> <span class="n">policy</span><span class="o">.</span><span class="n">get_action</span><span class="p">(</span><span class="n">obs</span><span class="p">,</span> <span class="n">memory</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="s1">&#39;*&#39;</span><span class="p">)</span>
+    
+    <span class="c1"># Apply the action to the environment.</span>
     <span class="n">obs</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">terminated</span><span class="p">,</span> <span class="n">truncated</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
-<span class="n">env</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    
+    <span class="c1"># Check if the episode has ended.</span>
+    <span class="k">if</span> <span class="n">terminated</span> <span class="ow">or</span> <span class="n">truncated</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Episode finished after </span><span class="si">{}</span><span class="s2"> timesteps&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+        <span class="k">break</span>
+
+<span class="n">env</span><span class="o">.</span><span class="n">close</span><span class="p">()</span> <span class="c1"># Close the environment when done.</span>
 </pre></div>
 </div>
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
-<p>In this example, the recorded video will be saved in the <code class="docutils literal notranslate"><span class="pre">./output</span></code> directory.</p>
+<p>In this example, if <code class="docutils literal notranslate"><span class="pre">RecordCallback</span></code> is used, the recorded video will be saved in the <code class="docutils literal notranslate"><span class="pre">./output</span></code> directory. The <code class="docutils literal notranslate"><span class="pre">memory</span></code> variable handles the policy’s recurrent state, and <code class="docutils literal notranslate"><span class="pre">input_shape='*'</span></code> in <code class="docutils literal notranslate"><span class="pre">get_action</span></code> is typical for single-instance inference.</p>
 </div>
 </section>
-<section id="policy-template">
-<h2>Policy Template<a class="headerlink" href="#policy-template" title="Link to this heading">#</a></h2>
+<section id="policy-template-minepolicy">
+<h2>Policy Template (<code class="docutils literal notranslate"><span class="pre">MinePolicy</span></code>)<a class="headerlink" href="#policy-template-minepolicy" title="Link to this heading">#</a></h2>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>One must implement their own policies based on the template to be compatible with our training and inference pipelines.</p>
+<p>To ensure compatibility with MineStudio’s training and inference pipelines, custom policies <strong>must</strong> inherit from <code class="docutils literal notranslate"><span class="pre">minestudio.models.base_policy.MinePolicy</span></code> and implement its abstract methods.</p>
 </div>
-<p>The policy template lies in <code class="docutils literal notranslate"><span class="pre">minestudio.models.base_policy.MinePolicy</span></code>. It consists of the following methods:</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">MinePolicy</span></code> class serves as the base for all policies. Key methods and properties are described below:</p>
 <details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
 <summary class="sd-summary-title sd-card-header">
-<span class="sd-summary-text"><strong>init</strong>(self, hiddim, action_space=None)</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
-<p class="sd-card-text">The constructor of the policy. It initializes the policy head and value head. The <code class="docutils literal notranslate"><span class="pre">hiddim</span></code> is the hidden dimension of the policy. The <code class="docutils literal notranslate"><span class="pre">action_space</span></code> is the action space of the environment. If it is not provided, the default action space of the Minecraft environment will be used.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hiddim</span><span class="p">,</span> <span class="n">action_space</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="sd-summary-text"><strong>init</strong>(self, hiddim, action_space=None, temperature=1.0, nucleus_prob=None)</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">The constructor for the policy.</p>
+<ul class="simple">
+<li><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">hiddim</span></code> (int): The hidden dimension size for the policy’s internal layers.</p></li>
+<li><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">action_space</span></code> (gymnasium.spaces.Space, optional): The action space of the environment. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, a default Minecraft action space (camera and buttons) is used.</p></li>
+<li><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">temperature</span></code> (float, optional): Temperature for sampling actions from the policy head. Defaults to <code class="docutils literal notranslate"><span class="pre">1.0</span></code>.</p></li>
+<li><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">nucleus_prob</span></code> (float, optional): Nucleus (top-p) probability for sampling actions. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, standard sampling is used. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+</ul>
+<p class="sd-card-text">It initializes the policy’s action head (<code class="docutils literal notranslate"><span class="pre">self.pi_head</span></code>) and value head (<code class="docutils literal notranslate"><span class="pre">self.value_head</span></code>).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># From minestudio.models.base_policy.py</span>
+<span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hiddim</span><span class="p">,</span> <span class="n">action_space</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">nucleus_prob</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">action_space</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">action_space</span> <span class="o">=</span> <span class="n">gymnasium</span><span class="o">.</span><span class="n">spaces</span><span class="o">.</span><span class="n">Dict</span><span class="p">({</span>
             <span class="s2">&quot;camera&quot;</span><span class="p">:</span> <span class="n">gymnasium</span><span class="o">.</span><span class="n">spaces</span><span class="o">.</span><span class="n">MultiDiscrete</span><span class="p">([</span><span class="mi">121</span><span class="p">]),</span> 
             <span class="s2">&quot;buttons&quot;</span><span class="p">:</span> <span class="n">gymnasium</span><span class="o">.</span><span class="n">spaces</span><span class="o">.</span><span class="n">MultiDiscrete</span><span class="p">([</span><span class="mi">8641</span><span class="p">]),</span>
         <span class="p">})</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">pi_head</span> <span class="o">=</span> <span class="n">make_action_head</span><span class="p">(</span><span class="n">action_space</span><span class="p">,</span> <span class="n">hiddim</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
+    <span class="c1"># self.value_head is a ScaledMSEHead</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">value_head</span> <span class="o">=</span> <span class="n">ScaledMSEHead</span><span class="p">(</span><span class="n">hiddim</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">norm_type</span><span class="o">=</span><span class="s2">&quot;ewma&quot;</span><span class="p">,</span> <span class="n">norm_kwargs</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="c1"># self.pi_head uses the provided action_space, hiddim, temperature, and nucleus_prob</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">pi_head</span> <span class="o">=</span> <span class="n">make_action_head</span><span class="p">(</span><span class="n">action_space</span><span class="p">,</span> <span class="n">hiddim</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="n">temperature</span><span class="p">,</span> <span class="n">nucleus_prob</span><span class="o">=</span><span class="n">nucleus_prob</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
-<p class="sd-card-text">If users want to customize the <code class="docutils literal notranslate"><span class="pre">pi_head</span></code> and <code class="docutils literal notranslate"><span class="pre">value_head</span></code> modules, they can override them after calling the <code class="docutils literal notranslate"><span class="pre">super().__init__</span></code> method.</p>
+<p class="sd-card-text">Users can override <code class="docutils literal notranslate"><span class="pre">self.pi_head</span></code> and <code class="docutils literal notranslate"><span class="pre">self.value_head</span></code> after calling <code class="docutils literal notranslate"><span class="pre">super().__init__(...)</span></code> if custom head implementations are needed.</p>
 </div>
 </div>
 </details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
 <summary class="sd-summary-title sd-card-header">
-<span class="sd-summary-text">forward(self, input, state_in, **kwargs)</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
-<p class="sd-card-text">The forward method of the policy. It takes the input and the state tensors and returns the latent tensors and the updated state tensors.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@abstractmethod</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
-            <span class="nb">input</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> 
+<span class="sd-summary-text">reset_parameters(self)</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Resets the parameters of the policy’s action head (<code class="docutils literal notranslate"><span class="pre">pi_head</span></code>) and value head (<code class="docutils literal notranslate"><span class="pre">value_head</span></code>). This can be useful for re-initializing a policy.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># From minestudio.models.base_policy.py</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">reset_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Resets the parameters of the policy and value heads.&quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">pi_head</span><span class="o">.</span><span class="n">reset_parameters</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">value_head</span><span class="o">.</span><span class="n">reset_parameters</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">forward(self, input: Dict[str, Any], state_in: Optional[List[torch.Tensor]] = None, **kwargs) -&gt; Tuple[Dict[str, torch.Tensor], List[torch.Tensor]]</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">This is an <strong>abstract method</strong> and <strong>must be implemented by derived classes</strong>. It defines the main computation of the policy.</p>
+<ul class="simple">
+<li><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">input</span></code> (Dict[str, Any]): A dictionary of input tensors (e.g., observations from the environment).</p></li>
+<li><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">state_in</span></code> (Optional[List[torch.Tensor]]): A list of input recurrent state tensors. <code class="docutils literal notranslate"><span class="pre">None</span></code> if the episode is starting or the policy is Markovian.</p></li>
+<li><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">**kwargs</span></code>: Additional keyword arguments.</p></li>
+</ul>
+<p class="sd-card-text">Returns:</p>
+<ul class="simple">
+<li><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">latents</span></code> (Dict[str, torch.Tensor]): A dictionary containing at least:</p>
+<ul>
+<li><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">'pi_logits'</span></code> (torch.Tensor): The logits for the action distribution.</p></li>
+<li><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">'vpred'</span></code> (torch.Tensor): The predicted value function.</p></li>
+</ul>
+</li>
+<li><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">state_out</span></code> (List[torch.Tensor]): A list containing the updated recurrent state tensors. For a Markovian policy (no state), this should be an empty list (<code class="docutils literal notranslate"><span class="pre">[]</span></code>).</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># From minestudio.models.base_policy.py</span>
+<span class="nd">@abstractmethod</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+            <span class="nb">input</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
             <span class="n">state_in</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="o">**</span><span class="n">kwargs</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Returns:</span>
-<span class="sd">        latents: containing `pi_logits` and `vpred` latent tensors.</span>
-<span class="sd">        state_out: containing the updated state tensors.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">pass</span>
 </pre></div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p class="sd-card-text">This method should be implemented by the derived classes.</p>
 </div>
 </div>
 </details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
 <summary class="sd-summary-title sd-card-header">
-<span class="sd-summary-text">initial_state(self, batch_size=None)</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
-<p class="sd-card-text">This is an important method that returns the initial state of the policy.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@abstractmethod</span>
+<span class="sd-summary-text">initial_state(self, batch_size: Optional[int] = None) -&gt; List[torch.Tensor]</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">This is an <strong>abstract method</strong> and <strong>must be implemented by derived classes</strong>. It returns the initial recurrent state of the policy.</p>
+<ul class="simple">
+<li><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">batch_size</span></code> (Optional[int]): The batch size for which to create the initial state.</p></li>
+</ul>
+<p class="sd-card-text">Returns:</p>
+<ul class="simple">
+<li><p class="sd-card-text">(List[torch.Tensor]): A list of initial state tensors. For a Markovian policy (no state), this should be an empty list (<code class="docutils literal notranslate"><span class="pre">[]</span></code>).</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># From minestudio.models.base_policy.py</span>
+<span class="nd">@abstractmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">initial_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
     <span class="k">pass</span>
 </pre></div>
@@ -794,48 +855,67 @@
 </div>
 </details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
 <summary class="sd-summary-title sd-card-header">
-<span class="sd-summary-text">get_action(self, input, state_in, deterministic, input_shape)</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
-<p class="sd-card-text">This is the method that returns the action of the policy. It takes the input, the state tensors, and the deterministic flag, and returns the action tensor and the updated state tensors. This method is usually called during the inference process.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@torch</span><span class="o">.</span><span class="n">inference_mode</span><span class="p">()</span>
+<span class="sd-summary-text">get_action(self, input: Dict[str, Any], state_in: Optional[List[torch.Tensor]], deterministic: bool = False, input_shape: str = “BT*”, **kwargs) -&gt; Tuple[Dict[str, torch.Tensor], List[torch.Tensor]]</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">This method computes and returns an action from the policy based on the current input and state. It’s typically used during inference.</p>
+<ul class="simple">
+<li><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">input</span></code> (Dict[str, Any]): Current observation from the environment.</p></li>
+<li><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">state_in</span></code> (Optional[List[torch.Tensor]]): Current recurrent state.</p></li>
+<li><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">deterministic</span></code> (bool): If <code class="docutils literal notranslate"><span class="pre">True</span></code>, samples actions deterministically (e.g., argmax). If <code class="docutils literal notranslate"><span class="pre">False</span></code>, samples stochastically. Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">input_shape</span></code> (str): Specifies the shape of the <code class="docutils literal notranslate"><span class="pre">input</span></code>.</p>
+<ul>
+<li><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">&quot;*&quot;</span></code>: Single instance input (e.g., one observation at a time during inference). The method handles batching/unbatching internally.</p></li>
+<li><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">&quot;BT*&quot;</span></code>: Batched sequence input (Batch, Time, …).
+Defaults to <code class="docutils literal notranslate"><span class="pre">&quot;BT*&quot;</span></code>.</p></li>
+</ul>
+</li>
+<li><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">**kwargs</span></code>: Additional keyword arguments passed to <code class="docutils literal notranslate"><span class="pre">forward</span></code>.</p></li>
+</ul>
+<p class="sd-card-text">Returns:</p>
+<ul class="simple">
+<li><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">action</span></code> (Dict[str, torch.Tensor]): The sampled action.</p></li>
+<li><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">state_out</span></code> (List[torch.Tensor]): The updated recurrent state.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Simplified from minestudio.models.base_policy.py</span>
+<span class="nd">@torch</span><span class="o">.</span><span class="n">inference_mode</span><span class="p">()</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                 <span class="nb">input</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
                 <span class="n">state_in</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]],</span>
                 <span class="n">deterministic</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
                 <span class="n">input_shape</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;BT*&quot;</span><span class="p">,</span>
-                <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span> 
+                <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]]:</span>
     <span class="k">if</span> <span class="n">input_shape</span> <span class="o">==</span> <span class="s2">&quot;*&quot;</span><span class="p">:</span>
+        <span class="c1"># Internal batching for single instance input</span>
         <span class="nb">input</span> <span class="o">=</span> <span class="n">dict_map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_batchify</span><span class="p">,</span> <span class="nb">input</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">state_in</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">state_in</span> <span class="o">=</span> <span class="n">recursive_tensor_op</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">state_in</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">input_shape</span> <span class="o">!=</span> <span class="s2">&quot;BT*&quot;</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Unsupported input_shape&quot;</span><span class="p">)</span>
+    
     <span class="n">latents</span><span class="p">,</span> <span class="n">state_out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">state_in</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-    <span class="n">action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pi_head</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">latents</span><span class="p">[</span><span class="s1">&#39;pi_logits&#39;</span><span class="p">],</span> <span class="n">deterministic</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">vpred</span> <span class="o">=</span> <span class="n">latents</span><span class="p">[</span><span class="s1">&#39;vpred&#39;</span><span class="p">]</span>
-    <span class="k">if</span> <span class="n">input_shape</span> <span class="o">==</span> <span class="s2">&quot;BT*&quot;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">action</span><span class="p">,</span> <span class="n">state_out</span>
-    <span class="k">elif</span> <span class="n">input_shape</span> <span class="o">==</span> <span class="s2">&quot;*&quot;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">dict_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">tensor</span><span class="p">:</span> <span class="n">tensor</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">action</span><span class="p">),</span> <span class="n">recursive_tensor_op</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">state_out</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+    <span class="n">action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pi_head</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">latents</span><span class="p">[</span><span class="s1">&#39;pi_logits&#39;</span><span class="p">],</span> <span class="n">deterministic</span><span class="o">=</span><span class="n">deterministic</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">vpred</span> <span class="o">=</span> <span class="n">latents</span><span class="p">[</span><span class="s1">&#39;vpred&#39;</span><span class="p">]</span> <span class="c1"># Cache for potential later use</span>
+    
+    <span class="k">if</span> <span class="n">input_shape</span> <span class="o">==</span> <span class="s2">&quot;*&quot;</span><span class="p">:</span>
+        <span class="c1"># Internal unbatching for single instance output</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="n">dict_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">tensor</span><span class="p">:</span> <span class="n">tensor</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">action</span><span class="p">)</span>
+        <span class="n">state_out</span> <span class="o">=</span> <span class="n">recursive_tensor_op</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">state_out</span><span class="p">)</span>
+        
+    <span class="k">return</span> <span class="n">action</span><span class="p">,</span> <span class="n">state_out</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">deterministic</span></code> is a flag that indicates whether the action is generates with <code class="docutils literal notranslate"><span class="pre">argmax</span></code> or <code class="docutils literal notranslate"><span class="pre">stochastic</span> <span class="pre">sampling</span></code>.
-We emperically find that setting <code class="docutils literal notranslate"><span class="pre">deterministic=False</span></code> can improve the performance of the policy.</p>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">input_shape</span></code> is a string that indicates the shape of the input. It can be <code class="docutils literal notranslate"><span class="pre">&quot;BT*&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;*&quot;</span></code>. <code class="docutils literal notranslate"><span class="pre">&quot;BT*&quot;</span></code> means the input is a batch of time sequences, and <code class="docutils literal notranslate"><span class="pre">&quot;*&quot;</span></code> means the input is a single sample. Generally speaking, if you are in inference mode, you feed an observation once a time. So you should set <code class="docutils literal notranslate"><span class="pre">input_shape=&quot;*&quot;</span></code>.</p>
+<p class="sd-card-text">Empirically, setting <code class="docutils literal notranslate"><span class="pre">deterministic=False</span></code> (stochastic sampling) can often improve policy performance during evaluation compared to deterministic actions.
+The <code class="docutils literal notranslate"><span class="pre">input_shape=&quot;*&quot;</span></code> is common for inference when processing one observation at a time.</p>
 </div>
 </div>
 </details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
 <summary class="sd-summary-title sd-card-header">
-<span class="sd-summary-text">device(self)</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
-<p class="sd-card-text">This is a property method that returns the device of the policy.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@property</span>
+<span class="sd-summary-text">device (property)</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">A property that returns the <code class="docutils literal notranslate"><span class="pre">torch.device</span></code> (e.g., ‘cpu’, ‘cuda:0’) on which the policy’s parameters are located.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># From minestudio.models.base_policy.py</span>
+<span class="nd">@property</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">device</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">:</span>
     <span class="k">return</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">())</span><span class="o">.</span><span class="n">device</span>
 </pre></div>
@@ -843,78 +923,143 @@ We emperically find that setting <code class="docutils literal notranslate"><spa
 </div>
 </details><div class="admonition hint">
 <p class="admonition-title">Hint</p>
-<p>The minimal set you need to care about is <code class="docutils literal notranslate"><span class="pre">forward</span></code> and <code class="docutils literal notranslate"><span class="pre">initial_state</span></code>.</p>
+<p>The minimal set of methods you <strong>must</strong> implement in your custom policy are <code class="docutils literal notranslate"><span class="pre">forward</span></code> and <code class="docutils literal notranslate"><span class="pre">initial_state</span></code>.</p>
 </div>
 </section>
 <section id="your-first-policy">
 <h2>Your First Policy<a class="headerlink" href="#your-first-policy" title="Link to this heading">#</a></h2>
-<p>Load the necessary modules:</p>
+<p>Here are basic examples of how to create custom policies by inheriting from <code class="docutils literal notranslate"><span class="pre">MinePolicy</span></code>.</p>
+<p>Load necessary modules:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">einops</span><span class="w"> </span><span class="kn">import</span> <span class="n">rearrange</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Any</span>
+
 <span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.models.base_policy</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinePolicy</span>
+<span class="c1"># Assuming make_action_head and ScaledMSEHead are accessible for custom heads,</span>
+<span class="c1"># or rely on those initialized in MinePolicy&#39;s __init__.</span>
 </pre></div>
 </div>
-<p>To customize a condition-free policy, you can follow this example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyConditionFreePolicy</span><span class="p">(</span><span class="n">MinePolicy</span><span class="p">):</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hiddim</span><span class="p">,</span> <span class="n">action_space</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">hiddim</span><span class="p">,</span> <span class="n">action_space</span><span class="p">)</span>
-        <span class="c1"># we use the original pi_head and value_head here.</span>
+<section id="example-1-condition-free-markovian-policy">
+<h3>Example 1: Condition-Free (Markovian) Policy<a class="headerlink" href="#example-1-condition-free-markovian-policy" title="Link to this heading">#</a></h3>
+<p>This policy does not depend on any external condition beyond the current observation and has no recurrent state.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MySimpleMarkovPolicy</span><span class="p">(</span><span class="n">MinePolicy</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hiddim</span><span class="p">,</span> <span class="n">action_space</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">image_size</span><span class="o">=</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span> <span class="n">image_channels</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">hiddim</span><span class="p">,</span> <span class="n">action_space</span><span class="p">)</span> <span class="c1"># Initializes self.pi_head and self.value_head</span>
+        
+        <span class="c1"># Example backbone: a simple MLP</span>
+        <span class="c1"># Input image is flattened: image_size[0] * image_size[1] * image_channels</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feature_dim</span> <span class="o">=</span> <span class="n">image_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">image_size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">image_channels</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">net</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
-            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">128</span><span class="o">*</span><span class="mi">128</span><span class="o">*</span><span class="mi">3</span><span class="p">,</span> <span class="n">hiddim</span><span class="p">),</span> 
+            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">feature_dim</span><span class="p">,</span> <span class="n">hiddim</span><span class="p">),</span> 
             <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
             <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hiddim</span><span class="p">,</span> <span class="n">hiddim</span><span class="p">),</span>
             <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">()</span>
         <span class="p">)</span>
-        <span class="c1"># we implement a simple mlp network here as the backbone. </span>
+        <span class="c1"># self.pi_head and self.value_head are already defined in the parent class.</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">state_in</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="nb">input</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mf">255.</span><span class="p">,</span> <span class="s1">&#39;b t h w c -&gt; b t (h w c)&#39;</span><span class="p">)</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+                <span class="nb">input</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> 
+                <span class="n">state_in</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="c1"># Will be None for Markovian</span>
+                <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]]:</span>
+        <span class="c1"># Assuming input[&#39;image&#39;] is (B, T, H, W, C)</span>
+        <span class="c1"># For a Markovian policy, we typically expect T=1 or process frames independently.</span>
+        <span class="c1"># If T &gt; 1, this example processes each time step independently.</span>
+        <span class="n">img_obs</span> <span class="o">=</span> <span class="nb">input</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">]</span> <span class="c1"># Shape: (B, T, H, W, C)</span>
+        <span class="n">b</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">img_obs</span><span class="o">.</span><span class="n">shape</span>
+        
+        <span class="c1"># Flatten image: (B, T, H, W, C) -&gt; (B*T, H*W*C)</span>
+        <span class="c1"># Normalize image (example: scale to [0,1])</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">img_obs</span> <span class="o">/</span> <span class="mf">255.0</span><span class="p">,</span> <span class="s1">&#39;b t h w c -&gt; (b t) (h w c)&#39;</span><span class="p">)</span>
+        
+        <span class="n">features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="c1"># Shape: (B*T, hiddim)</span>
+        
+        <span class="c1"># Reshape for policy and value heads if they expect (B, T, hiddim)</span>
+        <span class="n">features_reshaped</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="s1">&#39;(b t) d -&gt; b t d&#39;</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">b</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">)</span>
+        
+        <span class="n">pi_logits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pi_head</span><span class="p">(</span><span class="n">features_reshaped</span><span class="p">)</span> <span class="c1"># pi_head handles (B, T, D) or (B*T, D)</span>
+        <span class="n">vpred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">value_head</span><span class="p">(</span><span class="n">features_reshaped</span><span class="p">)</span>  <span class="c1"># value_head handles (B, T, D) or (B*T, D)</span>
+        
         <span class="n">result</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;pi_logits&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">pi_head</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> 
-            <span class="s1">&#39;vpred&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">value_head</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> 
+            <span class="s1">&#39;pi_logits&#39;</span><span class="p">:</span> <span class="n">pi_logits</span><span class="p">,</span> 
+            <span class="s1">&#39;vpred&#39;</span><span class="p">:</span> <span class="n">vpred</span><span class="p">,</span> 
         <span class="p">}</span>
-        <span class="k">return</span> <span class="n">result</span><span class="p">,</span> <span class="n">state_in</span>
+        <span class="c1"># For a Markovian policy, state_out is an empty list</span>
+        <span class="k">return</span> <span class="n">result</span><span class="p">,</span> <span class="p">[]</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">initial_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="c1"># we implement a simple markov policy here, so the state is always None.</span>
-        <span class="kc">None</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">initial_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
+        <span class="c1"># Markovian policy has no state, return empty list</span>
+        <span class="k">return</span> <span class="p">[]</span>
+
 </pre></div>
 </div>
-<p>To customize a condition-based policy, you can follow this example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyConditionBasedPolicy</span><span class="p">(</span><span class="n">MinePolicy</span><span class="p">):</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hiddim</span><span class="p">,</span> <span class="n">action_space</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</section>
+<section id="example-2-condition-based-markovian-policy">
+<h3>Example 2: Condition-Based (Markovian) Policy<a class="headerlink" href="#example-2-condition-based-markovian-policy" title="Link to this heading">#</a></h3>
+<p>This policy takes an additional ‘condition’ tensor as input.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MySimpleConditionedPolicy</span><span class="p">(</span><span class="n">MinePolicy</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hiddim</span><span class="p">,</span> <span class="n">action_space</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">image_size</span><span class="o">=</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span> <span class="n">image_channels</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">condition_dim</span><span class="o">=</span><span class="mi">64</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">hiddim</span><span class="p">,</span> <span class="n">action_space</span><span class="p">)</span>
-        <span class="c1"># we use the original pi_head and value_head here.</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">feature_dim</span> <span class="o">=</span> <span class="n">image_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">image_size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">image_channels</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">net</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
-            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">128</span><span class="o">*</span><span class="mi">128</span><span class="o">*</span><span class="mi">3</span><span class="p">,</span> <span class="n">hiddim</span><span class="p">),</span> 
+            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">feature_dim</span><span class="p">,</span> <span class="n">hiddim</span><span class="p">),</span> 
+            <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+        <span class="p">)</span>
+        <span class="c1"># Embedding for the condition</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">condition_net</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">condition_dim</span><span class="p">,</span> <span class="n">hiddim</span><span class="p">)</span> <span class="c1"># Or nn.Embedding if condition is discrete</span>
+        
+        <span class="c1"># Fusion layer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fusion_net</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hiddim</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="n">hiddim</span><span class="p">),</span> <span class="c1"># Example: concatenate image and condition features</span>
             <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
             <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hiddim</span><span class="p">,</span> <span class="n">hiddim</span><span class="p">),</span>
             <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">()</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">condition_net</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">hiddim</span><span class="p">)</span>
-        <span class="c1"># we implement a simple mlp network here as the backbone. </span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">state_in</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="nb">input</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mf">255.</span><span class="p">,</span> <span class="s1">&#39;b t h w c -&gt; b t (h w c)&#39;</span><span class="p">)</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="c1"># b t c</span>
-        <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">condition_net</span><span class="p">(</span><span class="nb">input</span><span class="p">[</span><span class="s1">&#39;condition&#39;</span><span class="p">])</span> <span class="c1"># b t -&gt; b t c</span>
-        <span class="n">z</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="c1"># simple addition fusion</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+                <span class="nb">input</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> 
+                <span class="n">state_in</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> 
+                <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]]:</span>
+        <span class="n">img_obs</span> <span class="o">=</span> <span class="nb">input</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">]</span> <span class="c1"># Shape: (B, T, H, W, C)</span>
+        <span class="n">condition</span> <span class="o">=</span> <span class="nb">input</span><span class="p">[</span><span class="s1">&#39;condition&#39;</span><span class="p">]</span> <span class="c1"># Shape: (B, T, condition_dim)</span>
+        
+        <span class="n">b</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">img_obs</span><span class="o">.</span><span class="n">shape</span>
+        
+        <span class="n">x_img</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">img_obs</span> <span class="o">/</span> <span class="mf">255.0</span><span class="p">,</span> <span class="s1">&#39;b t h w c -&gt; (b t) (h w c)&#39;</span><span class="p">)</span>
+        <span class="n">img_features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="p">(</span><span class="n">x_img</span><span class="p">)</span> <span class="c1"># Shape: (B*T, hiddim)</span>
+        
+        <span class="c1"># Process condition</span>
+        <span class="c1"># Assuming condition is already (B, T, condition_dim) -&gt; (B*T, condition_dim)</span>
+        <span class="n">cond_features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">condition_net</span><span class="p">(</span><span class="n">rearrange</span><span class="p">(</span><span class="n">condition</span><span class="p">,</span> <span class="s1">&#39;b t d -&gt; (b t) d&#39;</span><span class="p">))</span> <span class="c1"># Shape: (B*T, hiddim)</span>
+        
+        <span class="c1"># Fuse features (example: concatenation)</span>
+        <span class="n">fused_features</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">img_features</span><span class="p">,</span> <span class="n">cond_features</span><span class="p">],</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">final_features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fusion_net</span><span class="p">(</span><span class="n">fused_features</span><span class="p">)</span> <span class="c1"># Shape: (B*T, hiddim)</span>
+
+        <span class="n">final_features_reshaped</span> <span class="o">=</span> <span class="n">rearrange</span><span class="p">(</span><span class="n">final_features</span><span class="p">,</span> <span class="s1">&#39;(b t) d -&gt; b t d&#39;</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">b</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">)</span>
+        
+        <span class="n">pi_logits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pi_head</span><span class="p">(</span><span class="n">final_features_reshaped</span><span class="p">)</span>
+        <span class="n">vpred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">value_head</span><span class="p">(</span><span class="n">final_features_reshaped</span><span class="p">)</span>
+        
         <span class="n">result</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;pi_logits&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">pi_head</span><span class="p">(</span><span class="n">z</span><span class="p">),</span> 
-            <span class="s1">&#39;vpred&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">value_head</span><span class="p">(</span><span class="n">z</span><span class="p">),</span> 
+            <span class="s1">&#39;pi_logits&#39;</span><span class="p">:</span> <span class="n">pi_logits</span><span class="p">,</span> 
+            <span class="s1">&#39;vpred&#39;</span><span class="p">:</span> <span class="n">vpred</span><span class="p">,</span> 
         <span class="p">}</span>
-        <span class="k">return</span> <span class="n">result</span><span class="p">,</span> <span class="n">state_in</span>
+        <span class="k">return</span> <span class="n">result</span><span class="p">,</span> <span class="p">[]</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">initial_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="c1"># we implement a simple markov policy here, so the state is always None.</span>
-        <span class="kc">None</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">initial_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="p">[]</span>
 </pre></div>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>These examples are just for demonstration purposes and may perform poorly in practice.</p>
+<p>These examples are simplified for demonstration. Real-world policies, especially for complex environments like Minecraft, often require more sophisticated architectures (e.g., CNNs for image processing, recurrent layers like LSTMs or Transformers for temporal dependencies if not Markovian).
+The <code class="docutils literal notranslate"><span class="pre">input['image']</span></code> format and normalization (e.g., <code class="docutils literal notranslate"><span class="pre">/</span> <span class="pre">255.0</span></code>) should match how your environment provides observations and how your model expects them.</p>
 </div>
+</section>
 </section>
 </section>
 
@@ -969,8 +1114,12 @@ We emperically find that setting <code class="docutils literal notranslate"><spa
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-start">Quick Start</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#policy-template">Policy Template</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#your-first-policy">Your First Policy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#policy-template-minepolicy">Policy Template (<code class="docutils literal notranslate"><span class="pre">MinePolicy</span></code>)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#your-first-policy">Your First Policy</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-condition-free-markovian-policy">Example 1: Condition-Free (Markovian) Policy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2-condition-based-markovian-policy">Example 2: Condition-Based (Markovian) Policy</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
