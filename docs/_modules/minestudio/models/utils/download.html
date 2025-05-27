@@ -2,12 +2,12 @@
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="../" >
+<html lang="en" data-content_root="../../../../" >
 
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Overview: module code &#8212; MineStudio 1.0.0</title>
+    <title>minestudio.models.utils.download &#8212; MineStudio 1.0.0</title>
   
   
   
@@ -26,41 +26,41 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+  <link href="../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
-    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
-    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/jupyter-sphinx.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/thebelab.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=f44ad8c8" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=fd3f3429" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/thebelab.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=f44ad8c8" />
   
   <!-- So that users can add custom icons -->
-  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <script src="../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=8d563738"></script>
-    <script src="../_static/doctools.js?v=9a2dae69"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
-    <script src="../_static/copybutton.js?v=f281be69"></script>
-    <script src="../_static/thebelab-helper.js"></script>
+    <script src="../../../../_static/documentation_options.js?v=8d563738"></script>
+    <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../_static/thebelab-helper.js"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
-    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/index';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/minestudio/models/utils/download';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://craftjarvis.github.io/MineStudio/_static/switcher.json';
@@ -68,9 +68,9 @@
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             false;
         </script>
-    <link rel="icon" href="../_static/logo-no-text-light.svg"/>
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
+    <link rel="icon" href="../../../../_static/logo-no-text-light.svg"/>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -96,7 +96,7 @@
   <dialog id="pst-search-dialog">
     
 <form class="bd-search d-flex align-items-center"
-      action="../search.html"
+      action="../../../../search.html"
       method="get">
   <i class="fa-solid fa-magnifying-glass"></i>
   <input type="search"
@@ -132,7 +132,7 @@
     
   
 
-<a class="navbar-brand logo" href="../index.html">
+<a class="navbar-brand logo" href="../../../../index.html">
   
   
   
@@ -143,8 +143,8 @@
       
     
     
-    <img src="../_static/logo-no-text-light.svg" class="logo__image only-light" alt=""/>
-    <img src="../_static/logo-no-text-light.svg" class="logo__image only-dark pst-js-only" alt=""/>
+    <img src="../../../../_static/logo-no-text-light.svg" class="logo__image only-light" alt=""/>
+    <img src="../../../../_static/logo-no-text-light.svg" class="logo__image only-dark pst-js-only" alt=""/>
   
   
     <p class="title logo__title">MineStudio</p>
@@ -182,35 +182,35 @@
   <ul class="bd-navbar-elements navbar-nav">
     
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="../overview/index.html">
+  <a class="nav-link nav-internal" href="../../../../overview/index.html">
     Overview
   </a>
 </li>
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="../overview/getting-started.html">
+  <a class="nav-link nav-internal" href="../../../../overview/getting-started.html">
     Getting Started
   </a>
 </li>
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="../simulator/index.html">
+  <a class="nav-link nav-internal" href="../../../../simulator/index.html">
     Simulator
   </a>
 </li>
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="../data/index.html">
+  <a class="nav-link nav-internal" href="../../../../data/index.html">
     Data
   </a>
 </li>
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="../models/index.html">
+  <a class="nav-link nav-internal" href="../../../../models/index.html">
     Models
   </a>
 </li>
@@ -224,35 +224,35 @@
                 <ul id="pst-nav-more-links" class="dropdown-menu">
                     
 <li class=" ">
-  <a class="nav-link dropdown-item nav-internal" href="../offline/index.html">
+  <a class="nav-link dropdown-item nav-internal" href="../../../../offline/index.html">
     Offline
   </a>
 </li>
 
 
 <li class=" ">
-  <a class="nav-link dropdown-item nav-internal" href="../online/index.html">
+  <a class="nav-link dropdown-item nav-internal" href="../../../../online/index.html">
     Online
   </a>
 </li>
 
 
 <li class=" ">
-  <a class="nav-link dropdown-item nav-internal" href="../inference/index.html">
+  <a class="nav-link dropdown-item nav-internal" href="../../../../inference/index.html">
     Inference
   </a>
 </li>
 
 
 <li class=" ">
-  <a class="nav-link dropdown-item nav-internal" href="../benchmark/index.html">
+  <a class="nav-link dropdown-item nav-internal" href="../../../../benchmark/index.html">
     Benchmark
   </a>
 </li>
 
 
 <li class=" ">
-  <a class="nav-link dropdown-item nav-internal" href="../api/index.html">
+  <a class="nav-link dropdown-item nav-internal" href="../../../../api/index.html">
     API
   </a>
 </li>
@@ -395,70 +395,70 @@
   <ul class="bd-navbar-elements navbar-nav">
     
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="../overview/index.html">
+  <a class="nav-link nav-internal" href="../../../../overview/index.html">
     Overview
   </a>
 </li>
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="../overview/getting-started.html">
+  <a class="nav-link nav-internal" href="../../../../overview/getting-started.html">
     Getting Started
   </a>
 </li>
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="../simulator/index.html">
+  <a class="nav-link nav-internal" href="../../../../simulator/index.html">
     Simulator
   </a>
 </li>
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="../data/index.html">
+  <a class="nav-link nav-internal" href="../../../../data/index.html">
     Data
   </a>
 </li>
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="../models/index.html">
+  <a class="nav-link nav-internal" href="../../../../models/index.html">
     Models
   </a>
 </li>
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="../offline/index.html">
+  <a class="nav-link nav-internal" href="../../../../offline/index.html">
     Offline
   </a>
 </li>
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="../online/index.html">
+  <a class="nav-link nav-internal" href="../../../../online/index.html">
     Online
   </a>
 </li>
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="../inference/index.html">
+  <a class="nav-link nav-internal" href="../../../../inference/index.html">
     Inference
   </a>
 </li>
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="../benchmark/index.html">
+  <a class="nav-link nav-internal" href="../../../../benchmark/index.html">
     Benchmark
   </a>
 </li>
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="../api/index.html">
+  <a class="nav-link nav-internal" href="../../../../api/index.html">
     API
   </a>
 </li>
@@ -556,11 +556,14 @@
   <ul class="bd-breadcrumbs">
     
     <li class="breadcrumb-item breadcrumb-home">
-      <a href="../index.html" class="nav-link" aria-label="Home">
+      <a href="../../../../index.html" class="nav-link" aria-label="Home">
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Overview: module code</span></li>
+    
+    <li class="breadcrumb-item"><a href="../../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">minestudio.models.utils.download</span></li>
   </ul>
 </nav>
 </div>
@@ -577,38 +580,64 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-<h1>All modules for which code is available</h1>
-<ul><li><a href="minestudio/models/base_policy.html">minestudio.models.base_policy</a></li>
-<li><a href="minestudio/models/groot_one/body.html">minestudio.models.groot_one.body</a></li>
-<li><a href="minestudio/models/rocket_one/body.html">minestudio.models.rocket_one.body</a></li>
-<li><a href="minestudio/models/steve_one/body.html">minestudio.models.steve_one.body</a></li>
-<li><a href="minestudio/models/utils/download.html">minestudio.models.utils.download</a></li>
-<li><a href="minestudio/models/vpt/body.html">minestudio.models.vpt.body</a></li>
-<li><a href="minestudio/simulator/callbacks/callback.html">minestudio.simulator.callbacks.callback</a></li>
-<li><a href="minestudio/simulator/callbacks/commands.html">minestudio.simulator.callbacks.commands</a></li>
-<li><a href="minestudio/simulator/callbacks/demonstration.html">minestudio.simulator.callbacks.demonstration</a></li>
-<li><a href="minestudio/simulator/callbacks/fast_reset.html">minestudio.simulator.callbacks.fast_reset</a></li>
-<li><a href="minestudio/simulator/callbacks/hard_reset.html">minestudio.simulator.callbacks.hard_reset</a></li>
-<li><a href="minestudio/simulator/callbacks/init_inventory.html">minestudio.simulator.callbacks.init_inventory</a></li>
-<li><a href="minestudio/simulator/callbacks/judgereset.html">minestudio.simulator.callbacks.judgereset</a></li>
-<li><a href="minestudio/simulator/callbacks/mask_actions.html">minestudio.simulator.callbacks.mask_actions</a></li>
-<li><a href="minestudio/simulator/callbacks/play.html">minestudio.simulator.callbacks.play</a></li>
-<li><a href="minestudio/simulator/callbacks/point.html">minestudio.simulator.callbacks.point</a></li>
-<li><a href="minestudio/simulator/callbacks/prev_action.html">minestudio.simulator.callbacks.prev_action</a></li>
-<li><a href="minestudio/simulator/callbacks/record.html">minestudio.simulator.callbacks.record</a></li>
-<li><a href="minestudio/simulator/callbacks/reward_gate.html">minestudio.simulator.callbacks.reward_gate</a></li>
-<li><a href="minestudio/simulator/callbacks/rewards.html">minestudio.simulator.callbacks.rewards</a></li>
-<li><a href="minestudio/simulator/callbacks/speed_test.html">minestudio.simulator.callbacks.speed_test</a></li>
-<li><a href="minestudio/simulator/callbacks/summon_mobs.html">minestudio.simulator.callbacks.summon_mobs</a></li>
-<li><a href="minestudio/simulator/callbacks/task.html">minestudio.simulator.callbacks.task</a></li>
-<li><a href="minestudio/simulator/callbacks/voxels.html">minestudio.simulator.callbacks.voxels</a></li>
-<li><a href="minestudio/simulator/entry.html">minestudio.simulator.entry</a></li>
-<li><a href="minestudio/simulator/utils/constants.html">minestudio.simulator.utils.constants</a></li>
-<li><a href="minestudio/simulator/utils/gui.html">minestudio.simulator.utils.gui</a></li>
-<li><a href="minestudio/utils/vpt_lib/action_head.html">minestudio.utils.vpt_lib.action_head</a></li>
-<li><a href="minestudio/utils/vpt_lib/scaled_mse_head.html">minestudio.utils.vpt_lib.scaled_mse_head</a></li>
-<li><a href="torch.html">torch</a></li>
-</ul>
+<h1>Source code for minestudio.models.utils.download</h1><div class="highlight"><pre>
+<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Date: 2024-12-14 01:46:36</span>
+<span class="sd">LastEditors: muzhancun muzhancun@126.com</span>
+<span class="sd">LastEditTime: 2024-12-14 02:00:17</span>
+<span class="sd">FilePath: /MineStudio/minestudio/models/utils/download.py</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">huggingface_hub</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pathlib</span>
+
+<div class="viewcode-block" id="download_model">
+<a class="viewcode-back" href="../../../../api/models/index.html#minestudio.models.utils.download.download_model">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">download_model</span><span class="p">(</span><span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">local_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;downloads&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Downloads a specified model from Hugging Face Hub if it doesn&#39;t exist locally.</span>
+
+<span class="sd">    Prompts the user for confirmation before downloading. The model is saved to a</span>
+<span class="sd">    subdirectory within `local_dir` named after `model_name`.</span>
+
+<span class="sd">    :param model_name: The name of the model to download. </span>
+<span class="sd">                       Valid names are &quot;ROCKET-1&quot;, &quot;VPT&quot;, &quot;GROOT&quot;, &quot;STEVE-1&quot;.</span>
+<span class="sd">    :type model_name: str</span>
+<span class="sd">    :param local_dir: The base directory to save downloaded models. Defaults to &quot;downloads&quot;.</span>
+<span class="sd">                      This will be relative to the parent directory of this script&#39;s location.</span>
+<span class="sd">    :type local_dir: str</span>
+<span class="sd">    :returns: The local path to the downloaded model directory if successful or if download was skipped</span>
+<span class="sd">              by user choice but the directory was expected to exist (though it might not in that case).</span>
+<span class="sd">              Returns None if download is skipped and directory doesn&#39;t exist, or if an error occurs.</span>
+<span class="sd">    :rtype: str</span>
+<span class="sd">    :raises AssertionError: if `model_name` is not one of the recognized names.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">assert</span> <span class="n">model_name</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;ROCKET-1&quot;</span><span class="p">,</span> <span class="s2">&quot;VPT&quot;</span><span class="p">,</span> <span class="s2">&quot;GROOT&quot;</span><span class="p">,</span> <span class="s2">&quot;STEVE-1&quot;</span><span class="p">],</span> <span class="sa">f</span><span class="s2">&quot;Unknown model: </span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="n">local_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">absolute</span><span class="p">(),</span> <span class="n">local_dir</span><span class="p">,</span> <span class="n">model_name</span><span class="p">)</span>
+    
+    <span class="n">download</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Detecting missing </span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2">, do you want to download it from huggingface (Y/N)?</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">local_dir</span><span class="p">):</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">response</span> <span class="o">==</span> <span class="s1">&#39;Y&#39;</span> <span class="ow">or</span> <span class="n">response</span> <span class="o">==</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span>
+                <span class="n">download</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">break</span>
+            <span class="k">elif</span> <span class="n">response</span> <span class="o">==</span> <span class="s1">&#39;N&#39;</span> <span class="ow">or</span> <span class="n">response</span> <span class="o">==</span> <span class="s1">&#39;n&#39;</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">response</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please input Y or N:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">download</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Downloading </span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">local_dir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">huggingface_hub</span><span class="o">.</span><span class="n">hf_hub_download</span><span class="p">(</span><span class="n">repo_id</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;CraftJarvis/</span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">local_dir</span><span class="o">=</span><span class="n">local_dir</span><span class="p">,</span> <span class="n">repo_type</span><span class="o">=</span><span class="s1">&#39;model&#39;</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">local_dir</span></div>
+
+</pre></div>
 <div class="section ablog__blog_comments">
   
   
@@ -641,8 +670,8 @@
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+  <script defer src="../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">

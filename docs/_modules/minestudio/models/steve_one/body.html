@@ -1,0 +1,1391 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>minestudio.models.steve_one.body &#8212; MineStudio 1.0.0</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=fd3f3429" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/thebelab.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=f44ad8c8" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../_static/documentation_options.js?v=8d563738"></script>
+    <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../_static/thebelab-helper.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/minestudio/models/steve_one/body';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://craftjarvis.github.io/MineStudio/_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'master';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <link rel="icon" href="../../../../_static/logo-no-text-light.svg"/>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+
+
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../_static/logo-no-text-light.svg" class="logo__image only-light" alt=""/>
+    <img src="../../../../_static/logo-no-text-light.svg" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">MineStudio</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../overview/index.html">
+    Overview
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../overview/getting-started.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../simulator/index.html">
+    Simulator
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../data/index.html">
+    Data
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../models/index.html">
+    Models
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../../offline/index.html">
+    Offline
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../../online/index.html">
+    Online
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../../inference/index.html">
+    Inference
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../../benchmark/index.html">
+    Benchmark
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../../api/index.html">
+    API
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/CraftJarvis/MineStudio" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/minestudio" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-custom fa-pypi fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://arxiv.org/pdf/2310.08235" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="ai ai-arxiv fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">ArXiv</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+          
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../overview/index.html">
+    Overview
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../overview/getting-started.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../simulator/index.html">
+    Simulator
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../data/index.html">
+    Data
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../models/index.html">
+    Models
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../offline/index.html">
+    Offline
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../online/index.html">
+    Online
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../inference/index.html">
+    Inference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../benchmark/index.html">
+    Benchmark
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api/index.html">
+    API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/CraftJarvis/MineStudio" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/minestudio" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-custom fa-pypi fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://arxiv.org/pdf/2310.08235" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="ai ai-arxiv fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">ArXiv</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">minestudio.models.steve_one.body</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+<h1>Source code for minestudio.models.steve_one.body</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">copy</span><span class="w"> </span><span class="kn">import</span> <span class="n">deepcopy</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">hashlib</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn.functional</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">F</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">einops</span><span class="w"> </span><span class="kn">import</span> <span class="n">rearrange</span><span class="p">,</span> <span class="n">repeat</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.models.base_policy</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinePolicy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">huggingface_hub</span><span class="w"> </span><span class="kn">import</span> <span class="n">PyTorchModelHubMixin</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.utils.mineclip_lib.mineclip</span><span class="w"> </span><span class="kn">import</span> <span class="n">MineCLIP</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.utils.vpt_lib.impala_cnn</span><span class="w"> </span><span class="kn">import</span> <span class="n">ImpalaCNN</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.utils.vpt_lib.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">FanInInitReLULayer</span><span class="p">,</span> <span class="n">ResidualRecurrentBlocks</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.models.base_policy</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinePolicy</span>
+
+<div class="viewcode-block" id="TranslatorVAE">
+<a class="viewcode-back" href="../../../../api/models/index.html#minestudio.models.steve_one.body.TranslatorVAE">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">TranslatorVAE</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A Variational Autoencoder (VAE) to translate between visual and text embeddings.</span>
+
+<span class="sd">    This module can encode pairs of visual and text embeddings into a shared latent space</span>
+<span class="sd">    and decode from this latent space back to the visual embedding space, conditioned on</span>
+<span class="sd">    the text embedding.</span>
+
+<span class="sd">    :param input_dim: Dimension of the input visual and text embeddings (assumed to be the same).</span>
+<span class="sd">                      Defaults to 512.</span>
+<span class="sd">    :type input_dim: int</span>
+<span class="sd">    :param hidden_dim: Dimension of the hidden layers in the encoder and decoder. Defaults to 256.</span>
+<span class="sd">    :type hidden_dim: int</span>
+<span class="sd">    :param latent_dim: Dimension of the latent space. Defaults to 256.</span>
+<span class="sd">    :type latent_dim: int</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_dim</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">latent_dim</span><span class="o">=</span><span class="mi">256</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the TranslatorVAE.</span>
+
+<span class="sd">        :param input_dim: Dimensionality of input embeddings. Defaults to 512.</span>
+<span class="sd">        :type input_dim: int</span>
+<span class="sd">        :param hidden_dim: Dimensionality of hidden layers. Defaults to 256.</span>
+<span class="sd">        :type hidden_dim: int</span>
+<span class="sd">        :param latent_dim: Dimensionality of the latent space. Defaults to 256.</span>
+<span class="sd">        :type latent_dim: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_dim</span> <span class="o">=</span> <span class="n">input_dim</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hidden_dim</span> <span class="o">=</span> <span class="n">hidden_dim</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">latent_dim</span> <span class="o">=</span> <span class="n">latent_dim</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">input_dim</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">),</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">LayerNorm</span><span class="p">(</span><span class="n">hidden_dim</span><span class="p">),</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_dim</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">),</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">LayerNorm</span><span class="p">(</span><span class="n">hidden_dim</span><span class="p">),</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_dim</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">latent_dim</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">decoder</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">latent_dim</span> <span class="o">+</span> <span class="n">input_dim</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">),</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">LayerNorm</span><span class="p">(</span><span class="n">hidden_dim</span><span class="p">),</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_dim</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">),</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">LayerNorm</span><span class="p">(</span><span class="n">hidden_dim</span><span class="p">),</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_dim</span><span class="p">,</span> <span class="n">input_dim</span><span class="p">),</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="TranslatorVAE.encode">
+<a class="viewcode-back" href="../../../../api/models/index.html#minestudio.models.steve_one.body.TranslatorVAE.encode">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">encode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">visual_embeddings</span><span class="p">,</span> <span class="n">text_embeddings</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Encode the given visual and text embeddings into a latent vector representation (mu and logvar).</span>
+
+<span class="sd">        :param visual_embeddings: Tensor of visual embeddings.</span>
+<span class="sd">        :type visual_embeddings: torch.Tensor</span>
+<span class="sd">        :param text_embeddings: Tensor of text embeddings.</span>
+<span class="sd">        :type text_embeddings: torch.Tensor</span>
+<span class="sd">        :returns: Tensor representing the parameters (mu and logvar concatenated) of the latent distribution.</span>
+<span class="sd">        :rtype: torch.Tensor</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Concatenate the visual and text embeddings.</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">visual_embeddings</span><span class="p">,</span> <span class="n">text_embeddings</span><span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># Encode the concatenated embeddings into a latent vector.</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TranslatorVAE.sample">
+<a class="viewcode-back" href="../../../../api/models/index.html#minestudio.models.steve_one.body.TranslatorVAE.sample">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">logvar</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sample a latent vector from the Gaussian distribution defined by mu and logvar.</span>
+
+<span class="sd">        Uses the reparameterization trick.</span>
+
+<span class="sd">        :param mu: Mean of the latent Gaussian distribution.</span>
+<span class="sd">        :type mu: torch.Tensor</span>
+<span class="sd">        :param logvar: Log variance of the latent Gaussian distribution.</span>
+<span class="sd">        :type logvar: torch.Tensor</span>
+<span class="sd">        :returns: A sampled latent vector.</span>
+<span class="sd">        :rtype: torch.Tensor</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">std</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">logvar</span><span class="p">)</span>
+        <span class="n">eps</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn_like</span><span class="p">(</span><span class="n">std</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">mu</span> <span class="o">+</span> <span class="n">eps</span> <span class="o">*</span> <span class="n">std</span></div>
+
+
+<div class="viewcode-block" id="TranslatorVAE.decode">
+<a class="viewcode-back" href="../../../../api/models/index.html#minestudio.models.steve_one.body.TranslatorVAE.decode">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">latent_vector</span><span class="p">,</span> <span class="n">text_embeddings</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Decode the given latent vector and text embeddings into a visual embedding.</span>
+
+<span class="sd">        :param latent_vector: The latent vector to decode.</span>
+<span class="sd">        :type latent_vector: torch.Tensor</span>
+<span class="sd">        :param text_embeddings: Text embeddings to condition the decoding.</span>
+<span class="sd">        :type text_embeddings: torch.Tensor</span>
+<span class="sd">        :returns: The reconstructed visual embedding.</span>
+<span class="sd">        :rtype: torch.Tensor</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Concatenate the latent vector and text embeddings.</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">latent_vector</span><span class="p">,</span> <span class="n">text_embeddings</span><span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># Decode the concatenated embeddings into a visual embedding.</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">decoder</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TranslatorVAE.forward">
+<a class="viewcode-back" href="../../../../api/models/index.html#minestudio.models.steve_one.body.TranslatorVAE.forward">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text_embeddings</span><span class="p">,</span> <span class="n">deterministic</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate a visual embedding from text embeddings using a prior latent distribution.</span>
+
+<span class="sd">        This forward pass uses a standard Gaussian prior (mu=0, logvar=0) for the latent space.</span>
+<span class="sd">        It samples from this prior (or uses the mean if deterministic) and decodes it</span>
+<span class="sd">        conditioned on the provided text embeddings.</span>
+
+<span class="sd">        :param text_embeddings: Text embeddings to condition the generation.</span>
+<span class="sd">        :type text_embeddings: torch.Tensor</span>
+<span class="sd">        :param deterministic: If True, use the mean of the prior (mu=0) instead of sampling.</span>
+<span class="sd">                              Defaults to False.</span>
+<span class="sd">        :type deterministic: bool</span>
+<span class="sd">        :returns: The predicted visual embedding.</span>
+<span class="sd">        :rtype: torch.Tensor</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Use the prior as the mean and logvar.</span>
+        <span class="n">mu</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">text_embeddings</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">latent_dim</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">text_embeddings</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">logvar</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">text_embeddings</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">latent_dim</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">text_embeddings</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+
+        <span class="c1"># Sample a latent vector from the mu and logvar.</span>
+        <span class="k">if</span> <span class="n">deterministic</span><span class="p">:</span>
+            <span class="n">latent_vector</span> <span class="o">=</span> <span class="n">mu</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">latent_vector</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">logvar</span><span class="p">)</span>
+
+        <span class="c1"># Decode the latent vector into a visual embedding.</span>
+        <span class="n">pred_visual_embeddings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">latent_vector</span><span class="p">,</span> <span class="n">text_embeddings</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">pred_visual_embeddings</span></div>
+</div>
+
+
+<div class="viewcode-block" id="ImgPreprocessing">
+<a class="viewcode-back" href="../../../../api/models/index.html#minestudio.models.steve_one.body.ImgPreprocessing">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ImgPreprocessing</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Normalize incoming images.</span>
+
+<span class="sd">    :param img_statistics: remote path to npz file with a mean and std image. If specified</span>
+<span class="sd">        normalize images using this.</span>
+<span class="sd">    :param scale_img: If true and img_statistics not specified, scale incoming images by 1/255.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img_statistics</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">scale_img</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize ImgPreprocessing.</span>
+
+<span class="sd">        :param img_statistics: Path to a .npz file containing &#39;mean&#39; and &#39;std&#39; for image normalization.</span>
+<span class="sd">                               If None, normalization will be a simple scaling. Defaults to None.</span>
+<span class="sd">        :type img_statistics: Optional[str]</span>
+<span class="sd">        :param scale_img: If True and `img_statistics` is None, scale images by 1/255.0.</span>
+<span class="sd">                          Defaults to True.</span>
+<span class="sd">        :type scale_img: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">img_mean</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">img_statistics</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">img_statistics</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="o">**</span><span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">img_statistics</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">img_mean</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="n">img_statistics</span><span class="p">[</span><span class="s2">&quot;mean&quot;</span><span class="p">]),</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">img_std</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="n">img_statistics</span><span class="p">[</span><span class="s2">&quot;std&quot;</span><span class="p">]),</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ob_scale</span> <span class="o">=</span> <span class="mf">255.0</span> <span class="k">if</span> <span class="n">scale_img</span> <span class="k">else</span> <span class="mf">1.0</span>
+
+<div class="viewcode-block" id="ImgPreprocessing.forward">
+<a class="viewcode-back" href="../../../../api/models/index.html#minestudio.models.steve_one.body.ImgPreprocessing.forward">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Apply image preprocessing.</span>
+
+<span class="sd">        Normalizes the input image tensor. If `img_statistics` was provided during</span>
+<span class="sd">        initialization, it uses the mean and std from the file. Otherwise, it scales</span>
+<span class="sd">        the image by `1.0 / self.ob_scale`.</span>
+
+<span class="sd">        Note: The input `img` is assumed to be already scaled to [0, 1] if `img_statistics` is used,</span>
+<span class="sd">        or in [0, 255] if `scale_img` is True and `img_statistics` is None.</span>
+
+<span class="sd">        :param img: The input image tensor.</span>
+<span class="sd">        :type img: torch.Tensor</span>
+<span class="sd">        :returns: The preprocessed image tensor.</span>
+<span class="sd">        :rtype: torch.Tensor</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">img</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_mean</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_mean</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_std</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">ob_scale</span>
+        <span class="k">return</span> <span class="n">x</span></div>
+</div>
+
+
+<div class="viewcode-block" id="ImgObsProcess">
+<a class="viewcode-back" href="../../../../api/models/index.html#minestudio.models.steve_one.body.ImgObsProcess">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ImgObsProcess</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;ImpalaCNN followed by a linear layer.</span>
+
+<span class="sd">    :param cnn_outsize: impala output dimension</span>
+<span class="sd">    :param output_size: output size of the linear layer.</span>
+<span class="sd">    :param dense_init_norm_kwargs: kwargs for linear FanInInitReLULayer</span>
+<span class="sd">    :param init_norm_kwargs: kwargs for 2d and 3d conv FanInInitReLULayer</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">cnn_outsize</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">output_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">dense_init_norm_kwargs</span><span class="p">:</span> <span class="n">Dict</span> <span class="o">=</span> <span class="p">{},</span>
+        <span class="n">init_norm_kwargs</span><span class="p">:</span> <span class="n">Dict</span> <span class="o">=</span> <span class="p">{},</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize ImgObsProcess.</span>
+
+<span class="sd">        :param cnn_outsize: The output size of the ImpalaCNN.</span>
+<span class="sd">        :type cnn_outsize: int</span>
+<span class="sd">        :param output_size: The final output size after the linear layer.</span>
+<span class="sd">        :type output_size: int</span>
+<span class="sd">        :param dense_init_norm_kwargs: Keyword arguments for the dense FanInInitReLULayer (linear layer).</span>
+<span class="sd">                                       Defaults to {}.</span>
+<span class="sd">        :type dense_init_norm_kwargs: Dict</span>
+<span class="sd">        :param init_norm_kwargs: Keyword arguments for the convolutional FanInInitReLULayers (within ImpalaCNN).</span>
+<span class="sd">                                 Defaults to {}.</span>
+<span class="sd">        :type init_norm_kwargs: Dict</span>
+<span class="sd">        :param kwargs: Additional keyword arguments passed to ImpalaCNN.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cnn</span> <span class="o">=</span> <span class="n">ImpalaCNN</span><span class="p">(</span>
+            <span class="n">outsize</span><span class="o">=</span><span class="n">cnn_outsize</span><span class="p">,</span>
+            <span class="n">init_norm_kwargs</span><span class="o">=</span><span class="n">init_norm_kwargs</span><span class="p">,</span>
+            <span class="n">dense_init_norm_kwargs</span><span class="o">=</span><span class="n">dense_init_norm_kwargs</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">linear</span> <span class="o">=</span> <span class="n">FanInInitReLULayer</span><span class="p">(</span>
+            <span class="n">cnn_outsize</span><span class="p">,</span>
+            <span class="n">output_size</span><span class="p">,</span>
+            <span class="n">layer_type</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">dense_init_norm_kwargs</span><span class="p">,</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="ImgObsProcess.forward">
+<a class="viewcode-back" href="../../../../api/models/index.html#minestudio.models.steve_one.body.ImgObsProcess.forward">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Process the image observation.</span>
+
+<span class="sd">        Passes the image through the ImpalaCNN and then a linear layer.</span>
+
+<span class="sd">        :param img: The input image tensor.</span>
+<span class="sd">        :type img: torch.Tensor</span>
+<span class="sd">        :returns: The processed image features.</span>
+<span class="sd">        :rtype: torch.Tensor</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">linear</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cnn</span><span class="p">(</span><span class="n">img</span><span class="p">))</span></div>
+</div>
+
+
+<div class="viewcode-block" id="MinecraftPolicy">
+<a class="viewcode-back" href="../../../../api/models/index.html#minestudio.models.steve_one.body.MinecraftPolicy">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">MinecraftPolicy</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    :param recurrence_type:</span>
+<span class="sd">        None                - No recurrence, adds no extra layers</span>
+<span class="sd">        lstm                - (Depreciated). Singular LSTM</span>
+<span class="sd">        multi_layer_lstm    - Multi-layer LSTM. Uses n_recurrence_layers to determine number of consecututive LSTMs</span>
+<span class="sd">            Does NOT support ragged batching</span>
+<span class="sd">        multi_masked_lstm   - Multi-layer LSTM that supports ragged batching via the first vector. This model is slower</span>
+<span class="sd">            Uses n_recurrence_layers to determine number of consecututive LSTMs</span>
+<span class="sd">        transformer         - Dense transformer</span>
+<span class="sd">    :param init_norm_kwargs: kwargs for all FanInInitReLULayers.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">recurrence_type</span><span class="o">=</span><span class="s2">&quot;lstm&quot;</span><span class="p">,</span>
+        <span class="n">impala_width</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">impala_chans</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">),</span>
+        <span class="n">obs_processing_width</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="c1"># Unused</span>
+        <span class="n">hidsize</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span>
+        <span class="n">single_output</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">img_shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">scale_input_img</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">only_img_input</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="c1"># Unused</span>
+        <span class="n">init_norm_kwargs</span><span class="o">=</span><span class="p">{},</span>
+        <span class="n">impala_kwargs</span><span class="o">=</span><span class="p">{},</span>
+        <span class="n">input_shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="c1"># Unused</span>
+        <span class="n">active_reward_monitors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="c1"># Unused</span>
+        <span class="n">img_statistics</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">first_conv_norm</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">diff_mlp_embedding</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="c1"># Unused</span>
+        <span class="n">attention_mask_style</span><span class="o">=</span><span class="s2">&quot;clipped_causal&quot;</span><span class="p">,</span>
+        <span class="n">attention_heads</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+        <span class="n">attention_memory_size</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span>
+        <span class="n">use_pointwise_layer</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">pointwise_ratio</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+        <span class="n">pointwise_use_activation</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">n_recurrence_layers</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">recurrence_is_residual</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">timesteps</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">use_pre_lstm_ln</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">mineclip_embed_dim</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">unused_kwargs</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the MinecraftPolicy network for Steve-1.</span>
+
+<span class="sd">        This network processes image observations and MineCLIP text embeddings, </span>
+<span class="sd">        applies a recurrent layer, and produces latent representations for policy and value functions.</span>
+
+<span class="sd">        :param recurrence_type: Type of recurrence. Defaults to &quot;lstm&quot;.</span>
+<span class="sd">        :type recurrence_type: str</span>
+<span class="sd">        :param impala_width: Width multiplier for ImpalaCNN. Defaults to 1.</span>
+<span class="sd">        :type impala_width: int</span>
+<span class="sd">        :param impala_chans: Channels for ImpalaCNN. Defaults to (16, 32, 32).</span>
+<span class="sd">        :type impala_chans: Tuple[int, ...]</span>
+<span class="sd">        :param obs_processing_width: (Unused) Width for observation processing. Defaults to 256.</span>
+<span class="sd">        :type obs_processing_width: int</span>
+<span class="sd">        :param hidsize: Hidden size for layers. Defaults to 512.</span>
+<span class="sd">        :type hidsize: int</span>
+<span class="sd">        :param single_output: If True, policy/value functions share latent. Defaults to False.</span>
+<span class="sd">        :type single_output: bool</span>
+<span class="sd">        :param img_shape: Shape of input image. Defaults to None.</span>
+<span class="sd">        :type img_shape: Optional[Tuple[int, ...]]</span>
+<span class="sd">        :param scale_input_img: Whether to scale input images. Defaults to True.</span>
+<span class="sd">        :type scale_input_img: bool</span>
+<span class="sd">        :param only_img_input: (Unused) Flag for only image input. Defaults to False.</span>
+<span class="sd">        :type only_img_input: bool</span>
+<span class="sd">        :param init_norm_kwargs: Kwargs for FanInInitReLULayer norm. Defaults to {}.</span>
+<span class="sd">        :type init_norm_kwargs: Dict</span>
+<span class="sd">        :param impala_kwargs: Additional kwargs for ImpalaCNN. Defaults to {}.</span>
+<span class="sd">        :type impala_kwargs: Dict</span>
+<span class="sd">        :param input_shape: (Unused) Expected input shape. Defaults to None.</span>
+<span class="sd">        :type input_shape: Optional[Any]</span>
+<span class="sd">        :param active_reward_monitors: (Unused) Reward monitor config. Defaults to None.</span>
+<span class="sd">        :type active_reward_monitors: Optional[Dict]</span>
+<span class="sd">        :param img_statistics: Path to image normalization statistics. Defaults to None.</span>
+<span class="sd">        :type img_statistics: Optional[str]</span>
+<span class="sd">        :param first_conv_norm: Norm after first Impala conv. Defaults to False.</span>
+<span class="sd">        :type first_conv_norm: bool</span>
+<span class="sd">        :param diff_mlp_embedding: (Unused) Flag for diff MLP embedding. Defaults to False.</span>
+<span class="sd">        :type diff_mlp_embedding: bool</span>
+<span class="sd">        :param attention_mask_style: Attention mask style for Transformer. Defaults to &quot;clipped_causal&quot;.</span>
+<span class="sd">        :type attention_mask_style: str</span>
+<span class="sd">        :param attention_heads: Num attention heads for Transformer. Defaults to 8.</span>
+<span class="sd">        :type attention_heads: int</span>
+<span class="sd">        :param attention_memory_size: Memory size for Transformer attention. Defaults to 2048.</span>
+<span class="sd">        :type attention_memory_size: int</span>
+<span class="sd">        :param use_pointwise_layer: Use pointwise layers in recurrent blocks. Defaults to True.</span>
+<span class="sd">        :type use_pointwise_layer: bool</span>
+<span class="sd">        :param pointwise_ratio: Ratio for pointwise layer dim. Defaults to 4.</span>
+<span class="sd">        :type pointwise_ratio: int</span>
+<span class="sd">        :param pointwise_use_activation: Activation in pointwise layer. Defaults to False.</span>
+<span class="sd">        :type pointwise_use_activation: bool</span>
+<span class="sd">        :param n_recurrence_layers: Number of recurrent layers. Defaults to 1.</span>
+<span class="sd">        :type n_recurrence_layers: int</span>
+<span class="sd">        :param recurrence_is_residual: Residual connections in recurrent blocks. Defaults to True.</span>
+<span class="sd">        :type recurrence_is_residual: bool</span>
+<span class="sd">        :param timesteps: Timesteps for recurrence. Defaults to None.</span>
+<span class="sd">        :type timesteps: Optional[int]</span>
+<span class="sd">        :param use_pre_lstm_ln: LayerNorm before recurrent layer. Defaults to True.</span>
+<span class="sd">        :type use_pre_lstm_ln: bool</span>
+<span class="sd">        :param mineclip_embed_dim: Dimension of MineCLIP embeddings. Defaults to 512.</span>
+<span class="sd">        :type mineclip_embed_dim: int</span>
+<span class="sd">        :param unused_kwargs: Catches other kwargs.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="n">recurrence_type</span> <span class="ow">in</span> <span class="p">[</span>
+            <span class="s2">&quot;multi_layer_lstm&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;multi_layer_bilstm&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;multi_masked_lstm&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;transformer&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;none&quot;</span><span class="p">,</span>
+        <span class="p">]</span>
+
+        <span class="n">active_reward_monitors</span> <span class="o">=</span> <span class="n">active_reward_monitors</span> <span class="ow">or</span> <span class="p">{}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">single_output</span> <span class="o">=</span> <span class="n">single_output</span>
+
+        <span class="c1"># Dense init kwargs replaces batchnorm/groupnorm with layernorm</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">init_norm_kwargs</span> <span class="o">=</span> <span class="n">init_norm_kwargs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dense_init_norm_kwargs</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">init_norm_kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dense_init_norm_kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;group_norm_groups&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dense_init_norm_kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;group_norm_groups&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dense_init_norm_kwargs</span><span class="p">[</span><span class="s2">&quot;layer_norm&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dense_init_norm_kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;batch_norm&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dense_init_norm_kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;batch_norm&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dense_init_norm_kwargs</span><span class="p">[</span><span class="s2">&quot;layer_norm&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="c1"># Setup inputs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">img_preprocess</span> <span class="o">=</span> <span class="n">ImgPreprocessing</span><span class="p">(</span><span class="n">img_statistics</span><span class="o">=</span><span class="n">img_statistics</span><span class="p">,</span> <span class="n">scale_img</span><span class="o">=</span><span class="n">scale_input_img</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">img_process</span> <span class="o">=</span> <span class="n">ImgObsProcess</span><span class="p">(</span>
+            <span class="n">cnn_outsize</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span>
+            <span class="n">output_size</span><span class="o">=</span><span class="n">hidsize</span><span class="p">,</span>
+            <span class="n">inshape</span><span class="o">=</span><span class="n">img_shape</span><span class="p">,</span>
+            <span class="n">chans</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">impala_width</span> <span class="o">*</span> <span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">impala_chans</span><span class="p">),</span>
+            <span class="n">nblock</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+            <span class="n">dense_init_norm_kwargs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dense_init_norm_kwargs</span><span class="p">,</span>
+            <span class="n">init_norm_kwargs</span><span class="o">=</span><span class="n">init_norm_kwargs</span><span class="p">,</span>
+            <span class="n">first_conv_norm</span><span class="o">=</span><span class="n">first_conv_norm</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">impala_kwargs</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pre_lstm_ln</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">LayerNorm</span><span class="p">(</span><span class="n">hidsize</span><span class="p">)</span> <span class="k">if</span> <span class="n">use_pre_lstm_ln</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">diff_obs_process</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">recurrence_type</span> <span class="o">=</span> <span class="n">recurrence_type</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">recurrent_layer</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">recurrent_layer</span> <span class="o">=</span> <span class="n">ResidualRecurrentBlocks</span><span class="p">(</span>
+            <span class="n">hidsize</span><span class="o">=</span><span class="n">hidsize</span><span class="p">,</span>
+            <span class="n">timesteps</span><span class="o">=</span><span class="n">timesteps</span><span class="p">,</span>
+            <span class="n">recurrence_type</span><span class="o">=</span><span class="n">recurrence_type</span><span class="p">,</span>
+            <span class="n">is_residual</span><span class="o">=</span><span class="n">recurrence_is_residual</span><span class="p">,</span>
+            <span class="n">use_pointwise_layer</span><span class="o">=</span><span class="n">use_pointwise_layer</span><span class="p">,</span>
+            <span class="n">pointwise_ratio</span><span class="o">=</span><span class="n">pointwise_ratio</span><span class="p">,</span>
+            <span class="n">pointwise_use_activation</span><span class="o">=</span><span class="n">pointwise_use_activation</span><span class="p">,</span>
+            <span class="n">attention_mask_style</span><span class="o">=</span><span class="n">attention_mask_style</span><span class="p">,</span>
+            <span class="n">attention_heads</span><span class="o">=</span><span class="n">attention_heads</span><span class="p">,</span>
+            <span class="n">attention_memory_size</span><span class="o">=</span><span class="n">attention_memory_size</span><span class="p">,</span>
+            <span class="n">n_block</span><span class="o">=</span><span class="n">n_recurrence_layers</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">lastlayer</span> <span class="o">=</span> <span class="n">FanInInitReLULayer</span><span class="p">(</span><span class="n">hidsize</span><span class="p">,</span> <span class="n">hidsize</span><span class="p">,</span> <span class="n">layer_type</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">dense_init_norm_kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">final_ln</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">LayerNorm</span><span class="p">(</span><span class="n">hidsize</span><span class="p">)</span>
+
+        <span class="c1"># MODIFIED (added this)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mineclip_embed_linear</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">mineclip_embed_dim</span><span class="p">,</span> <span class="n">hidsize</span><span class="p">)</span>
+
+<div class="viewcode-block" id="MinecraftPolicy.output_latent_size">
+<a class="viewcode-back" href="../../../../api/models/index.html#minestudio.models.steve_one.body.MinecraftPolicy.output_latent_size">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">output_latent_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the size of the output latent vector.</span>
+
+<span class="sd">        :returns: The hidden size, which is the dimension of the output latents.</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">hidsize</span></div>
+
+
+<div class="viewcode-block" id="MinecraftPolicy.forward">
+<a class="viewcode-back" href="../../../../api/models/index.html#minestudio.models.steve_one.body.MinecraftPolicy.forward">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ob</span><span class="p">,</span> <span class="n">state_in</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Forward pass of the MinecraftPolicy (Steve-1 variant).</span>
+
+<span class="sd">        Processes image observations (&quot;img&quot;) and MineCLIP text embeddings (&quot;mineclip_embed&quot;),</span>
+<span class="sd">        combines them, passes them through recurrent layers, and produces latent representations.</span>
+
+<span class="sd">        :param ob: Dictionary of observations, expected to contain &quot;img&quot; and &quot;mineclip_embed&quot;.</span>
+<span class="sd">        :type ob: Dict[str, torch.Tensor]</span>
+<span class="sd">        :param state_in: Input recurrent state.</span>
+<span class="sd">        :type state_in: Any # Type depends on recurrence_type</span>
+<span class="sd">        :param context: Context dictionary, expected to contain &quot;first&quot; (a tensor indicating episode starts).</span>
+<span class="sd">        :type context: Dict[str, torch.Tensor]</span>
+<span class="sd">        :returns: A tuple containing:</span>
+<span class="sd">            - pi_latent_or_tuple (Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]]):</span>
+<span class="sd">                If `single_output` is True, this is a single tensor for both policy and value.</span>
+<span class="sd">                Otherwise, it&#39;s a tuple (pi_latent, vf_latent).</span>
+<span class="sd">            - state_out (Any): Output recurrent state.</span>
+<span class="sd">        :rtype: Tuple[Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]], Any]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">b</span><span class="p">,</span> <span class="n">t</span> <span class="o">=</span> <span class="n">ob</span><span class="p">[</span><span class="s2">&quot;img&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">first</span> <span class="o">=</span> <span class="n">context</span><span class="p">[</span><span class="s2">&quot;first&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">bool</span><span class="p">()</span>
+
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_preprocess</span><span class="p">(</span><span class="n">ob</span><span class="p">[</span><span class="s2">&quot;img&quot;</span><span class="p">])</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_process</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">diff_obs_process</span><span class="p">:</span>
+            <span class="n">processed_obs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">diff_obs_process</span><span class="p">(</span><span class="n">ob</span><span class="p">[</span><span class="s2">&quot;diff_goal&quot;</span><span class="p">])</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">processed_obs</span> <span class="o">+</span> <span class="n">x</span>
+
+        <span class="c1"># MODIFIED (added this)</span>
+        <span class="n">mineclip_embed</span> <span class="o">=</span> <span class="n">ob</span><span class="p">[</span><span class="s2">&quot;mineclip_embed&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">b</span> <span class="o">*</span> <span class="n">t</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># Normalize mineclip_embed (doesn&#39;t work because the norm is way too small then?)</span>
+        <span class="c1"># mineclip_embed = F.normalize(mineclip_embed, dim=-1)</span>
+        <span class="n">mineclip_embed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mineclip_embed_linear</span><span class="p">(</span><span class="n">mineclip_embed</span><span class="p">)</span>
+        <span class="n">mineclip_embed</span> <span class="o">=</span> <span class="n">mineclip_embed</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">mineclip_embed</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre_lstm_ln</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre_lstm_ln</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">recurrent_layer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">x</span><span class="p">,</span> <span class="n">state_out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">recurrent_layer</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">first</span><span class="p">,</span> <span class="n">state_in</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">state_out</span> <span class="o">=</span> <span class="n">state_in</span>
+
+        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lastlayer</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">final_ln</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">pi_latent</span> <span class="o">=</span> <span class="n">vf_latent</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">single_output</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">pi_latent</span><span class="p">,</span> <span class="n">state_out</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">pi_latent</span><span class="p">,</span> <span class="n">vf_latent</span><span class="p">),</span> <span class="n">state_out</span></div>
+
+
+<div class="viewcode-block" id="MinecraftPolicy.initial_state">
+<a class="viewcode-back" href="../../../../api/models/index.html#minestudio.models.steve_one.body.MinecraftPolicy.initial_state">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">initial_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batchsize</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the initial recurrent state.</span>
+
+<span class="sd">        :param batchsize: The batch size for the initial state.</span>
+<span class="sd">        :type batchsize: int</span>
+<span class="sd">        :returns: The initial recurrent state, or None if no recurrent layer is used.</span>
+<span class="sd">        :rtype: Any # Type depends on recurrence_type, can be None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">recurrent_layer</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">recurrent_layer</span><span class="o">.</span><span class="n">initial_state</span><span class="p">(</span><span class="n">batchsize</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
+</div>
+
+
+<div class="viewcode-block" id="SteveOnePolicy">
+<a class="viewcode-back" href="../../../../api/models/index.html#minestudio.models.steve_one.body.SteveOnePolicy">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SteveOnePolicy</span><span class="p">(</span><span class="n">MinePolicy</span><span class="p">,</span> <span class="n">PyTorchModelHubMixin</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Steve-1 policy model, combining visual processing with language conditioning via MineCLIP.</span>
+
+<span class="sd">    This policy uses a `MinecraftPolicy` core (which includes an ImpalaCNN and recurrent layers)</span>
+<span class="sd">    and integrates MineCLIP for processing text prompts. It can optionally use a `TranslatorVAE`</span>
+<span class="sd">    to translate between text and visual embedding spaces for more nuanced conditioning.</span>
+
+<span class="sd">    :param policy_kwargs: Keyword arguments for the underlying `MinecraftPolicy`.</span>
+<span class="sd">    :type policy_kwargs: Dict</span>
+<span class="sd">    :param mineclip_kwargs: Keyword arguments for initializing MineCLIP.</span>
+<span class="sd">    :type mineclip_kwargs: Dict</span>
+<span class="sd">    :param trans_kwargs: Keyword arguments for initializing `TranslatorVAE`. If None, VAE is not used.</span>
+<span class="sd">                         Defaults to None.</span>
+<span class="sd">    :type trans_kwargs: Optional[Dict]</span>
+<span class="sd">    :param action_space: The action space definition. Passed to `MinePolicy`.</span>
+<span class="sd">    :type action_space: Optional[Any]</span>
+<span class="sd">    :param internal_hiddim: Hidden dimension for policy/value heads. Passed to `MinePolicy` as `hiddim`.</span>
+<span class="sd">    :type internal_hiddim: int</span>
+<span class="sd">    :param kwargs: Additional keyword arguments for `MinePolicy` (e.g., temperature).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">policy_kwargs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+        <span class="n">mineclip_kwargs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+        <span class="n">trans_kwargs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">action_space</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">internal_hiddim</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the SteveOnePolicy.</span>
+
+<span class="sd">        :param policy_kwargs: Keyword arguments for the `MinecraftPolicy` core.</span>
+<span class="sd">        :type policy_kwargs: Dict[str, Any]</span>
+<span class="sd">        :param mineclip_kwargs: Keyword arguments for MineCLIP.</span>
+<span class="sd">        :type mineclip_kwargs: Dict[str, Any]</span>
+<span class="sd">        :param trans_kwargs: Keyword arguments for `TranslatorVAE`. If None, VAE is disabled.</span>
+<span class="sd">                             Defaults to None.</span>
+<span class="sd">        :type trans_kwargs: Optional[Dict[str, Any]]</span>
+<span class="sd">        :param action_space: Action space definition.</span>
+<span class="sd">        :type action_space: Optional[Any]</span>
+<span class="sd">        :param internal_hiddim: Hidden dimension for policy/value heads. If None, uses `policy_kwargs[&#39;hidsize&#39;]`.</span>
+<span class="sd">        :type internal_hiddim: Optional[int]</span>
+<span class="sd">        :param kwargs: Additional keyword arguments for `MinePolicy`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">internal_hiddim</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">internal_hiddim</span> <span class="o">=</span> <span class="n">policy_kwargs</span><span class="p">[</span><span class="s2">&quot;hidsize&quot;</span><span class="p">]</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">hiddim</span><span class="o">=</span><span class="n">internal_hiddim</span><span class="p">,</span> <span class="n">action_space</span><span class="o">=</span><span class="n">action_space</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">net</span> <span class="o">=</span> <span class="n">MinecraftPolicy</span><span class="p">(</span><span class="o">**</span><span class="n">policy_kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mineclip</span> <span class="o">=</span> <span class="n">MineCLIP</span><span class="p">(</span><span class="o">**</span><span class="n">mineclip_kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">translator_vae</span> <span class="o">=</span> <span class="n">TranslatorVAE</span><span class="p">(</span><span class="o">**</span><span class="n">trans_kwargs</span><span class="p">)</span> <span class="k">if</span> <span class="n">trans_kwargs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+
+        <span class="c1"># Cache for MineCLIP text embeddings</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mineclip_cache</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_mineclip_attns</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prompt</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Computes MineCLIP text embeddings for a given prompt, using a cache.</span>
+
+<span class="sd">        If the prompt has been processed before, returns the cached embedding.</span>
+<span class="sd">        Otherwise, computes it, caches it, and returns it.</span>
+
+<span class="sd">        :param prompt: The text prompt.</span>
+<span class="sd">        :type prompt: str</span>
+<span class="sd">        :param device: The torch device to move the embedding to.</span>
+<span class="sd">        :type device: torch.device</span>
+<span class="sd">        :returns: The MineCLIP text embedding for the prompt.</span>
+<span class="sd">        :rtype: torch.Tensor</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Create a hash of the prompt to use as a cache key.</span>
+        <span class="n">prompt_hash</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">prompt</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">prompt_hash</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mineclip_cache</span><span class="p">:</span>
+            <span class="n">attn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mineclip_cache</span><span class="p">[</span><span class="n">prompt_hash</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># If the prompt is new, compute the embedding.</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="n">attn</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">mineclip</span><span class="o">.</span><span class="n">encode_text</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">prompt</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">attn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mineclip</span><span class="o">.</span><span class="n">encode_text</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>
+
+            <span class="c1"># Cache the computed embedding.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_mineclip_cache</span><span class="p">[</span><span class="n">prompt_hash</span><span class="p">]</span> <span class="o">=</span> <span class="n">attn</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">attn</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">attn</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">attn</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">attn</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+
+<div class="viewcode-block" id="SteveOnePolicy.forward">
+<a class="viewcode-back" href="../../../../api/models/index.html#minestudio.models.steve_one.body.SteveOnePolicy.forward">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> 
+        <span class="nb">input</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> 
+        <span class="n">state_in</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> 
+        <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Forward pass of the SteveOnePolicy.</span>
+
+<span class="sd">        Processes image observations and a text prompt. The text prompt is converted to a</span>
+<span class="sd">        MineCLIP embedding. If a TranslatorVAE is used, this embedding can be further</span>
+<span class="sd">        transformed. The visual features and text-derived features are then passed to the</span>
+<span class="sd">        core `MinecraftPolicy` network.</span>
+
+<span class="sd">        :param input: Dictionary of input observations. Expected to contain:</span>
+<span class="sd">            - &quot;img&quot; (torch.Tensor): Image observations.</span>
+<span class="sd">            - &quot;prompt&quot; (str or List[str]): Text prompt(s).</span>
+<span class="sd">        :type input: Dict[str, Any]</span>
+<span class="sd">        :param state_in: Input recurrent state. If None, an initial state is generated.</span>
+<span class="sd">        :type state_in: Optional[List[torch.Tensor]]</span>
+<span class="sd">        :param kwargs: Additional keyword arguments.</span>
+<span class="sd">        :returns: A tuple containing:</span>
+<span class="sd">            - latents (Dict[str, torch.Tensor]): Dictionary with &#39;pi_logits&#39; and &#39;vpred&#39;.</span>
+<span class="sd">            - state_out (List[torch.Tensor]): Output recurrent state.</span>
+<span class="sd">        :rtype: Tuple[Dict[str, torch.Tensor], List[torch.Tensor]]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># MODIFIED (pass mineclip embeddings to the policy)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">input</span><span class="p">[</span><span class="s2">&quot;prompt&quot;</span><span class="p">],</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="nb">input</span><span class="p">[</span><span class="s2">&quot;prompt&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="nb">input</span><span class="p">[</span><span class="s2">&quot;prompt&quot;</span><span class="p">]]</span>
+        <span class="n">mineclip_embeds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_mineclip_attns</span><span class="p">(</span><span class="nb">input</span><span class="p">[</span><span class="s2">&quot;prompt&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">translator_vae</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># If using TranslatorVAE, decode the text embeddings to get visual embeddings</span>
+            <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+                <span class="n">visual_embeds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">translator_vae</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">mineclip_embeds</span><span class="p">,</span> <span class="n">mineclip_embeds</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">visual_embeds</span> <span class="o">=</span> <span class="n">mineclip_embeds</span>
+
+        <span class="k">if</span> <span class="n">state_in</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">state_in</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial_state</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">input</span><span class="p">[</span><span class="s2">&quot;img&quot;</span><span class="p">]))</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="p">(</span>
+            <span class="n">ob</span><span class="o">=</span><span class="p">{</span>
+                <span class="s2">&quot;img&quot;</span><span class="p">:</span> <span class="nb">input</span><span class="p">[</span><span class="s2">&quot;img&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;mineclip_embed&quot;</span><span class="p">:</span> <span class="n">visual_embeds</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="n">state_in</span><span class="o">=</span><span class="n">state_in</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SteveOnePolicy.initial_state">
+<a class="viewcode-back" href="../../../../api/models/index.html#minestudio.models.steve_one.body.SteveOnePolicy.initial_state">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">initial_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the initial recurrent state for a given batch size.</span>
+
+<span class="sd">        Caches initial states for frequently used batch sizes.</span>
+
+<span class="sd">        :param batch_size: The batch size. If None, returns state for batch size 1 (squeezed).</span>
+<span class="sd">                           Defaults to None.</span>
+<span class="sd">        :type batch_size: Optional[int]</span>
+<span class="sd">        :returns: A list of initial state tensors for the recurrent network, moved to the correct device.</span>
+<span class="sd">        :rtype: List[torch.Tensor]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">batch_size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="k">if</span> <span class="n">batch_size</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initial_state_cache</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initial_state_cache</span><span class="p">[</span><span class="n">batch_size</span><span class="p">]</span>
+
+        <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="o">.</span><span class="n">initial_state</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
+        <span class="c1"># Move to correct device</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">state</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_initial_state_cache</span><span class="p">[</span><span class="n">batch_size</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span>
+        <span class="k">return</span> <span class="n">state</span></div>
+
+
+<div class="viewcode-block" id="SteveOnePolicy.reset_parameters">
+<a class="viewcode-back" href="../../../../api/models/index.html#minestudio.models.steve_one.body.SteveOnePolicy.reset_parameters">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">reset_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">reset_parameters</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="o">.</span><span class="n">reset_parameters</span><span class="p">()</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">device</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">())</span><span class="o">.</span><span class="n">device</span></div>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">load_steve_one_policy</span><span class="p">(</span><span class="n">ckpt_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SteveOnePolicy</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">SteveOnePolicy</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">ckpt_path</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">SteveOnePolicy</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;CraftJarvis/MineStudio_STEVE-1.official&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+    <span class="n">condition</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">prepare_condition</span><span class="p">(</span>
+        <span class="p">{</span>
+            <span class="s1">&#39;cond_scale&#39;</span><span class="p">:</span> <span class="mf">4.0</span><span class="p">,</span>
+            <span class="s1">&#39;video&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">)</span>
+    <span class="n">output</span><span class="p">,</span> <span class="n">memory</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">condition</span><span class="p">,</span>
+        <span class="nb">input</span><span class="o">=</span><span class="p">{</span>
+            <span class="s1">&#39;image&#39;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span><span class="p">),</span> 
+        <span class="p">},</span>
+        <span class="n">state_in</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">initial_state</span><span class="p">(</span><span class="n">condition</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+<div class="section ablog__blog_comments">
+  
+  
+</div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, The CraftJarvis Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
