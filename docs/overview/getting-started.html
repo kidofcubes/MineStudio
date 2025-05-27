@@ -549,7 +549,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../data/dataset-raw.html">Raw Dataset</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../data/dataset-event.html">Event Dataset</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../data/visualization.html">Visualization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../data/convertion.html">Convertion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/convertion.html">Data Conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/callbacks.html">Data Processing Callbacks</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../models/index.html">Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -668,8 +669,8 @@
 <span class="sd-summary-text"><img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Install MineStudio</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
 <!--
  * @Date: 2024-11-28 22:13:52
- * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-12-30 15:19:15
+ * @LastEditors: caishaofei-mus1 1744260356@qq.com
+ * @LastEditTime: 2025-05-28 00:59:28
  * @FilePath: /MineStudio/docs/source/overview/installation.md
 -->
 <p class="rubric" id="installation"><span id="gentle-intro"></span>Installation</p>
@@ -677,116 +678,142 @@
 <p class="admonition-title">Note</p>
 <p class="sd-card-text">If you encounter any issues during installation, please open an issue on <a class="reference external" href="https://github.com/CraftJarvis/MineStudio/issues">GitHub</a>.</p>
 </div>
-<p class="sd-card-text">Welcome to MineStudio, please follow the tutorial below for installation.</p>
-<p class="rubric" id="install-jdk-8">Install JDK 8</p>
-<p class="sd-card-text">To ensure that the Simulator runs smoothly, please make sure that JDK 8 is installed on your system. We recommend using conda to maintain an environment on Linux systems.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>minestudio<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.10<span class="w"> </span>-y
+<p class="sd-card-text">Welcome to MineStudio! Please follow the tutorial below for installation.</p>
+<p class="rubric" id="install-jdk-8">1. Install JDK 8</p>
+<p class="sd-card-text">To ensure that the Simulator runs smoothly, JDK 8 must be installed on your system. We recommend using Conda to manage environments on Linux systems. If you don’t have Conda, you can install it from <a class="reference external" href="https://docs.conda.io/en/latest/miniconda.html">Miniconda</a> or <a class="reference external" href="https://www.anaconda.com/products/distribution">Anaconda</a>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>Create<span class="w"> </span>a<span class="w"> </span>new<span class="w"> </span>conda<span class="w"> </span>environment<span class="w"> </span><span class="o">(</span>optional,<span class="w"> </span>but<span class="w"> </span>recommended<span class="o">)</span>
+<span class="gp">$ </span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>minestudio<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.10<span class="w"> </span>-y
+
+<span class="gp"># </span>Activate<span class="w"> </span>the<span class="w"> </span>environment
 <span class="gp">$ </span>conda<span class="w"> </span>activate<span class="w"> </span>minestudio
+
+<span class="gp"># </span>Install<span class="w"> </span>OpenJDK<span class="w"> </span><span class="m">8</span>
 <span class="gp">$ </span>conda<span class="w"> </span>install<span class="w"> </span>--channel<span class="o">=</span>conda-forge<span class="w"> </span><span class="nv">openjdk</span><span class="o">=</span><span class="m">8</span><span class="w"> </span>-y
 </pre></div>
 </div>
-<p class="rubric" id="install-minestudio">Install MineStudio</p>
-<p class="sd-card-text">a. Install MineStudio from the <a class="reference external" href="https://github.com/CraftJarvis/MineStudio">GitHub</a>.</p>
+<p class="rubric" id="install-minestudio">2. Install MineStudio</p>
+<p class="sd-card-text">You can install MineStudio either from GitHub or PyPI.</p>
+<p class="sd-card-text"><strong>a. Install from GitHub (for the latest version):</strong></p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/CraftJarvis/MineStudio.git
 </pre></div>
 </div>
-<p class="sd-card-text">b. Install MineStudio from <a class="reference external" href="https://pypi.org/project/minestudio/">PyPI</a>.</p>
+<p class="sd-card-text"><strong>b. Install from PyPI (for stable releases):</strong></p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip<span class="w"> </span>install<span class="w"> </span>minestudio
 </pre></div>
 </div>
-<p class="rubric" id="install-the-rendering-tool">Install the rendering tool</p>
-<p class="sd-card-text">For users with <em>nvidia graphics cards</em>, we recommend installing <strong>VirtualGL</strong>; for other users, we recommend using <strong>Xvfb</strong>, which supports CPU rendering but is relatively slower.</p>
+<p class="rubric" id="install-the-rendering-tool">3. Install the Rendering Tool</p>
+<p class="sd-card-text">For GPU-accelerated rendering, especially for users with NVIDIA graphics cards, we recommend installing <strong>VirtualGL</strong>. For other users, or for a simpler setup, <strong>Xvfb</strong> can be used, which supports CPU rendering (this is generally slower).</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p class="sd-card-text">Installing rendering tools may require <strong>root</strong> permissions.</p>
+<p class="sd-card-text">Installing rendering tools and managing services typically requires <strong>root</strong> permissions. Use <code class="docutils literal notranslate"><span class="pre">sudo</span></code> before commands like <code class="docutils literal notranslate"><span class="pre">apt</span></code>, <code class="docutils literal notranslate"><span class="pre">dpkg</span></code>, and <code class="docutils literal notranslate"><span class="pre">service</span></code> where necessary.</p>
 </div>
 <p class="sd-card-text">There are two options:</p>
 <div class="sd-tab-set docutils">
 <input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
 <label class="sd-tab-label" for="sd-tab-item-0">
 Xvfb</label><div class="sd-tab-content docutils">
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>apt<span class="w"> </span>update<span class="w"> </span>
-<span class="gp">$ </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>xvfb<span class="w"> </span>mesa-utils<span class="w"> </span>libegl1-mesa<span class="w"> </span>libgl1-mesa-dev<span class="w"> </span>libglu1-mesa-dev<span class="w"> </span>
+<p class="sd-card-text">This option uses Xvfb for CPU-based rendering.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>apt<span class="w"> </span>update
+<span class="gp">$ </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>xvfb<span class="w"> </span>mesa-utils<span class="w"> </span>libegl1-mesa<span class="w"> </span>libgl1-mesa-dev<span class="w"> </span>libglu1-mesa-dev
 </pre></div>
 </div>
 </div>
 <input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
 <label class="sd-tab-label" for="sd-tab-item-1">
 VirtualGL</label><div class="sd-tab-content docutils">
+<p class="sd-card-text">This option uses VirtualGL for GPU-accelerated rendering.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p class="sd-card-text">Not all graphics cards support virtualGL. If you do not have speed requirements, it is recommended to use the easier-to-install xvfb rendering tool.</p>
+<p class="sd-card-text">Not all graphics cards and driver setups support VirtualGL seamlessly. If you do not have strict performance requirements or encounter issues, using the Xvfb rendering tool is often easier to install and configure.</p>
 </div>
-<p class="sd-card-text">You need to download the following sources:</p>
+<p class="sd-card-text"><strong>3.1. Download VirtualGL and Helper Script:</strong></p>
+<p class="sd-card-text">You need to download the following:</p>
 <ul class="simple">
-<li><p class="sd-card-text"><a class="reference external" href="https://sourceforge.net/projects/virtualgl/files/3.1/virtualgl_3.1_amd64.deb/download">virtualgl_3.1_amd64.deb</a></p></li>
-<li><p class="sd-card-text"><a class="reference external" href="https://github.com/CraftJarvis/MineStudio/blob/master/assets/vgl_entrypoint.sh">vgl_entrypoint.sh</a></p></li>
+<li><p class="sd-card-text">VirtualGL Debian package: <a class="reference external" href="https://sourceforge.net/projects/virtualgl/files/3.1/virtualgl_3.1_amd64.deb/download">virtualgl_3.1_amd64.deb</a></p></li>
+<li><p class="sd-card-text">vgl_entrypoint.sh script: <a class="reference external" href="https://github.com/CraftJarvis/MineStudio/blob/master/assets/vgl_entrypoint.sh">vgl_entrypoint.sh</a> (You might also find this script in the <code class="docutils literal notranslate"><span class="pre">assets/</span></code> directory if you cloned the MineStudio repository).</p></li>
 </ul>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>apt<span class="w"> </span>update<span class="w"> </span>
-<span class="gp">$ </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>xvfb<span class="w"> </span>mesa-utils<span class="w"> </span>libegl1-mesa<span class="w"> </span>libgl1-mesa-dev<span class="w"> </span>libglu1-mesa-dev<span class="w"> </span>
+<p class="sd-card-text"><strong>3.2. Install Dependencies and VirtualGL:</strong></p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>apt<span class="w"> </span>update
+<span class="gp">$ </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>xvfb<span class="w"> </span>mesa-utils<span class="w"> </span>libegl1-mesa<span class="w"> </span>libgl1-mesa-dev<span class="w"> </span>libglu1-mesa-dev<span class="w"> </span>xauth<span class="w"> </span>xterm
+<span class="gp">$ </span>sudo<span class="w"> </span>dpkg<span class="w"> </span>-i<span class="w"> </span>virtualgl_3.1_amd64.deb
+<span class="gp"># </span>If<span class="w"> </span>dpkg<span class="w"> </span>fails<span class="w"> </span>due<span class="w"> </span>to<span class="w"> </span>missing<span class="w"> </span>dependencies,<span class="w"> </span>run:
+<span class="gp">$ </span>sudo<span class="w"> </span>apt<span class="w"> </span>-f<span class="w"> </span>install
 </pre></div>
 </div>
-<p class="sd-card-text">Install the downloaded package.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dpkg<span class="w"> </span>-i<span class="w"> </span>virtualgl_3.1_amd64.deb
+<p class="sd-card-text"><strong>3.3. Configure VirtualGL:</strong></p>
+<p class="sd-card-text">Shutdown your display manager (e.g., gdm, lightdm). If you are using GDM, the command is:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>service<span class="w"> </span>gdm<span class="w"> </span>stop
+<span class="gp"># </span>Or<span class="w"> </span><span class="k">for</span><span class="w"> </span>LightDM:
+<span class="gp"># </span>$<span class="w"> </span>sudo<span class="w"> </span>service<span class="w"> </span>lightdm<span class="w"> </span>stop
 </pre></div>
 </div>
-<p class="sd-card-text">Shutdown the display manager and configure VirtualGL.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>service<span class="w"> </span>gdm<span class="w"> </span>stop<span class="w"> </span>
+<p class="sd-card-text">Run the VirtualGL server configuration script:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>/opt/VirtualGL/bin/vglserver_config
 </pre></div>
 </div>
-<p class="sd-card-text">Configure VirtualGL.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>/opt/VirtualGL/bin/vglserver_config<span class="w"> </span>
+<p class="sd-card-text">You will be prompted with several configuration questions.
+A common configuration sequence might involve:</p>
+<ol class="arabic simple">
+<li><p class="sd-card-text">Choosing option <code class="docutils literal notranslate"><span class="pre">1</span></code> if prompted to select a display manager configuration (e.g., for GDM/LightDM).</p></li>
+<li><p class="sd-card-text">Answering subsequent questions. The original guide suggested a sequence like: Yes, No, No, No. These questions typically relate to:</p>
+<ul class="simple">
+<li><p class="sd-card-text">Restricting access to VirtualGL to members of the <code class="docutils literal notranslate"><span class="pre">vglusers</span></code> group (Recommended: <code class="docutils literal notranslate"><span class="pre">Yes</span></code>. If you choose <code class="docutils literal notranslate"><span class="pre">Yes</span></code>, add your user to the <code class="docutils literal notranslate"><span class="pre">vglusers</span></code> group: <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">usermod</span> <span class="pre">-a</span> <span class="pre">-G</span> <span class="pre">vglusers</span> <span class="pre">$USER</span></code>).</p></li>
+<li><p class="sd-card-text">Restricting framebuffer readback on the 3D X server to members of the <code class="docutils literal notranslate"><span class="pre">vglusers</span></code> group (Recommended: <code class="docutils literal notranslate"><span class="pre">Yes</span></code>).</p></li>
+<li><p class="sd-card-text">Disabling the XTEST extension on the 3D X server (Recommended: <code class="docutils literal notranslate"><span class="pre">No</span></code>, unless you have specific security reasons and do not require indirect rendering capabilities).
+The original guide also mentioned “finally enter X”, the meaning of which is unclear. Please ensure you complete all configuration steps as prompted by the script. If unsure about any option, consulting the official VirtualGL documentation or accepting defaults is advisable.</p></li>
+</ul>
+</li>
+</ol>
+<p class="sd-card-text">Restart your display manager:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>service<span class="w"> </span>gdm<span class="w"> </span>start
+<span class="gp"># </span>Or<span class="w"> </span><span class="k">for</span><span class="w"> </span>LightDM:
+<span class="gp"># </span>$<span class="w"> </span>sudo<span class="w"> </span>service<span class="w"> </span>lightdm<span class="w"> </span>start
 </pre></div>
 </div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p class="sd-card-text">First choose 1，then Yes, No, No, No，finally enter X</p>
-</div>
-<p class="sd-card-text">Start the display manager.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>service<span class="w"> </span>gdm<span class="w"> </span>start
-</pre></div>
-</div>
-<p class="sd-card-text">Start the VirtualGL server.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>bash<span class="w"> </span>vgl_entrypoint.sh
+<p class="sd-card-text"><strong>3.4. Start VirtualGL Server Script:</strong>
+Execute the downloaded <code class="docutils literal notranslate"><span class="pre">vgl_entrypoint.sh</span></code> script. Make sure it’s executable (<code class="docutils literal notranslate"><span class="pre">chmod</span> <span class="pre">+x</span> <span class="pre">vgl_entrypoint.sh</span></code>).</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>bash<span class="w"> </span>./vgl_entrypoint.sh
 </pre></div>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p class="sd-card-text">Each time the system is restarted, it may be necessary to run <code class="docutils literal notranslate"><span class="pre">vgl_entrypoint.sh</span></code>.</p>
+<p class="sd-card-text">You might need to run <code class="docutils literal notranslate"><span class="pre">vgl_entrypoint.sh</span></code> each time the system restarts.</p>
 </div>
-<p class="sd-card-text">Configure the environment variables.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">PATH</span><span class="si">}</span><span class="s2">:/opt/VirtualGL/bin&quot;</span><span class="w"> </span>
-<span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="s2">&quot;/usr/lib/libreoffice/program:</span><span class="si">${</span><span class="nv">LD_LIBRARY_PATH</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>
-<span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">VGL_DISPLAY</span><span class="o">=</span><span class="s2">&quot;egl&quot;</span><span class="w"> </span>
-<span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">VGL_REFRESHRATE</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$REFRESH</span><span class="s2">&quot;</span>
-<span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">DISPLAY</span><span class="o">=</span>:1
+<p class="sd-card-text"><strong>3.5. Configure Environment Variables:</strong>
+Add these exports to your shell configuration file (e.g., <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code>, <code class="docutils literal notranslate"><span class="pre">~/.zshrc</span></code>) and source it or open a new terminal.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">export PATH=&quot;${PATH}:/opt/VirtualGL/bin&quot;</span>
+<span class="go">export VGL_DISPLAY=&quot;egl&quot; # Or try :0, or the appropriate display connected to your NVIDIA GPU</span>
+<span class="go">export VGL_REFRESHRATE=&quot;60&quot; # Or your monitor&#39;s actual refresh rate</span>
+<span class="go">export DISPLAY=&quot;:1&quot; # This is often used for the virtual X server display</span>
 </pre></div>
 </div>
+<p class="sd-card-text">Ensure these variables are set in the terminal where you run MineStudio.</p>
 </div>
 </div>
-<p class="rubric" id="verify-by-running-simulator">Verify by running simulator</p>
+<p class="rubric" id="verify-by-running-the-simulator">4. Verify by Running the Simulator</p>
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
-<p class="sd-card-text">The first time you run it, the script will ask whether to download the compiled model from Hugging Face; just choose Y.</p>
+<p class="sd-card-text">The first time you run the simulator, a script may ask whether to download compiled model assets from Hugging Face. Choose ‘Y’ to proceed.</p>
 </div>
-<p class="sd-card-text">If you are using <strong>Xvfb</strong>, run the following command:</p>
+<p class="sd-card-text"><strong>If you are using Xvfb:</strong></p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python<span class="w"> </span>-m<span class="w"> </span>minestudio.simulator.entry
 </pre></div>
 </div>
-<p class="sd-card-text">If you are using <strong>VirtualGL</strong>, run the following command:</p>
+<p class="sd-card-text"><strong>If you are using VirtualGL:</strong>
+Ensure the environment variables from step 3.5 are set.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nv">MINESTUDIO_GPU_RENDER</span><span class="o">=</span><span class="m">1</span><span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>minestudio.simulator.entry
 </pre></div>
 </div>
-<p class="sd-card-text">If you see the following output, the installation is successful.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Speed</span> <span class="n">Test</span> <span class="n">Status</span><span class="p">:</span> 
-<span class="n">Average</span> <span class="n">Time</span><span class="p">:</span> <span class="mf">0.03</span> 
-<span class="n">Average</span> <span class="n">FPS</span><span class="p">:</span> <span class="mf">38.46</span> 
-<span class="n">Total</span> <span class="n">Steps</span><span class="p">:</span> <span class="mi">50</span> 
+<p class="sd-card-text">If you see output similar to the following, the installation is successful:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Speed</span> <span class="n">Test</span> <span class="n">Status</span><span class="p">:</span>
+<span class="n">Average</span> <span class="n">Time</span><span class="p">:</span> <span class="mf">0.03</span>
+<span class="n">Average</span> <span class="n">FPS</span><span class="p">:</span> <span class="mf">38.46</span>
+<span class="n">Total</span> <span class="n">Steps</span><span class="p">:</span> <span class="mi">50</span>
 
-<span class="n">Speed</span> <span class="n">Test</span> <span class="n">Status</span><span class="p">:</span> 
-<span class="n">Average</span> <span class="n">Time</span><span class="p">:</span> <span class="mf">0.02</span> 
-<span class="n">Average</span> <span class="n">FPS</span><span class="p">:</span> <span class="mf">45.08</span> 
-<span class="n">Total</span> <span class="n">Steps</span><span class="p">:</span> <span class="mi">100</span> 
+<span class="n">Speed</span> <span class="n">Test</span> <span class="n">Status</span><span class="p">:</span>
+<span class="n">Average</span> <span class="n">Time</span><span class="p">:</span> <span class="mf">0.02</span>
+<span class="n">Average</span> <span class="n">FPS</span><span class="p">:</span> <span class="mf">45.08</span>
+<span class="n">Total</span> <span class="n">Steps</span><span class="p">:</span> <span class="mi">100</span>
 </pre></div>
 </div>
 </div>
@@ -865,74 +892,151 @@ VirtualGL</label><div class="sd-tab-content docutils">
 <span class="sd-summary-text"><img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Data: Flexible Data Structures and Fast Dataloaders</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
 <!--
  * @Date: 2024-12-01 08:30:33
- * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-12-30 14:20:20
+ * @LastEditors: caishaofei-mus1 1744260356@qq.com
+ * @LastEditTime: 2025-05-27 23:21:22
  * @FilePath: /MineStudio/docs/source/data/quick-data.md
 -->
-<p class="sd-card-text">Here is a minimal example to show how we load a trajectory from the dataset.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dataset</span>
+<p class="sd-card-text">Here is a minimal example to show how we load trajectories from the dataset.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">RawDataset</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.data.minecraft.callbacks</span><span class="w"> </span><span class="kn">import</span> <span class="n">ImageKernelCallback</span><span class="p">,</span> <span class="n">ActionKernelCallback</span>
 
-<span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span>
-    <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;raw&#39;</span><span class="p">,</span> 
-    <span class="n">dataset_dirs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;6xx&#39;</span><span class="p">,</span> <span class="s1">&#39;7xx&#39;</span><span class="p">,</span> <span class="s1">&#39;8xx&#39;</span><span class="p">,</span> <span class="s1">&#39;9xx&#39;</span><span class="p">,</span> <span class="s1">&#39;10xx&#39;</span><span class="p">],</span> 
-    <span class="n">enable_video</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">enable_action</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">frame_width</span><span class="o">=</span><span class="mi">224</span><span class="p">,</span> 
-    <span class="n">frame_height</span><span class="o">=</span><span class="mi">224</span><span class="p">,</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">RawDataset</span><span class="p">(</span>
+    <span class="n">dataset_dirs</span><span class="o">=</span><span class="p">[</span>
+        <span class="s1">&#39;/nfs-shared-2/data/contractors/dataset_6xx&#39;</span><span class="p">,</span> 
+        <span class="s1">&#39;/nfs-shared-2/data/contractors/dataset_7xx&#39;</span><span class="p">,</span> 
+        <span class="s1">&#39;/nfs-shared-2/data/contractors/dataset_8xx&#39;</span><span class="p">,</span> 
+        <span class="s1">&#39;/nfs-shared-2/data/contractors/dataset_9xx&#39;</span><span class="p">,</span> 
+        <span class="s1">&#39;/nfs-shared-2/data/contractors/dataset_10xx&#39;</span><span class="p">,</span> 
+    <span class="p">],</span>
+    <span class="n">modal_kernel_callbacks</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">ImageKernelCallback</span><span class="p">(</span><span class="n">frame_width</span><span class="o">=</span><span class="mi">224</span><span class="p">,</span> <span class="n">frame_height</span><span class="o">=</span><span class="mi">224</span><span class="p">,</span> <span class="n">enable_video_aug</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span> 
+        <span class="n">ActionKernelCallback</span><span class="p">(</span><span class="n">enable_prev_action</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">win_bias</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">read_bias</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span>
+    <span class="p">],</span>
     <span class="n">win_len</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> 
-    <span class="n">split</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> 
-    <span class="n">split_ratio</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> 
-    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span>
+    <span class="n">split_ratio</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span>
+    <span class="n">shuffle_episodes</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">item</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 </pre></div>
 </div>
 <p class="sd-card-text">You may see the output like this:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">08</span><span class="p">:</span><span class="mi">14</span><span class="p">:</span><span class="mi">15</span><span class="p">]</span> <span class="p">[</span><span class="n">Kernel</span><span class="p">]</span> <span class="n">Driver</span> <span class="n">video</span> <span class="n">load</span> <span class="mi">15738</span> <span class="n">episodes</span><span class="o">.</span>  
-<span class="p">[</span><span class="mi">08</span><span class="p">:</span><span class="mi">14</span><span class="p">:</span><span class="mi">15</span><span class="p">]</span> <span class="p">[</span><span class="n">Kernel</span><span class="p">]</span> <span class="n">Driver</span> <span class="n">action</span> <span class="n">load</span> <span class="mi">15823</span> <span class="n">episodes</span><span class="o">.</span> 
-<span class="p">[</span><span class="mi">08</span><span class="p">:</span><span class="mi">14</span><span class="p">:</span><span class="mi">15</span><span class="p">]</span> <span class="p">[</span><span class="n">Kernel</span><span class="p">]</span> <span class="n">episodes</span><span class="p">:</span> <span class="mi">15655</span><span class="p">,</span> <span class="n">frames</span><span class="p">:</span> <span class="mf">160495936.</span> 
-<span class="n">dict_keys</span><span class="p">([</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="s1">&#39;timestamp&#39;</span><span class="p">,</span> <span class="s1">&#39;episode&#39;</span><span class="p">,</span> <span class="s1">&#39;progress&#39;</span><span class="p">,</span> <span class="s1">&#39;env_action&#39;</span><span class="p">,</span> <span class="s1">&#39;agent_action&#39;</span><span class="p">,</span> <span class="s1">&#39;env_prev_action&#39;</span><span class="p">,</span> <span class="s1">&#39;agent_prev_action&#39;</span><span class="p">,</span> <span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="s1">&#39;mask&#39;</span><span class="p">])</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">23</span><span class="p">:</span><span class="mi">09</span><span class="p">:</span><span class="mi">38</span><span class="p">]</span> <span class="p">[</span><span class="n">Kernel</span><span class="p">]</span> <span class="n">Modal</span> <span class="n">image</span> <span class="n">load</span> <span class="mi">15738</span> <span class="n">episodes</span><span class="o">.</span>
+<span class="p">[</span><span class="mi">23</span><span class="p">:</span><span class="mi">09</span><span class="p">:</span><span class="mi">38</span><span class="p">]</span> <span class="p">[</span><span class="n">Kernel</span><span class="p">]</span> <span class="n">Modal</span> <span class="n">action</span> <span class="n">load</span> <span class="mi">15823</span> <span class="n">episodes</span><span class="o">.</span>
+<span class="p">[</span><span class="mi">23</span><span class="p">:</span><span class="mi">09</span><span class="p">:</span><span class="mi">38</span><span class="p">]</span> <span class="p">[</span><span class="n">Kernel</span><span class="p">]</span> <span class="n">episodes</span><span class="p">:</span> <span class="mi">15655</span><span class="p">,</span> <span class="n">frames</span><span class="p">:</span> <span class="mf">160495936.</span>
+<span class="p">[</span><span class="n">Raw</span> <span class="n">Dataset</span><span class="p">]</span> <span class="n">Shuffling</span> <span class="n">episodes</span> <span class="k">with</span> <span class="n">seed</span> <span class="mf">0.</span> 
+<span class="n">dict_keys</span><span class="p">([</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="s1">&#39;image_mask&#39;</span><span class="p">,</span> <span class="s1">&#39;action_mask&#39;</span><span class="p">,</span> <span class="s1">&#39;env_action&#39;</span><span class="p">,</span> <span class="s1">&#39;env_prev_action&#39;</span><span class="p">,</span> <span class="s1">&#39;agent_action&#39;</span><span class="p">,</span> <span class="s1">&#39;agent_prev_action&#39;</span><span class="p">,</span> <span class="s1">&#39;mask&#39;</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="s1">&#39;timestamp&#39;</span><span class="p">,</span> <span class="s1">&#39;episode&#39;</span><span class="p">,</span> <span class="s1">&#39;progress&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
 <p class="sd-card-text">Please note that the <code class="docutils literal notranslate"><span class="pre">dataset_dirs</span></code> parameter here is a list that can contain multiple dataset directories. In this example, we have loaded five dataset directories.</p>
-<p class="sd-card-text">If an element in the list is one of <code class="docutils literal notranslate"><span class="pre">6xx</span></code>, <code class="docutils literal notranslate"><span class="pre">7xx</span></code>, <code class="docutils literal notranslate"><span class="pre">8xx</span></code>, <code class="docutils literal notranslate"><span class="pre">9xx</span></code>, or <code class="docutils literal notranslate"><span class="pre">10xx</span></code>, the program will automatically download it from <a class="reference external" href="https://huggingface.co/CraftJarvis">Hugging Face</a>, so please ensure your network connection is stable and you have enough storage space.</p>
-<p class="sd-card-text">If an element in the list is a directory like <code class="docutils literal notranslate"><span class="pre">/nfs-shared/data/contractors/dataset_6xx</span></code>, the program will load data directly from that directory.</p>
-<p class="sd-card-text"><strong>You can also mix the two types of elements in the list.</strong></p>
+<p class="sd-card-text">If an element in the list is one of <code class="docutils literal notranslate"><span class="pre">6xx</span></code>, <code class="docutils literal notranslate"><span class="pre">7xx</span></code>, <code class="docutils literal notranslate"><span class="pre">8xx</span></code>, <code class="docutils literal notranslate"><span class="pre">9xx</span></code>, or <code class="docutils literal notranslate"><span class="pre">10xx</span></code>, the program will automatically download it from <a class="reference external" href="https://huggingface.co/CraftJarvis">Hugging Face</a>, so please ensure your network connection is stable and you have enough storage space.
+If an element in the list is a directory like <code class="docutils literal notranslate"><span class="pre">/nfs-shared/data/contractors/dataset_6xx</span></code>, the program will load data directly from that directory.</p>
+<p class="sd-card-text"><strong>We strongly recommend users to manually download the datasets and place them in a local directory, such as <code class="docutils literal notranslate"><span class="pre">/nfs-shared-2/data/contractors/dataset_6xx</span></code>, to avoid downloading issues.</strong></p>
 </div>
 <p class="sd-card-text"><span class="sd-d-grid"><span class="sd-sphinx-override sd-btn sd-text-wrap sd-btn-outline-primary">Learn more about Raw Dataset</span></span></p>
 <p class="sd-card-text">Alternatively, you can also load trajectories that have specific events, for example, loading all trajectories that contain the <code class="docutils literal notranslate"><span class="pre">kill</span> <span class="pre">entity</span></code> event.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dataset</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">EventDataset</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.data.minecraft.callbacks</span><span class="w"> </span><span class="kn">import</span> <span class="n">ImageKernelCallback</span><span class="p">,</span> <span class="n">ActionKernelCallback</span>
 
-<span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span>
-    <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;event&#39;</span><span class="p">,</span> 
-    <span class="n">dataset_dirs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;7xx&#39;</span><span class="p">],</span> 
-    <span class="n">enable_video</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">enable_action</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">frame_width</span><span class="o">=</span><span class="mi">224</span><span class="p">,</span> 
-    <span class="n">frame_height</span><span class="o">=</span><span class="mi">224</span><span class="p">,</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">EventDataset</span><span class="p">(</span>
+    <span class="n">dataset_dirs</span><span class="o">=</span><span class="p">[</span>
+        <span class="s1">&#39;/nfs-shared-2/data/contractors/dataset_6xx&#39;</span><span class="p">,</span> 
+        <span class="s1">&#39;/nfs-shared-2/data/contractors/dataset_7xx&#39;</span><span class="p">,</span> 
+        <span class="s1">&#39;/nfs-shared-2/data/contractors/dataset_8xx&#39;</span><span class="p">,</span> 
+        <span class="s1">&#39;/nfs-shared-2/data/contractors/dataset_9xx&#39;</span><span class="p">,</span> 
+        <span class="s1">&#39;/nfs-shared-2/data/contractors/dataset_10xx&#39;</span><span class="p">,</span> 
+    <span class="p">],</span> 
+    <span class="n">modal_kernel_callbacks</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">ImageKernelCallback</span><span class="p">(</span><span class="n">frame_width</span><span class="o">=</span><span class="mi">224</span><span class="p">,</span> <span class="n">frame_height</span><span class="o">=</span><span class="mi">224</span><span class="p">,</span> <span class="n">enable_video_aug</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span> 
+        <span class="n">ActionKernelCallback</span><span class="p">(),</span>
+    <span class="p">],</span>
     <span class="n">win_len</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> 
-    <span class="n">split</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> 
     <span class="n">split_ratio</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> 
-    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">event_regex</span><span class="o">=</span><span class="s1">&#39;minecraft.kill_entity:.*&#39;</span>
+    <span class="n">event_regex</span><span class="o">=</span><span class="s1">&#39;minecraft.kill_entity:.*&#39;</span><span class="p">,</span> 
+    <span class="n">min_nearby</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span>
+    <span class="n">max_within</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
 <span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;length of dataset: &quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">))</span>
 <span class="n">item</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 </pre></div>
 </div>
 <p class="sd-card-text">You may see the output like this:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">08</span><span class="p">:</span><span class="mi">19</span><span class="p">:</span><span class="mi">14</span><span class="p">]</span> <span class="p">[</span><span class="n">Kernel</span><span class="p">]</span> <span class="n">Driver</span> <span class="n">video</span> <span class="n">load</span> <span class="mi">4617</span> <span class="n">episodes</span><span class="o">.</span>
-<span class="p">[</span><span class="mi">08</span><span class="p">:</span><span class="mi">19</span><span class="p">:</span><span class="mi">14</span><span class="p">]</span> <span class="p">[</span><span class="n">Kernel</span><span class="p">]</span> <span class="n">Driver</span> <span class="n">action</span> <span class="n">load</span> <span class="mi">4681</span> <span class="n">episodes</span><span class="o">.</span> 
-<span class="p">[</span><span class="mi">08</span><span class="p">:</span><span class="mi">19</span><span class="p">:</span><span class="mi">14</span><span class="p">]</span> <span class="p">[</span><span class="n">Kernel</span><span class="p">]</span> <span class="n">episodes</span><span class="p">:</span> <span class="mi">4568</span><span class="p">,</span> <span class="n">frames</span><span class="p">:</span> <span class="mf">65291168.</span> 
-<span class="p">[</span><span class="mi">08</span><span class="p">:</span><span class="mi">19</span><span class="p">:</span><span class="mi">14</span><span class="p">]</span> <span class="p">[</span><span class="n">Event</span> <span class="n">Kernel</span><span class="p">]</span> <span class="n">Number</span> <span class="n">of</span> <span class="n">loaded</span> <span class="n">events</span><span class="p">:</span> <span class="mf">58.</span> 
-<span class="p">[</span><span class="mi">08</span><span class="p">:</span><span class="mi">19</span><span class="p">:</span><span class="mi">14</span><span class="p">]</span> <span class="p">[</span><span class="n">Event</span> <span class="n">Dataset</span><span class="p">]</span> <span class="n">Regex</span><span class="p">:</span> <span class="n">minecraft</span><span class="o">.</span><span class="n">kill_entity</span><span class="p">:</span><span class="o">.*</span><span class="p">,</span> <span class="n">Number</span> <span class="n">of</span> <span class="n">events</span><span class="p">:</span> <span class="mi">58</span><span class="p">,</span> <span class="n">number</span> <span class="n">of</span> <span class="n">items</span><span class="p">:</span> <span class="mi">19652</span>
-<span class="n">dict_keys</span><span class="p">([</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="s1">&#39;env_action&#39;</span><span class="p">,</span> <span class="s1">&#39;agent_action&#39;</span><span class="p">,</span> <span class="s1">&#39;env_prev_action&#39;</span><span class="p">,</span> <span class="s1">&#39;agent_prev_action&#39;</span><span class="p">,</span> <span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="s1">&#39;mask&#39;</span><span class="p">])</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">23</span><span class="p">:</span><span class="mi">16</span><span class="p">:</span><span class="mi">07</span><span class="p">]</span> <span class="p">[</span><span class="n">Event</span> <span class="n">Kernel</span> <span class="n">Manager</span><span class="p">]</span> <span class="n">Number</span> <span class="n">of</span> <span class="n">loaded</span> <span class="n">events</span><span class="p">:</span> <span class="mi">61</span>
+<span class="p">[</span><span class="mi">23</span><span class="p">:</span><span class="mi">16</span><span class="p">:</span><span class="mi">07</span><span class="p">]</span> <span class="p">[</span><span class="n">Kernel</span><span class="p">]</span> <span class="n">Modal</span> <span class="n">image</span> <span class="n">load</span> <span class="mi">15738</span> <span class="n">episodes</span><span class="o">.</span>
+<span class="p">[</span><span class="mi">23</span><span class="p">:</span><span class="mi">16</span><span class="p">:</span><span class="mi">07</span><span class="p">]</span> <span class="p">[</span><span class="n">Kernel</span><span class="p">]</span> <span class="n">Modal</span> <span class="n">action</span> <span class="n">load</span> <span class="mi">15823</span> <span class="n">episodes</span><span class="o">.</span>
+<span class="p">[</span><span class="mi">23</span><span class="p">:</span><span class="mi">16</span><span class="p">:</span><span class="mi">07</span><span class="p">]</span> <span class="p">[</span><span class="n">Kernel</span><span class="p">]</span> <span class="n">episodes</span><span class="p">:</span> <span class="mi">15655</span><span class="p">,</span> <span class="n">frames</span><span class="p">:</span> <span class="mf">160495936.</span>
+<span class="p">[</span><span class="mi">23</span><span class="p">:</span><span class="mi">16</span><span class="p">:</span><span class="mi">07</span><span class="p">]</span> <span class="p">[</span><span class="n">Event</span> <span class="n">Dataset</span><span class="p">]</span> <span class="n">Regex</span><span class="p">:</span> <span class="n">minecraft</span><span class="o">.</span><span class="n">kill_entity</span><span class="p">:</span><span class="o">.*</span><span class="p">,</span> <span class="n">Number</span> <span class="n">of</span> <span class="n">events</span><span class="p">:</span> <span class="mi">61</span><span class="p">,</span> <span class="n">number</span> <span class="n">of</span> <span class="n">items</span><span class="p">:</span> <span class="mf">16835.</span> 
+<span class="n">length</span> <span class="n">of</span> <span class="n">dataset</span><span class="p">:</span> <span class="mi">16835</span>
+<span class="n">dict_keys</span><span class="p">([</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="s1">&#39;env_action&#39;</span><span class="p">,</span> <span class="s1">&#39;agent_action&#39;</span><span class="p">,</span> <span class="s1">&#39;mask&#39;</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="s1">&#39;episode&#39;</span><span class="p">,</span> <span class="s1">&#39;timestamp&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 <p class="sd-card-text"><span class="sd-d-grid"><span class="sd-sphinx-override sd-btn sd-text-wrap sd-btn-outline-primary">Learn more about Event Dataset</span></span></p>
+<p class="sd-card-text">We also provide a dataloader wrapper to make it easier to use the dataset.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">RawDataModule</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.data.minecraft.callbacks</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ImageKernelCallback</span><span class="p">,</span> <span class="n">ActionKernelCallback</span>
+<span class="p">)</span>
+
+<span class="n">data_module</span> <span class="o">=</span> <span class="n">RawDataModule</span><span class="p">(</span>
+    <span class="n">data_params</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+        <span class="n">dataset_dirs</span><span class="o">=</span><span class="p">[</span>
+            <span class="s1">&#39;/nfs-shared-2/data/contractors/dataset_6xx&#39;</span><span class="p">,</span> 
+            <span class="s1">&#39;/nfs-shared-2/data/contractors/dataset_7xx&#39;</span><span class="p">,</span> 
+            <span class="s1">&#39;/nfs-shared-2/data/contractors/dataset_8xx&#39;</span><span class="p">,</span> 
+            <span class="s1">&#39;/nfs-shared-2/data/contractors/dataset_9xx&#39;</span><span class="p">,</span> 
+            <span class="s1">&#39;/nfs-shared-2/data/contractors/dataset_10xx&#39;</span><span class="p">,</span> 
+        <span class="p">],</span>
+        <span class="n">modal_kernel_callbacks</span><span class="o">=</span><span class="p">[</span>
+            <span class="n">ImageKernelCallback</span><span class="p">(</span><span class="n">frame_width</span><span class="o">=</span><span class="mi">224</span><span class="p">,</span> <span class="n">frame_height</span><span class="o">=</span><span class="mi">224</span><span class="p">,</span> <span class="n">enable_video_aug</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span> 
+            <span class="n">ActionKernelCallback</span><span class="p">(</span><span class="n">enable_prev_action</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">win_bias</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">read_bias</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span>
+        <span class="p">],</span>
+        <span class="n">win_len</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> 
+        <span class="n">split_ratio</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span>
+        <span class="n">shuffle_episodes</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="n">batch_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">num_workers</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+    <span class="n">prefetch_factor</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">episode_continuous_batch</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">data_module</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
+<span class="n">loader</span> <span class="o">=</span> <span class="n">data_module</span><span class="o">.</span><span class="n">train_dataloader</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">batch</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">loader</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">batch</span><span class="p">[</span><span class="s1">&#39;episode&#39;</span><span class="p">],</span> <span class="n">batch</span><span class="p">[</span><span class="s1">&#39;progress&#39;</span><span class="p">])]</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">idx</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="k">break</span>
+</pre></div>
+</div>
+<p class="sd-card-text">You may see the output like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">23</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mi">03</span><span class="p">]</span> <span class="p">[</span><span class="n">Kernel</span><span class="p">]</span> <span class="n">Modal</span> <span class="n">image</span> <span class="n">load</span> <span class="mi">15738</span> <span class="n">episodes</span><span class="o">.</span>
+<span class="p">[</span><span class="mi">23</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mi">03</span><span class="p">]</span> <span class="p">[</span><span class="n">Kernel</span><span class="p">]</span> <span class="n">Modal</span> <span class="n">action</span> <span class="n">load</span> <span class="mi">15823</span> <span class="n">episodes</span><span class="o">.</span>
+<span class="p">[</span><span class="mi">23</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mi">03</span><span class="p">]</span> <span class="p">[</span><span class="n">Kernel</span><span class="p">]</span> <span class="n">episodes</span><span class="p">:</span> <span class="mi">15655</span><span class="p">,</span> <span class="n">frames</span><span class="p">:</span> <span class="mf">160495936.</span>
+<span class="p">[</span><span class="n">Raw</span> <span class="n">Dataset</span><span class="p">]</span> <span class="n">Shuffling</span> <span class="n">episodes</span> <span class="k">with</span> <span class="n">seed</span> <span class="mf">0.</span> 
+<span class="p">[</span><span class="mi">23</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mi">03</span><span class="p">]</span> <span class="p">[</span><span class="n">Kernel</span><span class="p">]</span> <span class="n">Modal</span> <span class="n">image</span> <span class="n">load</span> <span class="mi">15738</span> <span class="n">episodes</span><span class="o">.</span>
+<span class="p">[</span><span class="mi">23</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mi">03</span><span class="p">]</span> <span class="p">[</span><span class="n">Kernel</span><span class="p">]</span> <span class="n">Modal</span> <span class="n">action</span> <span class="n">load</span> <span class="mi">15823</span> <span class="n">episodes</span><span class="o">.</span>
+<span class="p">[</span><span class="mi">23</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mi">03</span><span class="p">]</span> <span class="p">[</span><span class="n">Kernel</span><span class="p">]</span> <span class="n">episodes</span><span class="p">:</span> <span class="mi">15655</span><span class="p">,</span> <span class="n">frames</span><span class="p">:</span> <span class="mf">160495936.</span>
+<span class="p">[</span><span class="n">Raw</span> <span class="n">Dataset</span><span class="p">]</span> <span class="n">Shuffling</span> <span class="n">episodes</span> <span class="k">with</span> <span class="n">seed</span> <span class="mf">0.</span> 
+<span class="n">thirsty</span><span class="o">-</span><span class="n">lavender</span><span class="o">-</span><span class="n">koala</span><span class="o">-</span><span class="mi">7552</span><span class="n">d1728d4d</span><span class="o">-</span><span class="mi">20220411</span><span class="o">-</span><span class="mi">092042</span> <span class="mi">0</span><span class="o">/</span><span class="mi">75</span>        <span class="n">Player63</span><span class="o">-</span><span class="n">f153ac423f61</span><span class="o">-</span><span class="mi">20210723</span><span class="o">-</span><span class="mi">162533</span> <span class="mi">0</span><span class="o">/</span><span class="mi">8</span>       <span class="n">wiggy</span><span class="o">-</span><span class="n">aquamarine</span><span class="o">-</span><span class="n">tapir</span><span class="o">-</span><span class="n">c09d137a3840</span><span class="o">-</span><span class="mi">20220318</span><span class="o">-</span><span class="mi">024035</span> <span class="mi">0</span><span class="o">/</span><span class="mi">88</span>
+<span class="n">thirsty</span><span class="o">-</span><span class="n">lavender</span><span class="o">-</span><span class="n">koala</span><span class="o">-</span><span class="mi">7552</span><span class="n">d1728d4d</span><span class="o">-</span><span class="mi">20220411</span><span class="o">-</span><span class="mi">092042</span> <span class="mi">1</span><span class="o">/</span><span class="mi">75</span>        <span class="n">Player63</span><span class="o">-</span><span class="n">f153ac423f61</span><span class="o">-</span><span class="mi">20210723</span><span class="o">-</span><span class="mi">162533</span> <span class="mi">1</span><span class="o">/</span><span class="mi">8</span>       <span class="n">wiggy</span><span class="o">-</span><span class="n">aquamarine</span><span class="o">-</span><span class="n">tapir</span><span class="o">-</span><span class="n">c09d137a3840</span><span class="o">-</span><span class="mi">20220318</span><span class="o">-</span><span class="mi">024035</span> <span class="mi">1</span><span class="o">/</span><span class="mi">88</span>
+<span class="n">thirsty</span><span class="o">-</span><span class="n">lavender</span><span class="o">-</span><span class="n">koala</span><span class="o">-</span><span class="mi">7552</span><span class="n">d1728d4d</span><span class="o">-</span><span class="mi">20220411</span><span class="o">-</span><span class="mi">092042</span> <span class="mi">2</span><span class="o">/</span><span class="mi">75</span>        <span class="n">Player63</span><span class="o">-</span><span class="n">f153ac423f61</span><span class="o">-</span><span class="mi">20210723</span><span class="o">-</span><span class="mi">162533</span> <span class="mi">2</span><span class="o">/</span><span class="mi">8</span>       <span class="n">wiggy</span><span class="o">-</span><span class="n">aquamarine</span><span class="o">-</span><span class="n">tapir</span><span class="o">-</span><span class="n">c09d137a3840</span><span class="o">-</span><span class="mi">20220318</span><span class="o">-</span><span class="mi">024035</span> <span class="mi">2</span><span class="o">/</span><span class="mi">88</span>
+<span class="n">thirsty</span><span class="o">-</span><span class="n">lavender</span><span class="o">-</span><span class="n">koala</span><span class="o">-</span><span class="mi">7552</span><span class="n">d1728d4d</span><span class="o">-</span><span class="mi">20220411</span><span class="o">-</span><span class="mi">092042</span> <span class="mi">3</span><span class="o">/</span><span class="mi">75</span>        <span class="n">Player63</span><span class="o">-</span><span class="n">f153ac423f61</span><span class="o">-</span><span class="mi">20210723</span><span class="o">-</span><span class="mi">162533</span> <span class="mi">3</span><span class="o">/</span><span class="mi">8</span>       <span class="n">wiggy</span><span class="o">-</span><span class="n">aquamarine</span><span class="o">-</span><span class="n">tapir</span><span class="o">-</span><span class="n">c09d137a3840</span><span class="o">-</span><span class="mi">20220318</span><span class="o">-</span><span class="mi">024035</span> <span class="mi">3</span><span class="o">/</span><span class="mi">88</span>
+<span class="n">thirsty</span><span class="o">-</span><span class="n">lavender</span><span class="o">-</span><span class="n">koala</span><span class="o">-</span><span class="mi">7552</span><span class="n">d1728d4d</span><span class="o">-</span><span class="mi">20220411</span><span class="o">-</span><span class="mi">092042</span> <span class="mi">4</span><span class="o">/</span><span class="mi">75</span>        <span class="n">Player63</span><span class="o">-</span><span class="n">f153ac423f61</span><span class="o">-</span><span class="mi">20210723</span><span class="o">-</span><span class="mi">162533</span> <span class="mi">4</span><span class="o">/</span><span class="mi">8</span>       <span class="n">wiggy</span><span class="o">-</span><span class="n">aquamarine</span><span class="o">-</span><span class="n">tapir</span><span class="o">-</span><span class="n">c09d137a3840</span><span class="o">-</span><span class="mi">20220318</span><span class="o">-</span><span class="mi">024035</span> <span class="mi">4</span><span class="o">/</span><span class="mi">88</span>
+<span class="n">thirsty</span><span class="o">-</span><span class="n">lavender</span><span class="o">-</span><span class="n">koala</span><span class="o">-</span><span class="mi">7552</span><span class="n">d1728d4d</span><span class="o">-</span><span class="mi">20220411</span><span class="o">-</span><span class="mi">092042</span> <span class="mi">5</span><span class="o">/</span><span class="mi">75</span>        <span class="n">Player63</span><span class="o">-</span><span class="n">f153ac423f61</span><span class="o">-</span><span class="mi">20210723</span><span class="o">-</span><span class="mi">162533</span> <span class="mi">5</span><span class="o">/</span><span class="mi">8</span>       <span class="n">wiggy</span><span class="o">-</span><span class="n">aquamarine</span><span class="o">-</span><span class="n">tapir</span><span class="o">-</span><span class="n">c09d137a3840</span><span class="o">-</span><span class="mi">20220318</span><span class="o">-</span><span class="mi">024035</span> <span class="mi">5</span><span class="o">/</span><span class="mi">88</span>
+<span class="n">thirsty</span><span class="o">-</span><span class="n">lavender</span><span class="o">-</span><span class="n">koala</span><span class="o">-</span><span class="mi">7552</span><span class="n">d1728d4d</span><span class="o">-</span><span class="mi">20220411</span><span class="o">-</span><span class="mi">092042</span> <span class="mi">6</span><span class="o">/</span><span class="mi">75</span>        <span class="n">Player63</span><span class="o">-</span><span class="n">f153ac423f61</span><span class="o">-</span><span class="mi">20210723</span><span class="o">-</span><span class="mi">162533</span> <span class="mi">6</span><span class="o">/</span><span class="mi">8</span>       <span class="n">wiggy</span><span class="o">-</span><span class="n">aquamarine</span><span class="o">-</span><span class="n">tapir</span><span class="o">-</span><span class="n">c09d137a3840</span><span class="o">-</span><span class="mi">20220318</span><span class="o">-</span><span class="mi">024035</span> <span class="mi">6</span><span class="o">/</span><span class="mi">88</span>
+<span class="n">thirsty</span><span class="o">-</span><span class="n">lavender</span><span class="o">-</span><span class="n">koala</span><span class="o">-</span><span class="mi">7552</span><span class="n">d1728d4d</span><span class="o">-</span><span class="mi">20220411</span><span class="o">-</span><span class="mi">092042</span> <span class="mi">7</span><span class="o">/</span><span class="mi">75</span>        <span class="n">Player63</span><span class="o">-</span><span class="n">f153ac423f61</span><span class="o">-</span><span class="mi">20210723</span><span class="o">-</span><span class="mi">162533</span> <span class="mi">7</span><span class="o">/</span><span class="mi">8</span>       <span class="n">wiggy</span><span class="o">-</span><span class="n">aquamarine</span><span class="o">-</span><span class="n">tapir</span><span class="o">-</span><span class="n">c09d137a3840</span><span class="o">-</span><span class="mi">20220318</span><span class="o">-</span><span class="mi">024035</span> <span class="mi">7</span><span class="o">/</span><span class="mi">88</span>
+<span class="n">thirsty</span><span class="o">-</span><span class="n">lavender</span><span class="o">-</span><span class="n">koala</span><span class="o">-</span><span class="mi">7552</span><span class="n">d1728d4d</span><span class="o">-</span><span class="mi">20220411</span><span class="o">-</span><span class="mi">092042</span> <span class="mi">8</span><span class="o">/</span><span class="mi">75</span>        <span class="n">Player985</span><span class="o">-</span><span class="n">f153ac423f61</span><span class="o">-</span><span class="mi">20210914</span><span class="o">-</span><span class="mi">114117</span> <span class="mi">0</span><span class="o">/</span><span class="mi">23</span>     <span class="n">wiggy</span><span class="o">-</span><span class="n">aquamarine</span><span class="o">-</span><span class="n">tapir</span><span class="o">-</span><span class="n">c09d137a3840</span><span class="o">-</span><span class="mi">20220318</span><span class="o">-</span><span class="mi">024035</span> <span class="mi">8</span><span class="o">/</span><span class="mi">88</span>
+<span class="n">thirsty</span><span class="o">-</span><span class="n">lavender</span><span class="o">-</span><span class="n">koala</span><span class="o">-</span><span class="mi">7552</span><span class="n">d1728d4d</span><span class="o">-</span><span class="mi">20220411</span><span class="o">-</span><span class="mi">092042</span> <span class="mi">9</span><span class="o">/</span><span class="mi">75</span>        <span class="n">Player985</span><span class="o">-</span><span class="n">f153ac423f61</span><span class="o">-</span><span class="mi">20210914</span><span class="o">-</span><span class="mi">114117</span> <span class="mi">1</span><span class="o">/</span><span class="mi">23</span>     <span class="n">wiggy</span><span class="o">-</span><span class="n">aquamarine</span><span class="o">-</span><span class="n">tapir</span><span class="o">-</span><span class="n">c09d137a3840</span><span class="o">-</span><span class="mi">20220318</span><span class="o">-</span><span class="mi">024035</span> <span class="mi">9</span><span class="o">/</span><span class="mi">88</span>
+<span class="n">thirsty</span><span class="o">-</span><span class="n">lavender</span><span class="o">-</span><span class="n">koala</span><span class="o">-</span><span class="mi">7552</span><span class="n">d1728d4d</span><span class="o">-</span><span class="mi">20220411</span><span class="o">-</span><span class="mi">092042</span> <span class="mi">10</span><span class="o">/</span><span class="mi">75</span>       <span class="n">Player985</span><span class="o">-</span><span class="n">f153ac423f61</span><span class="o">-</span><span class="mi">20210914</span><span class="o">-</span><span class="mi">114117</span> <span class="mi">2</span><span class="o">/</span><span class="mi">23</span>     <span class="n">wiggy</span><span class="o">-</span><span class="n">aquamarine</span><span class="o">-</span><span class="n">tapir</span><span class="o">-</span><span class="n">c09d137a3840</span><span class="o">-</span><span class="mi">20220318</span><span class="o">-</span><span class="mi">024035</span> <span class="mi">10</span><span class="o">/</span><span class="mi">88</span>
+<span class="n">thirsty</span><span class="o">-</span><span class="n">lavender</span><span class="o">-</span><span class="n">koala</span><span class="o">-</span><span class="mi">7552</span><span class="n">d1728d4d</span><span class="o">-</span><span class="mi">20220411</span><span class="o">-</span><span class="mi">092042</span> <span class="mi">11</span><span class="o">/</span><span class="mi">75</span>       <span class="n">Player985</span><span class="o">-</span><span class="n">f153ac423f61</span><span class="o">-</span><span class="mi">20210914</span><span class="o">-</span><span class="mi">114117</span> <span class="mi">3</span><span class="o">/</span><span class="mi">23</span>     <span class="n">wiggy</span><span class="o">-</span><span class="n">aquamarine</span><span class="o">-</span><span class="n">tapir</span><span class="o">-</span><span class="n">c09d137a3840</span><span class="o">-</span><span class="mi">20220318</span><span class="o">-</span><span class="mi">024035</span> <span class="mi">11</span><span class="o">/</span><span class="mi">88</span>
+</pre></div>
+</div>
 </div>
 </details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
 <summary class="sd-summary-title sd-card-header">

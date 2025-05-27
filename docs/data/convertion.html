@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Convertion &#8212; MineStudio</title>
+    <title>Data Conversion &#8212; MineStudio</title>
   
   
   
@@ -72,7 +72,7 @@
     <link rel="icon" href="../_static/logo-no-text-light.svg"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Models" href="../models/index.html" />
+    <link rel="next" title="Data Processing Callbacks" href="callbacks.html" />
     <link rel="prev" title="Visualization" href="visualization.html" /> 
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -547,7 +547,8 @@
 <li class="toctree-l2"><a class="reference internal" href="dataset-raw.html">Raw Dataset</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dataset-event.html">Event Dataset</a></li>
 <li class="toctree-l2"><a class="reference internal" href="visualization.html">Visualization</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Convertion</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Data Conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="callbacks.html">Data Processing Callbacks</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../models/index.html">Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -628,7 +629,7 @@
     
     <li class="breadcrumb-item"><a href="index.html" class="nav-link">Data</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Convertion</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Data Conversion</span></li>
   </ul>
 </nav>
 </div>
@@ -647,129 +648,150 @@
                    <!--
  * @Date: 2024-12-12 09:18:35
  * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-12-30 16:06:47
+ * @LastEditTime: 2025-05-28 11:00:00
  * @FilePath: /MineStudio/docs/source/data/convertion.md
 -->
-<section id="convertion">
-<h1>Convertion<a class="headerlink" href="#convertion" title="Link to this heading">#</a></h1>
-<p>We provide a convertion script that allows users to convert the raw data to the MineStudio format.</p>
+<section id="data-conversion">
+<h1>Data Conversion<a class="headerlink" href="#data-conversion" title="Link to this heading">#</a></h1>
+<p>We provide tools to convert raw trajectory data into the MineStudio LMDB format. This conversion is crucial for efficient data loading and utilization within the MineStudio framework.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>It is essential to perform the conversion to ensure that our engineering efforts on the data can be effectively utilized.</p>
+<p>It is essential to perform the conversion to ensure that our data processing and model training pipelines can be effectively utilized.</p>
 </div>
-<section id="prepare-raw-trajectories">
-<h2>Prepare Raw Trajectories<a class="headerlink" href="#prepare-raw-trajectories" title="Link to this heading">#</a></h2>
-<p>The raw data should contain <code class="docutils literal notranslate"><span class="pre">video</span></code> and <code class="docutils literal notranslate"><span class="pre">action</span></code> directories. The <code class="docutils literal notranslate"><span class="pre">video</span></code> contains a list of <code class="docutils literal notranslate"><span class="pre">mp4-format</span></code> video files, and the <code class="docutils literal notranslate"><span class="pre">action</span></code> contains a list of <code class="docutils literal notranslate"><span class="pre">dict-format</span></code> action files. The <code class="docutils literal notranslate"><span class="pre">video</span></code> and <code class="docutils literal notranslate"><span class="pre">action</span></code> files should have the same length and the same name.</p>
-<ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">/path/to/raw_episodes/videos</span></code> directory:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">video</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;episode_0001.mp4&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;episode_0002.mp4&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;episode_0003.mp4&#39;</span><span class="p">,</span>
-    <span class="o">...</span>
-<span class="p">]</span>
-</pre></div>
-</div>
-</li>
-<li><p><code class="docutils literal notranslate"><span class="pre">/path/to/raw_episodes/actions</span></code> directory:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">action</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;episode_0001.pkl&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;episode_0002.pkl&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;episode_0003.pkl&#39;</span><span class="p">,</span>
-    <span class="o">...</span>
-<span class="p">]</span>
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Each action file is a <code class="docutils literal notranslate"><span class="pre">dict</span></code> object that contains the following keys:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dict_keys</span><span class="p">([</span><span class="s1">&#39;back&#39;</span><span class="p">,</span> <span class="s1">&#39;drop&#39;</span><span class="p">,</span> <span class="s1">&#39;forward&#39;</span><span class="p">,</span> <span class="s1">&#39;hotbar.1&#39;</span><span class="p">,</span> <span class="s1">&#39;hotbar.2&#39;</span><span class="p">,</span> <span class="s1">&#39;hotbar.3&#39;</span><span class="p">,</span> <span class="s1">&#39;hotbar.4&#39;</span><span class="p">,</span> <span class="s1">&#39;hotbar.5&#39;</span><span class="p">,</span> <span class="s1">&#39;hotbar.6&#39;</span><span class="p">,</span> <span class="s1">&#39;hotbar.7&#39;</span><span class="p">,</span> <span class="s1">&#39;hotbar.8&#39;</span><span class="p">,</span> <span class="s1">&#39;hotbar.9&#39;</span><span class="p">,</span> <span class="s1">&#39;inventory&#39;</span><span class="p">,</span> <span class="s1">&#39;jump&#39;</span><span class="p">,</span> <span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="s1">&#39;sneak&#39;</span><span class="p">,</span> <span class="s1">&#39;sprint&#39;</span><span class="p">,</span> <span class="s1">&#39;camera&#39;</span><span class="p">,</span> <span class="s1">&#39;attack&#39;</span><span class="p">,</span> <span class="s1">&#39;use&#39;</span><span class="p">])</span>
-</pre></div>
-</div>
-<p>The shape of <code class="docutils literal notranslate"><span class="pre">attack</span></code>: <code class="docutils literal notranslate"><span class="pre">(4376,)</span></code></p>
-<p>The shape of <code class="docutils literal notranslate"><span class="pre">camera</span></code>: <code class="docutils literal notranslate"><span class="pre">(4376,</span> <span class="pre">2)</span></code></p>
-</div>
-</li>
+<section id="understanding-the-conversion-process">
+<h2>1. Understanding the Conversion Process<a class="headerlink" href="#understanding-the-conversion-process" title="Link to this heading">#</a></h2>
+<p>The conversion process is managed by the <code class="docutils literal notranslate"><span class="pre">ConvertManager</span></code> class, which utilizes <code class="docutils literal notranslate"><span class="pre">ConvertWorker</span></code> (Ray remote actors) for parallel processing. Each modality (e.g., images, actions, metadata) in your raw dataset needs a corresponding <code class="docutils literal notranslate"><span class="pre">ModalConvertCallback</span></code> to handle its specific data reading and transformation logic.</p>
+<p><strong>Key Components:</strong></p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">ConvertManager</span></code></strong>: Orchestrates the conversion. It discovers raw data files, divides work among workers, and manages output.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">ConvertWorker</span></code></strong>: A Ray actor that processes a subset of episodes for a given modality, converts the data using a <code class="docutils literal notranslate"><span class="pre">ModalConvertCallback</span></code>, and writes it to an LMDB file.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">ModalConvertCallback</span></code></strong>: An abstract class that you need to implement for each data type you want to convert. MineStudio provides built-in callbacks for common types like images, actions, etc. (e.g., <code class="docutils literal notranslate"><span class="pre">ImageConvertCallback</span></code>, <code class="docutils literal notranslate"><span class="pre">ActionConvertCallback</span></code> from <code class="docutils literal notranslate"><span class="pre">minestudio.data.minecraft.callbacks.extension</span></code>). You will typically specify the path to your raw data within these callbacks.</p></li>
 </ul>
 </section>
-<section id="convert-raw-trajectories-to-minestudio-format">
-<h2>Convert Raw Trajectories to MineStudio format<a class="headerlink" href="#convert-raw-trajectories-to-minestudio-format" title="Link to this heading">#</a></h2>
+<section id="preparing-raw-trajectories">
+<h2>2. Preparing Raw Trajectories<a class="headerlink" href="#preparing-raw-trajectories" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">ConvertManager</span></code> and the specific <code class="docutils literal notranslate"><span class="pre">ModalConvertCallback</span></code> implementations will expect your raw data to be organized in a way they can discover. Typically, this means having separate directories for different data modalities or structured file naming.</p>
+<p>For example, if you are converting video and action data:</p>
 <ul>
-<li><p>convert <code class="docutils literal notranslate"><span class="pre">action</span></code> to MineStudio format:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">python -m minestudio.data.minecraft.tools.convert_lmdb \</span>
-<span class="go">       --num-workers 4 \</span>
-<span class="go">       --input-dir &#39;/path/to/raw_episodes/actions&#39; \</span>
-<span class="go">       --action-dir &#39;/path/to/raw_episodes/actions&#39; \</span>
-<span class="go">       --output-dir &#39;/path/to/output/dataset&#39; \</span>
-<span class="go">       --source-type &#39;action&#39;</span>
+<li><p><strong>Video Data</strong>: Might be a directory of <code class="docutils literal notranslate"><span class="pre">.mp4</span></code> files or image sequences.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">your_raw_data</span><span class="o">/</span><span class="n">videos</span><span class="o">/</span>
+    <span class="n">episode_0001</span><span class="o">.</span><span class="n">mp4</span>
+    <span class="n">episode_0002</span><span class="o">.</span><span class="n">mp4</span>
+    <span class="o">...</span>
 </pre></div>
 </div>
 </li>
-<li><p>convert <code class="docutils literal notranslate"><span class="pre">video</span></code> to MineStudio format:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">python -m minestudio.data.minecraft.tools.convert_lmdb \</span>
-<span class="go">       --num-workers 4 \</span>
-<span class="go">       --input-dir &#39;/path/to/raw_episodes/videos&#39; \</span>
-<span class="go">       --action-dir &#39;/path/to/raw_episodes/actions&#39; \</span>
-<span class="go">       --output-dir &#39;/path/to/output/dataset&#39; \</span>
-<span class="go">       --source-type &#39;video&#39;</span>
+<li><p><strong>Action Data</strong>: Might be a directory of <code class="docutils literal notranslate"><span class="pre">.pkl</span></code>, <code class="docutils literal notranslate"><span class="pre">.json</span></code>, or <code class="docutils literal notranslate"><span class="pre">.csv</span></code> files.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">your_raw_data</span><span class="o">/</span><span class="n">actions</span><span class="o">/</span>
+    <span class="n">episode_0001</span><span class="o">.</span><span class="n">pkl</span>
+    <span class="n">episode_0002</span><span class="o">.</span><span class="n">pkl</span>
+    <span class="o">...</span>
 </pre></div>
 </div>
 </li>
 </ul>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p><code class="docutils literal notranslate"><span class="pre">num-workers</span></code> arguments specify the number of convertion workers. <strong>It also determines the number of the resulting MineStudio dataset files.</strong></p>
-</div>
-<p>The resulting MineStudio dataset files will be stored in the <code class="docutils literal notranslate"><span class="pre">/path/to/output/dataset</span></code> directory.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">tree /path/to/output/dataset</span>
-<span class="go">├── action</span>
-<span class="go">│   ├── action-1000 </span>
-<span class="go">│   │   ├── data.mdb</span>
-<span class="go">│   │   └── lock.mdb</span>
-<span class="go">│   ├── action-1500</span>
-<span class="go">│   │   ├── data.mdb</span>
-<span class="go">│   │   └── lock.mdb</span>
-<span class="go">│   ├── action-1904</span>
-<span class="go">│   │   ├── data.mdb</span>
-<span class="go">│   │   └── lock.mdb</span>
-<span class="go">│   └── action-500</span>
-<span class="go">│       ├── data.mdb</span>
-<span class="go">│       └── lock.mdb</span>
-<span class="go">└── video</span>
-<span class="go">    ├── video-1428  </span>
-<span class="go">    │   ├── data.mdb</span>
-<span class="go">    │   └── lock.mdb</span>
-<span class="go">    ├── video-1903</span>
-<span class="go">    │   ├── data.mdb</span>
-<span class="go">    │   └── lock.mdb</span>
-<span class="go">    ├── video-476</span>
-<span class="go">    │   ├── data.mdb</span>
-<span class="go">    │   └── lock.mdb</span>
-<span class="go">    └── video-952</span>
-<span class="go">        ├── data.mdb</span>
-<span class="go">        └── lock.mdb</span>
-</pre></div>
-</div>
+<p>The exact structure and file types depend on the <code class="docutils literal notranslate"><span class="pre">ModalConvertCallback</span></code> you use or implement. Refer to the documentation of the specific callbacks for their expected input format.</p>
 </section>
-<section id="check-the-minestudio-format-dataset">
-<h2>Check the MineStudio-Format Dataset<a class="headerlink" href="#check-the-minestudio-format-dataset" title="Link to this heading">#</a></h2>
-<p>You can check the generated MineStudio dataset files using the following command:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dataset</span>
+<section id="converting-trajectories-to-minestudio-lmdb-format">
+<h2>3. Converting Trajectories to MineStudio LMDB Format<a class="headerlink" href="#converting-trajectories-to-minestudio-lmdb-format" title="Link to this heading">#</a></h2>
+<p>Instead of a command-line script, you use the <code class="docutils literal notranslate"><span class="pre">ConvertManager</span></code> API within a Python script. Here’s how to convert a modality (e.g., actions):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">ray</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.data.minecraft.tools.convertion</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConvertManager</span>
+<span class="c1"># Import the specific ModalConvertCallback for the data type you are converting</span>
+<span class="c1"># For example, for actions:</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.data.minecraft.callbacks.extension</span><span class="w"> </span><span class="kn">import</span> <span class="n">ActionConvertCallback</span> <span class="c1"># Adjust import as per actual location</span>
 
-<span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span>
-    <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;raw&#39;</span><span class="p">,</span> 
-    <span class="n">dataset_dirs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;/path/to/output/dataset&#39;</span><span class="p">],</span> 
-    <span class="n">frame_width</span><span class="o">=</span><span class="mi">224</span><span class="p">,</span> 
-    <span class="n">frame_height</span><span class="o">=</span><span class="mi">224</span><span class="p">,</span>
-    <span class="n">win_len</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> 
-    <span class="n">split</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> 
-    <span class="n">split_ratio</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> 
-    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">item</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="c1"># Initialize Ray (if not already initialized)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">ray</span><span class="o">.</span><span class="n">is_initialized</span><span class="p">():</span>
+        <span class="n">ray</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+
+    <span class="c1"># 1. Configure the ModalConvertCallback</span>
+    <span class="c1"># This callback needs to know where your raw action files are.</span>
+    <span class="c1"># The arguments for the callback will depend on its implementation.</span>
+    <span class="n">action_convert_kernel</span> <span class="o">=</span> <span class="n">ActionConvertCallback</span><span class="p">(</span>
+        <span class="n">source_dir</span><span class="o">=</span><span class="s1">&#39;/path/to/your_raw_data/actions&#39;</span><span class="p">,</span> <span class="c1"># Path to raw action files</span>
+        <span class="c1"># ... other parameters specific to ActionConvertCallback ...</span>
+    <span class="p">)</span>
+
+    <span class="c1"># 2. (Optional) Configure a Filter Kernel</span>
+    <span class="c1"># If you need to filter episodes or parts of episodes before conversion,</span>
+    <span class="c1"># you can provide a filter_kernel. This is another ModalConvertCallback.</span>
+    <span class="c1"># filter_kernel = YourFilterCallback(...)</span>
+
+    <span class="c1"># 3. Initialize the ConvertManager</span>
+    <span class="n">convert_manager</span> <span class="o">=</span> <span class="n">ConvertManager</span><span class="p">(</span>
+        <span class="n">output_dir</span><span class="o">=</span><span class="s1">&#39;/path/to/output/dataset/action&#39;</span><span class="p">,</span> <span class="c1"># Output directory for this modality&#39;s LMDB</span>
+        <span class="n">convert_kernel</span><span class="o">=</span><span class="n">action_convert_kernel</span><span class="p">,</span>
+        <span class="c1"># filter_kernel=filter_kernel, # Uncomment if using a filter</span>
+        <span class="n">chunk_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>          <span class="c1"># Affects how data is grouped in LMDB; also related to worker tasks</span>
+        <span class="n">num_workers</span><span class="o">=</span><span class="mi">4</span>           <span class="c1"># Number of parallel ConvertWorker actors</span>
+    <span class="p">)</span>
+
+    <span class="c1"># 4. Prepare tasks (discover and filter raw data)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Preparing conversion tasks...&quot;</span><span class="p">)</span>
+    <span class="n">convert_manager</span><span class="o">.</span><span class="n">prepare_tasks</span><span class="p">()</span>
+
+    <span class="c1"># 5. Dispatch tasks to workers for conversion</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Dispatching tasks to workers...&quot;</span><span class="p">)</span>
+    <span class="n">convert_manager</span><span class="o">.</span><span class="n">dispatch</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Conversion complete.&quot;</span><span class="p">)</span>
+    <span class="n">ray</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
 </pre></div>
 </div>
+<p><strong>Explanation:</strong></p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">ModalConvertCallback</span></code> (e.g., <code class="docutils literal notranslate"><span class="pre">ActionConvertCallback</span></code>)</strong>:</p>
+<ul>
+<li><p>You need to instantiate a specific callback for the modality you are converting.</p></li>
+<li><p>This callback is responsible for finding the raw data files (e.g., by looking in <code class="docutils literal notranslate"><span class="pre">source_dir</span></code>), reading them, and transforming them into the format expected for LMDB storage.</p></li>
+<li><p>The arguments to these callbacks (like <code class="docutils literal notranslate"><span class="pre">source_dir</span></code>) are crucial.</p></li>
+</ul>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">output_dir</span></code></strong>: This is the directory where the LMDB files for <em>this specific modality</em> will be stored. For example, if you are converting actions, point this to <code class="docutils literal notranslate"><span class="pre">/path/to/output/dataset/action</span></code>. For images, you’d run the conversion again with a different callback and a different <code class="docutils literal notranslate"><span class="pre">output_dir</span></code> like <code class="docutils literal notranslate"><span class="pre">/path/to/output/dataset/image</span></code>.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">chunk_size</span></code></strong>: Influences how data is grouped.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">num_workers</span></code></strong>: Determines the number of parallel worker processes. The <code class="docutils literal notranslate"><span class="pre">ConvertManager</span></code> divides the total number of episodes among these workers. Each worker will typically create its own LMDB file (or set of files) within the specified <code class="docutils literal notranslate"><span class="pre">output_dir</span></code>.</p></li>
+</ul>
+<p><strong>To convert multiple modalities (e.g., video, actions, metadata):</strong></p>
+<p>You would typically run the conversion process (steps 1-5 above) <em>multiple times</em>, once for each modality. Each run would use:</p>
+<ol class="arabic simple">
+<li><p>A different <code class="docutils literal notranslate"><span class="pre">ModalConvertCallback</span></code> configured for that modality.</p></li>
+<li><p>A different <code class="docutils literal notranslate"><span class="pre">output_dir</span></code> specific to that modality (e.g., <code class="docutils literal notranslate"><span class="pre">../dataset/image</span></code>, <code class="docutils literal notranslate"><span class="pre">../dataset/action</span></code>).</p></li>
+</ol>
+</section>
+<section id="output-file-structure">
+<h2>4. Output File Structure<a class="headerlink" href="#output-file-structure" title="Link to this heading">#</a></h2>
+<p>After running the conversion for each modality, your output directory will contain subdirectories for each modality, and within those, LMDB files generated by the <code class="docutils literal notranslate"><span class="pre">ConvertWorker</span></code>s.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">output_dir</span></code> for an action conversion was <code class="docutils literal notranslate"><span class="pre">/path/to/output/dataset/action</span></code> and <code class="docutils literal notranslate"><span class="pre">num_workers=2</span></code>, the structure might look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>/path/to/output/dataset/
+├── action/
+│   ├── shard_0/  # Data processed by worker 0
+│   │   ├── data.mdb
+│   │   └── lock.mdb
+│   ├── shard_1/  # Data processed by worker 1
+│   │   ├── data.mdb
+│   │   └── lock.mdb
+│   └── meta.json # (or similar, if ConvertManager saves overall metadata)
+├── image/        # After running conversion for images
+│   ├── action-0/
+│   │   ├── data.mdb
+│   │   └── lock.mdb
+│   ├── shard_1/
+│   │   ├── data.mdb
+│   │   └── lock.mdb
+│   └── meta.json
+└── ... (other modalities)
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The exact naming of the sub-directories within the modality’s <code class="docutils literal notranslate"><span class="pre">output_dir</span></code> (e.g., <code class="docutils literal notranslate"><span class="pre">shard_0</span></code>, <code class="docutils literal notranslate"><span class="pre">shard_1</span></code>) and the number of LMDB files will depend on the <code class="docutils literal notranslate"><span class="pre">ConvertManager</span></code>’s implementation details regarding how it assigns tasks to workers and how workers name their output. The example <code class="docutils literal notranslate"><span class="pre">meta.json</span></code> is illustrative; the manager might store overall metadata differently or not at all at the top level of the modality.</p>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">KernelManager</span></code> (used by <code class="docutils literal notranslate"><span class="pre">RawDataset</span></code> and <code class="docutils literal notranslate"><span class="pre">EventDataset</span></code>) is then configured with the parent directory (e.g., <code class="docutils literal notranslate"><span class="pre">/path/to/output/dataset/</span></code>) and will automatically discover these modality-specific LMDBs.</p>
 </section>
 </section>
 
@@ -796,11 +818,11 @@
       </div>
     </a>
     <a class="right-next"
-       href="../models/index.html"
+       href="callbacks.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Models</p>
+        <p class="prev-next-title">Data Processing Callbacks</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -823,9 +845,10 @@
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-raw-trajectories">Prepare Raw Trajectories</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#convert-raw-trajectories-to-minestudio-format">Convert Raw Trajectories to MineStudio format</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#check-the-minestudio-format-dataset">Check the MineStudio-Format Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-the-conversion-process">1. Understanding the Conversion Process</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preparing-raw-trajectories">2. Preparing Raw Trajectories</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#converting-trajectories-to-minestudio-lmdb-format">3. Converting Trajectories to MineStudio LMDB Format</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#output-file-structure">4. Output File Structure</a></li>
 </ul>
   </nav></div>
 
