@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-11-29 08:08:34
- * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-12-30 14:25:04
+ * @LastEditors: caishaofei-mus1 1744260356@qq.com
+ * @LastEditTime: 2025-05-28 00:46:46
  * @FilePath: /MineStudio/docs/source/data/index.md
 -->
 # Data
@@ -15,6 +15,7 @@ dataset-raw
 dataset-event
 visualization
 convertion
+callbacks
 ```
 
 ## Quick Start
@@ -62,38 +63,42 @@ with lmdb_handler.begin() as txn:
 ```
 
 ```{hint}
-In fact, you don't need to worry about these at all, as we have packaged these operations for you. You just need to call corresponding API. The class that is responsible for managing these details is `minestudio.data.minecraft.core.LMDBDriver`.
+In fact, you don't need to worry about these low-level details, as we have packaged these operations for you. You just need to call the corresponding API. The class primarily responsible for managing these details for a single data modality is `minestudio.data.minecraft.core.ModalKernel`. For managing multiple modalities, `minestudio.data.minecraft.core.KernelManager` is used, which internally utilizes `ModalKernel` instances.
 ```
 
-With ``LMDBDriver``, you can do these operations to a lmdb file: 
-- Get the trajectory list:
+With `ModalKernel`, you can perform these operations on the data:
+- Get the list of episodes (trajectories):
     ```python
-    trajectory_list = lmdb_driver.get_trajectory_list()
+    # Assuming 'modal_kernel' is an instance of ModalKernel
+    episode_list = modal_kernel.get_episode_list()
     ```
 
-- Get the total frames of several trajectories: 
+- Get the total number of frames for specified episodes:
     ```python
-    lmdb_driver.get_total_frames([
-        "trajectory_1",
-        "trajectory_2",
-        "trajectory_3"
+    # Assuming 'modal_kernel' is an instance of ModalKernel
+    total_frames = modal_kernel.get_num_frames([
+        "episode_1",
+        "episode_2",
+        "episode_3"
     ])
     ```
 
-- Read a sequence of frames from a trajectory:
+- Read a sequence of frames from an episode:
     ```python
-    frames, mask = lmdb_driver.read_frames(
-        eps="trajectory_1",
-        start_frame=11,
-        win_len=33, 
-        merge_fn=merge_fn, 
-        extract_fn=extract_fn, 
-        padding_fn=padding_fn, 
+    # Assuming 'modal_kernel' is an instance of ModalKernel
+    # and it has been initialized with an appropriate ModalKernelCallback
+    data_dict = modal_kernel.read_frames(
+        eps="episode_1",
+        start=11,      # Starting frame index
+        win_len=33,    # Window length (number of frames to read)
+        skip_frame=1   # Number of frames to skip between reads (1 means no skip)
     )
+    # 'data_dict' will contain the processed frames and potentially other info like a mask,
+    # depending on the ModalKernelCallback.
     ```
 
     ```{note}
-    ``merge_fn``, ``extract_fn``, and ``padding_fn`` are functions that are used to process the data and are specific to the data modality. 
+    The processing of data, such as merging chunks, extracting specific information, and padding, is handled by a `ModalKernelCallback` instance that is provided when the `ModalKernel` is created. This callback is specific to the data modality (e.g., video, actions).
     ```
 
 ````
@@ -102,13 +107,12 @@ With ``LMDBDriver``, you can do these operations to a lmdb file:
 
 We provide the following built-in modalities for users to store data:
 
-| Modality | Description | Data Format |
-| --- | --- | --- |
-| video | Observations returned by the environment | np.ndarry |
-| action | Mouse and keyboard actions | Dict |
-| contractor info | Information of the contractor | Dict |
-| segment info | Information of the segment | Dict |
-
+| Modality       | Description                                         | Data Format   |
+|----------------|-----------------------------------------------------|---------------|
+| image          | Visual observations from the environment (frames)   | `np.ndarray`  |
+| action         | Player/agent's mouse and keyboard inputs            | `Dict`        |
+| meta_info      | Auxiliary information about the game state/episode  | `Dict`        |
+| segmentation   | Object segmentation masks for the visual frames     | `Dict`        |
 
 ````{admonition} Video and Segmentation Visualization
 :class: dropdown admonition-youtube

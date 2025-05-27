@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-11-29 15:45:12
- * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-11-29 16:24:27
+ * @LastEditors: caishaofei-mus1 1744260356@qq.com
+ * @LastEditTime: 2025-05-27 21:50:28
  * @FilePath: /MineStudio/docs/source/simulator/design-principles.md
 -->
 
@@ -74,6 +74,24 @@ The simulator lifecycle is divided into three stages: `reset`, `step`, and `clos
     We can use callbacks to do some cleanup work before the environment is closed. For example, we can save the trajectories or doing some logging. 
     ```
 
+- `render`: This method is called when the environment is rendered. It returns the rendered image.
+    The `render` method code looks like this:
+    ```python
+    def render(self) -> None:
+        image = self.obs['image']
+        for callback in self.callbacks:
+            image = callback.before_render(self, image)
+        for callback in self.callbacks:
+            image = callback.after_render(self, image)
+        return image
+    ```
+
+    ```{hint}
+    We can use callbacks to preprocess the rendering before it is returned to the agent. For example, we can resize the image or add some overlays. 
+    The MineStudio online component will use this method to visualize the agent's behavior during training. 
+    ```
+
+
 ## Callbacks
 
 Callbacks are used to customize the environment. All the callbacks are optional, and you can use them in any combination. 
@@ -100,9 +118,9 @@ class MinecraftCallback:
     def after_close(self, sim):
         return
     
-    def before_render(self, sim):
-        return
+    def before_render(self, sim, image):
+        return image
     
-    def after_render(self, sim):
-        return
+    def after_render(self, sim, image):
+        return image
 ```
