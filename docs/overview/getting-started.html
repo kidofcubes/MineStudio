@@ -31,7 +31,7 @@
 <link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
-    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/jupyter-sphinx.css" />
     <link rel="stylesheet" type="text/css" href="../_static/thebelab.css" />
@@ -46,7 +46,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../_static/documentation_options.js?v=8d563738"></script>
-    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
@@ -66,7 +66,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'overview/getting-started';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
-        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://craftjarvis.github.io/MineStudio/_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://craftjarvis.github.io/MineStudio/master/_static/switcher.json';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'master';
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             false;
@@ -75,14 +75,10 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="MineStudio API Documentation" href="../api/index.html" />
-    <link rel="prev" title="Automatic Evaluation Pipeline" href="../benchmark/automatic-evaluation.html" />
-
+    <link rel="prev" title="Automatic Evaluation Pipeline" href="../benchmark/automatic-evaluation.html" /> 
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="" />
-
-
-
+  <meta name="docsearch:version" content="" />   
   </head>
   
   
@@ -652,8 +648,7 @@
                 
 <div id="searchbox"></div>
                 <article class="bd-article">
-                  
-<!--
+                   <!--
  * @Date: 2024-11-29 08:08:13
  * @LastEditors: muzhancun muzhancun@126.com
  * @LastEditTime: 2024-12-20 15:20:10
@@ -677,20 +672,20 @@
  * @LastEditTime: 2024-12-30 15:19:15
  * @FilePath: /MineStudio/docs/source/overview/installation.md
 -->
-<h1 class="rubric" id="installation"><span id="gentle-intro"></span>Installation</h1>
+<p class="rubric" id="installation"><span id="gentle-intro"></span>Installation</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p class="sd-card-text">If you encounter any issues during installation, please open an issue on <a class="reference external" href="https://github.com/CraftJarvis/MineStudio/issues">GitHub</a>.</p>
 </div>
 <p class="sd-card-text">Welcome to MineStudio, please follow the tutorial below for installation.</p>
-<h2 class="rubric" id="install-jdk-8">Install JDK 8</h2>
+<p class="rubric" id="install-jdk-8">Install JDK 8</p>
 <p class="sd-card-text">To ensure that the Simulator runs smoothly, please make sure that JDK 8 is installed on your system. We recommend using conda to maintain an environment on Linux systems.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>minestudio<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.10<span class="w"> </span>-y
 <span class="gp">$ </span>conda<span class="w"> </span>activate<span class="w"> </span>minestudio
 <span class="gp">$ </span>conda<span class="w"> </span>install<span class="w"> </span>--channel<span class="o">=</span>conda-forge<span class="w"> </span><span class="nv">openjdk</span><span class="o">=</span><span class="m">8</span><span class="w"> </span>-y
 </pre></div>
 </div>
-<h2 class="rubric" id="install-minestudio">Install MineStudio</h2>
+<p class="rubric" id="install-minestudio">Install MineStudio</p>
 <p class="sd-card-text">a. Install MineStudio from the <a class="reference external" href="https://github.com/CraftJarvis/MineStudio">GitHub</a>.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/CraftJarvis/MineStudio.git
 </pre></div>
@@ -699,7 +694,7 @@
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip<span class="w"> </span>install<span class="w"> </span>minestudio
 </pre></div>
 </div>
-<h2 class="rubric" id="install-the-rendering-tool">Install the rendering tool</h2>
+<p class="rubric" id="install-the-rendering-tool">Install the rendering tool</p>
 <p class="sd-card-text">For users with <em>nvidia graphics cards</em>, we recommend installing <strong>VirtualGL</strong>; for other users, we recommend using <strong>Xvfb</strong>, which supports CPU rendering but is relatively slower.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -769,7 +764,7 @@ VirtualGL</label><div class="sd-tab-content docutils">
 </div>
 </div>
 </div>
-<h2 class="rubric" id="verify-by-running-simulator">Verify by running simulator</h2>
+<p class="rubric" id="verify-by-running-simulator">Verify by running simulator</p>
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
 <p class="sd-card-text">The first time you run it, the script will ask whether to download the compiled model from Hugging Face; just choose Y.</p>
@@ -984,7 +979,7 @@ VirtualGL</label><div class="sd-tab-content docutils">
 </details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
 <summary class="sd-summary-title sd-card-header">
 <span class="sd-summary-text"><img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Offline: Pre-Training Policy with Offline Data</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
-<h1 class="rubric" id="tutorial-fine-tuning-vpt-to-a-hunter">Tutorial: Fine-tuning VPT to a Hunter</h1>
+<p class="rubric" id="tutorial-fine-tuning-vpt-to-a-hunter">Tutorial: Fine-tuning VPT to a Hunter</p>
 <p class="sd-card-text">Fine-tune a VPT policy in MineStudio is really simple.</p>
 <p class="sd-card-text">The following code snippet shows how to finetune a VPT policy to hunt animals in Minecraft using offline data.</p>
 <ol class="arabic">
@@ -1285,8 +1280,7 @@ bash<span class="w"> </span>run.sh
 </section>
 
 <div class="section ablog__blog_comments">
-  
-  
+   
 </div>
 
                 </article>
@@ -1383,7 +1377,7 @@ bash<span class="w"> </span>run.sh
         <div class="footer-item">
 
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
     <br/>
   </p>
 </div>

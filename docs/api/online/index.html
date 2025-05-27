@@ -1,0 +1,1602 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Online API Documentation &#8212; MineStudio 1.0.0</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/thebelab.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=f44ad8c8" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=8d563738"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/thebelab-helper.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/online/index';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://craftjarvis.github.io/MineStudio/master/_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'master';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <link rel="icon" href="../../_static/logo-no-text-light.svg"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Inference API Documentation" href="../inference/index.html" />
+    <link rel="prev" title="Offline API Documentation" href="../offline/index.html" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />   
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo-no-text-light.svg" class="logo__image only-light" alt=""/>
+    <img src="../../_static/logo-no-text-light.svg" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">MineStudio</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../overview/index.html">
+    Overview
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../overview/getting-started.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../simulator/index.html">
+    Simulator
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../data/index.html">
+    Data
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../models/index.html">
+    Models
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../offline/index.html">
+    Offline
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../online/index.html">
+    Online
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../inference/index.html">
+    Inference
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../benchmark/index.html">
+    Benchmark
+  </a>
+</li>
+
+
+<li class=" current active">
+  <a class="nav-link dropdown-item nav-internal" href="../index.html">
+    API
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/CraftJarvis/MineStudio" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/minestudio" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-custom fa-pypi fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://arxiv.org/pdf/2310.08235" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="ai ai-arxiv fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">ArXiv</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+          
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../overview/index.html">
+    Overview
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../overview/getting-started.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../simulator/index.html">
+    Simulator
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../data/index.html">
+    Data
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../models/index.html">
+    Models
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../offline/index.html">
+    Offline
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../online/index.html">
+    Online
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../inference/index.html">
+    Inference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../benchmark/index.html">
+    Benchmark
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/CraftJarvis/MineStudio" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/minestudio" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-custom fa-pypi fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://arxiv.org/pdf/2310.08235" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="ai ai-arxiv fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">ArXiv</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../simulator/index.html">Simulator</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../data/index.html">Data</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../models/index.html">Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../offline/index.html">Offline</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Online</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../inference/index.html">Inference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">MineStudio API Documentation</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Online API Documentation</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                   <section id="online-api-documentation">
+<h1>Online API Documentation<a class="headerlink" href="#online-api-documentation" title="Link to this heading">#</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<section id="rollout">
+<h2>Rollout<a class="headerlink" href="#rollout" title="Link to this heading">#</a></h2>
+<section id="module-minestudio.online.rollout.env_worker">
+<span id="env-worker"></span><h3>Env Worker<a class="headerlink" href="#module-minestudio.online.rollout.env_worker" title="Link to this heading">#</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="minestudio.online.rollout.env_worker.EnvWorker">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">minestudio.online.rollout.env_worker.</span></span><span class="sig-name descname"><span class="pre">EnvWorker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/rollout/env_worker.html#EnvWorker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.rollout.env_worker.EnvWorker" title="Link to this definition">#</a></dt>
+<dd><p>A class for running a Minecraft simulation environment in a separate process.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>env_generator</strong> – A function that returns a MinecraftSim instance.</p></li>
+<li><p><strong>conn</strong> – A multiprocessing connection object for communication with the main process.</p></li>
+<li><p><strong>video_output_dir</strong> – The directory to save output videos to.</p></li>
+<li><p><strong>video_fps</strong> – The frames per second for output videos.</p></li>
+<li><p><strong>restart_interval</strong> – The interval in seconds after which to restart the environment.</p></li>
+<li><p><strong>max_fast_reset</strong> – The maximum number of fast resets to perform.</p></li>
+<li><p><strong>env_id</strong> – The ID of the environment.</p></li>
+<li><p><strong>rollout_worker_id</strong> – The ID of the rollout worker.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">__call__</span></code>(*args, **kwargs)</p></td>
+<td><p>Call self as a function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.online.rollout.env_worker.EnvWorker.report_rewards" title="minestudio.online.rollout.env_worker.EnvWorker.report_rewards"><code class="xref py py-obj docutils literal notranslate"><span class="pre">report_rewards</span></code></a>(rewards)</p></td>
+<td><p>Sends the rewards for an episode to the main process.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.online.rollout.env_worker.EnvWorker.reset_state" title="minestudio.online.rollout.env_worker.EnvWorker.reset_state"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reset_state</span></code></a>()</p></td>
+<td><p>Sends a reset signal to the main process and receives the initial observation.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.online.rollout.env_worker.EnvWorker.run" title="minestudio.online.rollout.env_worker.EnvWorker.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>()</p></td>
+<td><p>The main loop of the environment worker process.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.online.rollout.env_worker.EnvWorker.step_agent" title="minestudio.online.rollout.env_worker.EnvWorker.step_agent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">step_agent</span></code></a>(obs, last_reward, ...)</p></td>
+<td><p>Sends an observation to the main process and receives an action and predicted value.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.online.rollout.env_worker.EnvWorker.report_rewards">
+<span class="sig-name descname"><span class="pre">report_rewards</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rewards</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/rollout/env_worker.html#EnvWorker.report_rewards"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.rollout.env_worker.EnvWorker.report_rewards" title="Link to this definition">#</a></dt>
+<dd><p>Sends the rewards for an episode to the main process.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>rewards</strong> – A NumPy array of rewards for the episode.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The result from the main process.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.online.rollout.env_worker.EnvWorker.reset_state">
+<span class="sig-name descname"><span class="pre">reset_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/minestudio/online/rollout/env_worker.html#EnvWorker.reset_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.rollout.env_worker.EnvWorker.reset_state" title="Link to this definition">#</a></dt>
+<dd><p>Sends a reset signal to the main process and receives the initial observation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The initial observation from the environment.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.online.rollout.env_worker.EnvWorker.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/minestudio/online/rollout/env_worker.html#EnvWorker.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.rollout.env_worker.EnvWorker.run" title="Link to this definition">#</a></dt>
+<dd><p>The main loop of the environment worker process.
+Handles environment resets, steps, and video recording.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.online.rollout.env_worker.EnvWorker.step_agent">
+<span class="sig-name descname"><span class="pre">step_agent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_reward</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_terminated</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_truncated</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">episode_uuid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/minestudio/online/rollout/env_worker.html#EnvWorker.step_agent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.rollout.env_worker.EnvWorker.step_agent" title="Link to this definition">#</a></dt>
+<dd><p>Sends an observation to the main process and receives an action and predicted value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obs</strong> – The current observation from the environment.</p></li>
+<li><p><strong>last_reward</strong> – The reward from the previous step.</p></li>
+<li><p><strong>last_terminated</strong> – Whether the previous episode terminated.</p></li>
+<li><p><strong>last_truncated</strong> – Whether the previous episode was truncated.</p></li>
+<li><p><strong>episode_uuid</strong> – The UUID of the current episode.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing the action and predicted value.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="minestudio.online.rollout.env_worker.VideoWriter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">minestudio.online.rollout.env_worker.</span></span><span class="sig-name descname"><span class="pre">VideoWriter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">video_fps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">queue_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">200</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/rollout/env_worker.html#VideoWriter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.rollout.env_worker.VideoWriter" title="Link to this definition">#</a></dt>
+<dd><p>A class for writing video frames to a file in a separate thread.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>video_fps</strong> – The frames per second of the output video.</p></li>
+<li><p><strong>queue_size</strong> – The maximum size of the command queue.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Attributes<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">daemon</span></code></dt><dd><p>A boolean value indicating whether this thread is a daemon thread.</p>
+</dd>
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">ident</span></code></dt><dd><p>Thread identifier of this thread or None if it has not been started.</p>
+</dd>
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></dt><dd><p>A string used for identification purposes only.</p>
+</dd>
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">native_id</span></code></dt><dd><p>Native integral thread ID of this thread, or None if it has not been started.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.online.rollout.env_worker.VideoWriter.close_video" title="minestudio.online.rollout.env_worker.VideoWriter.close_video"><code class="xref py py-obj docutils literal notranslate"><span class="pre">close_video</span></code></a>()</p></td>
+<td><p>Closes the current video file.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">getName</span></code>()</p></td>
+<td><p>Return a string used for identification purposes only.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">isDaemon</span></code>()</p></td>
+<td><p>Return whether this thread is a daemon.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_alive</span></code>()</p></td>
+<td><p>Return whether the thread is alive.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">join</span></code>([timeout])</p></td>
+<td><p>Wait until the thread terminates.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.online.rollout.env_worker.VideoWriter.open_video" title="minestudio.online.rollout.env_worker.VideoWriter.open_video"><code class="xref py py-obj docutils literal notranslate"><span class="pre">open_video</span></code></a>(path)</p></td>
+<td><p>Opens a video file for writing.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.online.rollout.env_worker.VideoWriter.run" title="minestudio.online.rollout.env_worker.VideoWriter.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>()</p></td>
+<td><p>The main loop of the video writer thread.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setDaemon</span></code>(daemonic)</p></td>
+<td><p>Set whether this thread is a daemon.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setName</span></code>(name)</p></td>
+<td><p>Set the name string for this thread.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">start</span></code>()</p></td>
+<td><p>Start the thread's activity.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.online.rollout.env_worker.VideoWriter.write_frame" title="minestudio.online.rollout.env_worker.VideoWriter.write_frame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_frame</span></code></a>(frame)</p></td>
+<td><p>Writes a frame to the video file.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.online.rollout.env_worker.VideoWriter.close_video">
+<span class="sig-name descname"><span class="pre">close_video</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/rollout/env_worker.html#VideoWriter.close_video"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.rollout.env_worker.VideoWriter.close_video" title="Link to this definition">#</a></dt>
+<dd><p>Closes the current video file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.online.rollout.env_worker.VideoWriter.open_video">
+<span class="sig-name descname"><span class="pre">open_video</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PosixPath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/rollout/env_worker.html#VideoWriter.open_video"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.rollout.env_worker.VideoWriter.open_video" title="Link to this definition">#</a></dt>
+<dd><p>Opens a video file for writing.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> – The path to the video file.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>AssertionError</strong> – if a video is already open.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.online.rollout.env_worker.VideoWriter.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/rollout/env_worker.html#VideoWriter.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.rollout.env_worker.VideoWriter.run" title="Link to this definition">#</a></dt>
+<dd><p>The main loop of the video writer thread.
+Processes commands from the queue to open, write, and close video files.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.online.rollout.env_worker.VideoWriter.write_frame">
+<span class="sig-name descname"><span class="pre">write_frame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/rollout/env_worker.html#VideoWriter.write_frame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.rollout.env_worker.VideoWriter.write_frame" title="Link to this definition">#</a></dt>
+<dd><p>Writes a frame to the video file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>frame</strong> – The frame to write, as a NumPy array.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>AssertionError</strong> – if no video is open.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="minestudio.online.rollout.env_worker.draw_vpred">
+<span class="sig-prename descclassname"><span class="pre">minestudio.online.rollout.env_worker.</span></span><span class="sig-name descname"><span class="pre">draw_vpred</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vpred</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">additional_text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/rollout/env_worker.html#draw_vpred"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.rollout.env_worker.draw_vpred" title="Link to this definition">#</a></dt>
+<dd><p>Draws the predicted value (vpred) and additional text on an image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img</strong> – The input image as a NumPy array.</p></li>
+<li><p><strong>vpred</strong> – The predicted value to display.</p></li>
+<li><p><strong>additional_text</strong> – Optional additional text to display.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The image with the text drawn on it.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="episode-statistics">
+<h3>Episode Statistics<a class="headerlink" href="#episode-statistics" title="Link to this heading">#</a></h3>
+</section>
+<section id="rollout-manager">
+<h3>Rollout Manager<a class="headerlink" href="#rollout-manager" title="Link to this heading">#</a></h3>
+</section>
+<section id="module-minestudio.online.rollout.rollout_worker">
+<span id="rollout-worker"></span><h3>Rollout Worker<a class="headerlink" href="#module-minestudio.online.rollout.rollout_worker" title="Link to this heading">#</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="minestudio.online.rollout.rollout_worker.ProgressHandler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">minestudio.online.rollout.rollout_worker.</span></span><span class="sig-name descname"><span class="pre">ProgressHandler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/rollout/rollout_worker.html#ProgressHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.rollout.rollout_worker.ProgressHandler" title="Link to this definition">#</a></dt>
+<dd><p>A protocol defining the structure for a progress handler function.</p>
+<p>This handler is called by the RolloutWorker to report step-wise progress.
+Implementers of this protocol can use this to, for example, send data to a replay buffer.</p>
+<p class="rubric">Methods</p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">__call__</span></code>(*, worker_uuid, obs, state, action, ...)</p></td>
+<td><p>Call self as a function.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="minestudio.online.rollout.rollout_worker.RolloutWorker">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">minestudio.online.rollout.rollout_worker.</span></span><span class="sig-name descname"><span class="pre">RolloutWorker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_envs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">policy_generator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../models/index.html#minestudio.models.base_policy.MinePolicy" title="minestudio.models.base_policy.MinePolicy"><span class="pre">MinePolicy</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env_generator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../simulator/index.html#minestudio.simulator.entry.MinecraftSim" title="minestudio.simulator.entry.MinecraftSim"><span class="pre">MinecraftSim</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_normalized_vf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_device</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'cpu'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_model_version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">video_fps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">video_output_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'./output'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resume</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">restart_interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">moving_stat_duration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">300</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">episode_statistics</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ActorHandle</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">progress_handler</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#minestudio.online.rollout.rollout_worker.ProgressHandler" title="minestudio.online.rollout.rollout_worker.ProgressHandler"><span class="pre">ProgressHandler</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_fast_reset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rollout_worker_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/rollout/rollout_worker.html#RolloutWorker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.rollout.rollout_worker.RolloutWorker" title="Link to this definition">#</a></dt>
+<dd><p>Manages a set of environments and a policy to collect experience for reinforcement learning.</p>
+<p>This class is responsible for:
+- Spawning and managing multiple environment worker processes (EnvWorker).
+- Performing inference using the policy model.
+- Stepping through the environments and collecting observations, actions, rewards, etc.
+- Communicating with an EpisodeStatistics actor to report episode-level metrics.
+- Optionally calling a progress_handler to process step-wise data (e.g., for a replay buffer).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num_envs</strong> – The number of parallel environments to run.</p></li>
+<li><p><strong>policy_generator</strong> – A callable that returns an instance of MinePolicy (the policy model).</p></li>
+<li><p><strong>env_generator</strong> – A callable that returns an instance of MinecraftSim (the environment).</p></li>
+<li><p><strong>use_normalized_vf</strong> – Whether to use a normalized value function. If True, vpreds will be denormalized.</p></li>
+<li><p><strong>model_device</strong> – The device to run the policy model on (e.g., “cpu”, “cuda:0”).</p></li>
+<li><p><strong>next_model_version</strong> – The initial version of the model.</p></li>
+<li><p><strong>batch_size</strong> – The number of environment steps to batch together for inference.</p></li>
+<li><p><strong>video_fps</strong> – Frames per second for video recording in EnvWorker.</p></li>
+<li><p><strong>video_output_dir</strong> – Directory to save videos in EnvWorker.</p></li>
+<li><p><strong>resume</strong> – Optional path to a checkpoint to resume training from.</p></li>
+<li><p><strong>restart_interval</strong> – Optional interval in seconds after which to restart EnvWorkers.</p></li>
+<li><p><strong>moving_stat_duration</strong> – Duration in seconds for calculating moving statistics (e.g., for pipeline monitoring).</p></li>
+<li><p><strong>log_interval</strong> – Optional interval in seconds for logging pipeline monitoring stats.</p></li>
+<li><p><strong>episode_statistics</strong> – Optional Ray ActorHandle for an EpisodeStatistics actor.</p></li>
+<li><p><strong>progress_handler</strong> – Optional callable that conforms to the ProgressHandler protocol.</p></li>
+<li><p><strong>max_fast_reset</strong> – Maximum number of fast resets for an EnvWorker before a full restart.</p></li>
+<li><p><strong>rollout_worker_id</strong> – Identifier for this rollout worker.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.online.rollout.rollout_worker.RolloutWorker.inference" title="minestudio.online.rollout.rollout_worker.RolloutWorker.inference"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inference</span></code></a>(requests)</p></td>
+<td><p>Performs a batch of inference requests using the policy model.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.online.rollout.rollout_worker.RolloutWorker.load_weights" title="minestudio.online.rollout.rollout_worker.RolloutWorker.load_weights"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_weights</span></code></a>(weights)</p></td>
+<td><p>Loads new weights into the policy model.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.online.rollout.rollout_worker.RolloutWorker.loop" title="minestudio.online.rollout.rollout_worker.RolloutWorker.loop"><code class="xref py py-obj docutils literal notranslate"><span class="pre">loop</span></code></a>()</p></td>
+<td><p>Runs one iteration of the rollout loop.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.online.rollout.rollout_worker.RolloutWorker.poll_environments" title="minestudio.online.rollout.rollout_worker.RolloutWorker.poll_environments"><code class="xref py py-obj docutils literal notranslate"><span class="pre">poll_environments</span></code></a>()</p></td>
+<td><p>Polls all environment connections for messages and processes them.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.online.rollout.rollout_worker.RolloutWorker.progress_handler" title="minestudio.online.rollout.rollout_worker.RolloutWorker.progress_handler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">progress_handler</span></code></a>(*, worker_uuid, obs, ...)</p></td>
+<td><p>Default progress handler, likely intended to be overridden or replaced.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.online.rollout.rollout_worker.RolloutWorker.rollout" title="minestudio.online.rollout.rollout_worker.RolloutWorker.rollout"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rollout</span></code></a>(num_batches)</p></td>
+<td><p>Runs the rollout loop for a specified number of batches.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.online.rollout.rollout_worker.RolloutWorker.update_model_version" title="minestudio.online.rollout.rollout_worker.RolloutWorker.update_model_version"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_model_version</span></code></a>(next_model_version)</p></td>
+<td><p>Updates the model version number that will be associated with subsequently collected data.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.online.rollout.rollout_worker.RolloutWorker.inference">
+<span class="sig-name descname"><span class="pre">inference</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">requests</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/minestudio/online/rollout/rollout_worker.html#RolloutWorker.inference"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.rollout.rollout_worker.RolloutWorker.inference" title="Link to this definition">#</a></dt>
+<dd><p>Performs a batch of inference requests using the policy model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>requests</strong> – A list of tuples, where each tuple contains (worker_id, observation).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing:
+- result_actions: A list of actions for each request.
+- result_states: A list of next hidden states for each request.
+- result_vpreds: A list of predicted values (vpreds) for each request.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.online.rollout.rollout_worker.RolloutWorker.load_weights">
+<span class="sig-name descname"><span class="pre">load_weights</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/minestudio/online/rollout/rollout_worker.html#RolloutWorker.load_weights"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.rollout.rollout_worker.RolloutWorker.load_weights" title="Link to this definition">#</a></dt>
+<dd><p>Loads new weights into the policy model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>weights</strong> – A dictionary containing the state dictionary of the model.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.online.rollout.rollout_worker.RolloutWorker.loop">
+<span class="sig-name descname"><span class="pre">loop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/minestudio/online/rollout/rollout_worker.html#RolloutWorker.loop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.rollout.rollout_worker.RolloutWorker.loop" title="Link to this definition">#</a></dt>
+<dd><p>Runs one iteration of the rollout loop.</p>
+<p>This involves:
+1. Polling environments until enough requests are queued to fill a batch.
+2. Performing inference on the batch of requests.
+3. Sending actions back to the environments.
+4. Calling the progress_handler if it’s set.
+5. Polling environments again to process any immediate responses.
+6. Logging statistics if the log_interval is met.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.online.rollout.rollout_worker.RolloutWorker.poll_environments">
+<span class="sig-name descname"><span class="pre">poll_environments</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/rollout/rollout_worker.html#RolloutWorker.poll_environments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.rollout.rollout_worker.RolloutWorker.poll_environments" title="Link to this definition">#</a></dt>
+<dd><p>Polls all environment connections for messages and processes them.</p>
+<p>Handles different message types:
+- “step_agent”: An environment is ready for a new action. The observation is added to queued_requests.
+- “reset_state”: An environment has reset. The agent’s hidden state for this environment is reset.
+- “report_rewards”: An environment has finished an episode. Rewards are reported to EpisodeStatistics.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.online.rollout.rollout_worker.RolloutWorker.progress_handler">
+<span class="sig-name descname"><span class="pre">progress_handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">worker_uuid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env_spec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_reward</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_terminated</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_truncated</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">episode_uuid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/minestudio/online/rollout/rollout_worker.html#RolloutWorker.progress_handler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.rollout.rollout_worker.RolloutWorker.progress_handler" title="Link to this definition">#</a></dt>
+<dd><p>Default progress handler, likely intended to be overridden or replaced.
+This implementation seems to be a duplicate of logic within RolloutWorkerWrapper.progress_handler
+and might not be used if a custom progress_handler is provided during RolloutWorker initialization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>worker_uuid</strong> – The UUID of the worker environment.</p></li>
+<li><p><strong>obs</strong> – The observation from the environment.</p></li>
+<li><p><strong>env_spec</strong> – Specification of the environment, used for filtering.</p></li>
+<li><p><strong>state</strong> – The hidden state of the policy model.</p></li>
+<li><p><strong>action</strong> – The action taken by the policy.</p></li>
+<li><p><strong>last_reward</strong> – The reward received from the previous step.</p></li>
+<li><p><strong>last_terminated</strong> – Whether the episode terminated at the previous step.</p></li>
+<li><p><strong>last_truncated</strong> – Whether the episode was truncated at the previous step.</p></li>
+<li><p><strong>episode_uuid</strong> – The UUID of the current episode.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>AssertionError</strong> – if env_spec is not in self.env_spec.config4test when not in self.env_spec.config.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.online.rollout.rollout_worker.RolloutWorker.rollout">
+<span class="sig-name descname"><span class="pre">rollout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_batches</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/minestudio/online/rollout/rollout_worker.html#RolloutWorker.rollout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.rollout.rollout_worker.RolloutWorker.rollout" title="Link to this definition">#</a></dt>
+<dd><p>Runs the rollout loop for a specified number of batches.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>num_batches</strong> – The number of inference batches to collect.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.online.rollout.rollout_worker.RolloutWorker.update_model_version">
+<span class="sig-name descname"><span class="pre">update_model_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">next_model_version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/rollout/rollout_worker.html#RolloutWorker.update_model_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.rollout.rollout_worker.RolloutWorker.update_model_version" title="Link to this definition">#</a></dt>
+<dd><p>Updates the model version number that will be associated with subsequently collected data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>next_model_version</strong> – The new model version number.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="start-manager">
+<h3>Start Manager<a class="headerlink" href="#start-manager" title="Link to this heading">#</a></h3>
+</section>
+</section>
+<section id="replay-buffer">
+<h2>Replay Buffer<a class="headerlink" href="#replay-buffer" title="Link to this heading">#</a></h2>
+<section id="actor">
+<h3>Actor<a class="headerlink" href="#actor" title="Link to this heading">#</a></h3>
+</section>
+<section id="fragment-store">
+<h3>Fragment Store<a class="headerlink" href="#fragment-store" title="Link to this heading">#</a></h3>
+</section>
+<section id="replay-buffer-interface">
+<h3>Replay Buffer Interface<a class="headerlink" href="#replay-buffer-interface" title="Link to this heading">#</a></h3>
+</section>
+</section>
+<section id="trainer">
+<h2>Trainer<a class="headerlink" href="#trainer" title="Link to this heading">#</a></h2>
+<section id="base-trainer">
+<h3>Base Trainer<a class="headerlink" href="#base-trainer" title="Link to this heading">#</a></h3>
+</section>
+<section id="ppo-trainer">
+<h3>PPO Trainer<a class="headerlink" href="#ppo-trainer" title="Link to this heading">#</a></h3>
+</section>
+<section id="start-trainer">
+<h3>Start Trainer<a class="headerlink" href="#start-trainer" title="Link to this heading">#</a></h3>
+</section>
+</section>
+<section id="utils">
+<h2>Utils<a class="headerlink" href="#utils" title="Link to this heading">#</a></h2>
+<section id="module-minestudio.online.utils.rollout.datatypes">
+<span id="rollout-utils"></span><h3>Rollout Utils<a class="headerlink" href="#module-minestudio.online.utils.rollout.datatypes" title="Link to this heading">#</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="minestudio.online.utils.rollout.datatypes.FragmentDataDict">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">minestudio.online.utils.rollout.datatypes.</span></span><span class="sig-name descname"><span class="pre">FragmentDataDict</span></span><a class="reference internal" href="../../_modules/minestudio/online/utils/rollout/datatypes.html#FragmentDataDict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.utils.rollout.datatypes.FragmentDataDict" title="Link to this definition">#</a></dt>
+<dd><p>A dictionary that maps FragmentIndex to arbitrary data.
+It provides a helper method to format a batch of fragments for model input.</p>
+<p class="rubric">Methods</p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear</span></code>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">copy</span></code>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.online.utils.rollout.datatypes.FragmentDataDict.format_batch" title="minestudio.online.utils.rollout.datatypes.FragmentDataDict.format_batch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">format_batch</span></code></a>(fragments, device)</p></td>
+<td><p>Formats a list of SampleFragments into a batch suitable for model input.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">fromkeys</span></code>(iterable[, value])</p></td>
+<td><p>Create a new dictionary with keys from iterable and values set to value.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get</span></code>(key[, default])</p></td>
+<td><p>Return the value for key if key is in the dictionary, else default.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">items</span></code>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">keys</span></code>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pop</span></code>(key[, default])</p></td>
+<td><p>If the key is not found, return the default if given; otherwise, raise a KeyError.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">popitem</span></code>(/)</p></td>
+<td><p>Remove and return a (key, value) pair as a 2-tuple.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setdefault</span></code>(key[, default])</p></td>
+<td><p>Insert key with a value of default if key is not in the dictionary.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">update</span></code>([E, ]**F)</p></td>
+<td><p>If E is present and has a .keys() method, then does:  for k in E: D[k] = E[k] If E is present and lacks a .keys() method, then does:  for k, v in E: D[k] = v In either case, this is followed by: for k in F:  D[k] = F[k]</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">values</span></code>()</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.online.utils.rollout.datatypes.FragmentDataDict.format_batch">
+<span class="sig-name descname"><span class="pre">format_batch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fragments</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#minestudio.online.utils.rollout.datatypes.SampleFragment" title="minestudio.online.utils.rollout.datatypes.SampleFragment"><span class="pre">SampleFragment</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.device</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/utils/rollout/datatypes.html#FragmentDataDict.format_batch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.utils.rollout.datatypes.FragmentDataDict.format_batch" title="Link to this definition">#</a></dt>
+<dd><p>Formats a list of SampleFragments into a batch suitable for model input.
+It retrieves the corresponding data for each fragment from the dictionary,
+stacks them, and moves them to the specified device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fragments</strong> – A list of SampleFragment objects.</p></li>
+<li><p><strong>device</strong> – The torch device to move the batch to.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A batch of data ready for model input.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="minestudio.online.utils.rollout.datatypes.FragmentIndex">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">minestudio.online.utils.rollout.datatypes.</span></span><span class="sig-name descname"><span class="pre">FragmentIndex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">worker_uuid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fid_in_worker</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/utils/rollout/datatypes.html#FragmentIndex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.utils.rollout.datatypes.FragmentIndex" title="Link to this definition">#</a></dt>
+<dd><p>Represents a unique identifier for a SampleFragment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>worker_uuid</strong> – The unique identifier of the worker that generated the fragment.</p></li>
+<li><p><strong>fid_in_worker</strong> – The fragment’s ID within that worker.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="minestudio.online.utils.rollout.datatypes.FragmentMetadata">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">minestudio.online.utils.rollout.datatypes.</span></span><span class="sig-name descname"><span class="pre">FragmentMetadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">worker_uuid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fid_in_worker</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/utils/rollout/datatypes.html#FragmentMetadata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.utils.rollout.datatypes.FragmentMetadata" title="Link to this definition">#</a></dt>
+<dd><p>Metadata associated with a SampleFragment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_version</strong> – The version of the model used to generate this fragment.</p></li>
+<li><p><strong>session_id</strong> – The ID of the training session.</p></li>
+<li><p><strong>worker_uuid</strong> – The unique identifier of the worker that generated the fragment.</p></li>
+<li><p><strong>fid_in_worker</strong> – The fragment’s ID within that worker.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="minestudio.online.utils.rollout.datatypes.SampleFragment">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">minestudio.online.utils.rollout.datatypes.</span></span><span class="sig-name descname"><span class="pre">SampleFragment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_done</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reward</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">first</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">worker_uuid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fid_in_worker</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_obs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">episode_uuids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/utils/rollout/datatypes.html#SampleFragment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.utils.rollout.datatypes.SampleFragment" title="Link to this definition">#</a></dt>
+<dd><p>Represents a fragment of a trajectory, containing observations, actions, rewards, and other metadata.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obs</strong> – The observation from the environment.</p></li>
+<li><p><strong>action</strong> – The action taken by the agent.</p></li>
+<li><p><strong>next_done</strong> – A boolean indicating whether the episode terminated after this fragment.</p></li>
+<li><p><strong>reward</strong> – The reward received after taking the action.</p></li>
+<li><p><strong>first</strong> – A boolean indicating if this is the first fragment in an episode.</p></li>
+<li><p><strong>in_state</strong> – The recurrent state of the agent.</p></li>
+<li><p><strong>worker_uuid</strong> – The unique identifier of the worker that generated the fragment.</p></li>
+<li><p><strong>fid_in_worker</strong> – The fragment’s ID within that worker.</p></li>
+<li><p><strong>next_obs</strong> – The next observation from the environment.</p></li>
+<li><p><strong>episode_uuids</strong> – A list of unique identifiers for the episodes this fragment belongs to.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Attributes<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference internal" href="#minestudio.online.utils.rollout.datatypes.SampleFragment.index" title="minestudio.online.utils.rollout.datatypes.SampleFragment.index"><code class="xref py py-obj docutils literal notranslate"><span class="pre">index</span></code></a></dt><dd><p>Returns the FragmentIndex for this SampleFragment.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.online.utils.rollout.datatypes.SampleFragment.print" title="minestudio.online.utils.rollout.datatypes.SampleFragment.print"><code class="xref py py-obj docutils literal notranslate"><span class="pre">print</span></code></a>()</p></td>
+<td><p>Prints the contents of the SampleFragment for debugging purposes.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py property">
+<dt class="sig sig-object py" id="minestudio.online.utils.rollout.datatypes.SampleFragment.index">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">index</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#minestudio.online.utils.rollout.datatypes.FragmentIndex" title="minestudio.online.utils.rollout.datatypes.FragmentIndex"><span class="pre">FragmentIndex</span></a></em><a class="headerlink" href="#minestudio.online.utils.rollout.datatypes.SampleFragment.index" title="Link to this definition">#</a></dt>
+<dd><p>Returns the FragmentIndex for this SampleFragment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The FragmentIndex object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.online.utils.rollout.datatypes.SampleFragment.print">
+<span class="sig-name descname"><span class="pre">print</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/minestudio/online/utils/rollout/datatypes.html#SampleFragment.print"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.utils.rollout.datatypes.SampleFragment.print" title="Link to this definition">#</a></dt>
+<dd><p>Prints the contents of the SampleFragment for debugging purposes.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="minestudio.online.utils.rollout.datatypes.StepRecord">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">minestudio.online.utils.rollout.datatypes.</span></span><span class="sig-name descname"><span class="pre">StepRecord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">worker_uuid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_reward</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_terminated</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_truncated</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">episode_uuid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/utils/rollout/datatypes.html#StepRecord"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.utils.rollout.datatypes.StepRecord" title="Link to this definition">#</a></dt>
+<dd><p>Represents a single step taken in the environment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>worker_uuid</strong> – The unique identifier of the worker that generated this step.</p></li>
+<li><p><strong>obs</strong> – The observation from the environment.</p></li>
+<li><p><strong>state</strong> – The recurrent state of the agent.</p></li>
+<li><p><strong>action</strong> – The action taken by the agent.</p></li>
+<li><p><strong>last_reward</strong> – The reward received from the previous step.</p></li>
+<li><p><strong>last_terminated</strong> – Whether the episode terminated after the previous step.</p></li>
+<li><p><strong>last_truncated</strong> – Whether the episode was truncated after the previous step.</p></li>
+<li><p><strong>model_version</strong> – The version of the model used to generate this step.</p></li>
+<li><p><strong>episode_uuid</strong> – The unique identifier of the episode this step belongs to.</p></li>
+<li><p><strong>session_id</strong> – The ID of the training session.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-minestudio.online.utils.rollout.monitor"></span><dl class="py class">
+<dt class="sig sig-object py" id="minestudio.online.utils.rollout.monitor.MovingStat">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">minestudio.online.utils.rollout.monitor.</span></span><span class="sig-name descname"><span class="pre">MovingStat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">duration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/utils/rollout/monitor.html#MovingStat"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.utils.rollout.monitor.MovingStat" title="Link to this definition">#</a></dt>
+<dd><p>Calculates a moving statistic (average) over a specified duration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>duration</strong> – The duration in seconds over which to calculate the statistic.</p>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.online.utils.rollout.monitor.MovingStat.average" title="minestudio.online.utils.rollout.monitor.MovingStat.average"><code class="xref py py-obj docutils literal notranslate"><span class="pre">average</span></code></a>()</p></td>
+<td><p>Calculates the average of the data points currently within the duration window.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.online.utils.rollout.monitor.MovingStat.update" title="minestudio.online.utils.rollout.monitor.MovingStat.update"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update</span></code></a>(x)</p></td>
+<td><p>Adds a new data point to the calculation.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.online.utils.rollout.monitor.MovingStat.average">
+<span class="sig-name descname"><span class="pre">average</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/utils/rollout/monitor.html#MovingStat.average"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.utils.rollout.monitor.MovingStat.average" title="Link to this definition">#</a></dt>
+<dd><p>Calculates the average of the data points currently within the duration window.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The average of the data points, or float(‘nan’) if no data is available.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.online.utils.rollout.monitor.MovingStat.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/utils/rollout/monitor.html#MovingStat.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.utils.rollout.monitor.MovingStat.update" title="Link to this definition">#</a></dt>
+<dd><p>Adds a new data point to the calculation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>x</strong> – The new data point.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="minestudio.online.utils.rollout.monitor.PipelineMonitor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">minestudio.online.utils.rollout.monitor.</span></span><span class="sig-name descname"><span class="pre">PipelineMonitor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stages</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">300</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/utils/rollout/monitor.html#PipelineMonitor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.utils.rollout.monitor.PipelineMonitor" title="Link to this definition">#</a></dt>
+<dd><p>Monitors the time spent in different stages of a pipeline.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stages</strong> – A list of strings representing the names of the pipeline stages.</p></li>
+<li><p><strong>duration</strong> – The duration in seconds over which to calculate moving statistics for each stage.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.online.utils.rollout.monitor.PipelineMonitor.print" title="minestudio.online.utils.rollout.monitor.PipelineMonitor.print"><code class="xref py py-obj docutils literal notranslate"><span class="pre">print</span></code></a>()</p></td>
+<td><p>Prints a table summarizing the average time spent in each stage for all monitored pipelines.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.online.utils.rollout.monitor.PipelineMonitor.report_enter" title="minestudio.online.utils.rollout.monitor.PipelineMonitor.report_enter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">report_enter</span></code></a>(stage[, pipeline_id])</p></td>
+<td><p>Reports that a pipeline has entered a new stage.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.online.utils.rollout.monitor.PipelineMonitor.print">
+<span class="sig-name descname"><span class="pre">print</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/utils/rollout/monitor.html#PipelineMonitor.print"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.utils.rollout.monitor.PipelineMonitor.print" title="Link to this definition">#</a></dt>
+<dd><p>Prints a table summarizing the average time spent in each stage for all monitored pipelines.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.online.utils.rollout.monitor.PipelineMonitor.report_enter">
+<span class="sig-name descname"><span class="pre">report_enter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pipeline_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'default'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/utils/rollout/monitor.html#PipelineMonitor.report_enter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.utils.rollout.monitor.PipelineMonitor.report_enter" title="Link to this definition">#</a></dt>
+<dd><p>Reports that a pipeline has entered a new stage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stage</strong> – The name of the stage being entered.</p></li>
+<li><p><strong>pipeline_id</strong> – The unique identifier of the pipeline instance.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>AssertionError</strong> – If the reported stage is not the expected next stage.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-minestudio.online.utils.train.gae">
+<span id="trainer-utils"></span><h3>Trainer Utils<a class="headerlink" href="#module-minestudio.online.utils.train.gae" title="Link to this heading">#</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="minestudio.online.utils.train.gae.get_last_fragment_indexes">
+<span class="sig-prename descclassname"><span class="pre">minestudio.online.utils.train.gae.</span></span><span class="sig-name descname"><span class="pre">get_last_fragment_indexes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fragment_indexs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#minestudio.online.utils.rollout.datatypes.FragmentIndex" title="minestudio.online.utils.rollout.datatypes.FragmentIndex"><span class="pre">FragmentIndex</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#minestudio.online.utils.rollout.datatypes.FragmentIndex" title="minestudio.online.utils.rollout.datatypes.FragmentIndex"><span class="pre">FragmentIndex</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/minestudio/online/utils/train/gae.html#get_last_fragment_indexes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.utils.train.gae.get_last_fragment_indexes" title="Link to this definition">#</a></dt>
+<dd><p>Identifies the last fragment index for each worker from a list of fragment indexes.</p>
+<p>A fragment is considered the last if it’s the last one from a worker or if the next fragment from the same worker is not contiguous.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fragment_indexs</strong> – A list of FragmentIndex objects.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of FragmentIndex objects, each being the last fragment for a worker in a sequence.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-minestudio.online.utils.train.wandb_logger"></span><dl class="py function">
+<dt class="sig sig-object py" id="minestudio.online.utils.train.wandb_logger.define_metric">
+<span class="sig-prename descclassname"><span class="pre">minestudio.online.utils.train.wandb_logger.</span></span><span class="sig-name descname"><span class="pre">define_metric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/utils/train/wandb_logger.html#define_metric"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.utils.train.wandb_logger.define_metric" title="Link to this definition">#</a></dt>
+<dd><p>Defines a metric for the current Weights &amp; Biases (wandb) training session.</p>
+<p>This function retrieves the current training session and calls its <cite>define_metric</cite> method remotely.
+If no session is active or an error occurs, an error message is logged.
+It asserts that a training session must be active.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> – Positional arguments to pass to <cite>wandb.define_metric()</cite>.</p></li>
+<li><p><strong>kwargs</strong> – Keyword arguments to pass to <cite>wandb.define_metric()</cite>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="minestudio.online.utils.train.wandb_logger.log">
+<span class="sig-prename descclassname"><span class="pre">minestudio.online.utils.train.wandb_logger.</span></span><span class="sig-name descname"><span class="pre">log</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/utils/train/wandb_logger.html#log"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.utils.train.wandb_logger.log" title="Link to this definition">#</a></dt>
+<dd><p>Logs data to the current Weights &amp; Biases (wandb) training session.</p>
+<p>This function retrieves the current training session and calls its <cite>log</cite> method remotely.
+If no session is active or an error occurs during logging, an error message is logged.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> – Positional arguments to pass to <cite>wandb.log()</cite>.</p></li>
+<li><p><strong>kwargs</strong> – Keyword arguments to pass to <cite>wandb.log()</cite>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="minestudio.online.utils.train.wandb_logger.log_video">
+<span class="sig-prename descclassname"><span class="pre">minestudio.online.utils.train.wandb_logger.</span></span><span class="sig-name descname"><span class="pre">log_video</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">video_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/utils/train/wandb_logger.html#log_video"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.utils.train.wandb_logger.log_video" title="Link to this definition">#</a></dt>
+<dd><p>Logs a video to the current Weights &amp; Biases (wandb) training session.</p>
+<p>This function retrieves the current training session and calls its <cite>log_video</cite> method remotely.
+If no session is active or an error occurs during logging, an error message is logged.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – A dictionary containing the data to log. The video itself should be under the <cite>video_key</cite>.</p></li>
+<li><p><strong>video_key</strong> – The key in the <cite>data</cite> dictionary that holds the video data.</p></li>
+<li><p><strong>fps</strong> – The frames per second of the video.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+<div class="section ablog__blog_comments">
+   
+</div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../offline/index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Offline API Documentation</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../inference/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Inference API Documentation</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rollout">Rollout</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#module-minestudio.online.rollout.env_worker">Env Worker</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.rollout.env_worker.EnvWorker"><code class="docutils literal notranslate"><span class="pre">EnvWorker</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.rollout.env_worker.EnvWorker.report_rewards"><code class="docutils literal notranslate"><span class="pre">EnvWorker.report_rewards()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.rollout.env_worker.EnvWorker.reset_state"><code class="docutils literal notranslate"><span class="pre">EnvWorker.reset_state()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.rollout.env_worker.EnvWorker.run"><code class="docutils literal notranslate"><span class="pre">EnvWorker.run()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.rollout.env_worker.EnvWorker.step_agent"><code class="docutils literal notranslate"><span class="pre">EnvWorker.step_agent()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.rollout.env_worker.VideoWriter"><code class="docutils literal notranslate"><span class="pre">VideoWriter</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.rollout.env_worker.VideoWriter.close_video"><code class="docutils literal notranslate"><span class="pre">VideoWriter.close_video()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.rollout.env_worker.VideoWriter.open_video"><code class="docutils literal notranslate"><span class="pre">VideoWriter.open_video()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.rollout.env_worker.VideoWriter.run"><code class="docutils literal notranslate"><span class="pre">VideoWriter.run()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.rollout.env_worker.VideoWriter.write_frame"><code class="docutils literal notranslate"><span class="pre">VideoWriter.write_frame()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.rollout.env_worker.draw_vpred"><code class="docutils literal notranslate"><span class="pre">draw_vpred()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#episode-statistics">Episode Statistics</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rollout-manager">Rollout Manager</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#module-minestudio.online.rollout.rollout_worker">Rollout Worker</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.rollout.rollout_worker.ProgressHandler"><code class="docutils literal notranslate"><span class="pre">ProgressHandler</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.rollout.rollout_worker.RolloutWorker"><code class="docutils literal notranslate"><span class="pre">RolloutWorker</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.rollout.rollout_worker.RolloutWorker.inference"><code class="docutils literal notranslate"><span class="pre">RolloutWorker.inference()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.rollout.rollout_worker.RolloutWorker.load_weights"><code class="docutils literal notranslate"><span class="pre">RolloutWorker.load_weights()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.rollout.rollout_worker.RolloutWorker.loop"><code class="docutils literal notranslate"><span class="pre">RolloutWorker.loop()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.rollout.rollout_worker.RolloutWorker.poll_environments"><code class="docutils literal notranslate"><span class="pre">RolloutWorker.poll_environments()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.rollout.rollout_worker.RolloutWorker.progress_handler"><code class="docutils literal notranslate"><span class="pre">RolloutWorker.progress_handler()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.rollout.rollout_worker.RolloutWorker.rollout"><code class="docutils literal notranslate"><span class="pre">RolloutWorker.rollout()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.rollout.rollout_worker.RolloutWorker.update_model_version"><code class="docutils literal notranslate"><span class="pre">RolloutWorker.update_model_version()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#start-manager">Start Manager</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#replay-buffer">Replay Buffer</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#actor">Actor</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fragment-store">Fragment Store</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#replay-buffer-interface">Replay Buffer Interface</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#trainer">Trainer</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#base-trainer">Base Trainer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ppo-trainer">PPO Trainer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#start-trainer">Start Trainer</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#utils">Utils</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#module-minestudio.online.utils.rollout.datatypes">Rollout Utils</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.utils.rollout.datatypes.FragmentDataDict"><code class="docutils literal notranslate"><span class="pre">FragmentDataDict</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.utils.rollout.datatypes.FragmentDataDict.format_batch"><code class="docutils literal notranslate"><span class="pre">FragmentDataDict.format_batch()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.utils.rollout.datatypes.FragmentIndex"><code class="docutils literal notranslate"><span class="pre">FragmentIndex</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.utils.rollout.datatypes.FragmentMetadata"><code class="docutils literal notranslate"><span class="pre">FragmentMetadata</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.utils.rollout.datatypes.SampleFragment"><code class="docutils literal notranslate"><span class="pre">SampleFragment</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.utils.rollout.datatypes.SampleFragment.index"><code class="docutils literal notranslate"><span class="pre">SampleFragment.index</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.utils.rollout.datatypes.SampleFragment.print"><code class="docutils literal notranslate"><span class="pre">SampleFragment.print()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.utils.rollout.datatypes.StepRecord"><code class="docutils literal notranslate"><span class="pre">StepRecord</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.utils.rollout.monitor.MovingStat"><code class="docutils literal notranslate"><span class="pre">MovingStat</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.utils.rollout.monitor.MovingStat.average"><code class="docutils literal notranslate"><span class="pre">MovingStat.average()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.utils.rollout.monitor.MovingStat.update"><code class="docutils literal notranslate"><span class="pre">MovingStat.update()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.utils.rollout.monitor.PipelineMonitor"><code class="docutils literal notranslate"><span class="pre">PipelineMonitor</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.utils.rollout.monitor.PipelineMonitor.print"><code class="docutils literal notranslate"><span class="pre">PipelineMonitor.print()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.utils.rollout.monitor.PipelineMonitor.report_enter"><code class="docutils literal notranslate"><span class="pre">PipelineMonitor.report_enter()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#module-minestudio.online.utils.train.gae">Trainer Utils</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.utils.train.gae.get_last_fragment_indexes"><code class="docutils literal notranslate"><span class="pre">get_last_fragment_indexes()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.utils.train.wandb_logger.define_metric"><code class="docutils literal notranslate"><span class="pre">define_metric()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.utils.train.wandb_logger.log"><code class="docutils literal notranslate"><span class="pre">log()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.utils.train.wandb_logger.log_video"><code class="docutils literal notranslate"><span class="pre">log_video()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/api/online/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, The CraftJarvis Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

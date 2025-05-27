@@ -6,4 +6,8 @@ MineStudio API Documentation
    :caption: Contents:
 
    Simulator <simulator/index>
+   Data <data/index>
    Models <models/index>
+   Offline <offline/index>
+   Online <online/index>
+   Inference <inference/index>

@@ -1,0 +1,1177 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Inference API Documentation &#8212; MineStudio 1.0.0</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/thebelab.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=f44ad8c8" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=8d563738"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/thebelab-helper.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/inference/index';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://craftjarvis.github.io/MineStudio/master/_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'master';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <link rel="icon" href="../../_static/logo-no-text-light.svg"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="Online API Documentation" href="../online/index.html" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />   
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo-no-text-light.svg" class="logo__image only-light" alt=""/>
+    <img src="../../_static/logo-no-text-light.svg" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">MineStudio</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../overview/index.html">
+    Overview
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../overview/getting-started.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../simulator/index.html">
+    Simulator
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../data/index.html">
+    Data
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../models/index.html">
+    Models
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../offline/index.html">
+    Offline
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../online/index.html">
+    Online
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../inference/index.html">
+    Inference
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../benchmark/index.html">
+    Benchmark
+  </a>
+</li>
+
+
+<li class=" current active">
+  <a class="nav-link dropdown-item nav-internal" href="../index.html">
+    API
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/CraftJarvis/MineStudio" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/minestudio" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-custom fa-pypi fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://arxiv.org/pdf/2310.08235" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="ai ai-arxiv fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">ArXiv</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+          
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../overview/index.html">
+    Overview
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../overview/getting-started.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../simulator/index.html">
+    Simulator
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../data/index.html">
+    Data
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../models/index.html">
+    Models
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../offline/index.html">
+    Offline
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../online/index.html">
+    Online
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../inference/index.html">
+    Inference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../benchmark/index.html">
+    Benchmark
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/CraftJarvis/MineStudio" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/minestudio" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-custom fa-pypi fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://arxiv.org/pdf/2310.08235" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="ai ai-arxiv fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">ArXiv</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../simulator/index.html">Simulator</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../data/index.html">Data</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../models/index.html">Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../offline/index.html">Offline</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../online/index.html">Online</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Inference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">MineStudio API Documentation</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Inference API Documentation</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                   <section id="inference-api-documentation">
+<h1>Inference API Documentation<a class="headerlink" href="#inference-api-documentation" title="Link to this heading">#</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<section id="module-minestudio.inference.pipeline">
+<span id="pipeline"></span><h2>Pipeline<a class="headerlink" href="#module-minestudio.inference.pipeline" title="Link to this heading">#</a></h2>
+<p>Date: 2024-11-25 07:29:21
+LastEditors: caishaofei <a class="reference external" href="mailto:caishaofei&#37;&#52;&#48;stu&#46;pku&#46;edu&#46;cn">caishaofei<span>&#64;</span>stu<span>&#46;</span>pku<span>&#46;</span>edu<span>&#46;</span>cn</a>
+LastEditTime: 2024-11-25 12:40:22
+FilePath: /MineStudio/minestudio/inference/pipeline.py</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="minestudio.inference.pipeline.EpisodePipeline">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">minestudio.inference.pipeline.</span></span><span class="sig-name descname"><span class="pre">EpisodePipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">episode_generator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#minestudio.inference.generator.base_generator.EpisodeGenerator" title="minestudio.inference.generator.base_generator.EpisodeGenerator"><span class="pre">EpisodeGenerator</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">episode_filter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#minestudio.inference.filter.base_filter.EpisodeFilter" title="minestudio.inference.filter.base_filter.EpisodeFilter"><span class="pre">EpisodeFilter</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#minestudio.inference.filter.base_filter.EpisodeFilter" title="minestudio.inference.filter.base_filter.EpisodeFilter"><span class="pre">EpisodeFilter</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">episode_recorder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#minestudio.inference.recorder.base_recorder.EpisodeRecorder" title="minestudio.inference.recorder.base_recorder.EpisodeRecorder"><span class="pre">EpisodeRecorder</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/inference/pipeline.html#EpisodePipeline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.inference.pipeline.EpisodePipeline" title="Link to this definition">#</a></dt>
+<dd><p>A pipeline for generating, filtering, and recording episodes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>episode_generator</strong> (<a class="reference internal" href="#minestudio.inference.generator.base_generator.EpisodeGenerator" title="minestudio.inference.generator.base_generator.EpisodeGenerator"><em>EpisodeGenerator</em></a>) – An instance of EpisodeGenerator.</p></li>
+<li><p><strong>episode_filter</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference internal" href="#minestudio.inference.filter.base_filter.EpisodeFilter" title="minestudio.inference.filter.base_filter.EpisodeFilter"><em>EpisodeFilter</em></a><em>, </em><em>List</em><em>[</em><a class="reference internal" href="#minestudio.inference.filter.base_filter.EpisodeFilter" title="minestudio.inference.filter.base_filter.EpisodeFilter"><em>EpisodeFilter</em></a><em>]</em><em>]</em><em>]</em>) – An instance of EpisodeFilter or a list of EpisodeFilter instances. Defaults to None.</p></li>
+<li><p><strong>episode_recorder</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="#minestudio.inference.recorder.base_recorder.EpisodeRecorder" title="minestudio.inference.recorder.base_recorder.EpisodeRecorder"><em>EpisodeRecorder</em></a><em>]</em>) – An instance of EpisodeRecorder. Defaults to None.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.inference.pipeline.EpisodePipeline.run" title="minestudio.inference.pipeline.EpisodePipeline.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>()</p></td>
+<td><p>Runs the episode pipeline.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.inference.pipeline.EpisodePipeline.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/inference/pipeline.html#EpisodePipeline.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.inference.pipeline.EpisodePipeline.run" title="Link to this definition">#</a></dt>
+<dd><p>Runs the episode pipeline.</p>
+<p>The pipeline generates an episode, filters it, and then records it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A summary of the recorded episode.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-minestudio.inference.filter.base_filter">
+<span id="filter"></span><h2>Filter<a class="headerlink" href="#module-minestudio.inference.filter.base_filter" title="Link to this heading">#</a></h2>
+<p>Date: 2024-11-25 07:36:18
+LastEditors: caishaofei <a class="reference external" href="mailto:caishaofei&#37;&#52;&#48;stu&#46;pku&#46;edu&#46;cn">caishaofei<span>&#64;</span>stu<span>&#46;</span>pku<span>&#46;</span>edu<span>&#46;</span>cn</a>
+LastEditTime: 2024-11-25 12:33:00
+FilePath: /MineStudio/minestudio/inference/filter/base_filter.py</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="minestudio.inference.filter.base_filter.EpisodeFilter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">minestudio.inference.filter.base_filter.</span></span><span class="sig-name descname"><span class="pre">EpisodeFilter</span></span><a class="reference internal" href="../../_modules/minestudio/inference/filter/base_filter.html#EpisodeFilter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.inference.filter.base_filter.EpisodeFilter" title="Link to this definition">#</a></dt>
+<dd><p>Base class for episode filters.</p>
+<p>Filters are used to process episodes generated by an EpisodeGenerator.</p>
+<p class="rubric">Methods</p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.inference.filter.base_filter.EpisodeFilter.filter" title="minestudio.inference.filter.base_filter.EpisodeFilter.filter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter</span></code></a>(episode_generator)</p></td>
+<td><p>Filters an episode generator.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.inference.filter.base_filter.EpisodeFilter.filter">
+<span class="sig-name descname"><span class="pre">filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">episode_generator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Generator</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Generator</span></span></span><a class="reference internal" href="../../_modules/minestudio/inference/filter/base_filter.html#EpisodeFilter.filter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.inference.filter.base_filter.EpisodeFilter.filter" title="Link to this definition">#</a></dt>
+<dd><p>Filters an episode generator.</p>
+<p>This method should be overridden by subclasses to implement specific filtering logic.
+By default, it returns the original generator without any filtering.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>episode_generator</strong> (<em>Generator</em>) – A generator that yields episodes.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A generator that yields filtered episodes.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Generator</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<p id="module-minestudio.inference.filter.info_base_filter">Date: 2024-11-25 12:39:01
+LastEditors: caishaofei <a class="reference external" href="mailto:caishaofei&#37;&#52;&#48;stu&#46;pku&#46;edu&#46;cn">caishaofei<span>&#64;</span>stu<span>&#46;</span>pku<span>&#46;</span>edu<span>&#46;</span>cn</a>
+LastEditTime: 2025-01-07 08:19:00
+FilePath: /MineStudio/minestudio/inference/filter/info_base_filter.py</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="minestudio.inference.filter.info_base_filter.InfoBaseFilter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">minestudio.inference.filter.info_base_filter.</span></span><span class="sig-name descname"><span class="pre">InfoBaseFilter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">regex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'status'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/inference/filter/info_base_filter.html#InfoBaseFilter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.inference.filter.info_base_filter.InfoBaseFilter" title="Link to this definition">#</a></dt>
+<dd><p>A filter that filters episodes based on information extracted from a specified key in the episode’s info.</p>
+<p>It uses a regular expression to match events in the info and counts the occurrences.
+If the total count meets a specified number, the episode is labeled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> (<em>str</em>) – The key in the episode info to extract data from.</p></li>
+<li><p><strong>regex</strong> (<em>str</em>) – The regular expression to match events.</p></li>
+<li><p><strong>num</strong> (<em>int</em>) – The minimum number of matched events required for an episode to pass the filter.</p></li>
+<li><p><strong>label</strong> (<em>str</em>) – The label to assign to the episode if it passes the filter. Defaults to “status”.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.inference.filter.info_base_filter.InfoBaseFilter.filter" title="minestudio.inference.filter.info_base_filter.InfoBaseFilter.filter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter</span></code></a>(episode_generator)</p></td>
+<td><p>Filters episodes based on the specified criteria.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.inference.filter.info_base_filter.InfoBaseFilter.filter">
+<span class="sig-name descname"><span class="pre">filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">episode_generator</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/inference/filter/info_base_filter.html#InfoBaseFilter.filter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.inference.filter.info_base_filter.InfoBaseFilter.filter" title="Link to this definition">#</a></dt>
+<dd><p>Filters episodes based on the specified criteria.</p>
+<p>For each episode, it loads the info, extracts data based on the key,
+matches events using the regex, and counts the occurrences.
+If the total count is greater than or equal to num, the episode is labeled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>episode_generator</strong> (<em>Generator</em>) – A generator that yields episodes.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A generator that yields filtered episodes.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Generator</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-minestudio.inference.generator.base_generator">
+<span id="generator"></span><h2>Generator<a class="headerlink" href="#module-minestudio.inference.generator.base_generator" title="Link to this heading">#</a></h2>
+<p>Date: 2024-11-25 07:36:18
+LastEditors: caishaofei <a class="reference external" href="mailto:caishaofei&#37;&#52;&#48;stu&#46;pku&#46;edu&#46;cn">caishaofei<span>&#64;</span>stu<span>&#46;</span>pku<span>&#46;</span>edu<span>&#46;</span>cn</a>
+LastEditTime: 2024-11-25 12:06:21
+FilePath: /MineStudio/minestudio/inference/generator/base_generator.py</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="minestudio.inference.generator.base_generator.AgentInterface">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">minestudio.inference.generator.base_generator.</span></span><span class="sig-name descname"><span class="pre">AgentInterface</span></span><a class="reference internal" href="../../_modules/minestudio/inference/generator/base_generator.html#AgentInterface"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.inference.generator.base_generator.AgentInterface" title="Link to this definition">#</a></dt>
+<dd><p>Interface for an agent that can interact with an environment.</p>
+<p class="rubric">Methods</p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.inference.generator.base_generator.AgentInterface.get_action" title="minestudio.inference.generator.base_generator.AgentInterface.get_action"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_action</span></code></a>(input, state, **kwargs)</p></td>
+<td><p>Gets an action from the agent.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.inference.generator.base_generator.AgentInterface.get_action">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_action</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/minestudio/inference/generator/base_generator.html#AgentInterface.get_action"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.inference.generator.base_generator.AgentInterface.get_action" title="Link to this definition">#</a></dt>
+<dd><p>Gets an action from the agent.</p>
+<p>This method must be implemented by subclasses to define how the agent selects an action
+based on the input and current state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input</strong> (<em>Dict</em>) – The input to the agent (e.g., observations from the environment).</p></li>
+<li><p><strong>state</strong> (<em>Any</em>) – The current state of the agent.</p></li>
+<li><p><strong>kwargs</strong> – Additional keyword arguments.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing the action selected by the agent and the updated state.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[Any, Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="minestudio.inference.generator.base_generator.EpisodeGenerator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">minestudio.inference.generator.base_generator.</span></span><span class="sig-name descname"><span class="pre">EpisodeGenerator</span></span><a class="reference internal" href="../../_modules/minestudio/inference/generator/base_generator.html#EpisodeGenerator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.inference.generator.base_generator.EpisodeGenerator" title="Link to this definition">#</a></dt>
+<dd><p>Base class for episode generators.</p>
+<p>Generators are responsible for creating sequences of experiences (episodes).</p>
+<p class="rubric">Methods</p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.inference.generator.base_generator.EpisodeGenerator.generate" title="minestudio.inference.generator.base_generator.EpisodeGenerator.generate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate</span></code></a>()</p></td>
+<td><p>Generates episodes.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.inference.generator.base_generator.EpisodeGenerator.generate">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Generator</span></span></span><a class="reference internal" href="../../_modules/minestudio/inference/generator/base_generator.html#EpisodeGenerator.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.inference.generator.base_generator.EpisodeGenerator.generate" title="Link to this definition">#</a></dt>
+<dd><p>Generates episodes.</p>
+<p>This method must be implemented by subclasses to define how episodes are generated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A generator that yields episodes.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Generator</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<p id="module-minestudio.inference.generator.mine_generator">Date: 2024-11-25 08:35:59
+LastEditors: caishaofei <a class="reference external" href="mailto:caishaofei&#37;&#52;&#48;stu&#46;pku&#46;edu&#46;cn">caishaofei<span>&#64;</span>stu<span>&#46;</span>pku<span>&#46;</span>edu<span>&#46;</span>cn</a>
+LastEditTime: 2024-12-02 11:59:51
+FilePath: /MineStudio/minestudio/inference/generator/mine_generator.py</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="minestudio.inference.generator.mine_generator.MineGenerator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">minestudio.inference.generator.mine_generator.</span></span><span class="sig-name descname"><span class="pre">MineGenerator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_workers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_gpus</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_restarts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">worker_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/inference/generator/mine_generator.html#MineGenerator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.inference.generator.mine_generator.MineGenerator" title="Link to this definition">#</a></dt>
+<dd><p>A generator for Minecraft episodes using multiple parallel workers.</p>
+<p>This class manages multiple <cite>Worker</cite> instances (potentially distributed with Ray)
+to generate Minecraft episodes in parallel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num_workers</strong> (<em>int</em>) – The number of parallel workers to use. Defaults to 1.</p></li>
+<li><p><strong>num_gpus</strong> (<em>float</em>) – The number of GPUs to assign to each Ray worker. Defaults to 0.5.</p></li>
+<li><p><strong>max_restarts</strong> (<em>int</em>) – The maximum number of times a Ray worker can be restarted if it fails. Defaults to 3.</p></li>
+<li><p><strong>worker_kwargs</strong> – Keyword arguments to pass to the <cite>Worker</cite> constructor.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.inference.generator.mine_generator.MineGenerator.generate" title="minestudio.inference.generator.mine_generator.MineGenerator.generate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate</span></code></a>()</p></td>
+<td><p>Generates episodes in parallel using the workers.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.inference.generator.mine_generator.MineGenerator.generate">
+<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Generator</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/minestudio/inference/generator/mine_generator.html#MineGenerator.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.inference.generator.mine_generator.MineGenerator.generate" title="Link to this definition">#</a></dt>
+<dd><p>Generates episodes in parallel using the workers.</p>
+<p>Uses <cite>ray.wait</cite> to get completed episodes from the workers.
+When a worker finishes an episode, it yields the episode data
+and assigns the worker to generate another episode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A generator that yields dictionaries of file paths for each episode.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Generator[Dict, None, None]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="minestudio.inference.generator.mine_generator.Worker">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">minestudio.inference.generator.mine_generator.</span></span><span class="sig-name descname"><span class="pre">Worker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env_generator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_generator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_max_steps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_episodes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tmpdir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_media</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'h264'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'jpeg'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'h264'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">unused_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/inference/generator/mine_generator.html#Worker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.inference.generator.mine_generator.Worker" title="Link to this definition">#</a></dt>
+<dd><p>A worker class for generating episodes.</p>
+<p>This class handles the interaction between an environment and an agent
+to generate a specified number of episodes, each with a maximum number of steps.
+It saves the generated data (images, actions, infos) to files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>env_generator</strong> (<em>Callable</em>) – A function that generates an environment instance.</p></li>
+<li><p><strong>agent_generator</strong> (<em>Callable</em>) – A function that generates an agent instance.</p></li>
+<li><p><strong>num_max_steps</strong> (<em>int</em>) – The maximum number of steps per episode.</p></li>
+<li><p><strong>num_episodes</strong> (<em>int</em>) – The number of episodes to generate.</p></li>
+<li><p><strong>tmpdir</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – The temporary directory to save episode data. Defaults to None.</p></li>
+<li><p><strong>image_media</strong> (<em>Literal</em><em>[</em><em>&quot;h264&quot;</em><em>, </em><em>&quot;jpeg&quot;</em><em>]</em>) – The format to save images (“h264” or “jpeg”). Defaults to “h264”.</p></li>
+<li><p><strong>unused_kwargs</strong> – Additional unused keyword arguments.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.inference.generator.mine_generator.Worker.append_image_and_info" title="minestudio.inference.generator.mine_generator.Worker.append_image_and_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">append_image_and_info</span></code></a>(info, images, infos)</p></td>
+<td><p>Appends image and info data to the respective lists.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.inference.generator.mine_generator.Worker.get_next" title="minestudio.inference.generator.mine_generator.Worker.get_next"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_next</span></code></a>()</p></td>
+<td><p>Gets the next generated episode.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.inference.generator.mine_generator.Worker.save_to_file" title="minestudio.inference.generator.mine_generator.Worker.save_to_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_to_file</span></code></a>(images, actions, infos)</p></td>
+<td><p>Saves the episode data (images, actions, infos) to files.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.inference.generator.mine_generator.Worker.append_image_and_info">
+<span class="sig-name descname"><span class="pre">append_image_and_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">info</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">images</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">infos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/inference/generator/mine_generator.html#Worker.append_image_and_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.inference.generator.mine_generator.Worker.append_image_and_info" title="Link to this definition">#</a></dt>
+<dd><p>Appends image and info data to the respective lists.</p>
+<p>The ‘pov’ (point of view) image is extracted from the info dictionary.
+The info dictionary is cleaned to ensure all values are of basic dict type if they have a ‘values’ attribute.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>info</strong> (<em>Dict</em>) – The info dictionary from the environment.</p></li>
+<li><p><strong>images</strong> (<em>List</em>) – The list to append the image to.</p></li>
+<li><p><strong>infos</strong> (<em>List</em>) – The list to append the cleaned info to.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.inference.generator.mine_generator.Worker.get_next">
+<span class="sig-name descname"><span class="pre">get_next</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/inference/generator/mine_generator.html#Worker.get_next"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.inference.generator.mine_generator.Worker.get_next" title="Link to this definition">#</a></dt>
+<dd><p>Gets the next generated episode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The next episode data (dictionary of file paths), or None if generation is complete.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Optional[Dict]</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If the generator is not initialized.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.inference.generator.mine_generator.Worker.save_to_file">
+<span class="sig-name descname"><span class="pre">save_to_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">images</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">actions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">infos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/inference/generator/mine_generator.html#Worker.save_to_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.inference.generator.mine_generator.Worker.save_to_file" title="Link to this definition">#</a></dt>
+<dd><p>Saves the episode data (images, actions, infos) to files.</p>
+<p>Generates a unique episode ID and saves infos and actions as pickle files.
+Saves images as an H264 video or a series of JPEG images based on <cite>self.image_media</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>images</strong> (<em>List</em>) – A list of images (frames) from the episode.</p></li>
+<li><p><strong>actions</strong> (<em>List</em>) – A list of actions taken during the episode.</p></li>
+<li><p><strong>infos</strong> (<em>List</em>) – A list of info dictionaries from the episode.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the paths to the saved files.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If <cite>self.image_media</cite> is not “h264” or “jpeg”.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-minestudio.inference.recorder.base_recorder">
+<span id="recorder"></span><h2>Recorder<a class="headerlink" href="#module-minestudio.inference.recorder.base_recorder" title="Link to this heading">#</a></h2>
+<p>Date: 2024-11-25 07:35:51
+LastEditors: caishaofei <a class="reference external" href="mailto:caishaofei&#37;&#52;&#48;stu&#46;pku&#46;edu&#46;cn">caishaofei<span>&#64;</span>stu<span>&#46;</span>pku<span>&#46;</span>edu<span>&#46;</span>cn</a>
+LastEditTime: 2024-11-25 12:55:03
+FilePath: /MineStudio/minestudio/inference/recorder/base_recorder.py</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="minestudio.inference.recorder.base_recorder.EpisodeRecorder">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">minestudio.inference.recorder.base_recorder.</span></span><span class="sig-name descname"><span class="pre">EpisodeRecorder</span></span><a class="reference internal" href="../../_modules/minestudio/inference/recorder/base_recorder.html#EpisodeRecorder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.inference.recorder.base_recorder.EpisodeRecorder" title="Link to this definition">#</a></dt>
+<dd><p>Base class for episode recorders.</p>
+<p>Recorders are used to process and summarize a collection of episodes.</p>
+<p class="rubric">Methods</p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.inference.recorder.base_recorder.EpisodeRecorder.record" title="minestudio.inference.recorder.base_recorder.EpisodeRecorder.record"><code class="xref py py-obj docutils literal notranslate"><span class="pre">record</span></code></a>(episode_generator)</p></td>
+<td><p>Records and summarizes episodes from an episode generator.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.inference.recorder.base_recorder.EpisodeRecorder.record">
+<span class="sig-name descname"><span class="pre">record</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">episode_generator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Generator</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></span><a class="reference internal" href="../../_modules/minestudio/inference/recorder/base_recorder.html#EpisodeRecorder.record"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.inference.recorder.base_recorder.EpisodeRecorder.record" title="Link to this definition">#</a></dt>
+<dd><p>Records and summarizes episodes from an episode generator.</p>
+<p>This method iterates through the episodes, counts the total number of episodes
+and the number of episodes marked with “status” == “yes”.
+It returns a dictionary containing these counts and the ‘yes_rate’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>episode_generator</strong> (<em>Generator</em>) – A generator that yields episodes.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary with a summary of the episodes, including ‘num_yes’, ‘num_episodes’, and ‘yes_rate’.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[Dict, str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+<div class="section ablog__blog_comments">
+   
+</div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../online/index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Online API Documentation</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-minestudio.inference.pipeline">Pipeline</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.inference.pipeline.EpisodePipeline"><code class="docutils literal notranslate"><span class="pre">EpisodePipeline</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.inference.pipeline.EpisodePipeline.run"><code class="docutils literal notranslate"><span class="pre">EpisodePipeline.run()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-minestudio.inference.filter.base_filter">Filter</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.inference.filter.base_filter.EpisodeFilter"><code class="docutils literal notranslate"><span class="pre">EpisodeFilter</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.inference.filter.base_filter.EpisodeFilter.filter"><code class="docutils literal notranslate"><span class="pre">EpisodeFilter.filter()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.inference.filter.info_base_filter.InfoBaseFilter"><code class="docutils literal notranslate"><span class="pre">InfoBaseFilter</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.inference.filter.info_base_filter.InfoBaseFilter.filter"><code class="docutils literal notranslate"><span class="pre">InfoBaseFilter.filter()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-minestudio.inference.generator.base_generator">Generator</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.inference.generator.base_generator.AgentInterface"><code class="docutils literal notranslate"><span class="pre">AgentInterface</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.inference.generator.base_generator.AgentInterface.get_action"><code class="docutils literal notranslate"><span class="pre">AgentInterface.get_action()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.inference.generator.base_generator.EpisodeGenerator"><code class="docutils literal notranslate"><span class="pre">EpisodeGenerator</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.inference.generator.base_generator.EpisodeGenerator.generate"><code class="docutils literal notranslate"><span class="pre">EpisodeGenerator.generate()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.inference.generator.mine_generator.MineGenerator"><code class="docutils literal notranslate"><span class="pre">MineGenerator</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.inference.generator.mine_generator.MineGenerator.generate"><code class="docutils literal notranslate"><span class="pre">MineGenerator.generate()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.inference.generator.mine_generator.Worker"><code class="docutils literal notranslate"><span class="pre">Worker</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.inference.generator.mine_generator.Worker.append_image_and_info"><code class="docutils literal notranslate"><span class="pre">Worker.append_image_and_info()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.inference.generator.mine_generator.Worker.get_next"><code class="docutils literal notranslate"><span class="pre">Worker.get_next()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.inference.generator.mine_generator.Worker.save_to_file"><code class="docutils literal notranslate"><span class="pre">Worker.save_to_file()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-minestudio.inference.recorder.base_recorder">Recorder</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.inference.recorder.base_recorder.EpisodeRecorder"><code class="docutils literal notranslate"><span class="pre">EpisodeRecorder</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.inference.recorder.base_recorder.EpisodeRecorder.record"><code class="docutils literal notranslate"><span class="pre">EpisodeRecorder.record()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/api/inference/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, The CraftJarvis Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

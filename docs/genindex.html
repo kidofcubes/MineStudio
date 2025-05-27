@@ -30,7 +30,7 @@
 <link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
-    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=fd3f3429" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/jupyter-sphinx.css" />
     <link rel="stylesheet" type="text/css" href="_static/thebelab.css" />
@@ -45,7 +45,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="_static/documentation_options.js?v=8d563738"></script>
-    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="_static/copybutton.js?v=f281be69"></script>
@@ -63,7 +63,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'genindex';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
-        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://craftjarvis.github.io/MineStudio/_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://craftjarvis.github.io/MineStudio/master/_static/switcher.json';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'master';
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             false;
@@ -572,7 +572,9 @@
  | <a href="#R"><strong>R</strong></a>
  | <a href="#S"><strong>S</strong></a>
  | <a href="#T"><strong>T</strong></a>
+ | <a href="#U"><strong>U</strong></a>
  | <a href="#V"><strong>V</strong></a>
+ | <a href="#W"><strong>W</strong></a>
  
 </div>
 <h2 id="A">A</h2>
@@ -583,6 +585,8 @@
       <li><a href="api/simulator/index.html#minestudio.simulator.entry.CameraConfig.action_transformer_kwargs">action_transformer_kwargs (minestudio.simulator.entry.CameraConfig property)</a>
 </li>
       <li><a href="api/models/index.html#minestudio.utils.vpt_lib.action_head.ActionHead">ActionHead (class in minestudio.utils.vpt_lib.action_head)</a>
+</li>
+      <li><a href="api/offline/index.html#minestudio.offline.lightning_callbacks.ema.EMAOptimizer.add_param_group">add_param_group() (minestudio.offline.lightning_callbacks.ema.EMAOptimizer method)</a>
 </li>
       <li><a href="api/simulator/index.html#minestudio.simulator.callbacks.callback.Compose.after_close">after_close() (minestudio.simulator.callbacks.callback.Compose method)</a>
 
@@ -660,6 +664,14 @@
       </ul></li>
       <li><a href="api/simulator/index.html#minestudio.simulator.entry.MinecraftSim.agent_action_to_env_action">agent_action_to_env_action() (minestudio.simulator.entry.MinecraftSim method)</a>
 </li>
+      <li><a href="api/inference/index.html#minestudio.inference.generator.base_generator.AgentInterface">AgentInterface (class in minestudio.inference.generator.base_generator)</a>
+</li>
+      <li><a href="api/offline/index.html#minestudio.offline.lightning_callbacks.ema.EMAOptimizer.all_parameters">all_parameters() (minestudio.offline.lightning_callbacks.ema.EMAOptimizer method)</a>
+</li>
+      <li><a href="api/inference/index.html#minestudio.inference.generator.mine_generator.Worker.append_image_and_info">append_image_and_info() (minestudio.inference.generator.mine_generator.Worker method)</a>
+</li>
+      <li><a href="api/online/index.html#minestudio.online.utils.rollout.monitor.MovingStat.average">average() (minestudio.online.utils.rollout.monitor.MovingStat method)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -698,9 +710,11 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/simulator/index.html#minestudio.simulator.callbacks.callback.Compose.before_step">before_step() (minestudio.simulator.callbacks.callback.Compose method)</a>
+      <li><a href="api/offline/index.html#minestudio.offline.mine_callbacks.callback.ObjectiveCallback.before_step">before_step() (minestudio.offline.mine_callbacks.callback.ObjectiveCallback method)</a>
 
       <ul>
+        <li><a href="api/simulator/index.html#minestudio.simulator.callbacks.callback.Compose.before_step">(minestudio.simulator.callbacks.callback.Compose method)</a>
+</li>
         <li><a href="api/simulator/index.html#minestudio.simulator.callbacks.callback.MinecraftCallback.before_step">(minestudio.simulator.callbacks.callback.MinecraftCallback method)</a>
 </li>
         <li><a href="api/simulator/index.html#minestudio.simulator.callbacks.mask_actions.MaskActionsCallback.before_step">(minestudio.simulator.callbacks.mask_actions.MaskActionsCallback method)</a>
@@ -718,6 +732,8 @@
         <li><a href="api/simulator/index.html#minestudio.simulator.callbacks.voxels.VoxelsCallback.before_step">(minestudio.simulator.callbacks.voxels.VoxelsCallback method)</a>
 </li>
       </ul></li>
+      <li><a href="api/offline/index.html#minestudio.offline.mine_callbacks.behavior_clone.BehaviorCloneCallback">BehaviorCloneCallback (class in minestudio.offline.mine_callbacks.behavior_clone)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -734,13 +750,19 @@
 </li>
       <li><a href="api/simulator/index.html#minestudio.simulator.utils.gui.MinecraftGUI.close_gui">close_gui() (minestudio.simulator.utils.gui.MinecraftGUI method)</a>
 </li>
+      <li><a href="api/online/index.html#minestudio.online.rollout.env_worker.VideoWriter.close_video">close_video() (minestudio.online.rollout.env_worker.VideoWriter method)</a>
+</li>
       <li><a href="api/simulator/index.html#minestudio.simulator.utils.gui.CommandModeDrawCall">CommandModeDrawCall() (in module minestudio.simulator.utils.gui)</a>
 </li>
       <li><a href="api/simulator/index.html#minestudio.simulator.callbacks.commands.CommandsCallback">CommandsCallback (class in minestudio.simulator.callbacks.commands)</a>
 </li>
+      <li><a href="api/simulator/index.html#minestudio.simulator.callbacks.callback.Compose">Compose (class in minestudio.simulator.callbacks.callback)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/simulator/index.html#minestudio.simulator.callbacks.callback.Compose">Compose (class in minestudio.simulator.callbacks.callback)</a>
+      <li><a href="api/offline/index.html#minestudio.offline.trainer.MineLightning.configure_optimizers">configure_optimizers() (minestudio.offline.trainer.MineLightning method)</a>
+</li>
+      <li><a href="api/offline/index.html#minestudio.offline.utils.convert_to_normal">convert_to_normal() (in module minestudio.offline.utils)</a>
 </li>
       <li><a href="api/simulator/index.html#minestudio.simulator.callbacks.callback.MinecraftCallback.create_from_conf">create_from_conf() (minestudio.simulator.callbacks.callback.MinecraftCallback method)</a>
 
@@ -768,6 +790,8 @@
 </li>
       <li><a href="api/models/index.html#minestudio.models.groot_one.body.Decoder">Decoder (class in minestudio.models.groot_one.body)</a>
 </li>
+      <li><a href="api/online/index.html#minestudio.online.utils.train.wandb_logger.define_metric">define_metric() (in module minestudio.online.utils.train.wandb_logger)</a>
+</li>
       <li><a href="api/simulator/index.html#minestudio.simulator.callbacks.demonstration.DemonstrationCallback">DemonstrationCallback (class in minestudio.simulator.callbacks.demonstration)</a>
 </li>
       <li><a href="api/models/index.html#minestudio.utils.vpt_lib.scaled_mse_head.ScaledMSEHead.denormalize">denormalize() (minestudio.utils.vpt_lib.scaled_mse_head.ScaledMSEHead method)</a>
@@ -792,12 +816,20 @@
 </li>
       <li><a href="api/simulator/index.html#minestudio.simulator.callbacks.demonstration.download_reference_videos">download_reference_videos() (in module minestudio.simulator.callbacks.demonstration)</a>
 </li>
+      <li><a href="api/online/index.html#minestudio.online.rollout.env_worker.draw_vpred">draw_vpred() (in module minestudio.online.rollout.env_worker)</a>
+</li>
   </ul></td>
 </tr></table>
 
 <h2 id="E">E</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/offline/index.html#minestudio.offline.lightning_callbacks.ema.EMA">EMA (class in minestudio.offline.lightning_callbacks.ema)</a>
+</li>
+      <li><a href="api/offline/index.html#minestudio.offline.lightning_callbacks.ema.ema_update">ema_update() (in module minestudio.offline.lightning_callbacks.ema)</a>
+</li>
+      <li><a href="api/offline/index.html#minestudio.offline.lightning_callbacks.ema.EMAOptimizer">EMAOptimizer (class in minestudio.offline.lightning_callbacks.ema)</a>
+</li>
       <li><a href="api/models/index.html#minestudio.models.steve_one.body.TranslatorVAE.encode">encode() (minestudio.models.steve_one.body.TranslatorVAE method)</a>
 </li>
       <li><a href="api/models/index.html#minestudio.models.groot_one.body.GrootPolicy.encode_video">encode_video() (minestudio.models.groot_one.body.GrootPolicy method)</a>
@@ -820,6 +852,16 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/simulator/index.html#minestudio.simulator.entry.MinecraftSim.env_action_to_agent_action">env_action_to_agent_action() (minestudio.simulator.entry.MinecraftSim method)</a>
 </li>
+      <li><a href="api/online/index.html#minestudio.online.rollout.env_worker.EnvWorker">EnvWorker (class in minestudio.online.rollout.env_worker)</a>
+</li>
+      <li><a href="api/inference/index.html#minestudio.inference.filter.base_filter.EpisodeFilter">EpisodeFilter (class in minestudio.inference.filter.base_filter)</a>
+</li>
+      <li><a href="api/inference/index.html#minestudio.inference.generator.base_generator.EpisodeGenerator">EpisodeGenerator (class in minestudio.inference.generator.base_generator)</a>
+</li>
+      <li><a href="api/inference/index.html#minestudio.inference.pipeline.EpisodePipeline">EpisodePipeline (class in minestudio.inference.pipeline)</a>
+</li>
+      <li><a href="api/inference/index.html#minestudio.inference.recorder.base_recorder.EpisodeRecorder">EpisodeRecorder (class in minestudio.inference.recorder.base_recorder)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -829,6 +871,14 @@
       <li><a href="api/models/index.html#minestudio.utils.vpt_lib.action_head.fan_in_linear">fan_in_linear() (in module minestudio.utils.vpt_lib.action_head)</a>
 </li>
       <li><a href="api/simulator/index.html#minestudio.simulator.callbacks.fast_reset.FastResetCallback">FastResetCallback (class in minestudio.simulator.callbacks.fast_reset)</a>
+</li>
+      <li><a href="api/inference/index.html#minestudio.inference.filter.base_filter.EpisodeFilter.filter">filter() (minestudio.inference.filter.base_filter.EpisodeFilter method)</a>
+
+      <ul>
+        <li><a href="api/inference/index.html#minestudio.inference.filter.info_base_filter.InfoBaseFilter.filter">(minestudio.inference.filter.info_base_filter.InfoBaseFilter method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/online/index.html#minestudio.online.utils.rollout.datatypes.FragmentDataDict.format_batch">format_batch() (minestudio.online.utils.rollout.datatypes.FragmentDataDict method)</a>
 </li>
       <li><a href="api/models/index.html#minestudio.models.base_policy.MinePolicy.forward">forward() (minestudio.models.base_policy.MinePolicy method)</a>
 
@@ -879,6 +929,14 @@
 </li>
       </ul></li>
   </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/online/index.html#minestudio.online.utils.rollout.datatypes.FragmentDataDict">FragmentDataDict (class in minestudio.online.utils.rollout.datatypes)</a>
+</li>
+      <li><a href="api/online/index.html#minestudio.online.utils.rollout.datatypes.FragmentIndex">FragmentIndex (class in minestudio.online.utils.rollout.datatypes)</a>
+</li>
+      <li><a href="api/online/index.html#minestudio.online.utils.rollout.datatypes.FragmentMetadata">FragmentMetadata (class in minestudio.online.utils.rollout.datatypes)</a>
+</li>
+  </ul></td>
 </tr></table>
 
 <h2 id="G">G</h2>
@@ -888,9 +946,23 @@
 </li>
       <li><a href="api/simulator/index.html#minestudio.simulator.callbacks.reward_gate.GateRewardsCallback">GateRewardsCallback (class in minestudio.simulator.callbacks.reward_gate)</a>
 </li>
+      <li><a href="api/inference/index.html#minestudio.inference.generator.base_generator.EpisodeGenerator.generate">generate() (minestudio.inference.generator.base_generator.EpisodeGenerator method)</a>
+
+      <ul>
+        <li><a href="api/inference/index.html#minestudio.inference.generator.mine_generator.MineGenerator.generate">(minestudio.inference.generator.mine_generator.MineGenerator method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/inference/index.html#minestudio.inference.generator.base_generator.AgentInterface.get_action">get_action() (minestudio.inference.generator.base_generator.AgentInterface method)</a>
+
+      <ul>
+        <li><a href="api/models/index.html#minestudio.models.base_policy.MinePolicy.get_action">(minestudio.models.base_policy.MinePolicy method)</a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/models/index.html#minestudio.models.base_policy.MinePolicy.get_action">get_action() (minestudio.models.base_policy.MinePolicy method)</a>
+      <li><a href="api/online/index.html#minestudio.online.utils.train.gae.get_last_fragment_indexes">get_last_fragment_indexes() (in module minestudio.online.utils.train.gae)</a>
+</li>
+      <li><a href="api/inference/index.html#minestudio.inference.generator.mine_generator.Worker.get_next">get_next() (minestudio.inference.generator.mine_generator.Worker method)</a>
 </li>
       <li><a href="api/models/index.html#minestudio.models.groot_one.body.GrootPolicy">GrootPolicy (class in minestudio.models.groot_one.body)</a>
 </li>
@@ -924,6 +996,14 @@
         <li><a href="api/models/index.html#minestudio.models.vpt.body.ImgPreprocessing">(class in minestudio.models.vpt.body)</a>
 </li>
       </ul></li>
+      <li><a href="api/online/index.html#minestudio.online.utils.rollout.datatypes.SampleFragment.index">index (minestudio.online.utils.rollout.datatypes.SampleFragment property)</a>
+</li>
+      <li><a href="api/online/index.html#minestudio.online.rollout.rollout_worker.RolloutWorker.inference">inference() (minestudio.online.rollout.rollout_worker.RolloutWorker method)</a>
+</li>
+      <li><a href="api/inference/index.html#minestudio.inference.filter.info_base_filter.InfoBaseFilter">InfoBaseFilter (class in minestudio.inference.filter.info_base_filter)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/models/index.html#minestudio.models.base_policy.MinePolicy.initial_state">initial_state() (minestudio.models.base_policy.MinePolicy method)</a>
 
       <ul>
@@ -942,8 +1022,6 @@
         <li><a href="api/models/index.html#minestudio.models.vpt.body.VPTPolicy.initial_state">(minestudio.models.vpt.body.VPTPolicy method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/simulator/index.html#minestudio.simulator.callbacks.init_inventory.InitInventoryCallback">InitInventoryCallback (class in minestudio.simulator.callbacks.init_inventory)</a>
 </li>
   </ul></td>
@@ -951,6 +1029,10 @@
 
 <h2 id="J">J</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/offline/index.html#minestudio.offline.lightning_callbacks.ema.EMAOptimizer.join">join() (minestudio.offline.lightning_callbacks.ema.EMAOptimizer method)</a>
+</li>
+  </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/simulator/index.html#minestudio.simulator.callbacks.judgereset.JudgeResetCallback">JudgeResetCallback (class in minestudio.simulator.callbacks.judgereset)</a>
 </li>
@@ -960,9 +1042,11 @@
 <h2 id="K">K</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/models/index.html#minestudio.utils.vpt_lib.action_head.ActionHead.kl_divergence">kl_divergence() (minestudio.utils.vpt_lib.action_head.ActionHead method)</a>
+      <li><a href="api/offline/index.html#minestudio.offline.mine_callbacks.kl_divergence.KLDivergenceCallback.kl_divergence">kl_divergence() (minestudio.offline.mine_callbacks.kl_divergence.KLDivergenceCallback method)</a>
 
       <ul>
+        <li><a href="api/models/index.html#minestudio.utils.vpt_lib.action_head.ActionHead.kl_divergence">(minestudio.utils.vpt_lib.action_head.ActionHead method)</a>
+</li>
         <li><a href="api/models/index.html#minestudio.utils.vpt_lib.action_head.CategoricalActionHead.kl_divergence">(minestudio.utils.vpt_lib.action_head.CategoricalActionHead method)</a>
 </li>
         <li><a href="api/models/index.html#minestudio.utils.vpt_lib.action_head.DiagGaussianActionHead.kl_divergence">(minestudio.utils.vpt_lib.action_head.DiagGaussianActionHead method)</a>
@@ -974,6 +1058,10 @@
         <li><a href="api/models/index.html#minestudio.utils.vpt_lib.action_head.TupleActionHead.kl_divergence">(minestudio.utils.vpt_lib.action_head.TupleActionHead method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/offline/index.html#minestudio.offline.mine_callbacks.kl_divergence.KLDivergenceCallback">KLDivergenceCallback (class in minestudio.offline.mine_callbacks.kl_divergence)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -988,7 +1076,17 @@
 </li>
       <li><a href="api/models/index.html#minestudio.models.rocket_one.body.load_rocket_policy">load_rocket_policy() (in module minestudio.models.rocket_one.body)</a>
 </li>
+      <li><a href="api/offline/index.html#minestudio.offline.lightning_callbacks.ema.EMAOptimizer.load_state_dict">load_state_dict() (minestudio.offline.lightning_callbacks.ema.EMAOptimizer method)</a>
+</li>
       <li><a href="api/models/index.html#minestudio.models.vpt.body.load_vpt_policy">load_vpt_policy() (in module minestudio.models.vpt.body)</a>
+</li>
+      <li><a href="api/online/index.html#minestudio.online.rollout.rollout_worker.RolloutWorker.load_weights">load_weights() (minestudio.online.rollout.rollout_worker.RolloutWorker method)</a>
+</li>
+      <li><a href="api/online/index.html#minestudio.online.utils.train.wandb_logger.log">log() (in module minestudio.online.utils.train.wandb_logger)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/online/index.html#minestudio.online.utils.train.wandb_logger.log_video">log_video() (in module minestudio.online.utils.train.wandb_logger)</a>
 </li>
       <li><a href="api/models/index.html#minestudio.utils.vpt_lib.action_head.ActionHead.logprob">logprob() (minestudio.utils.vpt_lib.action_head.ActionHead method)</a>
 
@@ -1004,8 +1102,8 @@
         <li><a href="api/models/index.html#minestudio.utils.vpt_lib.action_head.TupleActionHead.logprob">(minestudio.utils.vpt_lib.action_head.TupleActionHead method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/online/index.html#minestudio.online.rollout.rollout_worker.RolloutWorker.loop">loop() (minestudio.online.rollout.rollout_worker.RolloutWorker method)</a>
+</li>
       <li><a href="api/models/index.html#minestudio.utils.vpt_lib.scaled_mse_head.ScaledMSEHead.loss">loss() (minestudio.utils.vpt_lib.scaled_mse_head.ScaledMSEHead method)</a>
 </li>
   </ul></td>
@@ -1042,8 +1140,54 @@
       </ul></li>
       <li><a href="api/simulator/index.html#minestudio.simulator.entry.MinecraftSim">MinecraftSim (class in minestudio.simulator.entry)</a>
 </li>
+      <li><a href="api/inference/index.html#minestudio.inference.generator.mine_generator.MineGenerator">MineGenerator (class in minestudio.inference.generator.mine_generator)</a>
+</li>
+      <li><a href="api/offline/index.html#minestudio.offline.trainer.MineLightning">MineLightning (class in minestudio.offline.trainer)</a>
+</li>
       <li><a href="api/models/index.html#minestudio.models.base_policy.MinePolicy">MinePolicy (class in minestudio.models.base_policy)</a>
 </li>
+      <li>
+    minestudio.inference.filter.base_filter
+
+      <ul>
+        <li><a href="api/inference/index.html#module-minestudio.inference.filter.base_filter">module</a>
+</li>
+      </ul></li>
+      <li>
+    minestudio.inference.filter.info_base_filter
+
+      <ul>
+        <li><a href="api/inference/index.html#module-minestudio.inference.filter.info_base_filter">module</a>
+</li>
+      </ul></li>
+      <li>
+    minestudio.inference.generator.base_generator
+
+      <ul>
+        <li><a href="api/inference/index.html#module-minestudio.inference.generator.base_generator">module</a>
+</li>
+      </ul></li>
+      <li>
+    minestudio.inference.generator.mine_generator
+
+      <ul>
+        <li><a href="api/inference/index.html#module-minestudio.inference.generator.mine_generator">module</a>
+</li>
+      </ul></li>
+      <li>
+    minestudio.inference.pipeline
+
+      <ul>
+        <li><a href="api/inference/index.html#module-minestudio.inference.pipeline">module</a>
+</li>
+      </ul></li>
+      <li>
+    minestudio.inference.recorder.base_recorder
+
+      <ul>
+        <li><a href="api/inference/index.html#module-minestudio.inference.recorder.base_recorder">module</a>
+</li>
+      </ul></li>
       <li>
     minestudio.models.base_policy
 
@@ -1084,6 +1228,104 @@
 
       <ul>
         <li><a href="api/models/index.html#module-minestudio.models.vpt.body">module</a>
+</li>
+      </ul></li>
+      <li>
+    minestudio.offline.lightning_callbacks.ema
+
+      <ul>
+        <li><a href="api/offline/index.html#module-minestudio.offline.lightning_callbacks.ema">module</a>
+</li>
+      </ul></li>
+      <li>
+    minestudio.offline.lightning_callbacks.smart_checkpoint
+
+      <ul>
+        <li><a href="api/offline/index.html#module-minestudio.offline.lightning_callbacks.smart_checkpoint">module</a>
+</li>
+      </ul></li>
+      <li>
+    minestudio.offline.lightning_callbacks.speed_monitor
+
+      <ul>
+        <li><a href="api/offline/index.html#module-minestudio.offline.lightning_callbacks.speed_monitor">module</a>
+</li>
+      </ul></li>
+      <li>
+    minestudio.offline.mine_callbacks.behavior_clone
+
+      <ul>
+        <li><a href="api/offline/index.html#module-minestudio.offline.mine_callbacks.behavior_clone">module</a>
+</li>
+      </ul></li>
+      <li>
+    minestudio.offline.mine_callbacks.callback
+
+      <ul>
+        <li><a href="api/offline/index.html#module-minestudio.offline.mine_callbacks.callback">module</a>
+</li>
+      </ul></li>
+      <li>
+    minestudio.offline.mine_callbacks.kl_divergence
+
+      <ul>
+        <li><a href="api/offline/index.html#module-minestudio.offline.mine_callbacks.kl_divergence">module</a>
+</li>
+      </ul></li>
+      <li>
+    minestudio.offline.trainer
+
+      <ul>
+        <li><a href="api/offline/index.html#module-minestudio.offline.trainer">module</a>
+</li>
+      </ul></li>
+      <li>
+    minestudio.offline.utils
+
+      <ul>
+        <li><a href="api/offline/index.html#module-minestudio.offline.utils">module</a>
+</li>
+      </ul></li>
+      <li>
+    minestudio.online.rollout.env_worker
+
+      <ul>
+        <li><a href="api/online/index.html#module-minestudio.online.rollout.env_worker">module</a>
+</li>
+      </ul></li>
+      <li>
+    minestudio.online.rollout.rollout_worker
+
+      <ul>
+        <li><a href="api/online/index.html#module-minestudio.online.rollout.rollout_worker">module</a>
+</li>
+      </ul></li>
+      <li>
+    minestudio.online.utils.rollout.datatypes
+
+      <ul>
+        <li><a href="api/online/index.html#module-minestudio.online.utils.rollout.datatypes">module</a>
+</li>
+      </ul></li>
+      <li>
+    minestudio.online.utils.rollout.monitor
+
+      <ul>
+        <li><a href="api/online/index.html#module-minestudio.online.utils.rollout.monitor">module</a>
+</li>
+      </ul></li>
+      <li>
+    minestudio.online.utils.train.gae
+
+      <ul>
+        <li><a href="api/online/index.html#module-minestudio.online.utils.train.gae">module</a>
+</li>
+      </ul></li>
+      <li>
+    minestudio.online.utils.train.wandb_logger
+
+      <ul>
+        <li><a href="api/online/index.html#module-minestudio.online.utils.train.wandb_logger">module</a>
 </li>
       </ul></li>
       <li>
@@ -1149,6 +1391,8 @@
         <li><a href="api/simulator/index.html#module-minestudio.simulator.callbacks.play">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     minestudio.simulator.callbacks.point
 
@@ -1184,8 +1428,6 @@
         <li><a href="api/simulator/index.html#module-minestudio.simulator.callbacks.rewards">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     minestudio.simulator.callbacks.speed_test
 
@@ -1255,6 +1497,18 @@
     module
 
       <ul>
+        <li><a href="api/inference/index.html#module-minestudio.inference.filter.base_filter">minestudio.inference.filter.base_filter</a>
+</li>
+        <li><a href="api/inference/index.html#module-minestudio.inference.filter.info_base_filter">minestudio.inference.filter.info_base_filter</a>
+</li>
+        <li><a href="api/inference/index.html#module-minestudio.inference.generator.base_generator">minestudio.inference.generator.base_generator</a>
+</li>
+        <li><a href="api/inference/index.html#module-minestudio.inference.generator.mine_generator">minestudio.inference.generator.mine_generator</a>
+</li>
+        <li><a href="api/inference/index.html#module-minestudio.inference.pipeline">minestudio.inference.pipeline</a>
+</li>
+        <li><a href="api/inference/index.html#module-minestudio.inference.recorder.base_recorder">minestudio.inference.recorder.base_recorder</a>
+</li>
         <li><a href="api/models/index.html#module-minestudio.models.base_policy">minestudio.models.base_policy</a>
 </li>
         <li><a href="api/models/index.html#module-minestudio.models.groot_one.body">minestudio.models.groot_one.body</a>
@@ -1266,6 +1520,34 @@
         <li><a href="api/models/index.html#module-minestudio.models.utils.download">minestudio.models.utils.download</a>
 </li>
         <li><a href="api/models/index.html#module-minestudio.models.vpt.body">minestudio.models.vpt.body</a>
+</li>
+        <li><a href="api/offline/index.html#module-minestudio.offline.lightning_callbacks.ema">minestudio.offline.lightning_callbacks.ema</a>
+</li>
+        <li><a href="api/offline/index.html#module-minestudio.offline.lightning_callbacks.smart_checkpoint">minestudio.offline.lightning_callbacks.smart_checkpoint</a>
+</li>
+        <li><a href="api/offline/index.html#module-minestudio.offline.lightning_callbacks.speed_monitor">minestudio.offline.lightning_callbacks.speed_monitor</a>
+</li>
+        <li><a href="api/offline/index.html#module-minestudio.offline.mine_callbacks.behavior_clone">minestudio.offline.mine_callbacks.behavior_clone</a>
+</li>
+        <li><a href="api/offline/index.html#module-minestudio.offline.mine_callbacks.callback">minestudio.offline.mine_callbacks.callback</a>
+</li>
+        <li><a href="api/offline/index.html#module-minestudio.offline.mine_callbacks.kl_divergence">minestudio.offline.mine_callbacks.kl_divergence</a>
+</li>
+        <li><a href="api/offline/index.html#module-minestudio.offline.trainer">minestudio.offline.trainer</a>
+</li>
+        <li><a href="api/offline/index.html#module-minestudio.offline.utils">minestudio.offline.utils</a>
+</li>
+        <li><a href="api/online/index.html#module-minestudio.online.rollout.env_worker">minestudio.online.rollout.env_worker</a>
+</li>
+        <li><a href="api/online/index.html#module-minestudio.online.rollout.rollout_worker">minestudio.online.rollout.rollout_worker</a>
+</li>
+        <li><a href="api/online/index.html#module-minestudio.online.utils.rollout.datatypes">minestudio.online.utils.rollout.datatypes</a>
+</li>
+        <li><a href="api/online/index.html#module-minestudio.online.utils.rollout.monitor">minestudio.online.utils.rollout.monitor</a>
+</li>
+        <li><a href="api/online/index.html#module-minestudio.online.utils.train.gae">minestudio.online.utils.train.gae</a>
+</li>
+        <li><a href="api/online/index.html#module-minestudio.online.utils.train.wandb_logger">minestudio.online.utils.train.wandb_logger</a>
 </li>
         <li><a href="api/simulator/index.html#module-minestudio.simulator.callbacks.callback">minestudio.simulator.callbacks.callback</a>
 </li>
@@ -1314,6 +1596,8 @@
         <li><a href="api/models/index.html#module-minestudio.utils.vpt_lib.scaled_mse_head">minestudio.utils.vpt_lib.scaled_mse_head</a>
 </li>
       </ul></li>
+      <li><a href="api/online/index.html#minestudio.online.utils.rollout.monitor.MovingStat">MovingStat (class in minestudio.online.utils.rollout.monitor)</a>
+</li>
       <li><a href="api/models/index.html#minestudio.utils.vpt_lib.action_head.MSEActionHead">MSEActionHead (class in minestudio.utils.vpt_lib.action_head)</a>
 </li>
       <li><a href="api/simulator/index.html#minestudio.simulator.utils.gui.MultiPointDrawCall">MultiPointDrawCall() (in module minestudio.simulator.utils.gui)</a>
@@ -1340,10 +1624,28 @@
 <h2 id="O">O</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/offline/index.html#minestudio.offline.mine_callbacks.callback.ObjectiveCallback">ObjectiveCallback (class in minestudio.offline.mine_callbacks.callback)</a>
+</li>
       <li><a href="api/simulator/index.html#minestudio.simulator.entry.MinecraftSim.observation_space">observation_space (minestudio.simulator.entry.MinecraftSim property)</a>
+</li>
+      <li><a href="api/offline/index.html#minestudio.offline.lightning_callbacks.ema.EMA.on_fit_start">on_fit_start() (minestudio.offline.lightning_callbacks.ema.EMA method)</a>
+</li>
+      <li><a href="api/offline/index.html#minestudio.offline.lightning_callbacks.ema.EMA.on_load_checkpoint">on_load_checkpoint() (minestudio.offline.lightning_callbacks.ema.EMA method)</a>
+</li>
+      <li><a href="api/offline/index.html#minestudio.offline.lightning_callbacks.ema.EMA.on_test_end">on_test_end() (minestudio.offline.lightning_callbacks.ema.EMA method)</a>
+</li>
+      <li><a href="api/offline/index.html#minestudio.offline.lightning_callbacks.ema.EMA.on_test_start">on_test_start() (minestudio.offline.lightning_callbacks.ema.EMA method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/offline/index.html#minestudio.offline.lightning_callbacks.speed_monitor.SpeedMonitorCallback.on_train_batch_end">on_train_batch_end() (minestudio.offline.lightning_callbacks.speed_monitor.SpeedMonitorCallback method)</a>
+</li>
+      <li><a href="api/offline/index.html#minestudio.offline.lightning_callbacks.ema.EMA.on_validation_end">on_validation_end() (minestudio.offline.lightning_callbacks.ema.EMA method)</a>
+</li>
+      <li><a href="api/offline/index.html#minestudio.offline.lightning_callbacks.ema.EMA.on_validation_start">on_validation_start() (minestudio.offline.lightning_callbacks.ema.EMA method)</a>
+</li>
+      <li><a href="api/online/index.html#minestudio.online.rollout.env_worker.VideoWriter.open_video">open_video() (minestudio.online.rollout.env_worker.VideoWriter method)</a>
+</li>
       <li><a href="api/models/index.html#minestudio.models.steve_one.body.MinecraftPolicy.output_latent_size">output_latent_size() (minestudio.models.steve_one.body.MinecraftPolicy method)</a>
 
       <ul>
@@ -1358,19 +1660,33 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/models/index.html#minestudio.models.groot_one.body.peel_off">peel_off() (in module minestudio.models.groot_one.body)</a>
 </li>
+      <li><a href="api/online/index.html#minestudio.online.utils.rollout.monitor.PipelineMonitor">PipelineMonitor (class in minestudio.online.utils.rollout.monitor)</a>
+</li>
       <li><a href="api/simulator/index.html#minestudio.simulator.callbacks.play.PlayCallback">PlayCallback (class in minestudio.simulator.callbacks.play)</a>
 </li>
       <li><a href="api/simulator/index.html#minestudio.simulator.callbacks.point.PlaySegmentCallback">PlaySegmentCallback (class in minestudio.simulator.callbacks.point)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/simulator/index.html#minestudio.simulator.callbacks.point.PointCallback">PointCallback (class in minestudio.simulator.callbacks.point)</a>
 </li>
       <li><a href="api/simulator/index.html#minestudio.simulator.utils.gui.PointDrawCall">PointDrawCall() (in module minestudio.simulator.utils.gui)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/online/index.html#minestudio.online.rollout.rollout_worker.RolloutWorker.poll_environments">poll_environments() (minestudio.online.rollout.rollout_worker.RolloutWorker method)</a>
+</li>
       <li><a href="api/simulator/index.html#minestudio.simulator.callbacks.prev_action.PrevActionCallback">PrevActionCallback (class in minestudio.simulator.callbacks.prev_action)</a>
 </li>
+      <li><a href="api/online/index.html#minestudio.online.utils.rollout.datatypes.SampleFragment.print">print() (minestudio.online.utils.rollout.datatypes.SampleFragment method)</a>
+
+      <ul>
+        <li><a href="api/online/index.html#minestudio.online.utils.rollout.monitor.PipelineMonitor.print">(minestudio.online.utils.rollout.monitor.PipelineMonitor method)</a>
+</li>
+      </ul></li>
       <li><a href="api/simulator/index.html#minestudio.simulator.callbacks.play.PlayCallback.process_keys">process_keys() (minestudio.simulator.callbacks.play.PlayCallback method)</a>
+</li>
+      <li><a href="api/online/index.html#minestudio.online.rollout.rollout_worker.RolloutWorker.progress_handler">progress_handler() (minestudio.online.rollout.rollout_worker.RolloutWorker method)</a>
+</li>
+      <li><a href="api/online/index.html#minestudio.online.rollout.rollout_worker.ProgressHandler">ProgressHandler (class in minestudio.online.rollout.rollout_worker)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1378,6 +1694,8 @@
 <h2 id="R">R</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/inference/index.html#minestudio.inference.recorder.base_recorder.EpisodeRecorder.record">record() (minestudio.inference.recorder.base_recorder.EpisodeRecorder method)</a>
+</li>
       <li><a href="api/simulator/index.html#minestudio.simulator.callbacks.record.RecordCallback">RecordCallback (class in minestudio.simulator.callbacks.record)</a>
 </li>
       <li><a href="api/simulator/index.html#minestudio.simulator.utils.gui.RecordDrawCall">RecordDrawCall() (in module minestudio.simulator.utils.gui)</a>
@@ -1385,6 +1703,10 @@
       <li><a href="api/models/index.html#minestudio.models.base_policy.recursive_tensor_op">recursive_tensor_op() (in module minestudio.models.base_policy)</a>
 </li>
       <li><a href="api/simulator/index.html#minestudio.simulator.entry.MinecraftSim.render">render() (minestudio.simulator.entry.MinecraftSim method)</a>
+</li>
+      <li><a href="api/online/index.html#minestudio.online.utils.rollout.monitor.PipelineMonitor.report_enter">report_enter() (minestudio.online.utils.rollout.monitor.PipelineMonitor method)</a>
+</li>
+      <li><a href="api/online/index.html#minestudio.online.rollout.env_worker.EnvWorker.report_rewards">report_rewards() (minestudio.online.rollout.env_worker.EnvWorker method)</a>
 </li>
       <li><a href="api/simulator/index.html#minestudio.simulator.entry.MinecraftSim.reset">reset() (minestudio.simulator.entry.MinecraftSim method)</a>
 </li>
@@ -1412,11 +1734,27 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/online/index.html#minestudio.online.rollout.env_worker.EnvWorker.reset_state">reset_state() (minestudio.online.rollout.env_worker.EnvWorker method)</a>
+</li>
       <li><a href="api/simulator/index.html#minestudio.simulator.callbacks.reward_gate.GateRewardsCallback.reward_as_smlest_pos">reward_as_smlest_pos() (minestudio.simulator.callbacks.reward_gate.GateRewardsCallback method)</a>
 </li>
       <li><a href="api/simulator/index.html#minestudio.simulator.callbacks.rewards.RewardsCallback">RewardsCallback (class in minestudio.simulator.callbacks.rewards)</a>
 </li>
       <li><a href="api/models/index.html#minestudio.models.rocket_one.body.RocketPolicy">RocketPolicy (class in minestudio.models.rocket_one.body)</a>
+</li>
+      <li><a href="api/online/index.html#minestudio.online.rollout.rollout_worker.RolloutWorker.rollout">rollout() (minestudio.online.rollout.rollout_worker.RolloutWorker method)</a>
+</li>
+      <li><a href="api/online/index.html#minestudio.online.rollout.rollout_worker.RolloutWorker">RolloutWorker (class in minestudio.online.rollout.rollout_worker)</a>
+</li>
+      <li><a href="api/inference/index.html#minestudio.inference.pipeline.EpisodePipeline.run">run() (minestudio.inference.pipeline.EpisodePipeline method)</a>
+
+      <ul>
+        <li><a href="api/online/index.html#minestudio.online.rollout.env_worker.EnvWorker.run">(minestudio.online.rollout.env_worker.EnvWorker method)</a>
+</li>
+        <li><a href="api/online/index.html#minestudio.online.rollout.env_worker.VideoWriter.run">(minestudio.online.rollout.env_worker.VideoWriter method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/offline/index.html#minestudio.offline.lightning_callbacks.ema.run_ema_update_cpu">run_ema_update_cpu() (in module minestudio.offline.lightning_callbacks.ema)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1442,11 +1780,23 @@
         <li><a href="api/models/index.html#minestudio.utils.vpt_lib.action_head.TupleActionHead.sample">(minestudio.utils.vpt_lib.action_head.TupleActionHead method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/online/index.html#minestudio.online.utils.rollout.datatypes.SampleFragment">SampleFragment (class in minestudio.online.utils.rollout.datatypes)</a>
+</li>
+      <li><a href="api/offline/index.html#minestudio.offline.lightning_callbacks.ema.EMA.save_ema_model">save_ema_model() (minestudio.offline.lightning_callbacks.ema.EMA method)</a>
+</li>
+      <li><a href="api/offline/index.html#minestudio.offline.lightning_callbacks.ema.EMA.save_original_optimizer_state">save_original_optimizer_state() (minestudio.offline.lightning_callbacks.ema.EMA method)</a>
+</li>
+      <li><a href="api/inference/index.html#minestudio.inference.generator.mine_generator.Worker.save_to_file">save_to_file() (minestudio.inference.generator.mine_generator.Worker method)</a>
+</li>
       <li><a href="api/models/index.html#minestudio.utils.vpt_lib.scaled_mse_head.ScaledMSEHead">ScaledMSEHead (class in minestudio.utils.vpt_lib.scaled_mse_head)</a>
 </li>
       <li><a href="api/simulator/index.html#minestudio.simulator.utils.gui.SegmentDrawCall">SegmentDrawCall() (in module minestudio.simulator.utils.gui)</a>
+</li>
+      <li><a href="api/offline/index.html#minestudio.offline.lightning_callbacks.smart_checkpoint.SmartCheckpointCallback">SmartCheckpointCallback (class in minestudio.offline.lightning_callbacks.smart_checkpoint)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/offline/index.html#minestudio.offline.lightning_callbacks.speed_monitor.SpeedMonitorCallback">SpeedMonitorCallback (class in minestudio.offline.lightning_callbacks.speed_monitor)</a>
 </li>
       <li><a href="api/simulator/index.html#minestudio.simulator.callbacks.speed_test.SpeedTestCallback">SpeedTestCallback (class in minestudio.simulator.callbacks.speed_test)</a>
 </li>
@@ -1458,11 +1808,29 @@
         <li><a href="api/models/index.html#minestudio.models.vpt.body.VPTPolicy.split_state">(minestudio.models.vpt.body.VPTPolicy method)</a>
 </li>
       </ul></li>
-      <li><a href="api/simulator/index.html#minestudio.simulator.entry.MinecraftSim.step">step() (minestudio.simulator.entry.MinecraftSim method)</a>
+      <li><a href="api/offline/index.html#minestudio.offline.lightning_callbacks.ema.EMAOptimizer.state_dict">state_dict() (minestudio.offline.lightning_callbacks.ema.EMAOptimizer method)</a>
+</li>
+      <li><a href="api/offline/index.html#minestudio.offline.lightning_callbacks.ema.EMAOptimizer.step">step() (minestudio.offline.lightning_callbacks.ema.EMAOptimizer method)</a>
+
+      <ul>
+        <li><a href="api/simulator/index.html#minestudio.simulator.entry.MinecraftSim.step">(minestudio.simulator.entry.MinecraftSim method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/online/index.html#minestudio.online.rollout.env_worker.EnvWorker.step_agent">step_agent() (minestudio.online.rollout.env_worker.EnvWorker method)</a>
+</li>
+      <li><a href="api/online/index.html#minestudio.online.utils.rollout.datatypes.StepRecord">StepRecord (class in minestudio.online.utils.rollout.datatypes)</a>
 </li>
       <li><a href="api/models/index.html#minestudio.models.steve_one.body.SteveOnePolicy">SteveOnePolicy (class in minestudio.models.steve_one.body)</a>
 </li>
       <li><a href="api/simulator/index.html#minestudio.simulator.callbacks.summon_mobs.SummonMobsCallback">SummonMobsCallback (class in minestudio.simulator.callbacks.summon_mobs)</a>
+</li>
+      <li><a href="api/offline/index.html#minestudio.offline.lightning_callbacks.ema.EMAOptimizer.swap_ema_weights">swap_ema_weights() (minestudio.offline.lightning_callbacks.ema.EMAOptimizer method)</a>
+</li>
+      <li><a href="api/offline/index.html#minestudio.offline.lightning_callbacks.ema.EMA.swap_model_weights">swap_model_weights() (minestudio.offline.lightning_callbacks.ema.EMA method)</a>
+</li>
+      <li><a href="api/offline/index.html#minestudio.offline.lightning_callbacks.ema.EMAOptimizer.swap_tensors">swap_tensors() (minestudio.offline.lightning_callbacks.ema.EMAOptimizer method)</a>
+</li>
+      <li><a href="api/offline/index.html#minestudio.offline.lightning_callbacks.ema.EMAOptimizer.switch_main_parameter_weights">switch_main_parameter_weights() (minestudio.offline.lightning_callbacks.ema.EMAOptimizer method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1472,11 +1840,31 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/simulator/index.html#minestudio.simulator.callbacks.task.TaskCallback">TaskCallback (class in minestudio.simulator.callbacks.task)</a>
 </li>
+      <li><a href="api/offline/index.html#minestudio.offline.trainer.MineLightning.training_step">training_step() (minestudio.offline.trainer.MineLightning method)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/models/index.html#minestudio.models.steve_one.body.TranslatorVAE">TranslatorVAE (class in minestudio.models.steve_one.body)</a>
 </li>
+      <li><a href="api/offline/index.html#minestudio.offline.trainer.tree_detach">tree_detach() (in module minestudio.offline.trainer)</a>
+</li>
       <li><a href="api/models/index.html#minestudio.utils.vpt_lib.action_head.TupleActionHead">TupleActionHead (class in minestudio.utils.vpt_lib.action_head)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="U">U</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/offline/index.html#minestudio.offline.lightning_callbacks.ema.EMAOptimizer.update">update() (minestudio.offline.lightning_callbacks.ema.EMAOptimizer method)</a>
+
+      <ul>
+        <li><a href="api/online/index.html#minestudio.online.utils.rollout.monitor.MovingStat.update">(minestudio.online.utils.rollout.monitor.MovingStat method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/online/index.html#minestudio.online.rollout.rollout_worker.RolloutWorker.update_model_version">update_model_version() (minestudio.online.rollout.rollout_worker.RolloutWorker method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1484,15 +1872,31 @@
 <h2 id="V">V</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/offline/index.html#minestudio.offline.trainer.MineLightning.validation_step">validation_step() (minestudio.offline.trainer.MineLightning method)</a>
+</li>
       <li><a href="api/models/index.html#minestudio.utils.vpt_lib.action_head.CategoricalActionHead.vanilla_sample">vanilla_sample() (minestudio.utils.vpt_lib.action_head.CategoricalActionHead method)</a>
 </li>
       <li><a href="api/models/index.html#minestudio.models.groot_one.body.VideoEncoder">VideoEncoder (class in minestudio.models.groot_one.body)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/online/index.html#minestudio.online.rollout.env_worker.VideoWriter">VideoWriter (class in minestudio.online.rollout.env_worker)</a>
+</li>
       <li><a href="api/simulator/index.html#minestudio.simulator.callbacks.voxels.VoxelsCallback">VoxelsCallback (class in minestudio.simulator.callbacks.voxels)</a>
 </li>
       <li><a href="api/models/index.html#minestudio.models.vpt.body.VPTPolicy">VPTPolicy (class in minestudio.models.vpt.body)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="W">W</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/inference/index.html#minestudio.inference.generator.mine_generator.Worker">Worker (class in minestudio.inference.generator.mine_generator)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/online/index.html#minestudio.online.rollout.env_worker.VideoWriter.write_frame">write_frame() (minestudio.online.rollout.env_worker.VideoWriter method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1547,7 +1951,7 @@
         <div class="footer-item">
 
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
     <br/>
   </p>
 </div>
