@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-11-29 08:09:07
- * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-12-12 05:46:38
+ * @LastEditors: caishaofei-mus1 1744260356@qq.com
+ * @LastEditTime: 2025-05-28 01:03:49
  * @FilePath: /MineStudio/docs/source/simulator/index.md
 -->
 
@@ -28,14 +28,15 @@ The simulator has several arguments that can be used to customize the environmen
 
 | Argument | Default | Description |
 | --- | --- | --- |
-| action_type | "agent" | The style of the action space |
-| obs_size | (224, 224) | The resolution of the observation (cv2 resize) |
-| render_size | (640, 360) | The original resolution of the game is 640x360 |
-| seed | 0 | The seed of the minecraft world |
-| inventory | {} | The initial inventory of the agent |
-| preferred_spawn_biome | None | The preferred spawn biome when call reset |
-| num_empty_frames | 20 | The number of empty frames to skip when calling reset |
-| callbacks | [] | The callbacks to customize the environment (**advanced**) |
+| action_type | "agent" | The style of the action space. Can be 'env' or 'agent'. |
+| obs_size | (224, 224) | The resolution of the observation (cv2 resize). |
+| render_size | (640, 360) | The original resolution of the game. |
+| seed | 0 | The seed of the Minecraft world. |
+| inventory | {} | The initial inventory of the agent. |
+| preferred_spawn_biome | None | The preferred spawn biome when calling reset. |
+| num_empty_frames | 20 | The number of empty frames to skip when calling reset. |
+| callbacks | [] | A list of callbacks to customize the environment (**advanced**). |
+| camera_config | `CameraConfig()` | Configuration for camera quantization and binning settings. See `CameraConfig` class for details. |
 
 ## Using Callbacks
 
