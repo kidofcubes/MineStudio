@@ -55,6 +55,19 @@ from minestudio.data.minecraft.callbacks import MetaInfoKernelCallback, ImageKer
 '''
 
 def main(args):
+    """
+    Main function to process Minecraft game events and store them in an LMDB database.
+
+    This function reads event data from a specified input directory, processes it using
+    a KernelManager, and then organizes and writes the events into an LMDB database
+    with a specific structure. The structure includes a codebook for episode IDs,
+    the total number of events, information about each event type (number of items
+    and episodes), and individual event occurrences.
+
+    :param args: Command-line arguments, expected to have an `input_dir` attribute
+                 specifying the directory containing the raw game data.
+    :type args: argparse.Namespace
+    """
     
     event_path = Path(args.input_dir) / "event"
     if event_path.is_dir():

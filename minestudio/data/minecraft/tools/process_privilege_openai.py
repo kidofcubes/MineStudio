@@ -22,11 +22,27 @@ from typing import Dict
 from rich import print
 from rich.console import Console
 from pathlib import Path
-from typing import Dict, List, Any, Sequence, Tuple
+from typing import Dict, List, Any, Sequence, Tuple, Iterator # MODIFIED
 from hashlib import md5
 
 
-def load_tag_items(tag_items_path: str) -> Dict[str, List[str]]:
+def load_tag_items(tag_items_path: str) -> Tuple[Dict[str, List[str]], Dict[str, str]]:
+    """
+    Loads item tag information from a JSON file.
+
+    This function reads a JSON file where keys are tag groups (e.g., "minecraft:logs")
+    and values are lists of items belonging to that group (e.g., ["minecraft:oak_log", "minecraft:birch_log"]).
+    It processes this data to create two dictionaries:
+    1.  `group_to_items`: Maps a group name (e.g., "logs") to a list of item names (e.g., ["oak_log", "birch_log"]).
+    2.  `item_to_group`: Maps an item name (e.g., "oak_log") to its corresponding group name (e.g., "logs").
+
+    :param tag_items_path: The file path to the JSON file containing tag items.
+    :type tag_items_path: str
+    :returns: A tuple containing two dictionaries:
+              - group_to_items (Dict[str, List[str]]): Maps group names to lists of item names.
+              - item_to_group (Dict[str, str]): Maps item names to their group names.
+    :rtype: Tuple[Dict[str, List[str]], Dict[str, str]]
+    """
     
     with open(tag_items_path, 'r') as f:
         tag_items = json.load(f)
@@ -45,6 +61,20 @@ def load_tag_items(tag_items_path: str) -> Dict[str, List[str]]:
 
 
 def parse_crafting_items(recipe_path: str) -> Dict[str, Dict]:
+    """
+    Parses Minecraft recipe files to create a summary of crafting ingredients and results.
+
+    It iterates through JSON recipe files in the specified path, focusing on
+    'minecraft:crafting_shaped', 'minecraft:crafting_shapeless', and 'minecraft:smelting' types.
+    For each valid recipe, it extracts the required items/tags and the resulting item(s) with their counts.
+    The summary is stored in a dictionary where keys are the names of the resulting items.
+
+    :param recipe_path: The directory path containing Minecraft JSON recipe files.
+    :type recipe_path: str
+    :returns: A dictionary where keys are the names of craftable items and values are
+              dictionaries summarizing their recipes (ingredients by item/group and results).
+    :rtype: Dict[str, Dict]
+    """
 
     crafting_summary = {}
     
@@ -137,7 +167,7 @@ GROUP_TO_ITEMS, ITEM_TO_GROUP = load_tag_items(TAG_ITEMS_PATH)
 FRAME_SHAPE0 = 360
 MINEREC_ORIGINAL_HEIGHT_PX = 720
 
-def get_crafting_items(curr_stats: Dict, prev_stats: Dict) -> List[Tuple[str, int]]:
+def get_crafting_items(curr_stats: Dict, prev_stats: Dict) -> Iterator[Tuple[str, int]]: # MODIFIED
     for item in curr_stats:
         if 'craft_item' not in item:
             continue
@@ -146,7 +176,7 @@ def get_crafting_items(curr_stats: Dict, prev_stats: Dict) -> List[Tuple[str, in
         if delta > 0:
             yield ('craft_item:' + item_name, delta)
 
-def get_mining_blocks(curr_stats: Dict, prev_stats: Dict) -> List[Tuple[str, int]]:
+def get_mining_blocks(curr_stats: Dict, prev_stats: Dict) -> Iterator[Tuple[str, int]]: # MODIFIED
     for block in curr_stats:
         if 'mine_block' not in block:
             continue
@@ -155,7 +185,7 @@ def get_mining_blocks(curr_stats: Dict, prev_stats: Dict) -> List[Tuple[str, int
         if delta > 0:
             yield ('mine_block:' + block_name, delta)
 
-def get_picking_items(curr_stats: Dict, prev_stats: Dict) -> List[Tuple[str, int]]:
+def get_picking_items(curr_stats: Dict, prev_stats: Dict) -> Iterator[Tuple[str, int]]: # MODIFIED
     for item in curr_stats:
         if 'pickup' not in item:
             continue
@@ -164,7 +194,7 @@ def get_picking_items(curr_stats: Dict, prev_stats: Dict) -> List[Tuple[str, int
         if delta > 0:
             yield ('pickup:' + item_name, delta)
 
-def get_other_items(curr_inventory: Dict, prev_inventory: Dict) -> List[Tuple[str, int]]:
+def get_other_items(curr_inventory: Dict, prev_inventory: Dict) -> Iterator[Tuple[str, str, int]]: # MODIFIED
     for item_name in curr_inventory:
         delta = curr_inventory.get(item_name, 0) - prev_inventory.get(item_name, 0)
         if delta > 0:

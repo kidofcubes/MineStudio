@@ -12,9 +12,20 @@ from ray.util.actor_pool import ActorPool
 
 @ray.remote
 class FragmentLoader:
+    """
+    A Ray remote actor responsible for loading SampleFragments from a replay buffer.
+
+    This actor is designed to be used in a pool of loaders to parallelize data loading.
+    """
     def __init__(self):
         self.replay_buffer = ReplayBufferInterface()
     def load(self, record: Tuple[FragmentIndex, str]) -> Dict[str, Any]:
+        """
+        Loads a SampleFragment from the replay buffer given its index and UUID.
+
+        :param record: A tuple containing the FragmentIndex and the fragment's UUID.
+        :returns: A dictionary containing the FragmentIndex and the loaded SampleFragment.
+        """
         index, fragment_uuid = record
         fragment = self.replay_buffer.load_fragment(fragment_uuid)
         return {
@@ -23,6 +34,13 @@ class FragmentLoader:
         }
     
 def create_loader_pool(num_readers: int, num_cpus_per_reader: int):
+    """
+    Creates a pool of FragmentLoader actors.
+
+    :param num_readers: The number of FragmentLoader actors to create in the pool.
+    :param num_cpus_per_reader: The number of CPUs to allocate to each FragmentLoader actor.
+    :returns: An ActorPool of FragmentLoader actors.
+    """
     actors = [FragmentLoader.options( # type: ignore
         placement_group=None,
         num_cpus=num_cpus_per_reader, 
@@ -31,6 +49,17 @@ def create_loader_pool(num_readers: int, num_cpus_per_reader: int):
     return ActorPool(actors)
 
 def data_iter(loader_pool: ActorPool, records: List[Tuple[FragmentIndex, str]], batch_size: int, prefetch_batches: int):
+    """
+    Creates an iterator that yields batches of SampleFragments loaded by the FragmentLoader pool.
+
+    It shuffles the records, prefetches data, and yields batches of a specified size.
+
+    :param loader_pool: The ActorPool of FragmentLoader actors.
+    :param records: A list of tuples, where each tuple contains a FragmentIndex and a fragment UUID.
+    :param batch_size: The number of fragments per batch.
+    :param prefetch_batches: The number of batches to prefetch.
+    :yields: Batches of SampleFragments, where each batch is a list of dictionaries (output of FragmentLoader.load).
+    """
     records = records.copy()
     random.shuffle(records)
 
@@ -60,6 +89,16 @@ def data_iter(loader_pool: ActorPool, records: List[Tuple[FragmentIndex, str]], 
         yield auto_stack(accum)
 
 def prepare_batch(model, batch_fragments: List[SampleFragment]):
+        """
+        Prepares a batch of SampleFragments for model input.
+
+        It extracts observations, states, actions, and first flags from the fragments,
+        stacks them, and moves them to the model's device.
+
+        :param model: The model for which the batch is being prepared (used to get the device and merge_state method).
+        :param batch_fragments: A list of SampleFragment objects.
+        :returns: A dictionary containing the prepared batch (obs, state, action, first) as torch Tensors.
+        """
         _obs, _state, _action, _first = [], [], [], []
         device = model.device
         for f in batch_fragments:
@@ -79,6 +118,15 @@ def prepare_batch(model, batch_fragments: List[SampleFragment]):
         }
     
 def batchify_next_obs(next_obs: Dict[str, Any], device: torch.device):
+    """
+    Converts a next_obs dictionary into a batch format suitable for model input.
+
+    It stacks the next_obs (assumed to be a single observation) and moves it to the specified device.
+
+    :param next_obs: A dictionary representing the next observation.
+    :param device: The torch device to move the batch to.
+    :returns: The batchified next_obs as a torch Tensor.
+    """
     _obs = auto_stack([auto_stack([next_obs])])
     obs = auto_to_torch(_obs, device=device)
     return obs

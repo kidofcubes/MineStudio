@@ -96,8 +96,18 @@ cursor_image = cursor_image[:, :, :3]
 
 def json_action_to_env_action(json_action):
     """
-    Converts a json action into a MineRL action.
-    Returns (minerl_action, is_null_action)
+    Converts a json action from the input data into a MineRL environment-compatible action.
+
+    It translates keyboard inputs and mouse movements/buttons from the JSON format
+    to the action format expected by the MineRL environment.
+
+    :param json_action: A dictionary representing the action from the JSON data,
+                        containing keyboard and mouse inputs.
+    :type json_action: dict
+    :returns: A tuple containing:
+              - env_action (dict): The action formatted for the MineRL environment.
+              - is_null_action (bool): True if the action is a "no-op" (no significant input), False otherwise.
+    :rtype: tuple
     """
     # This might be slow...
     env_action = NOOP_ACTION.copy()
@@ -143,10 +153,22 @@ def json_action_to_env_action(json_action):
 
 def composite_images_with_alpha(image1, image2, alpha, x, y):
     """
-    Draw image2 over image1 at location x,y, using alpha as the opacity for image2.
+    Composites image2 onto image1 at a specified (x, y) location using an alpha channel for opacity.
 
-    Modifies image1 in-place
+    The function modifies image1 in-place.
+
+    :param image1: The base image (NumPy array) to which image2 will be added.
+    :type image1: numpy.ndarray
+    :param image2: The image to overlay on top of image1 (NumPy array).
+    :type image2: numpy.ndarray
+    :param alpha: The alpha channel (NumPy array) for image2, determining its opacity.
+    :type alpha: numpy.ndarray
+    :param x: The x-coordinate on image1 where the top-left corner of image2 will be placed.
+    :type x: int
+    :param y: The y-coordinate on image1 where the top-left corner of image2 will be placed.
+    :type y: int
     """
+    # Modifies image1 in-place
     ch = max(0, min(image1.shape[0] - y, image2.shape[0]))
     cw = max(0, min(image1.shape[1] - x, image2.shape[1]))
     if ch == 0 or cw == 0:  
@@ -156,6 +178,23 @@ def composite_images_with_alpha(image1, image2, alpha, x, y):
 
 
 def merge_action(cache: Dict[str, np.ndarray], action: Dict[str, Any]) -> Dict[str, np.ndarray]:
+    """
+    Merges a new action dictionary into a cache of actions.
+
+    If a key from the new action already exists in the cache, the new action's value
+    (converted to a NumPy array if it isn't already) is concatenated to the existing
+    NumPy array. If the key doesn't exist, it's added to the cache with the new
+    action's value as a new NumPy array.
+
+    :param cache: The dictionary caching previous actions. Keys are action types (str),
+                  and values are NumPy arrays of action values.
+    :type cache: Dict[str, np.ndarray]
+    :param action: The new action dictionary to merge. Keys are action types (str),
+                   and values can be of any type that can be converted to a NumPy array.
+    :type action: Dict[str, Any]
+    :returns: The updated cache dictionary.
+    :rtype: Dict[str, np.ndarray]
+    """
     for key, val in action.items():
         if key not in cache:
             cache[key] = np.array([val])
@@ -171,6 +210,22 @@ def write_video(
     height: int = 360, 
     fps: int = 20
 ) -> None:
+    """Write video frames to a video file using the PyAV library.
+
+    This function takes a sequence of NumPy array frames and encodes them into a video file
+    with the specified properties (filename, width, height, FPS).
+
+    :param file_name: The name (including path) of the output video file.
+    :type file_name: str
+    :param frames: A sequence of frames, where each frame is a NumPy array (RGB format).
+    :type frames: Sequence[np.ndarray]
+    :param width: The width of the output video in pixels, defaults to 640.
+    :type width: int, optional
+    :param height: The height of the output video in pixels, defaults to 360.
+    :type height: int, optional
+    :param fps: The frames per second of the output video, defaults to 20.
+    :type fps: int, optional
+    """
     """Write video frames to video files. """
     with av.open(file_name, mode="w", format='mp4') as container:
         stream = container.add_stream("h264", rate=fps)
@@ -184,6 +239,21 @@ def write_video(
             container.mux(packet)
 
 def extract_privileged_info(curr_data: Dict, prev_data: Dict=None) -> Dict:
+    """
+    Extracts privileged information from the current game state data and calculates deltas from previous state.
+
+    Privileged information includes player's yaw, pitch, position (x, y, z), hotbar contents,
+    and full inventory. It also calculates the change in yaw, pitch, and inventory items
+    compared to the previous game state.
+
+    :param curr_data: A dictionary containing the current game state data.
+    :type curr_data: Dict
+    :param prev_data: A dictionary containing the previous game state data, defaults to None.
+                      If None, delta values will be calculated against zeros or empty inventories.
+    :type prev_data: Dict, optional
+    :returns: A dictionary containing the extracted privileged information and calculated deltas.
+    :rtype: Dict
+    """
     
     if prev_data is None:
         prev_data = {}

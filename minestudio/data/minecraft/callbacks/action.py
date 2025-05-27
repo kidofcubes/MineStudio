@@ -1,7 +1,7 @@
 '''
 Date: 2025-01-09 05:27:25
-LastEditors: muzhancun 2100017790@stu.pku.edu.cn
-LastEditTime: 2025-01-27 13:38:47
+LastEditors: muzhancun muzhancun@stu.pku.edu.cn
+LastEditTime: 2025-05-27 15:04:29
 FilePath: /MineStudio/minestudio/data/minecraft/callbacks/action.py
 '''
 import re
@@ -406,17 +406,38 @@ class ActionDrawFrameCallback(DrawFrameCallback):
 
 class ActionConvertCallback(ModalConvertCallback):
     """
-    Callback for converting raw action data into the MineStudio format.
+    Callback for converting raw action data files.
+
+    This callback loads action data from .jsonl files, processes it, and converts it into a structured format.
     """
-
-    def load_episodes(self):
+    def __init__(self, 
+                 input_dirs: List[Union[str, Path]], 
+                 chunk_size: int=32, 
+                 action_transformer_kwargs: Dict=dict(),
+                 **kwargs):
         """
-        Loads and organizes action episode data from input directories.
+        Initializes the ActionConvertCallback.
 
-        It identifies action files (ending with .pkl), groups them by episode,
-        sorts segments within episodes, and re-splits episodes based on a maximum time interval.
+        :param input_dirs: List of input directories containing action files.
+        :type input_dirs: List[Union[str, Path]]
+        :param chunk_size: Size of data chunks to process.
+        :type chunk_size: int
+        :param action_transformer_kwargs: Keyword arguments for the ActionTransformer.
+        :type action_transformer_kwargs: Dict
+        :param kwargs: Additional keyword arguments.
+        """
+        super().__init__(**kwargs)
+        self.input_dirs = input_dirs
+        self.chunk_size = chunk_size
+        self.action_transformer_kwargs = action_transformer_kwargs
 
-        :returns: An OrderedDict of episodes, where keys are episode IDs and values are lists of (part_id, file_path) tuples.
+    def load_episodes(self) -> OrderedDict:
+        """
+        Loads episodes from input directories containing .jsonl action files.
+
+        It identifies episode segments from file names, sorts them, and organizes them into an OrderedDict.
+
+        :returns: An OrderedDict where keys are episode IDs and values are lists of segment file paths.
         :rtype: OrderedDict
         """
         CONTRACTOR_PATTERN = r"^(.*?)-(\d+)$"
@@ -462,16 +483,15 @@ class ActionConvertCallback(ModalConvertCallback):
         """
         Converts action data for a given episode.
 
-        It loads action data from specified files, applies frame skipping,
-        and chunks the data.
+        Processes actions from .jsonl files, applies transformations, and handles frame skipping and remapping.
 
-        :param eps_id: Episode ID.
+        :param eps_id: The ID of the episode.
         :type eps_id: str
-        :param skip_frames: A list of lists of boolean flags indicating whether to skip each frame for each segment file.
+        :param skip_frames: A list of lists of boolean flags indicating whether to skip frames.
         :type skip_frames: List[List[bool]]
-        :param modal_file_path: A list of file paths for the action data segments.
+        :param modal_file_path: A list of file paths for the modal data (action files).
         :type modal_file_path: List[Union[str, Path]]
-        :returns: A tuple containing a list of chunk start indices and a list of serialized chunk values.
+        :returns: A tuple containing a list of keys (chunk start indices) and a list of pickled data values.
         :rtype: Tuple[List, List]
         """
         cache, keys, vals = [], [], []

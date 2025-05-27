@@ -27,7 +27,12 @@ from minestudio.data.minecraft.callbacks import ModalKernelCallback
 from minestudio.utils.register import Registers
 
 class RawDataset(Dataset):
-    """Raw dataset for training and testing. """
+    """Raw dataset for training and testing.
+    
+    Handles loading and processing of raw Minecraft gameplay data.
+    It supports splitting data into training and validation sets,
+    shuffling episodes, and uses a kernel manager to read data.
+    """
     def __init__(self, 
                  dataset_dirs: List[str], 
                  modal_kernel_callbacks: List[Union[str, ModalKernelCallback]], 
@@ -40,6 +45,19 @@ class RawDataset(Dataset):
                  split_ratio: float=0.8,
                  verbose: bool=True,
                  shuffle_episodes: bool=False):
+        """Initialize the RawDataset.
+
+        :param dataset_dirs: List of directories containing the dataset.
+        :param modal_kernel_callbacks: List of modal kernel callbacks or their names.
+        :param modal_kernel_config: Configuration for modal kernels if names are provided.
+        :param seed: Random seed for shuffling episodes.
+        :param win_len: Window length for each item.
+        :param skip_frame: Number of frames to skip between consecutive frames in an item.
+        :param split: Dataset split, either 'train' or 'val'.
+        :param split_ratio: Ratio to split the dataset into training and validation sets.
+        :param verbose: Whether to print verbose information.
+        :param shuffle_episodes: Whether to shuffle episodes.
+        """
         super().__init__()
         self.win_len = win_len
         self.skip_frame = skip_frame
@@ -64,6 +82,12 @@ class RawDataset(Dataset):
         self.build_items()
     
     def build_items(self) -> None:
+        """Builds the list of items for the dataset.
+
+        This method processes episodes, splits them into train/val sets,
+        and creates a list of items, where each item corresponds to a window
+        of frames from an episode.
+        """
         self.episodes_with_length = self.kernel_manager.get_episodes_with_length()
         _episodes_with_length = list(self.episodes_with_length.items())
 
@@ -88,6 +112,11 @@ class RawDataset(Dataset):
             self.items.append( (self.num_items, episode) )
 
     def locate_item(self, idx: int) -> Tuple[str, int]:
+        """Locates the episode and relative index for a given item index.
+
+        :param idx: The index of the item in the dataset.
+        :returns: A tuple containing the episode identifier and the relative index within that episode.
+        """
         """Find the first episode that idx > acc[episode]"""
         left, right = 0, len(self.items)
         while left < right:
@@ -104,9 +133,19 @@ class RawDataset(Dataset):
         return episode, relative_idx
 
     def __len__(self) -> int:
+        """Returns the total number of items in the dataset.
+
+        :returns: The total number of items.
+        """
         return self.num_items
     
     def __getitem__(self, idx: int) -> Dict[str, torch.Tensor]:
+        """Retrieves an item from the dataset at the given index.
+
+        :param idx: The index of the item to retrieve.
+        :returns: A dictionary containing the item data, converted to torch tensors.
+        :raises AssertionError: If the index is out of range.
+        """
         assert idx < len(self), f"Index <{idx}> out of range <{len(self)}>"
         episode, relative_idx = self.locate_item(idx)
         start = max(0, relative_idx * self.win_len) # if start > 0 is the prequest for previous action
@@ -121,6 +160,14 @@ class RawDataset(Dataset):
         return item
 
     def to_tensor(self, item: Union[np.ndarray, List, Dict]) -> Union[np.ndarray, List, Dict]:
+        """Converts numpy arrays in an item to torch tensors.
+
+        Recursively traverses the item (which can be a numpy array, list, or dict)
+        and converts any numpy arrays to torch tensors.
+
+        :param item: The item to convert, can be a numpy array, list, or dictionary.
+        :returns: The item with numpy arrays converted to torch tensors.
+        """
         """Convert numpy array to torch tensor."""
         if isinstance(item, np.ndarray):
             return torch.from_numpy(item)
@@ -132,6 +179,11 @@ class RawDataset(Dataset):
             return item
 
 class RawDataModule(L.LightningDataModule):
+    """LightningDataModule for the RawDataset.
+
+    Handles the creation of training and validation dataloaders.
+    Supports episode continuous batching.
+    """
     
     def __init__(self, 
                  data_params: Dict, 
@@ -139,6 +191,14 @@ class RawDataModule(L.LightningDataModule):
                  num_workers: int=0, 
                  prefetch_factor: Optional[int] = None,
                  episode_continuous_batch: bool = False):
+        """Initialize the RawDataModule.
+
+        :param data_params: Parameters for the RawDataset.
+        :param batch_size: Batch size for the dataloaders.
+        :param num_workers: Number of worker processes for data loading.
+        :param prefetch_factor: Number of batches to prefetch.
+        :param episode_continuous_batch: Whether to use continuous batching for episodes.
+        """
         super().__init__()
         self.data_params = data_params
         self.batch_size = batch_size
@@ -147,10 +207,25 @@ class RawDataModule(L.LightningDataModule):
         self.episode_continuous_batch = episode_continuous_batch
     
     def setup(self, stage: Optional[str]=None):
+        """Sets up the training and validation datasets.
+
+        This method is called by PyTorch Lightning to prepare the data.
+        It instantiates `RawDataset` for both training and validation splits.
+
+        :param stage: The stage of training (e.g., 'fit', 'validate', 'test', 'predict'). Not used in this implementation.
+        """
         self.train_dataset = RawDataset(split='train', **self.data_params)
         self.val_dataset = RawDataset(split='val', **self.data_params)
 
     def train_dataloader(self):
+        """Creates the training dataloader.
+
+        If `episode_continuous_batch` is True, it uses `MineDistributedBatchSampler`
+        for continuous loading of video frames. Otherwise, it uses a standard DataLoader
+        with shuffling.
+
+        :returns: The DataLoader for the training set.
+        """
         if self.episode_continuous_batch:
             # using MineDistributedBatchSampler for loading continuous video frames
             batch_sampler = MineDistributedBatchSampler(
@@ -179,6 +254,13 @@ class RawDataModule(L.LightningDataModule):
         return train_loader
 
     def val_dataloader(self):
+        """Creates the validation dataloader.
+
+        If `episode_continuous_batch` is True, it uses `MineDistributedBatchSampler`.
+        Otherwise, it uses a standard DataLoader without shuffling.
+
+        :returns: The DataLoader for the validation set.
+        """
         if self.episode_continuous_batch:
             # using MineDistributedBatchSampler for loading continuous video frames
             batch_sampler = MineDistributedBatchSampler(

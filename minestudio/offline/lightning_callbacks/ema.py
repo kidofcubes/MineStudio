@@ -26,17 +26,21 @@ from lightning.pytorch.utilities.rank_zero import rank_zero_info
 
 class EMA(Callback):
     """
-    Implements Exponential Moving Averaging (EMA).
+    Implements Exponential Moving Averaging (EMA) for PyTorch Lightning.
 
-    When training a model, this callback will maintain moving averages of the trained parameters.
-    When evaluating, we use the moving averages copy of the trained parameters.
-    When saving, we save an additional set of parameters with the prefix `ema`.
+    This callback maintains moving averages of the trained parameters during training.
+    When evaluating or testing, it can swap the original weights with the EMA weights.
+    When saving a checkpoint, it saves an additional set of parameters with the prefix `ema`.
 
-    Args:
-        decay: The exponential decay used when calculating the moving average. Has to be between 0-1.
-        validate_original_weights: Validate the original weights, as apposed to the EMA weights.
-        every_n_steps: Apply EMA every N steps.
-        cpu_offload: Offload weights to CPU.
+    :param decay: The exponential decay factor used for calculating the moving average. Must be between 0 and 1.
+    :type decay: float
+    :param validate_original_weights: If True, validates the original weights instead of the EMA weights. Defaults to False.
+    :type validate_original_weights: bool
+    :param every_n_steps: Apply EMA every N training steps. Defaults to 1.
+    :type every_n_steps: int
+    :param cpu_offload: If True, offloads EMA weights to CPU to save GPU memory. Defaults to False.
+    :type cpu_offload: bool
+    :raises MisconfigurationException: If the decay value is not between 0 and 1.
     """
 
     def __init__(
@@ -50,6 +54,16 @@ class EMA(Callback):
         self.cpu_offload = cpu_offload
 
     def on_fit_start(self, trainer: "pl.Trainer", pl_module: "pl.LightningModule") -> None:
+        """
+        Called when the fit begins.
+
+        Wraps the optimizers with EMAOptimizer.
+
+        :param trainer: The PyTorch Lightning Trainer instance.
+        :type trainer: pl.Trainer
+        :param pl_module: The PyTorch Lightning LightningModule instance.
+        :type pl_module: pl.LightningModule
+        """
         device = pl_module.device if not self.cpu_offload else torch.device('cpu')
         trainer.optimizers = [
             EMAOptimizer(
@@ -64,28 +78,92 @@ class EMA(Callback):
         ]
 
     def on_validation_start(self, trainer: "pl.Trainer", pl_module: "pl.LightningModule") -> None:
+        """
+        Called when the validation loop begins.
+
+        Swaps to EMA weights if `validate_original_weights` is False.
+
+        :param trainer: The PyTorch Lightning Trainer instance.
+        :type trainer: pl.Trainer
+        :param pl_module: The PyTorch Lightning LightningModule instance.
+        :type pl_module: pl.LightningModule
+        """
         if self._should_validate_ema_weights(trainer):
             self.swap_model_weights(trainer)
 
     def on_validation_end(self, trainer: "pl.Trainer", pl_module: "pl.LightningModule") -> None:
+        """
+        Called when the validation loop ends.
+
+        Swaps back to original weights if EMA weights were used for validation.
+
+        :param trainer: The PyTorch Lightning Trainer instance.
+        :type trainer: pl.Trainer
+        :param pl_module: The PyTorch Lightning LightningModule instance.
+        :type pl_module: pl.LightningModule
+        """
         if self._should_validate_ema_weights(trainer):
             self.swap_model_weights(trainer)
 
     def on_test_start(self, trainer: "pl.Trainer", pl_module: "pl.LightningModule") -> None:
+        """
+        Called when the test loop begins.
+
+        Swaps to EMA weights if `validate_original_weights` is False.
+
+        :param trainer: The PyTorch Lightning Trainer instance.
+        :type trainer: pl.Trainer
+        :param pl_module: The PyTorch Lightning LightningModule instance.
+        :type pl_module: pl.LightningModule
+        """
         if self._should_validate_ema_weights(trainer):
             self.swap_model_weights(trainer)
 
     def on_test_end(self, trainer: "pl.Trainer", pl_module: "pl.LightningModule") -> None:
+        """
+        Called when the test loop ends.
+
+        Swaps back to original weights if EMA weights were used for testing.
+
+        :param trainer: The PyTorch Lightning Trainer instance.
+        :type trainer: pl.Trainer
+        :param pl_module: The PyTorch Lightning LightningModule instance.
+        :type pl_module: pl.LightningModule
+        """
         if self._should_validate_ema_weights(trainer):
             self.swap_model_weights(trainer)
 
     def _should_validate_ema_weights(self, trainer: "pl.Trainer") -> bool:
+        """
+        Determines if EMA weights should be used for validation/testing.
+
+        :param trainer: The PyTorch Lightning Trainer instance.
+        :type trainer: pl.Trainer
+        :returns: True if EMA weights should be used, False otherwise.
+        :rtype: bool
+        """
         return not self.validate_original_weights and self._ema_initialized(trainer)
 
     def _ema_initialized(self, trainer: "pl.Trainer") -> bool:
+        """
+        Checks if EMA has been initialized (i.e., if any optimizer is an EMAOptimizer).
+
+        :param trainer: The PyTorch Lightning Trainer instance.
+        :type trainer: pl.Trainer
+        :returns: True if EMA is initialized, False otherwise.
+        :rtype: bool
+        """
         return any(isinstance(optimizer, EMAOptimizer) for optimizer in trainer.optimizers)
 
     def swap_model_weights(self, trainer: "pl.Trainer", saving_ema_model: bool = False):
+        """
+        Swaps the model's main parameters with the EMA parameters.
+
+        :param trainer: The PyTorch Lightning Trainer instance.
+        :type trainer: pl.Trainer
+        :param saving_ema_model: If True, indicates that the EMA model is being saved. Defaults to False.
+        :type saving_ema_model: bool
+        """
         for optimizer in trainer.optimizers:
             assert isinstance(optimizer, EMAOptimizer)
             optimizer.switch_main_parameter_weights(saving_ema_model)
@@ -93,7 +171,12 @@ class EMA(Callback):
     @contextlib.contextmanager
     def save_ema_model(self, trainer: "pl.Trainer"):
         """
-        Saves an EMA copy of the model + EMA optimizer states for resume.
+        A context manager to save an EMA copy of the model and EMA optimizer states.
+
+        Temporarily swaps to EMA weights, yields, and then swaps back.
+
+        :param trainer: The PyTorch Lightning Trainer instance.
+        :type trainer: pl.Trainer
         """
         self.swap_model_weights(trainer, saving_ema_model=True)
         try:
@@ -103,6 +186,14 @@ class EMA(Callback):
 
     @contextlib.contextmanager
     def save_original_optimizer_state(self, trainer: "pl.Trainer"):
+        """
+        A context manager to temporarily set the `save_original_optimizer_state` flag in EMAOptimizers.
+
+        This is used to ensure that the original optimizer state is saved instead of the EMA optimizer state.
+
+        :param trainer: The PyTorch Lightning Trainer instance.
+        :type trainer: pl.Trainer
+        """
         for optimizer in trainer.optimizers:
             assert isinstance(optimizer, EMAOptimizer)
             optimizer.save_original_optimizer_state = True
@@ -115,6 +206,22 @@ class EMA(Callback):
     def on_load_checkpoint(
         self, trainer: "pl.Trainer", pl_module: "pl.LightningModule", checkpoint: Dict[str, Any]
     ) -> None:
+        """
+        Called when a checkpoint is loaded.
+
+        Handles loading of EMA weights and optimizer states. If an EMA checkpoint
+        (e.g., `model-EMA.ckpt`) is loaded, it treats the EMA weights as the main
+        weights. If a regular checkpoint is loaded, it looks for an associated
+        EMA checkpoint and restores the EMA state from it.
+
+        :param trainer: The PyTorch Lightning Trainer instance.
+        :type trainer: pl.Trainer
+        :param pl_module: The PyTorch Lightning LightningModule instance.
+        :type pl_module: pl.LightningModule
+        :param checkpoint: The loaded checkpoint dictionary.
+        :type checkpoint: Dict[str, Any]
+        :raises MisconfigurationException: If a regular checkpoint is loaded but its associated EMA checkpoint is not found.
+        """
         checkpoint_callback = trainer.checkpoint_callback
 
         # use the connector as NeMo calls the connector directly in the exp_manager when restoring.
@@ -147,6 +254,22 @@ class EMA(Callback):
 
 @torch.no_grad()
 def ema_update(ema_model_tuple, current_model_tuple, decay):
+    """
+    Performs the EMA update step.
+
+    Updates the EMA parameters using the formula:
+    `ema_weight = decay * ema_weight + (1 - decay) * current_weight`
+
+    This function uses `torch._foreach_mul_` and `torch._foreach_add_` for efficient
+    element-wise operations on tuples of tensors.
+
+    :param ema_model_tuple: A tuple of EMA parameter tensors.
+    :type ema_model_tuple: tuple[torch.Tensor]
+    :param current_model_tuple: A tuple of current model parameter tensors.
+    :type current_model_tuple: tuple[torch.Tensor]
+    :param decay: The EMA decay factor.
+    :type decay: float
+    """
     torch._foreach_mul_(ema_model_tuple, decay)
     torch._foreach_add_(
         ema_model_tuple, current_model_tuple, alpha=(1.0 - decay),
@@ -154,6 +277,21 @@ def ema_update(ema_model_tuple, current_model_tuple, decay):
 
 
 def run_ema_update_cpu(ema_model_tuple, current_model_tuple, decay, pre_sync_stream=None):
+    """
+    Runs the EMA update on the CPU.
+
+    This function is typically used when EMA parameters are offloaded to the CPU.
+    It synchronizes with a CUDA stream if provided, then calls `ema_update`.
+
+    :param ema_model_tuple: A tuple of EMA parameter tensors.
+    :type ema_model_tuple: tuple[torch.Tensor]
+    :param current_model_tuple: A tuple of current model parameter tensors.
+    :type current_model_tuple: tuple[torch.Tensor]
+    :param decay: The EMA decay factor.
+    :type decay: float
+    :param pre_sync_stream: A CUDA stream to synchronize with before the update. Defaults to None.
+    :type pre_sync_stream: torch.cuda.Stream | None
+    """
     if pre_sync_stream is not None:
         pre_sync_stream.synchronize()
 
@@ -162,43 +300,27 @@ def run_ema_update_cpu(ema_model_tuple, current_model_tuple, decay, pre_sync_str
 
 class EMAOptimizer(torch.optim.Optimizer):
     r"""
-    EMAOptimizer is a wrapper for torch.optim.Optimizer that computes
-    Exponential Moving Average of parameters registered in the optimizer.
+    Wraps a PyTorch optimizer to compute Exponential Moving Average (EMA) of model parameters.
 
-    EMA parameters are automatically updated after every step of the optimizer
-    with the following formula:
+    EMA parameters are updated after each optimizer step using the formula:
+    `ema_weight = decay * ema_weight + (1 - decay) * training_weight`
 
-        ema_weight = decay * ema_weight + (1 - decay) * training_weight
+    Use the `swap_ema_weights()` context manager to temporarily swap the model's
+    regular parameters with the EMA parameters, typically for evaluation.
 
-    To access EMA parameters, use ``swap_ema_weights()`` context manager to
-    perform a temporary in-place swap of regular parameters with EMA
-    parameters.
+    .. note::
+        EMAOptimizer is not compatible with APEX AMP O2.
 
-    Notes:
-        - EMAOptimizer is not compatible with APEX AMP O2.
-
-    Args:
-        optimizer (torch.optim.Optimizer): optimizer to wrap
-        device (torch.device): device for EMA parameters
-        decay (float): decay factor
-
-    Returns:
-        returns an instance of torch.optim.Optimizer that computes EMA of
-        parameters
-
-    Example:
-        model = Model().to(device)
-        opt = torch.optim.Adam(model.parameters())
-
-        opt = EMAOptimizer(opt, device, 0.9999)
-
-        for epoch in range(epochs):
-            training_loop(model, opt)
-
-            regular_eval_accuracy = evaluate(model)
-
-            with opt.swap_ema_weights():
-                ema_eval_accuracy = evaluate(model)
+    :param optimizer: The PyTorch optimizer to wrap.
+    :type optimizer: torch.optim.Optimizer
+    :param device: The device to store EMA parameters on (e.g., 'cuda', 'cpu').
+    :type device: torch.device
+    :param decay: The EMA decay factor. Defaults to 0.9999.
+    :type decay: float
+    :param every_n_steps: Apply EMA update every N optimizer steps. Defaults to 1.
+    :type every_n_steps: int
+    :param current_step: The initial training step. Defaults to 0.
+    :type current_step: int
     """
 
     def __init__(
@@ -225,10 +347,28 @@ class EMAOptimizer(torch.optim.Optimizer):
         self.in_saving_ema_model_context = False
 
     def all_parameters(self) -> Iterable[torch.Tensor]:
+        """
+        Returns an iterator over all parameters managed by the optimizer.
+
+        :returns: An iterator over all parameters.
+        :rtype: Iterable[torch.Tensor]
+        """
         return (param for group in self.param_groups for param in group['params'])
 
     def step(self, closure=None, grad_scaler=None, **kwargs):
-        self.join()
+        """
+        Performs a single optimization step.
+
+        This method calls the underlying optimizer's step() method and then,
+        if applicable, updates the EMA parameters.
+
+        :param closure: A closure that re-evaluates the model and returns the loss. Optional for most optimizers.
+        :type closure: callable, optional
+        :param grad_scaler: A `torch.cuda.amp.GradScaler` instance for mixed-precision training. Defaults to None.
+        :type grad_scaler: torch.cuda.amp.GradScaler, optional
+        :returns: The loss computed by the closure, or None if no closure is provided.
+        """
+        self.join() # Wait for previous EMA update to finish
 
         if self.first_iteration:
             if any(p.is_cuda for p in self.all_parameters()):
@@ -255,10 +395,23 @@ class EMAOptimizer(torch.optim.Optimizer):
         return loss
 
     def _should_update_at_step(self) -> bool:
+        """
+        Determines if the EMA parameters should be updated at the current step.
+
+        :returns: True if EMA should be updated, False otherwise.
+        :rtype: bool
+        """
         return self.current_step % self.every_n_steps == 0
 
     @torch.no_grad()
     def update(self):
+        """
+        Performs the EMA update for the parameters.
+
+        This method detaches the current model parameters, moves them to the EMA
+        device, and then calls `ema_update` (or `run_ema_update_cpu` if offloading
+        to CPU) to update the EMA parameters.
+        """
         if self.stream is not None:
             self.stream.wait_stream(torch.cuda.current_stream())
 
@@ -277,13 +430,31 @@ class EMAOptimizer(torch.optim.Optimizer):
             self.thread.start()
 
     def swap_tensors(self, tensor1, tensor2):
+        """
+        Swaps the data of two tensors in-place.
+
+        :param tensor1: The first tensor.
+        :type tensor1: torch.Tensor
+        :param tensor2: The second tensor.
+        :type tensor2: torch.Tensor
+        """
         tmp = torch.empty_like(tensor1)
         tmp.copy_(tensor1)
         tensor1.copy_(tensor2)
         tensor2.copy_(tmp)
 
     def switch_main_parameter_weights(self, saving_ema_model: bool = False):
-        self.join()
+        """
+        Swaps the main model parameters with the EMA parameters.
+
+        This method is called by the EMA callback or the `swap_ema_weights`
+        context manager.
+
+        :param saving_ema_model: If True, indicates that the EMA model is being saved.
+                                 This affects how `state_dict` behaves. Defaults to False.
+        :type saving_ema_model: bool
+        """
+        self.join() # Ensure any ongoing EMA update is complete
         self.in_saving_ema_model_context = saving_ema_model
         for param, ema_param in zip(self.all_parameters(), self.ema_params):
             self.swap_tensors(param.data, ema_param)
@@ -291,13 +462,12 @@ class EMAOptimizer(torch.optim.Optimizer):
     @contextlib.contextmanager
     def swap_ema_weights(self, enabled: bool = True):
         r"""
-        A context manager to in-place swap regular parameters with EMA
-        parameters.
-        It swaps back to the original regular parameters on context manager
-        exit.
+        A context manager to in-place swap regular model parameters with EMA parameters.
 
-        Args:
-            enabled (bool): whether the swap should be performed
+        Swaps back to the original regular parameters upon exiting the context.
+
+        :param enabled: If False, the swap is not performed. Defaults to True.
+        :type enabled: bool
         """
 
         if enabled:
@@ -309,9 +479,21 @@ class EMAOptimizer(torch.optim.Optimizer):
                 self.switch_main_parameter_weights()
 
     def __getattr__(self, name):
+        """
+        Delegates attribute access to the underlying optimizer if the attribute
+        is not found in this EMAOptimizer instance.
+
+        :param name: The name of the attribute.
+        :type name: str
+        :returns: The attribute from the underlying optimizer.
+        :raises AttributeError: If the attribute is not found in either EMAOptimizer or the underlying optimizer.
+        """
         return getattr(self.optimizer, name)
 
     def join(self):
+        """
+        Waits for any asynchronous EMA update (CUDA stream or CPU thread) to complete.
+        """
         if self.stream is not None:
             self.stream.synchronize()
 
@@ -319,6 +501,16 @@ class EMAOptimizer(torch.optim.Optimizer):
             self.thread.join()
 
     def state_dict(self):
+        """
+        Returns the state of the EMAOptimizer.
+
+        Includes the state of the underlying optimizer, the EMA parameters,
+        the current step, decay, and `every_n_steps`. If `save_original_optimizer_state`
+        is True, only the original optimizer's state is returned.
+
+        :returns: A dictionary containing the EMAOptimizer state.
+        :rtype: dict
+        """
         self.join()
 
         if self.save_original_optimizer_state:
@@ -336,6 +528,15 @@ class EMAOptimizer(torch.optim.Optimizer):
         return state_dict
 
     def load_state_dict(self, state_dict):
+        """
+        Loads the EMAOptimizer state.
+
+        Restores the state of the underlying optimizer, EMA parameters, current_step,
+        decay, and `every_n_steps`.
+
+        :param state_dict: The EMAOptimizer state dictionary to load.
+        :type state_dict: dict
+        """
         self.join()
 
         self.optimizer.load_state_dict(state_dict['opt'])
@@ -346,6 +547,15 @@ class EMAOptimizer(torch.optim.Optimizer):
         self.rebuild_ema_params = False
 
     def add_param_group(self, param_group):
+        """
+        Adds a parameter group to the underlying optimizer.
+
+        Also flags that EMA parameters need to be rebuilt to include parameters
+        from the new group.
+
+        :param param_group: The parameter group to add.
+        :type param_group: dict
+        """
         self.optimizer.add_param_group(param_group)
         self.rebuild_ema_params = True
 

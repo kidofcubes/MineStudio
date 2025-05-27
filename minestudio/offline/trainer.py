@@ -23,6 +23,18 @@ for var in IMPORTANT_VARIABLES:
     print(f"[Env Variable]  {var}: {val}")
 
 def tree_detach(tree):
+    """
+    Detaches a tree of tensors from the computation graph.
+
+    This function recursively traverses a nested structure (dictionary or list)
+    and detaches any PyTorch tensors it encounters. This is useful for
+    preventing gradients from flowing back through the detached tensors.
+
+    :param tree: The nested structure (dict, list, or tensor) to detach.
+    :type tree: dict | list | torch.Tensor
+    :returns: The detached tree.
+    :rtype: dict | list | torch.Tensor
+    """
     if isinstance(tree, dict):
         return {k: tree_detach(v) for k, v in tree.items()}
     elif isinstance(tree, list):
@@ -33,6 +45,13 @@ def tree_detach(tree):
         return tree
 
 class MineLightning(L.LightningModule):
+    """
+    A PyTorch Lightning module for training MinePolicy models.
+
+    This class encapsulates the training, validation, and optimization logic
+    for MinePolicy models. It handles memory management, batch processing,
+    and integration with ObjectiveCallbacks for custom training objectives.
+    """
 
     def __init__(
         self, 
@@ -45,6 +64,24 @@ class MineLightning(L.LightningModule):
         warmup_steps: int = 1000,
         weight_decay: float = 0.01,
     ):
+        """
+        Initializes the MineLightning module.
+
+        :param mine_policy: The MinePolicy model to train.
+        :type mine_policy: MinePolicy
+        :param callbacks: A list of ObjectiveCallback instances for custom objectives.
+        :type callbacks: List[ObjectiveCallback]
+        :param hyperparameters: A dictionary of hyperparameters to save.
+        :type hyperparameters: dict
+        :param log_freq: The frequency (in batches) for logging metrics.
+        :type log_freq: int
+        :param learning_rate: The learning rate for the optimizer.
+        :type learning_rate: float
+        :param warmup_steps: The number of warmup steps for the learning rate scheduler.
+        :type warmup_steps: int
+        :param weight_decay: The weight decay for the optimizer.
+        :type weight_decay: float
+        """
         super().__init__()
         self.mine_policy = mine_policy
         self.callbacks = callbacks
@@ -61,6 +98,18 @@ class MineLightning(L.LightningModule):
         self.save_hyperparameters(hyperparameters)
 
     def _make_memory(self, batch):
+        """
+        Manages the recurrent memory for the MinePolicy model.
+
+        This function initializes and updates the memory state based on the
+        batch data. It handles episode boundaries by resetting the memory
+        when a new episode begins.
+
+        :param batch: The input batch data.
+        :type batch: dict
+        :returns: The current memory state.
+        :rtype: dict
+        """
         if self.memory_dict["init_memory"] is None:
             self.memory_dict["init_memory"] = self.mine_policy.initial_state(batch['image'].shape[0])
         if self.memory_dict["memory"] is None:
@@ -79,6 +128,21 @@ class MineLightning(L.LightningModule):
         return self.memory_dict["memory"]
 
     def _batch_step(self, batch, batch_idx, step_name):
+        """
+        Performs a single training or validation step.
+
+        This function processes a batch of data, computes the model output,
+        calculates the loss using the registered callbacks, and logs the metrics.
+
+        :param batch: The input batch data.
+        :type batch: dict
+        :param batch_idx: The index of the current batch.
+        :type batch_idx: int
+        :param step_name: The name of the current step (e.g., 'train', 'val').
+        :type step_name: str
+        :returns: A dictionary containing the loss and other metrics.
+        :rtype: dict
+        """
         result = {'loss': 0}
         memory_in = self._make_memory(batch)
         for callback in self.callbacks:
@@ -99,12 +163,45 @@ class MineLightning(L.LightningModule):
         return result
 
     def training_step(self, batch, batch_idx):
+        """
+        Performs a training step.
+
+        This function calls _batch_step with step_name='train'.
+
+        :param batch: The input batch data.
+        :type batch: dict
+        :param batch_idx: The index of the current batch.
+        :type batch_idx: int
+        :returns: A dictionary containing the loss and other metrics.
+        :rtype: dict
+        """
         return self._batch_step(batch, batch_idx, 'train')
 
     def validation_step(self, batch, batch_idx):
+        """
+        Performs a validation step.
+
+        This function calls _batch_step with step_name='val'.
+
+        :param batch: The input batch data.
+        :type batch: dict
+        :param batch_idx: The index of the current batch.
+        :type batch_idx: int
+        :returns: A dictionary containing the loss and other metrics.
+        :rtype: dict
+        """
         return self._batch_step(batch, batch_idx, 'val')
 
     def configure_optimizers(self):
+        """
+        Configures the optimizer and learning rate scheduler.
+
+        This function sets up an AdamW optimizer and a linear warmup learning
+        rate scheduler.
+
+        :returns: A dictionary containing the optimizer and learning rate scheduler.
+        :rtype: dict
+        """
         optimizer = torch.optim.AdamW(
             params=self.mine_policy.parameters(), 
             lr=self.learning_rate, 

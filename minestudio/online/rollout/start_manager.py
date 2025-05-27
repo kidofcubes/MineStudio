@@ -16,6 +16,21 @@ import uuid
 import torch
 
 def start_rolloutmanager(policy_generator, env_generator, online_cfg, address="localhost:9899"):
+    """
+    Initializes and starts a RolloutManager actor in a Ray cluster.
+
+    This function handles the creation or reuse of a RolloutManager actor.
+    If a RolloutManager with the name "rollout_manager" already exists, it checks if its
+    configuration matches the provided `online_cfg`. If the configurations differ,
+    the existing actor is killed, and a new one is created. Otherwise, the existing
+    actor is reused.
+
+    :param policy_generator: A callable that generates a policy model.
+    :param env_generator: A callable that generates a Minecraft simulation environment.
+    :param online_cfg: An OmegaConf DictConfig object containing the online training configuration.
+                       This includes sub-configs for `train_config` and `rollout_config`.
+    :param address: The address of the Ray cluster to connect to.
+    """
     ray.init(address=address, ignore_reinit_error=True, namespace="online")
     logger = logging.getLogger("Main")
     torch.backends.cudnn.benchmark = False # type: ignore

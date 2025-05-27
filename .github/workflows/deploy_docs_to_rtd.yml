@@ -23,10 +23,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set up Python 3.9
+      - name: Set up Python 3.10
         uses: actions/setup-python@v4
         with:
-          python-version: "3.9"
+          python-version: "3.10"
           architecture: "x64"
 
       - name: Set SSH Environment
@@ -57,9 +57,6 @@ jobs:
           echo "Generate the api doc"
           pip install 'sphinx>=2.1'
           pip install -r requirements.txt
-          sphinx-apidoc -o source/API/ ../${PACKAGE_NAME} -f -E -M
-          sed -i '1d' source/API/modules.rst
-          sed -i '1i\API' source/API/modules.rst
 
           sphinx-multiversion source build/html 
 
@@ -68,6 +65,10 @@ jobs:
 
           rm -rf *
           mkdir -p ./docs
+
+          ls ../build/html/
+          echo "Copy the generated docs to the gh-pages branch"
+
           mv ../build/html/master/* ./docs/
           mv ../build/html/* ./docs/
           touch ./docs/.nojekyll

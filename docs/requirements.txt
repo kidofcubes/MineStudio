@@ -30,3 +30,4 @@ sphinx_copybutton
 get_pypi_latest_version
 pydata-sphinx-theme
 sphinx-multiversion
+ray[train]

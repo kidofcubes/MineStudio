@@ -18,10 +18,37 @@ from minestudio.data.minecraft.callbacks import ModalKernelCallback
 from minestudio.data.minecraft.utils import pull_datasets_from_remote
 
 class ModalKernel(object):
+    """
+    Manages and provides access to data for a single modality (e.g., video, actions) 
+    from a collection of LMDB datasets. It merges metadata and provides methods 
+    to read chunks and frames of data for specific episodes.
+
+    :param source_dirs: A list of directory paths, each containing LMDB files for the modality.
+    :type source_dirs: List[str]
+    :param modal_kernel_callback: A callback object to handle modality-specific operations 
+                                  like data merging, slicing, and padding.
+    :type modal_kernel_callback: ModalKernelCallback
+    :param short_name: If True, episode names are hashed to a shorter length. Defaults to False.
+    :type short_name: bool, optional
+    """
 
     SHORT_NAME_LENGTH = 8
 
     def __init__(self, source_dirs: List[str], modal_kernel_callback: ModalKernelCallback, short_name: bool = False):
+        """
+        Initializes the ModalKernel by merging metadata from multiple LMDB datasets.
+
+        It iterates through each source directory, opens LMDB files, and aggregates 
+        episode information, total frames, and chunk size. It also creates a mapping 
+        from episode names to their indices for quick lookups.
+
+        :param source_dirs: A list of directory paths, each containing LMDB files for the modality.
+        :type source_dirs: List[str]
+        :param modal_kernel_callback: A callback object to handle modality-specific operations.
+        :type modal_kernel_callback: ModalKernelCallback
+        :param short_name: If True, episode names are hashed. Defaults to False.
+        :type short_name: bool, optional
+        """
         super().__init__()
         self.modal_kernel_callback = modal_kernel_callback
         source_dirs = self.modal_kernel_callback.filter_dataset_paths(source_dirs)
@@ -54,12 +81,30 @@ class ModalKernel(object):
     
     @property
     def name(self):
+        """
+        Returns the name of the modality, as defined by the modal_kernel_callback.
+
+        :returns: The name of the modality.
+        :rtype: str
+        """
         return self.modal_kernel_callback.name
     
     def read_chunks(self, eps: str, start: int, end: int) -> List[bytes]:
         """
-        Given episode name and required interval, return the corresponding chunks.
-        [start, end] refer to frame-level indexes, which % self.chunk_size == 0. 
+        Reads and returns a list of data chunks for a given episode and frame range.
+
+        The start and end parameters specify the frame-level indices, which must be 
+        multiples of the chunk_size.
+
+        :param eps: The name of the episode to read from.
+        :type eps: str
+        :param start: The starting frame index (inclusive, multiple of chunk_size).
+        :type start: int
+        :param end: The ending frame index (inclusive, multiple of chunk_size).
+        :type end: int
+        :returns: A list of byte strings, where each string is a data chunk.
+        :rtype: List[bytes]
+        :raises AssertionError: If start or end are not multiples of chunk_size.
         """
         assert start % self.chunk_size == 0 and end % self.chunk_size == 0
         meta_info = self.episode_infos[self.eps_idx_mapping[eps]]
@@ -74,8 +119,24 @@ class ModalKernel(object):
     
     def read_frames(self, eps: str, start: int, win_len: int, skip_frame: int, **kwargs) -> Dict:
         """
-        Given episode name and required interval, return the corresponding frames.
-        [start, end] refer to a frame-level index, 0 <= start <= end < num_frames
+        Reads, processes, and returns a dictionary of frames for a given episode and window.
+
+        This method handles reading data chunks, merging them into continuous frames, 
+        slicing based on skip_frame, and padding if necessary. It utilizes the 
+        modal_kernel_callback for modality-specific operations.
+
+        :param eps: The name of the episode.
+        :type eps: str
+        :param start: The starting frame index.
+        :type start: int
+        :param win_len: The desired window length (number of frames).
+        :type win_len: int
+        :param skip_frame: The number of frames to skip between selected frames.
+        :type skip_frame: int
+        :param \\**kwargs: Additional arguments passed to the modal_kernel_callback.
+        :returns: A dictionary containing the processed frames and a corresponding mask. 
+                  The keys are formatted as "{modality_name}" and "{modality_name}_mask".
+        :rtype: Dict
         """
         meta_info = self.episode_infos[self.eps_idx_mapping[eps]]
         start += self.modal_kernel_callback.read_bias #! adding read_bias to the original range
@@ -112,9 +173,26 @@ class ModalKernel(object):
         return result
     
     def get_episode_list(self) -> List[str]:
+        """
+        Returns a list of all episode names managed by this kernel.
+
+        :returns: A list of episode names.
+        :rtype: List[str]
+        """
         return [info['episode'] for info in self.episode_infos]
     
     def get_num_frames(self, episodes: Optional[List[str]] = None):
+        """
+        Calculates and returns the total number of frames for the specified episodes.
+
+        If no episodes are provided, it calculates the total frames for all episodes 
+        managed by this kernel.
+
+        :param episodes: An optional list of episode names. If None, all episodes are considered.
+        :type episodes: Optional[List[str]], optional
+        :returns: The total number of frames.
+        :rtype: int
+        """
         if episodes is None:
             episodes = self.eps_idx_mapping.keys()
         num_frames = 0
@@ -124,15 +202,37 @@ class ModalKernel(object):
         return num_frames
 
 class KernelManager(object):
+    """
+    Manages multiple ModalKernel instances, providing a unified interface for accessing 
+    data from different modalities (e.g., video, actions, metadata) in a dataset.
+
+    It loads and organizes data from specified dataset directories, ensuring consistency 
+    across modalities and episodes.
+
+    :param dataset_dirs: A list of paths to dataset directories. Each directory is expected 
+                         to contain subdirectories for different modalities.
+    :type dataset_dirs: List[str]
+    :param modal_kernel_callbacks: A list of ModalKernelCallback objects, one for each 
+                                   modality to be managed.
+    :type modal_kernel_callbacks: List[ModalKernelCallback]
+    :param verbose: If True, prints logging information during initialization. Defaults to True.
+    :type verbose: bool, optional
+    """
 
     def __init__(self, dataset_dirs: List[str], modal_kernel_callbacks: List[ModalKernelCallback], verbose: bool = True):
-        """The kernel class for managing datasets. It provides a unified interface for 
-        accessing demonstrations information such as video, action, and meta_info. 
-        Args:
-            dataset_dirs (List[str]): A list of paths to dataset directories. 
-                It is supposed the dataset directory contains the following subdirectories:
-                video, action, meta_info, ...
-            modal_kernel_callbacks (List[ModalKernelCallback]): A list of modal kernel callbacks.
+        """
+        Initializes the KernelManager by setting up dataset directories and loading modal kernels.
+
+        It first pulls datasets from remote sources if necessary, then identifies 
+        sub-dataset directories. Finally, it calls `load_modal_kernels` to initialize 
+        kernels for each specified modality.
+
+        :param dataset_dirs: A list of paths to dataset directories.
+        :type dataset_dirs: List[str]
+        :param modal_kernel_callbacks: A list of ModalKernelCallback objects.
+        :type modal_kernel_callbacks: List[ModalKernelCallback]
+        :param verbose: If True, enables verbose logging. Defaults to True.
+        :type verbose: bool, optional
         """
         super().__init__()
         dataset_dirs = pull_datasets_from_remote(dataset_dirs)
@@ -146,6 +246,13 @@ class KernelManager(object):
         self.load_modal_kernels()
 
     def load_modal_kernels(self):
+        """
+        Loads a ModalKernel for each modality specified in modal_kernel_callbacks.
+
+        It iterates through the callbacks, creates a ModalKernel for each, and stores 
+        them in the `kernels` dictionary. It also determines the common episodes 
+        across all modalities and calculates the total number of frames.
+        """
         self.kernels = dict()
         episodes = None
 
@@ -170,7 +277,24 @@ class KernelManager(object):
             Console().log(f"[Kernel] episodes: {len(self.episodes_with_length)}, frames: {self.num_frames}. ")
 
     def read(self, eps: str, start: int, win_len: int, skip_frame: int, **kwargs) -> Dict:
-        """Read all avaliable modals from lmdb files."""
+        """
+        Reads and returns data for all managed modalities for a given episode and window.
+
+        It iterates through each loaded kernel, calls its `read_frames` method, 
+        and aggregates the results into a single dictionary.
+
+        :param eps: The name of the episode.
+        :type eps: str
+        :param start: The starting frame index.
+        :type start: int
+        :param win_len: The desired window length (number of frames).
+        :type win_len: int
+        :param skip_frame: The number of frames to skip between selected frames.
+        :type skip_frame: int
+        :param \\**kwargs: Additional arguments passed to the `read_frames` method of each kernel.
+        :returns: A dictionary containing data from all modalities for the specified window.
+        :rtype: Dict
+        """
         result = {}
         for modal, kernel in self.kernels.items():
             # if modal != 'meta_info': continue
@@ -179,9 +303,21 @@ class KernelManager(object):
         return result
 
     def get_num_frames(self):
+        """
+        Returns the total number of frames across all common episodes and modalities.
+
+        :returns: The total number of frames.
+        :rtype: int
+        """
         return self.num_frames
 
     def get_episodes_with_length(self):
+        """
+        Returns an OrderedDict mapping common episode names to their lengths (number of frames).
+
+        :returns: An OrderedDict where keys are episode names and values are their lengths.
+        :rtype: OrderedDict
+        """
         return self.episodes_with_length
 
 

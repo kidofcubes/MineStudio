@@ -4,6 +4,20 @@ import torch
 #from gymnasium.wrappers.frame_stack import LazyFrames
 from omegaconf import DictConfig
 def auto_stack(elems: List[Any]) -> Any:
+    """
+    Automatically stacks a list of elements into a single object.
+
+    The stacking behavior depends on the type of the elements:
+    - numpy arrays: stacked using np.stack()
+    - torch Tensors: stacked using torch.stack()
+    - strings: returned as a list of strings
+    - dicts or DictConfig: recursively stacks values for each key
+    - lists: recursively stacks elements at each corresponding index
+    - int, float, bool, np.number: converted to a numpy array
+
+    :param elems: A list of elements to stack.
+    :returns: The stacked object.
+    """
     if isinstance(elems[0], np.ndarray):
         return np.stack(elems)
     elif isinstance(elems[0], torch.Tensor):
@@ -25,6 +39,12 @@ def auto_stack(elems: List[Any]) -> Any:
         return elems
         
 def auto_to_numpy(data: Any) -> Any:
+    """
+    Recursively converts torch Tensors in a data structure to numpy arrays.
+
+    :param data: The data structure to convert. Can be a Tensor, dict, or list.
+    :returns: The data structure with Tensors converted to numpy arrays.
+    """
     if isinstance(data, torch.Tensor):
         return data.cpu().numpy()
     elif isinstance(data, dict):
@@ -38,6 +58,13 @@ def auto_to_numpy(data: Any) -> Any:
         return data
 
 def auto_to_torch(data: Any, device: Union[str, torch.device]) -> Any:
+    """
+    Recursively converts numpy arrays in a data structure to torch Tensors and moves them to the specified device.
+
+    :param data: The data structure to convert. Can be a numpy array, Tensor, dict, list, or tuple.
+    :param device: The torch device to move the Tensors to.
+    :returns: The data structure with numpy arrays converted to Tensors on the specified device.
+    """
     if isinstance(data, np.ndarray):
         np_data = torch.tensor(data)
         return np_data.to(device)
@@ -56,6 +83,14 @@ def auto_to_torch(data: Any, device: Union[str, torch.device]) -> Any:
         return data
     
 def auto_getitem(data: Union[Dict[str, torch.Tensor], torch.Tensor], index: int) -> Union[Dict[str, torch.Tensor], torch.Tensor]:
+    """
+    Gets an item from a data structure (dict of Tensors or a single Tensor) by index.
+
+    :param data: The data structure to get the item from.
+    :param index: The index of the item to retrieve.
+    :returns: The item at the specified index.
+    :raises NotImplementedError: If the data type is not supported.
+    """
     if isinstance(data, dict):
         return {
             key: value[index]
@@ -67,6 +102,21 @@ def auto_getitem(data: Union[Dict[str, torch.Tensor], torch.Tensor], index: int)
         raise NotImplementedError
     
 def auto_slice(data, start, end, dim, type_list = 0):
+    """
+    Slices a data structure along a specified dimension.
+
+    Supports torch Tensors, dicts, DictConfigs, and lists.
+    For lists, if dim is 0 or type_list is 1, it performs a simple list slice.
+    Otherwise, it recursively slices the inner lists.
+
+    :param data: The data structure to slice.
+    :param start: The starting index for the slice.
+    :param end: The ending index for the slice.
+    :param dim: The dimension along which to slice.
+    :param type_list: A flag for list slicing behavior (default 0).
+    :returns: The sliced data structure.
+    :raises ValueError: If the data type is not supported.
+    """
     if data is None:
         return None
     if isinstance(data, torch.Tensor):
@@ -82,6 +132,20 @@ def auto_slice(data, start, end, dim, type_list = 0):
         raise ValueError(f"Unsupported data type {type(data)}")
 
 def auto_cat(elems: List[Any], dim: int = 0) -> Any:
+    """
+    Automatically concatenates a list of elements along a specified dimension.
+
+    The concatenation behavior depends on the type of the elements:
+    - numpy arrays: concatenated using np.concatenate()
+    - torch Tensors: concatenated using torch.cat()
+    - lists: if dim is 0, lists are summed (flattened); otherwise, recursively concatenates elements at each corresponding index.
+    - dicts: recursively concatenates values for each key.
+
+    :param elems: A list of elements to concatenate.
+    :param dim: The dimension along which to concatenate (default 0).
+    :returns: The concatenated object.
+    :raises ValueError: If the data type is not supported.
+    """
     if elems[0] is None:
         return None
     elif isinstance(elems[0], np.ndarray):
@@ -102,6 +166,18 @@ def auto_cat(elems: List[Any], dim: int = 0) -> Any:
         raise ValueError(f"Unsupported data type {type(elems[0])}")
     
 def auto_pad(arr: Any, padding_length: int) -> Any:
+    """
+    Pads an array-like structure to a specified length.
+
+    Supports numpy arrays, lists, and dicts (recursively).
+    For numpy arrays, pads with zeros.
+    For lists, pads by repeating the first element.
+
+    :param arr: The array-like structure to pad.
+    :param padding_length: The desired length after padding.
+    :returns: The padded structure.
+    :raises NotImplementedError: If the data type is not supported.
+    """
     if isinstance(arr, np.ndarray):
         return np.pad(arr, ((0, padding_length),) + ((0, 0),) * (len(arr.shape) - 1), mode='constant')
     elif isinstance(arr, list):
@@ -115,6 +191,12 @@ def auto_pad(arr: Any, padding_length: int) -> Any:
         raise NotImplementedError
     
 def recursive_detach(data):
+    """
+    Recursively detaches torch Tensors in a data structure from the computation graph.
+
+    :param data: The data structure containing Tensors. Can be a Tensor, list, or tuple.
+    :returns: The data structure with Tensors detached.
+    """
     if isinstance(data, torch.Tensor):
         return data.detach()
     elif isinstance(data, list):
@@ -122,4 +204,4 @@ def recursive_detach(data):
     elif isinstance(data, tuple):
         return tuple(recursive_detach(item) for item in data)
     else:
-        return data 
+        return data

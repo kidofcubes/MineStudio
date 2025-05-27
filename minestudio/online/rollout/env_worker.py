@@ -22,6 +22,12 @@ from minestudio.simulator import MinecraftSim
 import subprocess
 
 class VideoWriter(Thread):
+    """
+    A class for writing video frames to a file in a separate thread.
+
+    :param video_fps: The frames per second of the output video.
+    :param queue_size: The maximum size of the command queue.
+    """
     def __init__(self, video_fps: int, queue_size: int = 200):
         super().__init__()
         self.cmd_queue = Queue(queue_size)
@@ -30,19 +36,38 @@ class VideoWriter(Thread):
         self.video_fps = video_fps
         self.openess = 0
     def open_video(self, path: PosixPath):
+        """
+        Opens a video file for writing.
+
+        :param path: The path to the video file.
+        :raises AssertionError: if a video is already open.
+        """
         assert self.openess == 0
         self.cmd_queue.put(("open", path))
         self.openess = 1
         
     def close_video(self):
+        """
+        Closes the current video file.
+        """
         self.cmd_queue.put(("close",))
         self.openess = 0
         
     def write_frame(self, frame: np.ndarray):
+        """
+        Writes a frame to the video file.
+
+        :param frame: The frame to write, as a NumPy array.
+        :raises AssertionError: if no video is open.
+        """
         assert self.openess == 1
         self.cmd_queue.put(("write", frame))
     
     def run(self):
+        """
+        The main loop of the video writer thread.
+        Processes commands from the queue to open, write, and close video files.
+        """
         while True:
             cmd, *args = self.cmd_queue.get()
             if cmd == "open":
@@ -75,6 +100,14 @@ class VideoWriter(Thread):
                 self.video_stream = None
 
 def draw_vpred(img: np.ndarray, vpred: float, additional_text: Optional[str] = ""):
+    """
+    Draws the predicted value (vpred) and additional text on an image.
+
+    :param img: The input image as a NumPy array.
+    :param vpred: The predicted value to display.
+    :param additional_text: Optional additional text to display.
+    :returns: The image with the text drawn on it.
+    """
     img = img.copy()
     h, w, c = img.shape
     if c == 1:
@@ -95,6 +128,18 @@ def draw_vpred(img: np.ndarray, vpred: float, additional_text: Optional[str] = "
 
 
 class EnvWorker(Process):
+    """
+    A class for running a Minecraft simulation environment in a separate process.
+
+    :param env_generator: A function that returns a MinecraftSim instance.
+    :param conn: A multiprocessing connection object for communication with the main process.
+    :param video_output_dir: The directory to save output videos to.
+    :param video_fps: The frames per second for output videos.
+    :param restart_interval: The interval in seconds after which to restart the environment.
+    :param max_fast_reset: The maximum number of fast resets to perform.
+    :param env_id: The ID of the environment.
+    :param rollout_worker_id: The ID of the rollout worker.
+    """
     def __init__(self, env_generator: Callable[[], MinecraftSim], conn: Connection, video_output_dir: str, video_fps: int, restart_interval: Optional[int] = None, max_fast_reset: int = 10000, env_id: int = 0, rollout_worker_id: int = 0):
         super().__init__()
         self.max_fast_reset = max_fast_reset
@@ -113,19 +158,44 @@ class EnvWorker(Process):
         self.video_fps = video_fps
     
     def step_agent(self, obs: dict, last_reward: float, last_terminated: bool, last_truncated: bool, episode_uuid: str) -> Tuple[Dict[str, torch.Tensor], float]:
+        """
+        Sends an observation to the main process and receives an action and predicted value.
+
+        :param obs: The current observation from the environment.
+        :param last_reward: The reward from the previous step.
+        :param last_terminated: Whether the previous episode terminated.
+        :param last_truncated: Whether the previous episode was truncated.
+        :param episode_uuid: The UUID of the current episode.
+        :returns: A tuple containing the action and predicted value.
+        """
         self.conn.send(("step_agent", obs, last_reward, last_terminated, last_truncated, episode_uuid))
         action, vpred = self.conn.recv()
         return action, vpred
 
     def reset_state(self) -> Dict[str, torch.Tensor]:
+        """
+        Sends a reset signal to the main process and receives the initial observation.
+
+        :returns: The initial observation from the environment.
+        """
         self.conn.send(("reset_state", None))
         return self.conn.recv()
     
     def report_rewards(self, rewards: np.ndarray):
+        """
+        Sends the rewards for an episode to the main process.
+
+        :param rewards: A NumPy array of rewards for the episode.
+        :returns: The result from the main process.
+        """
         self.conn.send(("report_rewards", rewards))
         return self.conn.recv()
 
     def run(self) -> None:
+        """
+        The main loop of the environment worker process.
+        Handles environment resets, steps, and video recording.
+        """
         video_writer = VideoWriter(video_fps=self.video_fps)
         video_writer.start()
         record = False

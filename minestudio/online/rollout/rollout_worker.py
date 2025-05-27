@@ -15,9 +15,16 @@ from minestudio.models import MinePolicy
 from minestudio.simulator import MinecraftSim
 from ray.actor import ActorHandle
 from minestudio.online.utils.rollout.monitor import PipelineMonitor, MovingStat
-from minestudio.online.utils import auto_stack, auto_to_torch
+from minestudio.online.utils import auto_stack, auto_to_torch, auto_to_numpy
+from minestudio.online.utils.rollout.datatypes import StepRecord
 
 class ProgressHandler(Protocol):
+    """
+    A protocol defining the structure for a progress handler function.
+
+    This handler is called by the RolloutWorker to report step-wise progress.
+    Implementers of this protocol can use this to, for example, send data to a replay buffer.
+    """
     def __call__(self, *,
         worker_uuid: str,
         obs: Dict[str, Any],
@@ -30,6 +37,34 @@ class ProgressHandler(Protocol):
     ) -> None: ...
 
 class RolloutWorker():
+    """
+    Manages a set of environments and a policy to collect experience for reinforcement learning.
+
+    This class is responsible for:
+    - Spawning and managing multiple environment worker processes (EnvWorker).
+    - Performing inference using the policy model.
+    - Stepping through the environments and collecting observations, actions, rewards, etc.
+    - Communicating with an EpisodeStatistics actor to report episode-level metrics.
+    - Optionally calling a progress_handler to process step-wise data (e.g., for a replay buffer).
+
+    :param num_envs: The number of parallel environments to run.
+    :param policy_generator: A callable that returns an instance of MinePolicy (the policy model).
+    :param env_generator: A callable that returns an instance of MinecraftSim (the environment).
+    :param use_normalized_vf: Whether to use a normalized value function. If True, vpreds will be denormalized.
+    :param model_device: The device to run the policy model on (e.g., "cpu", "cuda:0").
+    :param next_model_version: The initial version of the model.
+    :param batch_size: The number of environment steps to batch together for inference.
+    :param video_fps: Frames per second for video recording in EnvWorker.
+    :param video_output_dir: Directory to save videos in EnvWorker.
+    :param resume: Optional path to a checkpoint to resume training from.
+    :param restart_interval: Optional interval in seconds after which to restart EnvWorkers.
+    :param moving_stat_duration: Duration in seconds for calculating moving statistics (e.g., for pipeline monitoring).
+    :param log_interval: Optional interval in seconds for logging pipeline monitoring stats.
+    :param episode_statistics: Optional Ray ActorHandle for an EpisodeStatistics actor.
+    :param progress_handler: Optional callable that conforms to the ProgressHandler protocol.
+    :param max_fast_reset: Maximum number of fast resets for an EnvWorker before a full restart.
+    :param rollout_worker_id: Identifier for this rollout worker.
+    """
     def __init__(self, 
                  num_envs: int, 
                  policy_generator: Callable[[], MinePolicy],
@@ -107,9 +142,19 @@ class RolloutWorker():
         self.last_log_time = time.time()
 
     def update_model_version(self, next_model_version: int):
+        """
+        Updates the model version number that will be associated with subsequently collected data.
+
+        :param next_model_version: The new model version number.
+        """
         self.next_model_version = next_model_version
 
     def load_weights(self, weights: Dict[str, torch.Tensor]) -> None:
+        """
+        Loads new weights into the policy model.
+
+        :param weights: A dictionary containing the state dictionary of the model.
+        """
         #weights = weights.copy()
         for key, val in weights.items():
             weights[key] = val.to(self.model_device)
@@ -119,6 +164,15 @@ class RolloutWorker():
         return
 
     def inference(self, requests: list) -> Tuple[list, list, list]:
+        """
+        Performs a batch of inference requests using the policy model.
+
+        :param requests: A list of tuples, where each tuple contains (worker_id, observation).
+        :returns: A tuple containing:
+            - result_actions: A list of actions for each request.
+            - result_states: A list of next hidden states for each request.
+            - result_vpreds: A list of predicted values (vpreds) for each request.
+        """
         # logger.info(f"requests: {requests}")
         worker_ids, inputs = zip(*requests)
         idds = []
@@ -148,6 +202,14 @@ class RolloutWorker():
         return result_actions, result_states, result_vpreds
 
     def poll_environments(self):
+        """
+        Polls all environment connections for messages and processes them.
+
+        Handles different message types:
+        - "step_agent": An environment is ready for a new action. The observation is added to queued_requests.
+        - "reset_state": An environment has reset. The agent's hidden state for this environment is reset.
+        - "report_rewards": An environment has finished an episode. Rewards are reported to EpisodeStatistics.
+        """
         for i, conn in enumerate(self.env_conns):
             if conn.poll():
                 args = conn.recv()
@@ -183,6 +245,17 @@ class RolloutWorker():
                     raise NotImplementedError
                 
     def loop(self) -> None:
+        """
+        Runs one iteration of the rollout loop.
+
+        This involves:
+        1. Polling environments until enough requests are queued to fill a batch.
+        2. Performing inference on the batch of requests.
+        3. Sending actions back to the environments.
+        4. Calling the progress_handler if it's set.
+        5. Polling environments again to process any immediate responses.
+        6. Logging statistics if the log_interval is met.
+        """
         while len(self.queued_requests) < self.batch_size:
             self.poll_environments()
 
@@ -212,6 +285,11 @@ class RolloutWorker():
             rich.print(f"Average queue size after inference: {self.queue_size_after_inference_stat.average()}")
     
     def rollout(self, num_batches: int) -> None:
+        """
+        Runs the rollout loop for a specified number of batches.
+
+        :param num_batches: The number of inference batches to collect.
+        """
         num_batches_left = num_batches
         while num_batches_left >= 0:
             self.loop()
@@ -228,6 +306,22 @@ class RolloutWorker():
         last_truncated: bool,
         episode_uuid: str
     ) -> None:
+        """
+        Default progress handler, likely intended to be overridden or replaced.
+        This implementation seems to be a duplicate of logic within RolloutWorkerWrapper.progress_handler
+        and might not be used if a custom progress_handler is provided during RolloutWorker initialization.
+
+        :param worker_uuid: The UUID of the worker environment.
+        :param obs: The observation from the environment.
+        :param env_spec: Specification of the environment, used for filtering.
+        :param state: The hidden state of the policy model.
+        :param action: The action taken by the policy.
+        :param last_reward: The reward received from the previous step.
+        :param last_terminated: Whether the episode terminated at the previous step.
+        :param last_truncated: Whether the episode was truncated at the previous step.
+        :param episode_uuid: The UUID of the current episode.
+        :raises AssertionError: if env_spec is not in self.env_spec.config4test when not in self.env_spec.config.
+        """
         if env_spec in self.env_spec.config:
             if (
                 len(self.buffer[worker_uuid]) > 0

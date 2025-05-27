@@ -26,6 +26,34 @@ from ray.train import ScalingConfig
 from ray.experimental import tqdm_ray
 from minestudio.online.utils import auto_stack
 class BaseTrainer:
+    """
+    Base class for PPO-style trainers.
+
+    This class provides the core logic for distributed training, including:
+    - Managing rollout workers and a replay buffer.
+    - Fetching experience fragments and calculating GAE (Generalized Advantage Estimation).
+    - Broadcasting model updates to rollout workers.
+    - Setting up the training loop using Ray Train.
+
+    Subclasses should implement `setup_model_and_optimizer` and `train` methods.
+
+    :param rollout_manager: ActorHandle for the RolloutManager.
+    :param policy_generator: Callable that returns a MinePolicy instance.
+    :param env_generator: Callable that returns a MinecraftSim instance.
+    :param num_workers: Number of training workers (Ray actors).
+    :param num_readers: Number of parallel data readers for fetching fragments.
+    :param num_cpus_per_reader: Number of CPUs allocated to each data reader.
+    :param num_gpus_per_worker: Number of GPUs allocated to each training worker.
+    :param prefetch_batches: Number of batches to prefetch during data loading.
+    :param discount: Discount factor (gamma) for GAE.
+    :param gae_lambda: Lambda parameter for GAE.
+    :param context_length: The length of the context window for processing sequences.
+    :param use_normalized_vf: Whether to use a normalized value function.
+    :param inference_batch_size_per_gpu: Batch size for inference on each GPU during GAE calculation.
+    :param resume: Optional path to a checkpoint directory to resume training from.
+    :param resume_optimizer: Whether to resume the optimizer state if resuming from a checkpoint.
+    :param kwargs: Additional keyword arguments.
+    """
     def __init__(self, 
         rollout_manager: ActorHandle,
         policy_generator: Callable[[], MinePolicy],
@@ -68,6 +96,15 @@ class BaseTrainer:
         )
     
     def broadcast_model_to_rollout_workers(self, new_version):
+        """
+        Broadcasts the current model state_dict to all rollout workers.
+
+        This is typically called after a model update. If `new_version` is True,
+        the internal model version is incremented before broadcasting.
+        Only rank 0 worker performs the broadcast.
+
+        :param new_version: If True, increments the model version.
+        """
         if self.rank == 0:
             if new_version:
                 self.model_version += 1
@@ -85,6 +122,27 @@ class BaseTrainer:
         self, *,
         num_fragments: int
     ) -> Dict[str, Any]:
+        """
+        Fetches a batch of fragments from the replay buffer and calculates advantages using GAE.
+
+        This method orchestrates the following steps:
+        1. Rank 0 worker fetches `num_fragments` from the ReplayBufferInterface.
+        2. The fetched fragment records are distributed among the training workers.
+        3. Each worker performs inference on its assigned fragments to get vpreds and logps.
+        4. Information required for GAE (rewards, vpreds, next_done, next_vpred) is sent to a GAEWorker actor.
+        5. Rank 0 worker triggers GAE calculation in the GAEWorker.
+        6. Each worker retrieves its calculated td_targets and advantages from the GAEWorker.
+
+        :param num_fragments: The total number of fragments to fetch and process.
+        :returns: A dictionary containing:
+            - "records": The list of FragmentIndex and fragment_id tuples processed by this worker.
+            - "rewards": A FragmentDataDict of summed rewards for each fragment.
+            - "td_targets": A FragmentDataDict of TD targets (GAE targets) for each step.
+            - "advantages": A FragmentDataDict of advantages for each step.
+            - "old_logps": A FragmentDataDict of log probabilities of actions under the policy used for rollout.
+            - "old_pi_logits": A FragmentDataDict of policy logits from the rollout.
+            - "old_vpreds": A FragmentDataDict of value predictions from the rollout.
+        """
         torch.distributed.barrier()
 
         if self.rank == 0:
@@ -226,10 +284,32 @@ class BaseTrainer:
             "old_vpreds": vpreds
         }
     
-    def setup_model_and_optimizer(self) -> Tuple[MinecraftSim, torch.optim.Optimizer]:
+    def setup_model_and_optimizer(self) -> Tuple[MinePolicy, torch.optim.Optimizer]:
+        """
+        Abstract method to be implemented by subclasses.
+
+        This method should initialize and return the policy model and its optimizer.
+
+        :returns: A tuple containing the initialized MinePolicy model and a torch.optim.Optimizer.
+        :raises NotImplementedError: If not implemented by a subclass.
+        """
         raise NotImplementedError
     
     def _train_func(self, config):
+        """
+        The main training function passed to Ray Train's TorchTrainer.
+
+        This function is executed by each training worker. It sets up:
+        - Rank of the current worker.
+        - ReplayBufferInterface and DataLoaderPool.
+        - Model and optimizer (by calling `setup_model_and_optimizer`).
+        - Ray DDP for distributed training.
+        - Handles resumption from checkpoints.
+        - Broadcasts the initial model to rollout workers.
+        - Calls the `train()` method (to be implemented by subclasses) to start the training loop.
+
+        :param config: The configuration dictionary passed by Ray Train (not directly used in this base implementation but available).
+        """
         self.rank = ray.train.get_context().get_world_rank()
 
         self.replay_buffer = ReplayBufferInterface()
@@ -259,9 +339,20 @@ class BaseTrainer:
         self.train()
 
     def train(self):
+        """
+        Abstract method for the main training loop, to be implemented by subclasses.
+
+        This method will contain the logic for iterating through training steps/epochs,
+        fetching data, performing model updates, logging, and saving checkpoints.
+
+        :raises NotImplementedError: If not implemented by a subclass.
+        """
         raise NotImplementedError
 
     def fit(self):
+        """
+        Initializes and runs the Ray TorchTrainer to start the distributed training process.
+        """
         print("Entering fit")
         trainer = TorchTrainer(
             self._train_func,

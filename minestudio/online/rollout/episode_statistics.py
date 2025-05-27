@@ -9,6 +9,11 @@ import logging
 logger = logging.getLogger("ray")
 @ray.remote
 class EpisodeStatistics:
+    """
+    A Ray actor class for collecting and logging episode statistics.
+
+    :param discount: The discount factor for calculating discounted rewards.
+    """
     def __init__(self, discount: float):
         self.discount = discount
         self.episode_info = {}
@@ -20,10 +25,19 @@ class EpisodeStatistics:
         self.record_requests = deque()
 
     def update_training_session(self):
+        """
+        Defines metrics for wandb logging.
+        """
         wandb_logger.define_metric("episode_statistics/step")
         wandb_logger.define_metric("episode_statistics/*", step_metric="episode_statistics/step")
 
     def log_statistics(self, step: int, record_next_episode: bool):
+        """
+        Logs the computed statistics to wandb and resets metrics.
+
+        :param step: The current training step.
+        :param record_next_episode: A boolean indicating whether to record the next episode.
+        """
         if self.acc_episode_count == 0:
             pass
         else:
@@ -86,6 +100,14 @@ class EpisodeStatistics:
                 print("append_record_requests:"+str(self.record_requests))
     
     def report_episode(self, rewards: np.ndarray, its_specfg: str="", additional_des: str="4train") -> Optional[int]:
+        """
+        Reports the rewards for a completed episode and updates metrics.
+
+        :param rewards: A NumPy array of rewards for the episode.
+        :param its_specfg: A string specifying the task configuration.
+        :param additional_des: Additional description for the task (e.g., "4train" or "4test").
+        :returns: A tuple containing the step number and episode information if a video record is requested, otherwise None and episode information.
+        """
         its_specfg = its_specfg + additional_des
         if its_specfg not in self.sum_rewards_metrics:
             self.sum_rewards_metrics[its_specfg] = torchmetrics.MeanMetric()

@@ -5,28 +5,52 @@ from rich.table import Table
 import rich
 
 class MovingStat:
+    """
+    Calculates a moving statistic (average) over a specified duration.
+
+    :param duration: The duration in seconds over which to calculate the statistic.
+    """
     def __init__(self, duration: int):
         self.duration = duration
         self.data_queue = deque()
         self.sum = 0.0
 
     def _pop(self):
+        """
+        Removes data points from the queue that are older than the specified duration.
+        """
         while len(self.data_queue) > 0 and time.time() - self.data_queue[0][0] > self.duration:
             self.sum -= self.data_queue[0][1]
             self.data_queue.popleft()
 
     def update(self, x: float):
+        """
+        Adds a new data point to the calculation.
+
+        :param x: The new data point.
+        """
         self.data_queue.append((time.time(), x))
         self.sum += x
         self._pop()
         
     def average(self):
+        """
+        Calculates the average of the data points currently within the duration window.
+
+        :returns: The average of the data points, or float('nan') if no data is available.
+        """
         self._pop()
         if len(self.data_queue) == 0:
             return float('nan')
         return self.sum / len(self.data_queue)
 
 class PipelineMonitor:
+    """
+    Monitors the time spent in different stages of a pipeline.
+
+    :param stages: A list of strings representing the names of the pipeline stages.
+    :param duration: The duration in seconds over which to calculate moving statistics for each stage.
+    """
     def __init__(self, stages: List[str], duration: int = 300):
         self.stages = stages
         self.records = defaultdict(lambda: [MovingStat(duration) for _ in stages])
@@ -34,6 +58,13 @@ class PipelineMonitor:
         self.last_updated_time = {}
 
     def report_enter(self, stage: str, pipeline_id="default"):
+        """
+        Reports that a pipeline has entered a new stage.
+
+        :param stage: The name of the stage being entered.
+        :param pipeline_id: The unique identifier of the pipeline instance.
+        :raises AssertionError: If the reported stage is not the expected next stage.
+        """
         stage_idx = self.stages.index(stage)
         assert stage_idx == (self.last_stage[pipeline_id] + 1) % len(self.stages)
         if pipeline_id in self.last_updated_time:
@@ -42,6 +73,9 @@ class PipelineMonitor:
         self.last_stage[pipeline_id] = stage_idx
 
     def print(self):
+        """
+        Prints a table summarizing the average time spent in each stage for all monitored pipelines.
+        """
         table = Table()
 
         table.add_column("id")

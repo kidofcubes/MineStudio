@@ -17,6 +17,18 @@ import torchmetrics
 logger = logging.getLogger("ray")
 
 class FragmentRecord:
+    """
+    Represents a record of a fragment with its metadata and a reference to the FragmentManager.
+
+    This class is used to track references to fragments in the FragmentStore.
+    When a FragmentRecord instance is deleted (no longer referenced),
+    it informs the FragmentManager to potentially clean up the fragment from the store
+    if its reference count drops to zero.
+
+    :param fragment_id: The unique identifier of the fragment.
+    :param metadata: The FragmentMetadata associated with this fragment.
+    :param manager: The FragmentManager instance that manages this fragment.
+    """
     def __init__(self,
         fragment_id: str,
         metadata: FragmentMetadata,
@@ -28,16 +40,32 @@ class FragmentRecord:
         self.manager.ref_count[fragment_id] += 1
 
     def __del__(self):
+        """
+        Decrements the reference count of the fragment in the FragmentManager.
+        If the reference count becomes zero, it triggers the cleaning process in the manager.
+        """
         self.manager.ref_count[self.fragment_id] -= 1
         if self.manager.ref_count[self.fragment_id] == 0:
             self.manager.clean(self.fragment_id)
 
 class FragmentManager:
+    """
+    Manages fragments stored in a FragmentStore, primarily by tracking their reference counts.
+
+    :param fragment_store: An instance of FragmentStore where fragments are physically stored.
+    """
     def __init__(self, fragment_store: FragmentStore):
         self.fragment_store = fragment_store
         self.ref_count = defaultdict(int)
 
     def create_fragment_record(self, fragment_id: str, metadata: FragmentMetadata):
+        """
+        Creates a new FragmentRecord for a given fragment_id and its metadata.
+
+        :param fragment_id: The unique identifier of the fragment.
+        :param metadata: The FragmentMetadata associated with this fragment.
+        :returns: A new FragmentRecord instance.
+        """
         return FragmentRecord(
             fragment_id=fragment_id,
             metadata=metadata,
@@ -45,11 +73,26 @@ class FragmentManager:
         )
 
     def clean(self, fragment_id: str):
+        """
+        Removes a fragment from the reference count and deletes it from the FragmentStore.
+
+        This method is called when a fragment's reference count drops to zero.
+
+        :param fragment_id: The unique identifier of the fragment to clean.
+        """
         del self.ref_count[fragment_id]
         self.fragment_store.delete_fragment(fragment_id)
 
 @dataclass
 class ChunkRecord:
+    """
+    Represents a chunk of fragment records, along with model version, session ID, and use count.
+
+    :param fragment_records: A list of FragmentRecord objects that form this chunk.
+    :param model_version: The model version associated with the fragments in this chunk.
+    :param session_id: The session ID associated with the fragments in this chunk.
+    :param use_count: How many times this chunk has been used for training.
+    """
     fragment_records: List[FragmentRecord]
     model_version: int
     session_id: str
@@ -57,6 +100,19 @@ class ChunkRecord:
 
 @ray.remote
 class ReplayBufferActor:
+    """
+    A Ray actor that implements a replay buffer for storing and sampling experience fragments.
+
+    This actor manages chunks of fragments, handles staleness and reuse of data,
+    and provides an interface for adding new fragments and fetching batches for training.
+
+    :param max_chunks: The maximum number of chunks to store in the replay buffer.
+    :param max_staleness: The maximum allowed difference between the current model version and a fragment's model version for it to be considered valid.
+    :param max_reuse: The maximum number of times a chunk can be reused for training before being discarded.
+    :param database_config: A DictConfig object for configuring the FragmentStore (database).
+    :param fragments_per_chunk: The number of fragments that constitute a single chunk.
+    :param fragments_per_report: Optional. If set, logs statistics every N fragments added.
+    """
     def __init__(self,
         max_chunks: int,
         max_staleness: int,
@@ -95,13 +151,29 @@ class ReplayBufferActor:
         self.staleness_metric = torchmetrics.MeanMetric()
 
     def update_training_session(self):
+        """
+        Placeholder for any logic needed when a new training session starts.
+        Currently does nothing.
+        """
         pass
 
     def pop_chunk(self) -> None:
+        """
+        Removes the oldest chunk from the buffer and updates reuse metrics.
+        """
         self.reuse_metric.update(self.chunks[0].use_count, self.fragments_per_chunk)
         self.chunks.popleft()
 
     def add_chunk(self, chunk_record: ChunkRecord) -> None:
+        """
+        Adds a new chunk to the replay buffer.
+
+        If the buffer is full, the oldest chunk is popped.
+        Chunks that are too stale or belong to a different session are discarded immediately.
+        Notifies any pending fetch requests if enough chunks become available.
+
+        :param chunk_record: The ChunkRecord to add.
+        """
         while len(self.chunks) >= self.max_chunks:
             self.pop_chunk()
 
@@ -120,6 +192,18 @@ class ReplayBufferActor:
             self.reuse_metric.update(chunk_record.use_count, self.fragments_per_chunk)
 
     async def add_fragment(self, fragment_id: str, metadata: FragmentMetadata):
+        """
+        Adds a single fragment to the replay buffer.
+
+        Fragments are buffered per worker_uuid. Once enough fragments are collected
+        from a worker to form a chunk (fragments_per_chunk), a ChunkRecord is created
+        and added to the main buffer via `add_chunk`.
+        Handles stale fragments by discarding them from the worker's receive buffer.
+        Logs statistics periodically if `fragments_per_report` is set.
+
+        :param fragment_id: The unique ID of the fragment to add.
+        :param metadata: The FragmentMetadata associated with the fragment.
+        """
         fragment_record = self.fragment_manager.create_fragment_record(
             fragment_id=fragment_id,
             metadata=metadata
@@ -166,6 +250,15 @@ class ReplayBufferActor:
             self._last_report_time = now
 
     async def update_model_version(self, session_id: str, model_version: int) -> None:
+        """
+        Updates the current model version and session ID for the replay buffer.
+
+        This triggers the removal of any chunks that have become too stale
+        or belong to a previous session.
+
+        :param session_id: The new session ID.
+        :param model_version: The new model version.
+        """
         self.current_model_version = model_version
         self.current_session_id = session_id
         while (len(self.chunks) > 0 and self.chunks[0].model_version < self.current_model_version - self.max_staleness
@@ -173,6 +266,19 @@ class ReplayBufferActor:
             self.pop_chunk()
 
     async def fetch_fragments(self, num_fragments: int) -> List[Tuple[FragmentIndex, str]]:
+        """
+        Fetches a specified number of fragments for training.
+
+        Randomly samples chunks from the buffer. If not enough chunks are available,
+        it waits until they are. Tracks the reuse count of chunks and discards them
+        if `max_reuse` is reached. Logs reuse and staleness metrics.
+
+        :param num_fragments: The total number of fragments to fetch.
+                             Must be a multiple of `fragments_per_chunk`.
+        :returns: A list of tuples, each containing a FragmentIndex and the fragment_id.
+        :raises AssertionError: if num_fragments is not a multiple of fragments_per_chunk
+                               or if num_chunks requested exceeds max_chunks.
+        """
         assert num_fragments % self.fragments_per_chunk == 0
         num_chunks = num_fragments // self.fragments_per_chunk
         assert num_chunks <= self.max_chunks
@@ -213,9 +319,19 @@ class ReplayBufferActor:
                 ) for fragment_record in self.fragments_to_return]
     
     async def get_database_config(self):
+        """
+        Returns the database configuration used by the FragmentStore.
+
+        :returns: The database configuration (DictConfig).
+        """
         return self.database_config
 
     async def prepared_fragments(self) -> List[Tuple[FragmentIndex, str]]:
+        """
+        Returns the list of fragments that were prepared by the last call to `fetch_fragments`.
+
+        :returns: A list of tuples, each containing a FragmentIndex and the fragment_id.
+        """
         return [(
                     FragmentIndex(worker_uuid=fragment_record.metadata.worker_uuid, fid_in_worker=fragment_record.metadata.fid_in_worker),
                     fragment_record.fragment_id

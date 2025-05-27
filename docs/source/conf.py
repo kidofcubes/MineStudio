@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-28 17:46:44
 LastEditors: muzhancun muzhancun@stu.pku.edu.cn
-LastEditTime: 2025-05-26 22:03:05
+LastEditTime: 2025-05-27 15:37:45
 FilePath: /MineStudio/docs/source/conf.py
 '''
 import os
@@ -102,7 +102,7 @@ html_theme_options = {
   },
   "navbar_start": ["navbar-logo"],  # 在导航栏显示 Logo
   "switcher": {
-        "json_url": "https://craftjarvis.github.io/MineStudio/_static/switcher.json",
+        "json_url": "https://craftjarvis.github.io/MineStudio/master/_static/switcher.json",
         "version_match": "master",
    }
 }
@@ -115,7 +115,7 @@ autoapi_add_toctree_entry = False
 autoapi_dirs = ['../../minestudio']
 autoapi_ignore = ['*minerl*', '*tests*', '*tutorials*', '*utils*']
 
-autodoc_mock_imports = ['torch', 'absl', 'cv2', 'huggingface_hub', 'lmdb', 'ray', 'gymnasium', 'lightning', 'omegaconf', 'tree', 'einops', 'gym', 'gym3', 'coloredlogs', 'daemoniker', 'av', 'minecraft_data', 'torchvision', 'timm', 'transformers', 'x_transformers']
+autodoc_mock_imports = ['torch', 'absl', 'cv2', 'huggingface_hub', 'lmdb', 'gymnasium', 'lightning', 'omegaconf', 'tree', 'einops', 'gym', 'gym3', 'coloredlogs', 'daemoniker', 'av', 'minecraft_data', 'torchvision', 'timm', 'transformers', 'x_transformers']
 # -- application setup -------------------------------------------------------
 
 

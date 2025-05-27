@@ -34,6 +34,7 @@ import torch.distributed as dist
 #     return False
 
 def print_memory_usage():
+    """Prints the allocated and reserved GPU memory."""
     allocated = torch.cuda.memory_allocated() / (1024 ** 2)
     reserved = torch.cuda.memory_reserved() / (1024 ** 2)
     print(f"Allocated memory: {allocated:.2f} MB")
@@ -41,6 +42,12 @@ def print_memory_usage():
     
     
 class PPOTrainer(BaseTrainer):
+    """
+    Proximal Policy Optimization (PPO) Trainer.
+
+    This trainer implements the PPO algorithm for reinforcement learning.
+    It handles the training loop, data collection, and model updates.
+    """
     def __init__(self, 
         num_iterations: int,
         learning_rate: float,
@@ -71,6 +78,38 @@ class PPOTrainer(BaseTrainer):
         whole_config: str,
         **kwargs
     ):
+        """
+        Initializes the PPOTrainer.
+
+        :param num_iterations: Total number of training iterations.
+        :param learning_rate: Learning rate for the optimizer.
+        :param anneal_lr_linearly: Whether to anneal the learning rate linearly.
+        :param weight_decay: Weight decay for the optimizer.
+        :param adam_eps: Epsilon value for the Adam optimizer.
+        :param batch_size_per_gpu: Batch size per GPU.
+        :param batches_per_iteration: Number of batches per training iteration.
+        :param gradient_accumulation: Number of gradient accumulation steps.
+        :param epochs_per_iteration: Number of epochs per training iteration.
+        :param vf_warmup: Number of initial iterations to warm up the value function.
+        :param ppo_clip: PPO clipping parameter.
+        :param clip_vloss: Whether to clip the value loss.
+        :param max_grad_norm: Maximum gradient norm for clipping.
+        :param zero_initial_vf: Whether to zero out the initial value function parameters.
+        :param ppo_vf_coef: Coefficient for the value function loss in PPO.
+        :param ppo_policy_coef: Coefficient for the policy loss in PPO.
+        :param kl_divergence_coef_rho: Coefficient for the KL divergence penalty.
+        :param entropy_bonus_coef: Coefficient for the entropy bonus.
+        :param coef_rho_decay: Decay rate for the KL divergence coefficient.
+        :param normalize_advantage_full_batch: Whether to normalize advantages over the full batch.
+        :param record_video_interval: Interval for recording videos.
+        :param save_interval: Interval for saving model checkpoints.
+        :param save_path: Path to save model checkpoints.
+        :param keep_interval: Interval for keeping model checkpoints.
+        :param log_ratio_range: Range for clamping the log ratio of new to old policies.
+        :param enable_ref_update: Whether to enable reference model updates.
+        :param whole_config: String representation of the entire configuration.
+        :param kwargs: Additional keyword arguments for the BaseTrainer.
+        """
         super().__init__(inference_batch_size_per_gpu=batch_size_per_gpu, **kwargs)
         
         wandb_logger.define_metric("trainer/*", step_metric="trainer/env_steps_all_workers")
@@ -106,6 +145,14 @@ class PPOTrainer(BaseTrainer):
         assert self.batches_per_iteration % self.gradient_accumulation == 0
 
     def setup_model_and_optimizer(self, policy_generator) -> Tuple[MinePolicy, torch.optim.Optimizer]:
+        """
+        Sets up the model and optimizer.
+
+        :param policy_generator: A function that generates the policy model.
+        :type policy_generator: Callable
+        :return: A tuple containing the model and optimizer.
+        :rtype: Tuple[MinePolicy, torch.optim.Optimizer]
+        """
     
         model = policy_generator()
         optimizer = torch.optim.AdamW(
@@ -138,6 +185,12 @@ class PPOTrainer(BaseTrainer):
         return model, optimizer
     
     def train(self):
+        """
+        Main training loop.
+
+        This method iterates through training iterations, performs PPO updates,
+        and manages learning rate annealing and model broadcasting.
+        """
         self.num_updates = 0
         self.max_reward = 0
         self.time_stamp = time.strftime("%Y-%m-%d_%H-%M-%S", time.localtime())
@@ -173,6 +226,11 @@ class PPOTrainer(BaseTrainer):
                 logging.getLogger("ray").info(f"Updated model in {end_time - start_time} seconds.")
 
     def train_iteration(self):
+        """
+        Performs a single training iteration.
+
+        This involves fetching fragments, estimating advantages, and performing PPO updates.
+        """
         gae_results = self.fetch_fragments_and_estimate_advantages(
             num_fragments=self.fragments_per_iteration,
         )
@@ -195,6 +253,25 @@ class PPOTrainer(BaseTrainer):
                   old_vpreds: FragmentDataDict,
                   rewards: FragmentDataDict
                   ):
+        """
+        Performs the PPO update step.
+
+        This method calculates policy loss, value loss, entropy bonus, and KL divergence,
+        and updates the model parameters.
+
+        :param records: List of fragment records.
+        :type records: List[Tuple[FragmentIndex, str]]
+        :param td_targets: TD targets for value function update.
+        :type td_targets: FragmentDataDict
+        :param advantages: Advantages for policy update.
+        :type advantages: FragmentDataDict
+        :param old_logps: Log probabilities of actions under the old policy.
+        :type old_logps: FragmentDataDict
+        :param old_vpreds: Value predictions from the old policy.
+        :type old_vpreds: FragmentDataDict
+        :param rewards: Rewards received during rollouts.
+        :type rewards: FragmentDataDict
+        """
         
         self.buffer_reward = sum(rewards.values()) / len(rewards)
         mean_policy_loss = torchmetrics.MeanMetric().to(self.inner_model.device)
@@ -422,36 +499,108 @@ class PPOTrainer(BaseTrainer):
             if self.num_updates % self.save_interval == 0:
                 # TODO: this may cause problem in distributed training
                 logging.getLogger("ray").info(f"Saving checkpoint at update count {self.num_updates}...")
-                
-                if self.save_path:
-                    checkpoint_dir = Path(self.save_path) / 'checkpoints' / self.time_stamp /str(self.num_updates)
-                else:
-                    checkpoint_dir = Path("checkpoints") / self.time_stamp /str(self.num_updates)
-
-                logging.getLogger("ray").info(f"Checkpoint dir: {checkpoint_dir.absolute()}")
-                if not checkpoint_dir.exists():
-                    checkpoint_dir.mkdir(parents=True)
-
-                #save model
-                torch.save(self.inner_model.state_dict(), str(checkpoint_dir / "model.ckpt"))
-                torch.save(self.optimizer.state_dict(), str(checkpoint_dir / "optimizer.ckpt"))
-                with open(checkpoint_dir / "whole_config.py", "w") as f:
-                    f.write(self.whole_config)
-
-                if (
-                    self.last_checkpoint_dir
-                    and (self.num_updates + self.save_interval) % self.keep_interval != 0
-                ):
-                    shutil.rmtree(self.last_checkpoint_dir)
-                self.last_checkpoint_dir = checkpoint_dir
-
-            #send signal to record video
-            SPS_all_workers = self.fragments_per_iteration * self.fragment_length / (time.time() - self.last_log_time)
-            self.trained_steps_all_workers += self.fragments_per_iteration * self.fragment_length
-            self.last_log_time = time.time()
-            info["trainer/env_SPS_all_workers"] = SPS_all_workers
-            info["trainer/env_steps_all_workers"] = self.trained_steps_all_workers
-            print("I have send signal to manager: " + str(self.num_updates % self.record_video_interval == 0))
-            ray.get(self.rollout_manager.log_statistics.remote(self.trained_steps_all_workers, self.num_updates % self.record_video_interval == 0))
-            wandb_logger.log(info)
+                self.save_checkpoint()
+            if self.num_updates % self.keep_interval == 0:
+                self.remove_old_checkpoints()
             
+            self.trained_steps_all_workers += self.fragments_per_iteration * self.fragment_length
+            info["trainer/env_steps_all_workers"] = self.trained_steps_all_workers
+            info["trainer/time_since_last_log"] = time.time() - self.last_log_time
+            self.last_log_time = time.time()
+            wandb_logger.log_metrics(info, step=self.num_updates)
+
+    def save_checkpoint(self):
+        """Saves a model checkpoint.
+
+        This method saves the model state, optimizer state, and other relevant information.
+        """
+        if self.save_path is None:
+            return
+        Path(self.save_path).mkdir(parents=True, exist_ok=True)
+        checkpoint_dir = Path(self.save_path) / "checkpoint.pt"
+        torch.save(
+            {
+                "model_state_dict": self.inner_model.state_dict(),
+                "optimizer_state_dict": self.optimizer.state_dict(),
+                "num_updates": self.num_updates,
+                "kl_divergence_coef_rho": self.kl_divergence_coef_rho,
+            },
+            checkpoint_dir,
+        )
+        logging.getLogger("ray").info(f"Model checkpoint saved at {checkpoint_dir}")
+        self.last_checkpoint_dir = checkpoint_dir
+
+    def remove_old_checkpoints(self):
+        """Removes old checkpoints to save disk space.
+
+        This method keeps only a certain number of recent checkpoints.
+        """
+        if self.save_path is None or self.keep_interval <= 0:
+            return
+        
+        checkpoints = sorted(
+            Path(self.save_path).glob("checkpoint_*.pt"),
+            key=lambda x: x.stat().st_mtime,
+            reverse=True
+        )
+        for checkpoint in checkpoints[self.keep_interval:]:
+            try:
+                checkpoint.unlink()
+                logging.getLogger("ray").info(f"Removed old checkpoint: {checkpoint}")
+            except Exception as e:
+                logging.getLogger("ray").warning(f"Failed to remove checkpoint {checkpoint}: {e}")
+
+    def load_checkpoint(self, checkpoint_dir: str):
+        """Loads a model checkpoint.
+
+        :param checkpoint_dir: Directory of the checkpoint to load.
+        :type checkpoint_dir: str
+        """
+        checkpoint_state = torch.load(Path(checkpoint_dir) / "checkpoint.pt", map_location="cpu") # type: ignore
+        self.inner_model.load_state_dict(checkpoint_state["model_state_dict"])
+        self.optimizer.load_state_dict(checkpoint_state["optimizer_state_dict"])
+        self.num_updates = checkpoint_state["num_updates"]
+        self.kl_divergence_coef_rho = checkpoint_state["kl_divergence_coef_rho"]
+        if self.kl_divergence_coef_rho != 0:
+            assert self.ref_model is not None
+            self.ref_model.load_state_dict(checkpoint_state["ref_model_state_dict"])
+        logging.getLogger("ray").info(f"Loaded checkpoint from {checkpoint_dir}")
+
+    def get_inference_batch(self, fragments: List[SampleFragment]) -> dict:
+        """Prepares a batch for inference.
+
+        :param fragments: List of sample fragments.
+        :type fragments: List[SampleFragment]
+        :return: A dictionary containing the inference batch.
+        :rtype: dict
+        """
+        return prepare_batch(self.inner_model, fragments)
+
+    def _get_model_for_broadcast(self):
+        """Gets the model to be broadcasted to rollout workers.
+
+        :return: The model to be broadcasted.
+        :rtype: MinePolicy
+        """
+        model = copy.deepcopy(self.inner_model)
+        model.eval()
+        return model.to("cpu")
+    
+    def _get_ref_model_for_broadcast(self):
+        """Gets the reference model to be broadcasted to rollout workers.
+
+        :return: The reference model to be broadcasted.
+        :rtype: MinePolicy
+        """
+        assert self.ref_model is not None
+        ref_model = copy.deepcopy(self.ref_model)
+        ref_model.eval()
+        return ref_model.to("cpu")
+
+    def _update_ref_model(self):
+        """Updates the reference model with the current model's weights.
+        """
+        assert self.ref_model is not None
+        self.ref_model.load_state_dict(self.inner_model.state_dict())
+        self.ref_model.train()
+        logging.getLogger("ray").info("Updated ref model")

@@ -4,6 +4,16 @@ import minestudio.online.trainer
 from minestudio.online.utils.train.training_session import TrainingSession
 
 def start_trainer(policy_generator, env_generator, online_cfg, whole_config):
+    """Starts the training process.
+
+    This function initializes and starts a training session, creating a trainer
+    instance based on the provided configuration.
+
+    :param policy_generator: A function to generate the policy model.
+    :param env_generator: A function to generate the environment.
+    :param online_cfg: Online training configuration.
+    :param whole_config: The entire configuration as a string.
+    """
     training_session = None
     try:
         training_session = ray.get_actor("training_session")

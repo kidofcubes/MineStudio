@@ -76,8 +76,20 @@ CAMERA_SCALER = 360.0 / 2400.0
 
 def json_action_to_env_action(json_action):
     """
-    Converts a json action into a MineRL action.
-    Returns (minerl_action, is_null_action)
+    Converts a JSON action representation to a MineRL environment action.
+
+    This function takes a JSON object representing player actions (keyboard and mouse)
+    and transforms it into a dictionary format compatible with the MineRL environment.
+    It handles mapping keyboard keys to specific actions, scaling mouse movements 
+    for camera control, and processing mouse button presses.
+
+    :param json_action: A dictionary representing the action in JSON format. 
+                        Expected to have "keyboard" and "mouse" keys.
+    :type json_action: Dict
+    :returns: A tuple containing:
+        - env_action: A dictionary representing the action in MineRL format.
+        - is_null_action: A boolean indicating if the action is a NOOP (no operation).
+    :rtype: Tuple[Dict, bool]
     """
     # This might be slow...
     env_action = NOOP_ACTION.copy()
@@ -123,6 +135,20 @@ def json_action_to_env_action(json_action):
 
 
 def merge_action(cache: Dict[str, np.ndarray], action: Dict[str, Any]) -> Dict[str, np.ndarray]:
+    """
+    Merges a new action into a cache of actions.
+
+    If a key from the new action already exists in the cache, the new action's 
+    value is appended to the existing numpy array. If the key is new, it's added
+    to the cache with the new action's value as a new numpy array.
+
+    :param cache: The dictionary caching previous actions. Values are numpy arrays.
+    :type cache: Dict[str, np.ndarray]
+    :param action: The new action dictionary to merge.
+    :type action: Dict[str, Any]
+    :returns: The updated cache dictionary.
+    :rtype: Dict[str, np.ndarray]
+    """
     for key, val in action.items():
         if key not in cache:
             cache[key] = np.array([val])
@@ -132,6 +158,22 @@ def merge_action(cache: Dict[str, np.ndarray], action: Dict[str, Any]) -> Dict[s
 
     
 def run(args_dict: Dict) -> bool:
+    """
+    Processes a single JSONL file containing actions and converts it to a pickle file.
+
+    This function reads actions from a JSONL file, converts them to the MineRL 
+    environment action format, handles potential issues like stuck mouse buttons, 
+    and saves the processed actions as a pickle file.
+
+    :param args_dict: A dictionary containing arguments for processing:
+        - 'no': The number/identifier of the task.
+        - 'name': The base name for the output file.
+        - 'json_path': Path to the input JSONL file.
+        - 'action_path': Path to save the output pickle file.
+    :type args_dict: Dict
+    :returns: True if processing was successful, False otherwise.
+    :rtype: bool
+    """
     no = args_dict['no']
     name = args_dict['name']
     json_path = args_dict['json_path']
@@ -200,6 +242,19 @@ def run(args_dict: Dict) -> bool:
 
 
 def main(cfg):
+    """
+    Main function to process multiple JSONL action files in parallel.
+
+    It scans an input directory for JSONL files, prepares arguments for each file,
+    and then uses a multiprocessing Pool to process them in parallel using the `run`
+    function. It prints a summary of successful and total processed files.
+
+    :param cfg: Configuration object, expected to have attributes:
+        - 'input_dir': The directory containing JSONL files.
+        - 'nb_worker': The number of parallel workers to use.
+        - 'use_md5': Boolean, if True, generate video ID using MD5 hash of the name.
+    :type cfg: argparse.Namespace
+    """
     
     root = Path(cfg.input_dir)
     json_dir = root / 'jsonl'

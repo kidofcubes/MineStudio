@@ -74,6 +74,11 @@ online_dict = {
 }
 
 def env_generator():
+    """
+    Generates a Minecraft simulation environment with specific callbacks.
+
+    :returns: A MinecraftSim instance.
+    """
     from minestudio.simulator import MinecraftSim
     from minestudio.simulator.callbacks import (
         SummonMobsCallback, 
@@ -106,6 +111,11 @@ def env_generator():
     return env
 
 def policy_generator():
+    """
+    Generates a VPT policy loaded from pretrained models.
+
+    :returns: A VPT policy model.
+    """
     from minestudio.models import load_vpt_policy
     policy = load_vpt_policy(
         model_path="/nfs-shared/jarvisbase/pretrained/foundation-model-2x.model",

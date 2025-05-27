@@ -26,6 +26,7 @@ import copy
 import torch.distributed as dist
 
 def print_memory_usage():
+    """Prints the allocated and reserved GPU memory."""
     allocated = torch.cuda.memory_allocated() / (1024 ** 2)
     reserved = torch.cuda.memory_reserved() / (1024 ** 2)
     print(f"Allocated memory: {allocated:.2f} MB")
@@ -33,6 +34,12 @@ def print_memory_usage():
     
     
 class PPOBCTrainer(PPOTrainer):
+    """
+    PPO Trainer with Behavior Cloning (BC).
+
+    This trainer extends the PPOTrainer to incorporate behavior cloning loss,
+    leveraging expert data to guide the learning process.
+    """
     def __init__(self, 
         bc_coef: float,
         mine_data: MineDataModule,
@@ -40,6 +47,18 @@ class PPOBCTrainer(PPOTrainer):
         *args,
         **kwargs
     ):
+        """
+        Initializes the PPOBCTrainer.
+
+        :param bc_coef: Coefficient for the behavior cloning loss.
+        :type bc_coef: float
+        :param mine_data: Data module for accessing expert data.
+        :type mine_data: MineDataModule
+        :param callbacks: List of callbacks for behavior cloning.
+        :type callbacks: List[ObjectiveCallback]
+        :param args: Positional arguments for the PPOTrainer.
+        :param kwargs: Keyword arguments for the PPOTrainer.
+        """
         super().__init__(*args, **kwargs)
         
         self.bc_coef = bc_coef
@@ -53,6 +72,9 @@ class PPOBCTrainer(PPOTrainer):
         # self.enable_ref_update = False # Disable ref model updates
 
     def train_iteration(self):
+        """
+        Performs a single training iteration, including PPO and BC updates.
+        """
 
         gae_results = self.fetch_fragments_and_estimate_advantages(
             num_fragments=self.fragments_per_iteration,
@@ -76,6 +98,22 @@ class PPOBCTrainer(PPOTrainer):
                   old_vpreds: FragmentDataDict,
                   rewards: FragmentDataDict
                   ):
+        """
+        Performs the PPO update step, incorporating BC loss.
+
+        :param records: List of fragment records.
+        :type records: List[Tuple[FragmentIndex, str]]
+        :param td_targets: TD targets for value function update.
+        :type td_targets: FragmentDataDict
+        :param advantages: Advantages for policy update.
+        :type advantages: FragmentDataDict
+        :param old_logps: Log probabilities of actions under the old policy.
+        :type old_logps: FragmentDataDict
+        :param old_vpreds: Value predictions from the old policy.
+        :type old_vpreds: FragmentDataDict
+        :param rewards: Rewards received during rollouts.
+        :type rewards: FragmentDataDict
+        """
         
         self.buffer_reward = sum(rewards.values())
         if self.enable_ref_update:
@@ -372,4 +410,3 @@ class PPOBCTrainer(PPOTrainer):
             print("I have send signal to manager: " + str(self.num_updates % self.record_video_interval == 0))
             ray.get(self.rollout_manager.log_statistics.remote(self.trained_steps_all_workers, self.num_updates % self.record_video_interval == 0))
             wandb_logger.log(info)
-            

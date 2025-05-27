@@ -7,6 +7,14 @@ from collections import defaultdict
 import logging
 
 def get_last_fragment_indexes(fragment_indexs: List[FragmentIndex]) -> List[FragmentIndex]:
+    """
+    Identifies the last fragment index for each worker from a list of fragment indexes.
+
+    A fragment is considered the last if it's the last one from a worker or if the next fragment from the same worker is not contiguous.
+
+    :param fragment_indexs: A list of FragmentIndex objects.
+    :returns: A list of FragmentIndex objects, each being the last fragment for a worker in a sequence.
+    """
     fragment_indexs = fragment_indexs.copy()
     fragment_indexs.sort(key=lambda x: x.fid_in_worker)
     
@@ -21,6 +29,14 @@ def get_last_fragment_indexes(fragment_indexs: List[FragmentIndex]) -> List[Frag
 
 @ray.remote
 class GAEWorker:
+    """
+    A Ray remote actor for calculating Generalized Advantage Estimation (GAE) and TD-Lambda targets.
+
+    This worker processes fragments, calculates advantages and value targets, and stores them.
+
+    :param discount: The discount factor (gamma) for future rewards.
+    :param gae_lambda: The GAE lambda parameter for balancing bias and variance.
+    """
     def __init__(self,
         discount: float,
         gae_lambda: float,
@@ -31,12 +47,27 @@ class GAEWorker:
         self.reset()
         
     def reset(self):
+        """
+        Resets the internal state of the GAE worker, clearing stored GAE information.
+        """
         self.gae_infos: Dict[FragmentIndex, Dict[str, Any]] = {}
 
     def update_gae_infos(self, gae_infos: Dict[FragmentIndex, Dict[str, Any]]):
+        """
+        Updates the GAE information with new data.
+
+        :param gae_infos: A dictionary mapping FragmentIndex to a dictionary of GAE-related information
+                          (e.g., 'vpred', 'reward', 'next_done', 'next_vpred').
+        """
         self.gae_infos.update(gae_infos)
 
     def calculate_target(self):
+        """
+        Calculates TD-Lambda targets and GAE advantages for the stored fragments.
+
+        It iterates through fragments in reverse chronological order for each worker to compute GAE.
+        Logs the average GAE length using wandb_logger if available.
+        """
         fragment_indexs = list(self.gae_infos.keys())
         fragment_indexs.sort(key=lambda x: x.fid_in_worker)
 
@@ -95,6 +126,12 @@ class GAEWorker:
         # self.print_episodes() # for debug
 
     def get_target(self, indexs: List[FragmentIndex]) -> Tuple[FragmentDataDict, FragmentDataDict]:
+        """
+        Retrieves the calculated TD-Lambda targets and GAE advantages for a given list of fragment indexes.
+
+        :param indexs: A list of FragmentIndex objects for which to retrieve the targets and advantages.
+        :returns: A tuple containing two FragmentDataDicts: one for TD-Lambda targets and one for GAE advantages.
+        """
         td_targets, advantages = FragmentDataDict(), FragmentDataDict()
         for index in indexs:
             td_targets[index] = self.td_targets[index]

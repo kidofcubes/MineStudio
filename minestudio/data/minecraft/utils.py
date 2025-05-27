@@ -22,6 +22,14 @@ from huggingface_hub import hf_api, snapshot_download
 from minestudio.data.minecraft.callbacks import DrawFrameCallback
 
 def get_repo_total_size(repo_id, repo_type="dataset", branch="main"):
+    """Calculate the total size of a Hugging Face repository.
+
+    :param repo_id: The identifier of the repository (e.g., 'CraftJarvis/minestudio-data-6xx').
+    :param repo_type: The type of the repository, defaults to "dataset".
+    :param branch: The branch of the repository, defaults to "main".
+    :returns: A tuple containing the total size in bytes and the total size in gigabytes.
+    :raises requests.exceptions.HTTPError: If the API request fails.
+    """
 
     def fetch_file_list(path=""):
         url = f"https://huggingface.co/api/{repo_type}s/{repo_id}/tree/{branch}/{path}"
@@ -43,6 +51,15 @@ def get_repo_total_size(repo_id, repo_type="dataset", branch="main"):
     return total_size_bytes, total_size_gb
 
 def download_dataset_from_huggingface(name: Literal["6xx", "7xx", "8xx", "9xx", "10xx"], base_dir: Optional[str]=None):
+    """Downloads a dataset from Hugging Face.
+
+    Checks for sufficient disk space before downloading.
+
+    :param name: The name of the dataset to download (e.g., "6xx").
+    :param base_dir: The base directory to download the dataset to. If None, uses the MineStudio directory.
+    :returns: The local path to the downloaded dataset.
+    :raises ValueError: If there is insufficient disk space.
+    """
 
     if base_dir is None:
         from minestudio.utils import get_mine_studio_dir
@@ -67,6 +84,15 @@ def download_dataset_from_huggingface(name: Literal["6xx", "7xx", "8xx", "9xx", 
     return local_dataset_dir
 
 def pull_datasets_from_remote(dataset_dirs: List[str]) -> List[str]:
+    """Pulls datasets from remote Hugging Face repositories if specified.
+
+    Iterates through a list of dataset directory paths. If a path is a recognized
+    dataset name (e.g., '6xx'), it downloads the dataset from Hugging Face.
+    Otherwise, it keeps the original path.
+
+    :param dataset_dirs: A list of dataset directory paths or dataset names.
+    :returns: A list of updated dataset directory paths, with remote datasets downloaded.
+    """
     new_dataset_dirs = []
     for path in dataset_dirs:
         if path in ['6xx', '7xx', '8xx', '9xx', '10xx']:
@@ -83,6 +109,16 @@ def write_video(
     height: int = 360, 
     fps: int = 20
 ) -> None:
+    """Write a sequence of video frames to a video file.
+
+    :param file_name: The name of the output video file.
+    :param frames: A sequence of numpy arrays, where each array represents a frame.
+                   Frames are expected to be in RGB format.
+    :param width: The width of the video, defaults to 640.
+    :param height: The height of the video, defaults to 360.
+    :param fps: The frames per second of the video, defaults to 20.
+    :raises AssertionError: If a frame's dimensions do not match the specified width and height.
+    """
     """Write video frames to video files. """
     with av.open(file_name, mode="w", format='mp4') as container:
         stream = container.add_stream("h264", rate=fps)
@@ -97,6 +133,14 @@ def write_video(
             container.mux(packet)
 
 def batchify(batch_in: Sequence[Dict[str, Any]]) -> Any:
+    """Collates a sequence of items into a batch.
+
+    Recursively processes dictionaries, stacking tensors and converting
+    lists of numbers to tensors. Other types are returned as is.
+
+    :param batch_in: A sequence of items to batch. Each item is typically a dictionary.
+    :returns: The collated batch.
+    """
     example = batch_in[0]
     if isinstance(example, Dict):
         batch_out = {
@@ -114,6 +158,13 @@ def batchify(batch_in: Sequence[Dict[str, Any]]) -> Any:
     return batch_out
 
 class MineDistributedBatchSampler(Sampler):
+    """A distributed batch sampler for Minecraft datasets.
+
+    Ensures that each replica (process) gets a unique and continuous
+    set of samples from the dataset, particularly useful for sequential data
+    like video frames from game episodes. It divides the dataset among
+    replicas and then creates batches within each replica's assigned portion.
+    """
 
     def __init__(
         self, 
@@ -124,6 +175,18 @@ class MineDistributedBatchSampler(Sampler):
         shuffle=False, 
         drop_last=True,
     ):
+        """Initializes the MineDistributedBatchSampler.
+
+        :param dataset: The dataset to sample from. It's expected to have an 'episodes_with_items' attribute.
+        :param batch_size: The number of samples per batch.
+        :param num_replicas: The total number of processes participating in distributed training.
+                             If None, it's inferred from `torch.distributed`.
+        :param rank: The rank of the current process. If None, it's inferred from `torch.distributed`.
+        :param shuffle: Whether to shuffle the data. Must be False for this sampler.
+        :param drop_last: Whether to drop the last incomplete batch. Must be True for this sampler.
+        :raises RuntimeError: If `torch.distributed` is not available and `num_replicas` or `rank` is None.
+        :raises AssertionError: If `shuffle` is True or `drop_last` is False.
+        """
         if num_replicas is None:
             if not dist.is_available():
                 raise RuntimeError("Requires distributed package to be available")
@@ -159,6 +222,14 @@ class MineDistributedBatchSampler(Sampler):
         self.episodes_within_replica = episodes_within_replica
 
     def __iter__(self):
+        """Generates batches of indices.
+
+        Iterates through the assigned portion of the dataset for the current replica,
+        yielding batches of item indices. It tries to fill batches with samples
+        from ongoing episodes before moving to new episodes, maintaining continuity.
+
+        :returns: An iterator yielding batches of sample indices.
+        """
         """
         Build batch of episodes, each batch is consisted of `self.batch_size` episodes.
         Only if one episodes runs out of samples, the batch is filled with the next episode.
@@ -201,6 +272,10 @@ class MineDistributedBatchSampler(Sampler):
             yield batch
 
     def __len__(self):
+        """Returns the number of batches in the sampler for the current replica.
+
+        :returns: The number of batches.
+        """
         return self.num_samples_per_replica // self.batch_size
 
 def visualize_dataloader(
@@ -210,6 +285,17 @@ def visualize_dataloader(
     save_fps: int=20, 
     output_dir: str = "./",
 ) -> None:
+    """Visualizes data from a dataloader by creating a video.
+
+    Iterates through the dataloader, processes frames using draw_frame_callbacks,
+    and saves the resulting frames as an MP4 video.
+
+    :param dataloader: The dataloader to visualize.
+    :param draw_frame_callbacks: A list of callbacks to draw on frames.
+    :param num_samples: The number of batches to process from the dataloader.
+    :param save_fps: The frames per second for the output video.
+    :param output_dir: The directory to save the output video.
+    """
 
     video_frames = []
     for batch_idx, data in enumerate(tqdm(dataloader)):
