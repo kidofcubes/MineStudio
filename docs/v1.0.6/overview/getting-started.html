@@ -1,0 +1,1379 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Getting Started &#8212; MineStudio</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thebelab.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=f44ad8c8" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=8d563738"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/thebelab-helper.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'overview/getting-started';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://github.com/CraftJarvis/MineStudio/blob/master/docs/source/_static/switcher.json?raw=true';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'master';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <link rel="icon" href="../_static/logo-no-text-light.svg"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Automatic Evaluation Pipeline" href="../benchmark/automatic-evaluation.html" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />   
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo-no-text-light.svg" class="logo__image only-light" alt=""/>
+    <img src="../_static/logo-no-text-light.svg" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">MineStudio</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="index.html">
+    Overview
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../simulator/index.html">
+    Simulator
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../data/index.html">
+    Data
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../models/index.html">
+    Models
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../offline/index.html">
+    Offline
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../online/index.html">
+    Online
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../inference/index.html">
+    Inference
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../benchmark/index.html">
+    Benchmark
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/CraftJarvis/MineStudio" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/minestudio" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-custom fa-pypi fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://arxiv.org/pdf/2310.08235" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="ai ai-arxiv fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">ArXiv</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+          
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="index.html">
+    Overview
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../simulator/index.html">
+    Simulator
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../data/index.html">
+    Data
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../models/index.html">
+    Models
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../offline/index.html">
+    Offline
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../online/index.html">
+    Online
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../inference/index.html">
+    Inference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../benchmark/index.html">
+    Benchmark
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/CraftJarvis/MineStudio" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/minestudio" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-custom fa-pypi fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://arxiv.org/pdf/2310.08235" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="ai ai-arxiv fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">ArXiv</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">MineStudio Libraries</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../simulator/index.html">Simulator</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../simulator/general-information.html">General Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../simulator/design-principles.html">Design Principles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../simulator/play.html">Graphical User Interfaces</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../data/index.html">Data</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../data/dataset-raw.html">Raw Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/dataset-event.html">Event Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/visualization.html">Visualization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/convertion.html">Convertion</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../models/index.html">Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../models/baseline-vpt.html">Built-in Models: VPT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/baseline-steve1.html">Built-in Models: STEVE-1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/baseline-groot.html">Built-in Models: GROOT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/baseline-rocket1.html">Built-in Models: ROCKET-1</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../offline/index.html">Offline Training</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../offline/tutorial-vpt.html">Tutorial: Fine-tuning VPT to a Hunter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../offline/tutorial-rocket.html">Tutorial: Pre-Training ROCKET-1 from Scratch</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../online/index.html">Online Training</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../online/general-information.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../online/config.html">Config</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../online/trainer.html">Trainer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../online/rollout.html">Rollout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../online/customization.html">Customize</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../inference/index.html">Inference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../inference/baseline-vpt.html">Tutorial: Inference with VPT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inference/baseline-steve1.html">Tutorial: Inference with STEVE-1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inference/baseline-groot.html">Tutorial: Inference with GROOT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inference/baseline-rocket1.html">Tutorial: Inference with ROCKET-1</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../benchmark/index.html">Benchmark</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../benchmark/quick-benchmark.html">Quick benchmark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../benchmark/automatic-evaluation.html">Automatic Evaluation Pipeline</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../online/index.html">Online Training</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../online/general-information.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../online/config.html">Config</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../online/trainer.html">Trainer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../online/rollout.html">Rollout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../online/customization.html">Customize</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Getting Started</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                   <!--
+ * @Date: 2024-11-29 08:08:13
+ * @LastEditors: muzhancun muzhancun@126.com
+ * @LastEditTime: 2024-12-20 15:20:10
+ * @FilePath: /MineStudio/docs/source/overview/getting-started.md
+-->
+<a class="reference internal image-reference" href="../_images/banner.png"><img alt="../_images/banner.png" src="../_images/banner.png" style="width: 90%;" />
+</a>
+<section id="getting-started">
+<h1>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading">#</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<p>Before you start, make sure you have installed <a class="reference external" href="https://github.com/CraftJarvis/MineStudio">MineStudio</a> and its dependencies.</p>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text"><img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Install MineStudio</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<!--
+ * @Date: 2024-11-28 22:13:52
+ * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
+ * @LastEditTime: 2024-12-30 15:19:15
+ * @FilePath: /MineStudio/docs/source/overview/installation.md
+-->
+<p class="rubric" id="installation"><span id="gentle-intro"></span>Installation</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p class="sd-card-text">If you encounter any issues during installation, please open an issue on <a class="reference external" href="https://github.com/CraftJarvis/MineStudio/issues">GitHub</a>.</p>
+</div>
+<p class="sd-card-text">Welcome to MineStudio, please follow the tutorial below for installation.</p>
+<p class="rubric" id="install-jdk-8">Install JDK 8</p>
+<p class="sd-card-text">To ensure that the Simulator runs smoothly, please make sure that JDK 8 is installed on your system. We recommend using conda to maintain an environment on Linux systems.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>minestudio<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.10<span class="w"> </span>-y
+<span class="gp">$ </span>conda<span class="w"> </span>activate<span class="w"> </span>minestudio
+<span class="gp">$ </span>conda<span class="w"> </span>install<span class="w"> </span>--channel<span class="o">=</span>conda-forge<span class="w"> </span><span class="nv">openjdk</span><span class="o">=</span><span class="m">8</span><span class="w"> </span>-y
+</pre></div>
+</div>
+<p class="rubric" id="install-minestudio">Install MineStudio</p>
+<p class="sd-card-text">a. Install MineStudio from the <a class="reference external" href="https://github.com/CraftJarvis/MineStudio">GitHub</a>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/CraftJarvis/MineStudio.git
+</pre></div>
+</div>
+<p class="sd-card-text">b. Install MineStudio from <a class="reference external" href="https://pypi.org/project/minestudio/">PyPI</a>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip<span class="w"> </span>install<span class="w"> </span>minestudio
+</pre></div>
+</div>
+<p class="rubric" id="install-the-rendering-tool">Install the rendering tool</p>
+<p class="sd-card-text">For users with <em>nvidia graphics cards</em>, we recommend installing <strong>VirtualGL</strong>; for other users, we recommend using <strong>Xvfb</strong>, which supports CPU rendering but is relatively slower.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p class="sd-card-text">Installing rendering tools may require <strong>root</strong> permissions.</p>
+</div>
+<p class="sd-card-text">There are two options:</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-0">
+Xvfb</label><div class="sd-tab-content docutils">
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>apt<span class="w"> </span>update<span class="w"> </span>
+<span class="gp">$ </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>xvfb<span class="w"> </span>mesa-utils<span class="w"> </span>libegl1-mesa<span class="w"> </span>libgl1-mesa-dev<span class="w"> </span>libglu1-mesa-dev<span class="w"> </span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-1">
+VirtualGL</label><div class="sd-tab-content docutils">
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p class="sd-card-text">Not all graphics cards support virtualGL. If you do not have speed requirements, it is recommended to use the easier-to-install xvfb rendering tool.</p>
+</div>
+<p class="sd-card-text">You need to download the following sources:</p>
+<ul class="simple">
+<li><p class="sd-card-text"><a class="reference external" href="https://sourceforge.net/projects/virtualgl/files/3.1/virtualgl_3.1_amd64.deb/download">virtualgl_3.1_amd64.deb</a></p></li>
+<li><p class="sd-card-text"><a class="reference external" href="https://github.com/CraftJarvis/MineStudio/blob/master/assets/vgl_entrypoint.sh">vgl_entrypoint.sh</a></p></li>
+</ul>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>apt<span class="w"> </span>update<span class="w"> </span>
+<span class="gp">$ </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>xvfb<span class="w"> </span>mesa-utils<span class="w"> </span>libegl1-mesa<span class="w"> </span>libgl1-mesa-dev<span class="w"> </span>libglu1-mesa-dev<span class="w"> </span>
+</pre></div>
+</div>
+<p class="sd-card-text">Install the downloaded package.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dpkg<span class="w"> </span>-i<span class="w"> </span>virtualgl_3.1_amd64.deb
+</pre></div>
+</div>
+<p class="sd-card-text">Shutdown the display manager and configure VirtualGL.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>service<span class="w"> </span>gdm<span class="w"> </span>stop<span class="w"> </span>
+</pre></div>
+</div>
+<p class="sd-card-text">Configure VirtualGL.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>/opt/VirtualGL/bin/vglserver_config<span class="w"> </span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p class="sd-card-text">First choose 1，then Yes, No, No, No，finally enter X</p>
+</div>
+<p class="sd-card-text">Start the display manager.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>service<span class="w"> </span>gdm<span class="w"> </span>start
+</pre></div>
+</div>
+<p class="sd-card-text">Start the VirtualGL server.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>bash<span class="w"> </span>vgl_entrypoint.sh
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p class="sd-card-text">Each time the system is restarted, it may be necessary to run <code class="docutils literal notranslate"><span class="pre">vgl_entrypoint.sh</span></code>.</p>
+</div>
+<p class="sd-card-text">Configure the environment variables.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">PATH</span><span class="si">}</span><span class="s2">:/opt/VirtualGL/bin&quot;</span><span class="w"> </span>
+<span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="s2">&quot;/usr/lib/libreoffice/program:</span><span class="si">${</span><span class="nv">LD_LIBRARY_PATH</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>
+<span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">VGL_DISPLAY</span><span class="o">=</span><span class="s2">&quot;egl&quot;</span><span class="w"> </span>
+<span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">VGL_REFRESHRATE</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$REFRESH</span><span class="s2">&quot;</span>
+<span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">DISPLAY</span><span class="o">=</span>:1
+</pre></div>
+</div>
+</div>
+</div>
+<p class="rubric" id="verify-by-running-simulator">Verify by running simulator</p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p class="sd-card-text">The first time you run it, the script will ask whether to download the compiled model from Hugging Face; just choose Y.</p>
+</div>
+<p class="sd-card-text">If you are using <strong>Xvfb</strong>, run the following command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python<span class="w"> </span>-m<span class="w"> </span>minestudio.simulator.entry
+</pre></div>
+</div>
+<p class="sd-card-text">If you are using <strong>VirtualGL</strong>, run the following command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nv">MINESTUDIO_GPU_RENDER</span><span class="o">=</span><span class="m">1</span><span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>minestudio.simulator.entry
+</pre></div>
+</div>
+<p class="sd-card-text">If you see the following output, the installation is successful.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Speed</span> <span class="n">Test</span> <span class="n">Status</span><span class="p">:</span> 
+<span class="n">Average</span> <span class="n">Time</span><span class="p">:</span> <span class="mf">0.03</span> 
+<span class="n">Average</span> <span class="n">FPS</span><span class="p">:</span> <span class="mf">38.46</span> 
+<span class="n">Total</span> <span class="n">Steps</span><span class="p">:</span> <span class="mi">50</span> 
+
+<span class="n">Speed</span> <span class="n">Test</span> <span class="n">Status</span><span class="p">:</span> 
+<span class="n">Average</span> <span class="n">Time</span><span class="p">:</span> <span class="mf">0.02</span> 
+<span class="n">Average</span> <span class="n">FPS</span><span class="p">:</span> <span class="mf">45.08</span> 
+<span class="n">Total</span> <span class="n">Steps</span><span class="p">:</span> <span class="mi">100</span> 
+</pre></div>
+</div>
+</div>
+</details><section id="minestudio-libraries-quickstart">
+<h2>MineStudio Libraries Quickstart<a class="headerlink" href="#minestudio-libraries-quickstart" title="Link to this heading">#</a></h2>
+<p>Click on the dropdowns for your desired library to get started:</p>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text"><img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Simulator: Customizable Minecraft Environment</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<!--
+ * @Date: 2024-11-30 05:44:44
+ * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
+ * @LastEditTime: 2024-12-01 08:28:50
+ * @FilePath: /MineStudio/docs/source/simulator/quick-simulator.md
+-->
+<p class="sd-card-text">Here is a minimal example of how to use the simulator:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinecraftSim</span>
+
+<span class="n">sim</span> <span class="o">=</span> <span class="n">MinecraftSim</span><span class="p">(</span><span class="n">action_type</span><span class="o">=</span><span class="s2">&quot;env&quot;</span><span class="p">)</span>
+<span class="n">obs</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+    <span class="n">action</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">action_space</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
+    <span class="n">obs</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">terminated</span><span class="p">,</span> <span class="n">truncated</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p class="sd-card-text">Also, you can customize the environment by chaining multiple callbacks. Here is an example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinecraftSim</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator.callbacks</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">SpeedTestCallback</span><span class="p">,</span> 
+    <span class="n">RecordCallback</span><span class="p">,</span> 
+    <span class="n">SummonMobsCallback</span><span class="p">,</span> 
+    <span class="n">MaskActionsCallback</span><span class="p">,</span> 
+    <span class="n">RewardsCallback</span><span class="p">,</span> 
+    <span class="n">CommandsCallback</span><span class="p">,</span> 
+    <span class="n">FastResetCallback</span>
+<span class="p">)</span>
+
+<span class="n">sim</span> <span class="o">=</span> <span class="n">MinecraftSim</span><span class="p">(</span>
+    <span class="n">action_type</span><span class="o">=</span><span class="s2">&quot;env&quot;</span><span class="p">,</span>
+    <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">SpeedTestCallback</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span> 
+        <span class="n">SummonMobsCallback</span><span class="p">([{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;cow&#39;</span><span class="p">,</span> <span class="s1">&#39;number&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;range_x&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="s1">&#39;range_z&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">]}]),</span>
+        <span class="n">MaskActionsCallback</span><span class="p">(</span><span class="n">inventory</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">camera</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">])),</span> 
+        <span class="n">RecordCallback</span><span class="p">(</span><span class="n">record_path</span><span class="o">=</span><span class="s2">&quot;./output&quot;</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="mi">30</span><span class="p">),</span>
+        <span class="n">RewardsCallback</span><span class="p">([{</span>
+            <span class="s1">&#39;event&#39;</span><span class="p">:</span> <span class="s1">&#39;kill_entity&#39;</span><span class="p">,</span> 
+            <span class="s1">&#39;objects&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;cow&#39;</span><span class="p">,</span> <span class="s1">&#39;sheep&#39;</span><span class="p">],</span> 
+            <span class="s1">&#39;reward&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> 
+            <span class="s1">&#39;identity&#39;</span><span class="p">:</span> <span class="s1">&#39;kill sheep or cow&#39;</span><span class="p">,</span> 
+            <span class="s1">&#39;max_reward_times&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> 
+        <span class="p">}]),</span>
+        <span class="n">CommandsCallback</span><span class="p">(</span><span class="n">commands</span><span class="o">=</span><span class="p">[</span>
+            <span class="s1">&#39;/give @p minecraft:iron_sword 1&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;/give @p minecraft:diamond 64&#39;</span><span class="p">,</span>
+        <span class="p">]),</span> 
+        <span class="n">FastResetCallback</span><span class="p">(</span>
+            <span class="n">biomes</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;mountains&#39;</span><span class="p">],</span>
+            <span class="n">random_tp_range</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+<span class="n">obs</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">action_space</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+    <span class="n">action</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">action_space</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
+    <span class="n">obs</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">terminated</span><span class="p">,</span> <span class="n">truncated</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p class="sd-card-text"><span class="sd-d-grid"><a class="sd-sphinx-override sd-btn sd-text-wrap sd-btn-outline-primary reference internal" href="../simulator/index.html"><span class="doc">Learn more about MineStudio Simulator</span></a></span></p>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text"><img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Data: Flexible Data Structures and Fast Dataloaders</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<!--
+ * @Date: 2024-12-01 08:30:33
+ * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
+ * @LastEditTime: 2024-12-30 14:20:20
+ * @FilePath: /MineStudio/docs/source/data/quick-data.md
+-->
+<p class="sd-card-text">Here is a minimal example to show how we load a trajectory from the dataset.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dataset</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span>
+    <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;raw&#39;</span><span class="p">,</span> 
+    <span class="n">dataset_dirs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;6xx&#39;</span><span class="p">,</span> <span class="s1">&#39;7xx&#39;</span><span class="p">,</span> <span class="s1">&#39;8xx&#39;</span><span class="p">,</span> <span class="s1">&#39;9xx&#39;</span><span class="p">,</span> <span class="s1">&#39;10xx&#39;</span><span class="p">],</span> 
+    <span class="n">enable_video</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">enable_action</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">frame_width</span><span class="o">=</span><span class="mi">224</span><span class="p">,</span> 
+    <span class="n">frame_height</span><span class="o">=</span><span class="mi">224</span><span class="p">,</span>
+    <span class="n">win_len</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> 
+    <span class="n">split</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> 
+    <span class="n">split_ratio</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> 
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+<span class="n">item</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+</pre></div>
+</div>
+<p class="sd-card-text">You may see the output like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">08</span><span class="p">:</span><span class="mi">14</span><span class="p">:</span><span class="mi">15</span><span class="p">]</span> <span class="p">[</span><span class="n">Kernel</span><span class="p">]</span> <span class="n">Driver</span> <span class="n">video</span> <span class="n">load</span> <span class="mi">15738</span> <span class="n">episodes</span><span class="o">.</span>  
+<span class="p">[</span><span class="mi">08</span><span class="p">:</span><span class="mi">14</span><span class="p">:</span><span class="mi">15</span><span class="p">]</span> <span class="p">[</span><span class="n">Kernel</span><span class="p">]</span> <span class="n">Driver</span> <span class="n">action</span> <span class="n">load</span> <span class="mi">15823</span> <span class="n">episodes</span><span class="o">.</span> 
+<span class="p">[</span><span class="mi">08</span><span class="p">:</span><span class="mi">14</span><span class="p">:</span><span class="mi">15</span><span class="p">]</span> <span class="p">[</span><span class="n">Kernel</span><span class="p">]</span> <span class="n">episodes</span><span class="p">:</span> <span class="mi">15655</span><span class="p">,</span> <span class="n">frames</span><span class="p">:</span> <span class="mf">160495936.</span> 
+<span class="n">dict_keys</span><span class="p">([</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="s1">&#39;timestamp&#39;</span><span class="p">,</span> <span class="s1">&#39;episode&#39;</span><span class="p">,</span> <span class="s1">&#39;progress&#39;</span><span class="p">,</span> <span class="s1">&#39;env_action&#39;</span><span class="p">,</span> <span class="s1">&#39;agent_action&#39;</span><span class="p">,</span> <span class="s1">&#39;env_prev_action&#39;</span><span class="p">,</span> <span class="s1">&#39;agent_prev_action&#39;</span><span class="p">,</span> <span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="s1">&#39;mask&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p class="sd-card-text">Please note that the <code class="docutils literal notranslate"><span class="pre">dataset_dirs</span></code> parameter here is a list that can contain multiple dataset directories. In this example, we have loaded five dataset directories.</p>
+<p class="sd-card-text">If an element in the list is one of <code class="docutils literal notranslate"><span class="pre">6xx</span></code>, <code class="docutils literal notranslate"><span class="pre">7xx</span></code>, <code class="docutils literal notranslate"><span class="pre">8xx</span></code>, <code class="docutils literal notranslate"><span class="pre">9xx</span></code>, or <code class="docutils literal notranslate"><span class="pre">10xx</span></code>, the program will automatically download it from <a class="reference external" href="https://huggingface.co/CraftJarvis">Hugging Face</a>, so please ensure your network connection is stable and you have enough storage space.</p>
+<p class="sd-card-text">If an element in the list is a directory like <code class="docutils literal notranslate"><span class="pre">/nfs-shared/data/contractors/dataset_6xx</span></code>, the program will load data directly from that directory.</p>
+<p class="sd-card-text"><strong>You can also mix the two types of elements in the list.</strong></p>
+</div>
+<p class="sd-card-text"><span class="sd-d-grid"><span class="sd-sphinx-override sd-btn sd-text-wrap sd-btn-outline-primary">Learn more about Raw Dataset</span></span></p>
+<p class="sd-card-text">Alternatively, you can also load trajectories that have specific events, for example, loading all trajectories that contain the <code class="docutils literal notranslate"><span class="pre">kill</span> <span class="pre">entity</span></code> event.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dataset</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span>
+    <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;event&#39;</span><span class="p">,</span> 
+    <span class="n">dataset_dirs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;7xx&#39;</span><span class="p">],</span> 
+    <span class="n">enable_video</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">enable_action</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">frame_width</span><span class="o">=</span><span class="mi">224</span><span class="p">,</span> 
+    <span class="n">frame_height</span><span class="o">=</span><span class="mi">224</span><span class="p">,</span>
+    <span class="n">win_len</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> 
+    <span class="n">split</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> 
+    <span class="n">split_ratio</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> 
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">event_regex</span><span class="o">=</span><span class="s1">&#39;minecraft.kill_entity:.*&#39;</span>
+<span class="p">)</span>
+<span class="n">item</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+</pre></div>
+</div>
+<p class="sd-card-text">You may see the output like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">08</span><span class="p">:</span><span class="mi">19</span><span class="p">:</span><span class="mi">14</span><span class="p">]</span> <span class="p">[</span><span class="n">Kernel</span><span class="p">]</span> <span class="n">Driver</span> <span class="n">video</span> <span class="n">load</span> <span class="mi">4617</span> <span class="n">episodes</span><span class="o">.</span>
+<span class="p">[</span><span class="mi">08</span><span class="p">:</span><span class="mi">19</span><span class="p">:</span><span class="mi">14</span><span class="p">]</span> <span class="p">[</span><span class="n">Kernel</span><span class="p">]</span> <span class="n">Driver</span> <span class="n">action</span> <span class="n">load</span> <span class="mi">4681</span> <span class="n">episodes</span><span class="o">.</span> 
+<span class="p">[</span><span class="mi">08</span><span class="p">:</span><span class="mi">19</span><span class="p">:</span><span class="mi">14</span><span class="p">]</span> <span class="p">[</span><span class="n">Kernel</span><span class="p">]</span> <span class="n">episodes</span><span class="p">:</span> <span class="mi">4568</span><span class="p">,</span> <span class="n">frames</span><span class="p">:</span> <span class="mf">65291168.</span> 
+<span class="p">[</span><span class="mi">08</span><span class="p">:</span><span class="mi">19</span><span class="p">:</span><span class="mi">14</span><span class="p">]</span> <span class="p">[</span><span class="n">Event</span> <span class="n">Kernel</span><span class="p">]</span> <span class="n">Number</span> <span class="n">of</span> <span class="n">loaded</span> <span class="n">events</span><span class="p">:</span> <span class="mf">58.</span> 
+<span class="p">[</span><span class="mi">08</span><span class="p">:</span><span class="mi">19</span><span class="p">:</span><span class="mi">14</span><span class="p">]</span> <span class="p">[</span><span class="n">Event</span> <span class="n">Dataset</span><span class="p">]</span> <span class="n">Regex</span><span class="p">:</span> <span class="n">minecraft</span><span class="o">.</span><span class="n">kill_entity</span><span class="p">:</span><span class="o">.*</span><span class="p">,</span> <span class="n">Number</span> <span class="n">of</span> <span class="n">events</span><span class="p">:</span> <span class="mi">58</span><span class="p">,</span> <span class="n">number</span> <span class="n">of</span> <span class="n">items</span><span class="p">:</span> <span class="mi">19652</span>
+<span class="n">dict_keys</span><span class="p">([</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="s1">&#39;env_action&#39;</span><span class="p">,</span> <span class="s1">&#39;agent_action&#39;</span><span class="p">,</span> <span class="s1">&#39;env_prev_action&#39;</span><span class="p">,</span> <span class="s1">&#39;agent_prev_action&#39;</span><span class="p">,</span> <span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="s1">&#39;mask&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p class="sd-card-text"><span class="sd-d-grid"><span class="sd-sphinx-override sd-btn sd-text-wrap sd-btn-outline-primary">Learn more about Event Dataset</span></span></p>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text"><img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Models: Policy Template and Baselines</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<!--
+ * @Date: 2024-12-03 04:54:21
+ * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
+ * @LastEditTime: 2024-12-03 06:02:49
+ * @FilePath: /MineStudio/docs/source/models/quick-models.md
+-->
+<p class="sd-card-text">Here is an example that shows how to load the OpenAI’s VPT policy in the Minecraft environment.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinecraftSim</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator.callbacks</span><span class="w"> </span><span class="kn">import</span> <span class="n">RecordCallback</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_vpt_policy</span><span class="p">,</span> <span class="n">VPTPolicy</span>
+
+<span class="c1"># load the policy from the local model files</span>
+<span class="n">policy</span> <span class="o">=</span> <span class="n">load_vpt_policy</span><span class="p">(</span>
+    <span class="n">model_path</span><span class="o">=</span><span class="s2">&quot;/path/to/foundation-model-2x.model&quot;</span><span class="p">,</span> 
+    <span class="n">weights_path</span><span class="o">=</span><span class="s2">&quot;/path/to/foundation-model-2x.weights&quot;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span><span class="p">)</span>
+
+<span class="c1"># or load the policy from the Hugging Face model hub</span>
+<span class="n">policy</span> <span class="o">=</span> <span class="n">VPTPolicy</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;CraftJarvis/MineStudio_VPT.rl_from_early_game_2x&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span><span class="p">)</span>
+
+<span class="n">policy</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+
+<span class="n">env</span> <span class="o">=</span> <span class="n">MinecraftSim</span><span class="p">(</span>
+    <span class="n">obs_size</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span> 
+    <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">RecordCallback</span><span class="p">(</span><span class="n">record_path</span><span class="o">=</span><span class="s2">&quot;./output&quot;</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">frame_type</span><span class="o">=</span><span class="s2">&quot;pov&quot;</span><span class="p">)]</span>
+<span class="p">)</span>
+<span class="n">memory</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">obs</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1200</span><span class="p">):</span>
+    <span class="n">action</span><span class="p">,</span> <span class="n">memory</span> <span class="o">=</span> <span class="n">policy</span><span class="o">.</span><span class="n">get_action</span><span class="p">(</span><span class="n">obs</span><span class="p">,</span> <span class="n">memory</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="s1">&#39;*&#39;</span><span class="p">)</span>
+    <span class="n">obs</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">terminated</span><span class="p">,</span> <span class="n">truncated</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+<span class="n">env</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p class="sd-card-text">In this example, the recorded video will be saved in the <code class="docutils literal notranslate"><span class="pre">./output</span></code> directory.</p>
+</div>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text"><img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Offline: Pre-Training Policy with Offline Data</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="rubric" id="tutorial-fine-tuning-vpt-to-a-hunter">Tutorial: Fine-tuning VPT to a Hunter</p>
+<p class="sd-card-text">Fine-tune a VPT policy in MineStudio is really simple.</p>
+<p class="sd-card-text">The following code snippet shows how to finetune a VPT policy to hunt animals in Minecraft using offline data.</p>
+<ol class="arabic">
+<li><p class="sd-card-text">Import some dependencies:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">lightning</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">L</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">lightning.pytorch.loggers</span><span class="w"> </span><span class="kn">import</span> <span class="n">WandbLogger</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">lightning.pytorch.callbacks</span><span class="w"> </span><span class="kn">import</span> <span class="n">LearningRateMonitor</span>
+<span class="c1"># below are MineStudio dependencies</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">MineDataModule</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.offline</span><span class="w"> </span><span class="kn">import</span> <span class="n">MineLightning</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_vpt_policy</span><span class="p">,</span> <span class="n">VPTPolicy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.offline.mine_callbacks</span><span class="w"> </span><span class="kn">import</span> <span class="n">BehaviorCloneCallback</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.offline.lightning_callbacks</span><span class="w"> </span><span class="kn">import</span> <span class="n">SmartCheckpointCallback</span><span class="p">,</span> <span class="n">SpeedMonitorCallback</span>
+</pre></div>
+</div>
+</li>
+<li><p class="sd-card-text">Configure the policy model and the training process:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">policy</span> <span class="o">=</span> <span class="n">VPTPolicy</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;CraftJarvis/MineStudio_VPT.foundation_model_2x&quot;</span><span class="p">)</span>
+<span class="n">mine_lightning</span> <span class="o">=</span> <span class="n">MineLightning</span><span class="p">(</span>
+    <span class="n">mine_policy</span><span class="o">=</span><span class="n">policy</span><span class="p">,</span>
+    <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.00004</span><span class="p">,</span>
+    <span class="n">warmup_steps</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span>
+    <span class="n">weight_decay</span><span class="o">=</span><span class="mf">0.000181</span><span class="p">,</span>
+    <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">BehaviorCloneCallback</span><span class="p">(</span><span class="n">weight</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="sd-card-text">Configure the data module that contains all the <code class="docutils literal notranslate"><span class="pre">kill_entity</span></code> trajectory segments:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">episode_continuous_batch</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">mine_data</span> <span class="o">=</span> <span class="n">MineDataModule</span><span class="p">(</span>
+    <span class="n">data_params</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+        <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;event&#39;</span><span class="p">,</span> 
+        <span class="n">dataset_dirs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;10xx&#39;</span><span class="p">],</span>
+        <span class="n">win_len</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span>
+        <span class="n">frame_width</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span>
+        <span class="n">frame_height</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span>
+        <span class="n">event_regex</span><span class="o">=</span><span class="s2">&quot;minecraft.kill_entity:.*&quot;</span>
+        <span class="n">bias</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
+        <span class="n">min_nearby</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">batch_size</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+    <span class="n">num_workers</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+    <span class="n">prefetch_factor</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+    <span class="n">split_ratio</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> 
+    <span class="n">shuffle_episodes</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">episode_continuous_batch</span><span class="o">=</span><span class="n">episode_continuous_batch</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p class="sd-card-text">If <code class="docutils literal notranslate"><span class="pre">episode_continuous_batch=True</span></code>, then the dataloader will automatically use our distributed batch sampler. When configuring the <code class="docutils literal notranslate"><span class="pre">trainer</span></code>, we need to set <code class="docutils literal notranslate"><span class="pre">use_distributed_sampler=False</span></code>.</p>
+</div>
+</li>
+<li><p class="sd-card-text">Configure the <code class="docutils literal notranslate"><span class="pre">trainer</span></code> with your preferred <a class="reference external" href="https://lightning.ai/">PyTorch Lightning</a> callbacks:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L</span><span class="o">.</span><span class="n">Trainer</span><span class="p">(</span>
+    <span class="n">logger</span><span class="o">=</span><span class="n">WandbLogger</span><span class="p">(</span><span class="n">project</span><span class="o">=</span><span class="s2">&quot;minestudio-vpt&quot;</span><span class="p">),</span> 
+    <span class="n">devices</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> 
+    <span class="n">precision</span><span class="o">=</span><span class="s2">&quot;bf16&quot;</span><span class="p">,</span> 
+    <span class="n">strategy</span><span class="o">=</span><span class="s1">&#39;ddp_find_unused_parameters_true&#39;</span><span class="p">,</span> 
+    <span class="n">use_distributed_sampler</span><span class="o">=</span><span class="ow">not</span> <span class="n">episode_continuous_batch</span><span class="p">,</span> 
+    <span class="n">gradient_clip_val</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> 
+    <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">LearningRateMonitor</span><span class="p">(</span><span class="n">logging_interval</span><span class="o">=</span><span class="s1">&#39;step&#39;</span><span class="p">),</span> 
+        <span class="n">SpeedMonitorCallback</span><span class="p">(),</span>
+        <span class="n">SmartCheckpointCallback</span><span class="p">(</span>
+            <span class="n">dirpath</span><span class="o">=</span><span class="s1">&#39;./weights&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;weight-</span><span class="si">{epoch}</span><span class="s1">-</span><span class="si">{step}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">save_top_k</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> 
+            <span class="n">every_n_train_steps</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">save_weights_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">),</span> 
+        <span class="n">SmartCheckpointCallback</span><span class="p">(</span>
+            <span class="n">dirpath</span><span class="o">=</span><span class="s1">&#39;./checkpoints&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;ckpt-</span><span class="si">{epoch}</span><span class="s1">-</span><span class="si">{step}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">save_top_k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> 
+            <span class="n">every_n_train_steps</span><span class="o">=</span><span class="mi">2000</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">save_weights_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="p">]</span>
+<span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">mine_lightning</span><span class="p">,</span> <span class="n">datamodule</span><span class="o">=</span><span class="n">mine_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text"><img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Online: Finetuning Policy via Online Interaction</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">We provide a simple example in <code class="docutils literal notranslate"><span class="pre">online/run</span></code>. You can fine-tune VPT to complete the task of killing cows by directly running:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>online/run
+bash<span class="w"> </span>run.sh
+</pre></div>
+</div>
+<p class="sd-card-text">Specifically, this process includes several important configurations:</p>
+<p class="sd-card-text"><strong>Policy Generator</strong></p>
+<p class="sd-card-text">which does not accept parameters and directly returns <code class="docutils literal notranslate"><span class="pre">MinePolicy</span></code>.As an example：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">policy_generator</span><span class="p">():</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.models.openai_vpt.body</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_openai_policy</span>
+    <span class="n">model_path</span> <span class="o">=</span> <span class="s1">&#39;pretrained/foundation-model-2x.model&#39;</span>
+    <span class="n">weights_path</span> <span class="o">=</span> <span class="s1">&#39;pretrained/bc-from-early-game-2x.weights&#39;</span>
+    <span class="n">policy</span> <span class="o">=</span> <span class="n">load_openai_policy</span><span class="p">(</span><span class="n">model_path</span><span class="p">,</span> <span class="n">weights_path</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">policy</span>
+</pre></div>
+</div>
+<p class="sd-card-text"><strong>Environment Generator</strong></p>
+<p class="sd-card-text">which does not accept parameters and directly returns <code class="docutils literal notranslate"><span class="pre">MinePolicy</span></code>. As an example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">env_generator</span><span class="p">():</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinecraftSim</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator.callbacks</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+        <span class="n">SummonMobsCallback</span><span class="p">,</span> 
+        <span class="n">MaskActionsCallback</span><span class="p">,</span> 
+        <span class="n">RewardsCallback</span><span class="p">,</span> 
+        <span class="n">CommandsCallback</span><span class="p">,</span> 
+        <span class="n">JudgeResetCallback</span><span class="p">,</span>
+        <span class="n">FastResetCallback</span>
+    <span class="p">)</span>
+    <span class="n">sim</span> <span class="o">=</span> <span class="n">MinecraftSim</span><span class="p">(</span>
+        <span class="n">obs_size</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span> 
+        <span class="n">preferred_spawn_biome</span><span class="o">=</span><span class="s2">&quot;plains&quot;</span><span class="p">,</span> 
+        <span class="n">action_type</span> <span class="o">=</span> <span class="s2">&quot;agent&quot;</span><span class="p">,</span>
+        <span class="n">timestep_limit</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+        <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span>
+            <span class="n">SummonMobsCallback</span><span class="p">([{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;cow&#39;</span><span class="p">,</span> <span class="s1">&#39;number&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;range_x&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="s1">&#39;range_z&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">]}]),</span>
+            <span class="n">MaskActionsCallback</span><span class="p">(</span><span class="n">inventory</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> 
+            <span class="n">RewardsCallback</span><span class="p">([{</span>
+                <span class="s1">&#39;event&#39;</span><span class="p">:</span> <span class="s1">&#39;kill_entity&#39;</span><span class="p">,</span> 
+                <span class="s1">&#39;objects&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;cow&#39;</span><span class="p">],</span> 
+                <span class="s1">&#39;reward&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> 
+                <span class="s1">&#39;identity&#39;</span><span class="p">:</span> <span class="s1">&#39;chop_tree&#39;</span><span class="p">,</span> 
+                <span class="s1">&#39;max_reward_times&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> 
+            <span class="p">}]),</span>
+            <span class="n">CommandsCallback</span><span class="p">(</span><span class="n">commands</span><span class="o">=</span><span class="p">[</span>
+                <span class="s1">&#39;/give @p minecraft:iron_sword 1&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;/give @p minecraft:diamond 64&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;/effect @p 5 9999 255 true&#39;</span><span class="p">,</span>
+            <span class="p">]),</span>
+            <span class="n">FastResetCallback</span><span class="p">(</span>
+                <span class="n">biomes</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;plains&#39;</span><span class="p">],</span>
+                <span class="n">random_tp_range</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">JudgeResetCallback</span><span class="p">(</span><span class="mi">600</span><span class="p">),</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">sim</span>
+</pre></div>
+</div>
+<p class="sd-card-text"><strong>Config</strong> which provide the hyper-parameters for online training:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">online_dict</span> <span class="o">=</span> <span class="p">{</span>
+ <span class="s2">&quot;trainer_name&quot;</span><span class="p">:</span> <span class="s2">&quot;PPOTrainer&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;detach_rollout_manager&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s2">&quot;rollout_config&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;num_rollout_workers&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="s2">&quot;num_gpus_per_worker&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+        <span class="s2">&quot;num_cpus_per_worker&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s2">&quot;fragment_length&quot;</span><span class="p">:</span> <span class="mi">256</span><span class="p">,</span>
+        <span class="s2">&quot;to_send_queue_size&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+        <span class="s2">&quot;worker_config&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;num_envs&quot;</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span>
+            <span class="s2">&quot;batch_size&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+            <span class="s2">&quot;restart_interval&quot;</span><span class="p">:</span> <span class="mi">3600</span><span class="p">,</span>  <span class="c1"># 1h</span>
+            <span class="s2">&quot;video_fps&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+            <span class="s2">&quot;video_output_dir&quot;</span><span class="p">:</span> <span class="s2">&quot;output/videos&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;replay_buffer_config&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;max_chunks&quot;</span><span class="p">:</span> <span class="mi">4800</span><span class="p">,</span>
+            <span class="s2">&quot;max_reuse&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+            <span class="s2">&quot;max_staleness&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+            <span class="s2">&quot;fragments_per_report&quot;</span><span class="p">:</span> <span class="mi">40</span><span class="p">,</span>
+            <span class="s2">&quot;fragments_per_chunk&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s2">&quot;database_config&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;output/replay_buffer_cache&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;num_shards&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;episode_statistics_config&quot;</span><span class="p">:</span> <span class="p">{},</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;train_config&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;num_workers&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="s2">&quot;num_gpus_per_worker&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+        <span class="s2">&quot;num_iterations&quot;</span><span class="p">:</span> <span class="mi">4000</span><span class="p">,</span>
+        <span class="s2">&quot;vf_warmup&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s2">&quot;learning_rate&quot;</span><span class="p">:</span> <span class="mf">0.00002</span><span class="p">,</span>
+        <span class="s2">&quot;anneal_lr_linearly&quot;</span><span class="p">:</span> 
+        <span class="s2">&quot;weight_decay&quot;</span><span class="p">:</span> <span class="mf">0.04</span><span class="p">,</span>
+        <span class="s2">&quot;adam_eps&quot;</span><span class="p">:</span> <span class="mf">1e-8</span><span class="p">,</span>
+        <span class="s2">&quot;batch_size_per_gpu&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s2">&quot;batches_per_iteration&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+        <span class="s2">&quot;gradient_accumulation&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> 
+        <span class="s2">&quot;epochs_per_iteration&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> 
+        <span class="s2">&quot;context_length&quot;</span><span class="p">:</span> <span class="mi">64</span><span class="p">,</span>
+        <span class="s2">&quot;discount&quot;</span><span class="p">:</span> <span class="mf">0.999</span><span class="p">,</span>
+        <span class="s2">&quot;gae_lambda&quot;</span><span class="p">:</span> <span class="mf">0.95</span><span class="p">,</span>
+        <span class="s2">&quot;ppo_clip&quot;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span>
+        <span class="s2">&quot;clip_vloss&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> 
+        <span class="s2">&quot;max_grad_norm&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> 
+        <span class="s2">&quot;zero_initial_vf&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s2">&quot;ppo_policy_coef&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+        <span class="s2">&quot;ppo_vf_coef&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> 
+        <span class="s2">&quot;kl_divergence_coef_rho&quot;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span>
+        <span class="s2">&quot;entropy_bonus_coef&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+        <span class="s2">&quot;coef_rho_decay&quot;</span><span class="p">:</span> <span class="mf">0.9995</span><span class="p">,</span>
+        <span class="s2">&quot;log_ratio_range&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>  
+        <span class="s2">&quot;normalize_advantage_full_batch&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> 
+        <span class="s2">&quot;use_normalized_vf&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s2">&quot;num_readers&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="s2">&quot;num_cpus_per_reader&quot;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
+        <span class="s2">&quot;prefetch_batches&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="s2">&quot;save_interval&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+        <span class="s2">&quot;keep_interval&quot;</span><span class="p">:</span> <span class="mi">40</span><span class="p">,</span>
+        <span class="s2">&quot;record_video_interval&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="s2">&quot;fix_decoder&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="s2">&quot;resume&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> 
+        <span class="s2">&quot;resume_optimizer&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s2">&quot;save_path&quot;</span><span class="p">:</span> <span class="s2">&quot;output&quot;</span>
+    <span class="p">},</span>
+
+    <span class="s2">&quot;logger_config&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;project&quot;</span><span class="p">:</span> <span class="s2">&quot;minestudio_online&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;bow_cow&quot;</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+
+<span class="n">online_config</span> <span class="o">=</span> <span class="n">OmegaConf</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">online_dict</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sd-card-text">After preparing all the above content, run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.online.rollout.start_manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">start_rolloutmanager</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.online.trainer.start_trainer</span><span class="w"> </span><span class="kn">import</span> <span class="n">start_trainer</span>
+<span class="n">start_rolloutmanager</span><span class="p">(</span><span class="n">policy_generator</span><span class="p">,</span> <span class="n">env_generator</span><span class="p">,</span> <span class="n">online_cfg</span><span class="p">)</span>
+<span class="n">start_trainer</span><span class="p">(</span><span class="n">policy_generator</span><span class="p">,</span> <span class="n">env_generator</span><span class="p">,</span> <span class="n">online_cfg</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sd-card-text">to start online training.</p>
+<p class="sd-card-text">We use <code class="docutils literal notranslate"><span class="pre">wandb</span></code> to log and monitor the progress of the run. The corresponding parameters passed to <code class="docutils literal notranslate"><span class="pre">wandb</span></code> are in <code class="docutils literal notranslate"><span class="pre">config.logger_config</span></code>. When <code class="docutils literal notranslate"><span class="pre">save_path</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code>, the checkpoint will be saved to Ray’s working directory at <code class="docutils literal notranslate"><span class="pre">~/ray_results</span></code>.</p>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text"><img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Inference: Parallel Inference and Record Demonstrations</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<!--
+ * @Date: 2024-12-02 21:23:42
+ * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
+ * @LastEditTime: 2025-01-04 11:44:39
+ * @FilePath: /MineStudio/docs/source/inference/quick-inference.md
+-->
+<p class="sd-card-text">Here is a minimal example of how to use the inference framework:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">ray</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.inference</span><span class="w"> </span><span class="kn">import</span> <span class="n">EpisodePipeline</span><span class="p">,</span> <span class="n">MineGenerator</span><span class="p">,</span> <span class="n">InfoBaseFilter</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_vpt_policy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinecraftSim</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">ray</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+    <span class="n">env_generator</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span>
+        <span class="n">MinecraftSim</span><span class="p">,</span> 
+        <span class="n">obs_size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span> 
+        <span class="n">preferred_spawn_biome</span> <span class="o">=</span> <span class="s2">&quot;forest&quot;</span><span class="p">,</span> 
+    <span class="p">)</span> <span class="c1"># generate the environment</span>
+    <span class="n">agent_generator</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">VPTPolicy</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;CraftJarvis/MineStudio_VPT.rl_from_early_game_2x&quot;</span><span class="p">)</span> <span class="c1"># generate the agent</span>
+    <span class="n">worker_kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">env_generator</span> <span class="o">=</span> <span class="n">env_generator</span><span class="p">,</span> 
+        <span class="n">agent_generator</span> <span class="o">=</span> <span class="n">agent_generator</span><span class="p">,</span>
+        <span class="n">num_max_steps</span> <span class="o">=</span> <span class="mi">12000</span><span class="p">,</span> <span class="c1"># provide the maximum number of steps</span>
+        <span class="n">num_episodes</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="c1"># provide the number of episodes for each worker</span>
+        <span class="n">tmpdir</span> <span class="o">=</span> <span class="s2">&quot;./output&quot;</span><span class="p">,</span>
+        <span class="n">image_media</span> <span class="o">=</span> <span class="s2">&quot;h264&quot;</span><span class="p">,</span>
+    <span class="p">)</span> <span class="c1"># provide the worker kwargs</span>
+    <span class="n">pipeline</span> <span class="o">=</span> <span class="n">EpisodePipeline</span><span class="p">(</span>
+        <span class="n">episode_generator</span> <span class="o">=</span> <span class="n">MineGenerator</span><span class="p">(</span>
+            <span class="n">num_workers</span> <span class="o">=</span> <span class="mi">8</span><span class="p">,</span> <span class="c1"># the number of workers</span>
+            <span class="n">num_gpus</span> <span class="o">=</span> <span class="mf">0.25</span><span class="p">,</span> <span class="c1"># the number of gpus</span>
+            <span class="n">max_restarts</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="c1"># the maximum number of restarts for failed workers</span>
+            <span class="o">**</span><span class="n">worker_kwargs</span><span class="p">,</span> 
+        <span class="p">),</span>
+        <span class="n">episode_filter</span> <span class="o">=</span> <span class="n">InfoBaseFilter</span><span class="p">(</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="s2">&quot;mine_block&quot;</span><span class="p">,</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="s2">&quot;diamond_ore&quot;</span><span class="p">,</span>
+            <span class="n">num</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="p">),</span> <span class="c1"># InfoBaseFilter will label episodes mine more than 1 diamond_ore</span>
+    <span class="p">)</span>
+    <span class="n">summary</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">summary</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text"><img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Benchmark: Benchmarking and Evaluation</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+</div>
+</details></section>
+<section id="papers">
+<h2>Papers<a class="headerlink" href="#papers" title="Link to this heading">#</a></h2>
+<p>Our libraries directly support models from the following papers:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://arxiv.org/abs/2206.11795">Video PreTraining (VPT): Learning to Act by Watching Unlabeled Online Videos</a></p></li>
+<li><p><a class="reference external" href="https://arxiv.org/abs/2306.00937">STEVE-1: A Generative Model for Text-to-Behavior in Minecraft</a></p></li>
+<li><p><a class="reference external" href="https://arxiv.org/abs/2310.08235">GROOT: Learning to Follow Instructions by Watching Gameplay Videos</a></p></li>
+<li><p><a class="reference external" href="https://arxiv.org/abs/2410.17856">ROCKET-1: Mastering Open-World Interaction with Visual-Temporal Context Prompting</a></p></li>
+</ul>
+</section>
+</section>
+
+<div class="section ablog__blog_comments">
+   
+</div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../benchmark/automatic-evaluation.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Automatic Evaluation Pipeline</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio-libraries-quickstart">MineStudio Libraries Quickstart</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#papers">Papers</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/overview/getting-started.md.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, The CraftJarvis Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
