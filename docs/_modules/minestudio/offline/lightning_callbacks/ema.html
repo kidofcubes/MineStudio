@@ -860,6 +860,8 @@
 
 
 
+<div class="viewcode-block" id="ema_update">
+<a class="viewcode-back" href="../../../../api/offline/index.html#minestudio.offline.lightning_callbacks.ema.ema_update">[docs]</a>
 <span class="nd">@torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">()</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">ema_update</span><span class="p">(</span><span class="n">ema_model_tuple</span><span class="p">,</span> <span class="n">current_model_tuple</span><span class="p">,</span> <span class="n">decay</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -881,7 +883,8 @@
     <span class="n">torch</span><span class="o">.</span><span class="n">_foreach_mul_</span><span class="p">(</span><span class="n">ema_model_tuple</span><span class="p">,</span> <span class="n">decay</span><span class="p">)</span>
     <span class="n">torch</span><span class="o">.</span><span class="n">_foreach_add_</span><span class="p">(</span>
         <span class="n">ema_model_tuple</span><span class="p">,</span> <span class="n">current_model_tuple</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">decay</span><span class="p">),</span>
-    <span class="p">)</span>
+    <span class="p">)</span></div>
+
 
 
 <div class="viewcode-block" id="run_ema_update_cpu">
@@ -1022,6 +1025,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_step</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">every_n_steps</span> <span class="o">==</span> <span class="mi">0</span>
 
+<div class="viewcode-block" id="EMAOptimizer.update">
+<a class="viewcode-back" href="../../../../api/offline/index.html#minestudio.offline.lightning_callbacks.ema.EMAOptimizer.update">[docs]</a>
     <span class="nd">@torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">()</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -1046,7 +1051,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span>
                 <span class="n">target</span><span class="o">=</span><span class="n">run_ema_update_cpu</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ema_params</span><span class="p">,</span> <span class="n">current_model_state</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">decay</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">stream</span><span class="p">,),</span>
             <span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span></div>
+
 
 <div class="viewcode-block" id="EMAOptimizer.swap_tensors">
 <a class="viewcode-back" href="../../../../api/offline/index.html#minestudio.offline.lightning_callbacks.ema.EMAOptimizer.swap_tensors">[docs]</a>

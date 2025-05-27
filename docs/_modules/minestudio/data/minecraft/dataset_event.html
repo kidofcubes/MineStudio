@@ -1,0 +1,1311 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>minestudio.data.minecraft.dataset_event &#8212; MineStudio 1.0.0</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/thebelab.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=f44ad8c8" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../_static/documentation_options.js?v=8d563738"></script>
+    <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../_static/thebelab-helper.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/minestudio/data/minecraft/dataset_event';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://github.com/CraftJarvis/MineStudio/blob/master/docs/source/_static/switcher.json?raw=true';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'master';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <link rel="icon" href="../../../../_static/logo-no-text-light.svg"/>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />   
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../_static/logo-no-text-light.svg" class="logo__image only-light" alt=""/>
+    <img src="../../../../_static/logo-no-text-light.svg" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">MineStudio</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../overview/index.html">
+    Overview
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../overview/getting-started.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../simulator/index.html">
+    Simulator
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../data/index.html">
+    Data
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../models/index.html">
+    Models
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../../offline/index.html">
+    Offline
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../../online/index.html">
+    Online
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../../inference/index.html">
+    Inference
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../../benchmark/index.html">
+    Benchmark
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../../api/index.html">
+    API
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/CraftJarvis/MineStudio" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/minestudio" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-custom fa-pypi fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://arxiv.org/pdf/2310.08235" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="ai ai-arxiv fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">ArXiv</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+          
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../overview/index.html">
+    Overview
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../overview/getting-started.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../simulator/index.html">
+    Simulator
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../data/index.html">
+    Data
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../models/index.html">
+    Models
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../offline/index.html">
+    Offline
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../online/index.html">
+    Online
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../inference/index.html">
+    Inference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../benchmark/index.html">
+    Benchmark
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api/index.html">
+    API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/CraftJarvis/MineStudio" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/minestudio" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-custom fa-pypi fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://arxiv.org/pdf/2310.08235" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="ai ai-arxiv fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">ArXiv</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">minestudio.data.minecraft.dataset_event</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                   <h1>Source code for minestudio.data.minecraft.dataset_event</h1><div class="highlight"><pre>
+<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Date: 2024-11-10 10:26:52</span>
+<span class="sd">LastEditors: muzhancun muzhancun@stu.pku.edu.cn</span>
+<span class="sd">LastEditTime: 2025-05-27 15:24:46</span>
+<span class="sd">FilePath: /MineStudio/minestudio/data/minecraft/dataset_event.py</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">io</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">lmdb</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pickle</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch.utils.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">DataLoader</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">lightning.pytorch</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">L</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">rich.console</span><span class="w"> </span><span class="kn">import</span> <span class="n">Console</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Literal</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.data.minecraft.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">batchify</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.data.minecraft.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">KernelManager</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.data.minecraft.callbacks</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModalKernelCallback</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.utils.register</span><span class="w"> </span><span class="kn">import</span> <span class="n">Registers</span>
+
+<div class="viewcode-block" id="EventKernel">
+<a class="viewcode-back" href="../../../../api/data/index.html#minestudio.data.minecraft.dataset_event.EventKernel">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">EventKernel</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Manages and provides access to event data stored in an LMDB database.</span>
+
+<span class="sd">    This class reads event information and specific event items from an LMDB</span>
+<span class="sd">    database. It allows filtering events based on a regular expression and</span>
+<span class="sd">    can further filter events by minimum time separation (min_nearby) or</span>
+<span class="sd">    a maximum number of events to consider within a larger set (max_within).</span>
+<span class="sd">    It also handles a codebook for mapping episode names if provided.</span>
+
+<span class="sd">    :param event_path: Path to the directory containing the LMDB event database.</span>
+<span class="sd">    :type event_path: Union[str, Path]</span>
+<span class="sd">    :param event_regex: Regular expression to filter event names.</span>
+<span class="sd">    :type event_regex: str</span>
+<span class="sd">    :param min_nearby: Optional minimum time (in game ticks or similar units)</span>
+<span class="sd">                       between two occurrences of the same event in the same episode</span>
+<span class="sd">                       for an event instance to be included. Defaults to None.</span>
+<span class="sd">    :type min_nearby: Optional[int]</span>
+<span class="sd">    :param max_within: Optional maximum number of event instances to consider for each</span>
+<span class="sd">                       event type after other filtering. Defaults to None.</span>
+<span class="sd">    :type max_within: Optional[int]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span> <span class="n">event_regex</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">min_nearby</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">max_within</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">event_path</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">event_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">event_path</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">event_path</span><span class="o">.</span><span class="n">is_dir</span><span class="p">(),</span> <span class="sa">f</span><span class="s2">&quot;Event lmdb file </span><span class="si">{</span><span class="n">event_path</span><span class="si">}</span><span class="s2"> does not exist. &quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lmdb_stream</span> <span class="o">=</span> <span class="n">lmdb</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">event_path</span><span class="p">),</span> <span class="n">max_readers</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lock</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">lmdb_stream</span><span class="o">.</span><span class="n">begin</span><span class="p">(</span><span class="n">write</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="k">as</span> <span class="n">txn</span><span class="p">:</span>
+            <span class="n">__event_info__</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">txn</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;__event_info__&#39;</span><span class="p">))</span>
+            <span class="c1"># check if codebook exists</span>
+            <span class="n">__codebook_bytes__</span> <span class="o">=</span> <span class="n">txn</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;__codebook__&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">__codebook_bytes__</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__codebook__</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__codebook__</span> <span class="o">=</span> <span class="p">{</span><span class="n">v</span><span class="p">:</span> <span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">__codebook_bytes__</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">event_info</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">event</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">__event_info__</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">event_regex</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">event_info</span><span class="p">[</span><span class="n">event</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_list</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">event_info</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+        <span class="c1"># if min_nearby is not None or max_within is not None:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filter_out</span><span class="p">(</span><span class="n">min_nearby</span><span class="p">,</span> <span class="n">max_within</span><span class="p">)</span>
+    
+<div class="viewcode-block" id="EventKernel.filter_out">
+<a class="viewcode-back" href="../../../../api/data/index.html#minestudio.data.minecraft.dataset_event.EventKernel.filter_out">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">filter_out</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">min_nearby</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">max_within</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Filters the events based on proximity and count constraints.</span>
+
+<span class="sd">        This method refines the list of events to be used. It ensures that for any given</span>
+<span class="sd">        episode and event type, consecutive occurrences are separated by at least `min_nearby`</span>
+<span class="sd">        time units. It also limits the total number of occurrences for each event type to</span>
+<span class="sd">        `max_within` if specified.</span>
+
+<span class="sd">        :param min_nearby: Optional minimum time between consecutive events of the same type</span>
+<span class="sd">                           within an episode. If an event occurs too close to the previous one,</span>
+<span class="sd">                           it&#39;s filtered out. Defaults to None.</span>
+<span class="sd">        :type min_nearby: Optional[int]</span>
+<span class="sd">        :param max_within: Optional maximum number of instances to keep for each event type</span>
+<span class="sd">                           after applying the `min_nearby` filter. Defaults to None.</span>
+<span class="sd">        :type max_within: Optional[int]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">episode_event_last</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">remaining_events</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_list</span><span class="p">:</span>
+            <span class="n">num_events</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_event_size</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+            <span class="n">remaining_events</span><span class="p">[</span><span class="n">event</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_events</span><span class="p">):</span>
+                <span class="n">episode</span><span class="p">,</span> <span class="n">event_time</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_event_item</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">event_time</span> <span class="o">&lt;</span> <span class="mi">128</span><span class="p">:</span> <span class="c1"># remove dirty events</span>
+                    <span class="k">continue</span>
+                <span class="n">episode_event_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">episode</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">event</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="k">if</span> <span class="n">episode_event_key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">episode_event_last</span><span class="p">:</span>
+                    <span class="n">episode_event_last</span><span class="p">[</span><span class="n">episode_event_key</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">100000</span>
+
+                <span class="k">if</span> <span class="n">min_nearby</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> \
+                    <span class="ow">and</span> <span class="n">event_time</span> <span class="o">-</span> <span class="n">episode_event_last</span><span class="p">[</span><span class="n">episode_event_key</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">min_nearby</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                
+                <span class="k">if</span> <span class="n">max_within</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> \
+                    <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">remaining_events</span><span class="p">[</span><span class="n">event</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="n">max_within</span><span class="p">:</span>
+                    <span class="k">break</span>
+                
+                <span class="n">episode_event_last</span><span class="p">[</span><span class="n">episode_event_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">event_time</span>
+                <span class="n">remaining_events</span><span class="p">[</span><span class="n">event</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">event_info</span><span class="p">[</span><span class="n">event</span><span class="p">][</span><span class="s1">&#39;__num_items__&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">remaining_events</span><span class="p">[</span><span class="n">event</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remaining_events</span> <span class="o">=</span> <span class="n">remaining_events</span></div>
+
+    
+<div class="viewcode-block" id="EventKernel.get_event_list">
+<a class="viewcode-back" href="../../../../api/data/index.html#minestudio.data.minecraft.dataset_event.EventKernel.get_event_list">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_event_list</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the sorted list of unique event names that match the `event_regex`</span>
+<span class="sd">        and are present in the loaded event data.</span>
+
+<span class="sd">        :returns: A list of event names.</span>
+<span class="sd">        :rtype: List[str]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_list</span></div>
+
+    
+<div class="viewcode-block" id="EventKernel.get_event_size">
+<a class="viewcode-back" href="../../../../api/data/index.html#minestudio.data.minecraft.dataset_event.EventKernel.get_event_size">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_event_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the number of occurrences for a specific event type after filtering.</span>
+
+<span class="sd">        :param event: The name of the event.</span>
+<span class="sd">        :type event: str</span>
+<span class="sd">        :returns: The count of occurrences for the given event. Returns 0 if the event</span>
+<span class="sd">                  is not found or has no occurrences after filtering.</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">event</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_info</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_info</span><span class="p">[</span><span class="n">event</span><span class="p">][</span><span class="s1">&#39;__num_items__&#39;</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="EventKernel.get_event_item">
+<a class="viewcode-back" href="../../../../api/data/index.html#minestudio.data.minecraft.dataset_event.EventKernel.get_event_item">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_event_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">item_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves a specific event item by its type and index.</span>
+
+<span class="sd">        The method first remaps the `item_idx` if filtered `remaining_events` exist.</span>
+<span class="sd">        It then fetches the raw event item (episode, event_time, value) from the LMDB</span>
+<span class="sd">        database. If a codebook is present, it maps the episode name.</span>
+
+<span class="sd">        :param event: The name of the event type (e.g., &quot;minecraft.kill_entity:zombie&quot;).</span>
+<span class="sd">        :type event: str</span>
+<span class="sd">        :param item_idx: The index of the desired event item within its type, after filtering.</span>
+<span class="sd">        :type item_idx: int</span>
+<span class="sd">        :raises AssertionError: If `item_idx` is out of the valid range for the given event.</span>
+<span class="sd">        :returns: A tuple containing:</span>
+<span class="sd">                  - episode (str): The name or ID of the episode where the event occurred.</span>
+<span class="sd">                  - event_time (int): The timestamp (e.g., game tick) of the event.</span>
+<span class="sd">                  - value (int): A value associated with the event (semantics depend on event type).</span>
+<span class="sd">        :rtype: Tuple[str, int, int]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">item_idx</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_event_size</span><span class="p">(</span><span class="n">event</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;Item index </span><span class="si">{</span><span class="n">item_idx</span><span class="si">}</span><span class="s2"> out of range. &quot;</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;remaining_events&#39;</span><span class="p">):</span>
+            <span class="n">item_idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">remaining_events</span><span class="p">[</span><span class="n">event</span><span class="p">][</span><span class="n">item_idx</span><span class="p">]</span> <span class="c1"># remap the index</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="nb">str</span><span class="p">((</span><span class="n">event</span><span class="p">,</span> <span class="n">item_idx</span><span class="p">))</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">lmdb_stream</span><span class="o">.</span><span class="n">begin</span><span class="p">(</span><span class="n">write</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="k">as</span> <span class="n">txn</span><span class="p">:</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">txn</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="o">.</span><span class="n">encode</span><span class="p">()))</span>
+        <span class="n">episode</span><span class="p">,</span> <span class="n">event_time</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">item</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__codebook__</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">episode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__codebook__</span><span class="p">[</span><span class="n">episode</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">episode</span><span class="p">,</span> <span class="n">event_time</span><span class="p">,</span> <span class="n">value</span></div>
+</div>
+
+
+<div class="viewcode-block" id="EventKernelManager">
+<a class="viewcode-back" href="../../../../api/data/index.html#minestudio.data.minecraft.dataset_event.EventKernelManager">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">EventKernelManager</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Manages multiple EventKernel instances to provide a unified view of event data.</span>
+
+<span class="sd">    This class aggregates event data from several EventKernel objects, which might</span>
+<span class="sd">    correspond to different event LMDB databases or different partitions of data.</span>
+<span class="sd">    It allows querying the total size of an event type across all kernels and</span>
+<span class="sd">    retrieving specific event items by a global index.</span>
+
+<span class="sd">    :param event_path: A list of paths to directories, each containing an LMDB event database</span>
+<span class="sd">                       to be managed by an EventKernel.</span>
+<span class="sd">    :type event_path: List[Union[str, Path]]</span>
+<span class="sd">    :param event_regex: Regular expression used by each underlying EventKernel to filter event names.</span>
+<span class="sd">    :type event_regex: str</span>
+<span class="sd">    :param verbose: If True, logs information about the loaded events, defaults to True.</span>
+<span class="sd">    :type verbose: bool, optional</span>
+<span class="sd">    :param \*\*kwargs: Additional keyword arguments passed to the constructor of each EventKernel</span>
+<span class="sd">                     (e.g., `min_nearby`, `max_within`).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event_path</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]],</span> <span class="n">event_regex</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_kernels</span> <span class="o">=</span> <span class="p">[</span><span class="n">EventKernel</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">event_regex</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">event_path</span><span class="p">]</span>
+        <span class="n">event_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">kernel</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_kernels</span><span class="p">:</span>
+            <span class="n">event_set</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kernel</span><span class="o">.</span><span class="n">get_event_list</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_list</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">event_set</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+            <span class="n">Console</span><span class="p">()</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Event Kernel Manager] Number of loaded events: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">event_list</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+<div class="viewcode-block" id="EventKernelManager.get_event_list">
+<a class="viewcode-back" href="../../../../api/data/index.html#minestudio.data.minecraft.dataset_event.EventKernelManager.get_event_list">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_event_list</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the sorted list of unique event names aggregated from all managed EventKernel instances.</span>
+
+<span class="sd">        :returns: A list of unique, sorted event names.</span>
+<span class="sd">        :rtype: List[str]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_list</span></div>
+
+    
+<div class="viewcode-block" id="EventKernelManager.get_event_size">
+<a class="viewcode-back" href="../../../../api/data/index.html#minestudio.data.minecraft.dataset_event.EventKernelManager.get_event_size">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_event_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates the total number of occurrences for a specific event type across all managed kernels.</span>
+
+<span class="sd">        :param event: The name of the event.</span>
+<span class="sd">        :type event: str</span>
+<span class="sd">        :returns: The total count of the event. Returns 0 if the event is not found in any kernel</span>
+<span class="sd">                  or has no occurrences after filtering in the underlying kernels.</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">event</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_list</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">([</span><span class="n">kernel</span><span class="o">.</span><span class="n">get_event_size</span><span class="p">(</span><span class="n">event</span><span class="p">)</span> <span class="k">for</span> <span class="n">kernel</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_kernels</span><span class="p">])</span></div>
+
+    
+<div class="viewcode-block" id="EventKernelManager.get_event_item">
+<a class="viewcode-back" href="../../../../api/data/index.html#minestudio.data.minecraft.dataset_event.EventKernelManager.get_event_item">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_event_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">item_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves a specific event item by its type and a global index across all managed kernels.</span>
+
+<span class="sd">        It iterates through the managed EventKernel instances, subtracting the size of each kernel&#39;s</span>
+<span class="sd">        event pool from `item_idx` until the index falls within the range of the current kernel.</span>
+<span class="sd">        Then, it calls the `get_event_item` method of that specific kernel.</span>
+
+<span class="sd">        :param event: The name of the event type.</span>
+<span class="sd">        :type event: str</span>
+<span class="sd">        :param item_idx: The global index of the desired event item across all kernels.</span>
+<span class="sd">        :type item_idx: int</span>
+<span class="sd">        :raises ValueError: If `item_idx` is out of the valid range for the given event</span>
+<span class="sd">                           across all managed kernels.</span>
+<span class="sd">        :returns: A tuple containing:</span>
+<span class="sd">                  - episode (str): The name or ID of the episode.</span>
+<span class="sd">                  - event_time (int): The timestamp of the event.</span>
+<span class="sd">                  - value (int): A value associated with the event.</span>
+<span class="sd">        :rtype: Tuple[str, int, int]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">kernel</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_kernels</span><span class="p">:</span>
+            <span class="n">size</span> <span class="o">=</span> <span class="n">kernel</span><span class="o">.</span><span class="n">get_event_size</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">item_idx</span> <span class="o">&lt;</span> <span class="n">size</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">kernel</span><span class="o">.</span><span class="n">get_event_item</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">item_idx</span><span class="p">)</span>
+            <span class="n">item_idx</span> <span class="o">-=</span> <span class="n">size</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Item index </span><span class="si">{</span><span class="n">item_idx</span><span class="si">}</span><span class="s2"> out of range. &quot;</span><span class="p">)</span></div>
+</div>
+
+
+<div class="viewcode-block" id="EventDataset">
+<a class="viewcode-back" href="../../../../api/data/index.html#minestudio.data.minecraft.dataset_event.EventDataset">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">EventDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A PyTorch Dataset for loading sequences of data centered around specific game events.</span>
+
+<span class="sd">    This dataset uses an `EventKernelManager` to identify occurrences of specified events</span>
+<span class="sd">    (filtered by `event_regex`, `min_nearby`, `max_within`) and a `KernelManager`</span>
+<span class="sd">    to retrieve the actual multi-modal data (like images, actions, etc.) for a window</span>
+<span class="sd">    of time (`win_len`) around each event. It supports splitting into training and</span>
+<span class="sd">    validation sets.</span>
+
+<span class="sd">    :param dataset_dirs: List of directories where the raw dataset (LMDBs for different modalities)</span>
+<span class="sd">                         is stored.</span>
+<span class="sd">    :type dataset_dirs: List[str]</span>
+<span class="sd">    :param modal_kernel_callbacks: List of `ModalKernelCallback` instances or their registered names.</span>
+<span class="sd">                                   These define how data for each modality is fetched and processed.</span>
+<span class="sd">    :type modal_kernel_callbacks: List[Union[str, ModalKernelCallback]]</span>
+<span class="sd">    :param modal_kernel_config: Optional configuration dictionary for creating `ModalKernelCallback`</span>
+<span class="sd">                                instances if their names are provided. Defaults to None.</span>
+<span class="sd">    :type modal_kernel_config: Optional[Dict]</span>
+<span class="sd">    :param win_len: The length of the window (number of frames/steps) to retrieve around each event.</span>
+<span class="sd">                    Defaults to 1.</span>
+<span class="sd">    :type win_len: int</span>
+<span class="sd">    :param skip_frame: The number of frames to skip between consecutive frames in the window.</span>
+<span class="sd">                       Defaults to 1 (no skip).</span>
+<span class="sd">    :type skip_frame: int</span>
+<span class="sd">    :param split: Specifies whether this dataset instance is for &#39;train&#39; or &#39;val&#39;.</span>
+<span class="sd">                  Defaults to &#39;train&#39;.</span>
+<span class="sd">    :type split: Literal[&#39;train&#39;, &#39;val&#39;]</span>
+<span class="sd">    :param split_ratio: The ratio of data to be used for the training set. The rest is for validation.</span>
+<span class="sd">                        Defaults to 0.8.</span>
+<span class="sd">    :type split_ratio: float</span>
+<span class="sd">    :param verbose: If True, logs information during setup. Defaults to True.</span>
+<span class="sd">    :type verbose: bool</span>
+<span class="sd">    :param event_paths: Optional list of paths to event LMDB databases. If None, it assumes</span>
+<span class="sd">                        event databases are in an &quot;event&quot; subdirectory within each `dataset_dirs`.</span>
+<span class="sd">                        Defaults to None.</span>
+<span class="sd">    :type event_paths: Optional[List[str]]</span>
+<span class="sd">    :param bias: An offset applied to the start time when fetching the window of data around an event.</span>
+<span class="sd">                 `start = max(event_time - win_len + bias, 0)`. Defaults to 0.</span>
+<span class="sd">    :type bias: int</span>
+<span class="sd">    :param event_regex: Regular expression to filter event names from the `EventKernelManager`.</span>
+<span class="sd">                        Defaults to &#39;&#39;.</span>
+<span class="sd">    :type event_regex: str</span>
+<span class="sd">    :param min_nearby: Passed to `EventKernelManager` to filter events. Minimum time between</span>
+<span class="sd">                       consecutive events of the same type. Defaults to None.</span>
+<span class="sd">    :type min_nearby: Optional[int]</span>
+<span class="sd">    :param max_within: Passed to `EventKernelManager` to filter events. Maximum number of instances</span>
+<span class="sd">                       to keep for each event type. Defaults to None.</span>
+<span class="sd">    :type max_within: Optional[int]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+        <span class="n">dataset_dirs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> 
+        <span class="n">modal_kernel_callbacks</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ModalKernelCallback</span><span class="p">]],</span> 
+        <span class="n">modal_kernel_config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="c1"># below are parameters for spliting dataset and building items</span>
+        <span class="n">win_len</span><span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> 
+        <span class="n">skip_frame</span><span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">split</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="s1">&#39;val&#39;</span><span class="p">]</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span>
+        <span class="n">split_ratio</span><span class="p">:</span> <span class="nb">float</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> 
+        <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="c1"># below are event dataset specific parameters</span>
+        <span class="n">event_paths</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">bias</span><span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">event_regex</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> 
+        <span class="n">min_nearby</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="c1"># minimal avaliable distance between two selected events</span>
+        <span class="n">max_within</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="c1"># maximum number of samples within each event</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">win_len</span> <span class="o">=</span> <span class="n">win_len</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">skip_frame</span> <span class="o">=</span> <span class="n">skip_frame</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">split</span> <span class="o">=</span> <span class="n">split</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">split_ratio</span> <span class="o">=</span> <span class="n">split_ratio</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bias</span> <span class="o">=</span> <span class="n">bias</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_regex</span> <span class="o">=</span> <span class="n">event_regex</span>
+
+        <span class="k">if</span> <span class="n">event_paths</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">event_paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">Path</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;event&quot;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">dataset_dirs</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">event_paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">Path</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">event_paths</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_kernel</span> <span class="o">=</span> <span class="n">EventKernelManager</span><span class="p">(</span>
+            <span class="n">event_path</span><span class="o">=</span><span class="n">event_paths</span><span class="p">,</span>
+            <span class="n">event_regex</span><span class="o">=</span><span class="n">event_regex</span><span class="p">,</span>
+            <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span>
+            <span class="n">min_nearby</span><span class="o">=</span><span class="n">min_nearby</span><span class="p">,</span> 
+            <span class="n">max_within</span><span class="o">=</span><span class="n">max_within</span><span class="p">,</span>
+        <span class="p">)</span>
+        
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">modal_kernel_callbacks</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;At least one modal kernel callback is required. &quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">modal_kernel_callbacks</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">assert</span> <span class="n">modal_kernel_config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;Modal kernel config is required. &quot;</span>
+            <span class="n">modal_kernel_callbacks</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">Registers</span><span class="o">.</span><span class="n">modal_kernel_callback</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">create_from_config</span><span class="p">(</span><span class="n">modal_kernel_config</span><span class="p">)</span> 
+                    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">modal_kernel_callbacks</span>
+            <span class="p">]</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">kernel_manager</span> <span class="o">=</span> <span class="n">KernelManager</span><span class="p">(</span>
+            <span class="n">dataset_dirs</span><span class="o">=</span><span class="n">dataset_dirs</span><span class="p">,</span> 
+            <span class="n">modal_kernel_callbacks</span><span class="o">=</span><span class="n">modal_kernel_callbacks</span><span class="p">,</span>
+        <span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">build_items</span><span class="p">()</span>
+    
+<div class="viewcode-block" id="EventDataset.build_items">
+<a class="viewcode-back" href="../../../../api/data/index.html#minestudio.data.minecraft.dataset_event.EventDataset.build_items">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">build_items</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Builds the list of items for the dataset based on selected events and split.</span>
+
+<span class="sd">        This method populates `self.items`, which is a list of tuples.</span>
+<span class="sd">        Each tuple stores a cumulative count of items, the event name, and a bias</span>
+<span class="sd">        for indexing into the original event list (used for train/val splitting).</span>
+<span class="sd">        The total number of items in the dataset (`self.num_items`) is also calculated.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_kernel</span><span class="o">.</span><span class="n">get_event_list</span><span class="p">()</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_items</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">event_with_items</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_list</span><span class="p">:</span>
+            <span class="n">num_event_items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_kernel</span><span class="o">.</span><span class="n">get_event_size</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">split</span> <span class="o">==</span> <span class="s1">&#39;train&#39;</span><span class="p">:</span>
+                <span class="n">bias</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">num_event_items</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">num_event_items</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">split_ratio</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">split</span> <span class="o">==</span> <span class="s1">&#39;val&#39;</span><span class="p">:</span>
+                <span class="n">bias</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">num_event_items</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">split_ratio</span><span class="p">)</span>
+                <span class="n">num_event_items</span> <span class="o">=</span> <span class="n">num_event_items</span> <span class="o">-</span> <span class="n">bias</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Split type &lt;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">split</span><span class="si">}</span><span class="s2">&gt; not supported. &quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">num_items</span> <span class="o">+=</span> <span class="n">num_event_items</span>
+            <span class="n">event_with_items</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">num_items</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">bias</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">=</span> <span class="n">event_with_items</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+            <span class="n">Console</span><span class="p">()</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Event Dataset] Regex: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">event_regex</span><span class="si">}</span><span class="s2">, Number of events: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">event_list</span><span class="p">)</span><span class="si">}</span><span class="s2">, number of items: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">num_items</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="EventDataset.locate_item">
+<a class="viewcode-back" href="../../../../api/data/index.html#minestudio.data.minecraft.dataset_event.EventDataset.locate_item">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">locate_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Locates the specific event and relative index within that event for a given global item index.</span>
+
+<span class="sd">        It uses a binary search on `self.items` (which stores cumulative counts)</span>
+<span class="sd">        to efficiently find which event the `idx` falls into and what its relative</span>
+<span class="sd">        index within that event&#39;s items is (after considering the split bias).</span>
+
+<span class="sd">        :param idx: The global index of the item in the dataset.</span>
+<span class="sd">        :type idx: int</span>
+<span class="sd">        :returns: A tuple containing:</span>
+<span class="sd">                  - event (str): The name of the event.</span>
+<span class="sd">                  - relative_idx_with_bias (int): The index within the specific event&#39;s item list,</span>
+<span class="sd">                                                  adjusted for the train/val split bias.</span>
+<span class="sd">        :rtype: Tuple[str, int]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Find the first event that idx &gt; acc[event]</span>
+        <span class="n">left</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">)</span>
+        <span class="k">while</span> <span class="n">left</span> <span class="o">&lt;</span> <span class="n">right</span><span class="p">:</span>
+            <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">left</span> <span class="o">+</span> <span class="n">right</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">mid</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">idx</span><span class="p">:</span>
+                <span class="n">left</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">right</span> <span class="o">=</span> <span class="n">mid</span>
+        <span class="k">if</span> <span class="n">left</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">relative_idx</span> <span class="o">=</span> <span class="n">idx</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">relative_idx</span> <span class="o">=</span> <span class="n">idx</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">left</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">event</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">left</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">bias</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">left</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">event</span><span class="p">,</span> <span class="n">relative_idx</span> <span class="o">+</span> <span class="n">bias</span></div>
+
+    
+    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the total number of items in this dataset instance (train or val split).</span>
+
+<span class="sd">        :returns: The number of items.</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_items</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves a single data item (a window of multi-modal data centered around an event).</span>
+
+<span class="sd">        1.  Locates the event and its relative index using `locate_item`.</span>
+<span class="sd">        2.  Gets the specific event details (episode, time) using `self.event_kernel.get_event_item`.</span>
+<span class="sd">        3.  Calculates the start time for the data window.</span>
+<span class="sd">        4.  Reads the multi-modal data for the window using `self.kernel_manager.read`.</span>
+<span class="sd">        5.  Extracts any mask associated with the item.</span>
+<span class="sd">        6.  Adds event text, episode name, and timestamps to the item.</span>
+<span class="sd">        7.  Converts all NumPy arrays in the item to PyTorch tensors using `to_tensor`.</span>
+
+<span class="sd">        :param idx: The global index of the item to retrieve.</span>
+<span class="sd">        :type idx: int</span>
+<span class="sd">        :raises AssertionError: If `idx` is out of range.</span>
+<span class="sd">        :returns: A mapping where keys are modality names (or &#39;text&#39;, &#39;episode&#39;, &#39;timestamp&#39;, &#39;mask&#39;)</span>
+<span class="sd">                  and values are the corresponding data as PyTorch tensors.</span>
+<span class="sd">        :rtype: Mapping[str, torch.Tensor]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">idx</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;Index &lt;</span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2">&gt; out of range &lt;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">}</span><span class="s2">&gt;&quot;</span>
+        <span class="n">event</span><span class="p">,</span> <span class="n">relative_idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">locate_item</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+        <span class="n">episode</span><span class="p">,</span> <span class="n">event_time</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_kernel</span><span class="o">.</span><span class="n">get_event_item</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">relative_idx</span><span class="p">)</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">event_time</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">win_len</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">bias</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_manager</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">episode</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">win_len</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">win_len</span><span class="p">,</span> <span class="n">skip_frame</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">skip_frame</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+            <span class="k">if</span> <span class="n">key</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;mask&#39;</span><span class="p">):</span>
+                <span class="n">mask</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="n">item</span><span class="p">[</span><span class="s2">&quot;mask&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mask</span>
+
+        <span class="n">item</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;minecraft.&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">item</span><span class="p">[</span><span class="s1">&#39;episode&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">episode</span>
+        <span class="n">item</span><span class="p">[</span><span class="s1">&#39;timestamp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">start</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">win_len</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">skip_frame</span><span class="p">)</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_tensor</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">item</span>
+
+<div class="viewcode-block" id="EventDataset.to_tensor">
+<a class="viewcode-back" href="../../../../api/data/index.html#minestudio.data.minecraft.dataset_event.EventDataset.to_tensor">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_tensor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Recursively converts NumPy arrays within a nested structure (list or dict) to PyTorch tensors.</span>
+
+<span class="sd">        If the input item is a NumPy array, it&#39;s converted to a PyTorch tensor.</span>
+<span class="sd">        If it&#39;s a list, the conversion is applied to each element.</span>
+<span class="sd">        If it&#39;s a dictionary, the conversion is applied to each value.</span>
+<span class="sd">        Other types are returned as is.</span>
+
+<span class="sd">        :param item: The item to convert. Can be a NumPy array, or a list/dict containing them.</span>
+<span class="sd">        :type item: Union[np.ndarray, List, Dict]</span>
+<span class="sd">        :returns: The item with NumPy arrays replaced by PyTorch tensors.</span>
+<span class="sd">        :rtype: Union[torch.Tensor, List, Dict]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Convert numpy array to torch tensor.</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">List</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">to_tensor</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">item</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">Dict</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_tensor</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">item</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="EventDataModule">
+<a class="viewcode-back" href="../../../../api/data/index.html#minestudio.data.minecraft.dataset_event.EventDataModule">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">EventDataModule</span><span class="p">(</span><span class="n">L</span><span class="o">.</span><span class="n">LightningDataModule</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A PyTorch Lightning DataModule for handling event-based datasets.</span>
+
+<span class="sd">    This class encapsulates the train and validation `EventDataset` instances and provides</span>
+<span class="sd">    corresponding DataLoaders. It simplifies the data handling pipeline for training</span>
+<span class="sd">    and evaluating models with PyTorch Lightning.</span>
+
+<span class="sd">    :param data_params: Dictionary of parameters to be passed to the `EventDataset` constructor.</span>
+<span class="sd">                        This includes `dataset_dirs`, `modal_kernel_callbacks`, `win_len`, etc.</span>
+<span class="sd">    :type data_params: Dict</span>
+<span class="sd">    :param batch_size: The batch size for the DataLoaders, defaults to 1.</span>
+<span class="sd">    :type batch_size: int, optional</span>
+<span class="sd">    :param num_workers: The number of worker processes for data loading, defaults to 0.</span>
+<span class="sd">    :type num_workers: int, optional</span>
+<span class="sd">    :param prefetch_factor: Number of batches loaded in advance by each worker. Defaults to None.</span>
+<span class="sd">                            See PyTorch DataLoader documentation for more details.</span>
+<span class="sd">    :type prefetch_factor: Optional[int]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+                 <span class="n">data_params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> 
+                 <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> 
+                 <span class="n">num_workers</span><span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> 
+                 <span class="n">prefetch_factor</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_params</span> <span class="o">=</span> <span class="n">data_params</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">=</span> <span class="n">batch_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_workers</span> <span class="o">=</span> <span class="n">num_workers</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prefetch_factor</span> <span class="o">=</span> <span class="n">prefetch_factor</span>
+    
+<div class="viewcode-block" id="EventDataModule.setup">
+<a class="viewcode-back" href="../../../../api/data/index.html#minestudio.data.minecraft.dataset_event.EventDataModule.setup">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stage</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets up the training and validation datasets.</span>
+
+<span class="sd">        This method is called by PyTorch Lightning at the appropriate time (e.g., before training</span>
+<span class="sd">        or validation). It instantiates `EventDataset` for both &#39;train&#39; and &#39;val&#39; splits</span>
+<span class="sd">        using the provided `data_params`.</span>
+
+<span class="sd">        :param stage: A string indicating the current stage (e.g., &#39;fit&#39;, &#39;validate&#39;, &#39;test&#39;).</span>
+<span class="sd">                      Not directly used in this implementation but part of the Lightning interface.</span>
+<span class="sd">                      Defaults to None.</span>
+<span class="sd">        :type stage: Optional[str]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">EventDataset</span><span class="p">(</span><span class="n">split</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">data_params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">val_dataset</span> <span class="o">=</span> <span class="n">EventDataset</span><span class="p">(</span><span class="n">split</span><span class="o">=</span><span class="s1">&#39;val&#39;</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">data_params</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="EventDataModule.train_dataloader">
+<a class="viewcode-back" href="../../../../api/data/index.html#minestudio.data.minecraft.dataset_event.EventDataModule.train_dataloader">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">train_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets up the DataLoader for the training dataset.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">train_loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span>
+            <span class="n">dataset</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">train_dataset</span><span class="p">,</span> 
+            <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="p">,</span> 
+            <span class="n">num_workers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_workers</span><span class="p">,</span> 
+            <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
+            <span class="n">collate_fn</span><span class="o">=</span><span class="n">batchify</span><span class="p">,</span>
+            <span class="n">prefetch_factor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">prefetch_factor</span><span class="p">,</span>
+            <span class="n">pin_memory</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">drop_last</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">train_loader</span></div>
+
+
+<div class="viewcode-block" id="EventDataModule.val_dataloader">
+<a class="viewcode-back" href="../../../../api/data/index.html#minestudio.data.minecraft.dataset_event.EventDataModule.val_dataloader">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">val_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets up the DataLoader for the validation dataset.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">val_loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span>
+            <span class="n">dataset</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">val_dataset</span><span class="p">,</span> 
+            <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="p">,</span> 
+            <span class="n">num_workers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_workers</span><span class="p">,</span> 
+            <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
+            <span class="n">collate_fn</span><span class="o">=</span><span class="n">batchify</span><span class="p">,</span>
+            <span class="n">prefetch_factor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">prefetch_factor</span><span class="p">,</span>
+            <span class="n">pin_memory</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">drop_last</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">val_loader</span></div>
+</div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+
+    <span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">torch.utils.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataLoader</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.data.minecraft.callbacks</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+        <span class="n">ImageKernelCallback</span><span class="p">,</span> <span class="n">ActionKernelCallback</span><span class="p">,</span> <span class="n">MetaInfoKernelCallback</span><span class="p">,</span> <span class="n">SegmentationKernelCallback</span>
+    <span class="p">)</span>
+
+
+    <span class="n">data_module</span> <span class="o">=</span> <span class="n">EventDataModule</span><span class="p">(</span>
+        <span class="n">data_params</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">dataset_dirs</span><span class="o">=</span><span class="p">[</span>
+                <span class="s1">&#39;/nfs-shared-2/data/contractors/dataset_10xx&#39;</span><span class="p">,</span> 
+            <span class="p">],</span> 
+            <span class="n">modal_kernel_callbacks</span><span class="o">=</span><span class="p">[</span>
+                <span class="n">ImageKernelCallback</span><span class="p">(</span><span class="n">frame_width</span><span class="o">=</span><span class="mi">224</span><span class="p">,</span> <span class="n">frame_height</span><span class="o">=</span><span class="mi">224</span><span class="p">,</span> <span class="n">enable_video_aug</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span> 
+                <span class="n">ActionKernelCallback</span><span class="p">(),</span>
+                <span class="n">MetaInfoKernelCallback</span><span class="p">(),</span>
+                <span class="n">SegmentationKernelCallback</span><span class="p">(</span><span class="n">frame_width</span><span class="o">=</span><span class="mi">224</span><span class="p">,</span> <span class="n">frame_height</span><span class="o">=</span><span class="mi">224</span><span class="p">),</span> 
+            <span class="p">],</span>
+            <span class="n">win_len</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> 
+            <span class="n">split_ratio</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> 
+            <span class="n">event_regex</span><span class="o">=</span><span class="s1">&#39;minecraft.kill_entity:.*&#39;</span><span class="p">,</span> 
+            <span class="n">min_nearby</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span>
+            <span class="n">max_within</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+        <span class="p">),</span> 
+        <span class="n">batch_size</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> 
+        <span class="n">num_workers</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> 
+        <span class="n">prefetch_factor</span><span class="o">=</span><span class="kc">None</span>
+    <span class="p">)</span>
+    <span class="n">data_module</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
+    <span class="n">loader</span> <span class="o">=</span> <span class="n">data_module</span><span class="o">.</span><span class="n">train_dataloader</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">batch</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">loader</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">batch</span><span class="p">[</span><span class="s1">&#39;episode&#39;</span><span class="p">],</span> <span class="n">batch</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">])]</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">idx</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">:</span>
+            <span class="k">break</span>
+</pre></div>
+<div class="section ablog__blog_comments">
+   
+</div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, The CraftJarvis Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
