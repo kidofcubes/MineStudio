@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-28 17:46:44
 LastEditors: muzhancun muzhancun@stu.pku.edu.cn
-LastEditTime: 2025-05-27 17:32:14
+LastEditTime: 2025-05-27 17:43:14
 FilePath: /MineStudio/docs/source/conf.py
 '''
 import os
@@ -31,7 +31,6 @@ release = '1.0.0'
 extensions = [
     "sphinx.ext.napoleon",
     "sphinx.ext.autodoc",
-    # "sphinx.ext.autosummary",
     "sphinx.ext.todo",
     "sphinx.ext.viewcode",
     "sphinx.ext.intersphinx",
@@ -116,7 +115,10 @@ autoapi_dirs = ['../../minestudio']
 autoapi_ignore = ['*minerl*', '*tests*', '*tutorials*', '*utils*']
 
 autodoc_mock_imports = ['torch', 'absl', 'cv2', 'huggingface_hub', 'lmdb', 'gymnasium', 'lightning', 'omegaconf', 'tree', 'einops', 'gym', 'gym3', 'coloredlogs', 'daemoniker', 'av', 'minecraft_data', 'torchvision', 'timm', 'transformers', 'x_transformers', 'tqdm']
-# -- application setup -------------------------------------------------------
+autodoc_inherit_docstring = False
+autosummary_generate = False
+# -- application setup ----------
+# ---------------------------------------------
 
 
 def setup_to_main(
