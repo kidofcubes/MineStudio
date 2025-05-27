@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-28 17:46:44
 LastEditors: muzhancun muzhancun@stu.pku.edu.cn
-LastEditTime: 2025-05-27 19:14:11
+LastEditTime: 2025-05-27 19:38:12
 FilePath: /MineStudio/docs/source/conf.py
 '''
 import os
@@ -101,9 +101,10 @@ html_theme_options = {
   },
   "navbar_start": ["navbar-logo"],  # 在导航栏显示 Logo
   "switcher": {
-        "json_url": "https://github.com/CraftJarvis/MineStudio/blob/master/docs/source/_static/switcher.json?raw=true",
-        "version_match": "master",
-   }
+        "json_url": "https://craftjarvis.github.io/MineStudio/_static/version.json",
+        "version_match": "latest",
+   },
+   "check_switcher": True,
 }
 
 html_title = "MineStudio"
@@ -167,6 +168,5 @@ def setup(app: Sphinx) -> Dict[str, Any]:
     }
 
 # setup multiversion
-smv_tag_whitelist = r'^.*$'
-smv_branch_whitelist = r'^(master|releases/.*)$' # only include master and releases/* branches
-smv_released_pattern = r'^v(\d+\.\d+\.\d+)$'  # match version pattern vX.Y.Z
+smv_tag_whitelist = r'^.*$' 
+smv_released_pattern = r'^refs/tags/.*$'
