@@ -64,7 +64,7 @@ To install MineStudio from source, you can run the following command:
 pip install git+https://github.com/CraftJarvis/MineStudio.git
 ```
 
-Minecraft simulator requires rendering tools. For users with nvidia graphics cards, we recommend installing **VirtualGL**. For other users, we recommend using **Xvfb**, which supports CPU rendering but is relatively slower. Refer to the [documentation](https://craftjarvis.github.io/MineStudio/overview/installation.html#install-the-rendering-tool) for installation commands.
+[Important] Minecraft simulator requires rendering tools. For users with nvidia graphics cards, we recommend installing **VirtualGL**. For other users, we recommend using **Xvfb**, which supports CPU rendering but is slightly slower. Refer to the [documentation](https://craftjarvis.github.io/MineStudio/overview/installation.html#install-the-rendering-tool) for installation commands.
 
 After the installation, you can run the following command to check if the installation is successful:
 ```bash
