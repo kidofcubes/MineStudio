@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Online API Documentation &#8212; MineStudio 1.0.0</title>
+    <title>Online API Documentation &#8212; MineStudio</title>
   
   
   
@@ -45,7 +45,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=8d563738"></script>
+    <script src="../../_static/documentation_options.js?v=cb7bf70b"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -635,59 +635,7 @@
 <li><p><strong>rollout_worker_id</strong> – The ID of the rollout worker.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Attributes<span class="colon">:</span></dt>
-<dd class="field-even"><dl class="simple">
-<dt><strong>authkey</strong></dt><dd></dd>
-<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">daemon</span></code></dt><dd><p>Return whether process is a daemon</p>
-</dd>
-<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">exitcode</span></code></dt><dd><p>Return exit code of process or <cite>None</cite> if it has yet to stop</p>
-</dd>
-<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">ident</span></code></dt><dd><p>Return identifier (PID) of process or <cite>None</cite> if it has yet to start</p>
-</dd>
-<dt><strong>name</strong></dt><dd></dd>
-<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">pid</span></code></dt><dd><p>Return identifier (PID) of process or <cite>None</cite> if it has yet to start</p>
-</dd>
-<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">sentinel</span></code></dt><dd><p>Return a file descriptor (Unix) or handle (Windows) suitable for waiting for process termination.</p>
-</dd>
 </dl>
-</dd>
-</dl>
-<p class="rubric">Methods</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">close</span></code>()</p></td>
-<td><p>Close the Process object.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_alive</span></code>()</p></td>
-<td><p>Return whether process is alive</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">join</span></code>([timeout])</p></td>
-<td><p>Wait until child process terminates</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kill</span></code>()</p></td>
-<td><p>Terminate process; sends SIGKILL signal or uses TerminateProcess()</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.online.rollout.env_worker.EnvWorker.report_rewards" title="minestudio.online.rollout.env_worker.EnvWorker.report_rewards"><code class="xref py py-obj docutils literal notranslate"><span class="pre">report_rewards</span></code></a>(rewards)</p></td>
-<td><p>Sends the rewards for an episode to the main process.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.online.rollout.env_worker.EnvWorker.reset_state" title="minestudio.online.rollout.env_worker.EnvWorker.reset_state"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reset_state</span></code></a>()</p></td>
-<td><p>Sends a reset signal to the main process and receives the initial observation.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.online.rollout.env_worker.EnvWorker.run" title="minestudio.online.rollout.env_worker.EnvWorker.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>()</p></td>
-<td><p>The main loop of the environment worker process.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">start</span></code>()</p></td>
-<td><p>Start child process</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.online.rollout.env_worker.EnvWorker.step_agent" title="minestudio.online.rollout.env_worker.EnvWorker.step_agent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">step_agent</span></code></a>(obs, last_reward, ...)</p></td>
-<td><p>Sends an observation to the main process and receives an action and predicted value.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">terminate</span></code>()</p></td>
-<td><p>Terminate process; sends SIGTERM signal or uses TerminateProcess()</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="minestudio.online.rollout.env_worker.EnvWorker.report_rewards">
 <span class="sig-name descname"><span class="pre">report_rewards</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rewards</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/rollout/env_worker.html#EnvWorker.report_rewards"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.rollout.env_worker.EnvWorker.report_rewards" title="Link to this definition">#</a></dt>
@@ -753,58 +701,7 @@ Handles environment resets, steps, and video recording.</p>
 <li><p><strong>queue_size</strong> – The maximum size of the command queue.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Attributes<span class="colon">:</span></dt>
-<dd class="field-even"><dl class="simple">
-<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">daemon</span></code></dt><dd><p>A boolean value indicating whether this thread is a daemon thread.</p>
-</dd>
-<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">ident</span></code></dt><dd><p>Thread identifier of this thread or None if it has not been started.</p>
-</dd>
-<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></dt><dd><p>A string used for identification purposes only.</p>
-</dd>
-<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">native_id</span></code></dt><dd><p>Native integral thread ID of this thread, or None if it has not been started.</p>
-</dd>
 </dl>
-</dd>
-</dl>
-<p class="rubric">Methods</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.online.rollout.env_worker.VideoWriter.close_video" title="minestudio.online.rollout.env_worker.VideoWriter.close_video"><code class="xref py py-obj docutils literal notranslate"><span class="pre">close_video</span></code></a>()</p></td>
-<td><p>Closes the current video file.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">getName</span></code>()</p></td>
-<td><p>Return a string used for identification purposes only.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">isDaemon</span></code>()</p></td>
-<td><p>Return whether this thread is a daemon.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_alive</span></code>()</p></td>
-<td><p>Return whether the thread is alive.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">join</span></code>([timeout])</p></td>
-<td><p>Wait until the thread terminates.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.online.rollout.env_worker.VideoWriter.open_video" title="minestudio.online.rollout.env_worker.VideoWriter.open_video"><code class="xref py py-obj docutils literal notranslate"><span class="pre">open_video</span></code></a>(path)</p></td>
-<td><p>Opens a video file for writing.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.online.rollout.env_worker.VideoWriter.run" title="minestudio.online.rollout.env_worker.VideoWriter.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>()</p></td>
-<td><p>The main loop of the video writer thread.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setDaemon</span></code>(daemonic)</p></td>
-<td><p>Set whether this thread is a daemon.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setName</span></code>(name)</p></td>
-<td><p>Set the name string for this thread.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">start</span></code>()</p></td>
-<td><p>Start the thread's activity.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.online.rollout.env_worker.VideoWriter.write_frame" title="minestudio.online.rollout.env_worker.VideoWriter.write_frame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_frame</span></code></a>(frame)</p></td>
-<td><p>Writes a frame to the video file.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="minestudio.online.rollout.env_worker.VideoWriter.close_video">
 <span class="sig-name descname"><span class="pre">close_video</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/rollout/env_worker.html#VideoWriter.close_video"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.rollout.env_worker.VideoWriter.close_video" title="Link to this definition">#</a></dt>
@@ -881,15 +778,6 @@ Processes commands from the queue to open, write, and close video files.</p>
 <dd><p>A protocol defining the structure for a progress handler function.</p>
 <p>This handler is called by the RolloutWorker to report step-wise progress.
 Implementers of this protocol can use this to, for example, send data to a replay buffer.</p>
-<p class="rubric">Methods</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">__call__</span></code>(*, worker_uuid, obs, state, action, ...)</p></td>
-<td><p>Call self as a function.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 </dd></dl>
 
 <dl class="py class">
@@ -925,33 +813,6 @@ Implementers of this protocol can use this to, for example, send data to a repla
 </ul>
 </dd>
 </dl>
-<p class="rubric">Methods</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.online.rollout.rollout_worker.RolloutWorker.inference" title="minestudio.online.rollout.rollout_worker.RolloutWorker.inference"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inference</span></code></a>(requests)</p></td>
-<td><p>Performs a batch of inference requests using the policy model.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.online.rollout.rollout_worker.RolloutWorker.load_weights" title="minestudio.online.rollout.rollout_worker.RolloutWorker.load_weights"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_weights</span></code></a>(weights)</p></td>
-<td><p>Loads new weights into the policy model.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.online.rollout.rollout_worker.RolloutWorker.loop" title="minestudio.online.rollout.rollout_worker.RolloutWorker.loop"><code class="xref py py-obj docutils literal notranslate"><span class="pre">loop</span></code></a>()</p></td>
-<td><p>Runs one iteration of the rollout loop.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.online.rollout.rollout_worker.RolloutWorker.poll_environments" title="minestudio.online.rollout.rollout_worker.RolloutWorker.poll_environments"><code class="xref py py-obj docutils literal notranslate"><span class="pre">poll_environments</span></code></a>()</p></td>
-<td><p>Polls all environment connections for messages and processes them.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.online.rollout.rollout_worker.RolloutWorker.progress_handler" title="minestudio.online.rollout.rollout_worker.RolloutWorker.progress_handler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">progress_handler</span></code></a>(*, worker_uuid, obs, ...)</p></td>
-<td><p>Default progress handler, likely intended to be overridden or replaced.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.online.rollout.rollout_worker.RolloutWorker.rollout" title="minestudio.online.rollout.rollout_worker.RolloutWorker.rollout"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rollout</span></code></a>(num_batches)</p></td>
-<td><p>Runs the rollout loop for a specified number of batches.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.online.rollout.rollout_worker.RolloutWorker.update_model_version" title="minestudio.online.rollout.rollout_worker.RolloutWorker.update_model_version"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_model_version</span></code></a>(next_model_version)</p></td>
-<td><p>Updates the model version number that will be associated with subsequently collected data.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="minestudio.online.rollout.rollout_worker.RolloutWorker.inference">
 <span class="sig-name descname"><span class="pre">inference</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">requests</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/minestudio/online/rollout/rollout_worker.html#RolloutWorker.inference"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.rollout.rollout_worker.RolloutWorker.inference" title="Link to this definition">#</a></dt>
@@ -1113,18 +974,6 @@ This includes sub-configs for <cite>train_config</cite> and <cite>rollout_config
 <dd class="field-odd"><p><strong>fragment_store</strong> – An instance of FragmentStore where fragments are physically stored.</p>
 </dd>
 </dl>
-<p class="rubric">Methods</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.online.rollout.replay_buffer.actor.FragmentManager.clean" title="minestudio.online.rollout.replay_buffer.actor.FragmentManager.clean"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clean</span></code></a>(fragment_id)</p></td>
-<td><p>Removes a fragment from the reference count and deletes it from the FragmentStore.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.online.rollout.replay_buffer.actor.FragmentManager.create_fragment_record" title="minestudio.online.rollout.replay_buffer.actor.FragmentManager.create_fragment_record"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_fragment_record</span></code></a>(fragment_id, metadata)</p></td>
-<td><p>Creates a new FragmentRecord for a given fragment_id and its metadata.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="minestudio.online.rollout.replay_buffer.actor.FragmentManager.clean">
 <span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fragment_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/rollout/replay_buffer/actor.html#FragmentManager.clean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.rollout.replay_buffer.actor.FragmentManager.clean" title="Link to this definition">#</a></dt>
@@ -1196,27 +1045,6 @@ a LocalFragmentStoreImpl. Otherwise, it uses a RemoteFragmentStoreImpl actor.</p
 <dd class="field-even"><p><strong>AssertionError</strong> – if the local status cannot be determined.</p>
 </dd>
 </dl>
-<p class="rubric">Methods</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.online.rollout.replay_buffer.fragment_store.FragmentStore.add_fragment" title="minestudio.online.rollout.replay_buffer.fragment_store.FragmentStore.add_fragment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_fragment</span></code></a>(fragment)</p></td>
-<td><p>Adds a fragment to the store (either local or remote).</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.online.rollout.replay_buffer.fragment_store.FragmentStore.clear" title="minestudio.online.rollout.replay_buffer.fragment_store.FragmentStore.clear"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear</span></code></a>()</p></td>
-<td><p>Removes all fragments from the store (either local or remote).</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.online.rollout.replay_buffer.fragment_store.FragmentStore.delete_fragment" title="minestudio.online.rollout.replay_buffer.fragment_store.FragmentStore.delete_fragment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_fragment</span></code></a>(fragment_uuid)</p></td>
-<td><p>Deletes a fragment from the store (either local or remote) by its unique ID.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.online.rollout.replay_buffer.fragment_store.FragmentStore.get_disk_space" title="minestudio.online.rollout.replay_buffer.fragment_store.FragmentStore.get_disk_space"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_disk_space</span></code></a>()</p></td>
-<td><p>Gets the total disk space used by the cache (either local or remote) in bytes.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.online.rollout.replay_buffer.fragment_store.FragmentStore.get_fragment" title="minestudio.online.rollout.replay_buffer.fragment_store.FragmentStore.get_fragment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_fragment</span></code></a>(fragment_uuid)</p></td>
-<td><p>Retrieves a fragment from the store (either local or remote) by its unique ID.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="minestudio.online.rollout.replay_buffer.fragment_store.FragmentStore.add_fragment">
 <span class="sig-name descname"><span class="pre">add_fragment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fragment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#minestudio.online.utils.rollout.datatypes.SampleFragment" title="minestudio.online.utils.rollout.datatypes.SampleFragment"><span class="pre">SampleFragment</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/rollout/replay_buffer/fragment_store.html#FragmentStore.add_fragment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.rollout.replay_buffer.fragment_store.FragmentStore.add_fragment" title="Link to this definition">#</a></dt>
@@ -1289,27 +1117,6 @@ stored on the local disk.</p>
 </ul>
 </dd>
 </dl>
-<p class="rubric">Methods</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.online.rollout.replay_buffer.fragment_store.LocalFragmentStoreImpl.add_fragment" title="minestudio.online.rollout.replay_buffer.fragment_store.LocalFragmentStoreImpl.add_fragment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_fragment</span></code></a>(fragment)</p></td>
-<td><p>Adds a fragment to the store and returns a unique ID for it.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.online.rollout.replay_buffer.fragment_store.LocalFragmentStoreImpl.clear" title="minestudio.online.rollout.replay_buffer.fragment_store.LocalFragmentStoreImpl.clear"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear</span></code></a>()</p></td>
-<td><p>Removes all fragments from the store.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.online.rollout.replay_buffer.fragment_store.LocalFragmentStoreImpl.delete_fragment" title="minestudio.online.rollout.replay_buffer.fragment_store.LocalFragmentStoreImpl.delete_fragment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_fragment</span></code></a>(fragment_uuid)</p></td>
-<td><p>Deletes a fragment from the store by its unique ID.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.online.rollout.replay_buffer.fragment_store.LocalFragmentStoreImpl.get_disk_space" title="minestudio.online.rollout.replay_buffer.fragment_store.LocalFragmentStoreImpl.get_disk_space"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_disk_space</span></code></a>()</p></td>
-<td><p>Gets the total disk space used by the cache in bytes.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.online.rollout.replay_buffer.fragment_store.LocalFragmentStoreImpl.get_fragment" title="minestudio.online.rollout.replay_buffer.fragment_store.LocalFragmentStoreImpl.get_fragment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_fragment</span></code></a>(fragment_uuid)</p></td>
-<td><p>Retrieves a fragment from the store by its unique ID.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="minestudio.online.rollout.replay_buffer.fragment_store.LocalFragmentStoreImpl.add_fragment">
 <span class="sig-name descname"><span class="pre">add_fragment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fragment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#minestudio.online.utils.rollout.datatypes.SampleFragment" title="minestudio.online.utils.rollout.datatypes.SampleFragment"><span class="pre">SampleFragment</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/rollout/replay_buffer/fragment_store.html#LocalFragmentStoreImpl.add_fragment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.rollout.replay_buffer.fragment_store.LocalFragmentStoreImpl.add_fragment" title="Link to this definition">#</a></dt>
@@ -1388,30 +1195,6 @@ If None, it attempts to connect to an existing actor named “replay_buffer”.<
 <dd class="field-even"><p><strong>ValueError</strong> – If config is provided but an actor already exists, or if config is None and no actor exists.</p>
 </dd>
 </dl>
-<p class="rubric">Methods</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.online.rollout.replay_buffer.interface.ReplayBufferInterface.add_fragment" title="minestudio.online.rollout.replay_buffer.interface.ReplayBufferInterface.add_fragment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_fragment</span></code></a>(fragment, metadata)</p></td>
-<td><p>Adds a fragment to the FragmentStore and then informs the ReplayBufferActor.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.online.rollout.replay_buffer.interface.ReplayBufferInterface.fetch_fragments" title="minestudio.online.rollout.replay_buffer.interface.ReplayBufferInterface.fetch_fragments"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fetch_fragments</span></code></a>(num_fragments)</p></td>
-<td><p>Fetches a list of fragment IDs and their indices from the ReplayBufferActor.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.online.rollout.replay_buffer.interface.ReplayBufferInterface.load_fragment" title="minestudio.online.rollout.replay_buffer.interface.ReplayBufferInterface.load_fragment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_fragment</span></code></a>(fragment_id)</p></td>
-<td><p>Loads a fragment directly from the FragmentStore.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.online.rollout.replay_buffer.interface.ReplayBufferInterface.prepared_fragments" title="minestudio.online.rollout.replay_buffer.interface.ReplayBufferInterface.prepared_fragments"><code class="xref py py-obj docutils literal notranslate"><span class="pre">prepared_fragments</span></code></a>()</p></td>
-<td><p>Retrieves the fragments that were prepared by the last call to fetch_fragments in the ReplayBufferActor.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.online.rollout.replay_buffer.interface.ReplayBufferInterface.update_model_version" title="minestudio.online.rollout.replay_buffer.interface.ReplayBufferInterface.update_model_version"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_model_version</span></code></a>(session_id, model_version)</p></td>
-<td><p>Updates the model version in the ReplayBufferActor.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.online.rollout.replay_buffer.interface.ReplayBufferInterface.update_training_session" title="minestudio.online.rollout.replay_buffer.interface.ReplayBufferInterface.update_training_session"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_training_session</span></code></a>()</p></td>
-<td><p>Calls the update_training_session method of the ReplayBufferActor.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="minestudio.online.rollout.replay_buffer.interface.ReplayBufferInterface.add_fragment">
 <span class="sig-name descname"><span class="pre">add_fragment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fragment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#minestudio.online.utils.rollout.datatypes.SampleFragment" title="minestudio.online.utils.rollout.datatypes.SampleFragment"><span class="pre">SampleFragment</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#minestudio.online.utils.rollout.datatypes.FragmentMetadata" title="minestudio.online.utils.rollout.datatypes.FragmentMetadata"><span class="pre">FragmentMetadata</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/rollout/replay_buffer/interface.html#ReplayBufferInterface.add_fragment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.rollout.replay_buffer.interface.ReplayBufferInterface.add_fragment" title="Link to this definition">#</a></dt>
@@ -1533,27 +1316,6 @@ If None, it attempts to connect to an existing actor named “replay_buffer”.<
 </ul>
 </dd>
 </dl>
-<p class="rubric">Methods</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.online.trainer.basetrainer.BaseTrainer.broadcast_model_to_rollout_workers" title="minestudio.online.trainer.basetrainer.BaseTrainer.broadcast_model_to_rollout_workers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">broadcast_model_to_rollout_workers</span></code></a>(new_version)</p></td>
-<td><p>Broadcasts the current model state_dict to all rollout workers.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.online.trainer.basetrainer.BaseTrainer.fetch_fragments_and_estimate_advantages" title="minestudio.online.trainer.basetrainer.BaseTrainer.fetch_fragments_and_estimate_advantages"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fetch_fragments_and_estimate_advantages</span></code></a>(*, ...)</p></td>
-<td><p>Fetches a batch of fragments from the replay buffer and calculates advantages using GAE.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.online.trainer.basetrainer.BaseTrainer.fit" title="minestudio.online.trainer.basetrainer.BaseTrainer.fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code></a>()</p></td>
-<td><p>Initializes and runs the Ray TorchTrainer to start the distributed training process.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.online.trainer.basetrainer.BaseTrainer.setup_model_and_optimizer" title="minestudio.online.trainer.basetrainer.BaseTrainer.setup_model_and_optimizer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_model_and_optimizer</span></code></a>()</p></td>
-<td><p>Abstract method to be implemented by subclasses.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.online.trainer.basetrainer.BaseTrainer.train" title="minestudio.online.trainer.basetrainer.BaseTrainer.train"><code class="xref py py-obj docutils literal notranslate"><span class="pre">train</span></code></a>()</p></td>
-<td><p>Abstract method for the main training loop, to be implemented by subclasses.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="minestudio.online.trainer.basetrainer.BaseTrainer.broadcast_model_to_rollout_workers">
 <span class="sig-name descname"><span class="pre">broadcast_model_to_rollout_workers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_version</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/trainer/basetrainer.html#BaseTrainer.broadcast_model_to_rollout_workers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.trainer.basetrainer.BaseTrainer.broadcast_model_to_rollout_workers" title="Link to this definition">#</a></dt>
@@ -1641,45 +1403,6 @@ fetching data, performing model updates, logging, and saving checkpoints.</p>
 <dd><p>Proximal Policy Optimization (PPO) Trainer.</p>
 <p>This trainer implements the PPO algorithm for reinforcement learning.
 It handles the training loop, data collection, and model updates.</p>
-<p class="rubric">Methods</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">broadcast_model_to_rollout_workers</span></code>(new_version)</p></td>
-<td><p>Broadcasts the current model state_dict to all rollout workers.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">fetch_fragments_and_estimate_advantages</span></code>(*, ...)</p></td>
-<td><p>Fetches a batch of fragments from the replay buffer and calculates advantages using GAE.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code>()</p></td>
-<td><p>Initializes and runs the Ray TorchTrainer to start the distributed training process.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.online.trainer.ppotrainer.PPOTrainer.get_inference_batch" title="minestudio.online.trainer.ppotrainer.PPOTrainer.get_inference_batch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_inference_batch</span></code></a>(fragments)</p></td>
-<td><p>Prepares a batch for inference.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.online.trainer.ppotrainer.PPOTrainer.load_checkpoint" title="minestudio.online.trainer.ppotrainer.PPOTrainer.load_checkpoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_checkpoint</span></code></a>(checkpoint_dir)</p></td>
-<td><p>Loads a model checkpoint.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.online.trainer.ppotrainer.PPOTrainer.ppo_update" title="minestudio.online.trainer.ppotrainer.PPOTrainer.ppo_update"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ppo_update</span></code></a>(records, td_targets, advantages, ...)</p></td>
-<td><p>Performs the PPO update step.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.online.trainer.ppotrainer.PPOTrainer.remove_old_checkpoints" title="minestudio.online.trainer.ppotrainer.PPOTrainer.remove_old_checkpoints"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove_old_checkpoints</span></code></a>()</p></td>
-<td><p>Removes old checkpoints to save disk space.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.online.trainer.ppotrainer.PPOTrainer.save_checkpoint" title="minestudio.online.trainer.ppotrainer.PPOTrainer.save_checkpoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_checkpoint</span></code></a>()</p></td>
-<td><p>Saves a model checkpoint.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.online.trainer.ppotrainer.PPOTrainer.setup_model_and_optimizer" title="minestudio.online.trainer.ppotrainer.PPOTrainer.setup_model_and_optimizer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_model_and_optimizer</span></code></a>(policy_generator)</p></td>
-<td><p>Sets up the model and optimizer.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.online.trainer.ppotrainer.PPOTrainer.train" title="minestudio.online.trainer.ppotrainer.PPOTrainer.train"><code class="xref py py-obj docutils literal notranslate"><span class="pre">train</span></code></a>()</p></td>
-<td><p>Main training loop.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.online.trainer.ppotrainer.PPOTrainer.train_iteration" title="minestudio.online.trainer.ppotrainer.PPOTrainer.train_iteration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">train_iteration</span></code></a>()</p></td>
-<td><p>Performs a single training iteration.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="minestudio.online.trainer.ppotrainer.PPOTrainer.get_inference_batch">
 <span class="sig-name descname"><span class="pre">get_inference_batch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fragments</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#minestudio.online.utils.rollout.datatypes.SampleFragment" title="minestudio.online.utils.rollout.datatypes.SampleFragment"><span class="pre">SampleFragment</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../../_modules/minestudio/online/trainer/ppotrainer.html#PPOTrainer.get_inference_batch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.trainer.ppotrainer.PPOTrainer.get_inference_batch" title="Link to this definition">#</a></dt>
@@ -1814,48 +1537,6 @@ instance based on the provided configuration.</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">minestudio.online.utils.rollout.datatypes.</span></span><span class="sig-name descname"><span class="pre">FragmentDataDict</span></span><a class="reference internal" href="../../_modules/minestudio/online/utils/rollout/datatypes.html#FragmentDataDict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.utils.rollout.datatypes.FragmentDataDict" title="Link to this definition">#</a></dt>
 <dd><p>A dictionary that maps FragmentIndex to arbitrary data.
 It provides a helper method to format a batch of fragments for model input.</p>
-<p class="rubric">Methods</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear</span></code>()</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">copy</span></code>()</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.online.utils.rollout.datatypes.FragmentDataDict.format_batch" title="minestudio.online.utils.rollout.datatypes.FragmentDataDict.format_batch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">format_batch</span></code></a>(fragments, device)</p></td>
-<td><p>Formats a list of SampleFragments into a batch suitable for model input.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">fromkeys</span></code>(iterable[, value])</p></td>
-<td><p>Create a new dictionary with keys from iterable and values set to value.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get</span></code>(key[, default])</p></td>
-<td><p>Return the value for key if key is in the dictionary, else default.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">items</span></code>()</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">keys</span></code>()</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pop</span></code>(key[, default])</p></td>
-<td><p>If the key is not found, return the default if given; otherwise, raise a KeyError.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">popitem</span></code>(/)</p></td>
-<td><p>Remove and return a (key, value) pair as a 2-tuple.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setdefault</span></code>(key[, default])</p></td>
-<td><p>Insert key with a value of default if key is not in the dictionary.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">update</span></code>([E, ]**F)</p></td>
-<td><p>If E is present and has a .keys() method, then does:  for k in E: D[k] = E[k] If E is present and lacks a .keys() method, then does:  for k, v in E: D[k] = v In either case, this is followed by: for k in F:  D[k] = F[k]</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">values</span></code>()</p></td>
-<td><p></p></td>
-</tr>
-</tbody>
-</table>
-</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="minestudio.online.utils.rollout.datatypes.FragmentDataDict.format_batch">
 <span class="sig-name descname"><span class="pre">format_batch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fragments</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#minestudio.online.utils.rollout.datatypes.SampleFragment" title="minestudio.online.utils.rollout.datatypes.SampleFragment"><span class="pre">SampleFragment</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">device</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/utils/rollout/datatypes.html#FragmentDataDict.format_batch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.utils.rollout.datatypes.FragmentDataDict.format_batch" title="Link to this definition">#</a></dt>
@@ -1926,22 +1607,7 @@ stacks them, and moves them to the specified device.</p>
 <li><p><strong>episode_uuids</strong> – A list of unique identifiers for the episodes this fragment belongs to.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Attributes<span class="colon">:</span></dt>
-<dd class="field-even"><dl class="simple">
-<dt><a class="reference internal" href="#minestudio.online.utils.rollout.datatypes.SampleFragment.index" title="minestudio.online.utils.rollout.datatypes.SampleFragment.index"><code class="xref py py-obj docutils literal notranslate"><span class="pre">index</span></code></a></dt><dd><p>Returns the FragmentIndex for this SampleFragment.</p>
-</dd>
 </dl>
-</dd>
-</dl>
-<p class="rubric">Methods</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.online.utils.rollout.datatypes.SampleFragment.print" title="minestudio.online.utils.rollout.datatypes.SampleFragment.print"><code class="xref py py-obj docutils literal notranslate"><span class="pre">print</span></code></a>()</p></td>
-<td><p>Prints the contents of the SampleFragment for debugging purposes.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 <dl class="py property">
 <dt class="sig sig-object py" id="minestudio.online.utils.rollout.datatypes.SampleFragment.index">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">index</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#minestudio.online.utils.rollout.datatypes.FragmentIndex" title="minestudio.online.utils.rollout.datatypes.FragmentIndex"><span class="pre">FragmentIndex</span></a></em><a class="headerlink" href="#minestudio.online.utils.rollout.datatypes.SampleFragment.index" title="Link to this definition">#</a></dt>
@@ -1992,18 +1658,6 @@ stacks them, and moves them to the specified device.</p>
 <dd class="field-odd"><p><strong>duration</strong> – The duration in seconds over which to calculate the statistic.</p>
 </dd>
 </dl>
-<p class="rubric">Methods</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.online.utils.rollout.monitor.MovingStat.average" title="minestudio.online.utils.rollout.monitor.MovingStat.average"><code class="xref py py-obj docutils literal notranslate"><span class="pre">average</span></code></a>()</p></td>
-<td><p>Calculates the average of the data points currently within the duration window.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.online.utils.rollout.monitor.MovingStat.update" title="minestudio.online.utils.rollout.monitor.MovingStat.update"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update</span></code></a>(x)</p></td>
-<td><p>Adds a new data point to the calculation.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="minestudio.online.utils.rollout.monitor.MovingStat.average">
 <span class="sig-name descname"><span class="pre">average</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/utils/rollout/monitor.html#MovingStat.average"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.utils.rollout.monitor.MovingStat.average" title="Link to this definition">#</a></dt>
@@ -2040,18 +1694,6 @@ stacks them, and moves them to the specified device.</p>
 </ul>
 </dd>
 </dl>
-<p class="rubric">Methods</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.online.utils.rollout.monitor.PipelineMonitor.print" title="minestudio.online.utils.rollout.monitor.PipelineMonitor.print"><code class="xref py py-obj docutils literal notranslate"><span class="pre">print</span></code></a>()</p></td>
-<td><p>Prints a table summarizing the average time spent in each stage for all monitored pipelines.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.online.utils.rollout.monitor.PipelineMonitor.report_enter" title="minestudio.online.utils.rollout.monitor.PipelineMonitor.report_enter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">report_enter</span></code></a>(stage[, pipeline_id])</p></td>
-<td><p>Reports that a pipeline has entered a new stage.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="minestudio.online.utils.rollout.monitor.PipelineMonitor.print">
 <span class="sig-name descname"><span class="pre">print</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/utils/rollout/monitor.html#PipelineMonitor.print"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.utils.rollout.monitor.PipelineMonitor.print" title="Link to this definition">#</a></dt>

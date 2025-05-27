@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Data API Documentation &#8212; MineStudio 1.0.0</title>
+    <title>Data API Documentation &#8212; MineStudio</title>
   
   
   
@@ -45,7 +45,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=8d563738"></script>
+    <script src="../../_static/documentation_options.js?v=cb7bf70b"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -638,24 +638,6 @@ modality to be managed.</p></li>
 </ul>
 </dd>
 </dl>
-<p class="rubric">Methods</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.core.KernelManager.get_episodes_with_length" title="minestudio.data.minecraft.core.KernelManager.get_episodes_with_length"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_episodes_with_length</span></code></a>()</p></td>
-<td><p>Returns an OrderedDict mapping common episode names to their lengths (number of frames).</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.data.minecraft.core.KernelManager.get_num_frames" title="minestudio.data.minecraft.core.KernelManager.get_num_frames"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_num_frames</span></code></a>()</p></td>
-<td><p>Returns the total number of frames across all common episodes and modalities.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.core.KernelManager.load_modal_kernels" title="minestudio.data.minecraft.core.KernelManager.load_modal_kernels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_modal_kernels</span></code></a>()</p></td>
-<td><p>Loads a ModalKernel for each modality specified in modal_kernel_callbacks.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.data.minecraft.core.KernelManager.read" title="minestudio.data.minecraft.core.KernelManager.read"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read</span></code></a>(eps, start, win_len, skip_frame, **kwargs)</p></td>
-<td><p>Reads and returns data for all managed modalities for a given episode and window.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="minestudio.data.minecraft.core.KernelManager.get_episodes_with_length">
 <span class="sig-name descname"><span class="pre">get_episodes_with_length</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/core.html#KernelManager.get_episodes_with_length"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.core.KernelManager.get_episodes_with_length" title="Link to this definition">#</a></dt>
@@ -735,31 +717,7 @@ like data merging, slicing, and padding.</p></li>
 <li><p><strong>short_name</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, episode names are hashed to a shorter length. Defaults to False.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Attributes<span class="colon">:</span></dt>
-<dd class="field-even"><dl class="simple">
-<dt><a class="reference internal" href="#minestudio.data.minecraft.core.ModalKernel.name" title="minestudio.data.minecraft.core.ModalKernel.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></a></dt><dd><p>Returns the name of the modality, as defined by the modal_kernel_callback.</p>
-</dd>
 </dl>
-</dd>
-</dl>
-<p class="rubric">Methods</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.core.ModalKernel.get_episode_list" title="minestudio.data.minecraft.core.ModalKernel.get_episode_list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_episode_list</span></code></a>()</p></td>
-<td><p>Returns a list of all episode names managed by this kernel.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.data.minecraft.core.ModalKernel.get_num_frames" title="minestudio.data.minecraft.core.ModalKernel.get_num_frames"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_num_frames</span></code></a>([episodes])</p></td>
-<td><p>Calculates and returns the total number of frames for the specified episodes.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.core.ModalKernel.read_chunks" title="minestudio.data.minecraft.core.ModalKernel.read_chunks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_chunks</span></code></a>(eps, start, end)</p></td>
-<td><p>Reads and returns a list of data chunks for a given episode and frame range.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.data.minecraft.core.ModalKernel.read_frames" title="minestudio.data.minecraft.core.ModalKernel.read_frames"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_frames</span></code></a>(eps, start, win_len, skip_frame, ...)</p></td>
-<td><p>Reads, processes, and returns a dictionary of frames for a given episode and window.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="minestudio.data.minecraft.core.ModalKernel.get_episode_list">
 <span class="sig-name descname"><span class="pre">get_episode_list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/core.html#ModalKernel.get_episode_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.core.ModalKernel.get_episode_list" title="Link to this definition">#</a></dt>
@@ -887,24 +845,6 @@ See PyTorch DataLoader documentation for more details.</p></li>
 </ul>
 </dd>
 </dl>
-<p class="rubric">Methods</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">__call__</span></code>(*args, **kwargs)</p></td>
-<td><p>Call self as a function.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.data.minecraft.dataset_event.EventDataModule.setup" title="minestudio.data.minecraft.dataset_event.EventDataModule.setup"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup</span></code></a>([stage])</p></td>
-<td><p>Sets up the training and validation datasets.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.dataset_event.EventDataModule.train_dataloader" title="minestudio.data.minecraft.dataset_event.EventDataModule.train_dataloader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">train_dataloader</span></code></a>()</p></td>
-<td><p>Sets up the DataLoader for the training dataset.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.data.minecraft.dataset_event.EventDataModule.val_dataloader" title="minestudio.data.minecraft.dataset_event.EventDataModule.val_dataloader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">val_dataloader</span></code></a>()</p></td>
-<td><p>Sets up the DataLoader for the validation dataset.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="minestudio.data.minecraft.dataset_event.EventDataModule.setup">
 <span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/dataset_event.html#EventDataModule.setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.dataset_event.EventDataModule.setup" title="Link to this definition">#</a></dt>
@@ -976,24 +916,6 @@ to keep for each event type. Defaults to None.</p></li>
 </ul>
 </dd>
 </dl>
-<p class="rubric">Methods</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">__call__</span></code>(*args, **kwargs)</p></td>
-<td><p>Call self as a function.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.data.minecraft.dataset_event.EventDataset.build_items" title="minestudio.data.minecraft.dataset_event.EventDataset.build_items"><code class="xref py py-obj docutils literal notranslate"><span class="pre">build_items</span></code></a>()</p></td>
-<td><p>Builds the list of items for the dataset based on selected events and split.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.dataset_event.EventDataset.locate_item" title="minestudio.data.minecraft.dataset_event.EventDataset.locate_item"><code class="xref py py-obj docutils literal notranslate"><span class="pre">locate_item</span></code></a>(idx)</p></td>
-<td><p>Locates the specific event and relative index within that event for a given global item index.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.data.minecraft.dataset_event.EventDataset.to_tensor" title="minestudio.data.minecraft.dataset_event.EventDataset.to_tensor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_tensor</span></code></a>(item)</p></td>
-<td><p>Recursively converts NumPy arrays within a nested structure (list or dict) to PyTorch tensors.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="minestudio.data.minecraft.dataset_event.EventDataset.build_items">
 <span class="sig-name descname"><span class="pre">build_items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/dataset_event.html#EventDataset.build_items"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.dataset_event.EventDataset.build_items" title="Link to this definition">#</a></dt>
@@ -1075,24 +997,6 @@ event type after other filtering. Defaults to None.</p></li>
 </ul>
 </dd>
 </dl>
-<p class="rubric">Methods</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.dataset_event.EventKernel.filter_out" title="minestudio.data.minecraft.dataset_event.EventKernel.filter_out"><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter_out</span></code></a>([min_nearby, max_within])</p></td>
-<td><p>Filters the events based on proximity and count constraints.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.data.minecraft.dataset_event.EventKernel.get_event_item" title="minestudio.data.minecraft.dataset_event.EventKernel.get_event_item"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_event_item</span></code></a>(event, item_idx)</p></td>
-<td><p>Retrieves a specific event item by its type and index.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.dataset_event.EventKernel.get_event_list" title="minestudio.data.minecraft.dataset_event.EventKernel.get_event_list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_event_list</span></code></a>()</p></td>
-<td><p>Returns the sorted list of unique event names that match the <cite>event_regex</cite> and are present in the loaded event data.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.data.minecraft.dataset_event.EventKernel.get_event_size" title="minestudio.data.minecraft.dataset_event.EventKernel.get_event_size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_event_size</span></code></a>(event)</p></td>
-<td><p>Returns the number of occurrences for a specific event type after filtering.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="minestudio.data.minecraft.dataset_event.EventKernel.filter_out">
 <span class="sig-name descname"><span class="pre">filter_out</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">min_nearby</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_within</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/dataset_event.html#EventKernel.filter_out"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.dataset_event.EventKernel.filter_out" title="Link to this definition">#</a></dt>
@@ -1198,21 +1102,6 @@ to be managed by an EventKernel.</p></li>
 </ul>
 </dd>
 </dl>
-<p class="rubric">Methods</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.dataset_event.EventKernelManager.get_event_item" title="minestudio.data.minecraft.dataset_event.EventKernelManager.get_event_item"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_event_item</span></code></a>(event, item_idx)</p></td>
-<td><p>Retrieves a specific event item by its type and a global index across all managed kernels.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.data.minecraft.dataset_event.EventKernelManager.get_event_list" title="minestudio.data.minecraft.dataset_event.EventKernelManager.get_event_list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_event_list</span></code></a>()</p></td>
-<td><p>Returns the sorted list of unique event names aggregated from all managed EventKernel instances.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.dataset_event.EventKernelManager.get_event_size" title="minestudio.data.minecraft.dataset_event.EventKernelManager.get_event_size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_event_size</span></code></a>(event)</p></td>
-<td><p>Calculates the total number of occurrences for a specific event type across all managed kernels.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="minestudio.data.minecraft.dataset_event.EventKernelManager.get_event_item">
 <span class="sig-name descname"><span class="pre">get_event_item</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">item_idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/dataset_event.html#EventKernelManager.get_event_item"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.dataset_event.EventKernelManager.get_event_item" title="Link to this definition">#</a></dt>
@@ -1290,24 +1179,6 @@ FilePath: /MineStudio/minestudio/data/minecraft/dataset_raw.py</p>
 <dd><p>LightningDataModule for the RawDataset.</p>
 <p>Handles the creation of training and validation dataloaders.
 Supports episode continuous batching.</p>
-<p class="rubric">Methods</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">__call__</span></code>(*args, **kwargs)</p></td>
-<td><p>Call self as a function.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.data.minecraft.dataset_raw.RawDataModule.setup" title="minestudio.data.minecraft.dataset_raw.RawDataModule.setup"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup</span></code></a>([stage])</p></td>
-<td><p>Sets up the training and validation datasets.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.dataset_raw.RawDataModule.train_dataloader" title="minestudio.data.minecraft.dataset_raw.RawDataModule.train_dataloader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">train_dataloader</span></code></a>()</p></td>
-<td><p>Creates the training dataloader.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.data.minecraft.dataset_raw.RawDataModule.val_dataloader" title="minestudio.data.minecraft.dataset_raw.RawDataModule.val_dataloader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">val_dataloader</span></code></a>()</p></td>
-<td><p>Creates the validation dataloader.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="minestudio.data.minecraft.dataset_raw.RawDataModule.setup">
 <span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/dataset_raw.html#RawDataModule.setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.dataset_raw.RawDataModule.setup" title="Link to this definition">#</a></dt>
@@ -1357,24 +1228,6 @@ Otherwise, it uses a standard DataLoader without shuffling.</p>
 <p>Handles loading and processing of raw Minecraft gameplay data.
 It supports splitting data into training and validation sets,
 shuffling episodes, and uses a kernel manager to read data.</p>
-<p class="rubric">Methods</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">__call__</span></code>(*args, **kwargs)</p></td>
-<td><p>Call self as a function.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.data.minecraft.dataset_raw.RawDataset.build_items" title="minestudio.data.minecraft.dataset_raw.RawDataset.build_items"><code class="xref py py-obj docutils literal notranslate"><span class="pre">build_items</span></code></a>()</p></td>
-<td><p>Builds the list of items for the dataset.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.dataset_raw.RawDataset.locate_item" title="minestudio.data.minecraft.dataset_raw.RawDataset.locate_item"><code class="xref py py-obj docutils literal notranslate"><span class="pre">locate_item</span></code></a>(idx)</p></td>
-<td><p>Locates the episode and relative index for a given item index.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.data.minecraft.dataset_raw.RawDataset.to_tensor" title="minestudio.data.minecraft.dataset_raw.RawDataset.to_tensor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_tensor</span></code></a>(item)</p></td>
-<td><p>Converts numpy arrays in an item to torch tensors.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="minestudio.data.minecraft.dataset_raw.RawDataset.build_items">
 <span class="sig-name descname"><span class="pre">build_items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/dataset_raw.html#RawDataset.build_items"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.dataset_raw.RawDataset.build_items" title="Link to this definition">#</a></dt>
@@ -1428,15 +1281,6 @@ FilePath: /MineStudio/minestudio/data/minecraft/callbacks/callback.py</p>
 <dt class="sig sig-object py" id="minestudio.data.minecraft.callbacks.callback.DrawFrameCallback">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">minestudio.data.minecraft.callbacks.callback.</span></span><span class="sig-name descname"><span class="pre">DrawFrameCallback</span></span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/callbacks/callback.html#DrawFrameCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.callbacks.callback.DrawFrameCallback" title="Link to this definition">#</a></dt>
 <dd><p>Base class for callbacks that draw overlay information onto video frames for visualization purposes.</p>
-<p class="rubric">Methods</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.callback.DrawFrameCallback.draw_frames" title="minestudio.data.minecraft.callbacks.callback.DrawFrameCallback.draw_frames"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_frames</span></code></a>(frames, infos, sample_idx, **kwargs)</p></td>
-<td><p>Draws specified information onto a set of video frames.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="minestudio.data.minecraft.callbacks.callback.DrawFrameCallback.draw_frames">
 <span class="sig-name descname"><span class="pre">draw_frames</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frames</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">infos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/callbacks/callback.html#DrawFrameCallback.draw_frames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.callbacks.callback.DrawFrameCallback.draw_frames" title="Link to this definition">#</a></dt>
@@ -1473,21 +1317,6 @@ The structure of this dictionary depends on what the user wants to display.</p><
 <dd><p>Base class for callbacks that convert raw trajectory data into MineStudio’s built-in format.</p>
 <p>Users should implement the methods of this class to define how their specific
 data format is converted.</p>
-<p class="rubric">Methods</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.callback.ModalConvertCallback.do_convert" title="minestudio.data.minecraft.callbacks.callback.ModalConvertCallback.do_convert"><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_convert</span></code></a>(eps_id, skip_frames, modal_file_path)</p></td>
-<td><p>Converts the raw modal data for a given episode into the desired format.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.callback.ModalConvertCallback.gen_frame_skip_flags" title="minestudio.data.minecraft.callbacks.callback.ModalConvertCallback.gen_frame_skip_flags"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gen_frame_skip_flags</span></code></a>(file_name)</p></td>
-<td><p>Generates a list of boolean flags indicating which frames to skip in a given file.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.callback.ModalConvertCallback.load_episodes" title="minestudio.data.minecraft.callbacks.callback.ModalConvertCallback.load_episodes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_episodes</span></code></a>()</p></td>
-<td><p>Identifies and loads raw data from the specified input directories.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="minestudio.data.minecraft.callbacks.callback.ModalConvertCallback.do_convert">
 <span class="sig-name descname"><span class="pre">do_convert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eps_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_frames</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modal_file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/callbacks/callback.html#ModalConvertCallback.do_convert"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.callbacks.callback.ModalConvertCallback.do_convert" title="Link to this definition">#</a></dt>
@@ -1570,41 +1399,6 @@ file path for that part of the episode.</p>
 within the ModalKernel.</p>
 <p>Users must implement this callback for their custom modal data to manage operations
 like decoding, merging, slicing, and padding.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Attributes<span class="colon">:</span></dt>
-<dd class="field-odd"><dl class="simple">
-<dt><a class="reference internal" href="#minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.name" title="minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></a></dt><dd><p>Returns the name of the modality this callback handles (e.g., “image”, “action”).</p>
-</dd>
-</dl>
-</dd>
-</dl>
-<p class="rubric">Methods</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.create_from_config" title="minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.create_from_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_from_config</span></code></a>(config)</p></td>
-<td><p>Factory method to create a ModalKernelCallback instance from a configuration dictionary.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.do_decode" title="minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.do_decode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_decode</span></code></a>(chunk, **kwargs)</p></td>
-<td><p>Decodes a raw byte chunk of modal data into its usable format.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.do_merge" title="minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.do_merge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_merge</span></code></a>(chunk_list, **kwargs)</p></td>
-<td><p>Merges a list of decoded data chunks into a continuous sequence or structure.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.do_pad" title="minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.do_pad"><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_pad</span></code></a>(data, pad_len, pad_pos, **kwargs)</p></td>
-<td><p>Pads the modal data to a specified length if it's shorter than required.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.do_postprocess" title="minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.do_postprocess"><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_postprocess</span></code></a>(data, **kwargs)</p></td>
-<td><p>Performs optional post-processing operations on the sampled modal data.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.do_slice" title="minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.do_slice"><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_slice</span></code></a>(data, start, end, skip_frame, **kwargs)</p></td>
-<td><p>Extracts a slice from the modal data based on start, end, and skip_frame parameters.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.filter_dataset_paths" title="minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.filter_dataset_paths"><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter_dataset_paths</span></code></a>(dataset_paths)</p></td>
-<td><p>Filters a list of potential dataset paths to select those relevant to this modality.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.create_from_config">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#minestudio.data.minecraft.callbacks.callback.ModalKernelCallback" title="minestudio.data.minecraft.callbacks.callback.ModalKernelCallback"><span class="pre">ModalKernelCallback</span></a></span></span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/callbacks/callback.html#ModalKernelCallback.create_from_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.callbacks.callback.ModalKernelCallback.create_from_config" title="Link to this definition">#</a></dt>
@@ -1810,21 +1604,6 @@ FilePath: /MineStudio/minestudio/data/minecraft/callbacks/action.py</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">minestudio.data.minecraft.callbacks.action.</span></span><span class="sig-name descname"><span class="pre">ActionConvertCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_dirs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action_transformer_kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/callbacks/action.html#ActionConvertCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.callbacks.action.ActionConvertCallback" title="Link to this definition">#</a></dt>
 <dd><p>Callback for converting raw action data files.</p>
 <p>This callback loads action data from .jsonl files, processes it, and converts it into a structured format.</p>
-<p class="rubric">Methods</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.action.ActionConvertCallback.do_convert" title="minestudio.data.minecraft.callbacks.action.ActionConvertCallback.do_convert"><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_convert</span></code></a>(eps_id, skip_frames, modal_file_path)</p></td>
-<td><p>Converts action data for a given episode.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.action.ActionConvertCallback.gen_frame_skip_flags" title="minestudio.data.minecraft.callbacks.action.ActionConvertCallback.gen_frame_skip_flags"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gen_frame_skip_flags</span></code></a>(file_name)</p></td>
-<td><p>Generates frame skip flags based on action data to identify no-operation frames.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.action.ActionConvertCallback.load_episodes" title="minestudio.data.minecraft.callbacks.action.ActionConvertCallback.load_episodes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_episodes</span></code></a>()</p></td>
-<td><p>Loads episodes from input directories containing .jsonl action files.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="minestudio.data.minecraft.callbacks.action.ActionConvertCallback.do_convert">
 <span class="sig-name descname"><span class="pre">do_convert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eps_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_frames</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modal_file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/callbacks/action.html#ActionConvertCallback.do_convert"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.callbacks.action.ActionConvertCallback.do_convert" title="Link to this definition">#</a></dt>
@@ -1886,15 +1665,6 @@ FilePath: /MineStudio/minestudio/data/minecraft/callbacks/action.py</p>
 <dt class="sig sig-object py" id="minestudio.data.minecraft.callbacks.action.ActionDrawFrameCallback">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">minestudio.data.minecraft.callbacks.action.</span></span><span class="sig-name descname"><span class="pre">ActionDrawFrameCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(10,</span> <span class="pre">10)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/callbacks/action.html#ActionDrawFrameCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.callbacks.action.ActionDrawFrameCallback" title="Link to this definition">#</a></dt>
 <dd><p>Callback for drawing action information onto video frames.</p>
-<p class="rubric">Methods</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.action.ActionDrawFrameCallback.draw_frames" title="minestudio.data.minecraft.callbacks.action.ActionDrawFrameCallback.draw_frames"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_frames</span></code></a>(frames, infos, sample_idx)</p></td>
-<td><p>Draws action information onto each frame.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="minestudio.data.minecraft.callbacks.action.ActionDrawFrameCallback.draw_frames">
 <span class="sig-name descname"><span class="pre">draw_frames</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frames</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">infos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/callbacks/action.html#ActionDrawFrameCallback.draw_frames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.callbacks.action.ActionDrawFrameCallback.draw_frames" title="Link to this definition">#</a></dt>
@@ -1924,41 +1694,6 @@ FilePath: /MineStudio/minestudio/data/minecraft/callbacks/action.py</p>
 <dd><p>Callback for handling Minecraft actions.</p>
 <p>This callback processes action data, including decoding, merging, slicing, padding, and postprocessing.
 It can handle both regular actions and previous actions if enabled.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Attributes<span class="colon">:</span></dt>
-<dd class="field-odd"><dl class="simple">
-<dt><a class="reference internal" href="#minestudio.data.minecraft.callbacks.action.ActionKernelCallback.name" title="minestudio.data.minecraft.callbacks.action.ActionKernelCallback.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></a></dt><dd><p>Returns the name of the callback.</p>
-</dd>
-</dl>
-</dd>
-</dl>
-<p class="rubric">Methods</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.action.ActionKernelCallback.create_from_config" title="minestudio.data.minecraft.callbacks.action.ActionKernelCallback.create_from_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_from_config</span></code></a>()</p></td>
-<td><p>Creates an ActionKernelCallback instance from a configuration dictionary.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.action.ActionKernelCallback.do_decode" title="minestudio.data.minecraft.callbacks.action.ActionKernelCallback.do_decode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_decode</span></code></a>(chunk, **kwargs)</p></td>
-<td><p>Decodes a chunk of bytes into an action dictionary.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.action.ActionKernelCallback.do_merge" title="minestudio.data.minecraft.callbacks.action.ActionKernelCallback.do_merge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_merge</span></code></a>(chunk_list, **kwargs)</p></td>
-<td><p>Merges a list of decoded action chunks into a single dictionary.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.action.ActionKernelCallback.do_pad" title="minestudio.data.minecraft.callbacks.action.ActionKernelCallback.do_pad"><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_pad</span></code></a>(data, pad_len, pad_pos, **kwargs)</p></td>
-<td><p>Pads the action data.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.action.ActionKernelCallback.do_postprocess" title="minestudio.data.minecraft.callbacks.action.ActionKernelCallback.do_postprocess"><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_postprocess</span></code></a>(data)</p></td>
-<td><p>Postprocesses the action data.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.action.ActionKernelCallback.do_slice" title="minestudio.data.minecraft.callbacks.action.ActionKernelCallback.do_slice"><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_slice</span></code></a>(data, start, end, skip_frame, **kwargs)</p></td>
-<td><p>Slices the action data.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.action.ActionKernelCallback.filter_dataset_paths" title="minestudio.data.minecraft.callbacks.action.ActionKernelCallback.filter_dataset_paths"><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter_dataset_paths</span></code></a>(dataset_paths)</p></td>
-<td><p>Filters dataset paths to select only action-related paths.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="minestudio.data.minecraft.callbacks.action.ActionKernelCallback.create_from_config">
 <span class="sig-name descname"><span class="pre">create_from_config</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#minestudio.data.minecraft.callbacks.action.ActionKernelCallback" title="minestudio.data.minecraft.callbacks.action.ActionKernelCallback"><span class="pre">ActionKernelCallback</span></a></span></span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/callbacks/action.html#ActionKernelCallback.create_from_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.callbacks.action.ActionKernelCallback.create_from_config" title="Link to this definition">#</a></dt>
@@ -2118,52 +1853,6 @@ and optionally includes previous actions.</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">minestudio.data.minecraft.callbacks.action.</span></span><span class="sig-name descname"><span class="pre">VectorActionKernelCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action_chunk_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'vector'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/callbacks/action.html#VectorActionKernelCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.callbacks.action.VectorActionKernelCallback" title="Link to this definition">#</a></dt>
 <dd><p>Callback for handling actions represented as vectors.</p>
 <p>This callback converts actions between dictionary and vector representations.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Attributes<span class="colon">:</span></dt>
-<dd class="field-odd"><dl class="simple">
-<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></dt><dd><p>Returns the name of the callback.</p>
-</dd>
-<dt><a class="reference internal" href="#minestudio.data.minecraft.callbacks.action.VectorActionKernelCallback.vector_dim" title="minestudio.data.minecraft.callbacks.action.VectorActionKernelCallback.vector_dim"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vector_dim</span></code></a></dt><dd><p>Calculates the dimension of the action vector.</p>
-</dd>
-</dl>
-</dd>
-</dl>
-<p class="rubric">Methods</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.action.VectorActionKernelCallback.action_to_dict" title="minestudio.data.minecraft.callbacks.action.VectorActionKernelCallback.action_to_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">action_to_dict</span></code></a>(action)</p></td>
-<td><p>Converts an action dictionary to a specific dictionary format with &quot;camera&quot; and &quot;button&quot; keys.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.action.VectorActionKernelCallback.action_to_vector" title="minestudio.data.minecraft.callbacks.action.VectorActionKernelCallback.action_to_vector"><code class="xref py py-obj docutils literal notranslate"><span class="pre">action_to_vector</span></code></a>(action)</p></td>
-<td><p>Converts an action dictionary to an action vector.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_from_config</span></code>()</p></td>
-<td><p>Creates an ActionKernelCallback instance from a configuration dictionary.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_decode</span></code>(chunk, **kwargs)</p></td>
-<td><p>Decodes a chunk of bytes into an action dictionary.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_merge</span></code>(chunk_list, **kwargs)</p></td>
-<td><p>Merges a list of decoded action chunks into a single dictionary.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_pad</span></code>(data, pad_len, pad_pos, **kwargs)</p></td>
-<td><p>Pads the action data.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.action.VectorActionKernelCallback.do_postprocess" title="minestudio.data.minecraft.callbacks.action.VectorActionKernelCallback.do_postprocess"><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_postprocess</span></code></a>(data)</p></td>
-<td><p>Postprocesses the action data, converting it to the specified return type (vector or dict).</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_slice</span></code>(data, start, end, skip_frame, **kwargs)</p></td>
-<td><p>Slices the action data.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter_dataset_paths</span></code>(dataset_paths)</p></td>
-<td><p>Filters dataset paths to select only action-related paths.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.action.VectorActionKernelCallback.vector_to_action" title="minestudio.data.minecraft.callbacks.action.VectorActionKernelCallback.vector_to_action"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vector_to_action</span></code></a>(vector)</p></td>
-<td><p>Converts an action vector or a list of action vectors to action dictionaries.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="minestudio.data.minecraft.callbacks.action.VectorActionKernelCallback.action_to_dict">
 <span class="sig-name descname"><span class="pre">action_to_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/callbacks/action.html#VectorActionKernelCallback.action_to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.callbacks.action.VectorActionKernelCallback.action_to_dict" title="Link to this definition">#</a></dt>
@@ -2262,21 +1951,6 @@ FilePath: /MineStudio/minestudio/data/minecraft/callbacks/image.py</p>
 into the MineStudio chunked format.</p>
 <p>This class handles loading video episodes, splitting them, and encoding
 frames into byte chunks suitable for LMDB storage.</p>
-<p class="rubric">Methods</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.image.ImageConvertCallback.do_convert" title="minestudio.data.minecraft.callbacks.image.ImageConvertCallback.do_convert"><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_convert</span></code></a>(eps_id, skip_frames, modal_file_path)</p></td>
-<td><p>Converts video data for a given episode into a list of chunk keys and byte values.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">gen_frame_skip_flags</span></code>(file_name)</p></td>
-<td><p>Generates a list of boolean flags indicating which frames to skip in a given file.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.image.ImageConvertCallback.load_episodes" title="minestudio.data.minecraft.callbacks.image.ImageConvertCallback.load_episodes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_episodes</span></code></a>()</p></td>
-<td><p>Loads and organizes video episode data from the specified input directories.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="minestudio.data.minecraft.callbacks.image.ImageConvertCallback.do_convert">
 <span class="sig-name descname"><span class="pre">do_convert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eps_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_frames</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modal_file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">bytes</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/callbacks/image.html#ImageConvertCallback.do_convert"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.callbacks.image.ImageConvertCallback.do_convert" title="Link to this definition">#</a></dt>
@@ -2336,41 +2010,6 @@ belonging to that episode.</p>
 <dd><p>A ModalKernelCallback specifically for processing image (video frame) data.</p>
 <p>This class handles the decoding of video chunks, merging multiple chunks,
 slicing frames, padding, and optionally applying video augmentations.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Attributes<span class="colon">:</span></dt>
-<dd class="field-odd"><dl class="simple">
-<dt><a class="reference internal" href="#minestudio.data.minecraft.callbacks.image.ImageKernelCallback.name" title="minestudio.data.minecraft.callbacks.image.ImageKernelCallback.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></a></dt><dd><p>Returns the name of this callback, which is “image”.</p>
-</dd>
-</dl>
-</dd>
-</dl>
-<p class="rubric">Methods</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.image.ImageKernelCallback.create_from_config" title="minestudio.data.minecraft.callbacks.image.ImageKernelCallback.create_from_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_from_config</span></code></a>(config)</p></td>
-<td><p>Factory method to create an ImageKernelCallback instance from a configuration dictionary.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.image.ImageKernelCallback.do_decode" title="minestudio.data.minecraft.callbacks.image.ImageKernelCallback.do_decode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_decode</span></code></a>(chunk, **kwargs)</p></td>
-<td><p>Decodes a video chunk (bytes) into a NumPy array of frames.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.image.ImageKernelCallback.do_merge" title="minestudio.data.minecraft.callbacks.image.ImageKernelCallback.do_merge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_merge</span></code></a>(chunk_list, **kwargs)</p></td>
-<td><p>Merges a list of decoded video chunks (each being a byte string) into a single NumPy array of frames.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.image.ImageKernelCallback.do_pad" title="minestudio.data.minecraft.callbacks.image.ImageKernelCallback.do_pad"><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_pad</span></code></a>(data, pad_len, pad_pos, **kwargs)</p></td>
-<td><p>Pads a NumPy array of video frames with zeros to a specified length.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.image.ImageKernelCallback.do_postprocess" title="minestudio.data.minecraft.callbacks.image.ImageKernelCallback.do_postprocess"><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_postprocess</span></code></a>(data)</p></td>
-<td><p>Post-processes the image data, primarily by applying video augmentation if enabled.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.image.ImageKernelCallback.do_slice" title="minestudio.data.minecraft.callbacks.image.ImageKernelCallback.do_slice"><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_slice</span></code></a>(data, start, end, skip_frame, **kwargs)</p></td>
-<td><p>Slices a NumPy array of video frames based on start, end, and skip_frame parameters.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.image.ImageKernelCallback.filter_dataset_paths" title="minestudio.data.minecraft.callbacks.image.ImageKernelCallback.filter_dataset_paths"><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter_dataset_paths</span></code></a>(dataset_paths)</p></td>
-<td><p>Filters a list of dataset paths to select only those relevant to image/video data.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="minestudio.data.minecraft.callbacks.image.ImageKernelCallback.create_from_config">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#minestudio.data.minecraft.callbacks.image.ImageKernelCallback" title="minestudio.data.minecraft.callbacks.image.ImageKernelCallback"><span class="pre">ImageKernelCallback</span></a></span></span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/callbacks/image.html#ImageKernelCallback.create_from_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.callbacks.image.ImageKernelCallback.create_from_config" title="Link to this definition">#</a></dt>
@@ -2551,15 +2190,6 @@ but used to select frames up to <cite>end-1</cite>).</p></li>
 <dd><p>Applies a sequence of image augmentations to video frames using the albumentations library.</p>
 <p>This class defines a transformation pipeline that includes color jittering and affine
 transformations (rotation, scaling, shearing).</p>
-<p class="rubric">Methods</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">__call__</span></code>(video)</p></td>
-<td><p>Applies the defined augmentation transformations to each frame of the input video.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 </dd></dl>
 
 </section>
@@ -2573,21 +2203,6 @@ FilePath: /MineStudio/minestudio/data/minecraft/callbacks/meta_info.py</p>
 <dt class="sig sig-object py" id="minestudio.data.minecraft.callbacks.meta_info.MetaInfoConvertCallback">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">minestudio.data.minecraft.callbacks.meta_info.</span></span><span class="sig-name descname"><span class="pre">MetaInfoConvertCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_dirs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/callbacks/meta_info.html#MetaInfoConvertCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.callbacks.meta_info.MetaInfoConvertCallback" title="Link to this definition">#</a></dt>
 <dd><p>Callback for converting raw metadata into the MineStudio format.</p>
-<p class="rubric">Methods</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.meta_info.MetaInfoConvertCallback.do_convert" title="minestudio.data.minecraft.callbacks.meta_info.MetaInfoConvertCallback.do_convert"><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_convert</span></code></a>(eps_id, skip_frames, modal_file_path)</p></td>
-<td><p>Converts metadata for a given episode.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">gen_frame_skip_flags</span></code>(file_name)</p></td>
-<td><p>Generates a list of boolean flags indicating which frames to skip in a given file.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.meta_info.MetaInfoConvertCallback.load_episodes" title="minestudio.data.minecraft.callbacks.meta_info.MetaInfoConvertCallback.load_episodes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_episodes</span></code></a>()</p></td>
-<td><p>Loads and organizes metadata episode data from input directories.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="minestudio.data.minecraft.callbacks.meta_info.MetaInfoConvertCallback.do_convert">
 <span class="sig-name descname"><span class="pre">do_convert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eps_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_frames</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modal_file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/callbacks/meta_info.html#MetaInfoConvertCallback.do_convert"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.callbacks.meta_info.MetaInfoConvertCallback.do_convert" title="Link to this definition">#</a></dt>
@@ -2633,15 +2248,6 @@ sorts segments within episodes, and re-splits episodes based on a maximum time i
 <dt class="sig sig-object py" id="minestudio.data.minecraft.callbacks.meta_info.MetaInfoDrawFrameCallback">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">minestudio.data.minecraft.callbacks.meta_info.</span></span><span class="sig-name descname"><span class="pre">MetaInfoDrawFrameCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(150,</span> <span class="pre">10)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/callbacks/meta_info.html#MetaInfoDrawFrameCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.callbacks.meta_info.MetaInfoDrawFrameCallback" title="Link to this definition">#</a></dt>
 <dd><p>Callback for drawing metadata information onto video frames.</p>
-<p class="rubric">Methods</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.meta_info.MetaInfoDrawFrameCallback.draw_frames" title="minestudio.data.minecraft.callbacks.meta_info.MetaInfoDrawFrameCallback.draw_frames"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_frames</span></code></a>(frames, infos, sample_idx)</p></td>
-<td><p>Draws metadata (pitch, yaw, cursor position, GUI status) onto each frame.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="minestudio.data.minecraft.callbacks.meta_info.MetaInfoDrawFrameCallback.draw_frames">
 <span class="sig-name descname"><span class="pre">draw_frames</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frames</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">infos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/callbacks/meta_info.html#MetaInfoDrawFrameCallback.draw_frames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.callbacks.meta_info.MetaInfoDrawFrameCallback.draw_frames" title="Link to this definition">#</a></dt>
@@ -2670,41 +2276,6 @@ sorts segments within episodes, and re-splits episodes based on a maximum time i
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">minestudio.data.minecraft.callbacks.meta_info.</span></span><span class="sig-name descname"><span class="pre">MetaInfoKernelCallback</span></span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/callbacks/meta_info.html#MetaInfoKernelCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.callbacks.meta_info.MetaInfoKernelCallback" title="Link to this definition">#</a></dt>
 <dd><p>Callback for processing metadata information.</p>
 <p>Handles decoding, merging, slicing, and padding of metadata.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Attributes<span class="colon">:</span></dt>
-<dd class="field-odd"><dl class="simple">
-<dt><a class="reference internal" href="#minestudio.data.minecraft.callbacks.meta_info.MetaInfoKernelCallback.name" title="minestudio.data.minecraft.callbacks.meta_info.MetaInfoKernelCallback.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></a></dt><dd><p>Returns the name of the callback.</p>
-</dd>
-</dl>
-</dd>
-</dl>
-<p class="rubric">Methods</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.meta_info.MetaInfoKernelCallback.create_from_config" title="minestudio.data.minecraft.callbacks.meta_info.MetaInfoKernelCallback.create_from_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_from_config</span></code></a>()</p></td>
-<td><p>Creates a MetaInfoKernelCallback instance from a configuration dictionary.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.meta_info.MetaInfoKernelCallback.do_decode" title="minestudio.data.minecraft.callbacks.meta_info.MetaInfoKernelCallback.do_decode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_decode</span></code></a>(chunk, **kwargs)</p></td>
-<td><p>Decodes a chunk of bytes into a metadata dictionary.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.meta_info.MetaInfoKernelCallback.do_merge" title="minestudio.data.minecraft.callbacks.meta_info.MetaInfoKernelCallback.do_merge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_merge</span></code></a>(chunk_list, **kwargs)</p></td>
-<td><p>Merges a list of decoded metadata chunks into a single dictionary.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.meta_info.MetaInfoKernelCallback.do_pad" title="minestudio.data.minecraft.callbacks.meta_info.MetaInfoKernelCallback.do_pad"><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_pad</span></code></a>(data, pad_len, pad_pos, **kwargs)</p></td>
-<td><p>Pads the metadata.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_postprocess</span></code>(data, **kwargs)</p></td>
-<td><p>Performs optional post-processing operations on the sampled modal data.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.meta_info.MetaInfoKernelCallback.do_slice" title="minestudio.data.minecraft.callbacks.meta_info.MetaInfoKernelCallback.do_slice"><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_slice</span></code></a>(data, start, end, skip_frame, **kwargs)</p></td>
-<td><p>Slices the metadata.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.meta_info.MetaInfoKernelCallback.filter_dataset_paths" title="minestudio.data.minecraft.callbacks.meta_info.MetaInfoKernelCallback.filter_dataset_paths"><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter_dataset_paths</span></code></a>(dataset_paths)</p></td>
-<td><p>Filters dataset paths to select only metadata-related paths.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="minestudio.data.minecraft.callbacks.meta_info.MetaInfoKernelCallback.create_from_config">
 <span class="sig-name descname"><span class="pre">create_from_config</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#minestudio.data.minecraft.callbacks.meta_info.MetaInfoKernelCallback" title="minestudio.data.minecraft.callbacks.meta_info.MetaInfoKernelCallback"><span class="pre">MetaInfoKernelCallback</span></a></span></span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/callbacks/meta_info.html#MetaInfoKernelCallback.create_from_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.callbacks.meta_info.MetaInfoKernelCallback.create_from_config" title="Link to this definition">#</a></dt>
@@ -2856,21 +2427,6 @@ FilePath: /MineStudio/minestudio/data/minecraft/callbacks/segmentation.py</p>
 <dd><p>Callback for converting segmentation data from raw RLE files.</p>
 <p>This callback loads episodes from directories containing RLE files,
 processes them, and converts them into a structured format.</p>
-<p class="rubric">Methods</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.segmentation.SegmentationConvertCallback.do_convert" title="minestudio.data.minecraft.callbacks.segmentation.SegmentationConvertCallback.do_convert"><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_convert</span></code></a>(eps_id, skip_frames, modal_file_path)</p></td>
-<td><p>Convert segmentation data for a given episode.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">gen_frame_skip_flags</span></code>(file_name)</p></td>
-<td><p>Generates a list of boolean flags indicating which frames to skip in a given file.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.segmentation.SegmentationConvertCallback.load_episodes" title="minestudio.data.minecraft.callbacks.segmentation.SegmentationConvertCallback.load_episodes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_episodes</span></code></a>()</p></td>
-<td><p>Load episodes from input directories containing RLE files.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="minestudio.data.minecraft.callbacks.segmentation.SegmentationConvertCallback.do_convert">
 <span class="sig-name descname"><span class="pre">do_convert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eps_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_frames</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modal_file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/callbacks/segmentation.html#SegmentationConvertCallback.do_convert"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.callbacks.segmentation.SegmentationConvertCallback.do_convert" title="Link to this definition">#</a></dt>
@@ -2919,18 +2475,6 @@ That’s why <code class="docutils literal notranslate"><span class="pre">frame_
 <dd><p>Callback for drawing segmentation information on frames.</p>
 <p>This callback can draw points, masks, event text, frame IDs, and frame ranges
 onto video frames.</p>
-<p class="rubric">Methods</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.segmentation.SegmentationDrawFrameCallback.draw_frame" title="minestudio.data.minecraft.callbacks.segmentation.SegmentationDrawFrameCallback.draw_frame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_frame</span></code></a>(frame[, point, obj_mask, obj_id, ...])</p></td>
-<td><p>Draw segmentation information on a single frame.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.segmentation.SegmentationDrawFrameCallback.draw_frames" title="minestudio.data.minecraft.callbacks.segmentation.SegmentationDrawFrameCallback.draw_frames"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_frames</span></code></a>(frames, infos, sample_idx)</p></td>
-<td><p>Draw segmentation information on a list of frames.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="minestudio.data.minecraft.callbacks.segmentation.SegmentationDrawFrameCallback.draw_frame">
 <span class="sig-name descname"><span class="pre">draw_frame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj_mask</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/callbacks/segmentation.html#SegmentationDrawFrameCallback.draw_frame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.callbacks.segmentation.SegmentationDrawFrameCallback.draw_frame" title="Link to this definition">#</a></dt>
@@ -2985,47 +2529,6 @@ onto video frames.</p>
 <dd><p>Callback for handling segmentation data kernels.</p>
 <p>This callback processes segmentation masks, including RLE encoding/decoding,
 filtering dataset paths, merging data chunks, slicing, and padding.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Attributes<span class="colon">:</span></dt>
-<dd class="field-odd"><dl class="simple">
-<dt><a class="reference internal" href="#minestudio.data.minecraft.callbacks.segmentation.SegmentationKernelCallback.name" title="minestudio.data.minecraft.callbacks.segmentation.SegmentationKernelCallback.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></a></dt><dd><p>Get the name of the callback.</p>
-</dd>
-</dl>
-</dd>
-</dl>
-<p class="rubric">Methods</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.segmentation.SegmentationKernelCallback.create_from_config" title="minestudio.data.minecraft.callbacks.segmentation.SegmentationKernelCallback.create_from_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_from_config</span></code></a>()</p></td>
-<td><p>Create a SegmentationKernelCallback instance from a configuration dictionary.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.segmentation.SegmentationKernelCallback.do_decode" title="minestudio.data.minecraft.callbacks.segmentation.SegmentationKernelCallback.do_decode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_decode</span></code></a>(chunk, **kwargs)</p></td>
-<td><p>Decode a data chunk using pickle.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.segmentation.SegmentationKernelCallback.do_merge" title="minestudio.data.minecraft.callbacks.segmentation.SegmentationKernelCallback.do_merge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_merge</span></code></a>(chunk_list, **kwargs)</p></td>
-<td><p>Merge a list of data chunks into a single dictionary.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.segmentation.SegmentationKernelCallback.do_pad" title="minestudio.data.minecraft.callbacks.segmentation.SegmentationKernelCallback.do_pad"><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_pad</span></code></a>(data, pad_len, pad_pos, **kwargs)</p></td>
-<td><p>Pad the data to a specified length.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_postprocess</span></code>(data, **kwargs)</p></td>
-<td><p>Performs optional post-processing operations on the sampled modal data.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.segmentation.SegmentationKernelCallback.do_slice" title="minestudio.data.minecraft.callbacks.segmentation.SegmentationKernelCallback.do_slice"><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_slice</span></code></a>(data, start, end, skip_frame, **kwargs)</p></td>
-<td><p>Slice the data based on start, end, and skip_frame parameters.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.segmentation.SegmentationKernelCallback.filter_dataset_paths" title="minestudio.data.minecraft.callbacks.segmentation.SegmentationKernelCallback.filter_dataset_paths"><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter_dataset_paths</span></code></a>(dataset_paths)</p></td>
-<td><p>Filter dataset paths to include only segmentation-related files.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.segmentation.SegmentationKernelCallback.rle_decode" title="minestudio.data.minecraft.callbacks.segmentation.SegmentationKernelCallback.rle_decode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rle_decode</span></code></a>(mask_rle, shape)</p></td>
-<td><p>Decode a run-length encoded (RLE) mask.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.callbacks.segmentation.SegmentationKernelCallback.rle_encode" title="minestudio.data.minecraft.callbacks.segmentation.SegmentationKernelCallback.rle_encode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rle_encode</span></code></a>(binary_mask)</p></td>
-<td><p>Encode a binary mask using run-length encoding (RLE).</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="minestudio.data.minecraft.callbacks.segmentation.SegmentationKernelCallback.create_from_config">
 <span class="sig-name descname"><span class="pre">create_from_config</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#minestudio.data.minecraft.callbacks.segmentation.SegmentationKernelCallback" title="minestudio.data.minecraft.callbacks.segmentation.SegmentationKernelCallback"><span class="pre">SegmentationKernelCallback</span></a></span></span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/callbacks/segmentation.html#SegmentationKernelCallback.create_from_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.callbacks.segmentation.SegmentationKernelCallback.create_from_config" title="Link to this definition">#</a></dt>
@@ -3214,18 +2717,6 @@ FilePath: /MineStudio/minestudio/data/minecraft/tools/convertion.py</p>
 <p>This class is responsible for preparing tasks (episodes and their parts),
 dispatching these tasks to ConvertWorker instances, and collecting the results.
 It supports filtering of episodes and parts based on a filter_kernel.</p>
-<p class="rubric">Methods</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#minestudio.data.minecraft.tools.convertion.ConvertManager.dispatch" title="minestudio.data.minecraft.tools.convertion.ConvertManager.dispatch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dispatch</span></code></a>()</p></td>
-<td><p>Dispatch the prepared tasks to ConvertWorker actors for processing.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#minestudio.data.minecraft.tools.convertion.ConvertManager.prepare_tasks" title="minestudio.data.minecraft.tools.convertion.ConvertManager.prepare_tasks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">prepare_tasks</span></code></a>()</p></td>
-<td><p>Prepare the tasks (episodes and their parts) for conversion.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="minestudio.data.minecraft.tools.convertion.ConvertManager.dispatch">
 <span class="sig-name descname"><span class="pre">dispatch</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/data/minecraft/tools/convertion.html#ConvertManager.dispatch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.data.minecraft.tools.convertion.ConvertManager.dispatch" title="Link to this definition">#</a></dt>
@@ -3284,15 +2775,6 @@ FilePath: /MineStudio/minestudio/data/minecraft/utils.py</p>
 set of samples from the dataset, particularly useful for sequential data
 like video frames from game episodes. It divides the dataset among
 replicas and then creates batches within each replica’s assigned portion.</p>
-<p class="rubric">Methods</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">__call__</span></code>(*args, **kwargs)</p></td>
-<td><p>Call self as a function.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 </dd></dl>
 
 <dl class="py function">
