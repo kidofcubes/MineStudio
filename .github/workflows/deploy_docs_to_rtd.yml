@@ -43,6 +43,7 @@ jobs:
       - name: Summit repo to gh-pages branch.
         run: |
           ls
+          git pull
 
           cd docs
 
@@ -58,6 +59,8 @@ jobs:
           pip install 'sphinx>=2.1'
           pip install -r requirements.txt
 
+          git tag
+          git status
           sphinx-multiversion --dump-metadata source build/html  
           sphinx-multiversion source build/html 
 
