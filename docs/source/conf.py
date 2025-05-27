@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-28 17:46:44
 LastEditors: muzhancun muzhancun@stu.pku.edu.cn
-LastEditTime: 2025-05-27 17:43:14
+LastEditTime: 2025-05-27 19:03:15
 FilePath: /MineStudio/docs/source/conf.py
 '''
 import os
@@ -23,7 +23,7 @@ sys.path.insert(0, os.path.abspath('../../'))
 project = 'MineStudio'
 copyright = str(datetime.now().year) + ", The CraftJarvis Team"
 author = 'The CraftJarvis Team'
-release = '1.0.0'
+release = '1.1.3'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -106,7 +106,7 @@ html_theme_options = {
    }
 }
 
-html_title = f"MineStudio {release}"
+html_title = "MineStudio"
 html_favicon = "_static/logo-no-text-light.svg"
 
 # -- auto api ----------------------------------------------------------------
@@ -117,6 +117,7 @@ autoapi_ignore = ['*minerl*', '*tests*', '*tutorials*', '*utils*']
 autodoc_mock_imports = ['torch', 'absl', 'cv2', 'huggingface_hub', 'lmdb', 'gymnasium', 'lightning', 'omegaconf', 'tree', 'einops', 'gym', 'gym3', 'coloredlogs', 'daemoniker', 'av', 'minecraft_data', 'torchvision', 'timm', 'transformers', 'x_transformers', 'tqdm']
 autodoc_inherit_docstring = False
 autosummary_generate = False
+numpydoc_show_class_members = False 
 # -- application setup ----------
 # ---------------------------------------------
 
@@ -166,4 +167,6 @@ def setup(app: Sphinx) -> Dict[str, Any]:
     }
 
 # setup multiversion
+smv_tag_whitelist = r'^.*$'
 smv_branch_whitelist = r'^(master|releases/.*)$' # only include master and releases/* branches
+smv_released_pattern = r'^v(\d+\.\d+\.\d+)$'  # match version pattern vX.Y.Z
