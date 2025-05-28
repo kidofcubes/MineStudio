@@ -155,8 +155,8 @@ Here is the checkpoint list:
 - [CraftJarvis/MineStudio_GROOT.18w_EMA](https://huggingface.co/CraftJarvis/MineStudio_GROOT.18w_EMA), trained by [CraftJarvis](https://craftjarvis.github.io/)
 - [CraftJarvis/MineStudio_STEVE-1.official](https://huggingface.co/CraftJarvis/MineStudio_STEVE-1.official), trained by [STEVE-1](https://github.com/Shalev-Lifshitz/STEVE-1)
 - [CraftJarvis/MineStudio_ROCKET-1.12w_EMA](https://huggingface.co/CraftJarvis/MineStudio_ROCKET-1.12w_EMA), trained by [CraftJarvis](https://craftjarvis.github.io/)
-- [CraftJarvis/MineStudio_ROCKET-2-1x-22w](https://huggingface.co/phython96/ROCKET-2-1x-22w)
-- [CraftJarvis/MineStudio_ROCKET-2-1.5x-17w](https://huggingface.co/phython96/ROCKET-2-1.5x-17w)
+- [CraftJarvis/MineStudio_ROCKET-2-1x-22w](https://huggingface.co/phython96/ROCKET-2-1x-22w), trained by [CraftJarvis](https://craftjarvis.github.io/)
+- [CraftJarvis/MineStudio_ROCKET-2-1.5x-17w](https://huggingface.co/phython96/ROCKET-2-1.5x-17w), trained by [CraftJarvis](https://craftjarvis.github.io/)
 
 
 ## Star History
