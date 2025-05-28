@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-12-02 21:23:42
- * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2025-01-04 11:44:39
+ * @LastEditors: muzhancun muzhancun@stu.pku.edu.cn
+ * @LastEditTime: 2025-05-28 14:48:21
  * @FilePath: /MineStudio/docs/source/inference/quick-inference.md
 -->
 
@@ -40,9 +40,9 @@ if __name__ == '__main__':
         ),
         episode_filter = InfoBaseFilter(
             key = "mine_block",
-            val = "diamond_ore",
+            regex = "*.log",
             num = 1,
-        ), # InfoBaseFilter will label episodes mine more than 1 diamond_ore
+        ), # InfoBaseFilter will label episodes mine more than 1 *.log
     )
     summary = pipeline.run()
     print(summary)

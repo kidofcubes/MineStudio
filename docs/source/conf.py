@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-28 17:46:44
 LastEditors: muzhancun muzhancun@stu.pku.edu.cn
-LastEditTime: 2025-05-27 19:38:12
+LastEditTime: 2025-05-28 13:51:20
 FilePath: /MineStudio/docs/source/conf.py
 '''
 import os
@@ -50,6 +50,8 @@ extensions = [
     # "jupyterlite_sphinx",
     "sphinx_favicon",
     "sphinx_multiversion",
+    "_extension.gallery_directive",
+    "_extension.component_directive",
 ]
 
 templates_path = ['_templates']
@@ -74,6 +76,7 @@ html_css_files = [
 ]
 
 html_theme_options = {
+  "header_links_before_dropdown": 7,
   "icon_links": [
         {
             "name": "GitHub",
@@ -88,11 +91,11 @@ html_theme_options = {
         {
             "name": "ArXiv",
             "url": "https://arxiv.org/pdf/2310.08235",
-            "icon": "ai ai-arxiv",
+            "icon": "fa-custom fa-arxiv",
         }
   ], 
   "navbar_align": "left",
-  "show_toc_level": 2,
+  "show_toc_level": 1,
   "navbar_center": ["version-switcher", "navbar-nav"],  
   "logo": {
     "text": "MineStudio",
@@ -109,6 +112,10 @@ html_theme_options = {
 
 html_title = "MineStudio"
 html_favicon = "_static/logo-no-text-light.svg"
+
+html_js_files = [
+    ("custom-icons.js", {"defer": "defer"}),
+]
 
 # -- auto api ----------------------------------------------------------------
 autoapi_add_toctree_entry = False

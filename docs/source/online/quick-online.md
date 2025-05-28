@@ -1,3 +1,5 @@
+# Quick Online Training with VPT
+
 We provide a simple example in `online/run`. You can fine-tune VPT to complete the task of killing cows by directly running:
 
 ```bash
