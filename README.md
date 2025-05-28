@@ -45,7 +45,7 @@ MineStudio contains a series of tools and APIs that can help you quickly develop
 
 ## News
 
-- 2025/05/28 - We have released a big update of MineStudio (v.1.1.4) with the following changes:
+- 2025/05/28 - We have released a big update of MineStudio (v1.1.4) with the following changes:
   - Refactored the [data](https://craftjarvis.github.io/MineStudio/data/index.html) component to support more flexible data loading and processing, all the trajectory modals are now decoupled. Users are able to [customize](https://craftjarvis.github.io/MineStudio/data/callbacks.html) their own data processing methods. 
   - Added detailed code comments and docstrings to all the modules, making it easier to understand and use the code.
   - Improved the documentation with more [examples](https://github.com/CraftJarvis/MineStudio/tree/master/tests), tutorials, and a new [API](https://craftjarvis.github.io/MineStudio/api/index.html) reference section.
