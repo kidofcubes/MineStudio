@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-11-30 13:20:04
- * @LastEditors: muzhancun muzhancun@stu.pku.edu.cn
- * @LastEditTime: 2025-05-26 14:54:46
+ * @LastEditors: caishaofei-mus1 1744260356@qq.com
+ * @LastEditTime: 2025-05-28 13:06:53
  * @FilePath: /MineStudio/README.md
 -->
 
@@ -43,6 +43,13 @@ MineStudio contains a series of tools and APIs that can help you quickly develop
 
 **This repository is under development.** We welcome any contributions and suggestions.
 
+## News
+
+- 2025/05/28 - We have released a big update of MineStudio (v.1.1.4) with the following changes:
+  - Refactored the [data](https://craftjarvis.github.io/MineStudio/data/index.html) component to support more flexible data loading and processing, all the trajectory modals are now decoupled. Users are able to [customize](https://craftjarvis.github.io/MineStudio/data/callbacks.html) their own data processing methods. 
+  - Added detailed code comments and docstrings to all the modules, making it easier to understand and use the code.
+  - Improved the documentation with more examples, tutorials, and a new [API](https://craftjarvis.github.io/MineStudio/api/index.html) reference section.
+
 ## Installation
 
 For a more detailed installation guide, please refer to the [documentation](https://craftjarvis.github.io/MineStudio/overview/installation.html).
@@ -64,7 +71,7 @@ To install MineStudio from source, you can run the following command:
 pip install git+https://github.com/CraftJarvis/MineStudio.git
 ```
 
-[Important] Minecraft simulator requires rendering tools. For users with nvidia graphics cards, we recommend installing **VirtualGL**. For other users, we recommend using **Xvfb**, which supports CPU rendering but is slightly slower. Refer to the [documentation](https://craftjarvis.github.io/MineStudio/overview/installation.html#install-the-rendering-tool) for installation commands.
+[**Important**] Minecraft simulator requires rendering tools. For users with nvidia graphics cards, we recommend installing **VirtualGL**. For other users, we recommend using **Xvfb**, which supports CPU rendering but is slightly slower. Refer to the [documentation](https://craftjarvis.github.io/MineStudio/overview/installation.html#install-the-rendering-tool) for installation commands.
 
 After the installation, you can run the following command to check if the installation is successful:
 ```bash
@@ -83,28 +90,27 @@ docker run -it minestudio
 
 ## Datasets on 🤗 Hugging Face
 
-We converted the [Contractor Data](https://github.com/openai/Video-Pre-Training?tab=readme-ov-file#contractor-demonstrations) the OpenAI VPT project provided to our trajectory structure and released them to the Hugging Face. 
+We converted the [Contractor Data](https://github.com/openai/Video-Pre-Training?tab=readme-ov-file#contractor-demonstrations) the OpenAI VPT project provided to our trajectory structure and released them to the Hugging Face. (The old dataset is only available in v1.0.6 and earlier versions. From v1.1.0, we have changed the dataset structure to support more flexible data loading and processing.)
 
-- [CraftJarvis/minestudio-data-6xx](https://huggingface.co/datasets/CraftJarvis/minestudio-data-6xx)
-- [CraftJarvis/minestudio-data-7xx](https://huggingface.co/datasets/CraftJarvis/minestudio-data-7xx)
-- [CraftJarvis/minestudio-data-8xx](https://huggingface.co/datasets/CraftJarvis/minestudio-data-8xx)
-- [CraftJarvis/minestudio-data-9xx](https://huggingface.co/datasets/CraftJarvis/minestudio-data-9xx)
-- [CraftJarvis/minestudio-data-10xx](https://huggingface.co/datasets/CraftJarvis/minestudio-data-10xx)
+- [CraftJarvis/minestudio-data-6xx](https://huggingface.co/datasets/CraftJarvis/minestudio-data-6xx-v110)
+- [CraftJarvis/minestudio-data-7xx](https://huggingface.co/datasets/CraftJarvis/minestudio-data-7xx-v110)
+- [CraftJarvis/minestudio-data-8xx](https://huggingface.co/datasets/CraftJarvis/minestudio-data-8xx-v110)
+- [CraftJarvis/minestudio-data-9xx](https://huggingface.co/datasets/CraftJarvis/minestudio-data-9xx-v110)
+- [CraftJarvis/minestudio-data-10xx](https://huggingface.co/datasets/CraftJarvis/minestudio-data-10xx-v110)
 
 ```python
-from minestudio.data import load_dataset
+from minestudio.data import RawDataset
+from minestudio.data.minecraft.callbacks import ImageKernelCallback, ActionKernelCallback
 
-dataset = load_dataset(
-    mode='raw', 
-    dataset_dirs=['6xx', '7xx', '8xx', '9xx', '10xx'], 
-    enable_video=True,
-    enable_action=True,
-    frame_width=224, 
-    frame_height=224,
+dataset = RawDataset(
+    dataset_dirs=['6xx', '7xx', '8xx', '9xx', '10xx'],  # Specify the dataset directories
+    modal_kernel_callbacks=[
+        ImageKernelCallback(frame_width=224, frame_height=224, enable_video_aug=False), 
+        ActionKernelCallback(enable_prev_action=True, win_bias=1, read_bias=-1),
+    ],
     win_len=128, 
-    split='train', 
-    split_ratio=0.9, 
-    verbose=True
+    split_ratio=0.9,
+    shuffle_episodes=True,
 )
 item = dataset[0]
 print(item.keys())
@@ -149,6 +155,9 @@ Here is the checkpoint list:
 - [CraftJarvis/MineStudio_GROOT.18w_EMA](https://huggingface.co/CraftJarvis/MineStudio_GROOT.18w_EMA), trained by [CraftJarvis](https://craftjarvis.github.io/)
 - [CraftJarvis/MineStudio_STEVE-1.official](https://huggingface.co/CraftJarvis/MineStudio_STEVE-1.official), trained by [STEVE-1](https://github.com/Shalev-Lifshitz/STEVE-1)
 - [CraftJarvis/MineStudio_ROCKET-1.12w_EMA](https://huggingface.co/CraftJarvis/MineStudio_ROCKET-1.12w_EMA), trained by [CraftJarvis](https://craftjarvis.github.io/)
+- [CraftJarvis/MineStudio_ROCKET-2-1x-22w](https://huggingface.co/phython96/ROCKET-2-1x-22w)
+- [CraftJarvis/MineStudio_ROCKET-2-1.5x-17w](https://huggingface.co/phython96/ROCKET-2-1.5x-17w)
+
 
 ## Star History
 
