@@ -37,7 +37,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/thebelab.css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=f44ad8c8" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=2385f7c1" />
   
   <!-- So that users can add custom icons -->
   <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -71,6 +71,7 @@
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             false;
         </script>
+    <script defer="defer" src="../_static/custom-icons.js?v=26a3f3bc"></script>
     <link rel="icon" href="../_static/logo-no-text-light.svg"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -216,6 +217,20 @@
   </a>
 </li>
 
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../offline/index.html">
+    Offline
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../online/index.html">
+    Online
+  </a>
+</li>
+
             <li class="nav-item dropdown">
                 <button class="btn dropdown-toggle nav-item" type="button"
                 data-bs-toggle="dropdown" aria-expanded="false"
@@ -224,20 +239,6 @@
                 </button>
                 <ul id="pst-nav-more-links" class="dropdown-menu">
                     
-<li class=" ">
-  <a class="nav-link dropdown-item nav-internal" href="../offline/index.html">
-    Offline
-  </a>
-</li>
-
-
-<li class=" ">
-  <a class="nav-link dropdown-item nav-internal" href="../online/index.html">
-    Online
-  </a>
-</li>
-
-
 <li class=" ">
   <a class="nav-link dropdown-item nav-internal" href="../inference/index.html">
     Inference
@@ -323,7 +324,7 @@
           
           
           
-          <a href="https://arxiv.org/pdf/2310.08235" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="ai ai-arxiv fa-lg" aria-hidden="true"></i>
+          <a href="https://arxiv.org/pdf/2310.08235" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-custom fa-arxiv fa-lg" aria-hidden="true"></i>
             <span class="sr-only">ArXiv</span></a>
         </li>
 </ul></div>
@@ -519,7 +520,7 @@
           
           
           
-          <a href="https://arxiv.org/pdf/2310.08235" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="ai ai-arxiv fa-lg" aria-hidden="true"></i>
+          <a href="https://arxiv.org/pdf/2310.08235" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-custom fa-arxiv fa-lg" aria-hidden="true"></i>
             <span class="sr-only">ArXiv</span></a>
         </li>
 </ul></div>
@@ -566,13 +567,16 @@
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../online/index.html">Online Training</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../online/general-information.html">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../online/config.html">Config</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../online/general-information.html">Online Training Module: General Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../online/config.html">Configuring Online Training Sessions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../online/trainer.html">Trainer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../online/rollout.html">Rollout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../online/run.html">Launching Online Training: The <code class="docutils literal notranslate"><span class="pre">run.py</span></code> Script</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../online/utils.html">Shared Utilities for Online Training: The <code class="docutils literal notranslate"><span class="pre">utils</span></code> Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../online/customization.html">Customize</a></li>
 </ul>
 </details></li>
+
 <li class="toctree-l1 has-children"><a class="reference internal" href="../inference/index.html">Inference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../inference/baseline-vpt.html">Tutorial: Inference with VPT</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../inference/baseline-steve1.html">Tutorial: Inference with STEVE-1</a></li>
@@ -945,7 +949,7 @@
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-start">Quick Start</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-arguments">Basic Arguments</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-callbacks">Using Callbacks</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-callbacks">Using Callbacks</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#test-speed">Test Speed</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#send-chat-commands">Send Chat Commands</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#custom-reward-function">Custom Reward Function</a></li>

@@ -37,7 +37,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/thebelab.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=f44ad8c8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=2385f7c1" />
   
   <!-- So that users can add custom icons -->
   <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -69,6 +69,7 @@
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             false;
         </script>
+    <script defer="defer" src="../../_static/custom-icons.js?v=26a3f3bc"></script>
     <link rel="icon" href="../../_static/logo-no-text-light.svg"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -214,6 +215,20 @@
   </a>
 </li>
 
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../offline/index.html">
+    Offline
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../online/index.html">
+    Online
+  </a>
+</li>
+
             <li class="nav-item dropdown">
                 <button class="btn dropdown-toggle nav-item" type="button"
                 data-bs-toggle="dropdown" aria-expanded="false"
@@ -222,20 +237,6 @@
                 </button>
                 <ul id="pst-nav-more-links" class="dropdown-menu">
                     
-<li class=" ">
-  <a class="nav-link dropdown-item nav-internal" href="../../offline/index.html">
-    Offline
-  </a>
-</li>
-
-
-<li class=" ">
-  <a class="nav-link dropdown-item nav-internal" href="../../online/index.html">
-    Online
-  </a>
-</li>
-
-
 <li class=" ">
   <a class="nav-link dropdown-item nav-internal" href="../../inference/index.html">
     Inference
@@ -321,7 +322,7 @@
           
           
           
-          <a href="https://arxiv.org/pdf/2310.08235" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="ai ai-arxiv fa-lg" aria-hidden="true"></i>
+          <a href="https://arxiv.org/pdf/2310.08235" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-custom fa-arxiv fa-lg" aria-hidden="true"></i>
             <span class="sr-only">ArXiv</span></a>
         </li>
 </ul></div>
@@ -517,7 +518,7 @@
           
           
           
-          <a href="https://arxiv.org/pdf/2310.08235" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="ai ai-arxiv fa-lg" aria-hidden="true"></i>
+          <a href="https://arxiv.org/pdf/2310.08235" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-custom fa-arxiv fa-lg" aria-hidden="true"></i>
             <span class="sr-only">ArXiv</span></a>
         </li>
 </ul></div>
@@ -531,8 +532,7 @@
 <nav class="bd-docs-nav bd-links"
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul class="current nav bd-sidenav">
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Simulator</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
 </ul>
 </details></li>
@@ -2657,7 +2657,7 @@ to the POV image dimensions and overlaid with a green color.</p>
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-minestudio.simulator.entry">Entry</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-minestudio.simulator.entry">Entry</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.entry.CameraConfig"><code class="docutils literal notranslate"><span class="pre">CameraConfig</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.entry.CameraConfig.action_transformer_kwargs"><code class="docutils literal notranslate"><span class="pre">CameraConfig.action_transformer_kwargs</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.entry.CameraConfig.n_camera_bins"><code class="docutils literal notranslate"><span class="pre">CameraConfig.n_camera_bins</span></code></a></li>
@@ -2679,7 +2679,7 @@ to the POV image dimensions and overlaid with a green color.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.entry.download_engine"><code class="docutils literal notranslate"><span class="pre">download_engine()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#callbacks">Callbacks</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#callbacks">Callbacks</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#module-minestudio.simulator.callbacks.callback">BaseCallback</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.callbacks.callback.Compose"><code class="docutils literal notranslate"><span class="pre">Compose</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.callbacks.callback.Compose.after_close"><code class="docutils literal notranslate"><span class="pre">Compose.after_close()</span></code></a></li>
@@ -2862,7 +2862,7 @@ to the POV image dimensions and overlaid with a green color.</p>
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#utils">Utils</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#utils">Utils</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#module-minestudio.simulator.utils.constants">Constants</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.utils.constants.GUIConstants"><code class="docutils literal notranslate"><span class="pre">GUIConstants</span></code></a></li>
 </ul>

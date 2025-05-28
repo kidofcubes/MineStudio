@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Overview &#8212; MineStudio</title>
+    <title>Online Training Module: General Information &#8212; MineStudio</title>
   
   
   
@@ -37,7 +37,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/thebelab.css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=f44ad8c8" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=2385f7c1" />
   
   <!-- So that users can add custom icons -->
   <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -69,10 +69,11 @@
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             false;
         </script>
+    <script defer="defer" src="../_static/custom-icons.js?v=26a3f3bc"></script>
     <link rel="icon" href="../_static/logo-no-text-light.svg"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Config" href="config.html" />
+    <link rel="next" title="Configuring Online Training Sessions" href="config.html" />
     <link rel="prev" title="Online Training" href="index.html" /> 
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -214,6 +215,20 @@
   </a>
 </li>
 
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../offline/index.html">
+    Offline
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="index.html">
+    Online
+  </a>
+</li>
+
             <li class="nav-item dropdown">
                 <button class="btn dropdown-toggle nav-item" type="button"
                 data-bs-toggle="dropdown" aria-expanded="false"
@@ -222,20 +237,6 @@
                 </button>
                 <ul id="pst-nav-more-links" class="dropdown-menu">
                     
-<li class=" ">
-  <a class="nav-link dropdown-item nav-internal" href="../offline/index.html">
-    Offline
-  </a>
-</li>
-
-
-<li class=" ">
-  <a class="nav-link dropdown-item nav-internal" href="index.html">
-    Online
-  </a>
-</li>
-
-
 <li class=" ">
   <a class="nav-link dropdown-item nav-internal" href="../inference/index.html">
     Inference
@@ -321,7 +322,7 @@
           
           
           
-          <a href="https://arxiv.org/pdf/2310.08235" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="ai ai-arxiv fa-lg" aria-hidden="true"></i>
+          <a href="https://arxiv.org/pdf/2310.08235" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-custom fa-arxiv fa-lg" aria-hidden="true"></i>
             <span class="sr-only">ArXiv</span></a>
         </li>
 </ul></div>
@@ -517,7 +518,7 @@
           
           
           
-          <a href="https://arxiv.org/pdf/2310.08235" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="ai ai-arxiv fa-lg" aria-hidden="true"></i>
+          <a href="https://arxiv.org/pdf/2310.08235" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-custom fa-arxiv fa-lg" aria-hidden="true"></i>
             <span class="sr-only">ArXiv</span></a>
         </li>
 </ul></div>
@@ -564,13 +565,16 @@
 </ul>
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Online Training</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="config.html">Config</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Online Training Module: General Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html">Configuring Online Training Sessions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="trainer.html">Trainer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rollout.html">Rollout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="run.html">Launching Online Training: The <code class="docutils literal notranslate"><span class="pre">run.py</span></code> Script</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">Shared Utilities for Online Training: The <code class="docutils literal notranslate"><span class="pre">utils</span></code> Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="customization.html">Customize</a></li>
 </ul>
 </details></li>
+
 <li class="toctree-l1 has-children"><a class="reference internal" href="../inference/index.html">Inference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../inference/baseline-vpt.html">Tutorial: Inference with VPT</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../inference/baseline-steve1.html">Tutorial: Inference with STEVE-1</a></li>
@@ -629,7 +633,7 @@
     
     <li class="breadcrumb-item"><a href="index.html" class="nav-link">Online Training</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Overview</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Online Training Module: General Information</span></li>
   </ul>
 </nav>
 </div>
@@ -645,20 +649,66 @@
                 
 <div id="searchbox"></div>
                 <article class="bd-article">
-                   <section id="overview">
-<h1>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h1>
-<p>The code in the Online Training Module is mainly divided into four parts: <code class="docutils literal notranslate"><span class="pre">run</span></code>, <code class="docutils literal notranslate"><span class="pre">rollout</span></code>, and <code class="docutils literal notranslate"><span class="pre">train</span></code>. Each part is contained in its corresponding subfolder under the <code class="docutils literal notranslate"><span class="pre">online</span></code> folder.</p>
-<section id="rollout">
-<h2>Rollout<a class="headerlink" href="#rollout" title="Link to this heading">#</a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">rollout</span></code> section is located under <code class="docutils literal notranslate"><span class="pre">online/rollout</span></code> and mainly consists of several parts:</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">EnvWorker</span></code>  can obtain control information such as actions from the <code class="docutils literal notranslate"><span class="pre">RolloutWorker</span></code>. interact directly with the environment and pass the obtained information to the <code class="docutils literal notranslate"><span class="pre">RolloutWorker</span></code>.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">RolloutWorker</span></code> is responsible for compressing the observations, states, and other information from multiple <code class="docutils literal notranslate"><span class="pre">EnvWorker</span></code>s into a batches, passing them to the agent for efficient computation of actions, and then distributing the actions to the corresponding <code class="docutils literal notranslate"><span class="pre">EnvWorker</span></code>s. At the same time, it sends all the information to the <code class="docutils literal notranslate"><span class="pre">ReplayManager</span></code>.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">RolloutManager</span></code> receives the information from the <code class="docutils literal notranslate"><span class="pre">RolloutWorker</span></code> and internally maintains the work progress of all <code class="docutils literal notranslate"><span class="pre">EnvWorker</span></code>s. When a worker has been working for a certain number of consecutive frames, it clips the work into fragments and sends them, along with the information, to the <code class="docutils literal notranslate"><span class="pre">ReplayBuffer</span></code>.</p>
+                   <!-- filepath: /Users/muzhancun/workspace/MineStudio/docs/source/online/general-information.md -->
+<section id="online-training-module-general-information">
+<h1>Online Training Module: General Information<a class="headerlink" href="#online-training-module-general-information" title="Link to this heading">#</a></h1>
+<p>Welcome to the MineStudio Online Training Module! This section of the documentation provides a high-level overview of its architecture, core components, and the underlying design philosophy. The online module is engineered to facilitate the training of agents directly within the interactive Minecraft environment, allowing them to learn and adapt through continuous experience.</p>
+<section id="core-philosophy-learning-by-doing-at-scale">
+<h2>Core Philosophy: Learning by Doing, at Scale<a class="headerlink" href="#core-philosophy-learning-by-doing-at-scale" title="Link to this heading">#</a></h2>
+<p>The online training pipeline in MineStudio is built with scalability and efficiency in mind. It leverages the power of <a class="reference external" href="https://www.ray.io/">Ray</a> for distributed computation, enabling you to train agents on complex tasks that may require significant computational resources and vast amounts of interaction data. The central idea is to have agents (policies) that learn by actively engaging with the environment, collecting experiences, and updating their decision-making processes in near real-time.</p>
 </section>
-<section id="trainer">
-<h2>Trainer<a class="headerlink" href="#trainer" title="Link to this heading">#</a></h2>
-<p>This folder contains our defined Online Trainer, including the parent class <code class="docutils literal notranslate"><span class="pre">BaseTrainer</span></code> and subclasses such as <code class="docutils literal notranslate"><span class="pre">PPOTrainer</span></code>. These trainers accept <code class="docutils literal notranslate"><span class="pre">config</span></code> and the computation results of <code class="docutils literal notranslate"><span class="pre">GaeWorker</span></code> on the <code class="docutils literal notranslate"><span class="pre">ReplayBuffer</span></code> as parameters.</p>
-<p>By inheriting from <code class="docutils literal notranslate"><span class="pre">BaseTrainer</span></code>, you can customize the trainer according to your needs. Refer to <a class="reference internal" href="quick-online.html"><span class="doc std std-doc">Customization</span></a> for details.</p>
+<section id="architectural-overview-key-components">
+<h2>Architectural Overview: Key Components<a class="headerlink" href="#architectural-overview-key-components" title="Link to this heading">#</a></h2>
+<p>The online training module is primarily organized into three interconnected sub-modules, each residing in its respective subfolder within <code class="docutils literal notranslate"><span class="pre">minestudio/online/</span></code>:</p>
+<ol class="arabic simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">run</span></code></strong>: This is the entry point for initiating and managing an online training session. It’s responsible for parsing configurations, initializing the necessary Ray actors, and orchestrating the overall workflow. Think of it as the conductor of the online training orchestra.</p>
+<ul class="simple">
+<li><p><em>For more details, see the <a class="reference internal" href="run.html"><span class="std std-doc">Run</span></a> documentation.</em></p></li>
+</ul>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">rollout</span></code></strong>: This component is dedicated to the crucial task of experience collection. It manages a fleet of workers that interact with multiple instances of the Minecraft environment in parallel. These workers use the current agent policy to decide actions, observe outcomes, and gather the raw data (observations, actions, rewards, etc.) that forms the basis of learning.</p>
+<ul class="simple">
+<li><p><em>For more details, see the <a class="reference internal" href="rollout.html"><span class="std std-doc">Rollout</span></a> documentation.</em></p></li>
+</ul>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">trainer</span></code></strong>: This is where the learning happens. The trainer takes the experiences collected by the <code class="docutils literal notranslate"><span class="pre">rollout</span></code> workers and uses them to optimize the agent’s policy. MineStudio primarily features a <code class="docutils literal notranslate"><span class="pre">PPOTrainer</span></code> (Proximal Policy Optimization), a robust and widely-used reinforcement learning algorithm.</p>
+<ul class="simple">
+<li><p><em>For more details, see the <a class="reference internal" href="trainer.html"><span class="std std-doc">Trainer</span></a> documentation.</em></p></li>
+</ul>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">utils</span></code></strong>: This directory houses a collection of shared utilities, data structures, and helper functions that support both the <code class="docutils literal notranslate"><span class="pre">rollout</span></code> and <code class="docutils literal notranslate"><span class="pre">trainer</span></code> components. This promotes code reusability and consistency.</p>
+<ul class="simple">
+<li><p><em>For more details, see the <a class="reference internal" href="utils.html"><span class="std std-doc">Utils</span></a> documentation.</em></p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="interplay-of-components-a-simplified-data-flow">
+<h2>Interplay of Components: A Simplified Data Flow<a class="headerlink" href="#interplay-of-components-a-simplified-data-flow" title="Link to this heading">#</a></h2>
+<p>While the detailed interactions are covered in the specific documentation for each component, here’s a simplified view of how they work together:</p>
+<ol class="arabic simple">
+<li><p>The <strong><code class="docutils literal notranslate"><span class="pre">run</span></code></strong> script starts the process, initializing the <strong><code class="docutils literal notranslate"><span class="pre">RolloutManager</span></code></strong> (from the <code class="docutils literal notranslate"><span class="pre">rollout</span></code> module) and the <strong><code class="docutils literal notranslate"><span class="pre">Trainer</span></code></strong> (e.g., <code class="docutils literal notranslate"><span class="pre">PPOTrainer</span></code>).</p></li>
+<li><p>The <strong><code class="docutils literal notranslate"><span class="pre">RolloutManager</span></code></strong> deploys multiple <strong><code class="docutils literal notranslate"><span class="pre">RolloutWorker</span></code></strong> actors. Each <code class="docutils literal notranslate"><span class="pre">RolloutWorker</span></code> in turn manages several <strong><code class="docutils literal notranslate"><span class="pre">EnvWorker</span></code></strong> instances, which are the actual Minecraft environment simulations.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">EnvWorker</span></code>s send observations to their <code class="docutils literal notranslate"><span class="pre">RolloutWorker</span></code>.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">RolloutWorker</span></code> uses its local copy of the current policy (periodically updated by the <code class="docutils literal notranslate"><span class="pre">Trainer</span></code>) to select actions for each of its <code class="docutils literal notranslate"><span class="pre">EnvWorker</span></code>s.</p></li>
+<li><p>Actions are applied in the <code class="docutils literal notranslate"><span class="pre">EnvWorker</span></code>s, and the resulting new observations, rewards, and done states (collectively, a “step” of experience) are sent back to the <code class="docutils literal notranslate"><span class="pre">RolloutWorker</span></code>.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">RolloutWorker</span></code> groups these steps into <code class="docutils literal notranslate"><span class="pre">SampleFragment</span></code>s (chunks of trajectory data).</p></li>
+<li><p>These <code class="docutils literal notranslate"><span class="pre">SampleFragment</span></code>s are then sent, often via a <code class="docutils literal notranslate"><span class="pre">RolloutWorkerWrapper</span></code> and an internal queue, to a <strong>Replay Buffer</strong> (which can be part of the <code class="docutils literal notranslate"><span class="pre">RolloutManager</span></code> or a separate entity it manages).</p></li>
+<li><p>The <strong><code class="docutils literal notranslate"><span class="pre">Trainer</span></code></strong> fetches batches of <code class="docutils literal notranslate"><span class="pre">SampleFragment</span></code>s from the Replay Buffer.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">Trainer</span></code> computes advantages (e.g., using GAE) and then performs optimization steps (e.g., PPO updates) to improve the policy and value function models.</p></li>
+<li><p>Periodically, the <code class="docutils literal notranslate"><span class="pre">Trainer</span></code> sends the updated model weights to the <code class="docutils literal notranslate"><span class="pre">RolloutManager</span></code>, which then broadcasts them to all <code class="docutils literal notranslate"><span class="pre">RolloutWorker</span></code>s, ensuring they use the latest policy for subsequent data collection.</p></li>
+<li><p>This cycle of data collection and training continues, allowing the agent to progressively learn and improve its performance.</p></li>
+</ol>
+</section>
+<section id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading">#</a></h2>
+<p>To dive deeper into specific aspects:</p>
+<ul class="simple">
+<li><p>Understand how to configure your training runs in the <a class="reference internal" href="config.html"><span class="std std-doc">Config</span></a> section.</p></li>
+<li><p>For a quick guide on launching a training session, refer to the <a class="reference internal" href="quick-online.html"><span class="std std-doc">Quick Start</span></a>.</p></li>
+<li><p>If you’re interested in extending or modifying the existing trainers or policies, the <a class="reference internal" href="customization.html"><span class="std std-doc">Customization</span></a> page will be your guide.</p></li>
+</ul>
+<p>This modular and distributed architecture is designed to be flexible and scalable, catering to a wide range of research and development needs in the exciting domain of learning agents for Minecraft.</p>
 </section>
 </section>
 
@@ -689,7 +739,7 @@
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Config</p>
+        <p class="prev-next-title">Configuring Online Training Sessions</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -712,8 +762,10 @@
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rollout">Rollout</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#trainer">Trainer</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#core-philosophy-learning-by-doing-at-scale">Core Philosophy: Learning by Doing, at Scale</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#architectural-overview-key-components">Architectural Overview: Key Components</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interplay-of-components-a-simplified-data-flow">Interplay of Components: A Simplified Data Flow</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-started">Getting Started</a></li>
 </ul>
   </nav></div>
 

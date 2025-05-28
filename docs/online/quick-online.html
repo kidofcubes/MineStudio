@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>&lt;no title&gt; &#8212; MineStudio</title>
+    <title>Quick Online Training with VPT &#8212; MineStudio</title>
   
   
   
@@ -37,7 +37,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/thebelab.css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=f44ad8c8" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=2385f7c1" />
   
   <!-- So that users can add custom icons -->
   <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -69,6 +69,7 @@
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             false;
         </script>
+    <script defer="defer" src="../_static/custom-icons.js?v=26a3f3bc"></script>
     <link rel="icon" href="../_static/logo-no-text-light.svg"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
@@ -212,6 +213,20 @@
   </a>
 </li>
 
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../offline/index.html">
+    Offline
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="index.html">
+    Online
+  </a>
+</li>
+
             <li class="nav-item dropdown">
                 <button class="btn dropdown-toggle nav-item" type="button"
                 data-bs-toggle="dropdown" aria-expanded="false"
@@ -220,20 +235,6 @@
                 </button>
                 <ul id="pst-nav-more-links" class="dropdown-menu">
                     
-<li class=" ">
-  <a class="nav-link dropdown-item nav-internal" href="../offline/index.html">
-    Offline
-  </a>
-</li>
-
-
-<li class=" ">
-  <a class="nav-link dropdown-item nav-internal" href="index.html">
-    Online
-  </a>
-</li>
-
-
 <li class=" ">
   <a class="nav-link dropdown-item nav-internal" href="../inference/index.html">
     Inference
@@ -319,7 +320,7 @@
           
           
           
-          <a href="https://arxiv.org/pdf/2310.08235" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="ai ai-arxiv fa-lg" aria-hidden="true"></i>
+          <a href="https://arxiv.org/pdf/2310.08235" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-custom fa-arxiv fa-lg" aria-hidden="true"></i>
             <span class="sr-only">ArXiv</span></a>
         </li>
 </ul></div>
@@ -517,7 +518,7 @@
           
           
           
-          <a href="https://arxiv.org/pdf/2310.08235" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="ai ai-arxiv fa-lg" aria-hidden="true"></i>
+          <a href="https://arxiv.org/pdf/2310.08235" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-custom fa-arxiv fa-lg" aria-hidden="true"></i>
             <span class="sr-only">ArXiv</span></a>
         </li>
 </ul></div>
@@ -561,7 +562,7 @@
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">&lt;no title&gt;</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Quick Online Training with VPT</span></li>
   </ul>
 </nav>
 </div>
@@ -577,7 +578,9 @@
                 
 <div id="searchbox"></div>
                 <article class="bd-article">
-                   <p>We provide a simple example in <code class="docutils literal notranslate"><span class="pre">online/run</span></code>. You can fine-tune VPT to complete the task of killing cows by directly running:</p>
+                   <section id="quick-online-training-with-vpt">
+<h1>Quick Online Training with VPT<a class="headerlink" href="#quick-online-training-with-vpt" title="Link to this heading">#</a></h1>
+<p>We provide a simple example in <code class="docutils literal notranslate"><span class="pre">online/run</span></code>. You can fine-tune VPT to complete the task of killing cows by directly running:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>online/run
 bash<span class="w"> </span>run.sh
 </pre></div>
@@ -723,6 +726,7 @@ bash<span class="w"> </span>run.sh
 </div>
 <p>to start online training.</p>
 <p>We use <code class="docutils literal notranslate"><span class="pre">wandb</span></code> to log and monitor the progress of the run. The corresponding parameters passed to <code class="docutils literal notranslate"><span class="pre">wandb</span></code> are in <code class="docutils literal notranslate"><span class="pre">config.logger_config</span></code>. When <code class="docutils literal notranslate"><span class="pre">save_path</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code>, the checkpoint will be saved to Ray’s working directory at <code class="docutils literal notranslate"><span class="pre">~/ray_results</span></code>.</p>
+</section>
 
 <div class="section ablog__blog_comments">
    
@@ -747,18 +751,6 @@ bash<span class="w"> </span>run.sh
                 <dialog id="pst-secondary-sidebar-modal"></dialog>
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
-
-  <div class="sidebar-secondary-item">
-<div
-    id="pst-page-navigation-heading-2"
-    class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> On this page
-  </div>
-  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
-    <ul class="simple visible nav section-nav flex-column">
-</ul>
-
-  </nav></div>
 
   <div class="sidebar-secondary-item">
   <div role="note" aria-label="source link">

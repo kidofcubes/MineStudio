@@ -37,7 +37,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/thebelab.css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=f44ad8c8" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=2385f7c1" />
   
   <!-- So that users can add custom icons -->
   <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -69,10 +69,11 @@
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             false;
         </script>
+    <script defer="defer" src="../_static/custom-icons.js?v=26a3f3bc"></script>
     <link rel="icon" href="../_static/logo-no-text-light.svg"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Customize" href="customization.html" />
+    <link rel="next" title="Launching Online Training: The run.py Script" href="run.html" />
     <link rel="prev" title="Trainer" href="trainer.html" /> 
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -214,6 +215,20 @@
   </a>
 </li>
 
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../offline/index.html">
+    Offline
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="index.html">
+    Online
+  </a>
+</li>
+
             <li class="nav-item dropdown">
                 <button class="btn dropdown-toggle nav-item" type="button"
                 data-bs-toggle="dropdown" aria-expanded="false"
@@ -222,20 +237,6 @@
                 </button>
                 <ul id="pst-nav-more-links" class="dropdown-menu">
                     
-<li class=" ">
-  <a class="nav-link dropdown-item nav-internal" href="../offline/index.html">
-    Offline
-  </a>
-</li>
-
-
-<li class=" ">
-  <a class="nav-link dropdown-item nav-internal" href="index.html">
-    Online
-  </a>
-</li>
-
-
 <li class=" ">
   <a class="nav-link dropdown-item nav-internal" href="../inference/index.html">
     Inference
@@ -321,7 +322,7 @@
           
           
           
-          <a href="https://arxiv.org/pdf/2310.08235" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="ai ai-arxiv fa-lg" aria-hidden="true"></i>
+          <a href="https://arxiv.org/pdf/2310.08235" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-custom fa-arxiv fa-lg" aria-hidden="true"></i>
             <span class="sr-only">ArXiv</span></a>
         </li>
 </ul></div>
@@ -517,7 +518,7 @@
           
           
           
-          <a href="https://arxiv.org/pdf/2310.08235" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="ai ai-arxiv fa-lg" aria-hidden="true"></i>
+          <a href="https://arxiv.org/pdf/2310.08235" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-custom fa-arxiv fa-lg" aria-hidden="true"></i>
             <span class="sr-only">ArXiv</span></a>
         </li>
 </ul></div>
@@ -564,13 +565,16 @@
 </ul>
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Online Training</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="general-information.html">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="config.html">Config</a></li>
+<li class="toctree-l2"><a class="reference internal" href="general-information.html">Online Training Module: General Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html">Configuring Online Training Sessions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="trainer.html">Trainer</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Rollout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="run.html">Launching Online Training: The <code class="docutils literal notranslate"><span class="pre">run.py</span></code> Script</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">Shared Utilities for Online Training: The <code class="docutils literal notranslate"><span class="pre">utils</span></code> Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="customization.html">Customize</a></li>
 </ul>
 </details></li>
+
 <li class="toctree-l1 has-children"><a class="reference internal" href="../inference/index.html">Inference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../inference/baseline-vpt.html">Tutorial: Inference with VPT</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../inference/baseline-steve1.html">Tutorial: Inference with STEVE-1</a></li>
@@ -647,21 +651,56 @@
                 <article class="bd-article">
                    <section id="rollout">
 <h1>Rollout<a class="headerlink" href="#rollout" title="Link to this heading">#</a></h1>
-<p>In <code class="docutils literal notranslate"><span class="pre">online/rollout</span></code>, we have defined Rollout Process for collecting the online trajectories.</p>
-<p>The top-level of this structure is <code class="docutils literal notranslate"><span class="pre">RolloutManager</span></code>, it’s parameters can be seen in rollout_config in <a class="reference internal" href="config.html"><span class="doc std std-doc">Config</span></a>. You can also create and launch an Trainer with:</p>
-<p>Here are informations about some key elements from low level to high level.</p>
-<section id="envworker">
-<h2>EnvWorker<a class="headerlink" href="#envworker" title="Link to this heading">#</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">EnvWorker</span></code> is defined in <code class="docutils literal notranslate"><span class="pre">minestudio.online.rollout.env_worker</span></code>. This module is in charge of directly interacting with the environment and collecting data necessary for subsequent processing and analysis.</p>
+<p>This document delves into the rollout process within the online training module, a critical phase where the agent interacts with the environment to gather experiences.</p>
+<section id="design-principle">
+<h2>Design Principle<a class="headerlink" href="#design-principle" title="Link to this heading">#</a></h2>
+<p>The rollout module is engineered for efficient, large-scale experience collection, leveraging the power of <code class="docutils literal notranslate"><span class="pre">Ray</span></code> for distributed execution. Its design revolves around a few key components and philosophies.</p>
+<p>At the most granular level, the <strong><code class="docutils literal notranslate"><span class="pre">EnvWorker</span></code></strong> (Environment Worker) is responsible for running an individual instance of the Minecraft simulation. Multiple <code class="docutils literal notranslate"><span class="pre">EnvWorker</span></code>s operate in parallel, each generating a stream of raw interactions.</p>
+<p>Orchestrating these <code class="docutils literal notranslate"><span class="pre">EnvWorker</span></code>s is the <strong><code class="docutils literal notranslate"><span class="pre">RolloutWorker</span></code></strong>. This component manages a collection of environments and houses the current policy model. Its primary duties include spawning and overseeing its <code class="docutils literal notranslate"><span class="pre">EnvWorker</span></code>s, performing inference (i.e., using the policy model to decide actions based on observations from <code class="docutils literal notranslate"><span class="pre">EnvWorker</span></code>s), stepping the environments forward by relaying these actions, and collecting the resultant data (observations, actions, rewards, and done states). The <code class="docutils literal notranslate"><span class="pre">RolloutWorker</span></code> also communicates with an <code class="docutils literal notranslate"><span class="pre">EpisodeStatistics</span></code> actor to report metrics. For flexibility, a <code class="docutils literal notranslate"><span class="pre">progress_handler</span></code> can be specified; this callback is invoked with step-wise data and is typically used to channel the collected experiences towards a replay buffer.</p>
+<p>To manage the lifecycle and distributed nature of <code class="docutils literal notranslate"><span class="pre">RolloutWorker</span></code>s, they are wrapped by <strong><code class="docutils literal notranslate"><span class="pre">RolloutWorkerWrapper</span></code></strong> Ray actors. Each <code class="docutils literal notranslate"><span class="pre">RolloutWorkerWrapper</span></code> is responsible for a single <code class="docutils literal notranslate"><span class="pre">RolloutWorker</span></code>. It handles model updates pushed from the trainer and manages communication with the replay buffer. A key function of the wrapper is to buffer the steps collected by its <code class="docutils literal notranslate"><span class="pre">RolloutWorker</span></code> and assemble them into <code class="docutils literal notranslate"><span class="pre">SampleFragment</span></code>s – coherent chunks of trajectory data.</p>
+<p>Overseeing the entire distributed fleet of <code class="docutils literal notranslate"><span class="pre">RolloutWorkerWrapper</span></code>s is the <strong><code class="docutils literal notranslate"><span class="pre">RolloutManager</span></code></strong>, itself a Ray actor. This central coordinator manages the creation and supervision of all <code class="docutils literal notranslate"><span class="pre">RolloutWorkerWrapper</span></code>s. It plays a crucial role in <strong>Model Synchronization</strong>: when the trainer produces an updated model, it’s sent to the <code class="docutils literal notranslate"><span class="pre">RolloutManager</span></code>, which then efficiently distributes these new model weights to all its <code class="docutils literal notranslate"><span class="pre">RolloutWorkerWrapper</span></code>s. These wrappers, in turn, update their local <code class="docutils literal notranslate"><span class="pre">RolloutWorker</span></code> instances. The system also manages data staleness, ensuring that workers don’t continue to generate data with overly outdated policies. The <code class="docutils literal notranslate"><span class="pre">RolloutManager</span></code> also interfaces with the <code class="docutils literal notranslate"><span class="pre">ReplayBuffer</span></code> (often via a <code class="docutils literal notranslate"><span class="pre">ReplayBufferInterface</span></code>) and the <code class="docutils literal notranslate"><span class="pre">EpisodeStatistics</span></code> actor.</p>
+<p>The <strong>Data Flow</strong> is designed for parallelism and efficiency: <code class="docutils literal notranslate"><span class="pre">EnvWorker</span></code>s run environment instances and send observations to their <code class="docutils literal notranslate"><span class="pre">RolloutWorker</span></code>. The <code class="docutils literal notranslate"><span class="pre">RolloutWorker</span></code> performs inference, sends actions back, and collects step data. This data is passed to its <code class="docutils literal notranslate"><span class="pre">RolloutWorkerWrapper</span></code> via the <code class="docutils literal notranslate"><span class="pre">progress_handler</span></code>. The <code class="docutils literal notranslate"><span class="pre">RolloutWorkerWrapper</span></code> buffers these steps, assembles them into <code class="docutils literal notranslate"><span class="pre">SampleFragment</span></code>s, and then typically uses a separate internal queue and sender thread to push these fragments to the <code class="docutils literal notranslate"><span class="pre">ReplayBufferInterface</span></code>, ready for the trainer.</p>
 </section>
-<section id="rolloutworker">
-<h2>RolloutWorker<a class="headerlink" href="#rolloutworker" title="Link to this heading">#</a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">RolloutWorker</span></code> is defined in <code class="docutils literal notranslate"><span class="pre">minestudio.online.rollout.env_worker</span></code>, which is responsible for compressing the observations, states, and other information from multiple <code class="docutils literal notranslate"><span class="pre">EnvWorker</span></code>s into a batches, passing them to the agent for efficient computation of actions, and then distributing the actions to the corresponding <code class="docutils literal notranslate"><span class="pre">EnvWorker</span></code>s. At the same time, it sends all the information to the <code class="docutils literal notranslate"><span class="pre">ReplayManager</span></code>.</p>
+<section id="logic">
+<h2>Logic<a class="headerlink" href="#logic" title="Link to this heading">#</a></h2>
+<p>The rollout process unfolds through a sequence of coordinated actions, primarily orchestrated by Ray actors:</p>
+<section id="initialization-setting-the-stage">
+<h3>1. Initialization: Setting the Stage<a class="headerlink" href="#initialization-setting-the-stage" title="Link to this heading">#</a></h3>
+<p>The process begins with the creation of the <strong><code class="docutils literal notranslate"><span class="pre">RolloutManager</span></code></strong> Ray actor. This manager immediately takes on the task of spawning multiple <strong><code class="docutils literal notranslate"><span class="pre">RolloutWorkerWrapper</span></code></strong> Ray actors. Each of these wrappers, upon its own initialization, creates and configures a local <strong><code class="docutils literal notranslate"><span class="pre">RolloutWorker</span></code></strong> instance. Finally, each <code class="docutils literal notranslate"><span class="pre">RolloutWorker</span></code> launches several <strong><code class="docutils literal notranslate"><span class="pre">EnvWorker</span></code></strong> processes. Each <code class="docutils literal notranslate"><span class="pre">EnvWorker</span></code> is an independent simulation of the Minecraft environment, ready to interact with an agent.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This hierarchical setup (<code class="docutils literal notranslate"><span class="pre">RolloutManager</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">RolloutWorkerWrapper</span></code> (actor) -&gt; <code class="docutils literal notranslate"><span class="pre">RolloutWorker</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">EnvWorker</span></code> (process)) allows for scalable and resilient distributed data collection. Ray’s actor model handles the complexities of inter-process communication and scheduling across potentially many machines.</p>
+</div>
 </section>
-<section id="rolloutmanager">
-<h2>RolloutManager<a class="headerlink" href="#rolloutmanager" title="Link to this heading">#</a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">RolloutManager</span></code> is defined in <code class="docutils literal notranslate"><span class="pre">minestudio.online.rollout.env_worker</span></code>, which receives the information from the <code class="docutils literal notranslate"><span class="pre">RolloutWorker</span></code> and internally maintains the work progress of all <code class="docutils literal notranslate"><span class="pre">EnvWorker</span></code>s. When a worker has been working for a certain number of consecutive frames, it clips the work into fragments and sends them, along with the information, to the <code class="docutils literal notranslate"><span class="pre">ReplayBuffer</span></code>.</p>
-<p>You can launch <code class="docutils literal notranslate"><span class="pre">RolloutManager</span></code> directly be <code class="docutils literal notranslate"><span class="pre">minestudio.online.rollout.start_manager.start_rolloutmanager</span></code>.</p>
+<section id="the-experience-collection-loop-agents-in-action">
+<h3>2. The Experience Collection Loop: Agents in Action<a class="headerlink" href="#the-experience-collection-loop-agents-in-action" title="Link to this heading">#</a></h3>
+<p>The core of the rollout happens within each <code class="docutils literal notranslate"><span class="pre">RolloutWorker</span></code>. This is a continuous loop:
+The <code class="docutils literal notranslate"><span class="pre">RolloutWorker</span></code> actively <strong>polls</strong> its associated <code class="docutils literal notranslate"><span class="pre">EnvWorker</span></code>s for new observations from the game. Once enough observations are gathered to form an inference batch (the size of which is configurable), the <code class="docutils literal notranslate"><span class="pre">RolloutWorker</span></code> uses its current policy model to <strong>perform inference</strong>, generating actions for each environment. These actions are then dispatched back to the respective <code class="docutils literal notranslate"><span class="pre">EnvWorker</span></code>s, which apply them to their Minecraft instances and step the simulation forward.</p>
+<p>The resulting data from each step – the new observation, the action taken, the reward received, and whether the episode terminated or was truncated – is then passed by the <code class="docutils literal notranslate"><span class="pre">RolloutWorker</span></code> to its <code class="docutils literal notranslate"><span class="pre">progress_handler</span></code>. As mentioned, this handler is typically a method within the parent <code class="docutils literal notranslate"><span class="pre">RolloutWorkerWrapper</span></code>.</p>
+</section>
+<section id="data-buffering-and-fragment-creation-packaging-experiences">
+<h3>3. Data Buffering and Fragment Creation: Packaging Experiences<a class="headerlink" href="#data-buffering-and-fragment-creation-packaging-experiences" title="Link to this heading">#</a></h3>
+<p>Inside the <code class="docutils literal notranslate"><span class="pre">RolloutWorkerWrapper</span></code>, the <code class="docutils literal notranslate"><span class="pre">progress_handler</span></code> (called by the <code class="docutils literal notranslate"><span class="pre">RolloutWorker</span></code>) appends the incoming step data to an internal buffer, usually specific to each <code class="docutils literal notranslate"><span class="pre">EnvWorker</span></code> it manages. When the buffer for a particular environment accumulates enough steps (typically <code class="docutils literal notranslate"><span class="pre">fragment_length</span> <span class="pre">+</span> <span class="pre">1</span></code>, where <code class="docutils literal notranslate"><span class="pre">fragment_length</span></code> is the desired size of a data chunk), a <code class="docutils literal notranslate"><span class="pre">SampleFragment</span></code> is created. This fragment encapsulates the first <code class="docutils literal notranslate"><span class="pre">fragment_length</span></code> steps, forming a coherent piece of trajectory.
+This newly minted <code class="docutils literal notranslate"><span class="pre">SampleFragment</span></code> is then placed into an internal <strong>queue</strong> within the <code class="docutils literal notranslate"><span class="pre">RolloutWorkerWrapper</span></code>.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Using an internal queue and a separate sender thread within the <code class="docutils literal notranslate"><span class="pre">RolloutWorkerWrapper</span></code> decouples the data collection (which is often synchronous with the environment steps) from the data transmission to the replay buffer. This can improve throughput and prevent the environment simulation from stalling if the replay buffer is temporarily slow to ingest data.</p>
+</div>
+<p>A dedicated <strong>sender thread</strong> running within the <code class="docutils literal notranslate"><span class="pre">RolloutWorkerWrapper</span></code> continuously monitors this queue. It takes <code class="docutils literal notranslate"><span class="pre">SampleFragment</span></code>s from the queue and adds them to the <code class="docutils literal notranslate"><span class="pre">ReplayBufferInterface</span></code>, making them available for the training process.</p>
+</section>
+<section id="model-updates-staying-current">
+<h3>4. Model Updates: Staying Current<a class="headerlink" href="#model-updates-staying-current" title="Link to this heading">#</a></h3>
+<p>To ensure the agent learns from the most effective behaviors, its policy model must be kept up-to-date. The <code class="docutils literal notranslate"><span class="pre">Trainer</span></code> component, after performing its optimization steps, periodically sends new model weights to the <code class="docutils literal notranslate"><span class="pre">RolloutManager</span></code>.
+The <code class="docutils literal notranslate"><span class="pre">RolloutManager</span></code> then efficiently <strong>broadcasts</strong> these updated weights to all its managed <code class="docutils literal notranslate"><span class="pre">RolloutWorkerWrapper</span></code> actors. Upon receiving new weights, each <code class="docutils literal notranslate"><span class="pre">RolloutWorkerWrapper</span></code> instructs its local <code class="docutils literal notranslate"><span class="pre">RolloutWorker</span></code> to load them into its policy model.</p>
+<p>A <code class="docutils literal notranslate"><span class="pre">max_staleness</span></code> parameter is often used to manage data quality. If a <code class="docutils literal notranslate"><span class="pre">RolloutWorkerWrapper</span></code> finds that the data it’s collecting is based on a model version that is too old compared to the latest version received, it might discard that data or reset its buffers to avoid polluting the replay buffer with experiences from a significantly outdated policy.</p>
+</section>
+<section id="monitoring-performance-and-progress-statistics">
+<h3>5. Monitoring Performance and Progress: Statistics<a class="headerlink" href="#monitoring-performance-and-progress-statistics" title="Link to this heading">#</a></h3>
+<p>Keeping track of the rollout process is vital. Two main components handle this:
+The <strong><code class="docutils literal notranslate"><span class="pre">EpisodeStatistics</span></code></strong> actor, a central Ray actor, is responsible for tracking and logging episode-level metrics. As <code class="docutils literal notranslate"><span class="pre">EnvWorker</span></code>s complete episodes (via their <code class="docutils literal notranslate"><span class="pre">RolloutWorker</span></code>), they report information like total rewards and episode lengths to <code class="docutils literal notranslate"><span class="pre">EpisodeStatistics</span></code>. This provides a high-level view of agent performance.</p>
+<p>At a more granular level, the <strong><code class="docutils literal notranslate"><span class="pre">PipelineMonitor</span></code></strong> (often residing within each <code class="docutils literal notranslate"><span class="pre">RolloutWorker</span></code>) tracks performance metrics of the data collection pipeline itself. This can include timings for different stages, such as the time spent receiving observations from environments, the duration of the inference step, and the time taken to send actions back. This information is invaluable for identifying bottlenecks and optimizing the rollout throughput.</p>
+<p>In essence, the <code class="docutils literal notranslate"><span class="pre">RolloutManager</span></code> acts as the conductor of this distributed orchestra of workers and actors. It ensures that all components are working in concert, using up-to-date policies, and that the valuable experience data generated by the agent’s interactions is efficiently collected, packaged, and stored for learning.</p>
+</section>
 </section>
 </section>
 
@@ -688,11 +727,11 @@
       </div>
     </a>
     <a class="right-next"
-       href="customization.html"
+       href="run.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Customize</p>
+        <p class="prev-next-title">Launching Online Training: The <code class="docutils literal notranslate"><span class="pre">run.py</span></code> Script</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -715,9 +754,15 @@
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#envworker">EnvWorker</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rolloutworker">RolloutWorker</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rolloutmanager">RolloutManager</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#design-principle">Design Principle</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logic">Logic</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initialization-setting-the-stage">1. Initialization: Setting the Stage</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-experience-collection-loop-agents-in-action">2. The Experience Collection Loop: Agents in Action</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-buffering-and-fragment-creation-packaging-experiences">3. Data Buffering and Fragment Creation: Packaging Experiences</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-updates-staying-current">4. Model Updates: Staying Current</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#monitoring-performance-and-progress-statistics">5. Monitoring Performance and Progress: Statistics</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

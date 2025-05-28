@@ -37,7 +37,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/thebelab.css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=f44ad8c8" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=2385f7c1" />
   
   <!-- So that users can add custom icons -->
   <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -69,10 +69,11 @@
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             false;
         </script>
+    <script defer="defer" src="../_static/custom-icons.js?v=26a3f3bc"></script>
     <link rel="icon" href="../_static/logo-no-text-light.svg"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Overview" href="general-information.html" />
+    <link rel="next" title="Online Training Module: General Information" href="general-information.html" />
     <link rel="prev" title="Tutorial: Pre-Training ROCKET-1 from Scratch" href="../offline/tutorial-rocket.html" /> 
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -214,6 +215,20 @@
   </a>
 </li>
 
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../offline/index.html">
+    Offline
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="#">
+    Online
+  </a>
+</li>
+
             <li class="nav-item dropdown">
                 <button class="btn dropdown-toggle nav-item" type="button"
                 data-bs-toggle="dropdown" aria-expanded="false"
@@ -222,20 +237,6 @@
                 </button>
                 <ul id="pst-nav-more-links" class="dropdown-menu">
                     
-<li class=" ">
-  <a class="nav-link dropdown-item nav-internal" href="../offline/index.html">
-    Offline
-  </a>
-</li>
-
-
-<li class=" ">
-  <a class="nav-link dropdown-item nav-internal" href="#">
-    Online
-  </a>
-</li>
-
-
 <li class=" ">
   <a class="nav-link dropdown-item nav-internal" href="../inference/index.html">
     Inference
@@ -321,7 +322,7 @@
           
           
           
-          <a href="https://arxiv.org/pdf/2310.08235" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="ai ai-arxiv fa-lg" aria-hidden="true"></i>
+          <a href="https://arxiv.org/pdf/2310.08235" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-custom fa-arxiv fa-lg" aria-hidden="true"></i>
             <span class="sr-only">ArXiv</span></a>
         </li>
 </ul></div>
@@ -517,7 +518,7 @@
           
           
           
-          <a href="https://arxiv.org/pdf/2310.08235" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="ai ai-arxiv fa-lg" aria-hidden="true"></i>
+          <a href="https://arxiv.org/pdf/2310.08235" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-custom fa-arxiv fa-lg" aria-hidden="true"></i>
             <span class="sr-only">ArXiv</span></a>
         </li>
 </ul></div>
@@ -564,13 +565,16 @@
 </ul>
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Online Training</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="general-information.html">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="config.html">Config</a></li>
+<li class="toctree-l2"><a class="reference internal" href="general-information.html">Online Training Module: General Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html">Configuring Online Training Sessions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="trainer.html">Trainer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rollout.html">Rollout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="run.html">Launching Online Training: The <code class="docutils literal notranslate"><span class="pre">run.py</span></code> Script</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">Shared Utilities for Online Training: The <code class="docutils literal notranslate"><span class="pre">utils</span></code> Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="customization.html">Customize</a></li>
 </ul>
 </details></li>
+
 <li class="toctree-l1 has-children"><a class="reference internal" href="../inference/index.html">Inference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../inference/baseline-vpt.html">Tutorial: Inference with VPT</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../inference/baseline-steve1.html">Tutorial: Inference with STEVE-1</a></li>
@@ -642,7 +646,13 @@
                 
 <div id="searchbox"></div>
                 <article class="bd-article">
-                   <section id="online-training">
+                   <!--
+ * @Date: 2025-03-18 14:36:00
+ * @LastEditors: muzhancun muzhancun@stu.pku.edu.cn
+ * @LastEditTime: 2025-05-28 16:33:06
+ * @FilePath: /MineStudio/docs/source/online/index.md
+-->
+<section id="online-training">
 <h1>Online Training<a class="headerlink" href="#online-training" title="Link to this heading">#</a></h1>
 <p>The pipeline automates online training process in the MineStudio framework.</p>
 <hr class="docutils" />
@@ -652,26 +662,36 @@
 <div class="toctree-wrapper compound">
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">MineStudio Online Training</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="general-information.html">Overview</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="general-information.html#rollout">Rollout</a></li>
-<li class="toctree-l2"><a class="reference internal" href="general-information.html#trainer">Trainer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="general-information.html">Online Training Module: General Information</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="general-information.html#core-philosophy-learning-by-doing-at-scale">Core Philosophy: Learning by Doing, at Scale</a></li>
+<li class="toctree-l2"><a class="reference internal" href="general-information.html#architectural-overview-key-components">Architectural Overview: Key Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="general-information.html#interplay-of-components-a-simplified-data-flow">Interplay of Components: A Simplified Data Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="general-information.html#getting-started">Getting Started</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="config.html">Config</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="config.html#example-config">Example Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuring Online Training Sessions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="config.html#example-configuration-a-quick-look">Example Configuration: A Quick Look</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#detailed-configuration-parameters">Detailed Configuration Parameters</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="trainer.html">Trainer</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="trainer.html#constructor">Constructor</a></li>
-<li class="toctree-l2"><a class="reference internal" href="trainer.html#methods">Methods</a></li>
-<li class="toctree-l2"><a class="reference internal" href="trainer.html#attributes">Attributes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="trainer.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trainer.html#design-principle">Design Principle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trainer.html#logic">Logic</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="rollout.html">Rollout</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="rollout.html#envworker">EnvWorker</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rollout.html#rolloutworker">RolloutWorker</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rollout.html#rolloutmanager">RolloutManager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rollout.html#design-principle">Design Principle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rollout.html#logic">Logic</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="run.html">Launching Online Training: The <code class="docutils literal notranslate"><span class="pre">run.py</span></code> Script</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="run.html#core-responsibilities">Core Responsibilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="run.html#execution-flow-a-step-by-step-breakdown">Execution Flow: A Step-by-Step Breakdown</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Shared Utilities for Online Training: The <code class="docutils literal notranslate"><span class="pre">utils</span></code> Module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#design-philosophy-centralized-support">Design Philosophy: Centralized Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#key-components-and-their-roles">Key Components and Their Roles</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="customization.html">Customize</a><ul>
@@ -683,6 +703,10 @@
 </section>
 <section id="quick-start">
 <h2>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading">#</a></h2>
+</section>
+</section>
+<section id="quick-online-training-with-vpt">
+<h1>Quick Online Training with VPT<a class="headerlink" href="#quick-online-training-with-vpt" title="Link to this heading">#</a></h1>
 <p>We provide a simple example in <code class="docutils literal notranslate"><span class="pre">online/run</span></code>. You can fine-tune VPT to complete the task of killing cows by directly running:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>online/run
 bash<span class="w"> </span>run.sh
@@ -830,7 +854,6 @@ bash<span class="w"> </span>run.sh
 <p>to start online training.</p>
 <p>We use <code class="docutils literal notranslate"><span class="pre">wandb</span></code> to log and monitor the progress of the run. The corresponding parameters passed to <code class="docutils literal notranslate"><span class="pre">wandb</span></code> are in <code class="docutils literal notranslate"><span class="pre">config.logger_config</span></code>. When <code class="docutils literal notranslate"><span class="pre">save_path</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code>, the checkpoint will be saved to Ray’s working directory at <code class="docutils literal notranslate"><span class="pre">~/ray_results</span></code>.</p>
 </section>
-</section>
 
 <div class="section ablog__blog_comments">
    
@@ -859,7 +882,7 @@ bash<span class="w"> </span>run.sh
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Overview</p>
+        <p class="prev-next-title">Online Training Module: General Information</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -882,9 +905,14 @@ bash<span class="w"> </span>run.sh
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Online Training</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-start">Quick Start</a></li>
 </ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-online-training-with-vpt">Quick Online Training with VPT</a></li>
+</ul>
+
   </nav></div>
 
   <div class="sidebar-secondary-item">

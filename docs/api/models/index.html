@@ -37,7 +37,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/thebelab.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=f44ad8c8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=2385f7c1" />
   
   <!-- So that users can add custom icons -->
   <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -69,6 +69,7 @@
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             false;
         </script>
+    <script defer="defer" src="../../_static/custom-icons.js?v=26a3f3bc"></script>
     <link rel="icon" href="../../_static/logo-no-text-light.svg"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -214,6 +215,20 @@
   </a>
 </li>
 
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../offline/index.html">
+    Offline
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../online/index.html">
+    Online
+  </a>
+</li>
+
             <li class="nav-item dropdown">
                 <button class="btn dropdown-toggle nav-item" type="button"
                 data-bs-toggle="dropdown" aria-expanded="false"
@@ -222,20 +237,6 @@
                 </button>
                 <ul id="pst-nav-more-links" class="dropdown-menu">
                     
-<li class=" ">
-  <a class="nav-link dropdown-item nav-internal" href="../../offline/index.html">
-    Offline
-  </a>
-</li>
-
-
-<li class=" ">
-  <a class="nav-link dropdown-item nav-internal" href="../../online/index.html">
-    Online
-  </a>
-</li>
-
-
 <li class=" ">
   <a class="nav-link dropdown-item nav-internal" href="../../inference/index.html">
     Inference
@@ -321,7 +322,7 @@
           
           
           
-          <a href="https://arxiv.org/pdf/2310.08235" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="ai ai-arxiv fa-lg" aria-hidden="true"></i>
+          <a href="https://arxiv.org/pdf/2310.08235" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-custom fa-arxiv fa-lg" aria-hidden="true"></i>
             <span class="sr-only">ArXiv</span></a>
         </li>
 </ul></div>
@@ -517,7 +518,7 @@
           
           
           
-          <a href="https://arxiv.org/pdf/2310.08235" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="ai ai-arxiv fa-lg" aria-hidden="true"></i>
+          <a href="https://arxiv.org/pdf/2310.08235" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-custom fa-arxiv fa-lg" aria-hidden="true"></i>
             <span class="sr-only">ArXiv</span></a>
         </li>
 </ul></div>
@@ -531,8 +532,7 @@
 <nav class="bd-docs-nav bd-links"
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul class="current nav bd-sidenav">
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../simulator/index.html">Simulator</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
 </ul>
 </details></li>
@@ -2593,8 +2593,8 @@ Defaults to False.</p></li>
 <section id="module-minestudio.models.vpt.body">
 <span id="vpt"></span><h2>VPT<a class="headerlink" href="#module-minestudio.models.vpt.body" title="Link to this heading">#</a></h2>
 <p>Date: 2024-11-11 20:54:15
-LastEditors: caishaofei <a class="reference external" href="mailto:caishaofei&#37;&#52;&#48;stu&#46;pku&#46;edu&#46;cn">caishaofei<span>&#64;</span>stu<span>&#46;</span>pku<span>&#46;</span>edu<span>&#46;</span>cn</a>
-LastEditTime: 2025-01-04 13:32:36
+LastEditors: muzhancun <a class="reference external" href="mailto:muzhancun&#37;&#52;&#48;stu&#46;pku&#46;edu&#46;cn">muzhancun<span>&#64;</span>stu<span>&#46;</span>pku<span>&#46;</span>edu<span>&#46;</span>cn</a>
+LastEditTime: 2025-05-28 14:29:56
 FilePath: /MineStudio/minestudio/models/vpt/body.py</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="minestudio.models.vpt.body.ImgObsProcess">
@@ -3001,7 +3001,7 @@ Returns None if download is skipped and directory doesn’t exist, or if an erro
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-minestudio.models.base_policy">BasePolicy</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-minestudio.models.base_policy">BasePolicy</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.models.base_policy.MinePolicy"><code class="docutils literal notranslate"><span class="pre">MinePolicy</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.models.base_policy.MinePolicy.device"><code class="docutils literal notranslate"><span class="pre">MinePolicy.device</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.models.base_policy.MinePolicy.forward"><code class="docutils literal notranslate"><span class="pre">MinePolicy.forward()</span></code></a></li>
@@ -3089,7 +3089,7 @@ Returns None if download is skipped and directory doesn’t exist, or if an erro
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-minestudio.models.groot_one.body">GrootOne</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-minestudio.models.groot_one.body">GrootOne</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.models.groot_one.body.Decoder"><code class="docutils literal notranslate"><span class="pre">Decoder</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.models.groot_one.body.Decoder.forward"><code class="docutils literal notranslate"><span class="pre">Decoder.forward()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.models.groot_one.body.Decoder.initial_state"><code class="docutils literal notranslate"><span class="pre">Decoder.initial_state()</span></code></a></li>
@@ -3118,7 +3118,7 @@ Returns None if download is skipped and directory doesn’t exist, or if an erro
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.models.groot_one.body.peel_off"><code class="docutils literal notranslate"><span class="pre">peel_off()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-minestudio.models.rocket_one.body">RocketOne</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-minestudio.models.rocket_one.body">RocketOne</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.models.rocket_one.body.RocketPolicy"><code class="docutils literal notranslate"><span class="pre">RocketPolicy</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.models.rocket_one.body.RocketPolicy.forward"><code class="docutils literal notranslate"><span class="pre">RocketPolicy.forward()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.models.rocket_one.body.RocketPolicy.initial_state"><code class="docutils literal notranslate"><span class="pre">RocketPolicy.initial_state()</span></code></a></li>
@@ -3127,7 +3127,7 @@ Returns None if download is skipped and directory doesn’t exist, or if an erro
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.models.rocket_one.body.load_rocket_policy"><code class="docutils literal notranslate"><span class="pre">load_rocket_policy()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-minestudio.models.steve_one.body">SteveOne</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-minestudio.models.steve_one.body">SteveOne</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.models.steve_one.body.ImgObsProcess"><code class="docutils literal notranslate"><span class="pre">ImgObsProcess</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.models.steve_one.body.ImgObsProcess.forward"><code class="docutils literal notranslate"><span class="pre">ImgObsProcess.forward()</span></code></a></li>
 </ul>
@@ -3158,7 +3158,7 @@ Returns None if download is skipped and directory doesn’t exist, or if an erro
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-minestudio.models.vpt.body">VPT</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-minestudio.models.vpt.body">VPT</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.models.vpt.body.ImgObsProcess"><code class="docutils literal notranslate"><span class="pre">ImgObsProcess</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.models.vpt.body.ImgObsProcess.forward"><code class="docutils literal notranslate"><span class="pre">ImgObsProcess.forward()</span></code></a></li>
 </ul>
@@ -3184,7 +3184,7 @@ Returns None if download is skipped and directory doesn’t exist, or if an erro
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.models.vpt.body.load_vpt_policy"><code class="docutils literal notranslate"><span class="pre">load_vpt_policy()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#utils">Utils</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#utils">Utils</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#module-minestudio.models.utils.download">Download</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.models.utils.download.download_model"><code class="docutils literal notranslate"><span class="pre">download_model()</span></code></a></li>
 </ul>
