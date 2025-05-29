@@ -37,7 +37,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/thebelab.css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=2385f7c1" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=d6734ac8" />
   
   <!-- So that users can add custom icons -->
   <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -75,8 +75,7 @@
     <link rel="icon" href="../_static/logo-no-text-light.svg"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="MineStudio API Documentation" href="../api/index.html" />
-    <link rel="prev" title="Automatic Evaluation Pipeline" href="../benchmark/automatic-evaluation.html" /> 
+    <link rel="prev" title="Inference API Documentation" href="../api/inference/index.html" /> 
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />   
@@ -576,12 +575,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../online/customization.html">Customize</a></li>
 </ul>
 </details></li>
-
 <li class="toctree-l1 has-children"><a class="reference internal" href="../inference/index.html">Inference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../inference/baseline-vpt.html">Tutorial: Inference with VPT</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../inference/baseline-steve1.html">Tutorial: Inference with STEVE-1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../inference/baseline-groot.html">Tutorial: Inference with GROOT</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../inference/baseline-rocket1.html">Tutorial: Inference with ROCKET-1</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../benchmark/index.html">Benchmark</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -589,17 +585,27 @@
 <li class="toctree-l2"><a class="reference internal" href="../benchmark/automatic-evaluation.html">Automatic Evaluation Pipeline</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../online/index.html">Online Training</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../online/general-information.html">Online Training Module: General Information</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../online/config.html">Configuring Online Training Sessions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../online/trainer.html">Trainer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../online/rollout.html">Rollout</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../online/run.html">Launching Online Training: The <code class="docutils literal notranslate"><span class="pre">run.py</span></code> Script</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../online/utils.html">Shared Utilities for Online Training: The <code class="docutils literal notranslate"><span class="pre">utils</span></code> Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../online/customization.html">Customize</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../api/index.html">MineStudio API Documentation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../api/simulator/index.html">Simulator</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
 </ul>
 </details></li>
-
+<li class="toctree-l2 has-children"><a class="reference internal" href="../api/data/index.html">Data</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../api/models/index.html">Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../api/offline/index.html">Offline</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../api/online/index.html">Online</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../api/inference/index.html">Inference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
+</ul>
+</details></li>
+</ul>
+</details></li>
 </ul>
 </div>
 </nav></div>
@@ -658,8 +664,8 @@
                 <article class="bd-article">
                    <!--
  * @Date: 2024-11-29 08:08:13
- * @LastEditors: muzhancun muzhancun@126.com
- * @LastEditTime: 2024-12-20 15:20:10
+ * @LastEditors: muzhancun muzhancun@stu.pku.edu.cn
+ * @LastEditTime: 2025-05-29 13:28:47
  * @FilePath: /MineStudio/docs/source/overview/getting-started.md
 -->
 <a class="reference internal image-reference" href="../_images/banner.png"><img alt="../_images/banner.png" src="../_images/banner.png" style="width: 90%;" />
@@ -1199,7 +1205,7 @@ If an element in the list is a directory like <code class="docutils literal notr
 </details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
 <summary class="sd-summary-title sd-card-header">
 <span class="sd-summary-text"><img src="../_static/logo-no-text-gray.svg" alt="minestudio" width="35px"> Online: Finetuning Policy via Online Interaction</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
-<p class="rubric" id="quick-online-training-with-vpt">Quick Online Training with VPT</p>
+<!-- # Quick Online Training with VPT -->
 <p class="sd-card-text">We provide a simple example in <code class="docutils literal notranslate"><span class="pre">online/run</span></code>. You can fine-tune VPT to complete the task of killing cows by directly running:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>online/run
 bash<span class="w"> </span>run.sh
@@ -1429,22 +1435,13 @@ bash<span class="w"> </span>run.sh
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../benchmark/automatic-evaluation.html"
+       href="../api/inference/index.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Automatic Evaluation Pipeline</p>
+        <p class="prev-next-title">Inference API Documentation</p>
       </div>
-    </a>
-    <a class="right-next"
-       href="../api/index.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">MineStudio API Documentation</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>

@@ -37,7 +37,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/thebelab.css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=2385f7c1" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=d6734ac8" />
   
   <!-- So that users can add custom icons -->
   <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -574,17 +574,35 @@
 <li class="toctree-l2"><a class="reference internal" href="customization.html">Customize</a></li>
 </ul>
 </details></li>
-
 <li class="toctree-l1 has-children"><a class="reference internal" href="../inference/index.html">Inference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../inference/baseline-vpt.html">Tutorial: Inference with VPT</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../inference/baseline-steve1.html">Tutorial: Inference with STEVE-1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../inference/baseline-groot.html">Tutorial: Inference with GROOT</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../inference/baseline-rocket1.html">Tutorial: Inference with ROCKET-1</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../benchmark/index.html">Benchmark</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../benchmark/quick-benchmark.html">Quick benchmark</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../benchmark/automatic-evaluation.html">Automatic Evaluation Pipeline</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../api/index.html">MineStudio API Documentation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../api/simulator/index.html">Simulator</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../api/data/index.html">Data</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../api/models/index.html">Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../api/offline/index.html">Offline</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../api/online/index.html">Online</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../api/inference/index.html">Inference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
+</ul>
+</details></li>
 </ul>
 </details></li>
 </ul>
@@ -649,18 +667,15 @@
                    <!--
  * @Date: 2025-03-18 14:36:00
  * @LastEditors: muzhancun muzhancun@stu.pku.edu.cn
- * @LastEditTime: 2025-05-28 16:33:06
+ * @LastEditTime: 2025-05-29 13:43:21
  * @FilePath: /MineStudio/docs/source/online/index.md
 -->
 <section id="online-training">
 <h1>Online Training<a class="headerlink" href="#online-training" title="Link to this heading">#</a></h1>
 <p>The pipeline automates online training process in the MineStudio framework.</p>
-<hr class="docutils" />
 <section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h2>
-<p>The following is the overview of the Online module.</p>
 <div class="toctree-wrapper compound">
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">MineStudio Online Training</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="general-information.html">Online Training Module: General Information</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="general-information.html#core-philosophy-learning-by-doing-at-scale">Core Philosophy: Learning by Doing, at Scale</a></li>
@@ -703,10 +718,7 @@
 </section>
 <section id="quick-start">
 <h2>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading">#</a></h2>
-</section>
-</section>
-<section id="quick-online-training-with-vpt">
-<h1>Quick Online Training with VPT<a class="headerlink" href="#quick-online-training-with-vpt" title="Link to this heading">#</a></h1>
+<!-- # Quick Online Training with VPT -->
 <p>We provide a simple example in <code class="docutils literal notranslate"><span class="pre">online/run</span></code>. You can fine-tune VPT to complete the task of killing cows by directly running:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>online/run
 bash<span class="w"> </span>run.sh
@@ -854,6 +866,7 @@ bash<span class="w"> </span>run.sh
 <p>to start online training.</p>
 <p>We use <code class="docutils literal notranslate"><span class="pre">wandb</span></code> to log and monitor the progress of the run. The corresponding parameters passed to <code class="docutils literal notranslate"><span class="pre">wandb</span></code> are in <code class="docutils literal notranslate"><span class="pre">config.logger_config</span></code>. When <code class="docutils literal notranslate"><span class="pre">save_path</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code>, the checkpoint will be saved to Ray’s working directory at <code class="docutils literal notranslate"><span class="pre">~/ray_results</span></code>.</p>
 </section>
+</section>
 
 <div class="section ablog__blog_comments">
    
@@ -905,14 +918,9 @@ bash<span class="w"> </span>run.sh
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Online Training</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-start">Quick Start</a></li>
 </ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-online-training-with-vpt">Quick Online Training with VPT</a></li>
-</ul>
-
   </nav></div>
 
   <div class="sidebar-secondary-item">

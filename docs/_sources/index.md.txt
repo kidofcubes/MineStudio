@@ -57,6 +57,9 @@ MineStudio contains a series of tools and APIs that can help you quickly develop
 - header: "{fas}`tasks;pst-color-primary` Benchmark"
   content: "Automating and batch-testing of diverse Minecraft task with [MCU](https://craftjarvis.github.io/MCU/)"
   link: "benchmark/index.html"
+- header: "{fas}`code;pst-color-primary` API"
+  content: "A comprehensive API reference for MineStudio, including all modules and classes."
+  link: "api/index.html"
 ```
 
 ```{toctree}

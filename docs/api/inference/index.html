@@ -37,7 +37,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/thebelab.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=2385f7c1" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=d6734ac8" />
   
   <!-- So that users can add custom icons -->
   <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -73,6 +73,7 @@
     <link rel="icon" href="../../_static/logo-no-text-light.svg"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Getting Started" href="../../overview/getting-started.html" />
     <link rel="prev" title="Online API Documentation" href="../online/index.html" /> 
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -180,7 +181,7 @@
 <nav>
   <ul class="bd-navbar-elements navbar-nav">
     
-<li class="nav-item ">
+<li class="nav-item current active">
   <a class="nav-link nav-internal" href="../../overview/index.html">
     Overview
   </a>
@@ -250,7 +251,7 @@
 </li>
 
 
-<li class=" current active">
+<li class=" ">
   <a class="nav-link dropdown-item nav-internal" href="../index.html">
     API
   </a>
@@ -395,7 +396,7 @@
 <nav>
   <ul class="bd-navbar-elements navbar-nav">
     
-<li class="nav-item ">
+<li class="nav-item current active">
   <a class="nav-link nav-internal" href="../../overview/index.html">
     Overview
   </a>
@@ -458,7 +459,7 @@
 </li>
 
 
-<li class="nav-item current active">
+<li class="nav-item ">
   <a class="nav-link nav-internal" href="../index.html">
     API
   </a>
@@ -531,23 +532,77 @@
 <nav class="bd-docs-nav bd-links"
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../simulator/index.html">Simulator</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../overview/installation.html">Installation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">MineStudio Libraries</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../simulator/index.html">Simulator</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../simulator/general-information.html">General Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../simulator/design-principles.html">Design Principles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../simulator/play.html">Graphical User Interfaces</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../data/index.html">Data</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../data/index.html">Data</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../data/dataset-raw.html">Raw Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../data/dataset-event.html">Event Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../data/visualization.html">Visualization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../data/convertion.html">Data Conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../data/callbacks.html">Data Processing Callbacks</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../models/index.html">Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../models/index.html">Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../models/baseline-vpt.html">Built-in Models: VPT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../models/baseline-steve1.html">Built-in Models: STEVE-1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../models/baseline-groot.html">Built-in Models: GROOT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../models/baseline-rocket1.html">Built-in Models: ROCKET-1</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../offline/index.html">Offline</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../offline/index.html">Offline Training</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../offline/tutorial-vpt.html">Tutorial: Fine-tuning VPT to a Hunter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../offline/tutorial-rocket.html">Tutorial: Pre-Training ROCKET-1 from Scratch</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../online/index.html">Online</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../online/index.html">Online Training</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../online/general-information.html">Online Training Module: General Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../online/config.html">Configuring Online Training Sessions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../online/trainer.html">Trainer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../online/rollout.html">Rollout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../online/run.html">Launching Online Training: The <code class="docutils literal notranslate"><span class="pre">run.py</span></code> Script</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../online/utils.html">Shared Utilities for Online Training: The <code class="docutils literal notranslate"><span class="pre">utils</span></code> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../online/customization.html">Customize</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Inference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../inference/index.html">Inference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../inference/baseline-vpt.html">Tutorial: Inference with VPT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../inference/baseline-groot.html">Tutorial: Inference with GROOT</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../benchmark/index.html">Benchmark</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../benchmark/quick-benchmark.html">Quick benchmark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../benchmark/automatic-evaluation.html">Automatic Evaluation Pipeline</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">MineStudio API Documentation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="../simulator/index.html">Simulator</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../data/index.html">Data</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../models/index.html">Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../offline/index.html">Offline</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../online/index.html">Online</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
+</ul>
+</details></li>
+<li class="toctree-l2 current active has-children"><a class="current reference internal" href="#">Inference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
+</ul>
+</details></li>
 </ul>
 </details></li>
 </ul>
@@ -590,6 +645,9 @@
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
+    
+    <li class="breadcrumb-item"><a href="../../overview/index.html" class="nav-link">Overview</a></li>
+    
     
     <li class="breadcrumb-item"><a href="../index.html" class="nav-link">MineStudio API Documentation</a></li>
     
@@ -961,6 +1019,15 @@ It returns a dictionary containing these counts and the ‘yes_rate’.</p>
         <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title">Online API Documentation</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="../../overview/getting-started.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Getting Started</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-11-29 08:07:44
- * @LastEditors: caishaofei caishaofei@stu.pku.edu.cn
- * @LastEditTime: 2024-12-30 15:36:52
+ * @LastEditors: muzhancun muzhancun@stu.pku.edu.cn
+ * @LastEditTime: 2025-05-29 13:29:06
  * @FilePath: /MineStudio/docs/source/overview/index.md
 -->
 
@@ -29,4 +29,5 @@ installation
 ../online/index
 ../inference/index
 ../benchmark/index
+../api/index
 ```
