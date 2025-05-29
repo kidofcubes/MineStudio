@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-28 17:46:44
-LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2025-05-29 13:48:58
+LastEditors: muzhancun muzhancun@stu.pku.edu.cn
+LastEditTime: 2025-05-29 14:09:34
 FilePath: /MineStudio/docs/source/conf.py
 '''
 import os
@@ -90,7 +90,7 @@ html_theme_options = {
         },
         {
             "name": "ArXiv",
-            "url": "https://arxiv.org/pdf/2310.08235",
+            "url": "https://arxiv.org/pdf/2411.18293",
             "icon": "fa-custom fa-arxiv",
         }
   ], 
