@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-28 17:46:44
-LastEditors: muzhancun muzhancun@stu.pku.edu.cn
-LastEditTime: 2025-05-29 13:39:49
+LastEditors: caishaofei-mus1 1744260356@qq.com
+LastEditTime: 2025-05-29 13:48:58
 FilePath: /MineStudio/docs/source/conf.py
 '''
 import os
@@ -23,7 +23,7 @@ sys.path.insert(0, os.path.abspath('../../'))
 project = 'MineStudio'
 copyright = str(datetime.now().year) + ", The CraftJarvis Team"
 author = 'The CraftJarvis Team'
-release = '1.1.3'
+release = '1.1.4'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
