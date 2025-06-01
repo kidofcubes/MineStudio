@@ -23,18 +23,18 @@ from minestudio.online.utils import auto_stack
 import uuid
 import copy
 import torch.distributed as dist
-# def check_break_and_sync(is_broken: bool):
-#     # 将 is_broken 转换为 tensor 并与其他进程同步
-#     is_broken_tensor = torch.tensor(float(is_broken), device="cuda")  # 假设您使用 GPU
-#     dist.all_reduce(is_broken_tensor, op=dist.ReduceOp.SUM)
-    
-#     # 如果任意一个进程 is_broken, 则返回 True, 表示需要跳过
-#     if is_broken_tensor.item() > 0:
-#         return True
-#     return False
+
+VERBOSE = False
 
 def print_memory_usage():
-    """Prints the allocated and reserved GPU memory."""
+    """
+    Print current CUDA memory usage information.
+    
+    This function displays the allocated and reserved memory on the current CUDA device
+    in megabytes (MB). Useful for debugging memory issues during training.
+    
+    :returns: None (prints memory information to stdout)
+    """
     allocated = torch.cuda.memory_allocated() / (1024 ** 2)
     reserved = torch.cuda.memory_reserved() / (1024 ** 2)
     print(f"Allocated memory: {allocated:.2f} MB")
@@ -43,10 +43,15 @@ def print_memory_usage():
     
 class PPOTrainer(BaseTrainer):
     """
-    Proximal Policy Optimization (PPO) Trainer.
-
-    This trainer implements the PPO algorithm for reinforcement learning.
-    It handles the training loop, data collection, and model updates.
+    Proximal Policy Optimization (PPO) trainer for reinforcement learning.
+    
+    This class implements the PPO algorithm for training policies in Minecraft environments.
+    It extends BaseTrainer and provides functionality for distributed training with Ray,
+    gradient accumulation, value function warmup, and various PPO-specific optimizations
+    including clipping, entropy bonuses, and KL divergence regularization.
+    
+    The trainer supports both policy and value function training with configurable
+    coefficients, learning rate annealing, and checkpoint saving capabilities.
     """
     def __init__(self, 
         num_iterations: int,
@@ -79,36 +84,36 @@ class PPOTrainer(BaseTrainer):
         **kwargs
     ):
         """
-        Initializes the PPOTrainer.
-
-        :param num_iterations: Total number of training iterations.
-        :param learning_rate: Learning rate for the optimizer.
-        :param anneal_lr_linearly: Whether to anneal the learning rate linearly.
-        :param weight_decay: Weight decay for the optimizer.
-        :param adam_eps: Epsilon value for the Adam optimizer.
-        :param batch_size_per_gpu: Batch size per GPU.
-        :param batches_per_iteration: Number of batches per training iteration.
-        :param gradient_accumulation: Number of gradient accumulation steps.
-        :param epochs_per_iteration: Number of epochs per training iteration.
-        :param vf_warmup: Number of initial iterations to warm up the value function.
-        :param ppo_clip: PPO clipping parameter.
-        :param clip_vloss: Whether to clip the value loss.
-        :param max_grad_norm: Maximum gradient norm for clipping.
-        :param zero_initial_vf: Whether to zero out the initial value function parameters.
-        :param ppo_vf_coef: Coefficient for the value function loss in PPO.
-        :param ppo_policy_coef: Coefficient for the policy loss in PPO.
-        :param kl_divergence_coef_rho: Coefficient for the KL divergence penalty.
-        :param entropy_bonus_coef: Coefficient for the entropy bonus.
-        :param coef_rho_decay: Decay rate for the KL divergence coefficient.
-        :param normalize_advantage_full_batch: Whether to normalize advantages over the full batch.
-        :param record_video_interval: Interval for recording videos.
-        :param save_interval: Interval for saving model checkpoints.
-        :param save_path: Path to save model checkpoints.
-        :param keep_interval: Interval for keeping model checkpoints.
-        :param log_ratio_range: Range for clamping the log ratio of new to old policies.
-        :param enable_ref_update: Whether to enable reference model updates.
-        :param whole_config: String representation of the entire configuration.
-        :param kwargs: Additional keyword arguments for the BaseTrainer.
+        Initialize the PPO trainer with configuration parameters.
+        
+        :param num_iterations: Total number of training iterations to perform
+        :param learning_rate: Initial learning rate for the optimizer
+        :param anneal_lr_linearly: Whether to linearly anneal learning rate over training
+        :param weight_decay: Weight decay coefficient for AdamW optimizer
+        :param adam_eps: Epsilon parameter for AdamW optimizer numerical stability
+        :param batch_size_per_gpu: Number of fragments processed per GPU in each batch
+        :param batches_per_iteration: Number of batches processed per training iteration
+        :param gradient_accumulation: Number of batches to accumulate gradients over
+        :param epochs_per_iteration: Number of epochs to train on collected data per iteration
+        :param vf_warmup: Number of iterations to train only value function before policy
+        :param ppo_clip: Clipping parameter for PPO objective (typically 0.1-0.3)
+        :param clip_vloss: Whether to clip value function loss using PPO clipping
+        :param max_grad_norm: Maximum gradient norm for gradient clipping
+        :param zero_initial_vf: Whether to initialize value function weights to zero
+        :param ppo_vf_coef: Coefficient for value function loss in total loss
+        :param ppo_policy_coef: Coefficient for policy loss in total loss  
+        :param kl_divergence_coef_rho: Initial coefficient for KL divergence regularization
+        :param entropy_bonus_coef: Coefficient for entropy bonus in policy loss
+        :param coef_rho_decay: Decay factor for KL divergence coefficient per iteration
+        :param normalize_advantage_full_batch: Whether to normalize advantages across full batch
+        :param record_video_interval: Interval (in iterations) to record training videos
+        :param save_interval: Interval (in iterations) to save model checkpoints
+        :param save_path: Directory path to save checkpoints and logs
+        :param keep_interval: Interval to keep checkpoints (others are deleted)
+        :param log_ratio_range: Maximum allowed log probability ratio for stability
+        :param enable_ref_update: Whether to enable reference model updates
+        :param whole_config: Complete configuration string for saving with checkpoints
+        :param kwargs: Additional arguments passed to parent BaseTrainer class
         """
         super().__init__(inference_batch_size_per_gpu=batch_size_per_gpu, **kwargs)
         
@@ -146,12 +151,16 @@ class PPOTrainer(BaseTrainer):
 
     def setup_model_and_optimizer(self, policy_generator) -> Tuple[MinePolicy, torch.optim.Optimizer]:
         """
-        Sets up the model and optimizer.
-
-        :param policy_generator: A function that generates the policy model.
-        :type policy_generator: Callable
-        :return: A tuple containing the model and optimizer.
-        :rtype: Tuple[MinePolicy, torch.optim.Optimizer]
+        Set up the model and optimizer for PPO training.
+        
+        Creates the main policy model using the provided generator function and configures
+        an AdamW optimizer with the specified hyperparameters. Optionally initializes
+        value function weights to zero and sets up a reference model for KL divergence
+        regularization if enabled.
+        
+        :param policy_generator: Function that returns a new instance of the policy model
+        :returns: Tuple of (model, optimizer) ready for training
+        :raises AssertionError: If reference model setup fails when KL regularization is enabled
         """
     
         model = policy_generator()
@@ -186,10 +195,18 @@ class PPOTrainer(BaseTrainer):
     
     def train(self):
         """
-        Main training loop.
-
-        This method iterates through training iterations, performs PPO updates,
-        and manages learning rate annealing and model broadcasting.
+        Execute the main PPO training loop.
+        
+        Runs the complete training process for the specified number of iterations.
+        Each iteration involves collecting rollout data, computing advantages, and
+        performing PPO updates. Handles learning rate annealing, model broadcasting
+        to rollout workers, and checkpoint management.
+        
+        The method supports resuming from checkpoints by detecting current learning
+        rate and calculating the appropriate starting iteration. Includes distributed
+        training coordination and logging.
+        
+        :returns: None
         """
         self.num_updates = 0
         self.max_reward = 0
@@ -227,9 +244,18 @@ class PPOTrainer(BaseTrainer):
 
     def train_iteration(self):
         """
-        Performs a single training iteration.
-
-        This involves fetching fragments, estimating advantages, and performing PPO updates.
+        Execute a single training iteration of the PPO algorithm.
+        
+        Performs one complete iteration consisting of:
+        1. Fetching trajectory fragments from rollout workers
+        2. Computing Generalized Advantage Estimation (GAE) 
+        3. Performing PPO updates on the collected data
+        4. Decaying the KL divergence coefficient
+        
+        This method coordinates between data collection and policy optimization phases
+        of the PPO algorithm.
+        
+        :returns: None
         """
         gae_results = self.fetch_fragments_and_estimate_advantages(
             num_fragments=self.fragments_per_iteration,
@@ -254,23 +280,28 @@ class PPOTrainer(BaseTrainer):
                   rewards: FragmentDataDict
                   ):
         """
-        Performs the PPO update step.
-
-        This method calculates policy loss, value loss, entropy bonus, and KL divergence,
-        and updates the model parameters.
-
-        :param records: List of fragment records.
-        :type records: List[Tuple[FragmentIndex, str]]
-        :param td_targets: TD targets for value function update.
-        :type td_targets: FragmentDataDict
-        :param advantages: Advantages for policy update.
-        :type advantages: FragmentDataDict
-        :param old_logps: Log probabilities of actions under the old policy.
-        :type old_logps: FragmentDataDict
-        :param old_vpreds: Value predictions from the old policy.
-        :type old_vpreds: FragmentDataDict
-        :param rewards: Rewards received during rollouts.
-        :type rewards: FragmentDataDict
+        Perform PPO policy and value function updates on collected trajectory data.
+        
+        Implements the core PPO algorithm including:
+        - Policy loss computation with probability ratio clipping
+        - Value function loss with optional clipping
+        - KL divergence regularization against reference policy
+        - Entropy bonus for exploration
+        - Advantage normalization and gradient accumulation
+        - Distributed training synchronization and error handling
+        
+        The method processes data in batches across multiple epochs, computing various
+        metrics and losses while handling numerical stability issues. Includes 
+        checkpoint saving and performance logging.
+        
+        :param records: List of (fragment_index, worker_id) tuples identifying data fragments
+        :param td_targets: Temporal difference targets for value function training
+        :param advantages: Computed advantages for policy gradient estimation
+        :param old_logps: Log probabilities from the policy that collected the data
+        :param old_vpreds: Value predictions from the policy that collected the data  
+        :param rewards: Reward values from the trajectory fragments
+        :returns: None
+        :raises AssertionError: If reference model is None when KL regularization is enabled
         """
         
         self.buffer_reward = sum(rewards.values()) / len(rewards)
@@ -284,6 +315,19 @@ class PPOTrainer(BaseTrainer):
         mean_abs_td_target = torchmetrics.MeanMetric().to(self.inner_model.device)
         mean_abs_advantage = torchmetrics.MeanMetric().to(self.inner_model.device)
         explained_var_metric = torchmetrics.ExplainedVariance().to(self.inner_model.device)
+
+        if VERBOSE:
+            debug_metrics = {}
+            debug_metric_names = [
+                "advantage_mean", "advantage_max", "advantage_min", "advantage_std",
+                "ratio_mean", "ratio_max", "ratio_min", "ratio_std",
+                "entropy_mean", "entropy_max", "entropy_min", "entropy_std",
+                "vf_pred_mean", "vf_pred_max", "vf_pred_min", "vf_pred_std",
+                "log_p_mean", "log_p_max", "log_p_min", "log_p_std", "old_log_p_mean", "old_log_p_max", "old_log_p_min", "old_log_p_std"
+            ]
+
+            for name in debug_metric_names:
+                debug_metrics[name] = torchmetrics.MeanMetric().to(self.inner_model.device)
 
         indexs = [index for index, _ in records]
 
@@ -375,6 +419,11 @@ class PPOTrainer(BaseTrainer):
                             kl_divergence_loss = torch.tensor(0.0, device=self.inner_model.device)
                         
                         new_logp = self.inner_model.pi_head.logprob(chunk_action, pi_logits) 
+
+                        # !FIX:Clamp new_logp where advantage is negative
+                        condition = advantage < 0
+                        new_logp = torch.where(condition, torch.clamp(new_logp, min=-11.0), new_logp)
+
                         log_ratio = torch.clamp(new_logp - old_logp, max=self.log_ratio_range)
                         ratio = log_ratio.exp()
 
@@ -459,6 +508,40 @@ class PPOTrainer(BaseTrainer):
                             mean_entropy_bonus.update(entropy_bonus.detach(), weight=loss_weight)
                             mean_total_loss.update(total_loss.detach(), weight=loss_weight)
 
+                            if VERBOSE:
+                                current_entropy = self.inner_model.pi_head.entropy(pi_logits)
+                                current_vpred = forward_result["vpred"]
+                                
+                                debug_metrics["advantage_mean"].update(advantage.mean().detach(), weight=loss_weight)
+                                debug_metrics["advantage_max"].update(advantage.max().detach(), weight=loss_weight)
+                                debug_metrics["advantage_min"].update(advantage.min().detach(), weight=loss_weight)
+                                debug_metrics["advantage_std"].update(advantage.std().detach(), weight=loss_weight)
+                                
+                                debug_metrics["ratio_mean"].update(ratio.mean().detach(), weight=loss_weight)
+                                debug_metrics["ratio_max"].update(ratio.max().detach(), weight=loss_weight)
+                                debug_metrics["ratio_min"].update(ratio.min().detach(), weight=loss_weight)
+                                debug_metrics["ratio_std"].update(ratio.std().detach(), weight=loss_weight)
+
+                                debug_metrics["entropy_mean"].update(current_entropy.mean().detach(), weight=loss_weight)
+                                debug_metrics["entropy_max"].update(current_entropy.max().detach(), weight=loss_weight)
+                                debug_metrics["entropy_min"].update(current_entropy.min().detach(), weight=loss_weight)
+                                debug_metrics["entropy_std"].update(current_entropy.std().detach(), weight=loss_weight)
+
+                                debug_metrics["vf_pred_mean"].update(current_vpred.mean().detach(), weight=loss_weight)
+                                debug_metrics["vf_pred_max"].update(current_vpred.max().detach(), weight=loss_weight)
+                                debug_metrics["vf_pred_min"].update(current_vpred.min().detach(), weight=loss_weight)
+                                debug_metrics["vf_pred_std"].update(current_vpred.std().detach(), weight=loss_weight)
+
+                                debug_metrics["log_p_mean"].update(new_logp.mean().detach(), weight=loss_weight)
+                                debug_metrics["log_p_max"].update(new_logp.max().detach(), weight=loss_weight)
+                                debug_metrics["log_p_min"].update(new_logp.min().detach(), weight=loss_weight)
+                                debug_metrics["log_p_std"].update(new_logp.std().detach(), weight=loss_weight)
+
+                                debug_metrics["old_log_p_mean"].update(old_logp.mean().detach(), weight=loss_weight)
+                                debug_metrics["old_log_p_max"].update(old_logp.max().detach(), weight=loss_weight)
+                                debug_metrics["old_log_p_min"].update(old_logp.min().detach(), weight=loss_weight)
+                                debug_metrics["old_log_p_std"].update(old_logp.std().detach(), weight=loss_weight)
+
                             if self.use_normalized_vf:
                                 vpred_denormalized = self.inner_model.value_head.denormalize(vpred).reshape(B, end - start) # type: ignore
                                 explained_var_metric.update(vpred_denormalized.detach().reshape(-1), td_target.reshape(-1)) # TODO: weight?
@@ -499,108 +582,36 @@ class PPOTrainer(BaseTrainer):
             if self.num_updates % self.save_interval == 0:
                 # TODO: this may cause problem in distributed training
                 logging.getLogger("ray").info(f"Saving checkpoint at update count {self.num_updates}...")
-                self.save_checkpoint()
-            if self.num_updates % self.keep_interval == 0:
-                self.remove_old_checkpoints()
-            
+                
+                if self.save_path:
+                    checkpoint_dir = Path(self.save_path) / 'checkpoints' / self.time_stamp /str(self.num_updates)
+                else:
+                    checkpoint_dir = Path("checkpoints") / self.time_stamp /str(self.num_updates)
+
+                logging.getLogger("ray").info(f"Checkpoint dir: {checkpoint_dir.absolute()}")
+                if not checkpoint_dir.exists():
+                    checkpoint_dir.mkdir(parents=True)
+
+                #save model
+                torch.save(self.inner_model.state_dict(), str(checkpoint_dir / "model.ckpt"))
+                torch.save(self.optimizer.state_dict(), str(checkpoint_dir / "optimizer.ckpt"))
+                with open(checkpoint_dir / "whole_config.py", "w") as f:
+                    f.write(self.whole_config)
+
+                if (
+                    self.last_checkpoint_dir
+                    and (self.num_updates + self.save_interval) % self.keep_interval != 0
+                ):
+                    shutil.rmtree(self.last_checkpoint_dir)
+                self.last_checkpoint_dir = checkpoint_dir
+
+            #send signal to record video
+            SPS_all_workers = self.fragments_per_iteration * self.fragment_length / (time.time() - self.last_log_time)
             self.trained_steps_all_workers += self.fragments_per_iteration * self.fragment_length
-            info["trainer/env_steps_all_workers"] = self.trained_steps_all_workers
-            info["trainer/time_since_last_log"] = time.time() - self.last_log_time
             self.last_log_time = time.time()
-            wandb_logger.log_metrics(info, step=self.num_updates)
-
-    def save_checkpoint(self):
-        """Saves a model checkpoint.
-
-        This method saves the model state, optimizer state, and other relevant information.
-        """
-        if self.save_path is None:
-            return
-        Path(self.save_path).mkdir(parents=True, exist_ok=True)
-        checkpoint_dir = Path(self.save_path) / "checkpoint.pt"
-        torch.save(
-            {
-                "model_state_dict": self.inner_model.state_dict(),
-                "optimizer_state_dict": self.optimizer.state_dict(),
-                "num_updates": self.num_updates,
-                "kl_divergence_coef_rho": self.kl_divergence_coef_rho,
-            },
-            checkpoint_dir,
-        )
-        logging.getLogger("ray").info(f"Model checkpoint saved at {checkpoint_dir}")
-        self.last_checkpoint_dir = checkpoint_dir
-
-    def remove_old_checkpoints(self):
-        """Removes old checkpoints to save disk space.
-
-        This method keeps only a certain number of recent checkpoints.
-        """
-        if self.save_path is None or self.keep_interval <= 0:
-            return
-        
-        checkpoints = sorted(
-            Path(self.save_path).glob("checkpoint_*.pt"),
-            key=lambda x: x.stat().st_mtime,
-            reverse=True
-        )
-        for checkpoint in checkpoints[self.keep_interval:]:
-            try:
-                checkpoint.unlink()
-                logging.getLogger("ray").info(f"Removed old checkpoint: {checkpoint}")
-            except Exception as e:
-                logging.getLogger("ray").warning(f"Failed to remove checkpoint {checkpoint}: {e}")
-
-    def load_checkpoint(self, checkpoint_dir: str):
-        """Loads a model checkpoint.
-
-        :param checkpoint_dir: Directory of the checkpoint to load.
-        :type checkpoint_dir: str
-        """
-        checkpoint_state = torch.load(Path(checkpoint_dir) / "checkpoint.pt", map_location="cpu") # type: ignore
-        self.inner_model.load_state_dict(checkpoint_state["model_state_dict"])
-        self.optimizer.load_state_dict(checkpoint_state["optimizer_state_dict"])
-        self.num_updates = checkpoint_state["num_updates"]
-        self.kl_divergence_coef_rho = checkpoint_state["kl_divergence_coef_rho"]
-        if self.kl_divergence_coef_rho != 0:
-            assert self.ref_model is not None
-            self.ref_model.load_state_dict(checkpoint_state["ref_model_state_dict"])
-        logging.getLogger("ray").info(f"Loaded checkpoint from {checkpoint_dir}")
-
-    def get_inference_batch(self, fragments: List[SampleFragment]) -> dict:
-        """Prepares a batch for inference.
-
-        :param fragments: List of sample fragments.
-        :type fragments: List[SampleFragment]
-        :return: A dictionary containing the inference batch.
-        :rtype: dict
-        """
-        return prepare_batch(self.inner_model, fragments)
-
-    def _get_model_for_broadcast(self):
-        """Gets the model to be broadcasted to rollout workers.
-
-        :return: The model to be broadcasted.
-        :rtype: MinePolicy
-        """
-        model = copy.deepcopy(self.inner_model)
-        model.eval()
-        return model.to("cpu")
-    
-    def _get_ref_model_for_broadcast(self):
-        """Gets the reference model to be broadcasted to rollout workers.
-
-        :return: The reference model to be broadcasted.
-        :rtype: MinePolicy
-        """
-        assert self.ref_model is not None
-        ref_model = copy.deepcopy(self.ref_model)
-        ref_model.eval()
-        return ref_model.to("cpu")
-
-    def _update_ref_model(self):
-        """Updates the reference model with the current model's weights.
-        """
-        assert self.ref_model is not None
-        self.ref_model.load_state_dict(self.inner_model.state_dict())
-        self.ref_model.train()
-        logging.getLogger("ray").info("Updated ref model")
+            info["trainer/env_SPS_all_workers"] = SPS_all_workers
+            info["trainer/env_steps_all_workers"] = self.trained_steps_all_workers
+            print("I have send signal to manager: " + str(self.num_updates % self.record_video_interval == 0))
+            ray.get(self.rollout_manager.log_statistics.remote(self.trained_steps_all_workers, self.num_updates % self.record_video_interval == 0))
+            wandb_logger.log(info)
+            
