@@ -1457,84 +1457,64 @@ fetching data, performing model updates, logging, and saving checkpoints.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="minestudio.online.trainer.ppotrainer.PPOTrainer">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">minestudio.online.trainer.ppotrainer.</span></span><span class="sig-name descname"><span class="pre">PPOTrainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_iterations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">learning_rate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">anneal_lr_linearly</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight_decay</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adam_eps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size_per_gpu</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batches_per_iteration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gradient_accumulation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epochs_per_iteration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vf_warmup</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ppo_clip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clip_vloss</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_grad_norm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zero_initial_vf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ppo_vf_coef</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ppo_policy_coef</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kl_divergence_coef_rho</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entropy_bonus_coef</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coef_rho_decay</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize_advantage_full_batch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">record_video_interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keep_interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_ratio_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_ref_update</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="k"><span class="pre">False</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">whole_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/trainer/ppotrainer.html#PPOTrainer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.trainer.ppotrainer.PPOTrainer" title="Link to this definition">#</a></dt>
-<dd><p>Proximal Policy Optimization (PPO) Trainer.</p>
-<p>This trainer implements the PPO algorithm for reinforcement learning.
-It handles the training loop, data collection, and model updates.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="minestudio.online.trainer.ppotrainer.PPOTrainer.get_inference_batch">
-<span class="sig-name descname"><span class="pre">get_inference_batch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fragments</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#minestudio.online.utils.rollout.datatypes.SampleFragment" title="minestudio.online.utils.rollout.datatypes.SampleFragment"><span class="pre">SampleFragment</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../../_modules/minestudio/online/trainer/ppotrainer.html#PPOTrainer.get_inference_batch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.trainer.ppotrainer.PPOTrainer.get_inference_batch" title="Link to this definition">#</a></dt>
-<dd><p>Prepares a batch for inference.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>fragments</strong> (<em>List</em><em>[</em><a class="reference internal" href="#minestudio.online.utils.rollout.datatypes.SampleFragment" title="minestudio.online.utils.rollout.datatypes.SampleFragment"><em>SampleFragment</em></a><em>]</em>) – List of sample fragments.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A dictionary containing the inference batch.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>dict</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="minestudio.online.trainer.ppotrainer.PPOTrainer.load_checkpoint">
-<span class="sig-name descname"><span class="pre">load_checkpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">checkpoint_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/trainer/ppotrainer.html#PPOTrainer.load_checkpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.trainer.ppotrainer.PPOTrainer.load_checkpoint" title="Link to this definition">#</a></dt>
-<dd><p>Loads a model checkpoint.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>checkpoint_dir</strong> (<em>str</em>) – Directory of the checkpoint to load.</p>
-</dd>
-</dl>
-</dd></dl>
-
+<dd><p>Proximal Policy Optimization (PPO) trainer for reinforcement learning.</p>
+<p>This class implements the PPO algorithm for training policies in Minecraft environments.
+It extends BaseTrainer and provides functionality for distributed training with Ray,
+gradient accumulation, value function warmup, and various PPO-specific optimizations
+including clipping, entropy bonuses, and KL divergence regularization.</p>
+<p>The trainer supports both policy and value function training with configurable
+coefficients, learning rate annealing, and checkpoint saving capabilities.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="minestudio.online.trainer.ppotrainer.PPOTrainer.ppo_update">
 <span class="sig-name descname"><span class="pre">ppo_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">records</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#minestudio.online.utils.rollout.datatypes.FragmentIndex" title="minestudio.online.utils.rollout.datatypes.FragmentIndex"><span class="pre">FragmentIndex</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">td_targets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#minestudio.online.utils.rollout.datatypes.FragmentDataDict" title="minestudio.online.utils.rollout.datatypes.FragmentDataDict"><span class="pre">FragmentDataDict</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">advantages</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#minestudio.online.utils.rollout.datatypes.FragmentDataDict" title="minestudio.online.utils.rollout.datatypes.FragmentDataDict"><span class="pre">FragmentDataDict</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">old_logps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#minestudio.online.utils.rollout.datatypes.FragmentDataDict" title="minestudio.online.utils.rollout.datatypes.FragmentDataDict"><span class="pre">FragmentDataDict</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">old_vpreds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#minestudio.online.utils.rollout.datatypes.FragmentDataDict" title="minestudio.online.utils.rollout.datatypes.FragmentDataDict"><span class="pre">FragmentDataDict</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">rewards</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#minestudio.online.utils.rollout.datatypes.FragmentDataDict" title="minestudio.online.utils.rollout.datatypes.FragmentDataDict"><span class="pre">FragmentDataDict</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/trainer/ppotrainer.html#PPOTrainer.ppo_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.trainer.ppotrainer.PPOTrainer.ppo_update" title="Link to this definition">#</a></dt>
-<dd><p>Performs the PPO update step.</p>
-<p>This method calculates policy loss, value loss, entropy bonus, and KL divergence,
-and updates the model parameters.</p>
+<dd><p>Perform PPO policy and value function updates on collected trajectory data.</p>
+<p>Implements the core PPO algorithm including:
+- Policy loss computation with probability ratio clipping
+- Value function loss with optional clipping
+- KL divergence regularization against reference policy
+- Entropy bonus for exploration
+- Advantage normalization and gradient accumulation
+- Distributed training synchronization and error handling</p>
+<p>The method processes data in batches across multiple epochs, computing various
+metrics and losses while handling numerical stability issues. Includes
+checkpoint saving and performance logging.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>records</strong> (<em>List</em><em>[</em><em>Tuple</em><em>[</em><a class="reference internal" href="#minestudio.online.utils.rollout.datatypes.FragmentIndex" title="minestudio.online.utils.rollout.datatypes.FragmentIndex"><em>FragmentIndex</em></a><em>, </em><em>str</em><em>]</em><em>]</em>) – List of fragment records.</p></li>
-<li><p><strong>td_targets</strong> (<a class="reference internal" href="#minestudio.online.utils.rollout.datatypes.FragmentDataDict" title="minestudio.online.utils.rollout.datatypes.FragmentDataDict"><em>FragmentDataDict</em></a>) – TD targets for value function update.</p></li>
-<li><p><strong>advantages</strong> (<a class="reference internal" href="#minestudio.online.utils.rollout.datatypes.FragmentDataDict" title="minestudio.online.utils.rollout.datatypes.FragmentDataDict"><em>FragmentDataDict</em></a>) – Advantages for policy update.</p></li>
-<li><p><strong>old_logps</strong> (<a class="reference internal" href="#minestudio.online.utils.rollout.datatypes.FragmentDataDict" title="minestudio.online.utils.rollout.datatypes.FragmentDataDict"><em>FragmentDataDict</em></a>) – Log probabilities of actions under the old policy.</p></li>
-<li><p><strong>old_vpreds</strong> (<a class="reference internal" href="#minestudio.online.utils.rollout.datatypes.FragmentDataDict" title="minestudio.online.utils.rollout.datatypes.FragmentDataDict"><em>FragmentDataDict</em></a>) – Value predictions from the old policy.</p></li>
-<li><p><strong>rewards</strong> (<a class="reference internal" href="#minestudio.online.utils.rollout.datatypes.FragmentDataDict" title="minestudio.online.utils.rollout.datatypes.FragmentDataDict"><em>FragmentDataDict</em></a>) – Rewards received during rollouts.</p></li>
+<li><p><strong>records</strong> – List of (fragment_index, worker_id) tuples identifying data fragments</p></li>
+<li><p><strong>td_targets</strong> – Temporal difference targets for value function training</p></li>
+<li><p><strong>advantages</strong> – Computed advantages for policy gradient estimation</p></li>
+<li><p><strong>old_logps</strong> – Log probabilities from the policy that collected the data</p></li>
+<li><p><strong>old_vpreds</strong> – Value predictions from the policy that collected the data</p></li>
+<li><p><strong>rewards</strong> – Reward values from the trajectory fragments</p></li>
 </ul>
 </dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>AssertionError</strong> – If reference model is None when KL regularization is enabled</p>
+</dd>
 </dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="minestudio.online.trainer.ppotrainer.PPOTrainer.remove_old_checkpoints">
-<span class="sig-name descname"><span class="pre">remove_old_checkpoints</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/trainer/ppotrainer.html#PPOTrainer.remove_old_checkpoints"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.trainer.ppotrainer.PPOTrainer.remove_old_checkpoints" title="Link to this definition">#</a></dt>
-<dd><p>Removes old checkpoints to save disk space.</p>
-<p>This method keeps only a certain number of recent checkpoints.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="minestudio.online.trainer.ppotrainer.PPOTrainer.save_checkpoint">
-<span class="sig-name descname"><span class="pre">save_checkpoint</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/trainer/ppotrainer.html#PPOTrainer.save_checkpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.trainer.ppotrainer.PPOTrainer.save_checkpoint" title="Link to this definition">#</a></dt>
-<dd><p>Saves a model checkpoint.</p>
-<p>This method saves the model state, optimizer state, and other relevant information.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="minestudio.online.trainer.ppotrainer.PPOTrainer.setup_model_and_optimizer">
 <span class="sig-name descname"><span class="pre">setup_model_and_optimizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">policy_generator</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../models/index.html#minestudio.models.base_policy.MinePolicy" title="minestudio.models.base_policy.MinePolicy"><span class="pre">MinePolicy</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Optimizer</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/minestudio/online/trainer/ppotrainer.html#PPOTrainer.setup_model_and_optimizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.trainer.ppotrainer.PPOTrainer.setup_model_and_optimizer" title="Link to this definition">#</a></dt>
-<dd><p>Sets up the model and optimizer.</p>
+<dd><p>Set up the model and optimizer for PPO training.</p>
+<p>Creates the main policy model using the provided generator function and configures
+an AdamW optimizer with the specified hyperparameters. Optionally initializes
+value function weights to zero and sets up a reference model for KL divergence
+regularization if enabled.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>policy_generator</strong> (<em>Callable</em>) – A function that generates the policy model.</p>
+<dd class="field-odd"><p><strong>policy_generator</strong> – Function that returns a new instance of the policy model</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A tuple containing the model and optimizer.</p>
+<dd class="field-even"><p>Tuple of (model, optimizer) ready for training</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Tuple[<a class="reference internal" href="../models/index.html#minestudio.models.base_policy.MinePolicy" title="minestudio.models.base_policy.MinePolicy">MinePolicy</a>, torch.optim.Optimizer]</p>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>AssertionError</strong> – If reference model setup fails when KL regularization is enabled</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1542,16 +1522,37 @@ and updates the model parameters.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="minestudio.online.trainer.ppotrainer.PPOTrainer.train">
 <span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/trainer/ppotrainer.html#PPOTrainer.train"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.trainer.ppotrainer.PPOTrainer.train" title="Link to this definition">#</a></dt>
-<dd><p>Main training loop.</p>
-<p>This method iterates through training iterations, performs PPO updates,
-and manages learning rate annealing and model broadcasting.</p>
+<dd><p>Execute the main PPO training loop.</p>
+<p>Runs the complete training process for the specified number of iterations.
+Each iteration involves collecting rollout data, computing advantages, and
+performing PPO updates. Handles learning rate annealing, model broadcasting
+to rollout workers, and checkpoint management.</p>
+<p>The method supports resuming from checkpoints by detecting current learning
+rate and calculating the appropriate starting iteration. Includes distributed
+training coordination and logging.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="minestudio.online.trainer.ppotrainer.PPOTrainer.train_iteration">
 <span class="sig-name descname"><span class="pre">train_iteration</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/trainer/ppotrainer.html#PPOTrainer.train_iteration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.trainer.ppotrainer.PPOTrainer.train_iteration" title="Link to this definition">#</a></dt>
-<dd><p>Performs a single training iteration.</p>
-<p>This involves fetching fragments, estimating advantages, and performing PPO updates.</p>
+<dd><p>Execute a single training iteration of the PPO algorithm.</p>
+<p>Performs one complete iteration consisting of:
+1. Fetching trajectory fragments from rollout workers
+2. Computing Generalized Advantage Estimation (GAE)
+3. Performing PPO updates on the collected data
+4. Decaying the KL divergence coefficient</p>
+<p>This method coordinates between data collection and policy optimization phases
+of the PPO algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -1559,7 +1560,14 @@ and manages learning rate annealing and model broadcasting.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="minestudio.online.trainer.ppotrainer.print_memory_usage">
 <span class="sig-prename descclassname"><span class="pre">minestudio.online.trainer.ppotrainer.</span></span><span class="sig-name descname"><span class="pre">print_memory_usage</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/trainer/ppotrainer.html#print_memory_usage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.trainer.ppotrainer.print_memory_usage" title="Link to this definition">#</a></dt>
-<dd><p>Prints the allocated and reserved GPU memory.</p>
+<dd><p>Print current CUDA memory usage information.</p>
+<p>This function displays the allocated and reserved memory on the current CUDA device
+in megabytes (MB). Useful for debugging memory issues during training.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None (prints memory information to stdout)</p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
@@ -2075,11 +2083,7 @@ If no session is active or an error occurs during logging, an error message is l
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#module-minestudio.online.trainer.ppotrainer">PPO Trainer</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.trainer.ppotrainer.PPOTrainer"><code class="docutils literal notranslate"><span class="pre">PPOTrainer</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.trainer.ppotrainer.PPOTrainer.get_inference_batch"><code class="docutils literal notranslate"><span class="pre">PPOTrainer.get_inference_batch()</span></code></a></li>
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.trainer.ppotrainer.PPOTrainer.load_checkpoint"><code class="docutils literal notranslate"><span class="pre">PPOTrainer.load_checkpoint()</span></code></a></li>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.trainer.ppotrainer.PPOTrainer.ppo_update"><code class="docutils literal notranslate"><span class="pre">PPOTrainer.ppo_update()</span></code></a></li>
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.trainer.ppotrainer.PPOTrainer.remove_old_checkpoints"><code class="docutils literal notranslate"><span class="pre">PPOTrainer.remove_old_checkpoints()</span></code></a></li>
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.trainer.ppotrainer.PPOTrainer.save_checkpoint"><code class="docutils literal notranslate"><span class="pre">PPOTrainer.save_checkpoint()</span></code></a></li>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.trainer.ppotrainer.PPOTrainer.setup_model_and_optimizer"><code class="docutils literal notranslate"><span class="pre">PPOTrainer.setup_model_and_optimizer()</span></code></a></li>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.trainer.ppotrainer.PPOTrainer.train"><code class="docutils literal notranslate"><span class="pre">PPOTrainer.train()</span></code></a></li>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.online.trainer.ppotrainer.PPOTrainer.train_iteration"><code class="docutils literal notranslate"><span class="pre">PPOTrainer.train_iteration()</span></code></a></li>

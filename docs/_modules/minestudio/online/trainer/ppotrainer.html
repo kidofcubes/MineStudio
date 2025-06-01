@@ -602,20 +602,20 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">uuid</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">torch.distributed</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">dist</span>
-<span class="c1"># def check_break_and_sync(is_broken: bool):</span>
-<span class="c1">#     # 将 is_broken 转换为 tensor 并与其他进程同步</span>
-<span class="c1">#     is_broken_tensor = torch.tensor(float(is_broken), device=&quot;cuda&quot;)  # 假设您使用 GPU</span>
-<span class="c1">#     dist.all_reduce(is_broken_tensor, op=dist.ReduceOp.SUM)</span>
-    
-<span class="c1">#     # 如果任意一个进程 is_broken, 则返回 True, 表示需要跳过</span>
-<span class="c1">#     if is_broken_tensor.item() &gt; 0:</span>
-<span class="c1">#         return True</span>
-<span class="c1">#     return False</span>
+
+<span class="n">VERBOSE</span> <span class="o">=</span> <span class="kc">False</span>
 
 <div class="viewcode-block" id="print_memory_usage">
 <a class="viewcode-back" href="../../../../api/online/index.html#minestudio.online.trainer.ppotrainer.print_memory_usage">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">print_memory_usage</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Prints the allocated and reserved GPU memory.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Print current CUDA memory usage information.</span>
+<span class="sd">    </span>
+<span class="sd">    This function displays the allocated and reserved memory on the current CUDA device</span>
+<span class="sd">    in megabytes (MB). Useful for debugging memory issues during training.</span>
+<span class="sd">    </span>
+<span class="sd">    :returns: None (prints memory information to stdout)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">allocated</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">memory_allocated</span><span class="p">()</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1024</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
     <span class="n">reserved</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">memory_reserved</span><span class="p">()</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1024</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Allocated memory: </span><span class="si">{</span><span class="n">allocated</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> MB&quot;</span><span class="p">)</span>
@@ -627,10 +627,15 @@
 <a class="viewcode-back" href="../../../../api/online/index.html#minestudio.online.trainer.ppotrainer.PPOTrainer">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">PPOTrainer</span><span class="p">(</span><span class="n">BaseTrainer</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Proximal Policy Optimization (PPO) Trainer.</span>
-
-<span class="sd">    This trainer implements the PPO algorithm for reinforcement learning.</span>
-<span class="sd">    It handles the training loop, data collection, and model updates.</span>
+<span class="sd">    Proximal Policy Optimization (PPO) trainer for reinforcement learning.</span>
+<span class="sd">    </span>
+<span class="sd">    This class implements the PPO algorithm for training policies in Minecraft environments.</span>
+<span class="sd">    It extends BaseTrainer and provides functionality for distributed training with Ray,</span>
+<span class="sd">    gradient accumulation, value function warmup, and various PPO-specific optimizations</span>
+<span class="sd">    including clipping, entropy bonuses, and KL divergence regularization.</span>
+<span class="sd">    </span>
+<span class="sd">    The trainer supports both policy and value function training with configurable</span>
+<span class="sd">    coefficients, learning rate annealing, and checkpoint saving capabilities.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
         <span class="n">num_iterations</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
@@ -663,36 +668,36 @@
         <span class="o">**</span><span class="n">kwargs</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Initializes the PPOTrainer.</span>
-
-<span class="sd">        :param num_iterations: Total number of training iterations.</span>
-<span class="sd">        :param learning_rate: Learning rate for the optimizer.</span>
-<span class="sd">        :param anneal_lr_linearly: Whether to anneal the learning rate linearly.</span>
-<span class="sd">        :param weight_decay: Weight decay for the optimizer.</span>
-<span class="sd">        :param adam_eps: Epsilon value for the Adam optimizer.</span>
-<span class="sd">        :param batch_size_per_gpu: Batch size per GPU.</span>
-<span class="sd">        :param batches_per_iteration: Number of batches per training iteration.</span>
-<span class="sd">        :param gradient_accumulation: Number of gradient accumulation steps.</span>
-<span class="sd">        :param epochs_per_iteration: Number of epochs per training iteration.</span>
-<span class="sd">        :param vf_warmup: Number of initial iterations to warm up the value function.</span>
-<span class="sd">        :param ppo_clip: PPO clipping parameter.</span>
-<span class="sd">        :param clip_vloss: Whether to clip the value loss.</span>
-<span class="sd">        :param max_grad_norm: Maximum gradient norm for clipping.</span>
-<span class="sd">        :param zero_initial_vf: Whether to zero out the initial value function parameters.</span>
-<span class="sd">        :param ppo_vf_coef: Coefficient for the value function loss in PPO.</span>
-<span class="sd">        :param ppo_policy_coef: Coefficient for the policy loss in PPO.</span>
-<span class="sd">        :param kl_divergence_coef_rho: Coefficient for the KL divergence penalty.</span>
-<span class="sd">        :param entropy_bonus_coef: Coefficient for the entropy bonus.</span>
-<span class="sd">        :param coef_rho_decay: Decay rate for the KL divergence coefficient.</span>
-<span class="sd">        :param normalize_advantage_full_batch: Whether to normalize advantages over the full batch.</span>
-<span class="sd">        :param record_video_interval: Interval for recording videos.</span>
-<span class="sd">        :param save_interval: Interval for saving model checkpoints.</span>
-<span class="sd">        :param save_path: Path to save model checkpoints.</span>
-<span class="sd">        :param keep_interval: Interval for keeping model checkpoints.</span>
-<span class="sd">        :param log_ratio_range: Range for clamping the log ratio of new to old policies.</span>
-<span class="sd">        :param enable_ref_update: Whether to enable reference model updates.</span>
-<span class="sd">        :param whole_config: String representation of the entire configuration.</span>
-<span class="sd">        :param kwargs: Additional keyword arguments for the BaseTrainer.</span>
+<span class="sd">        Initialize the PPO trainer with configuration parameters.</span>
+<span class="sd">        </span>
+<span class="sd">        :param num_iterations: Total number of training iterations to perform</span>
+<span class="sd">        :param learning_rate: Initial learning rate for the optimizer</span>
+<span class="sd">        :param anneal_lr_linearly: Whether to linearly anneal learning rate over training</span>
+<span class="sd">        :param weight_decay: Weight decay coefficient for AdamW optimizer</span>
+<span class="sd">        :param adam_eps: Epsilon parameter for AdamW optimizer numerical stability</span>
+<span class="sd">        :param batch_size_per_gpu: Number of fragments processed per GPU in each batch</span>
+<span class="sd">        :param batches_per_iteration: Number of batches processed per training iteration</span>
+<span class="sd">        :param gradient_accumulation: Number of batches to accumulate gradients over</span>
+<span class="sd">        :param epochs_per_iteration: Number of epochs to train on collected data per iteration</span>
+<span class="sd">        :param vf_warmup: Number of iterations to train only value function before policy</span>
+<span class="sd">        :param ppo_clip: Clipping parameter for PPO objective (typically 0.1-0.3)</span>
+<span class="sd">        :param clip_vloss: Whether to clip value function loss using PPO clipping</span>
+<span class="sd">        :param max_grad_norm: Maximum gradient norm for gradient clipping</span>
+<span class="sd">        :param zero_initial_vf: Whether to initialize value function weights to zero</span>
+<span class="sd">        :param ppo_vf_coef: Coefficient for value function loss in total loss</span>
+<span class="sd">        :param ppo_policy_coef: Coefficient for policy loss in total loss  </span>
+<span class="sd">        :param kl_divergence_coef_rho: Initial coefficient for KL divergence regularization</span>
+<span class="sd">        :param entropy_bonus_coef: Coefficient for entropy bonus in policy loss</span>
+<span class="sd">        :param coef_rho_decay: Decay factor for KL divergence coefficient per iteration</span>
+<span class="sd">        :param normalize_advantage_full_batch: Whether to normalize advantages across full batch</span>
+<span class="sd">        :param record_video_interval: Interval (in iterations) to record training videos</span>
+<span class="sd">        :param save_interval: Interval (in iterations) to save model checkpoints</span>
+<span class="sd">        :param save_path: Directory path to save checkpoints and logs</span>
+<span class="sd">        :param keep_interval: Interval to keep checkpoints (others are deleted)</span>
+<span class="sd">        :param log_ratio_range: Maximum allowed log probability ratio for stability</span>
+<span class="sd">        :param enable_ref_update: Whether to enable reference model updates</span>
+<span class="sd">        :param whole_config: Complete configuration string for saving with checkpoints</span>
+<span class="sd">        :param kwargs: Additional arguments passed to parent BaseTrainer class</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">inference_batch_size_per_gpu</span><span class="o">=</span><span class="n">batch_size_per_gpu</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         
@@ -732,12 +737,16 @@
 <a class="viewcode-back" href="../../../../api/online/index.html#minestudio.online.trainer.ppotrainer.PPOTrainer.setup_model_and_optimizer">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">setup_model_and_optimizer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">policy_generator</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">MinePolicy</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Optimizer</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Sets up the model and optimizer.</span>
-
-<span class="sd">        :param policy_generator: A function that generates the policy model.</span>
-<span class="sd">        :type policy_generator: Callable</span>
-<span class="sd">        :return: A tuple containing the model and optimizer.</span>
-<span class="sd">        :rtype: Tuple[MinePolicy, torch.optim.Optimizer]</span>
+<span class="sd">        Set up the model and optimizer for PPO training.</span>
+<span class="sd">        </span>
+<span class="sd">        Creates the main policy model using the provided generator function and configures</span>
+<span class="sd">        an AdamW optimizer with the specified hyperparameters. Optionally initializes</span>
+<span class="sd">        value function weights to zero and sets up a reference model for KL divergence</span>
+<span class="sd">        regularization if enabled.</span>
+<span class="sd">        </span>
+<span class="sd">        :param policy_generator: Function that returns a new instance of the policy model</span>
+<span class="sd">        :returns: Tuple of (model, optimizer) ready for training</span>
+<span class="sd">        :raises AssertionError: If reference model setup fails when KL regularization is enabled</span>
 <span class="sd">        &quot;&quot;&quot;</span>
     
         <span class="n">model</span> <span class="o">=</span> <span class="n">policy_generator</span><span class="p">()</span>
@@ -775,10 +784,18 @@
 <a class="viewcode-back" href="../../../../api/online/index.html#minestudio.online.trainer.ppotrainer.PPOTrainer.train">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Main training loop.</span>
-
-<span class="sd">        This method iterates through training iterations, performs PPO updates,</span>
-<span class="sd">        and manages learning rate annealing and model broadcasting.</span>
+<span class="sd">        Execute the main PPO training loop.</span>
+<span class="sd">        </span>
+<span class="sd">        Runs the complete training process for the specified number of iterations.</span>
+<span class="sd">        Each iteration involves collecting rollout data, computing advantages, and</span>
+<span class="sd">        performing PPO updates. Handles learning rate annealing, model broadcasting</span>
+<span class="sd">        to rollout workers, and checkpoint management.</span>
+<span class="sd">        </span>
+<span class="sd">        The method supports resuming from checkpoints by detecting current learning</span>
+<span class="sd">        rate and calculating the appropriate starting iteration. Includes distributed</span>
+<span class="sd">        training coordination and logging.</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">num_updates</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_reward</span> <span class="o">=</span> <span class="mi">0</span>
@@ -819,9 +836,18 @@
 <a class="viewcode-back" href="../../../../api/online/index.html#minestudio.online.trainer.ppotrainer.PPOTrainer.train_iteration">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">train_iteration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Performs a single training iteration.</span>
-
-<span class="sd">        This involves fetching fragments, estimating advantages, and performing PPO updates.</span>
+<span class="sd">        Execute a single training iteration of the PPO algorithm.</span>
+<span class="sd">        </span>
+<span class="sd">        Performs one complete iteration consisting of:</span>
+<span class="sd">        1. Fetching trajectory fragments from rollout workers</span>
+<span class="sd">        2. Computing Generalized Advantage Estimation (GAE) </span>
+<span class="sd">        3. Performing PPO updates on the collected data</span>
+<span class="sd">        4. Decaying the KL divergence coefficient</span>
+<span class="sd">        </span>
+<span class="sd">        This method coordinates between data collection and policy optimization phases</span>
+<span class="sd">        of the PPO algorithm.</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">gae_results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch_fragments_and_estimate_advantages</span><span class="p">(</span>
             <span class="n">num_fragments</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fragments_per_iteration</span><span class="p">,</span>
@@ -849,23 +875,28 @@
                   <span class="n">rewards</span><span class="p">:</span> <span class="n">FragmentDataDict</span>
                   <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Performs the PPO update step.</span>
-
-<span class="sd">        This method calculates policy loss, value loss, entropy bonus, and KL divergence,</span>
-<span class="sd">        and updates the model parameters.</span>
-
-<span class="sd">        :param records: List of fragment records.</span>
-<span class="sd">        :type records: List[Tuple[FragmentIndex, str]]</span>
-<span class="sd">        :param td_targets: TD targets for value function update.</span>
-<span class="sd">        :type td_targets: FragmentDataDict</span>
-<span class="sd">        :param advantages: Advantages for policy update.</span>
-<span class="sd">        :type advantages: FragmentDataDict</span>
-<span class="sd">        :param old_logps: Log probabilities of actions under the old policy.</span>
-<span class="sd">        :type old_logps: FragmentDataDict</span>
-<span class="sd">        :param old_vpreds: Value predictions from the old policy.</span>
-<span class="sd">        :type old_vpreds: FragmentDataDict</span>
-<span class="sd">        :param rewards: Rewards received during rollouts.</span>
-<span class="sd">        :type rewards: FragmentDataDict</span>
+<span class="sd">        Perform PPO policy and value function updates on collected trajectory data.</span>
+<span class="sd">        </span>
+<span class="sd">        Implements the core PPO algorithm including:</span>
+<span class="sd">        - Policy loss computation with probability ratio clipping</span>
+<span class="sd">        - Value function loss with optional clipping</span>
+<span class="sd">        - KL divergence regularization against reference policy</span>
+<span class="sd">        - Entropy bonus for exploration</span>
+<span class="sd">        - Advantage normalization and gradient accumulation</span>
+<span class="sd">        - Distributed training synchronization and error handling</span>
+<span class="sd">        </span>
+<span class="sd">        The method processes data in batches across multiple epochs, computing various</span>
+<span class="sd">        metrics and losses while handling numerical stability issues. Includes </span>
+<span class="sd">        checkpoint saving and performance logging.</span>
+<span class="sd">        </span>
+<span class="sd">        :param records: List of (fragment_index, worker_id) tuples identifying data fragments</span>
+<span class="sd">        :param td_targets: Temporal difference targets for value function training</span>
+<span class="sd">        :param advantages: Computed advantages for policy gradient estimation</span>
+<span class="sd">        :param old_logps: Log probabilities from the policy that collected the data</span>
+<span class="sd">        :param old_vpreds: Value predictions from the policy that collected the data  </span>
+<span class="sd">        :param rewards: Reward values from the trajectory fragments</span>
+<span class="sd">        :returns: None</span>
+<span class="sd">        :raises AssertionError: If reference model is None when KL regularization is enabled</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         
         <span class="bp">self</span><span class="o">.</span><span class="n">buffer_reward</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">rewards</span><span class="o">.</span><span class="n">values</span><span class="p">())</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">rewards</span><span class="p">)</span>
@@ -879,6 +910,19 @@
         <span class="n">mean_abs_td_target</span> <span class="o">=</span> <span class="n">torchmetrics</span><span class="o">.</span><span class="n">MeanMetric</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
         <span class="n">mean_abs_advantage</span> <span class="o">=</span> <span class="n">torchmetrics</span><span class="o">.</span><span class="n">MeanMetric</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
         <span class="n">explained_var_metric</span> <span class="o">=</span> <span class="n">torchmetrics</span><span class="o">.</span><span class="n">ExplainedVariance</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">VERBOSE</span><span class="p">:</span>
+            <span class="n">debug_metrics</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">debug_metric_names</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="s2">&quot;advantage_mean&quot;</span><span class="p">,</span> <span class="s2">&quot;advantage_max&quot;</span><span class="p">,</span> <span class="s2">&quot;advantage_min&quot;</span><span class="p">,</span> <span class="s2">&quot;advantage_std&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ratio_mean&quot;</span><span class="p">,</span> <span class="s2">&quot;ratio_max&quot;</span><span class="p">,</span> <span class="s2">&quot;ratio_min&quot;</span><span class="p">,</span> <span class="s2">&quot;ratio_std&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;entropy_mean&quot;</span><span class="p">,</span> <span class="s2">&quot;entropy_max&quot;</span><span class="p">,</span> <span class="s2">&quot;entropy_min&quot;</span><span class="p">,</span> <span class="s2">&quot;entropy_std&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;vf_pred_mean&quot;</span><span class="p">,</span> <span class="s2">&quot;vf_pred_max&quot;</span><span class="p">,</span> <span class="s2">&quot;vf_pred_min&quot;</span><span class="p">,</span> <span class="s2">&quot;vf_pred_std&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;log_p_mean&quot;</span><span class="p">,</span> <span class="s2">&quot;log_p_max&quot;</span><span class="p">,</span> <span class="s2">&quot;log_p_min&quot;</span><span class="p">,</span> <span class="s2">&quot;log_p_std&quot;</span><span class="p">,</span> <span class="s2">&quot;old_log_p_mean&quot;</span><span class="p">,</span> <span class="s2">&quot;old_log_p_max&quot;</span><span class="p">,</span> <span class="s2">&quot;old_log_p_min&quot;</span><span class="p">,</span> <span class="s2">&quot;old_log_p_std&quot;</span>
+            <span class="p">]</span>
+
+            <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">debug_metric_names</span><span class="p">:</span>
+                <span class="n">debug_metrics</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">torchmetrics</span><span class="o">.</span><span class="n">MeanMetric</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
 
         <span class="n">indexs</span> <span class="o">=</span> <span class="p">[</span><span class="n">index</span> <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">records</span><span class="p">]</span>
 
@@ -970,6 +1014,11 @@
                             <span class="n">kl_divergence_loss</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
                         
                         <span class="n">new_logp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span><span class="o">.</span><span class="n">pi_head</span><span class="o">.</span><span class="n">logprob</span><span class="p">(</span><span class="n">chunk_action</span><span class="p">,</span> <span class="n">pi_logits</span><span class="p">)</span> 
+
+                        <span class="c1"># !FIX:Clamp new_logp where advantage is negative</span>
+                        <span class="n">condition</span> <span class="o">=</span> <span class="n">advantage</span> <span class="o">&lt;</span> <span class="mi">0</span>
+                        <span class="n">new_logp</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">condition</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="n">new_logp</span><span class="p">,</span> <span class="nb">min</span><span class="o">=-</span><span class="mf">11.0</span><span class="p">),</span> <span class="n">new_logp</span><span class="p">)</span>
+
                         <span class="n">log_ratio</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="n">new_logp</span> <span class="o">-</span> <span class="n">old_logp</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">log_ratio_range</span><span class="p">)</span>
                         <span class="n">ratio</span> <span class="o">=</span> <span class="n">log_ratio</span><span class="o">.</span><span class="n">exp</span><span class="p">()</span>
 
@@ -1054,6 +1103,40 @@
                             <span class="n">mean_entropy_bonus</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">entropy_bonus</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
                             <span class="n">mean_total_loss</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">total_loss</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
 
+                            <span class="k">if</span> <span class="n">VERBOSE</span><span class="p">:</span>
+                                <span class="n">current_entropy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span><span class="o">.</span><span class="n">pi_head</span><span class="o">.</span><span class="n">entropy</span><span class="p">(</span><span class="n">pi_logits</span><span class="p">)</span>
+                                <span class="n">current_vpred</span> <span class="o">=</span> <span class="n">forward_result</span><span class="p">[</span><span class="s2">&quot;vpred&quot;</span><span class="p">]</span>
+                                
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;advantage_mean&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">advantage</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;advantage_max&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">advantage</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;advantage_min&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">advantage</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;advantage_std&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">advantage</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+                                
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;ratio_mean&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">ratio</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;ratio_max&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">ratio</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;ratio_min&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">ratio</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;ratio_std&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">ratio</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;entropy_mean&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">current_entropy</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;entropy_max&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">current_entropy</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;entropy_min&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">current_entropy</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;entropy_std&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">current_entropy</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;vf_pred_mean&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">current_vpred</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;vf_pred_max&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">current_vpred</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;vf_pred_min&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">current_vpred</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;vf_pred_std&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">current_vpred</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;log_p_mean&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_logp</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;log_p_max&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_logp</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;log_p_min&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_logp</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;log_p_std&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_logp</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;old_log_p_mean&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">old_logp</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;old_log_p_max&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">old_logp</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;old_log_p_min&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">old_logp</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;old_log_p_std&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">old_logp</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+
                             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_normalized_vf</span><span class="p">:</span>
                                 <span class="n">vpred_denormalized</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span><span class="o">.</span><span class="n">value_head</span><span class="o">.</span><span class="n">denormalize</span><span class="p">(</span><span class="n">vpred</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span> <span class="c1"># type: ignore</span>
                                 <span class="n">explained_var_metric</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">vpred_denormalized</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">td_target</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="c1"># TODO: weight?</span>
@@ -1094,125 +1177,41 @@
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_updates</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_interval</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="c1"># TODO: this may cause problem in distributed training</span>
                 <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;ray&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Saving checkpoint at update count </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">num_updates</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">save_checkpoint</span><span class="p">()</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_updates</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">keep_interval</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">remove_old_checkpoints</span><span class="p">()</span>
-            
+                
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_path</span><span class="p">:</span>
+                    <span class="n">checkpoint_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_path</span><span class="p">)</span> <span class="o">/</span> <span class="s1">&#39;checkpoints&#39;</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_stamp</span> <span class="o">/</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_updates</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">checkpoint_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;checkpoints&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_stamp</span> <span class="o">/</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_updates</span><span class="p">)</span>
+
+                <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;ray&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Checkpoint dir: </span><span class="si">{</span><span class="n">checkpoint_dir</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">checkpoint_dir</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+                    <span class="n">checkpoint_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+                <span class="c1">#save model</span>
+                <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span> <span class="nb">str</span><span class="p">(</span><span class="n">checkpoint_dir</span> <span class="o">/</span> <span class="s2">&quot;model.ckpt&quot;</span><span class="p">))</span>
+                <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span> <span class="nb">str</span><span class="p">(</span><span class="n">checkpoint_dir</span> <span class="o">/</span> <span class="s2">&quot;optimizer.ckpt&quot;</span><span class="p">))</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">checkpoint_dir</span> <span class="o">/</span> <span class="s2">&quot;whole_config.py&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">whole_config</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">last_checkpoint_dir</span>
+                    <span class="ow">and</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_updates</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_interval</span><span class="p">)</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">keep_interval</span> <span class="o">!=</span> <span class="mi">0</span>
+                <span class="p">):</span>
+                    <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">last_checkpoint_dir</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">last_checkpoint_dir</span> <span class="o">=</span> <span class="n">checkpoint_dir</span>
+
+            <span class="c1">#send signal to record video</span>
+            <span class="n">SPS_all_workers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fragments_per_iteration</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">fragment_length</span> <span class="o">/</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_log_time</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">trained_steps_all_workers</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fragments_per_iteration</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">fragment_length</span>
-            <span class="n">info</span><span class="p">[</span><span class="s2">&quot;trainer/env_steps_all_workers&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">trained_steps_all_workers</span>
-            <span class="n">info</span><span class="p">[</span><span class="s2">&quot;trainer/time_since_last_log&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_log_time</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">last_log_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-            <span class="n">wandb_logger</span><span class="o">.</span><span class="n">log_metrics</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_updates</span><span class="p">)</span></div>
+            <span class="n">info</span><span class="p">[</span><span class="s2">&quot;trainer/env_SPS_all_workers&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">SPS_all_workers</span>
+            <span class="n">info</span><span class="p">[</span><span class="s2">&quot;trainer/env_steps_all_workers&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">trained_steps_all_workers</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;I have send signal to manager: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_updates</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">record_video_interval</span> <span class="o">==</span> <span class="mi">0</span><span class="p">))</span>
+            <span class="n">ray</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rollout_manager</span><span class="o">.</span><span class="n">log_statistics</span><span class="o">.</span><span class="n">remote</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trained_steps_all_workers</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_updates</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">record_video_interval</span> <span class="o">==</span> <span class="mi">0</span><span class="p">))</span>
+            <span class="n">wandb_logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">info</span><span class="p">)</span></div>
+</div>
 
-
-<div class="viewcode-block" id="PPOTrainer.save_checkpoint">
-<a class="viewcode-back" href="../../../../api/online/index.html#minestudio.online.trainer.ppotrainer.PPOTrainer.save_checkpoint">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">save_checkpoint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Saves a model checkpoint.</span>
-
-<span class="sd">        This method saves the model state, optimizer state, and other relevant information.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span>
-        <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_path</span><span class="p">)</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">checkpoint_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_path</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;checkpoint.pt&quot;</span>
-        <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span>
-            <span class="p">{</span>
-                <span class="s2">&quot;model_state_dict&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span>
-                <span class="s2">&quot;optimizer_state_dict&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span>
-                <span class="s2">&quot;num_updates&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_updates</span><span class="p">,</span>
-                <span class="s2">&quot;kl_divergence_coef_rho&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">kl_divergence_coef_rho</span><span class="p">,</span>
-            <span class="p">},</span>
-            <span class="n">checkpoint_dir</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;ray&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Model checkpoint saved at </span><span class="si">{</span><span class="n">checkpoint_dir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">last_checkpoint_dir</span> <span class="o">=</span> <span class="n">checkpoint_dir</span></div>
-
-
-<div class="viewcode-block" id="PPOTrainer.remove_old_checkpoints">
-<a class="viewcode-back" href="../../../../api/online/index.html#minestudio.online.trainer.ppotrainer.PPOTrainer.remove_old_checkpoints">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">remove_old_checkpoints</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Removes old checkpoints to save disk space.</span>
-
-<span class="sd">        This method keeps only a certain number of recent checkpoints.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_path</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">keep_interval</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">return</span>
-        
-        <span class="n">checkpoints</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
-            <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_path</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;checkpoint_*.pt&quot;</span><span class="p">),</span>
-            <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">stat</span><span class="p">()</span><span class="o">.</span><span class="n">st_mtime</span><span class="p">,</span>
-            <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span>
-        <span class="p">)</span>
-        <span class="k">for</span> <span class="n">checkpoint</span> <span class="ow">in</span> <span class="n">checkpoints</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">keep_interval</span><span class="p">:]:</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">checkpoint</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;ray&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Removed old checkpoint: </span><span class="si">{</span><span class="n">checkpoint</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;ray&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to remove checkpoint </span><span class="si">{</span><span class="n">checkpoint</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="PPOTrainer.load_checkpoint">
-<a class="viewcode-back" href="../../../../api/online/index.html#minestudio.online.trainer.ppotrainer.PPOTrainer.load_checkpoint">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">load_checkpoint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checkpoint_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Loads a model checkpoint.</span>
-
-<span class="sd">        :param checkpoint_dir: Directory of the checkpoint to load.</span>
-<span class="sd">        :type checkpoint_dir: str</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">checkpoint_state</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">checkpoint_dir</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;checkpoint.pt&quot;</span><span class="p">,</span> <span class="n">map_location</span><span class="o">=</span><span class="s2">&quot;cpu&quot;</span><span class="p">)</span> <span class="c1"># type: ignore</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">checkpoint_state</span><span class="p">[</span><span class="s2">&quot;model_state_dict&quot;</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">checkpoint_state</span><span class="p">[</span><span class="s2">&quot;optimizer_state_dict&quot;</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">num_updates</span> <span class="o">=</span> <span class="n">checkpoint_state</span><span class="p">[</span><span class="s2">&quot;num_updates&quot;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">kl_divergence_coef_rho</span> <span class="o">=</span> <span class="n">checkpoint_state</span><span class="p">[</span><span class="s2">&quot;kl_divergence_coef_rho&quot;</span><span class="p">]</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">kl_divergence_coef_rho</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">ref_model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ref_model</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">checkpoint_state</span><span class="p">[</span><span class="s2">&quot;ref_model_state_dict&quot;</span><span class="p">])</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;ray&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loaded checkpoint from </span><span class="si">{</span><span class="n">checkpoint_dir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="PPOTrainer.get_inference_batch">
-<a class="viewcode-back" href="../../../../api/online/index.html#minestudio.online.trainer.ppotrainer.PPOTrainer.get_inference_batch">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_inference_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fragments</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">SampleFragment</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Prepares a batch for inference.</span>
-
-<span class="sd">        :param fragments: List of sample fragments.</span>
-<span class="sd">        :type fragments: List[SampleFragment]</span>
-<span class="sd">        :return: A dictionary containing the inference batch.</span>
-<span class="sd">        :rtype: dict</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">prepare_batch</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span><span class="p">,</span> <span class="n">fragments</span><span class="p">)</span></div>
-
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_get_model_for_broadcast</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Gets the model to be broadcasted to rollout workers.</span>
-
-<span class="sd">        :return: The model to be broadcasted.</span>
-<span class="sd">        :rtype: MinePolicy</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">model</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span><span class="p">)</span>
-        <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
-    
-    <span class="k">def</span><span class="w"> </span><span class="nf">_get_ref_model_for_broadcast</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Gets the reference model to be broadcasted to rollout workers.</span>
-
-<span class="sd">        :return: The reference model to be broadcasted.</span>
-<span class="sd">        :rtype: MinePolicy</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">ref_model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-        <span class="n">ref_model</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ref_model</span><span class="p">)</span>
-        <span class="n">ref_model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">ref_model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_update_ref_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Updates the reference model with the current model&#39;s weights.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">ref_model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ref_model</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span><span class="o">.</span><span class="n">state_dict</span><span class="p">())</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ref_model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;ray&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Updated ref model&quot;</span><span class="p">)</span></div>
-
+            
 </pre></div>
 <div class="section ablog__blog_comments">
    
