@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-11-29 08:10:04
  * @LastEditors: muzhancun muzhancun@stu.pku.edu.cn
- * @LastEditTime: 2025-05-29 13:28:17
+ * @LastEditTime: 2025-06-02 14:21:12
  * @FilePath: /MineStudio/docs/source/inference/index.md
 -->
 # Inference
@@ -17,6 +17,7 @@ We highly recommend readers to read the ray documentation before using the infer
 
 baseline-vpt
 baseline-groot
+baseline-steve1
 ```
 
 ## Quick Start

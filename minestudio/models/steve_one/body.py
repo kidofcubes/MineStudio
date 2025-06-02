@@ -3,6 +3,7 @@ import hashlib
 from typing import Any, Callable, Dict, List, Optional, Tuple
 import torch
 import numpy as np
+import torch
 import torch.nn.functional as F
 from einops import rearrange, repeat
 
@@ -15,30 +16,22 @@ from minestudio.utils.vpt_lib.util import FanInInitReLULayer, ResidualRecurrentB
 from minestudio.models.base_policy import MinePolicy
 
 class TranslatorVAE(torch.nn.Module):
-    """A Variational Autoencoder (VAE) to translate between visual and text embeddings.
-
-    This module can encode pairs of visual and text embeddings into a shared latent space
-    and decode from this latent space back to the visual embedding space, conditioned on
-    the text embedding.
-
-    :param input_dim: Dimension of the input visual and text embeddings (assumed to be the same).
-                      Defaults to 512.
-    :type input_dim: int
-    :param hidden_dim: Dimension of the hidden layers in the encoder and decoder. Defaults to 256.
-    :type hidden_dim: int
-    :param latent_dim: Dimension of the latent space. Defaults to 256.
-    :type latent_dim: int
+    """
+    Variational Autoencoder for translating between text and visual embeddings.
+    
+    This VAE learns to map text embeddings to visual embeddings through a latent space,
+    enabling text-to-visual translation for multimodal learning tasks. The encoder
+    takes concatenated visual and text embeddings to produce latent representations,
+    while the decoder reconstructs visual embeddings from latent codes and text.
     """
 
     def __init__(self, input_dim=512, hidden_dim=256, latent_dim=256):
-        """Initialize the TranslatorVAE.
-
-        :param input_dim: Dimensionality of input embeddings. Defaults to 512.
-        :type input_dim: int
-        :param hidden_dim: Dimensionality of hidden layers. Defaults to 256.
-        :type hidden_dim: int
-        :param latent_dim: Dimensionality of the latent space. Defaults to 256.
-        :type latent_dim: int
+        """
+        Initialize the TranslatorVAE with specified dimensions.
+        
+        :param input_dim: Dimension of input visual and text embeddings
+        :param hidden_dim: Dimension of hidden layers in encoder and decoder
+        :param latent_dim: Dimension of the latent space
         """
         super().__init__()
         self.input_dim = input_dim
@@ -64,14 +57,12 @@ class TranslatorVAE(torch.nn.Module):
         )
 
     def encode(self, visual_embeddings, text_embeddings):
-        """Encode the given visual and text embeddings into a latent vector representation (mu and logvar).
-
-        :param visual_embeddings: Tensor of visual embeddings.
-        :type visual_embeddings: torch.Tensor
-        :param text_embeddings: Tensor of text embeddings.
-        :type text_embeddings: torch.Tensor
-        :returns: Tensor representing the parameters (mu and logvar concatenated) of the latent distribution.
-        :rtype: torch.Tensor
+        """
+        Encode concatenated visual and text embeddings into latent parameters.
+        
+        :param visual_embeddings: Visual embedding tensor of shape (B, input_dim)
+        :param text_embeddings: Text embedding tensor of shape (B, input_dim)
+        :returns: Encoded tensor containing mean and log variance (B, 2*latent_dim)
         """
         # Concatenate the visual and text embeddings.
         x = torch.cat([visual_embeddings, text_embeddings], dim=1)
@@ -79,30 +70,27 @@ class TranslatorVAE(torch.nn.Module):
         return self.encoder(x)
 
     def sample(self, mu, logvar):
-        """Sample a latent vector from the Gaussian distribution defined by mu and logvar.
-
-        Uses the reparameterization trick.
-
-        :param mu: Mean of the latent Gaussian distribution.
-        :type mu: torch.Tensor
-        :param logvar: Log variance of the latent Gaussian distribution.
-        :type logvar: torch.Tensor
-        :returns: A sampled latent vector.
-        :rtype: torch.Tensor
+        """
+        Sample a latent vector using the reparameterization trick.
+        
+        Applies the reparameterization trick to sample from a Gaussian distribution
+        defined by mu and logvar, enabling backpropagation through stochastic sampling.
+        
+        :param mu: Mean tensor of shape (B, latent_dim)
+        :param logvar: Log variance tensor of shape (B, latent_dim)
+        :returns: Sampled latent vector of shape (B, latent_dim)
         """
         std = torch.exp(0.5 * logvar)
         eps = torch.randn_like(std)
         return mu + eps * std
 
     def decode(self, latent_vector, text_embeddings):
-        """Decode the given latent vector and text embeddings into a visual embedding.
-
-        :param latent_vector: The latent vector to decode.
-        :type latent_vector: torch.Tensor
-        :param text_embeddings: Text embeddings to condition the decoding.
-        :type text_embeddings: torch.Tensor
-        :returns: The reconstructed visual embedding.
-        :rtype: torch.Tensor
+        """
+        Decode latent vector and text embeddings into visual embeddings.
+        
+        :param latent_vector: Latent representation tensor of shape (B, latent_dim)
+        :param text_embeddings: Text embedding tensor of shape (B, input_dim)
+        :returns: Reconstructed visual embeddings of shape (B, input_dim)
         """
         # Concatenate the latent vector and text embeddings.
         x = torch.cat([latent_vector, text_embeddings], dim=1)
@@ -110,19 +98,15 @@ class TranslatorVAE(torch.nn.Module):
         return self.decoder(x)
 
     def forward(self, text_embeddings, deterministic=False):
-        """Generate a visual embedding from text embeddings using a prior latent distribution.
-
-        This forward pass uses a standard Gaussian prior (mu=0, logvar=0) for the latent space.
-        It samples from this prior (or uses the mean if deterministic) and decodes it
-        conditioned on the provided text embeddings.
-
-        :param text_embeddings: Text embeddings to condition the generation.
-        :type text_embeddings: torch.Tensor
-        :param deterministic: If True, use the mean of the prior (mu=0) instead of sampling.
-                              Defaults to False.
-        :type deterministic: bool
-        :returns: The predicted visual embedding.
-        :rtype: torch.Tensor
+        """
+        Generate visual embeddings from text embeddings using prior distribution.
+        
+        Uses a zero-mean, unit-variance prior to sample latent vectors and decode
+        them into visual embeddings conditioned on the input text embeddings.
+        
+        :param text_embeddings: Input text embeddings of shape (B, input_dim)
+        :param deterministic: If True, use mean of prior; if False, sample from prior
+        :returns: Generated visual embeddings of shape (B, input_dim)
         """
         # Use the prior as the mean and logvar.
         mu = torch.zeros(text_embeddings.shape[0], self.latent_dim).to(text_embeddings.device)
@@ -140,22 +124,24 @@ class TranslatorVAE(torch.nn.Module):
         return pred_visual_embeddings
 
 class ImgPreprocessing(torch.nn.Module):
-    """Normalize incoming images.
-
-    :param img_statistics: remote path to npz file with a mean and std image. If specified
-        normalize images using this.
-    :param scale_img: If true and img_statistics not specified, scale incoming images by 1/255.
+    """
+    Image preprocessing module for normalization and scaling.
+    
+    Normalizes incoming images using either provided statistics (mean/std) or
+    simple scaling. Supports both statistical normalization from pre-computed
+    statistics and basic scaling by a constant factor.
+    
+    :param img_statistics: Path to npz file containing mean and std statistics.
+        If specified, normalize images using these statistics.
+    :param scale_img: If True and img_statistics not specified, scale images by 1/255.
     """
 
     def __init__(self, img_statistics: Optional[str] = None, scale_img: bool = True):
-        """Initialize ImgPreprocessing.
-
-        :param img_statistics: Path to a .npz file containing 'mean' and 'std' for image normalization.
-                               If None, normalization will be a simple scaling. Defaults to None.
-        :type img_statistics: Optional[str]
-        :param scale_img: If True and `img_statistics` is None, scale images by 1/255.0.
-                          Defaults to True.
-        :type scale_img: bool
+        """
+        Initialize image preprocessing with normalization parameters.
+        
+        :param img_statistics: Optional path to npz file with mean/std statistics
+        :param scale_img: Whether to scale images by 1/255 when no statistics provided
         """
         super().__init__()
         self.img_mean = None
@@ -167,19 +153,11 @@ class ImgPreprocessing(torch.nn.Module):
             self.ob_scale = 255.0 if scale_img else 1.0
 
     def forward(self, img):
-        """Apply image preprocessing.
-
-        Normalizes the input image tensor. If `img_statistics` was provided during
-        initialization, it uses the mean and std from the file. Otherwise, it scales
-        the image by `1.0 / self.ob_scale`.
-
-        Note: The input `img` is assumed to be already scaled to [0, 1] if `img_statistics` is used,
-        or in [0, 255] if `scale_img` is True and `img_statistics` is None.
-
-        :param img: The input image tensor.
-        :type img: torch.Tensor
-        :returns: The preprocessed image tensor.
-        :rtype: torch.Tensor
+        """
+        Apply preprocessing normalization to input images.
+        
+        :param img: Input image tensor of shape (B, C, H, W) or (B, T, C, H, W)
+        :returns: Normalized image tensor with same shape as input
         """
         x = img
         if self.img_mean is not None:
@@ -189,12 +167,16 @@ class ImgPreprocessing(torch.nn.Module):
         return x
 
 class ImgObsProcess(torch.nn.Module):
-    """ImpalaCNN followed by a linear layer.
-
-    :param cnn_outsize: impala output dimension
-    :param output_size: output size of the linear layer.
-    :param dense_init_norm_kwargs: kwargs for linear FanInInitReLULayer
-    :param init_norm_kwargs: kwargs for 2d and 3d conv FanInInitReLULayer
+    """
+    Image observation processing using ImpalaCNN followed by a linear layer.
+    
+    Processes image observations through an Impala CNN architecture and then
+    applies a linear transformation to produce the final output embeddings.
+    
+    :param cnn_outsize: Output dimension of the Impala CNN
+    :param output_size: Output size of the final linear layer
+    :param dense_init_norm_kwargs: Initialization kwargs for linear FanInInitReLULayer
+    :param init_norm_kwargs: Initialization kwargs for 2D and 3D conv FanInInitReLULayer
     """
 
     def __init__(
@@ -205,19 +187,14 @@ class ImgObsProcess(torch.nn.Module):
         init_norm_kwargs: Dict = {},
         **kwargs,
     ):
-        """Initialize ImgObsProcess.
-
-        :param cnn_outsize: The output size of the ImpalaCNN.
-        :type cnn_outsize: int
-        :param output_size: The final output size after the linear layer.
-        :type output_size: int
-        :param dense_init_norm_kwargs: Keyword arguments for the dense FanInInitReLULayer (linear layer).
-                                       Defaults to {}.
-        :type dense_init_norm_kwargs: Dict
-        :param init_norm_kwargs: Keyword arguments for the convolutional FanInInitReLULayers (within ImpalaCNN).
-                                 Defaults to {}.
-        :type init_norm_kwargs: Dict
-        :param kwargs: Additional keyword arguments passed to ImpalaCNN.
+        """
+        Initialize image observation processing module.
+        
+        :param cnn_outsize: Output dimension of the CNN backbone
+        :param output_size: Final output embedding dimension
+        :param dense_init_norm_kwargs: Kwargs for dense layer initialization
+        :param init_norm_kwargs: Kwargs for convolution layer initialization
+        :param kwargs: Additional arguments passed to ImpalaCNN
         """
         super().__init__()
         self.cnn = ImpalaCNN(
@@ -234,28 +211,32 @@ class ImgObsProcess(torch.nn.Module):
         )
 
     def forward(self, img):
-        """Process the image observation.
-
-        Passes the image through the ImpalaCNN and then a linear layer.
-
-        :param img: The input image tensor.
-        :type img: torch.Tensor
-        :returns: The processed image features.
-        :rtype: torch.Tensor
+        """
+        Process image through CNN and linear transformation.
+        
+        :param img: Input image tensor of shape (B, C, H, W)
+        :returns: Processed image features of shape (B, output_size)
         """
         return self.linear(self.cnn(img))
 
 class MinecraftPolicy(torch.nn.Module):
     """
-    :param recurrence_type:
-        None                - No recurrence, adds no extra layers
-        lstm                - (Depreciated). Singular LSTM
-        multi_layer_lstm    - Multi-layer LSTM. Uses n_recurrence_layers to determine number of consecututive LSTMs
-            Does NOT support ragged batching
-        multi_masked_lstm   - Multi-layer LSTM that supports ragged batching via the first vector. This model is slower
-            Uses n_recurrence_layers to determine number of consecututive LSTMs
-        transformer         - Dense transformer
-    :param init_norm_kwargs: kwargs for all FanInInitReLULayers.
+    Neural network policy for Minecraft gameplay with multimodal inputs.
+    
+    This policy combines visual and textual information processing through CNN and 
+    recurrent architectures. It supports various recurrence types including LSTM,
+    masked LSTM, and transformer variants for sequential decision making.
+    
+    The architecture processes images through ImpalaCNN, combines with MineCLIP
+    embeddings for text conditioning, and uses recurrent layers for temporal modeling.
+    
+    :param recurrence_type: Type of recurrent architecture:
+        - 'multi_layer_lstm': Multi-layer LSTM (no ragged batching support)
+        - 'multi_layer_bilstm': Bidirectional multi-layer LSTM  
+        - 'multi_masked_lstm': Multi-layer LSTM with ragged batching support
+        - 'transformer': Dense transformer architecture
+        - 'none': No recurrence
+    :param init_norm_kwargs: Initialization kwargs for all FanInInitReLULayers
     """
 
     def __init__(
@@ -263,19 +244,20 @@ class MinecraftPolicy(torch.nn.Module):
         recurrence_type="lstm",
         impala_width=1,
         impala_chans=(16, 32, 32),
-        obs_processing_width=256, # Unused
+        obs_processing_width=256,
         hidsize=512,
-        single_output=False,
+        single_output=False,  # True if we don't need separate outputs for action/value outputs
         img_shape=None,
         scale_input_img=True,
-        only_img_input=False, # Unused
+        only_img_input=False,
         init_norm_kwargs={},
         impala_kwargs={},
-        input_shape=None, # Unused
-        active_reward_monitors=None, # Unused
+        # Unused argument assumed by forc.
+        input_shape=None,  # pylint: disable=unused-argument
+        active_reward_monitors=None,
         img_statistics=None,
         first_conv_norm=False,
-        diff_mlp_embedding=False, # Unused
+        diff_mlp_embedding=False,
         attention_mask_style="clipped_causal",
         attention_heads=8,
         attention_memory_size=2048,
@@ -285,70 +267,41 @@ class MinecraftPolicy(torch.nn.Module):
         n_recurrence_layers=1,
         recurrence_is_residual=True,
         timesteps=None,
-        use_pre_lstm_ln=True,
-        mineclip_embed_dim=512,
+        use_pre_lstm_ln=True,  # Not needed for transformer
+        mineclip_embed_dim=512,  # MODIFIED (added this)
         **unused_kwargs,
     ):
-        """Initialize the MinecraftPolicy network for Steve-1.
-
-        This network processes image observations and MineCLIP text embeddings, 
-        applies a recurrent layer, and produces latent representations for policy and value functions.
-
-        :param recurrence_type: Type of recurrence. Defaults to "lstm".
-        :type recurrence_type: str
-        :param impala_width: Width multiplier for ImpalaCNN. Defaults to 1.
-        :type impala_width: int
-        :param impala_chans: Channels for ImpalaCNN. Defaults to (16, 32, 32).
-        :type impala_chans: Tuple[int, ...]
-        :param obs_processing_width: (Unused) Width for observation processing. Defaults to 256.
-        :type obs_processing_width: int
-        :param hidsize: Hidden size for layers. Defaults to 512.
-        :type hidsize: int
-        :param single_output: If True, policy/value functions share latent. Defaults to False.
-        :type single_output: bool
-        :param img_shape: Shape of input image. Defaults to None.
-        :type img_shape: Optional[Tuple[int, ...]]
-        :param scale_input_img: Whether to scale input images. Defaults to True.
-        :type scale_input_img: bool
-        :param only_img_input: (Unused) Flag for only image input. Defaults to False.
-        :type only_img_input: bool
-        :param init_norm_kwargs: Kwargs for FanInInitReLULayer norm. Defaults to {}.
-        :type init_norm_kwargs: Dict
-        :param impala_kwargs: Additional kwargs for ImpalaCNN. Defaults to {}.
-        :type impala_kwargs: Dict
-        :param input_shape: (Unused) Expected input shape. Defaults to None.
-        :type input_shape: Optional[Any]
-        :param active_reward_monitors: (Unused) Reward monitor config. Defaults to None.
-        :type active_reward_monitors: Optional[Dict]
-        :param img_statistics: Path to image normalization statistics. Defaults to None.
-        :type img_statistics: Optional[str]
-        :param first_conv_norm: Norm after first Impala conv. Defaults to False.
-        :type first_conv_norm: bool
-        :param diff_mlp_embedding: (Unused) Flag for diff MLP embedding. Defaults to False.
-        :type diff_mlp_embedding: bool
-        :param attention_mask_style: Attention mask style for Transformer. Defaults to "clipped_causal".
-        :type attention_mask_style: str
-        :param attention_heads: Num attention heads for Transformer. Defaults to 8.
-        :type attention_heads: int
-        :param attention_memory_size: Memory size for Transformer attention. Defaults to 2048.
-        :type attention_memory_size: int
-        :param use_pointwise_layer: Use pointwise layers in recurrent blocks. Defaults to True.
-        :type use_pointwise_layer: bool
-        :param pointwise_ratio: Ratio for pointwise layer dim. Defaults to 4.
-        :type pointwise_ratio: int
-        :param pointwise_use_activation: Activation in pointwise layer. Defaults to False.
-        :type pointwise_use_activation: bool
-        :param n_recurrence_layers: Number of recurrent layers. Defaults to 1.
-        :type n_recurrence_layers: int
-        :param recurrence_is_residual: Residual connections in recurrent blocks. Defaults to True.
-        :type recurrence_is_residual: bool
-        :param timesteps: Timesteps for recurrence. Defaults to None.
-        :type timesteps: Optional[int]
-        :param use_pre_lstm_ln: LayerNorm before recurrent layer. Defaults to True.
-        :type use_pre_lstm_ln: bool
-        :param mineclip_embed_dim: Dimension of MineCLIP embeddings. Defaults to 512.
-        :type mineclip_embed_dim: int
-        :param unused_kwargs: Catches other kwargs.
+        """
+        Initialize the Minecraft policy network.
+        
+        :param recurrence_type: Type of recurrent layer ('multi_layer_lstm', 'multi_layer_bilstm', 'multi_masked_lstm', 'transformer', 'none')
+        :param impala_width: Width multiplier for Impala CNN channels
+        :param impala_chans: Base channel sizes for Impala CNN layers
+        :param obs_processing_width: Width for observation processing layers
+        :param hidsize: Hidden state size for recurrent layers and output
+        :param single_output: Whether to use single output for both policy and value
+        :param img_shape: Expected input image shape
+        :param scale_input_img: Whether to scale input images by 1/255
+        :param only_img_input: Whether to use only image inputs (unused)
+        :param init_norm_kwargs: Initialization kwargs for normalization layers
+        :param impala_kwargs: Additional kwargs for Impala CNN
+        :param input_shape: Legacy parameter (unused)
+        :param active_reward_monitors: Dictionary of active reward monitors
+        :param img_statistics: Path to image normalization statistics
+        :param first_conv_norm: Whether to apply normalization to first conv layer
+        :param diff_mlp_embedding: Whether to use different MLP embedding (unused)
+        :param attention_mask_style: Attention masking style for transformer
+        :param attention_heads: Number of attention heads for transformer
+        :param attention_memory_size: Memory size for attention mechanism
+        :param use_pointwise_layer: Whether to use pointwise layers in transformer
+        :param pointwise_ratio: Ratio for pointwise layer dimensions
+        :param pointwise_use_activation: Whether to use activation in pointwise layers
+        :param n_recurrence_layers: Number of recurrent layers to stack
+        :param recurrence_is_residual: Whether recurrent layers use residual connections
+        :param timesteps: Number of timesteps for sequence processing
+        :param use_pre_lstm_ln: Whether to use layer norm before LSTM
+        :param mineclip_embed_dim: Dimension of MineCLIP embeddings
+        :param unused_kwargs: Additional unused arguments
         """
         super().__init__()
         assert recurrence_type in [
@@ -362,6 +315,9 @@ class MinecraftPolicy(torch.nn.Module):
         active_reward_monitors = active_reward_monitors or {}
 
         self.single_output = single_output
+
+        chans = tuple(int(impala_width * c) for c in impala_chans)
+        self.hidsize = hidsize
 
         # Dense init kwargs replaces batchnorm/groupnorm with layernorm
         self.init_norm_kwargs = init_norm_kwargs
@@ -379,7 +335,7 @@ class MinecraftPolicy(torch.nn.Module):
             cnn_outsize=256,
             output_size=hidsize,
             inshape=img_shape,
-            chans=tuple(int(impala_width * c) for c in impala_chans),
+            chans=chans,
             nblock=2,
             dense_init_norm_kwargs=self.dense_init_norm_kwargs,
             init_norm_kwargs=init_norm_kwargs,
@@ -414,31 +370,25 @@ class MinecraftPolicy(torch.nn.Module):
         self.mineclip_embed_linear = torch.nn.Linear(mineclip_embed_dim, hidsize)
 
     def output_latent_size(self):
-        """Returns the size of the output latent vector.
-
-        :returns: The hidden size, which is the dimension of the output latents.
-        :rtype: int
+        """
+        Get the size of the output latent representation.
+        
+        :returns: Integer size of the hidden/latent dimension
         """
         return self.hidsize
 
     def forward(self, ob, state_in, context):
-        """Forward pass of the MinecraftPolicy (Steve-1 variant).
-
-        Processes image observations ("img") and MineCLIP text embeddings ("mineclip_embed"),
-        combines them, passes them through recurrent layers, and produces latent representations.
-
-        :param ob: Dictionary of observations, expected to contain "img" and "mineclip_embed".
-        :type ob: Dict[str, torch.Tensor]
-        :param state_in: Input recurrent state.
-        :type state_in: Any # Type depends on recurrence_type
-        :param context: Context dictionary, expected to contain "first" (a tensor indicating episode starts).
-        :type context: Dict[str, torch.Tensor]
-        :returns: A tuple containing:
-            - pi_latent_or_tuple (Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]]):
-                If `single_output` is True, this is a single tensor for both policy and value.
-                Otherwise, it's a tuple (pi_latent, vf_latent).
-            - state_out (Any): Output recurrent state.
-        :rtype: Tuple[Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]], Any]
+        """
+        Forward pass through the Minecraft policy network.
+        
+        Processes multimodal observations (images and MineCLIP embeddings) through
+        CNN and recurrent layers to produce policy and value latent representations.
+        
+        :param ob: Observation dictionary containing 'img' and 'mineclip_embed' keys
+        :param state_in: Input recurrent state from previous timestep
+        :param context: Context dictionary containing 'first' episode flags
+        :returns: Tuple of ((pi_latent, vf_latent), state_out) where latents are
+                 policy and value representations and state_out is updated recurrent state
         """
         b, t = ob["img"].shape[:2]
         first = context["first"].bool()
@@ -476,12 +426,11 @@ class MinecraftPolicy(torch.nn.Module):
         return (pi_latent, vf_latent), state_out
 
     def initial_state(self, batchsize):
-        """Get the initial recurrent state.
-
-        :param batchsize: The batch size for the initial state.
-        :type batchsize: int
-        :returns: The initial recurrent state, or None if no recurrent layer is used.
-        :rtype: Any # Type depends on recurrence_type, can be None
+        """
+        Initialize the recurrent state for a new episode.
+        
+        :param batchsize: Batch size for state initialization
+        :returns: Initial recurrent state tensors or None if no recurrence
         """
         if self.recurrent_layer:
             return self.recurrent_layer.initial_state(batchsize)
@@ -489,177 +438,235 @@ class MinecraftPolicy(torch.nn.Module):
             return None
 
 class SteveOnePolicy(MinePolicy, PyTorchModelHubMixin):
-    """Steve-1 policy model, combining visual processing with language conditioning via MineCLIP.
-
-    This policy uses a `MinecraftPolicy` core (which includes an ImpalaCNN and recurrent layers)
-    and integrates MineCLIP for processing text prompts. It can optionally use a `TranslatorVAE`
-    to translate between text and visual embedding spaces for more nuanced conditioning.
-
-    :param policy_kwargs: Keyword arguments for the underlying `MinecraftPolicy`.
-    :type policy_kwargs: Dict
-    :param mineclip_kwargs: Keyword arguments for initializing MineCLIP.
-    :type mineclip_kwargs: Dict
-    :param trans_kwargs: Keyword arguments for initializing `TranslatorVAE`. If None, VAE is not used.
-                         Defaults to None.
-    :type trans_kwargs: Optional[Dict]
-    :param action_space: The action space definition. Passed to `MinePolicy`.
-    :type action_space: Optional[Any]
-    :param internal_hiddim: Hidden dimension for policy/value heads. Passed to `MinePolicy` as `hiddim`.
-    :type internal_hiddim: int
-    :param kwargs: Additional keyword arguments for `MinePolicy` (e.g., temperature).
+    """
+    Complete STEVE-1 policy combining visual processing, text conditioning, and action prediction.
+    
+    This policy integrates MineCLIP for multimodal understanding, a TranslatorVAE for 
+    text-to-visual translation, and a MinecraftPolicy network for decision making.
+    It supports both text and video conditioning through classifier-free guidance.
+    
+    The architecture enables text-conditioned gameplay by translating textual instructions
+    into visual embeddings that guide the policy's behavior in Minecraft environments.
     """
     
     def __init__(
-        self,
-        policy_kwargs: Dict[str, Any],
-        mineclip_kwargs: Dict[str, Any],
-        trans_kwargs: Optional[Dict[str, Any]] = None,
-        action_space=None,
-        internal_hiddim=None,
-        **kwargs
+        self, 
+        mineclip_kwargs: dict = {},
+        prior_kwargs: dict = {},
+        policy_kwargs: dict = {},
+        freeze_mineclip: bool = True,
+        action_space = None,
     ):
-        """Initialize the SteveOnePolicy.
-
-        :param policy_kwargs: Keyword arguments for the `MinecraftPolicy` core.
-        :type policy_kwargs: Dict[str, Any]
-        :param mineclip_kwargs: Keyword arguments for MineCLIP.
-        :type mineclip_kwargs: Dict[str, Any]
-        :param trans_kwargs: Keyword arguments for `TranslatorVAE`. If None, VAE is disabled.
-                             Defaults to None.
-        :type trans_kwargs: Optional[Dict[str, Any]]
-        :param action_space: Action space definition.
-        :type action_space: Optional[Any]
-        :param internal_hiddim: Hidden dimension for policy/value heads. If None, uses `policy_kwargs['hidsize']`.
-        :type internal_hiddim: Optional[int]
-        :param kwargs: Additional keyword arguments for `MinePolicy`.
         """
-        if internal_hiddim is None:
-            internal_hiddim = policy_kwargs["hidsize"]
-        super().__init__(hiddim=internal_hiddim, action_space=action_space, **kwargs)
-
-        self.net = MinecraftPolicy(**policy_kwargs)
-        self.mineclip = MineCLIP(**mineclip_kwargs)
-        self.translator_vae = TranslatorVAE(**trans_kwargs) if trans_kwargs is not None else None
-
-        # Cache for MineCLIP text embeddings
-        self._mineclip_cache = {}
-
-    def _get_mineclip_attns(self, prompt: str, device: torch.device) -> torch.Tensor:
-        """Computes MineCLIP text embeddings for a given prompt, using a cache.
-
-        If the prompt has been processed before, returns the cached embedding.
-        Otherwise, computes it, caches it, and returns it.
-
-        :param prompt: The text prompt.
-        :type prompt: str
-        :param device: The torch device to move the embedding to.
-        :type device: torch.device
-        :returns: The MineCLIP text embedding for the prompt.
-        :rtype: torch.Tensor
+        Initialize the STEVE-1 policy with all components.
+        
+        :param mineclip_kwargs: Configuration for MineCLIP multimodal encoder
+        :param prior_kwargs: Configuration for TranslatorVAE prior model
+        :param policy_kwargs: Configuration for MinecraftPolicy network
+        :param freeze_mineclip: Whether to freeze MineCLIP parameters during training
+        :param action_space: Action space specification for the environment
         """
-        # Create a hash of the prompt to use as a cache key.
-        prompt_hash = hashlib.sha256(prompt.encode("utf-8")).hexdigest()
+        net = MinecraftPolicy(** policy_kwargs)
+        super().__init__(hiddim=net.hidsize, action_space=action_space)
 
-        if prompt_hash in self._mineclip_cache:
-            attn = self._mineclip_cache[prompt_hash]
-        else:
-            # If the prompt is new, compute the embedding.
-            if isinstance(prompt, list):
-                attn = [self.mineclip.encode_text(p).detach() for p in prompt]
+        self.net = net
+        self.prior = TranslatorVAE(** prior_kwargs)
+        self.mineclip = MineCLIP(** mineclip_kwargs)
+
+        if freeze_mineclip:
+            for param in self.mineclip.parameters():
+                param.requires_grad = False
+
+    def prepare_condition(self, instruction: Dict[str, Any], deterministic: bool = False) -> Dict[str, Any]:
+        """
+        Prepare conditioning information from text or video instructions.
+        
+        Processes either text instructions (via TranslatorVAE) or video demonstrations
+        (via direct MineCLIP encoding) to create conditioning embeddings for the policy.
+        
+        :param instruction: Dictionary containing either 'text' or 'video' key plus 'cond_scale'
+        :param deterministic: Whether to use deterministic sampling for text conditioning
+        :returns: Dictionary with 'cond_scale' and 'mineclip_embeds' for policy conditioning
+        :raises AssertionError: If instruction lacks required keys or has conflicting modalities
+        """
+        assert 'cond_scale' in instruction, "instruction must have 'cond_scale' key."
+
+        if 'video' in instruction:
+            assert 'text' not in instruction, "cannot have both text and video in instruction"
+            
+            video = instruction['video']
+
+            if isinstance(video, np.ndarray):
+                video = torch.from_numpy(video).to(self.device)
+            if video.dim() == 4:
+                video = rearrange(video, 'T H W C -> 1 T C H W')
+            if video.shape[2] != 3:
+                video = rearrange(video, 'B T H W C -> B T C H W')
+
+            assert video.dim() == 5 and video.shape[2] == 3, "video must be a 5D tensor with shape (B, T, C, H, W) or (B, T, H, W, C)"
+            B, T, C, H, W = video.shape
+
+            if video.dtype == torch.uint8:
+                mineclip_inputs = video.float()
+            elif video.dtype == torch.float32:
+                assert video.abs().max() <= 1.0, "float32 video must be in range [-1, 1]"
+                mineclip_inputs = video * 255.0
             else:
-                attn = self.mineclip.encode_text(prompt).detach()
+                raise ValueError("video must be either uint8 or float32.")
+            
+            mineclip_inputs = rearrange(
+                torch.nn.functional.interpolate(
+                    rearrange(mineclip_inputs, 'B T C H W -> (B T) C H W'),
+                    size=(160, 256), 
+                    mode='bilinear', 
+                    align_corners=False
+                ),
+                '(B T) C H W -> B T C H W',
+                B=B, T=T
+            )
 
-            # Cache the computed embedding.
-            self._mineclip_cache[prompt_hash] = attn
+            mineclip_embeds = self.mineclip.encode_video(mineclip_inputs)
+        else:
+            assert 'text' in instruction, "instruction must have either text or video."
 
-        if isinstance(attn, list):
-            attn = torch.stack(attn)
+            texts = instruction['text']
+            if isinstance(texts, str):
+                texts = [texts]
+            assert isinstance(texts, list) and isinstance(texts[0], str), "text must be a string or a list of strings."
+            
+            text_embeds = self.mineclip.encode_text(texts)
+            mineclip_embeds = self.prior(text_embeds, deterministic=deterministic)
 
-        return attn.to(device)
+        return {
+            'cond_scale': instruction['cond_scale'],
+            'mineclip_embeds': mineclip_embeds,
+        }
 
     def forward(
         self, 
+        condition: Dict[str, Any],
         input: Dict[str, Any], 
-        state_in: Optional[List[torch.Tensor]] = None, 
+        state_in: Optional[List[torch.Tensor]] = None,
         **kwargs
     ) -> Tuple[Dict[str, torch.Tensor], List[torch.Tensor]]:
-        """Forward pass of the SteveOnePolicy.
-
-        Processes image observations and a text prompt. The text prompt is converted to a
-        MineCLIP embedding. If a TranslatorVAE is used, this embedding can be further
-        transformed. The visual features and text-derived features are then passed to the
-        core `MinecraftPolicy` network.
-
-        :param input: Dictionary of input observations. Expected to contain:
-            - "img" (torch.Tensor): Image observations.
-            - "prompt" (str or List[str]): Text prompt(s).
-        :type input: Dict[str, Any]
-        :param state_in: Input recurrent state. If None, an initial state is generated.
-        :type state_in: Optional[List[torch.Tensor]]
-        :param kwargs: Additional keyword arguments.
-        :returns: A tuple containing:
-            - latents (Dict[str, torch.Tensor]): Dictionary with 'pi_logits' and 'vpred'.
-            - state_out (List[torch.Tensor]): Output recurrent state.
-        :rtype: Tuple[Dict[str, torch.Tensor], List[torch.Tensor]]
         """
-        # MODIFIED (pass mineclip embeddings to the policy)
-        if isinstance(input["prompt"], str):
-            input["prompt"] = [input["prompt"]]
-        mineclip_embeds = self._get_mineclip_attns(input["prompt"][0], device=self.device)
-
-        if self.translator_vae is not None:
-            # If using TranslatorVAE, decode the text embeddings to get visual embeddings
-            with torch.no_grad():
-                visual_embeds = self.translator_vae.decode(mineclip_embeds, mineclip_embeds)
-        else:
-            visual_embeds = mineclip_embeds
-
+        Forward pass with classifier-free guidance for conditioned generation.
+        
+        Performs a forward pass through the policy network with optional classifier-free
+        guidance. When cond_scale > 0, runs both conditioned and unconditioned inference
+        and combines the outputs using the specified guidance scale.
+        
+        :param condition: Dictionary with 'cond_scale' and 'mineclip_embeds'
+        :param input: Dictionary with 'image' key containing observation images
+        :param state_in: Optional list of recurrent state tensors from previous timestep
+        :param kwargs: Additional keyword arguments (unused)
+        :returns: Tuple of (latents_dict, state_out) where latents_dict contains
+                 'pi_logits' and 'vpred' and state_out is updated recurrent state
+        """
+        condition = input['condition'].copy()
+        if 'mineclip_embeds' not in condition:
+            condition = self.prepare_condition(condition)
         if state_in is None:
-            state_in = self.initial_state(len(input["img"]))
+            state_in = self.initial_state(condition, input['image'].shape[0])
+        input, state_in = input.copy(), state_in.copy()
+        mineclip_embeds = condition['mineclip_embeds']
+        if mineclip_embeds.shape[0] == 1 and input['image'].shape[0] > 1:
+            mineclip_embeds = repeat(mineclip_embeds, '1 ... -> b ...', b=input['image'].shape[0])
+        if condition['cond_scale'] != 0 and condition['cond_scale'] is not None:
+            state_in = [rearrange(x, "b ... c -> (b c) ...") for x in state_in]
+            images = repeat(input['image'], "b ... -> (b c) ...", c=2)
+            mineclip_embeds = rearrange(
+                torch.stack([mineclip_embeds, torch.zeros_like(mineclip_embeds)]),
+                'c b ... -> (b c) ...'
+            )
+        else:
+            images = input['image']
 
-        return self.net(
-            ob={
-                "img": input["img"],
-                "mineclip_embed": visual_embeds,
-            },
-            state_in=state_in,
-            **kwargs
+        dummy_first = torch.zeros((images.shape[0], images.shape[1]), dtype=torch.bool, device=self.device)
+
+        if images.shape[-1] != 3:
+            images = rearrange(images, 'b t c h w -> b t h w c')
+        if images.dtype == torch.uint8:
+            images = images.float()
+        elif images.dtype == torch.float32:
+            assert images.abs().max() <= 1.0, "float32 image must be in range [-1, 1]"
+            images = images * 255.0
+        else:
+            raise ValueError("image must be either uint8 or float32.")
+
+        (pi_latent, vf_latent), state_out = self.net(
+            ob={"img": images, "mineclip_embed": repeat(mineclip_embeds, 'b c -> b t c', t=images.shape[1])}, 
+            context={"first": dummy_first}, 
+            state_in=state_in
         )
 
-    def initial_state(self, batch_size: Optional[int] = None):
-        """Get the initial recurrent state for a given batch size.
+        pi_logits = self.pi_head(pi_latent)
+        vpred = self.value_head(vf_latent)
+        if condition['cond_scale'] != 0 and condition['cond_scale'] is not None:
+            pi_logits = {k: rearrange(v, '(b c) ... -> b c ...', c=2) for k, v in pi_logits.items()}
+            vpred = rearrange(vpred, '(b c) ... -> b c ...', c=2)
+            state_out = [rearrange(x, '(b c) ... -> b ... c', c=2) for x in state_out]
+            
+            pi_logits = {k: (1 + condition['cond_scale']) * v[:, 0] - condition['cond_scale'] * v[:, 1] for k, v in pi_logits.items()}
+            vpred = vpred[:, 0]
 
-        Caches initial states for frequently used batch sizes.
-
-        :param batch_size: The batch size. If None, returns state for batch size 1 (squeezed).
-                           Defaults to None.
-        :type batch_size: Optional[int]
-        :returns: A list of initial state tensors for the recurrent network, moved to the correct device.
-        :rtype: List[torch.Tensor]
+        latents = {
+            "pi_logits": pi_logits, 
+            "vpred": vpred, 
+        }
+        return latents, state_out
+    
+    def initial_state(
+        self, 
+        condition: Dict[str, Any], 
+        batch_size: Optional[int] = None
+    ) -> List[torch.Tensor]:
         """
-        if batch_size is None:
-            batch_size = 1
-
-        if batch_size in self._initial_state_cache:
-            return self._initial_state_cache[batch_size]
-
-        state = self.net.initial_state(batch_size)
-        # Move to correct device
-        state = [s.to(self.device) for s in state]
-
-        self._initial_state_cache[batch_size] = state
-        return state
+        Initialize recurrent state for policy inference.
+        
+        Creates initial state tensors for the recurrent layers. When classifier-free
+        guidance is enabled (cond_scale > 0), duplicates states for both conditioned
+        and unconditioned inference branches.
+        
+        :param condition: Conditioning dictionary with 'cond_scale' key
+        :param batch_size: Batch size for state initialization
+        :returns: List of initial state tensors
+        """
+        initial_state = self.net.initial_state(batch_size)
+        if condition['cond_scale'] == 0.0 or condition['cond_scale'] is None:
+            return initial_state
+        else:
+            return [torch.stack([x, x], dim=-1) for x in initial_state]
 
     def reset_parameters(self):
+        """
+        Reset all trainable parameters in the policy network.
+        
+        :raises NotImplementedError: This method is not yet implemented
+        """
         super().reset_parameters()
         self.net.reset_parameters()
         raise NotImplementedError()
 
     @property
     def device(self) -> torch.device:
+        """
+        Get the device of the policy model.
+        
+        :returns: torch.device where the model parameters are located
+        """
         return next(self.parameters()).device
 
 def load_steve_one_policy(ckpt_path: str) -> SteveOnePolicy:
+    """
+    Load a pre-trained STEVE-1 policy from a checkpoint path.
+    
+    Convenience function to load a STEVE-1 policy using the HuggingFace Hub
+    model loading mechanism.
+    
+    :param ckpt_path: Path or HuggingFace model identifier for the checkpoint
+    :returns: Loaded SteveOnePolicy instance
+    """
     return SteveOnePolicy.from_pretrained(ckpt_path)
 
 if __name__ == '__main__':
