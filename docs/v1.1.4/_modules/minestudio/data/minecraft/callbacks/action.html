@@ -1,0 +1,1289 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>minestudio.data.minecraft.callbacks.action &#8212; MineStudio</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/thebelab.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/custom.css?v=d6734ac8" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../_static/documentation_options.js?v=00f267c6"></script>
+    <script src="../../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../../_static/thebelab-helper.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/minestudio/data/minecraft/callbacks/action';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://craftjarvis.github.io/MineStudio/_static/version.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'latest';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <script defer="defer" src="../../../../../_static/custom-icons.js?v=26a3f3bc"></script>
+    <link rel="icon" href="../../../../../_static/logo-no-text-light.svg"/>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />   
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../_static/logo-no-text-light.svg" class="logo__image only-light" alt=""/>
+    <img src="../../../../../_static/logo-no-text-light.svg" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">MineStudio</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../overview/index.html">
+    Overview
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../overview/getting-started.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../simulator/index.html">
+    Simulator
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../data/index.html">
+    Data
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../models/index.html">
+    Models
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../offline/index.html">
+    Offline
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../online/index.html">
+    Online
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../../../inference/index.html">
+    Inference
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../../../benchmark/index.html">
+    Benchmark
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../../../api/index.html">
+    API
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/CraftJarvis/MineStudio" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/minestudio" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-custom fa-pypi fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://arxiv.org/pdf/2411.18293" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-custom fa-arxiv fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">ArXiv</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+          
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../overview/index.html">
+    Overview
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../overview/getting-started.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../simulator/index.html">
+    Simulator
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../data/index.html">
+    Data
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../models/index.html">
+    Models
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../offline/index.html">
+    Offline
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../online/index.html">
+    Online
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../inference/index.html">
+    Inference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../benchmark/index.html">
+    Benchmark
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../api/index.html">
+    API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/CraftJarvis/MineStudio" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/minestudio" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-custom fa-pypi fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://arxiv.org/pdf/2411.18293" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-custom fa-arxiv fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">ArXiv</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">minestudio.data.minecraft.callbacks.action</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                   <h1>Source code for minestudio.data.minecraft.callbacks.action</h1><div class="highlight"><pre>
+<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Date: 2025-01-09 05:27:25</span>
+<span class="sd">LastEditors: muzhancun muzhancun@stu.pku.edu.cn</span>
+<span class="sd">LastEditTime: 2025-05-27 15:04:29</span>
+<span class="sd">FilePath: /MineStudio/minestudio/data/minecraft/callbacks/action.py</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">cv2</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pickle</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rich</span><span class="w"> </span><span class="kn">import</span> <span class="nb">print</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Literal</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">OrderedDict</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.utils.vpt_lib.actions</span><span class="w"> </span><span class="kn">import</span> <span class="n">ActionTransformer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.utils.vpt_lib.action_mapping</span><span class="w"> </span><span class="kn">import</span> <span class="n">CameraHierarchicalMapping</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.data.minecraft.callbacks.callback</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModalKernelCallback</span><span class="p">,</span> <span class="n">DrawFrameCallback</span><span class="p">,</span> <span class="n">ModalConvertCallback</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.utils.register</span><span class="w"> </span><span class="kn">import</span> <span class="n">Registers</span>
+
+<div class="viewcode-block" id="ActionKernelCallback">
+<a class="viewcode-back" href="../../../../../api/data/index.html#minestudio.data.minecraft.callbacks.action.ActionKernelCallback">[docs]</a>
+<span class="nd">@Registers</span><span class="o">.</span><span class="n">modal_kernel_callback</span><span class="o">.</span><span class="n">register</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ActionKernelCallback</span><span class="p">(</span><span class="n">ModalKernelCallback</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Callback for handling Minecraft actions.</span>
+
+<span class="sd">    This callback processes action data, including decoding, merging, slicing, padding, and postprocessing.</span>
+<span class="sd">    It can handle both regular actions and previous actions if enabled.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ActionKernelCallback.create_from_config">
+<a class="viewcode-back" href="../../../../../api/data/index.html#minestudio.data.minecraft.callbacks.action.ActionKernelCallback.create_from_config">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_from_config</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;ActionKernelCallback&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates an ActionKernelCallback instance from a configuration dictionary.</span>
+
+<span class="sd">        :param config: Configuration dictionary.</span>
+<span class="sd">        :type config: Dict</span>
+<span class="sd">        :returns: An instance of ActionKernelCallback.</span>
+<span class="sd">        :rtype: ActionKernelCallback</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">ActionKernelCallback</span><span class="p">(</span><span class="o">**</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;action&#39;</span><span class="p">,</span> <span class="p">{}))</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+                 <span class="n">n_camera_bins</span><span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span>
+                 <span class="n">camera_binsize</span><span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                 <span class="n">camera_maxval</span><span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                 <span class="n">camera_mu</span><span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                 <span class="n">camera_quantization_scheme</span><span class="o">=</span><span class="s2">&quot;mu_law&quot;</span><span class="p">,</span> 
+                 <span class="n">enable_prev_action</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the ActionKernelCallback.</span>
+
+<span class="sd">        :param n_camera_bins: Number of bins for camera quantization.</span>
+<span class="sd">        :type n_camera_bins: int</span>
+<span class="sd">        :param camera_binsize: Binsize for camera quantization.</span>
+<span class="sd">        :type camera_binsize: int</span>
+<span class="sd">        :param camera_maxval: Maximum value for camera quantization.</span>
+<span class="sd">        :type camera_maxval: int</span>
+<span class="sd">        :param camera_mu: Mu value for camera mu-law quantization.</span>
+<span class="sd">        :type camera_mu: int</span>
+<span class="sd">        :param camera_quantization_scheme: Scheme for camera quantization (&quot;mu_law&quot; or other).</span>
+<span class="sd">        :type camera_quantization_scheme: str</span>
+<span class="sd">        :param enable_prev_action: Whether to enable processing of previous actions.</span>
+<span class="sd">        :type enable_prev_action: bool</span>
+<span class="sd">        :param kwargs: Additional keyword arguments.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">action_mapper</span> <span class="o">=</span> <span class="n">CameraHierarchicalMapping</span><span class="p">(</span><span class="n">n_camera_bins</span><span class="o">=</span><span class="n">n_camera_bins</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">action_transformer</span> <span class="o">=</span> <span class="n">ActionTransformer</span><span class="p">(</span>
+            <span class="n">camera_binsize</span><span class="o">=</span><span class="n">camera_binsize</span><span class="p">,</span>
+            <span class="n">camera_maxval</span><span class="o">=</span><span class="n">camera_maxval</span><span class="p">,</span>
+            <span class="n">camera_mu</span><span class="o">=</span><span class="n">camera_mu</span><span class="p">,</span>
+            <span class="n">camera_quantization_scheme</span><span class="o">=</span><span class="n">camera_quantization_scheme</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">enable_prev_action</span> <span class="o">=</span> <span class="n">enable_prev_action</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the name of the callback.</span>
+
+<span class="sd">        :returns: The name &#39;action&#39;.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s1">&#39;action&#39;</span>
+
+<div class="viewcode-block" id="ActionKernelCallback.filter_dataset_paths">
+<a class="viewcode-back" href="../../../../../api/data/index.html#minestudio.data.minecraft.callbacks.action.ActionKernelCallback.filter_dataset_paths">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">filter_dataset_paths</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset_paths</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Path</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Filters dataset paths to select only action-related paths.</span>
+
+<span class="sd">        :param dataset_paths: A list of dataset paths.</span>
+<span class="sd">        :type dataset_paths: List[Union[str, Path]]</span>
+<span class="sd">        :returns: A list of paths pointing to action data.</span>
+<span class="sd">        :rtype: List[Path]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataset_paths</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">dataset_paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">dataset_paths</span><span class="p">]</span>
+        <span class="n">action_paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">path</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">dataset_paths</span> <span class="k">if</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">stem</span> <span class="o">==</span> <span class="s1">&#39;action&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">action_paths</span></div>
+
+
+<div class="viewcode-block" id="ActionKernelCallback.do_decode">
+<a class="viewcode-back" href="../../../../../api/data/index.html#minestudio.data.minecraft.callbacks.action.ActionKernelCallback.do_decode">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">do_decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chunk</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Decodes a chunk of bytes into an action dictionary.</span>
+
+<span class="sd">        :param chunk: Bytes to decode.</span>
+<span class="sd">        :type chunk: bytes</span>
+<span class="sd">        :param kwargs: Additional keyword arguments.</span>
+<span class="sd">        :returns: Decoded action dictionary.</span>
+<span class="sd">        :rtype: Dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ActionKernelCallback.do_merge">
+<a class="viewcode-back" href="../../../../../api/data/index.html#minestudio.data.minecraft.callbacks.action.ActionKernelCallback.do_merge">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">do_merge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chunk_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">bytes</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Merges a list of decoded action chunks into a single dictionary.</span>
+
+<span class="sd">        :param chunk_list: List of byte chunks representing actions.</span>
+<span class="sd">        :type chunk_list: List[bytes]</span>
+<span class="sd">        :param kwargs: Additional keyword arguments.</span>
+<span class="sd">        :returns: A dictionary containing merged action data.</span>
+<span class="sd">        :rtype: Dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">chunks</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">do_decode</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span> <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">chunk_list</span><span class="p">]</span>
+        <span class="n">cache_chunks</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">chunks</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">chunk</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cache_chunks</span><span class="p">:</span>
+                    <span class="n">cache_chunks</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">cache_chunks</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">merged_chunks</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">cache_chunks</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+        <span class="k">return</span> <span class="n">merged_chunks</span></div>
+
+
+<div class="viewcode-block" id="ActionKernelCallback.do_slice">
+<a class="viewcode-back" href="../../../../../api/data/index.html#minestudio.data.minecraft.callbacks.action.ActionKernelCallback.do_slice">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">do_slice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">end</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">skip_frame</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Slices the action data.</span>
+
+<span class="sd">        :param data: Action data dictionary.</span>
+<span class="sd">        :type data: Dict</span>
+<span class="sd">        :param start: Start index for slicing.</span>
+<span class="sd">        :type start: int</span>
+<span class="sd">        :param end: End index for slicing.</span>
+<span class="sd">        :type end: int</span>
+<span class="sd">        :param skip_frame: Frame skipping interval.</span>
+<span class="sd">        :type skip_frame: int</span>
+<span class="sd">        :param kwargs: Additional keyword arguments.</span>
+<span class="sd">        :returns: Sliced action data.</span>
+<span class="sd">        :rtype: Dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sliced_data</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">value</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">:</span><span class="n">skip_frame</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+        <span class="k">return</span> <span class="n">sliced_data</span></div>
+
+
+<div class="viewcode-block" id="ActionKernelCallback.do_pad">
+<a class="viewcode-back" href="../../../../../api/data/index.html#minestudio.data.minecraft.callbacks.action.ActionKernelCallback.do_pad">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">do_pad</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">pad_len</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">pad_pos</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="s2">&quot;right&quot;</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Dict</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Pads the action data.</span>
+
+<span class="sd">        :param data: Action data dictionary.</span>
+<span class="sd">        :type data: Dict</span>
+<span class="sd">        :param pad_len: Length of padding to add.</span>
+<span class="sd">        :type pad_len: int</span>
+<span class="sd">        :param pad_pos: Position to add padding (&quot;left&quot; or &quot;right&quot;).</span>
+<span class="sd">        :type pad_pos: Literal[&quot;left&quot;, &quot;right&quot;]</span>
+<span class="sd">        :param kwargs: Additional keyword arguments.</span>
+<span class="sd">        :returns: A tuple containing the padded action data and the padding mask.</span>
+<span class="sd">        :rtype: Tuple[Dict, np.ndarray]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pad_data</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">traj_len</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">dims</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+            <span class="k">if</span> <span class="n">pad_pos</span> <span class="o">==</span> <span class="s2">&quot;right&quot;</span><span class="p">:</span>
+                <span class="n">pad_value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">value</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">pad_len</span><span class="p">,</span> <span class="o">*</span><span class="n">dims</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">pad_pos</span> <span class="o">==</span> <span class="s2">&quot;left&quot;</span><span class="p">:</span>
+                <span class="n">pad_value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">pad_len</span><span class="p">,</span> <span class="o">*</span><span class="n">dims</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">),</span> <span class="n">value</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">pad_data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">pad_value</span>
+        <span class="k">if</span> <span class="n">pad_pos</span> <span class="o">==</span> <span class="s2">&quot;right&quot;</span><span class="p">:</span>
+            <span class="n">pad_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">traj_len</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">pad_len</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">pad_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">pad_len</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">traj_len</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">pad_data</span><span class="p">,</span> <span class="n">pad_mask</span></div>
+
+
+<div class="viewcode-block" id="ActionKernelCallback.do_postprocess">
+<a class="viewcode-back" href="../../../../../api/data/index.html#minestudio.data.minecraft.callbacks.action.ActionKernelCallback.do_postprocess">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">do_postprocess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Postprocesses the action data.</span>
+
+<span class="sd">        This method handles the transformation of environment actions to agent actions</span>
+<span class="sd">        and optionally includes previous actions.</span>
+
+<span class="sd">        :param data: Data dictionary containing actions.</span>
+<span class="sd">        :type data: Dict</span>
+<span class="sd">        :returns: Postprocessed data dictionary.</span>
+<span class="sd">        :rtype: Dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pop_action</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">enable_prev_action</span><span class="p">:</span>
+            <span class="n">data</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;env_</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pop_action</span>
+            <span class="n">data</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;agent_</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">action_mapper</span><span class="o">.</span><span class="n">from_factored</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">action_transformer</span><span class="o">.</span><span class="n">env2policy</span><span class="p">(</span><span class="n">pop_action</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">action</span> <span class="o">=</span> <span class="p">{</span> <span class="n">key</span><span class="p">:</span> <span class="n">val</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">pop_action</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="p">}</span>
+            <span class="n">prev_action</span> <span class="o">=</span> <span class="p">{</span> <span class="n">key</span><span class="p">:</span> <span class="n">val</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">pop_action</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="p">}</span>
+            <span class="n">data</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;env_</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">action</span>
+            <span class="n">data</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;env_prev_</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">prev_action</span>
+            <span class="n">data</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;agent_</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">action_mapper</span><span class="o">.</span><span class="n">from_factored</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">action_transformer</span><span class="o">.</span><span class="n">env2policy</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">data</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;agent_prev_</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">action_mapper</span><span class="o">.</span><span class="n">from_factored</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">action_transformer</span><span class="o">.</span><span class="n">env2policy</span><span class="p">(</span><span class="n">prev_action</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">data</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">_mask&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">action</span><span class="p">[</span><span class="s1">&#39;attack&#39;</span><span class="p">]),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">data</span></div>
+</div>
+
+
+<div class="viewcode-block" id="VectorActionKernelCallback">
+<a class="viewcode-back" href="../../../../../api/data/index.html#minestudio.data.minecraft.callbacks.action.VectorActionKernelCallback">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">VectorActionKernelCallback</span><span class="p">(</span><span class="n">ActionKernelCallback</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Callback for handling actions represented as vectors.</span>
+
+<span class="sd">    This callback converts actions between dictionary and vector representations.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">ACTION_KEYS</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">({</span>
+        <span class="s1">&#39;camera&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;attack&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;forward&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;back&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;left&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;jump&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;sneak&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;sprint&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;use&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;drop&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;inventory&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> 
+        <span class="s1">&#39;hotbar.1&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;hotbar.2&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;hotbar.3&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;hotbar.4&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;hotbar.5&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;hotbar.6&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;hotbar.7&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;hotbar.8&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;hotbar.9&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="p">})</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action_chunk_size</span><span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">return_type</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s2">&quot;vector&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the VectorActionKernelCallback.</span>
+
+<span class="sd">        :param action_chunk_size: Size of the action chunks.</span>
+<span class="sd">        :type action_chunk_size: int</span>
+<span class="sd">        :param return_type: The return type for processed actions (&quot;vector&quot; or &quot;dict&quot;).</span>
+<span class="sd">        :type return_type: str</span>
+<span class="sd">        :raises AssertionError: if return_type is not &quot;vector&quot; or &quot;dict&quot;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">action_chunk_size</span> <span class="o">=</span> <span class="n">action_chunk_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">win_bias</span> <span class="o">=</span> <span class="n">action_chunk_size</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">assert</span> <span class="n">return_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;vector&quot;</span><span class="p">,</span> <span class="s2">&quot;dict&quot;</span><span class="p">],</span> <span class="sa">f</span><span class="s2">&quot;Invalid return type: </span><span class="si">{</span><span class="n">return_type</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">return_type</span> <span class="o">=</span> <span class="n">return_type</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">vector_dim</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates the dimension of the action vector.</span>
+
+<span class="sd">        :returns: The dimension of the action vector.</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ACTION_KEYS</span><span class="o">.</span><span class="n">values</span><span class="p">())</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">action_chunk_size</span>
+
+<div class="viewcode-block" id="VectorActionKernelCallback.vector_to_action">
+<a class="viewcode-back" href="../../../../../api/data/index.html#minestudio.data.minecraft.callbacks.action.VectorActionKernelCallback.vector_to_action">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">vector_to_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vector</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">],</span> <span class="n">Dict</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Converts an action vector or a list of action vectors to action dictionaries.</span>
+
+<span class="sd">        :param vector: Action vector(s).</span>
+<span class="sd">        :type vector: np.ndarray</span>
+<span class="sd">        :returns: Action dictionary or list of action dictionaries.</span>
+<span class="sd">        :rtype: Union[List[Dict], Dict]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">vector</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">vector</span> <span class="o">=</span> <span class="n">vector</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+        <span class="n">actions</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">vector</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">action</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="p">[]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ACTION_KEYS</span><span class="p">}</span>
+            <span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">action_chunk_size</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">dim</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ACTION_KEYS</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+                    <span class="n">action</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vector</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">offset</span><span class="p">:</span> <span class="n">offset</span><span class="o">+</span><span class="n">dim</span><span class="p">])</span>
+                    <span class="n">offset</span> <span class="o">+=</span> <span class="n">dim</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">action</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;camera&#39;</span><span class="p">:</span>
+                    <span class="n">action</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">action</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">*</span> <span class="mf">180.</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">action</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">action</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+            <span class="n">actions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">vector</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">actions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">actions</span></div>
+
+
+<div class="viewcode-block" id="VectorActionKernelCallback.action_to_vector">
+<a class="viewcode-back" href="../../../../../api/data/index.html#minestudio.data.minecraft.callbacks.action.VectorActionKernelCallback.action_to_vector">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">action_to_vector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Converts an action dictionary to an action vector.</span>
+
+<span class="sd">        :param action: Action dictionary.</span>
+<span class="sd">        :type action: Dict</span>
+<span class="sd">        :returns: Action vector.</span>
+<span class="sd">        :rtype: np.ndarray</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">vectors</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">win_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">action</span><span class="p">[</span><span class="s1">&#39;attack&#39;</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">win_len</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">action_chunk_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vector_dim</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+            <span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">action_chunk_size</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">dim</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ACTION_KEYS</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+                    <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;camera&#39;</span><span class="p">:</span>
+                        <span class="n">val</span> <span class="o">=</span> <span class="n">action</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">i</span><span class="o">+</span><span class="n">t</span><span class="p">]</span> <span class="o">/</span> <span class="mi">180</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">val</span> <span class="o">=</span> <span class="n">action</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">i</span><span class="o">+</span><span class="n">t</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span>
+                    <span class="n">vector</span><span class="p">[</span><span class="n">offset</span><span class="p">:</span> <span class="n">offset</span><span class="o">+</span><span class="n">dim</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+                    <span class="n">offset</span> <span class="o">+=</span> <span class="n">dim</span>
+            <span class="n">vectors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vector</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">vectors</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="VectorActionKernelCallback.action_to_dict">
+<a class="viewcode-back" href="../../../../../api/data/index.html#minestudio.data.minecraft.callbacks.action.VectorActionKernelCallback.action_to_dict">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">action_to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Converts an action dictionary to a specific dictionary format with &quot;camera&quot; and &quot;button&quot; keys.</span>
+
+<span class="sd">        :param action: Action dictionary.</span>
+<span class="sd">        :type action: Dict</span>
+<span class="sd">        :returns: Dictionary with &quot;camera&quot; and &quot;button&quot; actions.</span>
+<span class="sd">        :rtype: Dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;camera&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;button&quot;</span><span class="p">:</span> <span class="p">[]}</span>
+        <span class="n">win_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">action</span><span class="p">[</span><span class="s1">&#39;attack&#39;</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">win_len</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">action_chunk_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">camera</span><span class="p">,</span> <span class="n">button</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">action_chunk_size</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">dim</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ACTION_KEYS</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;camera&#39;</span><span class="p">:</span>
+                        <span class="n">camera</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">action</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">i</span><span class="o">+</span><span class="n">t</span><span class="p">]</span> <span class="o">/</span> <span class="mi">180</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">button</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">action</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">i</span><span class="o">+</span><span class="n">t</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;camera&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">camera</span><span class="p">)</span>
+            <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;button&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">button</span><span class="p">)</span>
+
+        <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;camera&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ret</span><span class="p">[</span><span class="s2">&quot;camera&quot;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;button&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ret</span><span class="p">[</span><span class="s2">&quot;button&quot;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+
+
+<div class="viewcode-block" id="VectorActionKernelCallback.do_postprocess">
+<a class="viewcode-back" href="../../../../../api/data/index.html#minestudio.data.minecraft.callbacks.action.VectorActionKernelCallback.do_postprocess">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">do_postprocess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Postprocesses the action data, converting it to the specified return type (vector or dict).</span>
+
+<span class="sd">        :param data: Data dictionary containing actions.</span>
+<span class="sd">        :type data: Dict</span>
+<span class="sd">        :returns: Postprocessed data dictionary with actions in the specified format.</span>
+<span class="sd">        :rtype: Dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;action&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_type</span> <span class="o">==</span> <span class="s2">&quot;vector&quot;</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">action_to_vector</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_type</span> <span class="o">==</span> <span class="s2">&quot;dict&quot;</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">action_to_dict</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+        <span class="c1"># restored_action = self.vector_to_action(vector)</span>
+        <span class="c1"># data[&#39;action_mask&#39;]: shape (128 + 32 -1, )</span>
+        <span class="c1"># vector mask: shape (128, 32)</span>
+        <span class="n">action_chunk_mask</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;action_mask&#39;</span><span class="p">])</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">action_chunk_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">action_chunk_mask</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;action_mask&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">:</span> <span class="n">i</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">action_chunk_size</span><span class="p">])</span>
+        <span class="n">action_chunk_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">action_chunk_mask</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">data</span><span class="p">[</span><span class="s1">&#39;action&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ret</span>
+        <span class="n">data</span><span class="p">[</span><span class="s1">&#39;action_chunk_mask&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">action_chunk_mask</span>
+        <span class="k">return</span> <span class="n">data</span></div>
+</div>
+
+
+<div class="viewcode-block" id="ActionDrawFrameCallback">
+<a class="viewcode-back" href="../../../../../api/data/index.html#minestudio.data.minecraft.callbacks.action.ActionDrawFrameCallback">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ActionDrawFrameCallback</span><span class="p">(</span><span class="n">DrawFrameCallback</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Callback for drawing action information onto video frames.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_point</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the ActionDrawFrameCallback.</span>
+
+<span class="sd">        :param start_point: The (x, y) coordinates for the top-left starting point of the text overlay.</span>
+<span class="sd">        :type start_point: Tuple[int, int]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">start_point</span>
+
+<div class="viewcode-block" id="ActionDrawFrameCallback.draw_frames">
+<a class="viewcode-back" href="../../../../../api/data/index.html#minestudio.data.minecraft.callbacks.action.ActionDrawFrameCallback.draw_frames">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">draw_frames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frames</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">List</span><span class="p">],</span> <span class="n">infos</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">sample_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Draws action information onto each frame.</span>
+
+<span class="sd">        :param frames: A list of frames or a numpy array of frames.</span>
+<span class="sd">        :type frames: Union[np.ndarray, List]</span>
+<span class="sd">        :param infos: Dictionary containing action information.</span>
+<span class="sd">        :type infos: Dict</span>
+<span class="sd">        :param sample_idx: Index of the sample to process.</span>
+<span class="sd">        :type sample_idx: int</span>
+<span class="sd">        :returns: A list of frames with action information drawn on them.</span>
+<span class="sd">        :rtype: List[np.ndarray]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cache_frames</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">env_action</span> <span class="o">=</span> <span class="n">infos</span><span class="p">[</span><span class="s1">&#39;env_action&#39;</span><span class="p">]</span>
+        <span class="n">env_prev_action</span> <span class="o">=</span> <span class="n">infos</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;env_prev_action&#39;</span><span class="p">,</span> <span class="n">env_action</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">frame_idx</span><span class="p">,</span> <span class="n">frame</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">frames</span><span class="p">):</span>
+            <span class="n">frame</span> <span class="o">=</span> <span class="n">frame</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">act</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span><span class="p">[</span><span class="n">sample_idx</span><span class="p">][</span><span class="n">frame_idx</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">env_action</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+            <span class="n">prev_act</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span><span class="p">[</span><span class="n">sample_idx</span><span class="p">][</span><span class="n">frame_idx</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">env_prev_action</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+            <span class="n">current_row</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">),</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">pv</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">act</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">prev_act</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+                <span class="k">if</span> <span class="s1">&#39;hotbar&#39;</span> <span class="ow">in</span> <span class="n">k</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="s1">&#39;camera&#39;</span><span class="p">:</span>
+                    <span class="n">v</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+                    <span class="n">pv</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">pv</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">v</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">]&quot;</span>
+                    <span class="n">pv</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">pv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">pv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">]&quot;</span>
+                <span class="n">cv2</span><span class="o">.</span><span class="n">putText</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">pv</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="o">+</span><span class="mi">35</span><span class="o">+</span><span class="n">current_row</span><span class="o">*</span><span class="mi">15</span><span class="p">),</span> <span class="n">cv2</span><span class="o">.</span><span class="n">FONT_HERSHEY_SIMPLEX</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="n">current_row</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">cache_frames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cache_frames</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="ActionConvertCallback">
+<a class="viewcode-back" href="../../../../../api/data/index.html#minestudio.data.minecraft.callbacks.action.ActionConvertCallback">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ActionConvertCallback</span><span class="p">(</span><span class="n">ModalConvertCallback</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Callback for converting raw action data files.</span>
+
+<span class="sd">    This callback loads action data from .jsonl files, processes it, and converts it into a structured format.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+                 <span class="n">input_dirs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]],</span> 
+                 <span class="n">chunk_size</span><span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> 
+                 <span class="n">action_transformer_kwargs</span><span class="p">:</span> <span class="n">Dict</span><span class="o">=</span><span class="nb">dict</span><span class="p">(),</span>
+                 <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the ActionConvertCallback.</span>
+
+<span class="sd">        :param input_dirs: List of input directories containing action files.</span>
+<span class="sd">        :type input_dirs: List[Union[str, Path]]</span>
+<span class="sd">        :param chunk_size: Size of data chunks to process.</span>
+<span class="sd">        :type chunk_size: int</span>
+<span class="sd">        :param action_transformer_kwargs: Keyword arguments for the ActionTransformer.</span>
+<span class="sd">        :type action_transformer_kwargs: Dict</span>
+<span class="sd">        :param kwargs: Additional keyword arguments.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_dirs</span> <span class="o">=</span> <span class="n">input_dirs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">chunk_size</span> <span class="o">=</span> <span class="n">chunk_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">action_transformer_kwargs</span> <span class="o">=</span> <span class="n">action_transformer_kwargs</span>
+
+<div class="viewcode-block" id="ActionConvertCallback.load_episodes">
+<a class="viewcode-back" href="../../../../../api/data/index.html#minestudio.data.minecraft.callbacks.action.ActionConvertCallback.load_episodes">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">load_episodes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">OrderedDict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Loads episodes from input directories containing .jsonl action files.</span>
+
+<span class="sd">        It identifies episode segments from file names, sorts them, and organizes them into an OrderedDict.</span>
+
+<span class="sd">        :returns: An OrderedDict where keys are episode IDs and values are lists of segment file paths.</span>
+<span class="sd">        :rtype: OrderedDict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">CONTRACTOR_PATTERN</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;^(.*?)-(\d+)$&quot;</span>
+        <span class="n">episodes</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+        <span class="n">num_segments</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">source_dir</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_dirs</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Current input directory: &quot;</span><span class="p">,</span> <span class="n">source_dir</span><span class="p">)</span> <span class="c1"># action file ends with `.pkl`</span>
+            <span class="k">for</span> <span class="n">file_path</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">source_dir</span><span class="p">)</span><span class="o">.</span><span class="n">rglob</span><span class="p">(</span><span class="s2">&quot;*.pkl&quot;</span><span class="p">),</span> <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Looking for source files&quot;</span><span class="p">):</span>
+                <span class="n">file_name</span> <span class="o">=</span> <span class="n">file_path</span><span class="o">.</span><span class="n">stem</span>
+                <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">CONTRACTOR_PATTERN</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+                    <span class="n">eps</span><span class="p">,</span> <span class="n">part_id</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">eps</span><span class="p">,</span> <span class="n">part_id</span> <span class="o">=</span> <span class="n">file_name</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span>
+                <span class="k">if</span> <span class="n">eps</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">episodes</span><span class="p">:</span>
+                    <span class="n">episodes</span><span class="p">[</span><span class="n">eps</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">episodes</span><span class="p">[</span><span class="n">eps</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="p">(</span><span class="n">part_id</span><span class="p">,</span> <span class="n">file_path</span><span class="p">)</span> <span class="p">)</span>
+                <span class="n">num_segments</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="c1"># rank the segments in an accending order</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">episodes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">episodes</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="c1"># re-split episodes according to time</span>
+        <span class="n">new_episodes</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+        <span class="n">MAX_TIME</span> <span class="o">=</span> <span class="mi">1000</span>
+        <span class="k">for</span> <span class="n">eps</span><span class="p">,</span> <span class="n">segs</span> <span class="ow">in</span> <span class="n">episodes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">start_time</span> <span class="o">=</span> <span class="o">-</span><span class="n">MAX_TIME</span>
+            <span class="n">working_ord</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="k">for</span> <span class="n">part_id</span><span class="p">,</span> <span class="n">file_path</span> <span class="ow">in</span> <span class="n">segs</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">part_id</span><span class="p">)</span> <span class="o">-</span> <span class="n">start_time</span> <span class="o">&gt;=</span> <span class="n">MAX_TIME</span><span class="p">:</span>
+                    <span class="n">working_ord</span> <span class="o">=</span> <span class="n">part_id</span>
+                    <span class="n">new_episodes</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">eps</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">working_ord</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">start_time</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">part_id</span><span class="p">)</span>
+                <span class="n">new_episodes</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">eps</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">working_ord</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="p">(</span><span class="n">part_id</span><span class="p">,</span> <span class="n">file_path</span><span class="p">)</span> <span class="p">)</span>
+        <span class="n">episodes</span> <span class="o">=</span> <span class="n">new_episodes</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[Action] - num of episodes: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">episodes</span><span class="p">)</span><span class="si">}</span><span class="s1">, num of segments: </span><span class="si">{</span><span class="n">num_segments</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span> 
+        <span class="k">return</span> <span class="n">episodes</span></div>
+
+
+
+<div class="viewcode-block" id="ActionConvertCallback.do_convert">
+<a class="viewcode-back" href="../../../../../api/data/index.html#minestudio.data.minecraft.callbacks.action.ActionConvertCallback.do_convert">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">do_convert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+                   <span class="n">eps_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
+                   <span class="n">skip_frames</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">bool</span><span class="p">]],</span> 
+                   <span class="n">modal_file_path</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">,</span> <span class="n">List</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Converts action data for a given episode.</span>
+
+<span class="sd">        Processes actions from .jsonl files, applies transformations, and handles frame skipping and remapping.</span>
+
+<span class="sd">        :param eps_id: The ID of the episode.</span>
+<span class="sd">        :type eps_id: str</span>
+<span class="sd">        :param skip_frames: A list of lists of boolean flags indicating whether to skip frames.</span>
+<span class="sd">        :type skip_frames: List[List[bool]]</span>
+<span class="sd">        :param modal_file_path: A list of file paths for the modal data (action files).</span>
+<span class="sd">        :type modal_file_path: List[Union[str, Path]]</span>
+<span class="sd">        :returns: A tuple containing a list of keys (chunk start indices) and a list of pickled data values.</span>
+<span class="sd">        :rtype: Tuple[List, List]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cache</span><span class="p">,</span> <span class="n">keys</span><span class="p">,</span> <span class="n">vals</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">_skip_frames</span><span class="p">,</span> <span class="n">_modal_file_path</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">skip_frames</span><span class="p">,</span> <span class="n">modal_file_path</span><span class="p">):</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">_modal_file_path</span><span class="p">),</span> <span class="s1">&#39;rb&#39;</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">_skip_frames</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">_skip_frames</span> <span class="o">=</span> <span class="o">...</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cache</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">cache</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span><span class="p">[</span><span class="n">_skip_frames</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="n">cache</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">cache</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="n">_skip_frames</span><span class="p">]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">chunk_start</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">cache</span><span class="p">[</span><span class="s1">&#39;attack&#39;</span><span class="p">]),</span> <span class="bp">self</span><span class="o">.</span><span class="n">chunk_size</span><span class="p">):</span>
+            <span class="n">chunk_end</span> <span class="o">=</span> <span class="n">chunk_start</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">chunk_size</span>
+            <span class="k">if</span> <span class="n">chunk_end</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">cache</span><span class="p">[</span><span class="s1">&#39;attack&#39;</span><span class="p">]):</span>
+                <span class="k">break</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span><span class="p">[</span><span class="n">chunk_start</span><span class="p">:</span><span class="n">chunk_end</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">cache</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+            <span class="n">keys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">chunk_start</span><span class="p">)</span>
+            <span class="n">vals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">val</span><span class="p">))</span>
+        
+        <span class="k">return</span> <span class="n">keys</span><span class="p">,</span> <span class="n">vals</span></div>
+
+
+
+<div class="viewcode-block" id="ActionConvertCallback.gen_frame_skip_flags">
+<a class="viewcode-back" href="../../../../../api/data/index.html#minestudio.data.minecraft.callbacks.action.ActionConvertCallback.gen_frame_skip_flags">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">gen_frame_skip_flags</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">bool</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates frame skip flags based on action data to identify no-operation frames.</span>
+
+<span class="sd">        A frame is considered a no-op if the camera is static and all other actions are zero.</span>
+
+<span class="sd">        :param file_name: The name of the action file (without extension).</span>
+<span class="sd">        :type file_name: str</span>
+<span class="sd">        :returns: A list of boolean flags, where True indicates the frame should be kept (not a no-op).</span>
+<span class="sd">        :rtype: List[bool]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="nb">dir</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_dirs</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="nb">dir</span><span class="p">)</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">file_name</span><span class="si">}</span><span class="s2">.pkl&quot;</span>
+            <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+                <span class="k">break</span>
+        
+        <span class="k">def</span><span class="w"> </span><span class="nf">_check_no_op</span><span class="p">(</span><span class="n">action</span><span class="p">:</span> <span class="n">Dict</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">action</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;camera&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="mf">0.</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">True</span>
+            <span class="n">_sum</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">action</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">_sum</span> <span class="o">+=</span> <span class="n">val</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">_sum</span> <span class="o">!=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mf">0.</span><span class="p">)</span>
+        
+        <span class="n">skip_flags</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">action_pkl</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="n">traj_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">action_pkl</span><span class="p">[</span><span class="s1">&#39;attack&#39;</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">fid</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">traj_len</span><span class="p">):</span>
+                <span class="n">f_action</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">val</span><span class="p">[</span><span class="n">fid</span><span class="p">:</span><span class="n">fid</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">action_pkl</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+                <span class="n">no_op_flag</span> <span class="o">=</span> <span class="n">_check_no_op</span><span class="p">(</span><span class="n">f_action</span><span class="p">)</span>
+                <span class="n">skip_flags</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">no_op_flag</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">skip_flags</span></div>
+</div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    for debugging purpose</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">action_convert</span> <span class="o">=</span> <span class="n">ActionConvertCallback</span><span class="p">(</span>
+        <span class="n">input_dirs</span><span class="o">=</span><span class="p">[</span>
+            <span class="s2">&quot;/nfs-shared/data/contractors/all_9xx_Jun_29/actions&quot;</span>
+        <span class="p">],</span> 
+        <span class="n">chunk_size</span><span class="o">=</span><span class="mi">32</span>
+    <span class="p">)</span>
+    <span class="n">episodes</span> <span class="o">=</span> <span class="n">action_convert</span><span class="o">.</span><span class="n">load_episodes</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="n">eps</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">episodes</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">eps</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">idx</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="k">break</span>
+    
+    <span class="c1"># test gen_frame_skip_flags</span>
+    <span class="n">action_path</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">stem</span>
+    <span class="n">skip_flags</span> <span class="o">=</span> <span class="n">action_convert</span><span class="o">.</span><span class="n">gen_frame_skip_flags</span><span class="p">(</span><span class="n">action_path</span><span class="p">)</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">ipdb</span><span class="p">;</span> <span class="n">ipdb</span><span class="o">.</span><span class="n">set_trace</span><span class="p">()</span>
+
+
+</pre></div>
+<div class="section ablog__blog_comments">
+   
+</div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, The CraftJarvis Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

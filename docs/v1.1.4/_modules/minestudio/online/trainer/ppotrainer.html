@@ -1,0 +1,1291 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>minestudio.online.trainer.ppotrainer &#8212; MineStudio</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/thebelab.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=d6734ac8" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../_static/documentation_options.js?v=00f267c6"></script>
+    <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../_static/thebelab-helper.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/minestudio/online/trainer/ppotrainer';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://craftjarvis.github.io/MineStudio/_static/version.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'latest';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <script defer="defer" src="../../../../_static/custom-icons.js?v=26a3f3bc"></script>
+    <link rel="icon" href="../../../../_static/logo-no-text-light.svg"/>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />   
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../_static/logo-no-text-light.svg" class="logo__image only-light" alt=""/>
+    <img src="../../../../_static/logo-no-text-light.svg" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">MineStudio</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../overview/index.html">
+    Overview
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../overview/getting-started.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../simulator/index.html">
+    Simulator
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../data/index.html">
+    Data
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../models/index.html">
+    Models
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../offline/index.html">
+    Offline
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../online/index.html">
+    Online
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../../inference/index.html">
+    Inference
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../../benchmark/index.html">
+    Benchmark
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../../api/index.html">
+    API
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/CraftJarvis/MineStudio" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/minestudio" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-custom fa-pypi fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://arxiv.org/pdf/2411.18293" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-custom fa-arxiv fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">ArXiv</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+          
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../overview/index.html">
+    Overview
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../overview/getting-started.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../simulator/index.html">
+    Simulator
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../data/index.html">
+    Data
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../models/index.html">
+    Models
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../offline/index.html">
+    Offline
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../online/index.html">
+    Online
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../inference/index.html">
+    Inference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../benchmark/index.html">
+    Benchmark
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api/index.html">
+    API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/CraftJarvis/MineStudio" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/minestudio" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-custom fa-pypi fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://arxiv.org/pdf/2411.18293" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-custom fa-arxiv fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">ArXiv</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">minestudio.online.trainer.ppotrainer</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                   <h1>Source code for minestudio.online.trainer.ppotrainer</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">shutil</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn.functional</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">F</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">contextlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">nullcontext</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.online.utils.train.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">prepare_batch</span><span class="p">,</span> <span class="n">data_iter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.online.utils.rollout.datatypes</span><span class="w"> </span><span class="kn">import</span> <span class="n">FragmentIndex</span><span class="p">,</span> <span class="n">SampleFragment</span><span class="p">,</span> <span class="n">FragmentDataDict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.online.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">auto_slice</span><span class="p">,</span> <span class="n">recursive_detach</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">minestudio.online.utils.train.wandb_logger</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">wandb_logger</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinePolicy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinecraftSim</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ray</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ray.train.torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torchmetrics</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.online.trainer.basetrainer</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseTrainer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ray.experimental</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm_ray</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.online.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">auto_stack</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">uuid</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.distributed</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">dist</span>
+
+<span class="n">VERBOSE</span> <span class="o">=</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="print_memory_usage">
+<a class="viewcode-back" href="../../../../api/online/index.html#minestudio.online.trainer.ppotrainer.print_memory_usage">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">print_memory_usage</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Print current CUDA memory usage information.</span>
+<span class="sd">    </span>
+<span class="sd">    This function displays the allocated and reserved memory on the current CUDA device</span>
+<span class="sd">    in megabytes (MB). Useful for debugging memory issues during training.</span>
+<span class="sd">    </span>
+<span class="sd">    :returns: None (prints memory information to stdout)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">allocated</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">memory_allocated</span><span class="p">()</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1024</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">reserved</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">memory_reserved</span><span class="p">()</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1024</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Allocated memory: </span><span class="si">{</span><span class="n">allocated</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> MB&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Reserved memory: </span><span class="si">{</span><span class="n">reserved</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> MB&quot;</span><span class="p">)</span></div>
+
+    
+    
+<div class="viewcode-block" id="PPOTrainer">
+<a class="viewcode-back" href="../../../../api/online/index.html#minestudio.online.trainer.ppotrainer.PPOTrainer">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PPOTrainer</span><span class="p">(</span><span class="n">BaseTrainer</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Proximal Policy Optimization (PPO) trainer for reinforcement learning.</span>
+<span class="sd">    </span>
+<span class="sd">    This class implements the PPO algorithm for training policies in Minecraft environments.</span>
+<span class="sd">    It extends BaseTrainer and provides functionality for distributed training with Ray,</span>
+<span class="sd">    gradient accumulation, value function warmup, and various PPO-specific optimizations</span>
+<span class="sd">    including clipping, entropy bonuses, and KL divergence regularization.</span>
+<span class="sd">    </span>
+<span class="sd">    The trainer supports both policy and value function training with configurable</span>
+<span class="sd">    coefficients, learning rate annealing, and checkpoint saving capabilities.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+        <span class="n">num_iterations</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">learning_rate</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">anneal_lr_linearly</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+        <span class="n">weight_decay</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">adam_eps</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">batch_size_per_gpu</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">batches_per_iteration</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">gradient_accumulation</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">epochs_per_iteration</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">vf_warmup</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">ppo_clip</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">clip_vloss</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+        <span class="n">max_grad_norm</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">zero_initial_vf</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+        <span class="n">ppo_vf_coef</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">ppo_policy_coef</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">kl_divergence_coef_rho</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">entropy_bonus_coef</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">coef_rho_decay</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">normalize_advantage_full_batch</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+        <span class="n">record_video_interval</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">save_interval</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">save_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+        <span class="n">keep_interval</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">log_ratio_range</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">enable_ref_update</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">whole_config</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the PPO trainer with configuration parameters.</span>
+<span class="sd">        </span>
+<span class="sd">        :param num_iterations: Total number of training iterations to perform</span>
+<span class="sd">        :param learning_rate: Initial learning rate for the optimizer</span>
+<span class="sd">        :param anneal_lr_linearly: Whether to linearly anneal learning rate over training</span>
+<span class="sd">        :param weight_decay: Weight decay coefficient for AdamW optimizer</span>
+<span class="sd">        :param adam_eps: Epsilon parameter for AdamW optimizer numerical stability</span>
+<span class="sd">        :param batch_size_per_gpu: Number of fragments processed per GPU in each batch</span>
+<span class="sd">        :param batches_per_iteration: Number of batches processed per training iteration</span>
+<span class="sd">        :param gradient_accumulation: Number of batches to accumulate gradients over</span>
+<span class="sd">        :param epochs_per_iteration: Number of epochs to train on collected data per iteration</span>
+<span class="sd">        :param vf_warmup: Number of iterations to train only value function before policy</span>
+<span class="sd">        :param ppo_clip: Clipping parameter for PPO objective (typically 0.1-0.3)</span>
+<span class="sd">        :param clip_vloss: Whether to clip value function loss using PPO clipping</span>
+<span class="sd">        :param max_grad_norm: Maximum gradient norm for gradient clipping</span>
+<span class="sd">        :param zero_initial_vf: Whether to initialize value function weights to zero</span>
+<span class="sd">        :param ppo_vf_coef: Coefficient for value function loss in total loss</span>
+<span class="sd">        :param ppo_policy_coef: Coefficient for policy loss in total loss  </span>
+<span class="sd">        :param kl_divergence_coef_rho: Initial coefficient for KL divergence regularization</span>
+<span class="sd">        :param entropy_bonus_coef: Coefficient for entropy bonus in policy loss</span>
+<span class="sd">        :param coef_rho_decay: Decay factor for KL divergence coefficient per iteration</span>
+<span class="sd">        :param normalize_advantage_full_batch: Whether to normalize advantages across full batch</span>
+<span class="sd">        :param record_video_interval: Interval (in iterations) to record training videos</span>
+<span class="sd">        :param save_interval: Interval (in iterations) to save model checkpoints</span>
+<span class="sd">        :param save_path: Directory path to save checkpoints and logs</span>
+<span class="sd">        :param keep_interval: Interval to keep checkpoints (others are deleted)</span>
+<span class="sd">        :param log_ratio_range: Maximum allowed log probability ratio for stability</span>
+<span class="sd">        :param enable_ref_update: Whether to enable reference model updates</span>
+<span class="sd">        :param whole_config: Complete configuration string for saving with checkpoints</span>
+<span class="sd">        :param kwargs: Additional arguments passed to parent BaseTrainer class</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">inference_batch_size_per_gpu</span><span class="o">=</span><span class="n">batch_size_per_gpu</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        
+        <span class="n">wandb_logger</span><span class="o">.</span><span class="n">define_metric</span><span class="p">(</span><span class="s2">&quot;trainer/*&quot;</span><span class="p">,</span> <span class="n">step_metric</span><span class="o">=</span><span class="s2">&quot;trainer/env_steps_all_workers&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">vf_warmup</span> <span class="o">=</span> <span class="n">vf_warmup</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_iterations</span> <span class="o">=</span> <span class="n">num_iterations</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">batch_size_per_gpu</span> <span class="o">=</span> <span class="n">batch_size_per_gpu</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">batches_per_iteration</span> <span class="o">=</span> <span class="n">batches_per_iteration</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">epochs_per_iteration</span> <span class="o">=</span> <span class="n">epochs_per_iteration</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">zero_initial_vf</span> <span class="o">=</span> <span class="n">zero_initial_vf</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ppo_clip</span> <span class="o">=</span> <span class="n">ppo_clip</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ppo_vf_coef</span> <span class="o">=</span> <span class="n">ppo_vf_coef</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kl_divergence_coef_rho</span> <span class="o">=</span> <span class="n">kl_divergence_coef_rho</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">entropy_bonus_coef</span> <span class="o">=</span> <span class="n">entropy_bonus_coef</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coef_rho_decay</span> <span class="o">=</span> <span class="n">coef_rho_decay</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">normalize_advantage_full_batch</span> <span class="o">=</span> <span class="n">normalize_advantage_full_batch</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">=</span> <span class="n">learning_rate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weight_decay</span> <span class="o">=</span> <span class="n">weight_decay</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ppo_policy_coef</span> <span class="o">=</span> <span class="n">ppo_policy_coef</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">adam_eps</span> <span class="o">=</span> <span class="n">adam_eps</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_grad_norm</span> <span class="o">=</span> <span class="n">max_grad_norm</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gradient_accumulation</span> <span class="o">=</span> <span class="n">gradient_accumulation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">anneal_lr_linearly</span> <span class="o">=</span> <span class="n">anneal_lr_linearly</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clip_vloss</span> <span class="o">=</span> <span class="n">clip_vloss</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_ratio_range</span> <span class="o">=</span> <span class="n">log_ratio_range</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fragments_per_iteration</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_workers</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">batch_size_per_gpu</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">batches_per_iteration</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">record_video_interval</span> <span class="o">=</span> <span class="n">record_video_interval</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_interval</span> <span class="o">=</span> <span class="n">save_interval</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">keep_interval</span> <span class="o">=</span> <span class="n">keep_interval</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_path</span> <span class="o">=</span> <span class="n">save_path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">enable_ref_update</span> <span class="o">=</span> <span class="n">enable_ref_update</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">whole_config</span> <span class="o">=</span> <span class="n">whole_config</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">batches_per_iteration</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">gradient_accumulation</span> <span class="o">==</span> <span class="mi">0</span>
+
+<div class="viewcode-block" id="PPOTrainer.setup_model_and_optimizer">
+<a class="viewcode-back" href="../../../../api/online/index.html#minestudio.online.trainer.ppotrainer.PPOTrainer.setup_model_and_optimizer">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">setup_model_and_optimizer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">policy_generator</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">MinePolicy</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Optimizer</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set up the model and optimizer for PPO training.</span>
+<span class="sd">        </span>
+<span class="sd">        Creates the main policy model using the provided generator function and configures</span>
+<span class="sd">        an AdamW optimizer with the specified hyperparameters. Optionally initializes</span>
+<span class="sd">        value function weights to zero and sets up a reference model for KL divergence</span>
+<span class="sd">        regularization if enabled.</span>
+<span class="sd">        </span>
+<span class="sd">        :param policy_generator: Function that returns a new instance of the policy model</span>
+<span class="sd">        :returns: Tuple of (model, optimizer) ready for training</span>
+<span class="sd">        :raises AssertionError: If reference model setup fails when KL regularization is enabled</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+    
+        <span class="n">model</span> <span class="o">=</span> <span class="n">policy_generator</span><span class="p">()</span>
+        <span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">AdamW</span><span class="p">(</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span>
+            <span class="n">lr</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span><span class="p">,</span>
+            <span class="n">weight_decay</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">weight_decay</span><span class="p">,</span>
+            <span class="n">eps</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">adam_eps</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">zero_initial_vf</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">value_head</span><span class="o">.</span><span class="n">parameters</span><span class="p">():</span>
+                <span class="n">param</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">zero_</span><span class="p">()</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;ray&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Model prepared. Type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">model</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;basic_config&quot;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span>
+            <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span>
+            <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> </span><span class="si">%(levelname)s</span><span class="s1"> </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">,</span>
+            <span class="n">handlers</span><span class="o">=</span><span class="p">[</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">FileHandler</span><span class="p">(</span><span class="s2">&quot;ray.log&quot;</span><span class="p">),</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">()</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">kl_divergence_coef_rho</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ref_model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">policy_generator</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ref_model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">ray</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">torch</span><span class="o">.</span><span class="n">get_device</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ref_model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ref_model</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">model</span><span class="p">,</span> <span class="n">optimizer</span></div>
+
+    
+<div class="viewcode-block" id="PPOTrainer.train">
+<a class="viewcode-back" href="../../../../api/online/index.html#minestudio.online.trainer.ppotrainer.PPOTrainer.train">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Execute the main PPO training loop.</span>
+<span class="sd">        </span>
+<span class="sd">        Runs the complete training process for the specified number of iterations.</span>
+<span class="sd">        Each iteration involves collecting rollout data, computing advantages, and</span>
+<span class="sd">        performing PPO updates. Handles learning rate annealing, model broadcasting</span>
+<span class="sd">        to rollout workers, and checkpoint management.</span>
+<span class="sd">        </span>
+<span class="sd">        The method supports resuming from checkpoints by detecting current learning</span>
+<span class="sd">        rate and calculating the appropriate starting iteration. Includes distributed</span>
+<span class="sd">        training coordination and logging.</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_updates</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_reward</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_stamp</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">_%H-%M-%S&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">())</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Begining training....&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rank</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">last_log_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">trained_steps_all_workers</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">last_checkpoint_dir</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="n">current_lr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">param_groups</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;lr&quot;</span><span class="p">]</span>
+        <span class="c1">#patch of hkc</span>
+        <span class="k">if</span> <span class="n">current_lr</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span><span class="p">:</span>
+            <span class="n">current_lr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">&gt;</span><span class="mf">0.000000001</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">num_updates</span> <span class="o">=</span><span class="nb">int</span><span class="p">((</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">current_lr</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span><span class="p">)</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">num_iterations</span><span class="o">+</span><span class="mf">0.00001</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">num_updates</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kl_divergence_coef_rho</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kl_divergence_coef_rho</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coef_rho_decay</span> <span class="o">**</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_updates</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_updates</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_iterations</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[num_iters]: </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">anneal_lr_linearly</span><span class="p">:</span>
+                <span class="n">frac</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">i</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_iterations</span>
+                <span class="n">lrnow</span> <span class="o">=</span> <span class="n">frac</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">param_groups</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;lr&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lrnow</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">train_iteration</span><span class="p">()</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rank</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_updates</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">vf_warmup</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">broadcast_model_to_rollout_workers</span><span class="p">(</span><span class="n">new_version</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;ray&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Updated model in </span><span class="si">{</span><span class="n">end_time</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start_time</span><span class="si">}</span><span class="s2"> seconds.&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PPOTrainer.train_iteration">
+<a class="viewcode-back" href="../../../../api/online/index.html#minestudio.online.trainer.ppotrainer.PPOTrainer.train_iteration">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">train_iteration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Execute a single training iteration of the PPO algorithm.</span>
+<span class="sd">        </span>
+<span class="sd">        Performs one complete iteration consisting of:</span>
+<span class="sd">        1. Fetching trajectory fragments from rollout workers</span>
+<span class="sd">        2. Computing Generalized Advantage Estimation (GAE) </span>
+<span class="sd">        3. Performing PPO updates on the collected data</span>
+<span class="sd">        4. Decaying the KL divergence coefficient</span>
+<span class="sd">        </span>
+<span class="sd">        This method coordinates between data collection and policy optimization phases</span>
+<span class="sd">        of the PPO algorithm.</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">gae_results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch_fragments_and_estimate_advantages</span><span class="p">(</span>
+            <span class="n">num_fragments</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fragments_per_iteration</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ppo_update</span><span class="p">(</span>
+            <span class="n">records</span><span class="o">=</span><span class="n">gae_results</span><span class="p">[</span><span class="s2">&quot;records&quot;</span><span class="p">],</span>
+            <span class="n">td_targets</span><span class="o">=</span><span class="n">gae_results</span><span class="p">[</span><span class="s2">&quot;td_targets&quot;</span><span class="p">],</span>
+            <span class="n">advantages</span><span class="o">=</span><span class="n">gae_results</span><span class="p">[</span><span class="s2">&quot;advantages&quot;</span><span class="p">],</span>
+            <span class="n">old_logps</span><span class="o">=</span><span class="n">gae_results</span><span class="p">[</span><span class="s2">&quot;old_logps&quot;</span><span class="p">],</span>
+            <span class="n">old_vpreds</span><span class="o">=</span><span class="n">gae_results</span><span class="p">[</span><span class="s2">&quot;old_vpreds&quot;</span><span class="p">],</span>
+            <span class="n">rewards</span> <span class="o">=</span> <span class="n">gae_results</span><span class="p">[</span><span class="s2">&quot;rewards&quot;</span><span class="p">]</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">kl_divergence_coef_rho</span> <span class="o">*=</span> <span class="bp">self</span><span class="o">.</span><span class="n">coef_rho_decay</span></div>
+
+
+<div class="viewcode-block" id="PPOTrainer.ppo_update">
+<a class="viewcode-back" href="../../../../api/online/index.html#minestudio.online.trainer.ppotrainer.PPOTrainer.ppo_update">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">ppo_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                  <span class="n">records</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">FragmentIndex</span><span class="p">,</span> <span class="nb">str</span><span class="p">]],</span>
+                  <span class="n">td_targets</span><span class="p">:</span> <span class="n">FragmentDataDict</span><span class="p">,</span> 
+                  <span class="n">advantages</span><span class="p">:</span> <span class="n">FragmentDataDict</span><span class="p">,</span>
+                  <span class="n">old_logps</span><span class="p">:</span> <span class="n">FragmentDataDict</span><span class="p">,</span>
+                  <span class="n">old_vpreds</span><span class="p">:</span> <span class="n">FragmentDataDict</span><span class="p">,</span>
+                  <span class="n">rewards</span><span class="p">:</span> <span class="n">FragmentDataDict</span>
+                  <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform PPO policy and value function updates on collected trajectory data.</span>
+<span class="sd">        </span>
+<span class="sd">        Implements the core PPO algorithm including:</span>
+<span class="sd">        - Policy loss computation with probability ratio clipping</span>
+<span class="sd">        - Value function loss with optional clipping</span>
+<span class="sd">        - KL divergence regularization against reference policy</span>
+<span class="sd">        - Entropy bonus for exploration</span>
+<span class="sd">        - Advantage normalization and gradient accumulation</span>
+<span class="sd">        - Distributed training synchronization and error handling</span>
+<span class="sd">        </span>
+<span class="sd">        The method processes data in batches across multiple epochs, computing various</span>
+<span class="sd">        metrics and losses while handling numerical stability issues. Includes </span>
+<span class="sd">        checkpoint saving and performance logging.</span>
+<span class="sd">        </span>
+<span class="sd">        :param records: List of (fragment_index, worker_id) tuples identifying data fragments</span>
+<span class="sd">        :param td_targets: Temporal difference targets for value function training</span>
+<span class="sd">        :param advantages: Computed advantages for policy gradient estimation</span>
+<span class="sd">        :param old_logps: Log probabilities from the policy that collected the data</span>
+<span class="sd">        :param old_vpreds: Value predictions from the policy that collected the data  </span>
+<span class="sd">        :param rewards: Reward values from the trajectory fragments</span>
+<span class="sd">        :returns: None</span>
+<span class="sd">        :raises AssertionError: If reference model is None when KL regularization is enabled</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">buffer_reward</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">rewards</span><span class="o">.</span><span class="n">values</span><span class="p">())</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">rewards</span><span class="p">)</span>
+        <span class="n">mean_policy_loss</span> <span class="o">=</span> <span class="n">torchmetrics</span><span class="o">.</span><span class="n">MeanMetric</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">mean_kl_divergence_loss</span> <span class="o">=</span> <span class="n">torchmetrics</span><span class="o">.</span><span class="n">MeanMetric</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">mean_entropy_bonus</span> <span class="o">=</span> <span class="n">torchmetrics</span><span class="o">.</span><span class="n">MeanMetric</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">mean_value_loss</span> <span class="o">=</span> <span class="n">torchmetrics</span><span class="o">.</span><span class="n">MeanMetric</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">mean_total_loss</span> <span class="o">=</span> <span class="n">torchmetrics</span><span class="o">.</span><span class="n">MeanMetric</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">mean_approx_kl</span> <span class="o">=</span> <span class="n">torchmetrics</span><span class="o">.</span><span class="n">MeanMetric</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">mean_clip_fraction</span> <span class="o">=</span> <span class="n">torchmetrics</span><span class="o">.</span><span class="n">MeanMetric</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">mean_abs_td_target</span> <span class="o">=</span> <span class="n">torchmetrics</span><span class="o">.</span><span class="n">MeanMetric</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">mean_abs_advantage</span> <span class="o">=</span> <span class="n">torchmetrics</span><span class="o">.</span><span class="n">MeanMetric</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">explained_var_metric</span> <span class="o">=</span> <span class="n">torchmetrics</span><span class="o">.</span><span class="n">ExplainedVariance</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">VERBOSE</span><span class="p">:</span>
+            <span class="n">debug_metrics</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">debug_metric_names</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="s2">&quot;advantage_mean&quot;</span><span class="p">,</span> <span class="s2">&quot;advantage_max&quot;</span><span class="p">,</span> <span class="s2">&quot;advantage_min&quot;</span><span class="p">,</span> <span class="s2">&quot;advantage_std&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ratio_mean&quot;</span><span class="p">,</span> <span class="s2">&quot;ratio_max&quot;</span><span class="p">,</span> <span class="s2">&quot;ratio_min&quot;</span><span class="p">,</span> <span class="s2">&quot;ratio_std&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;entropy_mean&quot;</span><span class="p">,</span> <span class="s2">&quot;entropy_max&quot;</span><span class="p">,</span> <span class="s2">&quot;entropy_min&quot;</span><span class="p">,</span> <span class="s2">&quot;entropy_std&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;vf_pred_mean&quot;</span><span class="p">,</span> <span class="s2">&quot;vf_pred_max&quot;</span><span class="p">,</span> <span class="s2">&quot;vf_pred_min&quot;</span><span class="p">,</span> <span class="s2">&quot;vf_pred_std&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;log_p_mean&quot;</span><span class="p">,</span> <span class="s2">&quot;log_p_max&quot;</span><span class="p">,</span> <span class="s2">&quot;log_p_min&quot;</span><span class="p">,</span> <span class="s2">&quot;log_p_std&quot;</span><span class="p">,</span> <span class="s2">&quot;old_log_p_mean&quot;</span><span class="p">,</span> <span class="s2">&quot;old_log_p_max&quot;</span><span class="p">,</span> <span class="s2">&quot;old_log_p_min&quot;</span><span class="p">,</span> <span class="s2">&quot;old_log_p_std&quot;</span>
+            <span class="p">]</span>
+
+            <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">debug_metric_names</span><span class="p">:</span>
+                <span class="n">debug_metrics</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">torchmetrics</span><span class="o">.</span><span class="n">MeanMetric</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+
+        <span class="n">indexs</span> <span class="o">=</span> <span class="p">[</span><span class="n">index</span> <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">records</span><span class="p">]</span>
+
+        <span class="n">broken_num_lossnan</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">broken_num_kl</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="n">_advantage_sum1</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">_advantage_sum2</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">_advantage_count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">indexs</span><span class="p">:</span>
+            <span class="n">_advantage_sum1</span> <span class="o">+=</span> <span class="n">advantages</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+            <span class="n">_advantage_sum2</span> <span class="o">+=</span> <span class="p">(</span><span class="n">advantages</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+            <span class="n">_advantage_count</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">advantages</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">advantage_mean</span> <span class="o">=</span> <span class="n">_advantage_sum1</span> <span class="o">/</span> <span class="n">_advantage_count</span>
+        <span class="n">advantage_std</span> <span class="o">=</span> <span class="p">(</span><span class="n">_advantage_sum2</span> <span class="o">/</span> <span class="n">_advantage_count</span> <span class="o">-</span> <span class="n">advantage_mean</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span>
+
+        <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">empty_cache</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">epochs_per_iteration</span><span class="p">):</span>
+
+            <span class="n">it</span> <span class="o">=</span> <span class="n">data_iter</span><span class="p">(</span>
+                <span class="n">loader_pool</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">loader_pool</span><span class="p">,</span>
+                <span class="n">records</span><span class="o">=</span><span class="n">records</span><span class="p">,</span>
+                <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_size_per_gpu</span><span class="p">,</span>
+                <span class="n">prefetch_batches</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">prefetch_batches</span>
+            <span class="p">)</span>
+            
+            <span class="n">batch_count</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rank</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">it</span> <span class="o">=</span> <span class="n">tqdm_ray</span><span class="o">.</span><span class="n">tqdm</span><span class="p">(</span><span class="n">it</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;PPO update </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">num_updates</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2"> at epoch </span><span class="si">{</span><span class="n">epoch</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2"> / </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">epochs_per_iteration</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">records</span><span class="p">)</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">batch_size_per_gpu</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">_batch</span> <span class="ow">in</span> <span class="n">it</span><span class="p">:</span>
+                <span class="n">batch_fragments</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">SampleFragment</span><span class="p">]</span> <span class="o">=</span> <span class="n">_batch</span><span class="p">[</span><span class="s2">&quot;fragment&quot;</span><span class="p">]</span> <span class="c1"># type: ignore</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">fragment_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">batch_fragments</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">next_done</span><span class="p">)</span> <span class="c1"># TODO: replace this with a better way</span>
+
+                <span class="c1"># Prepare data</span>
+                <span class="n">batch</span> <span class="o">=</span> <span class="n">prepare_batch</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span><span class="p">,</span> <span class="n">batch_fragments</span><span class="p">)</span>
+                <span class="n">B</span><span class="p">,</span> <span class="n">T</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[</span><span class="s2">&quot;first&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span> <span class="c1">#obs state action first</span>
+                <span class="n">batch_count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                <span class="n">_old_logp</span> <span class="o">=</span> <span class="n">old_logps</span><span class="o">.</span><span class="n">format_batch</span><span class="p">(</span><span class="n">batch_fragments</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+                <span class="n">_advantage</span> <span class="o">=</span> <span class="n">advantages</span><span class="o">.</span><span class="n">format_batch</span><span class="p">(</span><span class="n">batch_fragments</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+                <span class="n">_old_vpred</span> <span class="o">=</span> <span class="n">old_vpreds</span><span class="o">.</span><span class="n">format_batch</span><span class="p">(</span><span class="n">batch_fragments</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+                <span class="n">_td_target</span> <span class="o">=</span> <span class="n">td_targets</span><span class="o">.</span><span class="n">format_batch</span><span class="p">(</span><span class="n">batch_fragments</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">normalize_advantage_full_batch</span><span class="p">:</span>
+                    <span class="n">_advantage</span> <span class="o">=</span> <span class="p">(</span><span class="n">_advantage</span> <span class="o">-</span> <span class="n">advantage_mean</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">advantage_std</span> <span class="o">+</span> <span class="mf">1e-8</span><span class="p">)</span>
+
+                <span class="n">new_state</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[</span><span class="s2">&quot;state&quot;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">kl_divergence_coef_rho</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">ref_model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                    <span class="n">new_ref_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ref_model</span><span class="o">.</span><span class="n">initial_state</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+                
+                <span class="c1"># Train</span>
+                <span class="n">first_backward</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">for</span> <span class="n">start</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">context_length</span><span class="p">):</span>
+                    <span class="n">end</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">start</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">context_length</span><span class="p">)</span>
+                    
+                    <span class="c1">#hack: This may need model-specific processing</span>
+                    <span class="n">chunk_obs</span> <span class="o">=</span> <span class="n">auto_slice</span><span class="p">(</span><span class="n">batch</span><span class="p">[</span><span class="s2">&quot;obs&quot;</span><span class="p">],</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">type_list</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                    <span class="n">chunk_first</span> <span class="o">=</span> <span class="n">auto_slice</span><span class="p">(</span><span class="n">batch</span><span class="p">[</span><span class="s2">&quot;first&quot;</span><span class="p">],</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">type_list</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                    <span class="n">chunk_action</span> <span class="o">=</span> <span class="n">auto_slice</span><span class="p">(</span><span class="n">batch</span><span class="p">[</span><span class="s2">&quot;action&quot;</span><span class="p">],</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">type_list</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    
+                    <span class="n">old_logp</span> <span class="o">=</span> <span class="n">auto_slice</span><span class="p">(</span><span class="n">_old_logp</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                    <span class="n">advantage</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span> <span class="o">=</span> <span class="n">auto_slice</span><span class="p">(</span><span class="n">_advantage</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># type: ignore</span>
+                    <span class="n">old_vpred</span> <span class="o">=</span> <span class="n">auto_slice</span><span class="p">(</span><span class="n">_old_vpred</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                    <span class="n">td_target</span> <span class="o">=</span> <span class="n">auto_slice</span><span class="p">(</span><span class="n">_td_target</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+                    <span class="n">loss_weight</span> <span class="o">=</span> <span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span> <span class="o">/</span> <span class="n">T</span>
+                    
+                    <span class="n">context</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">no_sync</span><span class="p">()</span> <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">parallel</span><span class="o">.</span><span class="n">DistributedDataParallel</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">batch_count</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">gradient_accumulation</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">end</span> <span class="o">&lt;</span> <span class="n">T</span><span class="p">))</span> <span class="k">else</span> <span class="n">nullcontext</span><span class="p">()</span>
+                    <span class="k">with</span> <span class="n">context</span><span class="p">:</span>
+                        <span class="n">forward_result</span><span class="p">,</span> <span class="n">new_state</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">chunk_obs</span><span class="p">,</span> <span class="n">state_in</span><span class="o">=</span><span class="n">new_state</span><span class="p">,</span> <span class="n">context</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;first&quot;</span><span class="p">:</span> <span class="n">chunk_first</span><span class="p">})</span><span class="c1">#, train_iter = str(self.num_updates))#, train_iter = uuid.uuid1().hex)#, train_iters = 2*self.num_optimized)</span>
+                        <span class="n">new_state</span> <span class="o">=</span> <span class="n">recursive_detach</span><span class="p">(</span><span class="n">new_state</span><span class="p">)</span>
+                        <span class="n">pi_logits</span> <span class="o">=</span> <span class="n">forward_result</span><span class="p">[</span><span class="s2">&quot;pi_logits&quot;</span><span class="p">]</span>
+
+                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">kl_divergence_coef_rho</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                            <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">inference_mode</span><span class="p">():</span><span class="c1">#torch.inference_mode</span>
+                                <span class="n">ref_forward_result</span><span class="p">,</span> <span class="n">new_ref_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ref_model</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">chunk_obs</span><span class="p">,</span> <span class="n">state_in</span><span class="o">=</span><span class="n">new_ref_state</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;first&quot;</span><span class="p">:</span><span class="n">chunk_first</span><span class="p">})</span><span class="c1">#, train_iter = str(self.num_updates))#, train_iter = uuid.uuid1().hex)#), train_iters = 2*self.num_optimized+1) # type: ignore</span>
+                                <span class="n">ref_pi_logit</span> <span class="o">=</span> <span class="n">ref_forward_result</span><span class="p">[</span><span class="s2">&quot;pi_logits&quot;</span><span class="p">]</span>
+                            <span class="n">epsilon</span> <span class="o">=</span> <span class="mf">1e-8</span>
+                            <span class="c1">#print(&quot;pi_logits_sum_1&quot;, torch.exp(pi_logits[&#39;buttons&#39;]).sum(dim = -1))</span>
+                            <span class="c1"># kl_divergence_loss = self.inner_model.pi_head.kl_divergence({key: (ref_pi_logit[key]+epsilon) for key in ref_pi_logit}, {key:(pi_logits[key]+epsilon) for key in pi_logits}).mean() # TODO: kl(p, q) or kl(q, p) ?</span>
+                            <span class="n">kl_divergence_loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span><span class="o">.</span><span class="n">pi_head</span><span class="o">.</span><span class="n">kl_divergence</span><span class="p">({</span><span class="n">key</span><span class="p">:(</span><span class="n">pi_logits</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">+</span><span class="n">epsilon</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">pi_logits</span><span class="p">},</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="p">(</span><span class="n">ref_pi_logit</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">+</span><span class="n">epsilon</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">ref_pi_logit</span><span class="p">})</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="c1"># TODO: kl(p, q) or kl(q, p) ?</span>
+                            <span class="k">if</span> <span class="n">kl_divergence_loss</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mf">0.1</span><span class="p">:</span>
+                                <span class="n">ray</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">pdb</span><span class="o">.</span><span class="n">set_trace</span><span class="p">()</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">kl_divergence_loss</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+                        
+                        <span class="n">new_logp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span><span class="o">.</span><span class="n">pi_head</span><span class="o">.</span><span class="n">logprob</span><span class="p">(</span><span class="n">chunk_action</span><span class="p">,</span> <span class="n">pi_logits</span><span class="p">)</span> 
+
+                        <span class="c1"># !FIX:Clamp new_logp where advantage is negative</span>
+                        <span class="n">condition</span> <span class="o">=</span> <span class="n">advantage</span> <span class="o">&lt;</span> <span class="mi">0</span>
+                        <span class="n">new_logp</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">condition</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="n">new_logp</span><span class="p">,</span> <span class="nb">min</span><span class="o">=-</span><span class="mf">11.0</span><span class="p">),</span> <span class="n">new_logp</span><span class="p">)</span>
+
+                        <span class="n">log_ratio</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="n">new_logp</span> <span class="o">-</span> <span class="n">old_logp</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">log_ratio_range</span><span class="p">)</span>
+                        <span class="n">ratio</span> <span class="o">=</span> <span class="n">log_ratio</span><span class="o">.</span><span class="n">exp</span><span class="p">()</span>
+
+                        <span class="c1">#patch of hkc</span>
+                        <span class="n">approx_kl</span> <span class="o">=</span> <span class="p">((</span><span class="n">ratio</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-</span> <span class="n">log_ratio</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+                        <span class="n">approx_kl_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="n">approx_kl</span><span class="p">],</span> <span class="n">device</span><span class="o">=</span><span class="s1">&#39;cuda&#39;</span><span class="p">)</span>
+                        <span class="n">dist</span><span class="o">.</span><span class="n">all_reduce</span><span class="p">(</span><span class="n">approx_kl_tensor</span><span class="p">,</span> <span class="n">op</span><span class="o">=</span><span class="n">dist</span><span class="o">.</span><span class="n">ReduceOp</span><span class="o">.</span><span class="n">MAX</span><span class="p">)</span>  <span class="c1"># 获取所有进程中的最大 approx_kl</span>
+                        <span class="k">if</span> <span class="n">approx_kl_tensor</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>
+                            <span class="n">broken_num_kl</span> <span class="o">+=</span> <span class="mi">1</span>
+                            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;too high kl&quot;</span><span class="p">)</span>
+                            <span class="c1"># break</span>
+
+                        <span class="n">_policy_loss1</span> <span class="o">=</span> <span class="o">-</span> <span class="n">advantage</span> <span class="o">*</span> <span class="n">ratio</span>
+                        <span class="n">_policy_loss2</span> <span class="o">=</span> <span class="o">-</span> <span class="n">advantage</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="n">ratio</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">ppo_clip</span><span class="p">,</span> <span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">ppo_clip</span><span class="p">)</span>
+                        <span class="n">policy_loss</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">_policy_loss1</span><span class="p">,</span> <span class="n">_policy_loss2</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+                        <span class="n">vpred</span> <span class="o">=</span> <span class="n">forward_result</span><span class="p">[</span><span class="s2">&quot;vpred&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span>
+                        <span class="c1">#vpred = vpred.reshape(B, end-start)</span>
+                        
+                        <span class="c1"># TODO: should we halve the value loss?</span>
+                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_normalized_vf</span><span class="p">:</span>
+                            <span class="n">vf_loss_func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">vpred</span><span class="p">,</span> <span class="n">td_target</span><span class="p">:</span> <span class="p">(</span>
+                                <span class="mf">0.5</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span><span class="o">.</span><span class="n">value_head</span><span class="o">.</span><span class="n">loss</span><span class="p">(</span><span class="n">vpred</span><span class="p">,</span> <span class="n">td_target</span><span class="p">,</span> <span class="n">reduction</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">)</span> <span class="c1"># type: ignore</span>
+                            <span class="p">)</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">vf_loss_func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">vpred</span><span class="p">,</span> <span class="n">td_target</span><span class="p">:</span> <span class="p">(</span>
+                                <span class="mf">0.5</span> <span class="o">*</span> <span class="n">F</span><span class="o">.</span><span class="n">mse_loss</span><span class="p">(</span><span class="n">vpred</span><span class="p">,</span> <span class="n">td_target</span><span class="p">,</span> <span class="n">reduction</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">)</span>
+                            <span class="p">)</span>
+
+                        <span class="n">vf_loss_BT</span> <span class="o">=</span> <span class="n">vf_loss_func</span><span class="p">(</span><span class="n">vpred</span><span class="p">,</span> <span class="n">td_target</span><span class="p">)</span>
+
+                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">clip_vloss</span><span class="p">:</span>
+                            <span class="n">vpred_clipped</span> <span class="o">=</span> <span class="n">old_vpred</span> <span class="o">+</span> <span class="n">torch</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span>
+                                <span class="n">vpred</span> <span class="o">-</span> <span class="n">old_vpred</span><span class="p">,</span>
+                                <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">ppo_clip</span><span class="p">,</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">ppo_clip</span><span class="p">,</span>
+                            <span class="p">)</span>
+                            <span class="n">vf_loss_clipped_BT</span> <span class="o">=</span> <span class="n">vf_loss_func</span><span class="p">(</span><span class="n">vpred_clipped</span><span class="p">,</span> <span class="n">td_target</span><span class="p">)</span>
+                            <span class="n">vf_loss_BT</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">vf_loss_BT</span><span class="p">,</span> <span class="n">vf_loss_clipped_BT</span><span class="p">)</span>
+                        
+                        <span class="n">vf_loss</span> <span class="o">=</span> <span class="n">vf_loss_BT</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+                        
+                        <span class="n">entropy_bonus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span><span class="o">.</span><span class="n">pi_head</span><span class="o">.</span><span class="n">entropy</span><span class="p">(</span><span class="n">pi_logits</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_updates</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">vf_warmup</span><span class="p">:</span>
+                            <span class="n">total_loss</span> <span class="o">=</span> <span class="p">(</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">ppo_vf_coef</span> <span class="o">*</span> <span class="n">vf_loss</span> <span class="o">+</span> 
+                                <span class="mf">1.0</span> <span class="o">*</span> <span class="n">kl_divergence_loss</span>
+                            <span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">gradient_accumulation</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">total_loss</span> <span class="o">=</span> <span class="p">(</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">ppo_policy_coef</span> <span class="o">*</span> <span class="n">policy_loss</span> <span class="o">+</span> 
+                                <span class="bp">self</span><span class="o">.</span><span class="n">kl_divergence_coef_rho</span> <span class="o">*</span> <span class="n">kl_divergence_loss</span> <span class="o">+</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">ppo_vf_coef</span> <span class="o">*</span> <span class="n">vf_loss</span>
+                                <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">entropy_bonus_coef</span> <span class="o">*</span> <span class="n">entropy_bonus</span>
+                            <span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">gradient_accumulation</span>
+
+                        <span class="n">total_loss</span> <span class="o">*=</span> <span class="n">loss_weight</span>
+                        <span class="c1"># assert not torch.isnan(total_loss)</span>
+
+                        <span class="c1"># 假设 loss 是你的损失值</span>
+                        <span class="n">loss_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="n">total_loss</span><span class="o">.</span><span class="n">item</span><span class="p">()],</span> <span class="n">device</span><span class="o">=</span><span class="s1">&#39;cuda&#39;</span><span class="p">)</span>
+                        <span class="n">is_nan</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">loss_tensor</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+                        <span class="n">dist</span><span class="o">.</span><span class="n">all_reduce</span><span class="p">(</span><span class="n">is_nan</span><span class="p">,</span> <span class="n">op</span><span class="o">=</span><span class="n">dist</span><span class="o">.</span><span class="n">ReduceOp</span><span class="o">.</span><span class="n">SUM</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">is_nan</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                            <span class="n">broken_num_lossnan</span> <span class="o">+=</span> <span class="mi">1</span>
+                            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;loss nan&quot;</span><span class="p">)</span>
+                            <span class="k">break</span>
+
+                        <span class="n">total_loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+
+                        <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+                            <span class="n">approx_kl</span> <span class="o">=</span> <span class="p">((</span><span class="n">ratio</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-</span> <span class="n">log_ratio</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+                            <span class="k">if</span> <span class="n">approx_kl</span> <span class="o">&gt;</span> <span class="mi">100000</span><span class="p">:</span>
+                                <span class="n">ray</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">pdb</span><span class="o">.</span><span class="n">set_trace</span><span class="p">()</span>
+                            <span class="n">mean_approx_kl</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">approx_kl</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+                            <span class="n">clipfrac</span> <span class="o">=</span> <span class="p">((</span><span class="n">ratio</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">ppo_clip</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+                            <span class="n">mean_clip_fraction</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">clipfrac</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+                            <span class="n">mean_policy_loss</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">policy_loss</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span> <span class="c1"># .detach() is necessary here</span>
+                            <span class="n">mean_kl_divergence_loss</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kl_divergence_loss</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+                            <span class="n">mean_value_loss</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">vf_loss</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+                            <span class="n">mean_entropy_bonus</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">entropy_bonus</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+                            <span class="n">mean_total_loss</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">total_loss</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+
+                            <span class="k">if</span> <span class="n">VERBOSE</span><span class="p">:</span>
+                                <span class="n">current_entropy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span><span class="o">.</span><span class="n">pi_head</span><span class="o">.</span><span class="n">entropy</span><span class="p">(</span><span class="n">pi_logits</span><span class="p">)</span>
+                                <span class="n">current_vpred</span> <span class="o">=</span> <span class="n">forward_result</span><span class="p">[</span><span class="s2">&quot;vpred&quot;</span><span class="p">]</span>
+                                
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;advantage_mean&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">advantage</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;advantage_max&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">advantage</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;advantage_min&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">advantage</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;advantage_std&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">advantage</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+                                
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;ratio_mean&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">ratio</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;ratio_max&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">ratio</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;ratio_min&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">ratio</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;ratio_std&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">ratio</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;entropy_mean&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">current_entropy</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;entropy_max&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">current_entropy</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;entropy_min&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">current_entropy</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;entropy_std&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">current_entropy</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;vf_pred_mean&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">current_vpred</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;vf_pred_max&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">current_vpred</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;vf_pred_min&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">current_vpred</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;vf_pred_std&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">current_vpred</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;log_p_mean&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_logp</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;log_p_max&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_logp</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;log_p_min&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_logp</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;log_p_std&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_logp</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;old_log_p_mean&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">old_logp</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;old_log_p_max&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">old_logp</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;old_log_p_min&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">old_logp</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+                                <span class="n">debug_metrics</span><span class="p">[</span><span class="s2">&quot;old_log_p_std&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">old_logp</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+
+                            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_normalized_vf</span><span class="p">:</span>
+                                <span class="n">vpred_denormalized</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span><span class="o">.</span><span class="n">value_head</span><span class="o">.</span><span class="n">denormalize</span><span class="p">(</span><span class="n">vpred</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span> <span class="c1"># type: ignore</span>
+                                <span class="n">explained_var_metric</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">vpred_denormalized</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">td_target</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="c1"># TODO: weight?</span>
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="n">explained_var_metric</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">vpred</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">td_target</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+
+                            <span class="n">mean_abs_td_target</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">td_target</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+                            <span class="n">mean_abs_advantage</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">advantage</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">weight</span><span class="o">=</span><span class="n">loss_weight</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">batch_count</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">gradient_accumulation</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">clip_grad</span><span class="o">.</span><span class="n">clip_grad_norm_</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_grad_norm</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+
+        <span class="n">mean_kl_divergence_loss_item</span> <span class="o">=</span> <span class="n">mean_kl_divergence_loss</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+        <span class="n">info</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;trainer/policy_loss&quot;</span><span class="p">:</span> <span class="n">mean_policy_loss</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span>
+            <span class="s2">&quot;trainer/kl_divergence_loss&quot;</span><span class="p">:</span> <span class="n">mean_kl_divergence_loss_item</span><span class="p">,</span>
+            <span class="s2">&quot;trainer/entropy_bonus&quot;</span><span class="p">:</span> <span class="n">mean_entropy_bonus</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span>
+            <span class="s2">&quot;trainer/value_loss&quot;</span><span class="p">:</span> <span class="n">mean_value_loss</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span>
+            <span class="s2">&quot;trainer/total_loss&quot;</span><span class="p">:</span> <span class="n">mean_total_loss</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span>
+            <span class="s2">&quot;trainer/approx_kl&quot;</span><span class="p">:</span> <span class="n">mean_approx_kl</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span>
+            <span class="s2">&quot;trainer/clip_fraction&quot;</span><span class="p">:</span> <span class="n">mean_clip_fraction</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span>
+            <span class="s2">&quot;trainer/learning_rate&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">param_groups</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;lr&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;trainer/rho&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">kl_divergence_coef_rho</span><span class="p">,</span>
+            <span class="s2">&quot;trainer/explained_var&quot;</span><span class="p">:</span> <span class="n">explained_var_metric</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span> <span class="c1"># type: ignore</span>
+            <span class="s2">&quot;trainer/abs_advantage&quot;</span><span class="p">:</span> <span class="n">mean_abs_advantage</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span>
+            <span class="s2">&quot;trainer/abs_td_target&quot;</span><span class="p">:</span> <span class="n">mean_abs_td_target</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span>
+            <span class="c1"># &quot;trainer/ref_version&quot;: self.ref_version,</span>
+            <span class="s2">&quot;trainer/broken_num_lossnan&quot;</span><span class="p">:</span> <span class="n">broken_num_lossnan</span><span class="p">,</span>
+            <span class="s2">&quot;trainer/broken_num_kl&quot;</span><span class="p">:</span> <span class="n">broken_num_kl</span><span class="p">,</span>
+            <span class="s2">&quot;trainer/buffer_reward&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffer_reward</span><span class="p">,</span>
+            <span class="c1">#&quot;trainer/max_bonus&quot;: torch.max(torch.abs(self.inner_model.policy.net.zv_bonus)).item(),</span>
+        <span class="p">}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_updates</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rank</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_updates</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_interval</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="c1"># TODO: this may cause problem in distributed training</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;ray&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Saving checkpoint at update count </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">num_updates</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+                
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_path</span><span class="p">:</span>
+                    <span class="n">checkpoint_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_path</span><span class="p">)</span> <span class="o">/</span> <span class="s1">&#39;checkpoints&#39;</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_stamp</span> <span class="o">/</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_updates</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">checkpoint_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;checkpoints&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_stamp</span> <span class="o">/</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_updates</span><span class="p">)</span>
+
+                <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;ray&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Checkpoint dir: </span><span class="si">{</span><span class="n">checkpoint_dir</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">checkpoint_dir</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+                    <span class="n">checkpoint_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+                <span class="c1">#save model</span>
+                <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span> <span class="nb">str</span><span class="p">(</span><span class="n">checkpoint_dir</span> <span class="o">/</span> <span class="s2">&quot;model.ckpt&quot;</span><span class="p">))</span>
+                <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span> <span class="nb">str</span><span class="p">(</span><span class="n">checkpoint_dir</span> <span class="o">/</span> <span class="s2">&quot;optimizer.ckpt&quot;</span><span class="p">))</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">checkpoint_dir</span> <span class="o">/</span> <span class="s2">&quot;whole_config.py&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">whole_config</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">last_checkpoint_dir</span>
+                    <span class="ow">and</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_updates</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_interval</span><span class="p">)</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">keep_interval</span> <span class="o">!=</span> <span class="mi">0</span>
+                <span class="p">):</span>
+                    <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">last_checkpoint_dir</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">last_checkpoint_dir</span> <span class="o">=</span> <span class="n">checkpoint_dir</span>
+
+            <span class="c1">#send signal to record video</span>
+            <span class="n">SPS_all_workers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fragments_per_iteration</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">fragment_length</span> <span class="o">/</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_log_time</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">trained_steps_all_workers</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fragments_per_iteration</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">fragment_length</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">last_log_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">info</span><span class="p">[</span><span class="s2">&quot;trainer/env_SPS_all_workers&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">SPS_all_workers</span>
+            <span class="n">info</span><span class="p">[</span><span class="s2">&quot;trainer/env_steps_all_workers&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">trained_steps_all_workers</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;I have send signal to manager: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_updates</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">record_video_interval</span> <span class="o">==</span> <span class="mi">0</span><span class="p">))</span>
+            <span class="n">ray</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rollout_manager</span><span class="o">.</span><span class="n">log_statistics</span><span class="o">.</span><span class="n">remote</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trained_steps_all_workers</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_updates</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">record_video_interval</span> <span class="o">==</span> <span class="mi">0</span><span class="p">))</span>
+            <span class="n">wandb_logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">info</span><span class="p">)</span></div>
+</div>
+
+            
+</pre></div>
+<div class="section ablog__blog_comments">
+   
+</div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, The CraftJarvis Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

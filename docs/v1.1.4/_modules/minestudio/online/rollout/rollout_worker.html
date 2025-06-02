@@ -1,0 +1,1117 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>minestudio.online.rollout.rollout_worker &#8212; MineStudio</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/thebelab.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=d6734ac8" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../_static/documentation_options.js?v=00f267c6"></script>
+    <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../_static/thebelab-helper.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/minestudio/online/rollout/rollout_worker';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://craftjarvis.github.io/MineStudio/_static/version.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'latest';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <script defer="defer" src="../../../../_static/custom-icons.js?v=26a3f3bc"></script>
+    <link rel="icon" href="../../../../_static/logo-no-text-light.svg"/>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />   
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../_static/logo-no-text-light.svg" class="logo__image only-light" alt=""/>
+    <img src="../../../../_static/logo-no-text-light.svg" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">MineStudio</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../overview/index.html">
+    Overview
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../overview/getting-started.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../simulator/index.html">
+    Simulator
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../data/index.html">
+    Data
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../models/index.html">
+    Models
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../offline/index.html">
+    Offline
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../online/index.html">
+    Online
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../../inference/index.html">
+    Inference
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../../benchmark/index.html">
+    Benchmark
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../../api/index.html">
+    API
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/CraftJarvis/MineStudio" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/minestudio" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-custom fa-pypi fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://arxiv.org/pdf/2411.18293" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-custom fa-arxiv fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">ArXiv</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+          
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../overview/index.html">
+    Overview
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../overview/getting-started.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../simulator/index.html">
+    Simulator
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../data/index.html">
+    Data
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../models/index.html">
+    Models
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../offline/index.html">
+    Offline
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../online/index.html">
+    Online
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../inference/index.html">
+    Inference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../benchmark/index.html">
+    Benchmark
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api/index.html">
+    API
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/CraftJarvis/MineStudio" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/minestudio" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-custom fa-pypi fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://arxiv.org/pdf/2411.18293" title="ArXiv" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-custom fa-arxiv fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">ArXiv</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">minestudio.online.rollout.rollout_worker</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                   <h1>Source code for minestudio.online.rollout.rollout_worker</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">uuid</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.multiprocessing</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mp</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ray</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">multiprocessing.connection</span><span class="w"> </span><span class="kn">import</span> <span class="n">Connection</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">rich</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.online.rollout.env_worker</span><span class="w"> </span><span class="kn">import</span> <span class="n">EnvWorker</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Protocol</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Dict</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinePolicy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinecraftSim</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ray.actor</span><span class="w"> </span><span class="kn">import</span> <span class="n">ActorHandle</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.online.utils.rollout.monitor</span><span class="w"> </span><span class="kn">import</span> <span class="n">PipelineMonitor</span><span class="p">,</span> <span class="n">MovingStat</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.online.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">auto_stack</span><span class="p">,</span> <span class="n">auto_to_torch</span><span class="p">,</span> <span class="n">auto_to_numpy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.online.utils.rollout.datatypes</span><span class="w"> </span><span class="kn">import</span> <span class="n">StepRecord</span>
+
+<div class="viewcode-block" id="ProgressHandler">
+<a class="viewcode-back" href="../../../../api/online/index.html#minestudio.online.rollout.rollout_worker.ProgressHandler">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ProgressHandler</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A protocol defining the structure for a progress handler function.</span>
+
+<span class="sd">    This handler is called by the RolloutWorker to report step-wise progress.</span>
+<span class="sd">    Implementers of this protocol can use this to, for example, send data to a replay buffer.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span>
+        <span class="n">worker_uuid</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">obs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+        <span class="n">state</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">],</span>
+        <span class="n">action</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+        <span class="n">last_reward</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">last_terminated</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+        <span class="n">last_truncated</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+        <span class="n">episode_uuid</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span> <span class="o">...</span></div>
+
+
+<div class="viewcode-block" id="RolloutWorker">
+<a class="viewcode-back" href="../../../../api/online/index.html#minestudio.online.rollout.rollout_worker.RolloutWorker">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">RolloutWorker</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Manages a set of environments and a policy to collect experience for reinforcement learning.</span>
+
+<span class="sd">    This class is responsible for:</span>
+<span class="sd">    - Spawning and managing multiple environment worker processes (EnvWorker).</span>
+<span class="sd">    - Performing inference using the policy model.</span>
+<span class="sd">    - Stepping through the environments and collecting observations, actions, rewards, etc.</span>
+<span class="sd">    - Communicating with an EpisodeStatistics actor to report episode-level metrics.</span>
+<span class="sd">    - Optionally calling a progress_handler to process step-wise data (e.g., for a replay buffer).</span>
+
+<span class="sd">    :param num_envs: The number of parallel environments to run.</span>
+<span class="sd">    :param policy_generator: A callable that returns an instance of MinePolicy (the policy model).</span>
+<span class="sd">    :param env_generator: A callable that returns an instance of MinecraftSim (the environment).</span>
+<span class="sd">    :param use_normalized_vf: Whether to use a normalized value function. If True, vpreds will be denormalized.</span>
+<span class="sd">    :param model_device: The device to run the policy model on (e.g., &quot;cpu&quot;, &quot;cuda:0&quot;).</span>
+<span class="sd">    :param next_model_version: The initial version of the model.</span>
+<span class="sd">    :param batch_size: The number of environment steps to batch together for inference.</span>
+<span class="sd">    :param video_fps: Frames per second for video recording in EnvWorker.</span>
+<span class="sd">    :param video_output_dir: Directory to save videos in EnvWorker.</span>
+<span class="sd">    :param resume: Optional path to a checkpoint to resume training from.</span>
+<span class="sd">    :param restart_interval: Optional interval in seconds after which to restart EnvWorkers.</span>
+<span class="sd">    :param moving_stat_duration: Duration in seconds for calculating moving statistics (e.g., for pipeline monitoring).</span>
+<span class="sd">    :param log_interval: Optional interval in seconds for logging pipeline monitoring stats.</span>
+<span class="sd">    :param episode_statistics: Optional Ray ActorHandle for an EpisodeStatistics actor.</span>
+<span class="sd">    :param progress_handler: Optional callable that conforms to the ProgressHandler protocol.</span>
+<span class="sd">    :param max_fast_reset: Maximum number of fast resets for an EnvWorker before a full restart.</span>
+<span class="sd">    :param rollout_worker_id: Identifier for this rollout worker.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+                 <span class="n">num_envs</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> 
+                 <span class="n">policy_generator</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="n">MinePolicy</span><span class="p">],</span>
+                 <span class="n">env_generator</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="n">MinecraftSim</span><span class="p">],</span>
+                 <span class="n">use_normalized_vf</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                 <span class="n">model_device</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;cpu&quot;</span><span class="p">,</span>
+                 <span class="n">next_model_version</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+                 <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                 <span class="n">video_fps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span>
+                 <span class="n">video_output_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;./output&quot;</span><span class="p">,</span>
+                 <span class="n">resume</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">restart_interval</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">moving_stat_duration</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">300</span><span class="p">,</span>
+                 <span class="n">log_interval</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> 
+                 <span class="n">episode_statistics</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ActorHandle</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">progress_handler</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ProgressHandler</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">max_fast_reset</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">,</span>
+                 <span class="n">rollout_worker_id</span><span class="p">:</span> <span class="nb">int</span>  <span class="o">=</span> <span class="mi">0</span><span class="p">):</span> <span class="c1"># TODO: more advanced batch strategy</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_envs</span> <span class="o">=</span> <span class="n">num_envs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">policy_generator</span> <span class="o">=</span> <span class="n">policy_generator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">env_generator</span> <span class="o">=</span> <span class="n">env_generator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_device</span> <span class="o">=</span> <span class="n">model_device</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">=</span> <span class="n">batch_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_interval</span> <span class="o">=</span> <span class="n">log_interval</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">progress_handler</span> <span class="o">=</span> <span class="n">progress_handler</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">episode_statistics</span> <span class="o">=</span> <span class="n">episode_statistics</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">use_normalized_vf</span> <span class="o">=</span> <span class="n">use_normalized_vf</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">next_model_version</span> <span class="o">=</span> <span class="n">next_model_version</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_resets</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_envs</span><span class="p">)]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">env_conns</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Connection</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">env_processes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">queued_requests</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">agent_states</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">worker_uuids</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_envs</span><span class="p">)</span>
+        <span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pipeline_monitor</span> <span class="o">=</span> <span class="n">PipelineMonitor</span><span class="p">([</span>
+            <span class="s1">&#39;recv_obs&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;inference&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;send_action&#39;</span><span class="p">,</span>
+        <span class="p">],</span> <span class="n">duration</span><span class="o">=</span><span class="n">moving_stat_duration</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">queue_size_after_inference_stat</span> <span class="o">=</span> <span class="n">MovingStat</span><span class="p">(</span>
+            <span class="n">duration</span><span class="o">=</span><span class="n">moving_stat_duration</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">video_step</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">if</span> <span class="n">mp</span><span class="o">.</span><span class="n">get_start_method</span><span class="p">(</span><span class="n">allow_none</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">&quot;spawn&quot;</span><span class="p">:</span>
+            <span class="n">rich</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;[red]WARNING: The multiprocessing start method is not set to &#39;spawn&#39;. We will set it to &#39;spawn&#39; for you, but this may cause problems if you are using other libraries that use multiprocessing.[/red]&quot;</span><span class="p">)</span>
+
+        <span class="n">mp</span><span class="o">.</span><span class="n">set_start_method</span><span class="p">(</span><span class="s2">&quot;spawn&quot;</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">progress_handler_kwargs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[{}</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_envs</span><span class="p">)]</span>
+
+        <span class="k">for</span> <span class="n">env_id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_envs</span><span class="p">):</span>
+            <span class="n">parent_conn</span><span class="p">,</span> <span class="n">child_conn</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">Pipe</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">env_conns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">parent_conn</span><span class="p">)</span> <span class="c1"># type: ignore</span>
+            <span class="n">process</span> <span class="o">=</span> <span class="n">EnvWorker</span><span class="p">(</span><span class="n">env_generator</span><span class="o">=</span><span class="n">env_generator</span><span class="p">,</span> <span class="n">conn</span><span class="o">=</span><span class="n">child_conn</span><span class="p">,</span> <span class="n">restart_interval</span><span class="o">=</span><span class="n">restart_interval</span><span class="p">,</span> <span class="n">video_fps</span><span class="o">=</span><span class="n">video_fps</span><span class="p">,</span> <span class="n">video_output_dir</span><span class="o">=</span><span class="n">video_output_dir</span><span class="p">,</span> <span class="n">max_fast_reset</span><span class="o">=</span><span class="n">max_fast_reset</span><span class="p">,</span> <span class="n">env_id</span> <span class="o">=</span> <span class="n">env_id</span><span class="p">,</span> <span class="n">rollout_worker_id</span> <span class="o">=</span> <span class="n">rollout_worker_id</span><span class="p">)</span> <span class="c1"># type: ignore</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">env_processes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">process</span><span class="p">)</span>
+            <span class="n">process</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+        <span class="n">torch</span><span class="o">.</span><span class="n">set_float32_matmul_precision</span><span class="p">(</span><span class="s1">&#39;high&#39;</span><span class="p">)</span>
+        <span class="n">torch</span><span class="o">.</span><span class="n">backends</span><span class="o">.</span><span class="n">cudnn</span><span class="o">.</span><span class="n">benchmark</span> <span class="o">=</span> <span class="kc">False</span> <span class="c1"># type: ignore</span>
+        <span class="c1"># the input size of the model is not fixed, so cudnn.benchmark must be disabled</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">agent</span><span class="p">:</span> <span class="n">MinePolicy</span> <span class="o">=</span> <span class="n">policy_generator</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">resume</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">load_weights</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">resume</span><span class="o">+</span><span class="s2">&quot;/model.ckpt&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_device</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_log_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+<div class="viewcode-block" id="RolloutWorker.update_model_version">
+<a class="viewcode-back" href="../../../../api/online/index.html#minestudio.online.rollout.rollout_worker.RolloutWorker.update_model_version">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_model_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">next_model_version</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates the model version number that will be associated with subsequently collected data.</span>
+
+<span class="sd">        :param next_model_version: The new model version number.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">next_model_version</span> <span class="o">=</span> <span class="n">next_model_version</span></div>
+
+
+<div class="viewcode-block" id="RolloutWorker.load_weights">
+<a class="viewcode-back" href="../../../../api/online/index.html#minestudio.online.rollout.rollout_worker.RolloutWorker.load_weights">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">load_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weights</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Loads new weights into the policy model.</span>
+
+<span class="sd">        :param weights: A dictionary containing the state dictionary of the model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#weights = weights.copy()</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">weights</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">weights</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_device</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="n">strict</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+        <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">empty_cache</span><span class="p">()</span>
+        <span class="k">return</span></div>
+
+
+<div class="viewcode-block" id="RolloutWorker.inference">
+<a class="viewcode-back" href="../../../../api/online/index.html#minestudio.online.rollout.rollout_worker.RolloutWorker.inference">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">inference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">requests</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">list</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Performs a batch of inference requests using the policy model.</span>
+
+<span class="sd">        :param requests: A list of tuples, where each tuple contains (worker_id, observation).</span>
+<span class="sd">        :returns: A tuple containing:</span>
+<span class="sd">            - result_actions: A list of actions for each request.</span>
+<span class="sd">            - result_states: A list of next hidden states for each request.</span>
+<span class="sd">            - result_vpreds: A list of predicted values (vpreds) for each request.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># logger.info(f&quot;requests: {requests}&quot;)</span>
+        <span class="n">worker_ids</span><span class="p">,</span> <span class="n">inputs</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">requests</span><span class="p">)</span>
+        <span class="n">idds</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">in_states</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">worker_ids</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pipeline_monitor</span><span class="o">.</span><span class="n">report_enter</span><span class="p">(</span><span class="s1">&#39;inference&#39;</span><span class="p">,</span> <span class="n">pipeline_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">worker_uuids</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+            <span class="n">idds</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;_&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_resets</span><span class="p">[</span><span class="n">idx</span><span class="p">]))</span>
+            <span class="n">in_states</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">agent_states</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+        
+        <span class="c1"># batch = self.agent.merge_input(inputs) #auto_to_torch(auto_stack([auto_stack([input]) for input in inputs]), device=self.model_device)</span>
+        <span class="n">batch</span> <span class="o">=</span> <span class="n">auto_to_torch</span><span class="p">(</span><span class="n">auto_stack</span><span class="p">([</span><span class="n">auto_stack</span><span class="p">([</span><span class="nb">input</span><span class="p">])</span> <span class="k">for</span> <span class="nb">input</span> <span class="ow">in</span> <span class="n">inputs</span><span class="p">]),</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model_device</span><span class="p">)</span>
+        <span class="n">memory_in</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">merge_state</span><span class="p">(</span><span class="n">in_states</span><span class="p">)</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">inference_mode</span><span class="p">():</span>
+            <span class="n">latents</span><span class="p">,</span> <span class="n">state_out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">agent</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">batch</span><span class="p">,</span> <span class="n">state_in</span><span class="o">=</span><span class="n">memory_in</span><span class="p">)</span>
+            <span class="n">pi_logits</span><span class="p">,</span> <span class="n">vpreds</span> <span class="o">=</span> <span class="n">latents</span><span class="p">[</span><span class="s2">&quot;pi_logits&quot;</span><span class="p">],</span> <span class="n">latents</span><span class="p">[</span><span class="s1">&#39;vpred&#39;</span><span class="p">]</span>
+            <span class="n">action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">pi_head</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">pi_logits</span><span class="p">,</span> <span class="n">deterministic</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_normalized_vf</span><span class="p">:</span>
+                <span class="n">vpreds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">value_head</span><span class="o">.</span><span class="n">denormalize</span><span class="p">(</span><span class="n">vpreds</span><span class="p">)</span> <span class="c1"># type: ignore</span>
+
+        <span class="n">result_actions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">split_action</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">worker_ids</span><span class="p">))</span>
+        <span class="n">result_states</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">split_state</span><span class="p">(</span><span class="n">state_out</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">worker_ids</span><span class="p">))</span>
+        <span class="n">result_vpreds</span> <span class="o">=</span> <span class="p">[</span><span class="n">vpred</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span> <span class="k">for</span> <span class="n">vpred</span> <span class="ow">in</span> <span class="n">vpreds</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">result_actions</span><span class="p">,</span> <span class="n">result_states</span><span class="p">,</span> <span class="n">result_vpreds</span></div>
+
+
+<div class="viewcode-block" id="RolloutWorker.poll_environments">
+<a class="viewcode-back" href="../../../../api/online/index.html#minestudio.online.rollout.rollout_worker.RolloutWorker.poll_environments">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">poll_environments</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Polls all environment connections for messages and processes them.</span>
+
+<span class="sd">        Handles different message types:</span>
+<span class="sd">        - &quot;step_agent&quot;: An environment is ready for a new action. The observation is added to queued_requests.</span>
+<span class="sd">        - &quot;reset_state&quot;: An environment has reset. The agent&#39;s hidden state for this environment is reset.</span>
+<span class="sd">        - &quot;report_rewards&quot;: An environment has finished an episode. Rewards are reported to EpisodeStatistics.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">conn</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">env_conns</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">conn</span><span class="o">.</span><span class="n">poll</span><span class="p">():</span>
+                <span class="n">args</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">recv</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;step_agent&quot;</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">pipeline_monitor</span><span class="o">.</span><span class="n">report_enter</span><span class="p">(</span><span class="s1">&#39;recv_obs&#39;</span><span class="p">,</span> <span class="n">pipeline_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">worker_uuids</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                    <span class="n">obs</span><span class="p">,</span> <span class="n">last_reward</span><span class="p">,</span> <span class="n">last_terminated</span><span class="p">,</span> <span class="n">last_truncated</span><span class="p">,</span> <span class="n">episode_uuid</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">args</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">args</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">args</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">args</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">progress_handler_kwargs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                        <span class="s2">&quot;worker_uuid&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">worker_uuids</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                        <span class="s2">&quot;obs&quot;</span><span class="p">:</span> <span class="n">obs</span><span class="p">,</span>
+                        <span class="s2">&quot;state&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">agent_states</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                        <span class="s2">&quot;last_reward&quot;</span><span class="p">:</span> <span class="n">last_reward</span><span class="p">,</span>
+                        <span class="s2">&quot;last_terminated&quot;</span><span class="p">:</span> <span class="n">last_terminated</span><span class="p">,</span>
+                        <span class="s2">&quot;last_truncated&quot;</span><span class="p">:</span> <span class="n">last_truncated</span><span class="p">,</span>
+                        <span class="s2">&quot;episode_uuid&quot;</span><span class="p">:</span> <span class="n">episode_uuid</span><span class="p">,</span>
+                    <span class="p">}</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">queued_requests</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="n">obs</span><span class="p">))</span>
+                <span class="k">elif</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;reset_state&quot;</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">agent_states</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">initial_state</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">num_resets</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">conn</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s2">&quot;ok&quot;</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;report_rewards&quot;</span><span class="p">:</span>
+                    <span class="n">rewards</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">episode_statistics</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">video_step</span><span class="p">,</span> <span class="n">episode_info</span> <span class="o">=</span> <span class="n">ray</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">episode_statistics</span><span class="o">.</span><span class="n">report_episode</span><span class="o">.</span><span class="n">remote</span><span class="p">(</span><span class="n">rewards</span><span class="p">))</span>
+                        <span class="k">if</span> <span class="n">video_step</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">video_step</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">video_step</span><span class="p">:</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">video_step</span> <span class="o">=</span> <span class="n">video_step</span>
+                            <span class="n">conn</span><span class="o">.</span><span class="n">send</span><span class="p">((</span><span class="n">video_step</span><span class="p">,</span> <span class="n">episode_info</span><span class="p">))</span>
+                        <span class="k">else</span><span class="p">:</span>    
+                            <span class="n">conn</span><span class="o">.</span><span class="n">send</span><span class="p">((</span><span class="kc">None</span><span class="p">,</span> <span class="n">episode_info</span><span class="p">))</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">conn</span><span class="o">.</span><span class="n">send</span><span class="p">((</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+                
+<div class="viewcode-block" id="RolloutWorker.loop">
+<a class="viewcode-back" href="../../../../api/online/index.html#minestudio.online.rollout.rollout_worker.RolloutWorker.loop">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">loop</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Runs one iteration of the rollout loop.</span>
+
+<span class="sd">        This involves:</span>
+<span class="sd">        1. Polling environments until enough requests are queued to fill a batch.</span>
+<span class="sd">        2. Performing inference on the batch of requests.</span>
+<span class="sd">        3. Sending actions back to the environments.</span>
+<span class="sd">        4. Calling the progress_handler if it&#39;s set.</span>
+<span class="sd">        5. Polling environments again to process any immediate responses.</span>
+<span class="sd">        6. Logging statistics if the log_interval is met.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">queued_requests</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">poll_environments</span><span class="p">()</span>
+
+        <span class="n">requests</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">queued_requests</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="p">]</span>
+        <span class="n">actions</span><span class="p">,</span> <span class="n">states</span><span class="p">,</span> <span class="n">denormalized_vpreds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inference</span><span class="p">(</span><span class="n">requests</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">queued_requests</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">queued_requests</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="p">:]</span>
+        <span class="n">for_idx</span> <span class="o">=</span>  <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">action</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">denormalized_vpred</span><span class="p">,</span> <span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">actions</span><span class="p">,</span> <span class="n">states</span><span class="p">,</span> <span class="n">denormalized_vpreds</span><span class="p">,</span> <span class="n">requests</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pipeline_monitor</span><span class="o">.</span><span class="n">report_enter</span><span class="p">(</span><span class="s1">&#39;send_action&#39;</span><span class="p">,</span> <span class="n">pipeline_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">worker_uuids</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">agent_states</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span>
+            <span class="c1"># logger.info(f&quot;sending action: {action}&quot;)</span>
+            <span class="n">action</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">action</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">env_conns</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">send</span><span class="p">((</span><span class="n">action</span><span class="p">,</span> <span class="n">denormalized_vpred</span><span class="p">))</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">progress_handler</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">progress_handler</span><span class="p">(</span>
+                    <span class="n">action</span><span class="o">=</span><span class="n">action</span><span class="p">,</span>
+                    <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">progress_handler_kwargs</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span>    
+                <span class="p">)</span>
+            <span class="n">for_idx</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">poll_environments</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">queue_size_after_inference_stat</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">queued_requests</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_interval</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_log_time</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_interval</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">last_log_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pipeline_monitor</span><span class="o">.</span><span class="n">print</span><span class="p">()</span>
+            <span class="n">rich</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Average queue size after inference: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">queue_size_after_inference_stat</span><span class="o">.</span><span class="n">average</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="RolloutWorker.rollout">
+<a class="viewcode-back" href="../../../../api/online/index.html#minestudio.online.rollout.rollout_worker.RolloutWorker.rollout">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">rollout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_batches</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Runs the rollout loop for a specified number of batches.</span>
+
+<span class="sd">        :param num_batches: The number of inference batches to collect.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">num_batches_left</span> <span class="o">=</span> <span class="n">num_batches</span>
+        <span class="k">while</span> <span class="n">num_batches_left</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">loop</span><span class="p">()</span>
+            <span class="n">num_batches_left</span> <span class="o">-=</span> <span class="mi">1</span></div>
+
+
+<div class="viewcode-block" id="RolloutWorker.progress_handler">
+<a class="viewcode-back" href="../../../../api/online/index.html#minestudio.online.rollout.rollout_worker.RolloutWorker.progress_handler">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">progress_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span>
+        <span class="n">worker_uuid</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">obs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+        <span class="n">env_spec</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">state</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">],</span>
+        <span class="n">action</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+        <span class="n">last_reward</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">last_terminated</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+        <span class="n">last_truncated</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+        <span class="n">episode_uuid</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Default progress handler, likely intended to be overridden or replaced.</span>
+<span class="sd">        This implementation seems to be a duplicate of logic within RolloutWorkerWrapper.progress_handler</span>
+<span class="sd">        and might not be used if a custom progress_handler is provided during RolloutWorker initialization.</span>
+
+<span class="sd">        :param worker_uuid: The UUID of the worker environment.</span>
+<span class="sd">        :param obs: The observation from the environment.</span>
+<span class="sd">        :param env_spec: Specification of the environment, used for filtering.</span>
+<span class="sd">        :param state: The hidden state of the policy model.</span>
+<span class="sd">        :param action: The action taken by the policy.</span>
+<span class="sd">        :param last_reward: The reward received from the previous step.</span>
+<span class="sd">        :param last_terminated: Whether the episode terminated at the previous step.</span>
+<span class="sd">        :param last_truncated: Whether the episode was truncated at the previous step.</span>
+<span class="sd">        :param episode_uuid: The UUID of the current episode.</span>
+<span class="sd">        :raises AssertionError: if env_spec is not in self.env_spec.config4test when not in self.env_spec.config.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">env_spec</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">env_spec</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="p">[</span><span class="n">worker_uuid</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span>
+                <span class="ow">and</span> <span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">current_model_version</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="p">[</span><span class="n">worker_uuid</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">model_version</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_staleness</span>
+                    <span class="ow">or</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">current_session_id</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="p">[</span><span class="n">worker_uuid</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">session_id</span>
+                <span class="p">)</span>
+            <span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="p">[</span><span class="n">worker_uuid</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+                
+            <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="p">[</span><span class="n">worker_uuid</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">StepRecord</span><span class="p">(</span>
+                <span class="n">worker_uuid</span><span class="o">=</span><span class="n">worker_uuid</span><span class="p">,</span>
+                <span class="n">obs</span><span class="o">=</span><span class="n">obs</span><span class="p">,</span>
+                <span class="n">state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">action</span><span class="o">=</span><span class="n">action</span><span class="p">,</span>
+                <span class="n">last_reward</span><span class="o">=</span><span class="n">last_reward</span><span class="p">,</span>
+                <span class="n">last_terminated</span><span class="o">=</span><span class="n">last_terminated</span><span class="p">,</span>
+                <span class="n">last_truncated</span><span class="o">=</span><span class="n">last_truncated</span><span class="p">,</span>
+                <span class="n">model_version</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">current_model_version</span><span class="p">,</span>
+                <span class="n">episode_uuid</span><span class="o">=</span><span class="n">episode_uuid</span><span class="p">,</span>
+                <span class="n">session_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">current_session_id</span>
+            <span class="p">))</span>
+
+            <span class="n">steps_to_send</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="p">[</span><span class="n">worker_uuid</span><span class="p">])</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">fragment_length</span><span class="p">:</span>
+                <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="p">[</span><span class="n">worker_uuid</span><span class="p">])</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">fragment_length</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="n">steps_to_send</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="p">[</span><span class="n">worker_uuid</span><span class="p">][:</span><span class="bp">self</span><span class="o">.</span><span class="n">fragment_length</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="p">[</span><span class="n">worker_uuid</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="p">[</span><span class="n">worker_uuid</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">fragment_length</span><span class="p">:]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">to_send_queue</span><span class="o">.</span><span class="n">put</span><span class="p">((</span><span class="n">steps_to_send</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="p">[</span><span class="n">worker_uuid</span><span class="p">][</span><span class="mi">0</span><span class="p">]))</span>
+
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="p">[</span><span class="n">worker_uuid</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="p">[</span><span class="n">worker_uuid</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">auto_to_numpy</span><span class="p">(</span><span class="n">state</span><span class="p">)</span> <span class="c1">#[s.cpu().numpy() for s in state]</span>
+        <span class="k">else</span> <span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;env_spec not in self.env_spec.config, do not send to buffer&quot;</span><span class="p">)</span>
+            <span class="k">assert</span><span class="p">(</span><span class="n">env_spec</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">env_spec</span><span class="o">.</span><span class="n">config4test</span><span class="p">)</span></div>
+</div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">ray</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">address</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="n">ignore_reinit_error</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">namespace</span><span class="o">=</span><span class="s2">&quot;online&quot;</span><span class="p">,</span><span class="n">runtime_env</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;env_vars&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;RAY_DEBUG&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">},</span> <span class="p">})</span>
+    <span class="n">mp</span><span class="o">.</span><span class="n">set_start_method</span><span class="p">(</span><span class="s2">&quot;spawn&quot;</span><span class="p">)</span>
+    <span class="c1"># from minestudio.simulator.callbacks import (</span>
+    <span class="c1">#     SpeedTestCallback, </span>
+    <span class="c1">#     RecordCallback, </span>
+    <span class="c1">#     SummonMobsCallback, </span>
+    <span class="c1">#     MaskActionsCallback, </span>
+    <span class="c1">#     RewardsCallback, </span>
+    <span class="c1">#     CommandsCallback, </span>
+    <span class="c1">#     TaskCallback,</span>
+    <span class="c1">#     FastResetCallback</span>
+    <span class="c1"># )</span>
+
+    <span class="c1"># def env_generator():</span>
+    <span class="c1">#     from minestudio.simulator import MinecraftSim</span>
+    <span class="c1">#     from minestudio.simulator.callbacks import (</span>
+    <span class="c1">#         SpeedTestCallback, </span>
+    <span class="c1">#         RecordCallback, </span>
+    <span class="c1">#         SummonMobsCallback, </span>
+    <span class="c1">#         MaskActionsCallback, </span>
+    <span class="c1">#         RewardsCallback, </span>
+    <span class="c1">#         CommandsCallback, </span>
+    <span class="c1">#         TaskCallback,</span>
+    <span class="c1">#         FastResetCallback</span>
+    <span class="c1">#     )</span>
+    <span class="c1">#     sim = MinecraftSim(</span>
+    <span class="c1">#         action_type=&quot;env&quot;,</span>
+    <span class="c1">#         callbacks=[</span>
+    <span class="c1">#             SpeedTestCallback(50), </span>
+    <span class="c1">#             SummonMobsCallback([{&#39;name&#39;: &#39;cow&#39;, &#39;number&#39;: 10, &#39;range_x&#39;: [-5, 5], &#39;range_z&#39;: [-5, 5]}]),</span>
+    <span class="c1">#             MaskActionsCallback(inventory=0, camera=np.array([0., 0.])), </span>
+    <span class="c1">#             RecordCallback(record_path=&quot;./output&quot;, fps=30),</span>
+    <span class="c1">#             RewardsCallback([{</span>
+    <span class="c1">#                 &#39;event&#39;: &#39;kill_entity&#39;, </span>
+    <span class="c1">#                 &#39;objects&#39;: [&#39;cow&#39;, &#39;sheep&#39;], </span>
+    <span class="c1">#                 &#39;reward&#39;: 1.0, </span>
+    <span class="c1">#                 &#39;identity&#39;: &#39;kill sheep or cow&#39;, </span>
+    <span class="c1">#                 &#39;max_reward_times&#39;: 5, </span>
+    <span class="c1">#             }]),</span>
+    <span class="c1">#             CommandsCallback(commands=[</span>
+    <span class="c1">#                 &#39;/give @p minecraft:iron_sword 1&#39;,</span>
+    <span class="c1">#                 &#39;/give @p minecraft:diamond 64&#39;,</span>
+    <span class="c1">#             ]), </span>
+    <span class="c1">#             FastResetCallback(</span>
+    <span class="c1">#                 biomes=[&#39;mountains&#39;],</span>
+    <span class="c1">#                 random_tp_range=1000,</span>
+    <span class="c1">#             ), </span>
+    <span class="c1">#             TaskCallback([</span>
+    <span class="c1">#                 {&#39;name&#39;: &#39;chop&#39;, &#39;text&#39;: &#39;mine the oak logs&#39;}, </span>
+    <span class="c1">#                 {&#39;name&#39;: &#39;diamond&#39;, &#39;text&#39;: &#39;mine the diamond ore&#39;},</span>
+    <span class="c1">#             ])</span>
+    <span class="c1">#         ]</span>
+    <span class="c1">#     )</span>
+    <span class="c1">#     return sim</span>
+
+    <span class="c1"># def policy_generator():</span>
+    <span class="c1">#     from minestudio.models.openai_vpt.body import load_vpt_policy</span>
+    <span class="c1">#     model_path = &#39;/nfs-shared/jarvisbase/pretrained/foundation-model-2x.model&#39;</span>
+    <span class="c1">#     weights_path = &#39;/nfs-shared/jarvisbase/pretrained/rl-from-early-game-2x.weights&#39;</span>
+    <span class="c1">#     policy = load_vpt_policy(model_path, weights_path)</span>
+    <span class="c1">#     return policy</span>
+
+    <span class="c1"># worker = RolloutWorker(</span>
+    <span class="c1">#     num_envs=8,</span>
+    <span class="c1">#     env_generator=env_generator,</span>
+    <span class="c1">#     policy_generator=policy_generator,</span>
+    <span class="c1">#     model_device=&quot;cuda:4&quot;,</span>
+    <span class="c1">#     batch_size=4,</span>
+    <span class="c1">#     log_interval=5</span>
+    <span class="c1"># )</span>
+    
+    <span class="c1"># worker.rollout(num_batches=1000000)</span>
+</pre></div>
+<div class="section ablog__blog_comments">
+   
+</div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, The CraftJarvis Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
