@@ -544,7 +544,6 @@ class SteveOnePolicy(MinePolicy, PyTorchModelHubMixin):
 
     def forward(
         self, 
-        condition: Dict[str, Any],
         input: Dict[str, Any], 
         state_in: Optional[List[torch.Tensor]] = None,
         **kwargs
@@ -681,6 +680,7 @@ if __name__ == '__main__':
     output, memory = model(condition,
         input={
             'image': torch.zeros(2, 8, 128, 128, 3).to("cuda"), 
+            'condition': condition
         },
         state_in=model.initial_state(condition, 2)
     )
