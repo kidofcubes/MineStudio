@@ -47,7 +47,7 @@ The example code is provided in ``minestudio/tutorials/inference/evaluate_steve/
 
         if __name__ == '__main__':
             ray.init()
-            task_configs = prepare_task_configs("simple")
+            task_configs = prepare_task_configs("simple", path="CraftJarvis/MineStudio_task_group.simple")
             config_file = task_configs["collect_wood"] 
             # you can try: survive_plant, collect_wood, build_pillar, ... ; make sure the config file contains `reference_video` field 
             print(config_file)

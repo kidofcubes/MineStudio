@@ -712,7 +712,7 @@ The example code is provided in <code class="docutils literal notranslate"><span
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">ray</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
-    <span class="n">task_configs</span> <span class="o">=</span> <span class="n">prepare_task_configs</span><span class="p">(</span><span class="s2">&quot;simple&quot;</span><span class="p">)</span>
+    <span class="n">task_configs</span> <span class="o">=</span> <span class="n">prepare_task_configs</span><span class="p">(</span><span class="s2">&quot;simple&quot;</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s2">&quot;CraftJarvis/MineStudio_task_group.simple&quot;</span><span class="p">)</span>
     <span class="n">config_file</span> <span class="o">=</span> <span class="n">task_configs</span><span class="p">[</span><span class="s2">&quot;collect_wood&quot;</span><span class="p">]</span>
     <span class="c1"># you can try: survive_plant, collect_wood, build_pillar, ... ; make sure the config file contains `reference_video` field</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">config_file</span><span class="p">)</span>
