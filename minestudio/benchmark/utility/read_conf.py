@@ -1,7 +1,7 @@
 '''
 Date: 2024-12-06 16:42:49
-LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2025-01-07 11:08:39
+LastEditors: muzhancun muzhancun@stu.pku.edu.cn
+LastEditTime: 2025-06-06 13:59:32
 FilePath: /MineStudio/minestudio/benchmark/utility/read_conf.py
 '''
 import os
@@ -38,7 +38,7 @@ def prepare_task_configs(group_name: str, path: Optional[str] = None, refresh: b
         print(f"Refreshing the cache: removing existing task configs from: {local_dir}")
         shutil.rmtree(local_dir)
     if not os.path.exists(local_dir):
-        if os.path.isdir(path):
+        if path is not None and os.path.isdir(path):
             shutil.copytree(path, local_dir)
         else:
             print(f"Downloading task configs from 🤗: {path}")

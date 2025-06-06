@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-25 08:11:33
-LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2025-01-04 11:39:20
+LastEditors: muzhancun muzhancun@stu.pku.edu.cn
+LastEditTime: 2025-06-06 14:02:15
 FilePath: /MineStudio/minestudio/tutorials/inference/evaluate_vpts/mine_diamond.py
 '''
 import ray
@@ -41,7 +41,7 @@ if __name__ == '__main__':
         ), 
         episode_filter=InfoBaseFilter(
             key="mine_block",
-            val="diamond_ore",
+            regex=".*diamond_ore.*",
             num=1,
         ),
     )

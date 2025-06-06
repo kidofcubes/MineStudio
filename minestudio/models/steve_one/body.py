@@ -530,7 +530,9 @@ class SteveOnePolicy(MinePolicy, PyTorchModelHubMixin):
             assert 'text' in instruction, "instruction must have either text or video."
 
             texts = instruction['text']
-            if isinstance(texts, str):
+            if isinstance(texts, list):
+                texts = texts[0]
+            elif isinstance(texts, str):
                 texts = [texts]
             assert isinstance(texts, list) and isinstance(texts[0], str), "text must be a string or a list of strings."
             
@@ -671,16 +673,14 @@ def load_steve_one_policy(ckpt_path: str) -> SteveOnePolicy:
 if __name__ == '__main__':
     model = SteveOnePolicy.from_pretrained("CraftJarvis/MineStudio_STEVE-1.official").to("cuda")
     model.eval()
-    condition = model.prepare_condition(
-        {
-            'cond_scale': 4.0,
-            'video': np.random.randint(0, 255, (2, 16, 224, 224, 3)).astype(np.uint8)
-        }
-    )
-    output, memory = model(condition,
+    output, memory = model.get_action(
         input={
             'image': torch.zeros(2, 8, 128, 128, 3).to("cuda"), 
-            'condition': condition
+            'condition': {
+                'cond_scale': 4.0,
+                'text': 'mine dirt',
+            }
         },
-        state_in=model.initial_state(condition, 2)
+        state_in=None
     )
+    print(output.keys())

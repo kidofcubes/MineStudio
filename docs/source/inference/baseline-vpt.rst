@@ -61,7 +61,7 @@ Finally, we create an ``EpisodePipeline`` object, passing ``MineGenerator`` as t
         ), 
         episode_filter=InfoBaseFilter(
             key="mine_block",
-            val="diamond_ore",
+            regex=".*diamond_ore.*",
             num=1,
         ),
     )
