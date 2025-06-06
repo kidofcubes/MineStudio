@@ -42,7 +42,7 @@ if __name__ == '__main__':
 
     env_generator = partial(
         MinecraftSim,
-        obs_size = (224, 224),
+        obs_size = (128, 128),
         preferred_spawn_biome = "forest", 
         callbacks = [
             SpeedTestCallback(50),
