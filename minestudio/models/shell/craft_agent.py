@@ -606,7 +606,7 @@ class CraftWorker(GUIWorker):
                     if pattern[i][j] == signal:
                         num_need += 1
             num_need = num_need * iter_num
-            self._assert(num_need <= inventory_num, f"not enough {item}，whats {num_need}, has {inventory_num}")
+            self._assert(num_need <= inventory_num, f"not enough {item}，wants {num_need}, has {inventory_num}")
 
             # place
             resource_idx = 0
@@ -745,22 +745,14 @@ if __name__ == '__main__':
             }]),
             RecordCallback(record_path="output", fps=30,record_actions=True,record_infos=True,record_origin_observation=True),
             FastResetCallback(
-                biomes=['mountains'],
+                biomes=['plains'],
                 random_tp_range=1000,
             ), 
+            
             InitInventoryCallback([
                 {"slot": 0,
-                "type": "crafting_table",
+                "type": "diamond_sword",
                 "quantity":1,},
-                {"slot": 1,
-                "type": "stick",
-                "quantity":">10",},
-                {"slot": 2,
-                "type": "oak_planks",
-                "quantity":"<12,>10",},
-                {"slot": "random",
-                "type": "oak_planks",
-                "quantity":"random",},
             ],inventory_distraction_level="random")
         ]
     )
