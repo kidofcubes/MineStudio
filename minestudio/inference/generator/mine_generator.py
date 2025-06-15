@@ -6,8 +6,11 @@ FilePath: /MineStudio/minestudio/inference/generator/mine_generator.py
 '''
 import os
 import ray
+
 from typing import Callable, Optional, List, Dict, Tuple, Literal, Generator
+
 from minestudio.inference.generator.base_generator import EpisodeGenerator, AgentInterface
+from minestudio.utils import get_compute_device
 
 class Worker:
     """
@@ -62,7 +65,7 @@ class Worker:
         self.num_max_steps = num_max_steps
         self.num_episodes = num_episodes
         self.env = env_generator()
-        self.agent = agent_generator().to("cuda")
+        self.agent = agent_generator().to(get_compute_device())
         self.agent.eval()
         self.image_media = image_media
         self.tmpdir = tmpdir
