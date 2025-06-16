@@ -474,7 +474,10 @@ class EventDataset(Dataset):
         """
         # Convert numpy array to torch tensor.
         if isinstance(item, np.ndarray):
-            return torch.from_numpy(item)
+            tensor = torch.from_numpy(item)
+            if tensor.dtype == torch.float64:
+                tensor = tensor.float()
+            return tensor
         elif isinstance(item, List):
             return [self.to_tensor(val) for val in item]
         elif isinstance(item, Dict):

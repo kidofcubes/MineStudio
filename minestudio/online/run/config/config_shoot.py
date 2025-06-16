@@ -10,6 +10,8 @@ import wandb
 import uuid
 import torch
 from minestudio.online.rollout.start_manager import start_rolloutmanager
+from minestudio.utils import get_compute_device
+
 online_dict = {
     "trainer_name": "PPOTrainer",
     "detach_rollout_manager": True,
@@ -127,5 +129,5 @@ def policy_generator():
     policy = load_vpt_policy(
         model_path="/nfs-shared/jarvisbase/pretrained/foundation-model-2x.model",
         weights_path="/nfs-shared/jarvisbase/pretrained/foundation-model-2x.weights"
-    ).to("cuda")
+    ).to(get_compute_device())
     return policy
