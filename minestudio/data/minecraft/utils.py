@@ -81,7 +81,7 @@ def download_dataset_from_huggingface(name: Literal["6xx", "7xx", "8xx", "9xx", 
     if total_size > free:
         raise ValueError(f"Insufficient space for downloading {name}. ")
     dataset_dir = os.path.join(get_mine_studio_dir(), 'contractors', f'dataset_{name}')
-    endpoint = os.environ['HF_ENDPOINT'] if 'HF_ENDPOINT' in os.environ.keys() else null
+    endpoint = os.environ['HF_ENDPOINT'] if 'HF_ENDPOINT' in os.environ.keys() else "https://huggingface.co"
     local_dataset_dir = snapshot_download(repo_id, repo_type="dataset", local_dir=dataset_dir,endpoint=endpoint)
     return local_dataset_dir
 

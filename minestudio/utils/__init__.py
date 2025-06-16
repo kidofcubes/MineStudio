@@ -8,7 +8,7 @@ from .register import Register, Registers
 from .temp import get_mine_studio_dir
 
 
-# A utility function to get the best compute device for Pytorch. 
+# A utility function to get the best compute device for PyTorch. 
 # Preferring cuda, then mps, ...  and finally cpu.
 def get_compute_device():
     import torch

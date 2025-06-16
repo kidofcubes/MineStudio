@@ -35,7 +35,7 @@ if [ \( $port -lt 0 \) -o \( $port -gt 65535 \) ]; then
 fi
 
 if [ "$device" == "cpu" ]; then
-    if [ `uname` == 'Darwin' ]; then
+    if [ "$(uname)" = "Darwin" ]; then
         java -Xmx$maxMem -XstartOnFirstThread -jar $fatjar --envPort=$port --envSeed=$seed
     else
         xvfb-run -a java -Xmx$maxMem -jar $fatjar --envPort=$port
