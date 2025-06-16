@@ -40,10 +40,10 @@ The following code snippet shows how to finetune a VPT policy to hunt animals in
             win_len=128,
             frame_width=128,
             frame_height=128,
-            event_regex="minecraft.kill_entity:.*"
+            event_regex="minecraft.kill_entity:.*",
             bias=16,
             min_nearby=64,
-        )
+        ),
         batch_size=8,
         num_workers=8,
         prefetch_factor=4,

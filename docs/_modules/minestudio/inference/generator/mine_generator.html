@@ -585,8 +585,11 @@
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">ray</span>
+
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Generator</span>
+
 <span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.inference.generator.base_generator</span><span class="w"> </span><span class="kn">import</span> <span class="n">EpisodeGenerator</span><span class="p">,</span> <span class="n">AgentInterface</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_compute_device</span>
 
 <div class="viewcode-block" id="Worker">
 <a class="viewcode-back" href="../../../../api/inference/index.html#minestudio.inference.generator.mine_generator.Worker">[docs]</a>
@@ -643,7 +646,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">num_max_steps</span> <span class="o">=</span> <span class="n">num_max_steps</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">num_episodes</span> <span class="o">=</span> <span class="n">num_episodes</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">env</span> <span class="o">=</span> <span class="n">env_generator</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">agent</span> <span class="o">=</span> <span class="n">agent_generator</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">agent</span> <span class="o">=</span> <span class="n">agent_generator</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">get_compute_device</span><span class="p">())</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">image_media</span> <span class="o">=</span> <span class="n">image_media</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tmpdir</span> <span class="o">=</span> <span class="n">tmpdir</span>
