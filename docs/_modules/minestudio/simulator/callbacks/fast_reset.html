@@ -580,15 +580,18 @@
 <span></span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">Date: 2024-11-11 16:15:32</span>
 <span class="sd">LastEditors: muzhancun muzhancun@stu.pku.edu.cn</span>
-<span class="sd">LastEditTime: 2025-05-26 20:56:38</span>
+<span class="sd">LastEditTime: 2025-06-12 19:47:39</span>
 <span class="sd">FilePath: /MineStudio/minestudio/simulator/callbacks/fast_reset.py</span>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator.callbacks.callback</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinecraftCallback</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.utils.register</span><span class="w"> </span><span class="kn">import</span> <span class="n">Registers</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rich</span><span class="w"> </span><span class="kn">import</span> <span class="nb">print</span>
 
 <div class="viewcode-block" id="FastResetCallback">
 <a class="viewcode-back" href="../../../../api/simulator/index.html#minestudio.simulator.callbacks.fast_reset.FastResetCallback">[docs]</a>
+<span class="nd">@Registers</span><span class="o">.</span><span class="n">simulator_callback</span><span class="o">.</span><span class="n">register</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">FastResetCallback</span><span class="p">(</span><span class="n">MinecraftCallback</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Implements a fast reset mechanism for the Minecraft simulator.</span>
 
@@ -605,6 +608,31 @@
 <span class="sd">    :param start_weather: The weather to set at reset, defaults to &#39;clear&#39;.</span>
 <span class="sd">    :type start_weather: str, optional</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="FastResetCallback.create_from_conf">
+<a class="viewcode-back" href="../../../../api/simulator/index.html#minestudio.simulator.callbacks.fast_reset.FastResetCallback.create_from_conf">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_from_conf</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates a FastReset from a configuration.</span>
+
+<span class="sd">        Loads data from the source (file path or dict).</span>
+
+<span class="sd">        :param source: Configuration source.</span>
+<span class="sd">        :type source: Dict</span>
+<span class="sd">        :returns: FastResetCallback instance or None if no valid configuration is found.</span>
+<span class="sd">        :rtype: Optional[FastResetCallback]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">essential_keys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;biomes&#39;</span><span class="p">,</span> <span class="s1">&#39;random_tp_range&#39;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">essential_keys</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">source</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[red]Missing </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2"> for FastResetCallback, skipping.[/red]&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">FastResetCallback</span><span class="p">(</span>
+            <span class="n">biomes</span><span class="o">=</span><span class="n">source</span><span class="p">[</span><span class="s1">&#39;biomes&#39;</span><span class="p">],</span>
+            <span class="n">random_tp_range</span><span class="o">=</span><span class="n">source</span><span class="p">[</span><span class="s1">&#39;random_tp_range&#39;</span><span class="p">],</span>
+            <span class="n">start_time</span><span class="o">=</span><span class="n">source</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;start_time&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="n">start_weather</span><span class="o">=</span><span class="n">source</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;start_weather&#39;</span><span class="p">,</span> <span class="s1">&#39;clear&#39;</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">biomes</span><span class="p">,</span> <span class="n">random_tp_range</span><span class="p">,</span> <span class="n">start_time</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">start_weather</span><span class="o">=</span><span class="s1">&#39;clear&#39;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Initializes the FastResetCallback.</span>

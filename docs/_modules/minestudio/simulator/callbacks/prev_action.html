@@ -580,7 +580,7 @@
 <span></span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">Date: 2024-11-11 19:31:53</span>
 <span class="sd">LastEditors: muzhancun muzhancun@stu.pku.edu.cn</span>
-<span class="sd">LastEditTime: 2025-05-26 21:18:13</span>
+<span class="sd">LastEditTime: 2025-06-12 19:48:23</span>
 <span class="sd">FilePath: /MineStudio/minestudio/simulator/callbacks/prev_action.py</span>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
@@ -595,9 +595,9 @@
         <span class="s2">&quot;hotbar.4&quot;</span><span class="p">,</span> <span class="s2">&quot;hotbar.5&quot;</span><span class="p">,</span> <span class="s2">&quot;hotbar.6&quot;</span><span class="p">,</span> <span class="s2">&quot;hotbar.7&quot;</span><span class="p">,</span> <span class="s2">&quot;hotbar.8&quot;</span><span class="p">,</span> <span class="s2">&quot;hotbar.9&quot;</span><span class="p">,</span>
         <span class="s2">&quot;camera&quot;</span><span class="p">]</span>
 
-<span class="c1"># @Registers.simulator_callback.register</span>
 <div class="viewcode-block" id="PrevActionCallback">
 <a class="viewcode-back" href="../../../../api/simulator/index.html#minestudio.simulator.callbacks.prev_action.PrevActionCallback">[docs]</a>
+<span class="nd">@Registers</span><span class="o">.</span><span class="n">simulator_callback</span><span class="o">.</span><span class="n">register</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">PrevActionCallback</span><span class="p">(</span><span class="n">MinecraftCallback</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A callback that stores the previous action and adds it to the observation.</span>
@@ -605,6 +605,25 @@
 <span class="sd">    This callback is useful for tasks where the agent needs to know its previous</span>
 <span class="sd">    action to make a decision.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="PrevActionCallback.create_from_conf">
+<a class="viewcode-back" href="../../../../api/simulator/index.html#minestudio.simulator.callbacks.prev_action.PrevActionCallback.create_from_conf">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_from_conf</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates a PrevActionCallback from a configuration.</span>
+
+<span class="sd">        Loads data from the source (file path or dict).</span>
+
+<span class="sd">        :param source: Configuration source.</span>
+<span class="sd">        :type source: Dict</span>
+<span class="sd">        :returns: PrevActionCallback or None if no valid configuration is found.</span>
+<span class="sd">        :rtype: Optional[PrevActionCallback]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="s1">&#39;use_prev_action&#39;</span> <span class="ow">in</span> <span class="n">source</span> <span class="ow">and</span> <span class="n">source</span><span class="p">[</span><span class="s1">&#39;use_prev_action&#39;</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="n">PrevActionCallback</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[red]use_prev_action is not set to True, skipping PrevActionCallback.[/red]&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
+
     
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>

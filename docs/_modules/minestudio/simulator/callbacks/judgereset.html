@@ -577,9 +577,17 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                    <h1>Source code for minestudio.simulator.callbacks.judgereset</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator.callbacks.callback</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinecraftCallback</span>
+<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Date: 2025-06-12 19:46:03</span>
+<span class="sd">LastEditors: muzhancun muzhancun@stu.pku.edu.cn</span>
+<span class="sd">LastEditTime: 2025-06-12 19:47:07</span>
+<span class="sd">FilePath: /MineStudio/minestudio/simulator/callbacks/judgereset.py</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator.callbacks.callback</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinecraftCallback</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinecraftGUI</span><span class="p">,</span> <span class="n">GUIConstants</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator.utils.gui</span><span class="w"> </span><span class="kn">import</span> <span class="n">PointDrawCall</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.utils.register</span><span class="w"> </span><span class="kn">import</span> <span class="n">Registers</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rich</span><span class="w"> </span><span class="kn">import</span> <span class="nb">print</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Tuple</span>
@@ -587,6 +595,7 @@
 
 <div class="viewcode-block" id="JudgeResetCallback">
 <a class="viewcode-back" href="../../../../api/simulator/index.html#minestudio.simulator.callbacks.judgereset.JudgeResetCallback">[docs]</a>
+<span class="nd">@Registers</span><span class="o">.</span><span class="n">simulator_callback</span><span class="o">.</span><span class="n">register</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">JudgeResetCallback</span><span class="p">(</span><span class="n">MinecraftCallback</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Resets the environment if a time limit is reached or episode terminates.</span>
 
@@ -598,6 +607,23 @@
 <span class="sd">                       Defaults to 600.</span>
 <span class="sd">    :type time_limit: int, optional</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="JudgeResetCallback.create_from_conf">
+<a class="viewcode-back" href="../../../../api/simulator/index.html#minestudio.simulator.callbacks.judgereset.JudgeResetCallback.create_from_conf">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_from_conf</span><span class="p">(</span><span class="n">source</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">&#39;JudgeResetCallback&#39;</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates a JudgeResetCallback from a configuration.</span>
+<span class="sd">        </span>
+<span class="sd">        :param source: Configuration source.</span>
+<span class="sd">        :type source: Dict</span>
+<span class="sd">        :returns: JudgeResetCallback instance or None if no valid configuration is found.</span>
+<span class="sd">        :rtype: Optional[JudgeResetCallback]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="s1">&#39;time_limit&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">source</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[red]Missing &#39;time_limit&#39; for JudgeResetCallback, skipping.[/red]&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">JudgeResetCallback</span><span class="p">(</span><span class="n">time_limit</span><span class="o">=</span><span class="n">source</span><span class="p">[</span><span class="s1">&#39;time_limit&#39;</span><span class="p">])</span></div>
+
+
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">600</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Initializes the JudgeResetCallback.</span>
 

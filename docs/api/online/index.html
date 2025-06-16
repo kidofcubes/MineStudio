@@ -696,11 +696,14 @@
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="minestudio.online.rollout.env_worker.EnvWorker.report_rewards">
-<span class="sig-name descname"><span class="pre">report_rewards</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rewards</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/rollout/env_worker.html#EnvWorker.report_rewards"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.rollout.env_worker.EnvWorker.report_rewards" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">report_rewards</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rewards</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/online/rollout/env_worker.html#EnvWorker.report_rewards"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.online.rollout.env_worker.EnvWorker.report_rewards" title="Link to this definition">#</a></dt>
 <dd><p>Sends the rewards for an episode to the main process.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>rewards</strong> – A NumPy array of rewards for the episode.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rewards</strong> – A NumPy array of rewards for the episode.</p></li>
+<li><p><strong>task</strong> – An optional string specifying the task configuration.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The result from the main process.</p>

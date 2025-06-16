@@ -856,8 +856,8 @@ FilePath: /MineStudio/minestudio/simulator/entry.py</p>
 <section id="module-minestudio.simulator.callbacks.callback">
 <span id="basecallback"></span><h3>BaseCallback<a class="headerlink" href="#module-minestudio.simulator.callbacks.callback" title="Link to this heading">#</a></h3>
 <p>Date: 2025-01-06 17:32:04
-LastEditors: caishaofei-mus1 <a class="reference external" href="mailto:1744260356&#37;&#52;&#48;qq&#46;com">1744260356<span>&#64;</span>qq<span>&#46;</span>com</a>
-LastEditTime: 2025-05-09 14:54:09
+LastEditors: muzhancun <a class="reference external" href="mailto:muzhancun&#37;&#52;&#48;stu&#46;pku&#46;edu&#46;cn">muzhancun<span>&#64;</span>stu<span>&#46;</span>pku<span>&#46;</span>edu<span>&#46;</span>cn</a>
+LastEditTime: 2025-06-15 17:02:18
 FilePath: /MineStudio/minestudio/simulator/callbacks/callback.py</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="minestudio.simulator.callbacks.callback.Compose">
@@ -1363,7 +1363,7 @@ and saves them to “reference_videos” in the MineStudio root directory.</p>
 <span id="fastresetcallback"></span><h3>FastResetCallback<a class="headerlink" href="#module-minestudio.simulator.callbacks.fast_reset" title="Link to this heading">#</a></h3>
 <p>Date: 2024-11-11 16:15:32
 LastEditors: muzhancun <a class="reference external" href="mailto:muzhancun&#37;&#52;&#48;stu&#46;pku&#46;edu&#46;cn">muzhancun<span>&#64;</span>stu<span>&#46;</span>pku<span>&#46;</span>edu<span>&#46;</span>cn</a>
-LastEditTime: 2025-05-26 20:56:38
+LastEditTime: 2025-06-12 19:47:39
 FilePath: /MineStudio/minestudio/simulator/callbacks/fast_reset.py</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="minestudio.simulator.callbacks.fast_reset.FastResetCallback">
@@ -1402,6 +1402,24 @@ biome and location.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.simulator.callbacks.fast_reset.FastResetCallback.create_from_conf">
+<span class="sig-name descname"><span class="pre">create_from_conf</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/simulator/callbacks/fast_reset.html#FastResetCallback.create_from_conf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.simulator.callbacks.fast_reset.FastResetCallback.create_from_conf" title="Link to this definition">#</a></dt>
+<dd><p>Creates a FastReset from a configuration.</p>
+<p>Loads data from the source (file path or dict).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>source</strong> (<em>Dict</em>) – Configuration source.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>FastResetCallback instance or None if no valid configuration is found.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[<a class="reference internal" href="#minestudio.simulator.callbacks.fast_reset.FastResetCallback" title="minestudio.simulator.callbacks.fast_reset.FastResetCallback">FastResetCallback</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1572,6 +1590,10 @@ initializes an InitInventoryCallback if ‘init_inventory’ is present.</p>
 </section>
 <section id="module-minestudio.simulator.callbacks.judgereset">
 <span id="judgeresetcallback"></span><h3>JudgeResetCallback<a class="headerlink" href="#module-minestudio.simulator.callbacks.judgereset" title="Link to this heading">#</a></h3>
+<p>Date: 2025-06-12 19:46:03
+LastEditors: muzhancun <a class="reference external" href="mailto:muzhancun&#37;&#52;&#48;stu&#46;pku&#46;edu&#46;cn">muzhancun<span>&#64;</span>stu<span>&#46;</span>pku<span>&#46;</span>edu<span>&#46;</span>cn</a>
+LastEditTime: 2025-06-12 19:47:07
+FilePath: /MineStudio/minestudio/simulator/callbacks/judgereset.py</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="minestudio.simulator.callbacks.judgereset.JudgeResetCallback">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">minestudio.simulator.callbacks.judgereset.</span></span><span class="sig-name descname"><span class="pre">JudgeResetCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">600</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/simulator/callbacks/judgereset.html#JudgeResetCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.simulator.callbacks.judgereset.JudgeResetCallback" title="Link to this definition">#</a></dt>
@@ -1629,6 +1651,23 @@ a reset and resets <cite>self.time_step</cite>.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Tuple[Dict, float, bool, bool, Dict]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.simulator.callbacks.judgereset.JudgeResetCallback.create_from_conf">
+<span class="sig-name descname"><span class="pre">create_from_conf</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#minestudio.simulator.callbacks.judgereset.JudgeResetCallback" title="minestudio.simulator.callbacks.judgereset.JudgeResetCallback"><span class="pre">JudgeResetCallback</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/minestudio/simulator/callbacks/judgereset.html#JudgeResetCallback.create_from_conf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.simulator.callbacks.judgereset.JudgeResetCallback.create_from_conf" title="Link to this definition">#</a></dt>
+<dd><p>Creates a JudgeResetCallback from a configuration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>source</strong> (<em>Dict</em>) – Configuration source.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>JudgeResetCallback instance or None if no valid configuration is found.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[<a class="reference internal" href="#minestudio.simulator.callbacks.judgereset.JudgeResetCallback" title="minestudio.simulator.callbacks.judgereset.JudgeResetCallback">JudgeResetCallback</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2024,7 +2063,7 @@ select a 2D point. The selected point’s coordinates are stored in the
 <span id="prevactioncallback"></span><h3>PrevActionCallback<a class="headerlink" href="#module-minestudio.simulator.callbacks.prev_action" title="Link to this heading">#</a></h3>
 <p>Date: 2024-11-11 19:31:53
 LastEditors: muzhancun <a class="reference external" href="mailto:muzhancun&#37;&#52;&#48;stu&#46;pku&#46;edu&#46;cn">muzhancun<span>&#64;</span>stu<span>&#46;</span>pku<span>&#46;</span>edu<span>&#46;</span>cn</a>
-LastEditTime: 2025-05-26 21:18:13
+LastEditTime: 2025-06-12 19:48:23
 FilePath: /MineStudio/minestudio/simulator/callbacks/prev_action.py</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="minestudio.simulator.callbacks.prev_action.PrevActionCallback">
@@ -2084,6 +2123,24 @@ action to make a decision.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The action.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.simulator.callbacks.prev_action.PrevActionCallback.create_from_conf">
+<span class="sig-name descname"><span class="pre">create_from_conf</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/minestudio/simulator/callbacks/prev_action.html#PrevActionCallback.create_from_conf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.simulator.callbacks.prev_action.PrevActionCallback.create_from_conf" title="Link to this definition">#</a></dt>
+<dd><p>Creates a PrevActionCallback from a configuration.</p>
+<p>Loads data from the source (file path or dict).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>source</strong> (<em>Dict</em>) – Configuration source.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>PrevActionCallback or None if no valid configuration is found.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[<a class="reference internal" href="#minestudio.simulator.callbacks.prev_action.PrevActionCallback" title="minestudio.simulator.callbacks.prev_action.PrevActionCallback">PrevActionCallback</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2786,6 +2843,7 @@ to the POV image dimensions and overlaid with a green color.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#module-minestudio.simulator.callbacks.fast_reset">FastResetCallback</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.callbacks.fast_reset.FastResetCallback"><code class="docutils literal notranslate"><span class="pre">FastResetCallback</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.callbacks.fast_reset.FastResetCallback.before_reset"><code class="docutils literal notranslate"><span class="pre">FastResetCallback.before_reset()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.callbacks.fast_reset.FastResetCallback.create_from_conf"><code class="docutils literal notranslate"><span class="pre">FastResetCallback.create_from_conf()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -2811,6 +2869,7 @@ to the POV image dimensions and overlaid with a green color.</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.callbacks.judgereset.JudgeResetCallback"><code class="docutils literal notranslate"><span class="pre">JudgeResetCallback</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.callbacks.judgereset.JudgeResetCallback.after_reset"><code class="docutils literal notranslate"><span class="pre">JudgeResetCallback.after_reset()</span></code></a></li>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.callbacks.judgereset.JudgeResetCallback.after_step"><code class="docutils literal notranslate"><span class="pre">JudgeResetCallback.after_step()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.callbacks.judgereset.JudgeResetCallback.create_from_conf"><code class="docutils literal notranslate"><span class="pre">JudgeResetCallback.create_from_conf()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -2854,6 +2913,7 @@ to the POV image dimensions and overlaid with a green color.</p>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.callbacks.prev_action.PrevActionCallback.after_reset"><code class="docutils literal notranslate"><span class="pre">PrevActionCallback.after_reset()</span></code></a></li>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.callbacks.prev_action.PrevActionCallback.after_step"><code class="docutils literal notranslate"><span class="pre">PrevActionCallback.after_step()</span></code></a></li>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.callbacks.prev_action.PrevActionCallback.before_step"><code class="docutils literal notranslate"><span class="pre">PrevActionCallback.before_step()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.simulator.callbacks.prev_action.PrevActionCallback.create_from_conf"><code class="docutils literal notranslate"><span class="pre">PrevActionCallback.create_from_conf()</span></code></a></li>
 </ul>
 </li>
 </ul>
