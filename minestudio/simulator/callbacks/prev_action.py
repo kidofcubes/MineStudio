@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-11 19:31:53
 LastEditors: muzhancun muzhancun@stu.pku.edu.cn
-LastEditTime: 2025-05-26 21:18:13
+LastEditTime: 2025-06-12 19:48:23
 FilePath: /MineStudio/minestudio/simulator/callbacks/prev_action.py
 '''
 import os
@@ -16,7 +16,7 @@ avail_keys = ["attack", "use", "inventory", "forward", "back", "left", "right",
         "hotbar.4", "hotbar.5", "hotbar.6", "hotbar.7", "hotbar.8", "hotbar.9",
         "camera"]
 
-# @Registers.simulator_callback.register
+@Registers.simulator_callback.register
 class PrevActionCallback(MinecraftCallback):
     """
     A callback that stores the previous action and adds it to the observation.
@@ -24,6 +24,22 @@ class PrevActionCallback(MinecraftCallback):
     This callback is useful for tasks where the agent needs to know its previous
     action to make a decision.
     """
+
+    def create_from_conf(source):
+        """Creates a PrevActionCallback from a configuration.
+
+        Loads data from the source (file path or dict).
+
+        :param source: Configuration source.
+        :type source: Dict
+        :returns: PrevActionCallback or None if no valid configuration is found.
+        :rtype: Optional[PrevActionCallback]
+        """
+        if 'use_prev_action' in source and source['use_prev_action']:
+            return PrevActionCallback()
+        else:
+            print("[red]use_prev_action is not set to True, skipping PrevActionCallback.[/red]")
+            return None
     
     def __init__(self):
         """

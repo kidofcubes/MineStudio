@@ -1,13 +1,16 @@
 '''
 Date: 2024-11-11 16:15:32
 LastEditors: muzhancun muzhancun@stu.pku.edu.cn
-LastEditTime: 2025-05-26 20:56:38
+LastEditTime: 2025-06-12 19:47:39
 FilePath: /MineStudio/minestudio/simulator/callbacks/fast_reset.py
 '''
 import random
 import numpy as np
 from minestudio.simulator.callbacks.callback import MinecraftCallback
+from minestudio.utils.register import Registers
+from rich import print
 
+@Registers.simulator_callback.register
 class FastResetCallback(MinecraftCallback):
     """Implements a fast reset mechanism for the Minecraft simulator.
 
@@ -24,6 +27,28 @@ class FastResetCallback(MinecraftCallback):
     :param start_weather: The weather to set at reset, defaults to 'clear'.
     :type start_weather: str, optional
     """
+
+    def create_from_conf(source):
+        """Creates a FastReset from a configuration.
+
+        Loads data from the source (file path or dict).
+
+        :param source: Configuration source.
+        :type source: Dict
+        :returns: FastResetCallback instance or None if no valid configuration is found.
+        :rtype: Optional[FastResetCallback]
+        """
+        essential_keys = ['biomes', 'random_tp_range']
+        for key in essential_keys:
+            if key not in source:
+                print(f"[red]Missing {key} for FastResetCallback, skipping.[/red]")
+                return None
+        return FastResetCallback(
+            biomes=source['biomes'],
+            random_tp_range=source['random_tp_range'],
+            start_time=source.get('start_time', 0),
+            start_weather=source.get('start_weather', 'clear')
+        )
 
     def __init__(self, biomes, random_tp_range, start_time=0, start_weather='clear'):
         """Initializes the FastResetCallback.

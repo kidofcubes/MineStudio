@@ -22,6 +22,7 @@ from ray.experimental import tqdm_ray
 from minestudio.online.utils import auto_stack
 import uuid
 import copy
+import pickle
 import torch.distributed as dist
 
 VERBOSE = False
@@ -595,8 +596,8 @@ class PPOTrainer(BaseTrainer):
                 #save model
                 torch.save(self.inner_model.state_dict(), str(checkpoint_dir / "model.ckpt"))
                 torch.save(self.optimizer.state_dict(), str(checkpoint_dir / "optimizer.ckpt"))
-                with open(checkpoint_dir / "whole_config.py", "w") as f:
-                    f.write(self.whole_config)
+                with open(checkpoint_dir / "whole_config.pkl", "wb") as f:
+                    pickle.dump(self.whole_config, f)
 
                 if (
                     self.last_checkpoint_dir

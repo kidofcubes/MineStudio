@@ -1,11 +1,20 @@
+'''
+Date: 2025-06-12 19:46:03
+LastEditors: muzhancun muzhancun@stu.pku.edu.cn
+LastEditTime: 2025-06-12 19:47:07
+FilePath: /MineStudio/minestudio/simulator/callbacks/judgereset.py
+'''
 from minestudio.simulator.callbacks.callback import MinecraftCallback
 from minestudio.simulator.utils import MinecraftGUI, GUIConstants
 from minestudio.simulator.utils.gui import PointDrawCall
+from minestudio.utils.register import Registers
+from rich import print
 
 import time
 from typing import Dict, Literal, Optional, Callable, Tuple
 import cv2
 
+@Registers.simulator_callback.register
 class JudgeResetCallback(MinecraftCallback):
     """Resets the environment if a time limit is reached or episode terminates.
 
@@ -17,6 +26,20 @@ class JudgeResetCallback(MinecraftCallback):
                        Defaults to 600.
     :type time_limit: int, optional
     """
+
+    def create_from_conf(source: Dict) -> Optional['JudgeResetCallback']:
+        """Creates a JudgeResetCallback from a configuration.
+        
+        :param source: Configuration source.
+        :type source: Dict
+        :returns: JudgeResetCallback instance or None if no valid configuration is found.
+        :rtype: Optional[JudgeResetCallback]
+        """
+        if 'time_limit' not in source:
+            print("[red]Missing 'time_limit' for JudgeResetCallback, skipping.[/red]")
+            return None
+        return JudgeResetCallback(time_limit=source['time_limit'])
+
     def __init__(self, time_limit: int = 600):
         """Initializes the JudgeResetCallback.
 

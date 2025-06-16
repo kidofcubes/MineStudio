@@ -181,14 +181,15 @@ class EnvWorker(Process):
         self.conn.send(("reset_state", None))
         return self.conn.recv()
     
-    def report_rewards(self, rewards: np.ndarray):
+    def report_rewards(self, rewards: np.ndarray, task: Optional[str] = None):
         """
         Sends the rewards for an episode to the main process.
 
         :param rewards: A NumPy array of rewards for the episode.
+        :param task: An optional string specifying the task configuration.
         :returns: The result from the main process.
         """
-        self.conn.send(("report_rewards", rewards))
+        self.conn.send(("report_rewards", rewards, task))
         return self.conn.recv()
 
     def run(self) -> None:
@@ -251,7 +252,7 @@ class EnvWorker(Process):
                         video_writer.close_video()
                     #_result = self.report_rewards(np.array(reward_list))
                     
-                    _result, episode_info = self.report_rewards(np.array(reward_list))
+                    _result, episode_info = self.report_rewards(np.array(reward_list), obs.get("task", None))
                     obs["online_info"] = episode_info
                     
                     if _result is not None:

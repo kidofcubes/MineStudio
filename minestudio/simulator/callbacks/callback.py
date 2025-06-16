@@ -1,7 +1,7 @@
 '''
 Date: 2025-01-06 17:32:04
-LastEditors: caishaofei-mus1 1744260356@qq.com
-LastEditTime: 2025-05-09 14:54:09
+LastEditors: muzhancun muzhancun@stu.pku.edu.cn
+LastEditTime: 2025-06-15 17:02:18
 FilePath: /MineStudio/minestudio/simulator/callbacks/callback.py
 '''
 import os
@@ -152,7 +152,8 @@ class MinecraftCallback:
         """
         return image
 
-
+    def __repr__(self):
+        return f"{self.__class__.__name__}()"
 class Compose(MinecraftCallback):
     """
     A callback that composes multiple callbacks into a single callback.
@@ -289,4 +290,4 @@ class Compose(MinecraftCallback):
         for callback in self.activate_callbacks:
             image = callback.before_render(sim, image)
         return image
-
+    

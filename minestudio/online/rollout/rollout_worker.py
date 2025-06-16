@@ -232,8 +232,9 @@ class RolloutWorker():
                     conn.send("ok")
                 elif args[0] == "report_rewards":
                     rewards = args[1]
+                    task = args[2] if len(args) > 2 else None
                     if self.episode_statistics is not None:
-                        video_step, episode_info = ray.get(self.episode_statistics.report_episode.remote(rewards))
+                        video_step, episode_info = ray.get(self.episode_statistics.report_episode.remote(rewards, its_specfg = task if task is not None else ""))
                         if video_step is not None and video_step > self.video_step:
                             self.video_step = video_step
                             conn.send((video_step, episode_info))

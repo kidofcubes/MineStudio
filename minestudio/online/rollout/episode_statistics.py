@@ -5,7 +5,7 @@ from typing import Dict, Any, Optional, List
 import numpy as np
 from collections import deque
 import logging
-
+from rich import print
 logger = logging.getLogger("ray")
 @ray.remote
 class EpisodeStatistics:
@@ -47,18 +47,30 @@ class EpisodeStatistics:
             num_test_tasks = 0
             sum_discounted_reward = 0
             sum_episode_length = 0
+            num_valid_episode_length = 0  # Track valid episode length count
+
+            # [Change log] Move the logging of step to the beginning by zhancun
+            wandb_logger.log({
+                "episode_statistics/step": step, 
+            })  
 
             for task in self.sum_rewards_metrics.keys():
                 mean_sum_reward = self.sum_rewards_metrics[task].compute()
                 mean_discounted_reward = self.discounted_rewards_metrics[task].compute()
                 mean_episode_length = self.episode_lengths_metrics[task].compute()
 
+                # Log individual task metrics
+                if not np.isnan(mean_sum_reward):
+                    wandb_logger.log({
+                        f"episode_statistics/{task}/sum_reward": mean_sum_reward,
+                        f"episode_statistics/{task}/discounted_reward": mean_discounted_reward,
+                        f"episode_statistics/{task}/episode_length": mean_episode_length,
+                    })
+                    print(f"Task {task} - Sum Reward: {mean_sum_reward}, Discounted Reward: {mean_discounted_reward}, Episode Length: {mean_episode_length}")
+
                 self.sum_rewards_metrics[task].reset()
                 self.discounted_rewards_metrics[task].reset()
                 self.episode_lengths_metrics[task].reset()
-                wandb_logger.log({
-                     "episode_statistics/step": step, 
-                })
 
                 if not np.isnan(mean_sum_reward) and "4train" in task:
                     sum_train_reward += mean_sum_reward
@@ -67,14 +79,18 @@ class EpisodeStatistics:
                 if not np.isnan(mean_sum_reward) and "4test" in task:
                     sum_test_reward += mean_sum_reward
                     num_test_tasks += 1
-                sum_episode_length += mean_episode_length
+                
+                # Only add episode length if it's not NaN
+                if not np.isnan(mean_episode_length):
+                    sum_episode_length += mean_episode_length
+                    num_valid_episode_length += 1
 
             self.episode_info = {
                 "steps": step,
                 "episode_count": self.acc_episode_count,
                 "mean_sum_reward": sum_train_reward / num_train_tasks if num_train_tasks > 0 else 0,
                 "mean_discounted_reward": sum_discounted_reward / num_train_tasks if num_train_tasks > 0 else 0,
-                "mean_episode_length": sum_episode_length / (num_train_tasks + num_test_tasks) if num_train_tasks + num_test_tasks > 0 else 0
+                "mean_episode_length": sum_episode_length / num_valid_episode_length if num_valid_episode_length > 0 else 0
             }
             wandb_logger.log({
                 "episode_statistics/steps": step,
@@ -82,7 +98,7 @@ class EpisodeStatistics:
                 "episode_statistics/mean_sum_reward": sum_train_reward / num_train_tasks if num_train_tasks > 0 else 0,
                 "episode_statistics/mean_test_sum_reward": sum_test_reward / num_test_tasks if num_test_tasks > 0 else 0,
                 "episode_statistics/mean_discounted_reward": sum_discounted_reward / num_train_tasks if num_train_tasks > 0 else 0,
-                "episode_statistics/mean_episode_length": sum_episode_length / (num_train_tasks + num_test_tasks) if num_train_tasks + num_test_tasks > 0 else 0
+                "episode_statistics/mean_episode_length": sum_episode_length / num_valid_episode_length if num_valid_episode_length > 0 else 0
             })
 
             self.acc_episode_count = 0
