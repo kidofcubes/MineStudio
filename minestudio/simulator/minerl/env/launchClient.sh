@@ -36,7 +36,7 @@ fi
 
 if [ "$device" == "cpu" ]; then
     if [ "$(uname)" = "Darwin" ]; then
-        java -Xmx$maxMem -XstartOnFirstThread -jar $fatjar --envPort=$port --envSeed=$seed
+        java -Xmx$maxMem -XstartOnFirstThread -jar $fatjar --envPort=$port
     else
         xvfb-run -a java -Xmx$maxMem -jar $fatjar --envPort=$port
     fi
