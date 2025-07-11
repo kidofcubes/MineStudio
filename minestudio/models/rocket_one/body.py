@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-10 15:52:16
-LastEditors: caishaofei caishaofei@stu.pku.edu.cn
-LastEditTime: 2025-01-04 17:09:54
+LastEditors: Muyao 2350076251@qq.com
+LastEditTime: 2025-07-10 20:35:04
 FilePath: /MineStudio/minestudio/models/rocket_one/body.py
 '''
 import torch
@@ -106,9 +106,15 @@ class RocketPolicy(MinePolicy, PyTorchModelHubMixin):
 
 @Registers.model_loader.register
 def load_rocket_policy(ckpt_path: Optional[str] = None):
+    import os
     if ckpt_path is None:
         model = RocketPolicy.from_pretrained("CraftJarvis/MineStudio_ROCKET-1.12w_EMA")
         return model
+    elif os.path.exists(ckpt_path):
+        print(ckpt_path)
+        model = RocketPolicy.from_pretrained(ckpt_path)
+        return model
+    
     ckpt = torch.load(ckpt_path)
     model = RocketPolicy(**ckpt['hyper_parameters']['model'])
     state_dict = {k.replace('mine_policy.', ''): v for k, v in ckpt['state_dict'].items()}
