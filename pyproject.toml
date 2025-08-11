@@ -30,7 +30,7 @@ dependencies = [
     "coloredlogs",
     "daemoniker",
     "lxml",
-    "cuda-python",
+    "cuda-python; platform_system!='Darwin'",  # Exclude on macOS  
     "diskcache",
     "albumentations",
     "einops",
@@ -66,3 +66,7 @@ readme = { file = "README.md" }
 
 [tool.pytest.ini_options]
 addopts = ["--import-mode=importlib"]
+
+[[tool.poetry.source]]
+name = "ali"
+url = "https://mirrors.aliyun.com/pypi/simple/"

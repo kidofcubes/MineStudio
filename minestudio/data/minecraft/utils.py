@@ -32,7 +32,8 @@ def get_repo_total_size(repo_id, repo_type="dataset", branch="main"):
     """
 
     def fetch_file_list(path=""):
-        url = f"https://huggingface.co/api/{repo_type}s/{repo_id}/tree/{branch}/{path}"
+        endpoint = os.environ['HF_ENDPOINT'] if 'HF_ENDPOINT' in os.environ.keys() else "https://huggingface.co"
+        url = f"{endpoint}/api/{repo_type}s/{repo_id}/tree/{branch}/{path}"
         response = requests.get(url)
         response.raise_for_status()
         return response.json()
@@ -80,7 +81,8 @@ def download_dataset_from_huggingface(name: Literal["6xx", "7xx", "8xx", "9xx", 
     if total_size > free:
         raise ValueError(f"Insufficient space for downloading {name}. ")
     dataset_dir = os.path.join(get_mine_studio_dir(), 'contractors', f'dataset_{name}')
-    local_dataset_dir = snapshot_download(repo_id, repo_type="dataset", local_dir=dataset_dir)
+    endpoint = os.environ['HF_ENDPOINT'] if 'HF_ENDPOINT' in os.environ.keys() else "https://huggingface.co"
+    local_dataset_dir = snapshot_download(repo_id, repo_type="dataset", local_dir=dataset_dir,endpoint=endpoint)
     return local_dataset_dir
 
 def pull_datasets_from_remote(dataset_dirs: List[str]) -> List[str]:

@@ -9,6 +9,7 @@ from minestudio.simulator.utils import MinecraftGUI, GUIConstants
 
 import time
 from typing import Dict, Literal, Optional, Callable, Tuple, List, Any
+from minestudio.utils import get_compute_device
 from rich import print
 
 DEBUG = False
@@ -53,7 +54,7 @@ class PlayCallback(MinecraftCallback):
         self.end_time = time.time()
         if agent_generator is not None:
             print(f'[green]Load agent with name: {agent_generator.func.__name__}, args: {agent_generator.keywords}[/green]')
-            self.agent = agent_generator().to("cuda")
+            self.agent = agent_generator().to(get_compute_device())
         else:
             self.agent = None
         self.switch = 'human'
