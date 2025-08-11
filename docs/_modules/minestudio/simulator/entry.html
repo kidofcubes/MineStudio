@@ -580,7 +580,7 @@
 <span></span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">Date: 2024-11-11 05:20:17</span>
 <span class="sd">LastEditors: muzhancun muzhancun@stu.pku.edu.cn</span>
-<span class="sd">LastEditTime: 2025-05-26 22:10:06</span>
+<span class="sd">LastEditTime: 2025-06-16 17:57:05</span>
 <span class="sd">FilePath: /MineStudio/minestudio/simulator/entry.py</span>
 <span class="sd">&#39;&#39;&#39;</span>
 
@@ -822,7 +822,7 @@
             <span class="n">obs</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">done</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
         <span class="n">obs</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wrap_obs_info</span><span class="p">(</span><span class="n">obs</span><span class="p">,</span> <span class="n">info</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">callback</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">callback</span><span class="p">)</span>
+            <span class="c1"># print(callback)</span>
             <span class="n">obs</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">callback</span><span class="o">.</span><span class="n">after_reset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obs</span><span class="p">,</span> <span class="n">info</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">obs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span> <span class="o">=</span> <span class="n">obs</span><span class="p">,</span> <span class="n">info</span>
         <span class="k">return</span> <span class="n">obs</span><span class="p">,</span> <span class="n">info</span></div>

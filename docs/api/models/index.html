@@ -2474,7 +2474,7 @@ and combines the outputs using the specified guidance scale.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="minestudio.models.steve_one.body.SteveOnePolicy.initial_state">
-<span class="sig-name descname"><span class="pre">initial_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">condition</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/minestudio/models/steve_one/body.html#SteveOnePolicy.initial_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.models.steve_one.body.SteveOnePolicy.initial_state" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">initial_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">condition</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/minestudio/models/steve_one/body.html#SteveOnePolicy.initial_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.models.steve_one.body.SteveOnePolicy.initial_state" title="Link to this definition">#</a></dt>
 <dd><p>Initialize recurrent state for policy inference.</p>
 <p>Creates initial state tensors for the recurrent layers. When classifier-free
 guidance is enabled (cond_scale &gt; 0), duplicates states for both conditioned
@@ -2488,6 +2488,27 @@ and unconditioned inference branches.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>List of initial state tensors</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.models.steve_one.body.SteveOnePolicy.merge_state">
+<span class="sig-name descname"><span class="pre">merge_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">states</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/minestudio/models/steve_one/body.html#SteveOnePolicy.merge_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.models.steve_one.body.SteveOnePolicy.merge_state" title="Link to this definition">#</a></dt>
+<dd><p>Abstract method to merge multiple states.</p>
+<p>Subclasses should implement this if they support merging states.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>states</strong> – The states to merge.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The merged state as an optional list of tensors.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[List[torch.Tensor]]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>NotImplementedError</strong> – if not implemented by the subclass.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2521,6 +2542,30 @@ and unconditioned inference branches.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Raises<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>NotImplementedError</strong> – This method is not yet implemented</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="minestudio.models.steve_one.body.SteveOnePolicy.split_state">
+<span class="sig-name descname"><span class="pre">split_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">states</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">split_num</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/minestudio/models/steve_one/body.html#SteveOnePolicy.split_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#minestudio.models.steve_one.body.SteveOnePolicy.split_state" title="Link to this definition">#</a></dt>
+<dd><p>Abstract method to split a state into multiple states.</p>
+<p>Subclasses should implement this if they support splitting states.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>state</strong> – The state to split.</p></li>
+<li><p><strong>split_num</strong> – The number of ways to split the state.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An optional list of split states.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[List[List[torch.Tensor]]]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>NotImplementedError</strong> – if not implemented by the subclass.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -3182,8 +3227,10 @@ Returns None if download is skipped and directory doesn’t exist, or if an erro
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.models.steve_one.body.SteveOnePolicy.device"><code class="docutils literal notranslate"><span class="pre">SteveOnePolicy.device</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.models.steve_one.body.SteveOnePolicy.forward"><code class="docutils literal notranslate"><span class="pre">SteveOnePolicy.forward()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.models.steve_one.body.SteveOnePolicy.initial_state"><code class="docutils literal notranslate"><span class="pre">SteveOnePolicy.initial_state()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.models.steve_one.body.SteveOnePolicy.merge_state"><code class="docutils literal notranslate"><span class="pre">SteveOnePolicy.merge_state()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.models.steve_one.body.SteveOnePolicy.prepare_condition"><code class="docutils literal notranslate"><span class="pre">SteveOnePolicy.prepare_condition()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.models.steve_one.body.SteveOnePolicy.reset_parameters"><code class="docutils literal notranslate"><span class="pre">SteveOnePolicy.reset_parameters()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.models.steve_one.body.SteveOnePolicy.split_state"><code class="docutils literal notranslate"><span class="pre">SteveOnePolicy.split_state()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minestudio.models.steve_one.body.TranslatorVAE"><code class="docutils literal notranslate"><span class="pre">TranslatorVAE</span></code></a><ul class="nav section-nav flex-column">

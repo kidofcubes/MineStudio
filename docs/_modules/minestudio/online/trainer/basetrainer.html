@@ -631,6 +631,7 @@
 <span class="sd">    :param context_length: The length of the context window for processing sequences.</span>
 <span class="sd">    :param use_normalized_vf: Whether to use a normalized value function.</span>
 <span class="sd">    :param inference_batch_size_per_gpu: Batch size for inference on each GPU during GAE calculation.</span>
+<span class="sd">    :param use_amp: Whether to use automatic mixed precision</span>
 <span class="sd">    :param resume: Optional path to a checkpoint directory to resume training from.</span>
 <span class="sd">    :param resume_optimizer: Whether to resume the optimizer state if resuming from a checkpoint.</span>
 <span class="sd">    :param kwargs: Additional keyword arguments.</span>
@@ -649,6 +650,7 @@
         <span class="n">context_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
         <span class="n">use_normalized_vf</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
         <span class="n">inference_batch_size_per_gpu</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">use_amp</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
         <span class="n">resume</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
         <span class="n">resume_optimizer</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
         <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
@@ -664,7 +666,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">inference_batch_size_per_gpu</span> <span class="o">=</span> <span class="n">inference_batch_size_per_gpu</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">use_normalized_vf</span> <span class="o">=</span> <span class="n">use_normalized_vf</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">context_length</span> <span class="o">=</span> <span class="n">context_length</span>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">use_amp</span> <span class="o">=</span> <span class="n">use_amp</span>
+        
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Warning: resume is not implemented&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">resume</span> <span class="o">=</span> <span class="n">resume</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">resume_optimizer</span> <span class="o">=</span> <span class="n">resume_optimizer</span>
@@ -905,7 +908,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">replay_buffer</span> <span class="o">=</span> <span class="n">ReplayBufferInterface</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">loader_pool</span> <span class="o">=</span> <span class="n">create_loader_pool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_readers</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_cpus_per_reader</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">setup_model_and_optimizer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">policy_generator</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scaler</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">setup_model_and_optimizer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">policy_generator</span><span class="p">)</span>
         <span class="k">assert</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span><span class="p">,</span> <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">DataParallel</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">parallel</span><span class="o">.</span><span class="n">DistributedDataParallel</span><span class="p">))</span>
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span><span class="o">.</span><span class="n">training</span>
 
@@ -923,6 +926,8 @@
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">module</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">resume</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">resume_optimizer</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resume</span><span class="p">,</span> <span class="s2">&quot;optimizer.ckpt&quot;</span><span class="p">),</span> <span class="n">map_location</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span><span class="o">.</span><span class="n">device</span><span class="p">))</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_amp</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">scaler</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resume</span><span class="p">,</span> <span class="s2">&quot;scaler.ckpt&quot;</span><span class="p">),</span> <span class="n">map_location</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">inner_model</span><span class="o">.</span><span class="n">device</span><span class="p">))</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">model_version</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">broadcast_model_to_rollout_workers</span><span class="p">(</span><span class="n">new_version</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>

@@ -599,6 +599,9 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">minestudio.simulator</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinecraftSim</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">io</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PIL</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
 <div class="viewcode-block" id="VideoWriter">
 <a class="viewcode-back" href="../../../../api/online/index.html#minestudio.online.rollout.env_worker.VideoWriter">[docs]</a>
@@ -695,33 +698,73 @@
 
 <div class="viewcode-block" id="draw_vpred">
 <a class="viewcode-back" href="../../../../api/online/index.html#minestudio.online.rollout.env_worker.draw_vpred">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">draw_vpred</span><span class="p">(</span><span class="n">img</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">vpred</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">additional_text</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">draw_vpred</span><span class="p">(</span>
+    <span class="n">img</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">vpred</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">additional_text</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="n">text_color</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">85</span><span class="p">),</span>  <span class="c1"># Minecraft yellow</span>
+    <span class="n">shadow_color</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>     <span class="c1"># Black shadow</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Draws the predicted value (vpred) and additional text on an image.</span>
-
-<span class="sd">    :param img: The input image as a NumPy array.</span>
-<span class="sd">    :param vpred: The predicted value to display.</span>
-<span class="sd">    :param additional_text: Optional additional text to display.</span>
-<span class="sd">    :returns: The image with the text drawn on it.</span>
+<span class="sd">    Draw vpred text with Minecraft-styled rendering, coherent with before_render function in base_callback2.</span>
+<span class="sd">    Uses matplotlib for high-quality text rendering with shadow effect.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">h</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span>
-    <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-    <span class="n">ref_text</span> <span class="o">=</span> <span class="s2">&quot;vpred: -1000.000&quot;</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;vpred: %0.3f&quot;</span> <span class="o">%</span> <span class="n">vpred</span> <span class="o">+</span> <span class="n">additional_text</span>
-    <span class="n">ref_font_scale</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="n">ref_thickness</span> <span class="o">=</span> <span class="mi">2</span>
-    <span class="p">(</span><span class="n">ref_text_width</span><span class="p">,</span> <span class="n">ref_text_height</span><span class="p">),</span> <span class="n">baseline</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">getTextSize</span><span class="p">(</span><span class="n">ref_text</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">FONT_HERSHEY_SIMPLEX</span><span class="p">,</span> <span class="n">ref_font_scale</span><span class="p">,</span> <span class="n">ref_thickness</span><span class="p">)</span> <span class="c1"># type: ignore</span>
-    <span class="n">desired_width</span> <span class="o">=</span> <span class="mf">0.4</span> <span class="o">*</span> <span class="n">w</span>
-    <span class="n">desired_height</span> <span class="o">=</span> <span class="mf">0.2</span> <span class="o">*</span> <span class="n">h</span>
-    <span class="n">scale</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">desired_width</span> <span class="o">/</span> <span class="n">ref_text_width</span><span class="p">,</span> <span class="n">desired_height</span> <span class="o">/</span> <span class="n">ref_text_height</span><span class="p">)</span>
-    <span class="n">text_height</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ref_text_height</span> <span class="o">*</span> <span class="n">scale</span><span class="p">)</span>
-    <span class="n">offset</span> <span class="o">=</span> <span class="nb">int</span> <span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.05</span><span class="p">)</span>
-    <span class="n">text_org</span> <span class="o">=</span> <span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">text_height</span> <span class="o">+</span> <span class="n">offset</span><span class="p">)</span>
-    <span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">putText</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">text_org</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">FONT_HERSHEY_SIMPLEX</span><span class="p">,</span> <span class="n">scale</span> <span class="o">*</span> <span class="n">ref_font_scale</span><span class="p">,</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="nb">int</span> <span class="p">(</span><span class="n">ref_thickness</span> <span class="o">*</span> <span class="n">scale</span><span class="p">))</span> <span class="c1"># type: ignore</span>
-    <span class="k">return</span> <span class="n">img</span></div>
+    <span class="c1"># Ensure image is in RGB format</span>
+    <span class="n">draw_img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">draw_img</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">draw_img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">draw_img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">draw_img</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_GRAY2BGR</span><span class="p">)</span>
 
+    <span class="n">image_height</span><span class="p">,</span> <span class="n">image_width</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">draw_img</span><span class="o">.</span><span class="n">shape</span>
+    
+    <span class="c1"># Prepare text content</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;vpred: %0.3f&quot;</span> <span class="o">%</span> <span class="n">vpred</span> <span class="o">+</span> <span class="n">additional_text</span>
+
+    <span class="c1"># --- Matplotlib Figure Setup for High DPI (matching base_callback2) ---</span>
+    <span class="c1"># Set a high DPI for a crisp image</span>
+    <span class="n">dpi</span> <span class="o">=</span> <span class="mi">300</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="n">image_width</span> <span class="o">/</span> <span class="n">dpi</span><span class="p">,</span> <span class="n">image_height</span> <span class="o">/</span> <span class="n">dpi</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">draw_img</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+
+    <span class="c1"># --- Add Minecraft-Styled Text (matching base_callback2) ---</span>
+    <span class="c1"># Colors inspired by Minecraft&#39;s UI (convert RGB to matplotlib format)</span>
+    <span class="n">mc_yellow</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;#</span><span class="si">{</span><span class="n">text_color</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s1">02x</span><span class="si">}{</span><span class="n">text_color</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s1">02x</span><span class="si">}{</span><span class="n">text_color</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">:</span><span class="s1">02x</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="n">mc_black</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;#</span><span class="si">{</span><span class="n">shadow_color</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s1">02x</span><span class="si">}{</span><span class="n">shadow_color</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s1">02x</span><span class="si">}{</span><span class="n">shadow_color</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">:</span><span class="s1">02x</span><span class="si">}</span><span class="s1">&#39;</span>
+    
+    <span class="c1"># Text properties (matching base_callback2 style)</span>
+    <span class="n">text_props</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;transform&#39;</span><span class="p">:</span> <span class="n">ax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span>
+        <span class="s1">&#39;fontsize&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="s1">&#39;verticalalignment&#39;</span><span class="p">:</span> <span class="s1">&#39;center&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;horizontalalignment&#39;</span><span class="p">:</span> <span class="s1">&#39;left&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;fontweight&#39;</span><span class="p">:</span> <span class="s1">&#39;bold&#39;</span><span class="p">,</span>  <span class="c1"># Bold to mimic pixel font thickness</span>
+    <span class="p">}</span>
+
+    <span class="c1"># Position text at left center (similar to base_callback2 but different position)</span>
+    <span class="n">text_x</span> <span class="o">=</span> <span class="mf">0.02</span>
+    <span class="n">text_y</span> <span class="o">=</span> <span class="mf">0.5</span>
+
+    <span class="c1"># Draw the black &quot;shadow&quot; text slightly offset</span>
+    <span class="c1"># This creates a classic 8-bit style outline/shadow</span>
+    <span class="n">shadow_offset</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">dpi</span>  <span class="c1"># Small offset in points</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">text_x</span> <span class="o">+</span> <span class="n">shadow_offset</span><span class="p">,</span> <span class="n">text_y</span> <span class="o">-</span> <span class="n">shadow_offset</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">mc_black</span><span class="p">,</span> <span class="o">**</span><span class="n">text_props</span><span class="p">)</span>
+    
+    <span class="c1"># Draw the main yellow text on top</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">text_x</span><span class="p">,</span> <span class="n">text_y</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">mc_yellow</span><span class="p">,</span> <span class="o">**</span><span class="n">text_props</span><span class="p">)</span>
+
+    <span class="c1"># --- Convert Matplotlib Figure back to NumPy Array (matching base_callback2) ---</span>
+    <span class="k">with</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()</span> <span class="k">as</span> <span class="n">buff</span><span class="p">:</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">buff</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">,</span> <span class="n">transparent</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">pad_inches</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">buff</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="c1"># Use PIL to correctly handle the RGBA conversion from PNG</span>
+        <span class="n">plot_pil</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">buff</span><span class="p">)</span>
+        <span class="n">plot_image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">plot_pil</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>  <span class="c1"># Important to free up memory</span>
+
+    <span class="c1"># Return the image with the alpha channel sliced off (RGB)</span>
+    <span class="k">return</span> <span class="n">plot_image</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span></div>
 
 
 <div class="viewcode-block" id="EnvWorker">
