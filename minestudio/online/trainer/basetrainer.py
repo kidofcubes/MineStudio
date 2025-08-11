@@ -50,6 +50,7 @@ class BaseTrainer:
     :param context_length: The length of the context window for processing sequences.
     :param use_normalized_vf: Whether to use a normalized value function.
     :param inference_batch_size_per_gpu: Batch size for inference on each GPU during GAE calculation.
+    :param use_amp: Whether to use automatic mixed precision
     :param resume: Optional path to a checkpoint directory to resume training from.
     :param resume_optimizer: Whether to resume the optimizer state if resuming from a checkpoint.
     :param kwargs: Additional keyword arguments.
@@ -68,6 +69,7 @@ class BaseTrainer:
         context_length: int,
         use_normalized_vf: bool,
         inference_batch_size_per_gpu: int,
+        use_amp: bool,
         resume: Optional[str],
         resume_optimizer: bool,
         **kwargs,
@@ -83,7 +85,8 @@ class BaseTrainer:
         self.inference_batch_size_per_gpu = inference_batch_size_per_gpu
         self.use_normalized_vf = use_normalized_vf
         self.context_length = context_length
-
+        self.use_amp = use_amp
+        
         print("Warning: resume is not implemented")
         self.resume = resume
         self.resume_optimizer = resume_optimizer
@@ -315,7 +318,7 @@ class BaseTrainer:
         self.replay_buffer = ReplayBufferInterface()
         self.loader_pool = create_loader_pool(self.num_readers, self.num_cpus_per_reader)
 
-        self.inner_model, self.optimizer = self.setup_model_and_optimizer(self.policy_generator)
+        self.inner_model, self.optimizer, self.scaler = self.setup_model_and_optimizer(self.policy_generator)
         assert not isinstance(self.inner_model, (torch.nn.DataParallel, torch.nn.parallel.DistributedDataParallel))
         assert self.inner_model.training
 
@@ -333,6 +336,8 @@ class BaseTrainer:
         assert self.model is self.inner_model or self.model.module is self.inner_model
         if self.resume and self.resume_optimizer:
             self.optimizer.load_state_dict(torch.load(os.path.join(self.resume, "optimizer.ckpt"), map_location=self.inner_model.device))
+            if self.use_amp:
+                self.scaler.load_state_dict(torch.load(os.path.join(self.resume, "scaler.ckpt"), map_location=self.inner_model.device))
 
         self.model_version = 0
         self.broadcast_model_to_rollout_workers(new_version=True)

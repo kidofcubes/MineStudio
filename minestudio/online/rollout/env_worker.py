@@ -20,6 +20,9 @@ import os
 import copy
 from minestudio.simulator import MinecraftSim
 import subprocess
+import io
+from PIL import Image
+import matplotlib.pyplot as plt
 
 class VideoWriter(Thread):
     """
@@ -99,33 +102,73 @@ class VideoWriter(Thread):
                 self.video_container = None
                 self.video_stream = None
 
-def draw_vpred(img: np.ndarray, vpred: float, additional_text: Optional[str] = ""):
+def draw_vpred(
+    img: np.ndarray,
+    vpred: float,
+    additional_text: Optional[str] = "",
+    text_color: Tuple[int, int, int] = (255, 255, 85),  # Minecraft yellow
+    shadow_color: Tuple[int, int, int] = (0, 0, 0),     # Black shadow
+) -> np.ndarray:
     """
-    Draws the predicted value (vpred) and additional text on an image.
+    Draw vpred text with Minecraft-styled rendering, coherent with before_render function in base_callback2.
+    Uses matplotlib for high-quality text rendering with shadow effect.
+    """
+    # Ensure image is in RGB format
+    draw_img = img.copy()
+    if len(draw_img.shape) == 2 or draw_img.shape[2] == 1:
+        draw_img = cv2.cvtColor(draw_img, cv2.COLOR_GRAY2BGR)
 
-    :param img: The input image as a NumPy array.
-    :param vpred: The predicted value to display.
-    :param additional_text: Optional additional text to display.
-    :returns: The image with the text drawn on it.
-    """
-    img = img.copy()
-    h, w, c = img.shape
-    if c == 1:
-        img = img.repeat(3, axis=2)
-    ref_text = "vpred: -1000.000"
+    image_height, image_width, _ = draw_img.shape
+    
+    # Prepare text content
     text = f"vpred: %0.3f" % vpred + additional_text
-    ref_font_scale = 1
-    ref_thickness = 2
-    (ref_text_width, ref_text_height), baseline = cv2.getTextSize(ref_text, cv2.FONT_HERSHEY_SIMPLEX, ref_font_scale, ref_thickness) # type: ignore
-    desired_width = 0.4 * w
-    desired_height = 0.2 * h
-    scale = min(desired_width / ref_text_width, desired_height / ref_text_height)
-    text_height = int(ref_text_height * scale)
-    offset = int (min(w, h) * 0.05)
-    text_org = (offset, text_height + offset)
-    img = cv2.putText(img, text, text_org, cv2.FONT_HERSHEY_SIMPLEX, scale * ref_font_scale, (255, 255, 255), int (ref_thickness * scale)) # type: ignore
-    return img
 
+    # --- Matplotlib Figure Setup for High DPI (matching base_callback2) ---
+    # Set a high DPI for a crisp image
+    dpi = 300
+    fig = plt.figure(figsize=(image_width / dpi, image_height / dpi), dpi=dpi, facecolor='none', edgecolor='none')
+    ax = fig.add_axes([0, 0, 1, 1])
+    ax.imshow(draw_img)
+    ax.axis('off')
+
+    # --- Add Minecraft-Styled Text (matching base_callback2) ---
+    # Colors inspired by Minecraft's UI (convert RGB to matplotlib format)
+    mc_yellow = f'#{text_color[0]:02x}{text_color[1]:02x}{text_color[2]:02x}'
+    mc_black = f'#{shadow_color[0]:02x}{shadow_color[1]:02x}{shadow_color[2]:02x}'
+    
+    # Text properties (matching base_callback2 style)
+    text_props = {
+        'transform': ax.transAxes,
+        'fontsize': 4,
+        'verticalalignment': 'center',
+        'horizontalalignment': 'left',
+        'fontweight': 'bold',  # Bold to mimic pixel font thickness
+    }
+
+    # Position text at left center (similar to base_callback2 but different position)
+    text_x = 0.02
+    text_y = 0.5
+
+    # Draw the black "shadow" text slightly offset
+    # This creates a classic 8-bit style outline/shadow
+    shadow_offset = 1 / dpi  # Small offset in points
+    ax.text(text_x + shadow_offset, text_y - shadow_offset, text, color=mc_black, **text_props)
+    
+    # Draw the main yellow text on top
+    ax.text(text_x, text_y, text, color=mc_yellow, **text_props)
+
+    # --- Convert Matplotlib Figure back to NumPy Array (matching base_callback2) ---
+    with io.BytesIO() as buff:
+        fig.savefig(buff, format='png', dpi=dpi, transparent=True, pad_inches=0)
+        buff.seek(0)
+        # Use PIL to correctly handle the RGBA conversion from PNG
+        plot_pil = Image.open(buff)
+        plot_image = np.array(plot_pil)
+
+    plt.close(fig)  # Important to free up memory
+
+    # Return the image with the alpha channel sliced off (RGB)
+    return plot_image[:, :, :3]
 
 class EnvWorker(Process):
     """

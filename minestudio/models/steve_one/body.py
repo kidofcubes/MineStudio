@@ -14,6 +14,7 @@ from minestudio.utils.mineclip_lib.mineclip import MineCLIP
 from minestudio.utils.vpt_lib.impala_cnn import ImpalaCNN
 from minestudio.utils.vpt_lib.util import FanInInitReLULayer, ResidualRecurrentBlocks
 from minestudio.models.base_policy import MinePolicy
+from minestudio.online.utils import auto_stack, auto_to_torch
 
 class TranslatorVAE(torch.nn.Module):
     """
@@ -530,7 +531,7 @@ class SteveOnePolicy(MinePolicy, PyTorchModelHubMixin):
             assert 'text' in instruction, "instruction must have either text or video."
 
             texts = instruction['text']
-            if isinstance(texts, list):
+            if isinstance(texts[0], list):
                 texts = texts[0]
             elif isinstance(texts, str):
                 texts = [texts]
@@ -568,11 +569,13 @@ class SteveOnePolicy(MinePolicy, PyTorchModelHubMixin):
         if 'mineclip_embeds' not in condition:
             condition = self.prepare_condition(condition)
         if state_in is None:
-            state_in = self.initial_state(condition, input['image'].shape[0])
+            state_in = self.initial_state(batch_size=input['image'].shape[0], condition=condition)
         input, state_in = input.copy(), state_in.copy()
         mineclip_embeds = condition['mineclip_embeds']
         if mineclip_embeds.shape[0] == 1 and input['image'].shape[0] > 1:
             mineclip_embeds = repeat(mineclip_embeds, '1 ... -> b ...', b=input['image'].shape[0])
+        if isinstance(condition['cond_scale'], torch.Tensor):
+            condition['cond_scale'] = condition['cond_scale'][0][0].item() #! TEMPORAL FIXME: remove this when we have a better way to handle this
         if condition['cond_scale'] != 0 and condition['cond_scale'] is not None:
             state_in = [rearrange(x, "b ... c -> (b c) ...") for x in state_in]
             images = repeat(input['image'], "b ... -> (b c) ...", c=2)
@@ -619,8 +622,8 @@ class SteveOnePolicy(MinePolicy, PyTorchModelHubMixin):
     
     def initial_state(
         self, 
-        condition: Dict[str, Any], 
-        batch_size: Optional[int] = None
+        batch_size = None,
+        condition: Dict[str, Any] = None,
     ) -> List[torch.Tensor]:
         """
         Initialize recurrent state for policy inference.
@@ -634,10 +637,25 @@ class SteveOnePolicy(MinePolicy, PyTorchModelHubMixin):
         :returns: List of initial state tensors
         """
         initial_state = self.net.initial_state(batch_size)
+        if condition is None:
+            return initial_state
         if condition['cond_scale'] == 0.0 or condition['cond_scale'] is None:
             return initial_state
         else:
             return [torch.stack([x, x], dim=-1) for x in initial_state]
+        
+    def merge_state(self, states) -> Optional[List[torch.Tensor]]:
+        result_states = []
+        for i in range(len(states[0])):
+            result_states.append(auto_to_torch(torch.cat([state[i] for state in states], 0), device=self.device))
+        return result_states
+
+    def split_state(self, states, split_num) -> Optional[List[List[torch.Tensor]]]:
+        result_states = [
+            [states[j][i:i+1] for j in range(len(states))]
+            for i in range(split_num)
+        ]
+        return result_states
 
     def reset_parameters(self):
         """

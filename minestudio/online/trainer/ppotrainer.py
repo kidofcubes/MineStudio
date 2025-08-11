@@ -80,8 +80,8 @@ class PPOTrainer(BaseTrainer):
         save_path: Optional[str],
         keep_interval: int,
         log_ratio_range: float,
-        enable_ref_update: False,
         whole_config: str,
+        enable_ref_update: bool = False,
         **kwargs
     ):
         """
@@ -112,8 +112,8 @@ class PPOTrainer(BaseTrainer):
         :param save_path: Directory path to save checkpoints and logs
         :param keep_interval: Interval to keep checkpoints (others are deleted)
         :param log_ratio_range: Maximum allowed log probability ratio for stability
-        :param enable_ref_update: Whether to enable reference model updates
         :param whole_config: Complete configuration string for saving with checkpoints
+        :param enable_ref_update: Whether to enable reference model updates
         :param kwargs: Additional arguments passed to parent BaseTrainer class
         """
         super().__init__(inference_batch_size_per_gpu=batch_size_per_gpu, **kwargs)
@@ -165,6 +165,10 @@ class PPOTrainer(BaseTrainer):
         """
     
         model = policy_generator()
+        if self.use_amp:
+            scaler = torch.amp.GradScaler('cuda')
+        else:
+            scaler = None
         optimizer = torch.optim.AdamW(
             model.parameters(),
             lr=self.learning_rate,
@@ -192,7 +196,7 @@ class PPOTrainer(BaseTrainer):
             self.ref_model.train()
         else:
             self.ref_model = None
-        return model, optimizer
+        return model, optimizer, scaler
     
     def train(self):
         """
@@ -401,7 +405,7 @@ class PPOTrainer(BaseTrainer):
                     loss_weight = (end - start) / T
                     
                     context = self.model.no_sync() if (isinstance(self.model, torch.nn.parallel.DistributedDataParallel) and (batch_count % self.gradient_accumulation != 0 or end < T)) else nullcontext()
-                    with context:
+                    with context, torch.cuda.amp.autocast(enabled=self.use_amp):
                         forward_result, new_state= self.model(input=chunk_obs, state_in=new_state, context = {"first": chunk_first})#, train_iter = str(self.num_updates))#, train_iter = uuid.uuid1().hex)#, train_iters = 2*self.num_optimized)
                         new_state = recursive_detach(new_state)
                         pi_logits = forward_result["pi_logits"]
@@ -494,7 +498,10 @@ class PPOTrainer(BaseTrainer):
                             print("loss nan")
                             break
 
-                        total_loss.backward()
+                        if self.use_amp:
+                            self.scaler.scale(total_loss).backward()
+                        else:
+                            total_loss.backward()
 
                         with torch.no_grad():
                             approx_kl = ((ratio - 1.0) - log_ratio).mean()
@@ -553,8 +560,14 @@ class PPOTrainer(BaseTrainer):
                             mean_abs_advantage.update(advantage.abs().mean().detach(), weight=loss_weight)
 
                 if batch_count % self.gradient_accumulation == 0:
-                    torch.nn.utils.clip_grad.clip_grad_norm_(self.model.parameters(), self.max_grad_norm)
-                    self.optimizer.step()
+                    if self.use_amp:
+                        self.scaler.unscale_(self.optimizer)
+                        torch.nn.utils.clip_grad.clip_grad_norm_(self.model.parameters(), self.max_grad_norm)
+                        self.scaler.step(self.optimizer)
+                        self.scaler.update()
+                    else:
+                        torch.nn.utils.clip_grad.clip_grad_norm_(self.model.parameters(), self.max_grad_norm)
+                        self.optimizer.step()
                     self.optimizer.zero_grad()
 
         mean_kl_divergence_loss_item = mean_kl_divergence_loss.compute().item()
@@ -594,8 +607,11 @@ class PPOTrainer(BaseTrainer):
                     checkpoint_dir.mkdir(parents=True)
 
                 #save model
+                print(f"Saving model to {checkpoint_dir / 'model.ckpt'}")
                 torch.save(self.inner_model.state_dict(), str(checkpoint_dir / "model.ckpt"))
                 torch.save(self.optimizer.state_dict(), str(checkpoint_dir / "optimizer.ckpt"))
+                if self.use_amp:
+                    torch.save(self.scaler.state_dict(), str(checkpoint_dir / "scaler.ckpt"))
                 with open(checkpoint_dir / "whole_config.pkl", "wb") as f:
                     pickle.dump(self.whole_config, f)
 

@@ -21,6 +21,7 @@ class EpisodeStatistics:
         self.sum_rewards_metrics = {}#torchmetrics.MeanMetric()
         self.discounted_rewards_metrics = {}#torchmetrics.MeanMetric()
         self.episode_lengths_metrics = {}#torchmetrics.MeanMetric()
+        self.episode_count_metrics = {}
         self.acc_episode_count = 0
         self.record_requests = deque()
 
@@ -58,6 +59,7 @@ class EpisodeStatistics:
                 mean_sum_reward = self.sum_rewards_metrics[task].compute()
                 mean_discounted_reward = self.discounted_rewards_metrics[task].compute()
                 mean_episode_length = self.episode_lengths_metrics[task].compute()
+                episode_count = self.episode_count_metrics[task].compute()
 
                 # Log individual task metrics
                 if not np.isnan(mean_sum_reward):
@@ -65,13 +67,16 @@ class EpisodeStatistics:
                         f"episode_statistics/{task}/sum_reward": mean_sum_reward,
                         f"episode_statistics/{task}/discounted_reward": mean_discounted_reward,
                         f"episode_statistics/{task}/episode_length": mean_episode_length,
+                        f"episode_statistics/{task}/episode_count": episode_count,
+                        f"episode_statistics/{task}/frequency": episode_count / self.acc_episode_count,
                     })
                     print(f"Task {task} - Sum Reward: {mean_sum_reward}, Discounted Reward: {mean_discounted_reward}, Episode Length: {mean_episode_length}")
 
                 self.sum_rewards_metrics[task].reset()
                 self.discounted_rewards_metrics[task].reset()
                 self.episode_lengths_metrics[task].reset()
-
+                self.episode_count_metrics[task].reset()
+                
                 if not np.isnan(mean_sum_reward) and "4train" in task:
                     sum_train_reward += mean_sum_reward
                     sum_discounted_reward += mean_discounted_reward
@@ -81,7 +86,7 @@ class EpisodeStatistics:
                     num_test_tasks += 1
                 
                 # Only add episode length if it's not NaN
-                if not np.isnan(mean_episode_length):
+                if not np.isnan(mean_episode_length) and not np.isnan(mean_sum_reward):
                     sum_episode_length += mean_episode_length
                     num_valid_episode_length += 1
 
@@ -129,6 +134,7 @@ class EpisodeStatistics:
             self.sum_rewards_metrics[its_specfg] = torchmetrics.MeanMetric()
             self.discounted_rewards_metrics[its_specfg] = torchmetrics.MeanMetric()
             self.episode_lengths_metrics[its_specfg] = torchmetrics.MeanMetric()
+            self.episode_count_metrics[its_specfg] = torchmetrics.SumMetric()
         sum_reward = rewards.sum()
 
         discounted_reward = ((self.discount ** np.arange(len(rewards))) * rewards).sum()
@@ -136,6 +142,7 @@ class EpisodeStatistics:
         self.sum_rewards_metrics[its_specfg].update(sum_reward)
         self.discounted_rewards_metrics[its_specfg].update(discounted_reward)
         self.episode_lengths_metrics[its_specfg].update(episode_length)
+        self.episode_count_metrics[its_specfg].update(1)
         self.acc_episode_count += 1
         if len(self.record_requests) > 0:
             print("episode, cord_requests>0:" + str(self.record_requests))
