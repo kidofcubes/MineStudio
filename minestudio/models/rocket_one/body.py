@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-10 15:52:16
 LastEditors: Muyao 2350076251@qq.com
-LastEditTime: 2025-07-10 20:35:04
+LastEditTime: 2025-07-12 05:23:23
 FilePath: /MineStudio/minestudio/models/rocket_one/body.py
 '''
 import torch
@@ -111,7 +111,6 @@ def load_rocket_policy(ckpt_path: Optional[str] = None):
         model = RocketPolicy.from_pretrained("CraftJarvis/MineStudio_ROCKET-1.12w_EMA")
         return model
     elif os.path.exists(ckpt_path):
-        print(ckpt_path)
         model = RocketPolicy.from_pretrained(ckpt_path)
         return model
     

@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-11 05:20:17
-LastEditors: muzhancun muzhancun@stu.pku.edu.cn
-LastEditTime: 2025-02-25 16:04:19
+LastEditors: Muyao 2350076251@qq.com
+LastEditTime: 2025-08-11 21:06:58
 FilePath: /HierarchicalAgent/scratch/muzhancun/MineStudio/minestudio/simulator/entry.py
 '''
 
@@ -117,6 +117,7 @@ class MinecraftSim(gymnasium.Env):
         self.action_mapper = CameraHierarchicalMapping(n_camera_bins = camera_config.n_camera_bins)
         self.action_transformer = ActionTransformer(**camera_config.action_transformer_kwargs)
 
+        
     def agent_action_to_env_action(self, action: Dict[str, Any]):
         #! This is quite important step (for some reason).
         #! For the sake of your sanity, remember to do this step (manual conversion to numpy)
