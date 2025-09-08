@@ -54,12 +54,11 @@ The example code is provided in ``minestudio/tutorials/inference/evaluate_steve/
 
             env_generator = partial(
                 MinecraftSim,
-                obs_size = (224, 224),
+                obs_size = (128, 128),
                 preferred_spawn_biome = "forest", 
                 callbacks = [
-                    SpeedTestCallback(50),
-                    CommandCallback("mine log", cond_scale=4.0),  # Add a command callback for SteveOnePolicy
-                ] + load_callbacks_from_config(config_file)
+                    SpeedTestCallback(50)
+                ] + load_callbacks_from_config(config_file) + [CommandCallback("mine log", cond_scale=4.0)] # Add a command callback for SteveOnePolicy
             )
 
             agent_generator = lambda: SteveOnePolicy.from_pretrained("CraftJarvis/MineStudio_STEVE-1.official")
